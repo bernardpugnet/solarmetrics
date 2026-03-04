@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarMetrics - Bernard Pugnet | Solar Finance & Energy Expert</title>
+    <meta name="description" content="SolarMetrics - Expertise in solar project financing, PV asset management, LCOE, PPA and profitability analysis. 20 years of market finance experience.">
+    <meta name="keywords" content="solar, photovoltaic, PV, LCOE, PPA, asset management, project finance, renewable energy, Bernard Pugnet">
+    <meta name="author" content="Bernard Pugnet">
+    <meta property="og:title" content="SolarMetrics - Solar Finance & Energy Expert">
+    <meta property="og:description" content="Expertise in solar project financing, PV asset management, profitability analysis.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <meta property="og:locale" content="en_US">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .animate-float{animation:float 6s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+        html{scroll-behavior:smooth}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Home</a>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
+                    <a href="case-study.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Case Study</a>
+                    <a href="tools.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Tools</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="ai-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">AI & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Resources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../fr/index.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Home</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
+                <a href="case-study.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Case Study</a>
+                <a href="tools.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="ai-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">AI & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="resources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+            <!-- Background Effects -->
+            <div class="absolute inset-0 z-0">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-float"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full mb-8">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-amber-500 text-sm font-medium">Solar Finance & Energy Expert</span>
+                </div>
+
+                <!-- Title -->
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
+                    Finance & Technology<br>
+                    <span class="gradient-text">of Solar Energy</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10">
+                    20 years of market finance expertise serving the energy transition. 
+                    Project financing, Asset Management, profitability analysis.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="contact.html" class="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-amber-500/25 transition-all">
+                        Contact Me
+                    </a>
+                    <a href="technologies.html" class="px-8 py-4 bg-slate-800 text-white font-semibold rounded-xl border border-slate-700 hover:bg-slate-700 transition-all">
+                        Explore the Site
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section class="py-16 bg-gradient-to-b from-slate-900 to-slate-800/50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">📰 News & Market Watch</h2>
+                        <p class="text-slate-400 mt-1">Analysis and solar market trends</p>
+                    </div>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="text-amber-500 hover:text-amber-400 text-sm font-medium flex items-center gap-2">
+                        Follow on LinkedIn
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- News Item 1 -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
+                        <div class="text-xs text-slate-500 mb-2">March 2026</div>
+                        <h3 class="text-white font-semibold mb-2">CRE Tenders: €79/MWh</h3>
+                        <p class="text-slate-400 text-sm mb-3">Latest PPE2 results confirm ground-mount PV price stabilization around €79-80/MWh.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source: CRE</span>
+                    </div>
+                    
+                    <!-- News Item 2 -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
+                        <div class="text-xs text-slate-500 mb-2">February 2026</div>
+                        <h3 class="text-white font-semibold mb-2">IRENA 2024: Global LCOE at $43/MWh</h3>
+                        <p class="text-slate-400 text-sm mb-3">Average global solar PV cost continues to decline, with significant regional disparities.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source: IRENA</span>
+                    </div>
+                    
+                    <!-- News Item 3 -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
+                        <div class="text-xs text-slate-500 mb-2">January 2026</div>
+                        <h3 class="text-white font-semibold mb-2">AI & Monitoring: 2026 Trends</h3>
+                        <p class="text-slate-400 text-sm mb-3">Artificial intelligence is transforming solar asset management: anomaly detection, production forecasting.</p>
+                        <span class="text-amber-500 text-xs font-medium">Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Figures -->
+        <section class="py-20 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white text-center mb-12">Key Solar Figures</h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- France -->
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 text-center">
+                        <div class="text-3xl mb-2">🇫🇷</div>
+                        <p class="text-4xl font-bold text-amber-500">21 GW</p>
+                        <p class="text-slate-400 mt-2">France Capacity</p>
+                        <p class="text-slate-500 text-sm mt-1">+3.2 GW in 2024</p>
+                    </div>
+                    
+                    <!-- Global -->
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 text-center">
+                        <div class="text-3xl mb-2">🌍</div>
+                        <p class="text-4xl font-bold text-green-500">1.6 TW</p>
+                        <p class="text-slate-400 mt-2">Global Capacity</p>
+                        <p class="text-slate-500 text-sm mt-1">+420 GW in 2024</p>
+                    </div>
+                    
+                    <!-- Jobs -->
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 text-center">
+                        <div class="text-3xl mb-2">👷</div>
+                        <p class="text-4xl font-bold text-blue-500">45,000</p>
+                        <p class="text-slate-400 mt-2">Jobs in France</p>
+                        <p class="text-slate-500 text-sm mt-1">+15% vs 2023</p>
+                    </div>
+                    
+                    <!-- LCOE -->
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 text-center">
+                        <div class="text-3xl mb-2">💰</div>
+                        <p class="text-4xl font-bold text-purple-500">€45</p>
+                        <p class="text-slate-400 mt-2">LCOE /MWh</p>
+                        <p class="text-slate-500 text-sm mt-1">-89% since 2010</p>
+                    </div>
+                </div>
+                
+                <p class="text-center text-slate-500 text-sm mt-8">Sources: RTE, IRENA, SER, Observ'ER 2024</p>
+            </div>
+        </section>
+
+        <!-- Site Sections -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white text-center mb-4">Explore the Site</h2>
+                <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">
+                    Technical and economic analysis, interactive tools to understand the solar market
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Technologies -->
+                    <a href="technologies.html" class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-amber-500/50 transition-all">
+                        <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-amber-500/30 transition-colors">
+                            <span class="text-2xl">☀️</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Solar Technologies</h3>
+                        <p class="text-slate-400 text-sm">PERC, TOPCon, HJT, perovskites, agrivoltaics, battery storage</p>
+                    </a>
+
+                    <!-- Economy -->
+                    <a href="economy.html" class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-green-500/50 transition-all">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-500/30 transition-colors">
+                            <span class="text-2xl">💰</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Economy & Financing</h3>
+                        <p class="text-slate-400 text-sm">LCOE, PPA, Project Finance, Asset Management, financial structures</p>
+                    </a>
+
+                    <!-- Markets -->
+                    <a href="markets.html" class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                            <span class="text-2xl">🌍</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">International Markets</h3>
+                        <p class="text-slate-400 text-sm">Europe, Switzerland, UAE, regulations, French players</p>
+                    </a>
+
+                    <!-- AI -->
+                    <a href="ai-data.html" class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-purple-500/50 transition-all">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-500/30 transition-colors">
+                            <span class="text-2xl">🤖</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">AI & Data</h3>
+                        <p class="text-slate-400 text-sm">Forecasting, predictive maintenance, algorithmic trading</p>
+                    </a>
+
+                    <!-- Tools -->
+                    <a href="tools.html" class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-cyan-500/50 transition-all">
+                        <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-cyan-500/30 transition-colors">
+                            <span class="text-2xl">🧮</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Interactive Tools</h3>
+                        <p class="text-slate-400 text-sm">Profitability calculator, irradiation map, comparator</p>
+                    </a>
+
+                    <!-- Resources -->
+                    <a href="resources.html" class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-indigo-500/50 transition-all">
+                        <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-500/30 transition-colors">
+                            <span class="text-2xl">📚</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Resources</h3>
+                        <p class="text-slate-400 text-sm">FR/EN Glossary, reference sources, FAQ</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Preview -->
+        <section class="py-20 bg-slate-800/50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="w-24 h-24 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <span class="text-4xl font-bold text-white">BP</span>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-4">Bernard Pugnet</h2>
+                <p class="text-amber-500 font-medium mb-6">Solar Finance & Energy Expert</p>
+                <p class="text-slate-400 max-w-2xl mx-auto mb-8">
+                    20 years of experience in market finance (trading, options, risk management, hedge fund creation). 
+                    Today, I put this expertise at the service of the energy transition, with a focus on financing and analysis of solar projects.
+                </p>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    View my LinkedIn profile
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the Site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="economy.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Economy</p>
+                </a>
+                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                </a>
+                <a href="ai-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
+                    <span class="text-2xl">🤖</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">AI & Data</p>
+                </a>
+                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
+                </a>
+                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm text-center">
+                    © <span id="currentYear"></span> SolarMetrics - Bernard Pugnet | Indicative data
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/index.html" class="text-slate-400 hover:text-white text-sm transition-colors">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <!-- Legal Notice -->
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Publisher:</strong> Bernard Pugnet - Personal informational website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual Property:</strong> All content on this site (text, images, graphics) is the property of Bernard Pugnet or cited sources. Reproduction is prohibited without authorization.</p>
+                        <p><strong class="text-slate-400">Personal Data:</strong> This site does not collect any personal data. No tracking cookies are used. Only technical cookies may be set by third-party services (CDN).</p>
+                        <p><strong class="text-slate-400">Disclaimer:</strong> Information on this site is provided for informational purposes only and does not constitute investment advice. The publisher disclaims any liability for the use of this information.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

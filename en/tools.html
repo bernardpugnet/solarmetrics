@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Tools - SolarMetrics</title>
+    <meta name="description" content="Interactive solar tools: profitability calculator, irradiance data, technology comparator.">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}</style>
+</head>
+<body class="bg-slate-900 text-white">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
+                    <a href="case-study.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Case Study</a>
+                    <a href="tools.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Tools</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="ai-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">IA & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Resources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/outils.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
+                <a href="case-study.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Case Study</a>
+                <a href="tools.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Tools</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="ai-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">IA & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="resources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+                <a href="tools.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Tools</a>
+                <a href="resources.html" class="block px-4 py-2 Mtext-slate-400 hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 Mtext-slate-400 hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+
+    <section id="outils" class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <div class="w-16 h-16 mx-auto mb-6 p-4 bg-green-500/20 rounded-2xl">
+                    <svg class="w-full h-full text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-bold text-white mb-4">Interactive Tools</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Calculate the profitability of your solar projects and explore industry data</p>
+            </div>
+
+            <!-- Calculateur de rentabilité -->
+            <div class="mb-20" id="calculateur">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">1</span>
+                    Solar Profitability Calculator
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Inputs -->
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-6">Project Parameters</h4>
+                        
+                        <div class="space-y-6">
+                            <!-- Puissance -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Installed Capacity</span>
+                                    <span class="text-white font-medium"><span id="puissanceValue">100</span> kWc</span>
+                                </label>
+                                <input type="range" id="puissance" min="9" max="1000" value="100" aria-label="Installed Capacity en kWc" 
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>9 kWc</span>
+                                    <span>1 MWc</span>
+                                </div>
+                            </div>
+
+                            <!-- CAPEX -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">CAPEX (installation cost)</span>
+                                    <span class="text-white font-medium"><span id="capexValue">800</span> €/kWc</span>
+                                </label>
+                                <input type="range" id="capex" aria-label="CAPEX en euros par kWc" min="500" max="1500" value="800" step="10"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>500 €/kWc</span>
+                                    <span>1500 €/kWc</span>
+                                </div>
+                            </div>
+
+                            <!-- Localisation / Productible -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Annual Yield</span>
+                                    <span class="text-white font-medium"><span id="productibleValue">1150</span> kWh/kWc</span>
+                                </label>
+                                <input type="range" id="productible" aria-label="Annual Yield en kWh par kWc" min="900" max="1500" value="1150" step="10"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>900 (North)</span>
+                                    <span>1500 (South)</span>
+                                </div>
+                            </div>
+
+                            <!-- Prix de vente -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Electricity Selling Price</span>
+                                    <span class="text-white font-medium"><span id="prixValue">90</span> €/MWh</span>
+                                </label>
+                                <input type="range" id="prix" aria-label="Prix de vente en euros par MWh" min="40" max="150" value="90" step="5"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>40 €/MWh</span>
+                                    <span>150 €/MWh</span>
+                                </div>
+                            </div>
+
+                            <!-- Taux autoconsommation -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Self-consumption Rate</span>
+                                    <span class="text-white font-medium"><span id="autoconsoValue">30</span>%</span>
+                                </label>
+                                <input type="range" id="autoconso" aria-label="Taux autoconsommation en pourcentage" min="0" max="100" value="30" step="5"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>0% (full sale)</span>
+                                    <span>100%</span>
+                                </div>
+                            </div>
+
+                            <!-- Prix réseau évité -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Avoided Grid Price (self-consumption)</span>
+                                    <span class="text-white font-medium"><span id="prixReseauValue">180</span> €/MWh</span>
+                                </label>
+                                <input type="range" id="prixReseau" aria-label="Prix réseau évité en euros par MWh" min="100" max="300" value="180" step="10"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>100 €/MWh</span>
+                                    <span>300 €/MWh</span>
+                                </div>
+                            </div>
+
+                            <!-- OPEX -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Annual OPEX</span>
+                                    <span class="text-white font-medium"><span id="opexValue">15</span> €/kWc/an</span>
+                                </label>
+                                <input type="range" id="opex" aria-label="Annual OPEX en euros par kWc" min="8" max="30" value="15"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>8 €</span>
+                                    <span>30 €</span>
+                                </div>
+                            </div>
+
+                            <!-- Durée -->
+                            <div>
+                                <label class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Operating Period</span>
+                                    <span class="text-white font-medium"><span id="dureeValue">25</span> ans</span>
+                                </label>
+                                <input type="range" id="duree" aria-label="Durée exploitation en années" min="15" max="35" value="25"
+                                       class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                                    <span>15 ans</span>
+                                    <span>35 ans</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="space-y-6">
+                        <!-- KPIs principaux -->
+                        <div class="bg-gradient-to-br from-green-500/10 to-amber-500/10 rounded-2xl p-8 border border-green-500/20">
+                            <h4 class="text-xl font-semibold text-white mb-6">Results</h4>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-slate-400 text-sm mb-1">Total Investment</p>
+                                    <p class="text-2xl font-bold text-white"><span id="resultInvest">80</span> k€</p>
+                                </div>
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-slate-400 text-sm mb-1">Annual Production</p>
+                                    <p class="text-2xl font-bold text-white"><span id="resultProd">115</span> MWh</p>
+                                </div>
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-slate-400 text-sm mb-1">Year 1 Revenue</p>
+                                    <p class="text-2xl font-bold text-green-500"><span id="resultRevenu">12.6</span> k€</p>
+                                </div>
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-slate-400 text-sm mb-1">Year 1 Cash-flow</p>
+                                    <p class="text-2xl font-bold text-green-500"><span id="resultCashflow">11.1</span> k€</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl">
+                                    <div>
+                                        <p class="text-white font-semibold">Project IRR</p>
+                                        <p class="text-slate-500 text-xs">Internal Rate of Return</p>
+                                    </div>
+                                    <p class="text-3xl font-bold text-amber-500"><span id="resultTRI">9.2</span>%</p>
+                                </div>
+                                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl">
+                                    <div>
+                                        <p class="text-white font-semibold">Payback Period</p>
+                                        <p class="text-slate-500 text-xs">Simple Payback</p>
+                                    </div>
+                                    <p class="text-3xl font-bold text-blue-500"><span id="resultPayback">7.2</span> ans</p>
+                                </div>
+                                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl">
+                                    <div>
+                                        <p class="text-white font-semibold">NPV (8%)</p>
+                                        <p class="text-slate-500 text-xs">Net Present Value</p>
+                                    </div>
+                                    <p class="text-3xl font-bold text-green-500"><span id="resultVAN">25</span> k€</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Impact CO2 -->
+                        <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h5 class="text-white font-semibold mb-4">🌱 Environmental Impact</h5>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="text-center">
+                                    <p class="text-2xl font-bold text-green-500"><span id="resultCO2">5.2</span> t</p>
+                                    <p class="text-slate-400 text-sm">CO₂ avoided / year</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-2xl font-bold text-green-500"><span id="resultCO2Total">130</span> t</p>
+                                    <p class="text-slate-400 text-sm">CO₂ avoided over 25 years</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-500 text-xs mt-3 text-center">Base: 45 gCO₂/kWh (France average mix)</p>
+                        </div>
+
+                        <!-- LCOE calculé -->
+                        <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h5 class="text-white font-semibold mb-4">📊 Project LCOE</h5>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">Levelized Cost of Energy</p>
+                                    <p class="text-slate-500 text-xs">(8% discount rate, 0.5%/year degradation)</p>
+                                </div>
+                                <p class="text-3xl font-bold text-amber-500"><span id="resultLCOE">52</span> €/MWh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="mt-6 p-4 bg-slate-900/30 rounded-xl border border-slate-700/30">
+                    <p class="text-slate-500 text-xs text-center">
+                        ⚠️ Cet outil fournit une estimation simplifiée à titre indicatif. Une étude détaillée par un professionnel 
+                        est recommandée pour tout projet d'investissement. Hypothèses : dégradation 0.5%/an, pas d'indexation prix, 
+                        pas de valeur résiduelle, pas de financement bancaire.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Carte ensoleillement -->
+            <div class="mb-20" id="carte">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">2</span>
+                    Solar Yield by Region
+                </h3>
+
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-white mb-4">Average Yield in France</h4>
+                            <p class="text-slate-400 text-sm mb-6">
+                                Le productible (kWh/kWc/an) varie fortement selon la localisation. 
+                                Il dépend de l'irradiation (GHI), de l'orientation, de l'inclinaison et des ombrages.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-4 h-4 bg-red-500 rounded"></div>
+                                    <span class="text-slate-300 flex-1">Southern France (PACA, Corsica)</span>
+                                    <span class="text-white font-semibold">1350-1500 kWh/kWc</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-4 h-4 bg-orange-500 rounded"></div>
+                                    <span class="text-slate-300 flex-1">Southwest & Central-East</span>
+                                    <span class="text-white font-semibold">1200-1350 kWh/kWc</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-4 h-4 bg-amber-500 rounded"></div>
+                                    <span class="text-slate-300 flex-1">Central France</span>
+                                    <span class="text-white font-semibold">1100-1200 kWh/kWc</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+                                    <span class="text-slate-300 flex-1">Paris Region & East</span>
+                                    <span class="text-white font-semibold">1000-1100 kWh/kWc</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-4 h-4 bg-blue-500 rounded"></div>
+                                    <span class="text-slate-300 flex-1">Northern France</span>
+                                    <span class="text-white font-semibold">900-1050 kWh/kWc</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="relative w-64 h-72">
+                                <!-- France simplifiée en CSS -->
+                                <svg viewBox="0 0 100 110" class="w-full h-full">
+                                    <!-- Nord -->
+                                    <path d="M30,10 L70,10 L75,25 L65,30 L35,30 L25,25 Z" fill="#3b82f6" opacity="0.6"/>
+                                    <!-- Île-de-France / Grand Est -->
+                                    <path d="M35,30 L65,30 L70,45 L60,50 L40,50 L30,45 Z" fill="#eab308" opacity="0.6"/>
+                                    <!-- Centre -->
+                                    <path d="M25,45 L40,50 L45,65 L30,70 L15,60 Z" fill="#f59e0b" opacity="0.6"/>
+                                    <path d="M45,50 L60,50 L65,65 L50,70 L45,65 Z" fill="#f59e0b" opacity="0.6"/>
+                                    <!-- Ouest -->
+                                    <path d="M5,35 L25,30 L25,55 L10,60 Z" fill="#3b82f6" opacity="0.6"/>
+                                    <!-- Est -->
+                                    <path d="M70,35 L85,45 L80,65 L65,60 Z" fill="#f59e0b" opacity="0.6"/>
+                                    <!-- Sud-Ouest -->
+                                    <path d="M10,65 L30,70 L35,90 L15,95 L5,80 Z" fill="#f97316" opacity="0.6"/>
+                                    <!-- Sud-Est -->
+                                    <path d="M50,70 L80,65 L90,85 L70,100 L45,95 Z" fill="#ef4444" opacity="0.6"/>
+                                    <!-- PACA -->
+                                    <path d="M70,85 L90,80 L95,95 L80,105 L70,100 Z" fill="#ef4444" opacity="0.8"/>
+                                </svg>
+                                <div class="absolute bottom-0 right-0 text-xs text-slate-500">
+                                    Source : PVGIS
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                        <p class="text-amber-500 text-sm">
+                            💡 <strong>Tip:</strong> Use <a href="https://re.jrc.ec.europa.eu/pvg_tools/en/" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">PVGIS (free European tool)</a> for a precise estimate at your exact address.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparateur technologies -->
+            <div class="mb-8" id="comparateur">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">3</span>
+                    PV Technology Comparator
+                </h3>
+
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                    <p class="text-slate-400 mb-6">Compare technologies according to your priority criteria:</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-white">Criteria</th>
+                                    <th class="px-4 py-3 text-center text-sm font-semibold text-white">PERC Mono</th>
+                                    <th class="px-4 py-3 text-center text-sm font-semibold text-white">TOPCon</th>
+                                    <th class="px-4 py-3 text-center text-sm font-semibold text-white">HJT</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr>
+                                    <td class="px-4 py-3 text-slate-400">Module Efficiency</td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-amber-500">★★★</span>
+                                            <span class="text-slate-500">★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">21-22%</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-amber-500">★★★★</span>
+                                            <span class="text-slate-500">★</span>
+                                        </div>
+                                        <span class="text-white text-sm">22-23%</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-amber-500">★★★★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">23-24%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-slate-400">Cost (€/Wp)</td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-green-500">★★★★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">0.15-0.20</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-green-500">★★★★</span>
+                                            <span class="text-slate-500">★</span>
+                                        </div>
+                                        <span class="text-white text-sm">0.18-0.25</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-green-500">★★★</span>
+                                            <span class="text-slate-500">★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">0.25-0.35</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-slate-400">Heat Behavior</td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-blue-500">★★★</span>
+                                            <span class="text-slate-500">★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">-0.35%/°C</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-blue-500">★★★★</span>
+                                            <span class="text-slate-500">★</span>
+                                        </div>
+                                        <span class="text-white text-sm">-0.30%/°C</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-blue-500">★★★★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">-0.26%/°C</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-slate-400">Bifaciality</td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-purple-500">★★★</span>
+                                            <span class="text-slate-500">★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">~70%</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-purple-500">★★★★</span>
+                                            <span class="text-slate-500">★</span>
+                                        </div>
+                                        <span class="text-white text-sm">~85%</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            <span class="text-purple-500">★★★★★</span>
+                                        </div>
+                                        <span class="text-white text-sm">~95%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-slate-400">Market Maturity</td>
+                                    <td class="px-4 py-3 text-center">
+                                        <span class="px-2 py-1 bg-green-500/20 text-green-500 text-xs rounded-full">Mature</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs rounded-full">Growing</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <span class="px-2 py-1 bg-blue-500/20 text-blue-500 text-xs rounded-full">Premium</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6 grid md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-slate-800/50 rounded-xl border-l-4 border-green-500">
+                            <h5 class="text-white font-semibold mb-1">PERC: Best Value</h5>
+                            <p class="text-slate-400 text-sm">Best value for money for most projects.</p>
+                        </div>
+                        <div class="p-4 bg-slate-800/50 rounded-xl border-l-4 border-amber-500">
+                            <h5 class="text-white font-semibold mb-1">TOPCon: Optimal 2025</h5>
+                            <p class="text-slate-400 text-sm">New utility-scale standard, good efficiency/cost balance.</p>
+                        </div>
+                        <div class="p-4 bg-slate-800/50 rounded-xl border-l-4 border-blue-500">
+                            <h5 class="text-white font-semibold mb-1">HJT: Maximum Efficiency</h5>
+                            <p class="text-slate-400 text-sm">Ideal for limited surfaces or hot conditions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Script Calculateur -->
+    <script>
+        // Calculateur de rentabilité
+        function updateCalculateur() {
+            // Récupérer les valeurs
+            const puissance = parseFloat(document.getElementById('puissance').value);
+            const capex = parseFloat(document.getElementById('capex').value);
+            const productible = parseFloat(document.getElementById('productible').value);
+            const prix = parseFloat(document.getElementById('prix').value);
+            const autoconso = parseFloat(document.getElementById('autoconso').value) / 100;
+            const prixReseau = parseFloat(document.getElementById('prixReseau').value);
+            const opex = parseFloat(document.getElementById('opex').value);
+            const duree = parseFloat(document.getElementById('duree').value);
+
+            // Mettre à jour les affichages des sliders
+            document.getElementById('puissanceValue').textContent = puissance;
+            document.getElementById('capexValue').textContent = capex;
+            document.getElementById('productibleValue').textContent = productible;
+            document.getElementById('prixValue').textContent = prix;
+            document.getElementById('autoconsoValue').textContent = Math.round(autoconso * 100);
+            document.getElementById('prixReseauValue').textContent = prixReseau;
+            document.getElementById('opexValue').textContent = opex;
+            document.getElementById('dureeValue').textContent = duree;
+
+            // Calculs
+            const investissement = puissance * capex / 1000; // en k€
+            const productionAn1 = puissance * productible / 1000; // en MWh
+
+            // Revenus = autoconso * prixReseau + (1-autoconso) * prixVente
+            const revenuAn1 = productionAn1 * (autoconso * prixReseau + (1 - autoconso) * prix) / 1000; // en k€
+            const opexAnnuel = puissance * opex / 1000; // en k€
+            const cashflowAn1 = revenuAn1 - opexAnnuel;
+
+            // Simple Payback
+            const payback = investissement / cashflowAn1;
+
+            // VAN et TRI (simplifié)
+            const tauxActu = 0.08;
+            const degradation = 0.005;
+            let van = -investissement * 1000;
+            let cashflows = [-investissement * 1000];
+            
+            for (let i = 1; i <= duree; i++) {
+                const prodAnnee = productionAn1 * Math.pow(1 - degradation, i - 1);
+                const revenuAnnee = prodAnnee * (autoconso * prixReseau + (1 - autoconso) * prix);
+                const cfAnnee = revenuAnnee - opexAnnuel * 1000;
+                cashflows.push(cfAnnee);
+                van += cfAnnee / Math.pow(1 + tauxActu, i);
+            }
+
+            // TRI par Newton-Raphson
+            let tri = 0.1;
+            for (let iter = 0; iter < 100; iter++) {
+                let npv = 0;
+                let dnpv = 0;
+                for (let i = 0; i < cashflows.length; i++) {
+                    npv += cashflows[i] / Math.pow(1 + tri, i);
+                    if (i > 0) dnpv -= i * cashflows[i] / Math.pow(1 + tri, i + 1);
+                }
+                if (Math.abs(dnpv) < 0.0001) break;
+                tri = tri - npv / dnpv;
+                if (Math.abs(npv) < 100) break;
+            }
+
+            // LCOE
+            let sumCosts = investissement * 1000;
+            let sumProd = 0;
+            for (let i = 1; i <= duree; i++) {
+                sumCosts += opexAnnuel * 1000 / Math.pow(1 + tauxActu, i);
+                sumProd += productionAn1 * 1000 * Math.pow(1 - degradation, i - 1) / Math.pow(1 + tauxActu, i);
+            }
+            const lcoe = sumCosts / sumProd * 1000; // €/MWh
+
+            // CO2 évité (45g/kWh mix France moyen)
+            const co2An = productionAn1 * 1000 * 0.045 / 1000; // tonnes
+            const co2Total = co2An * duree * (1 - degradation * duree / 2);
+
+            // Afficher les résultats
+            document.getElementById('resultInvest').textContent = investissement.toFixed(0);
+            document.getElementById('resultProd').textContent = productionAn1.toFixed(0);
+            document.getElementById('resultRevenu').textContent = revenuAn1.toFixed(1);
+            document.getElementById('resultCashflow').textContent = cashflowAn1.toFixed(1);
+            document.getElementById('resultTRI').textContent = (tri * 100).toFixed(1);
+            document.getElementById('resultPayback').textContent = payback.toFixed(1);
+            document.getElementById('resultVAN').textContent = (van / 1000).toFixed(0);
+            document.getElementById('resultLCOE').textContent = lcoe.toFixed(0);
+            document.getElementById('resultCO2').textContent = co2An.toFixed(1);
+            document.getElementById('resultCO2Total').textContent = co2Total.toFixed(0);
+        }
+
+        // Ajouter les event listeners
+        ['puissance', 'capex', 'productible', 'prix', 'autoconso', 'prixReseau', 'opex', 'duree'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateCalculateur);
+        });
+
+        // Calcul initial
+        document.addEventListener('DOMContentLoaded', updateCalculateur);
+    </script>
+
+    </main>
+    
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Need a financial analysis for your project?</h2>
+            <p class="text-slate-400 mb-8">20 years of market finance experience serving solar energy</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Contact Me
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    View my LinkedIn profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the Site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Home</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="economy.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Economy</p>
+                </a>
+                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                </a>
+                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
+                </a>
+                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/outils.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Publisher:</strong> Bernard Pugnet - Personal informational website - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual Property:</strong> All content on this site is the property of Bernard Pugnet or its cited sources.</p>
+                        <p><strong class="text-slate-400">Personal Data:</strong> This site does not collect any personal data. No tracking cookies are used.</p>
+                        <p><strong class="text-slate-400">Disclaimer:</strong> Information is provided for indicative purposes only and does not constitute investment advice.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
+        function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener(

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Bernard Pugnet - SolarMetrics</title>
+    <meta name="description" content="Contact Bernard Pugnet - Finance & Solar Energy Expert with 20+ years of market finance experience">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .card-hover{transition:all 0.3s ease}
+        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.3)}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
+                    <a href="case-study.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Case Study</a>
+                    <a href="tools.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Tools</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="ai-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">AI & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Resources</a>
+                    <a href="contact.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../fr/contact.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
+                <a href="case-study.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Case Study</a>
+                <a href="tools.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="ai-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">AI & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="resources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <!-- Photo/Avatar -->
+                    <div class="relative inline-block mb-8">
+                        <div class="w-32 h-32 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl shadow-amber-500/20">
+                            <span class="text-5xl font-bold text-white">BP</span>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center border-4 border-slate-900">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Bernard Pugnet</h1>
+                    <p class="text-xl md:text-2xl gradient-text font-semibold mb-6">Senior Finance & Risk Manager</p>
+                    <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                        Financial management, team leadership & international operations • Goal: Renewable Energy Asset Manager
+                    </p>
+                </div>
+
+                <!-- Contact Cards -->
+                <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-16">
+                    <!-- Email -->
+                    <a href="mailto:bernard.pugnet13400@gmail.com" class="card-hover bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 hover:border-amber-500/50 group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center group-hover:bg-amber-500/30 transition-colors">
+                                <svg class="w-7 h-7 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-white font-semibold text-lg">Email</p>
+                                <p class="text-slate-400">bernard.pugnet13400@gmail.com</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="card-hover bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 hover:border-blue-500/50 group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                                <svg class="w-7 h-7 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-white font-semibold text-lg">LinkedIn</p>
+                                <p class="text-slate-400">linkedin.com/in/bernard-pugnet</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Value Proposition -->
+                <div class="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 rounded-3xl p-8 md:p-10 border border-amber-500/20">
+                    <h2 class="text-2xl font-bold text-white mb-6 text-center">What I Bring</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            </div>
+                            <h3 class="text-white font-semibold mb-2">Finance & Risk</h3>
+                            <p class="text-slate-400 text-sm">Financial modeling, risk management, investor reporting, OPEX/CAPEX management</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-amber-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            </div>
+                            <h3 class="text-white font-semibold mb-2">Renewable Energy Transition</h3>
+                            <p class="text-slate-400 text-sm">Asset Management, operating KPIs, PPA, O&M, EPC, bank reporting</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                            </div>
+                            <h3 class="text-white font-semibold mb-2">International Management</h3>
+                            <p class="text-slate-400 text-sm">Multicultural teams, West Africa experience, stakeholder coordination</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Timeline -->
+        <section class="py-20 bg-slate-800/50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white mb-12 text-center">My Journey</h2>
+                
+                <div class="relative">
+                    <!-- Vertical line -->
+                    <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-blue-500 to-green-500"></div>
+                    
+                    <!-- Items -->
+                    <div class="space-y-6">
+                        <!-- Renewable transition -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-amber-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-amber-500/30">
+                                <span class="text-amber-500 text-sm font-medium">2025 - Present</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Renewable Energy Asset Management Transition</h3>
+                                <p class="text-slate-400 mt-2">Active upskilling: operating KPIs, PPA, O&M, investor reporting</p>
+                            </div>
+                        </div>
+
+                        <!-- AfriKaFun -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-orange-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-orange-500 text-sm font-medium">2024 - 2025</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Operations Director</h3>
+                                <p class="text-slate-500 text-sm">AfriKaFun Production — West Africa</p>
+                                <p class="text-slate-400 mt-2">OPEX/CAPEX management, investor relations, multicultural management</p>
+                            </div>
+                        </div>
+
+                        <!-- Worldcoin -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-purple-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-purple-500 text-sm font-medium">2021 - 2022</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Operations Lead</h3>
+                                <p class="text-slate-500 text-sm">Worldcoin / Tools for Humanity — Benin</p>
+                                <p class="text-slate-400 mt-2">Multi-site deployment, KPIs, national top performer</p>
+                            </div>
+                        </div>
+
+                        <!-- Carré Bleu -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-indigo-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-indigo-500 text-sm font-medium">2019 - 2021</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Webmaster & Digital Project Manager</h3>
+                                <p class="text-slate-500 text-sm">Groupe Carré Bleu — Aubagne</p>
+                                <p class="text-slate-400 mt-2">Created 6 group websites, brand guidelines, social media management</p>
+                            </div>
+                        </div>
+
+                        <!-- EMD Professor -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-cyan-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-cyan-500 text-sm font-medium">2015 - 2017</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Finance Professor</h3>
+                                <p class="text-slate-500 text-sm">EMD Business School — Marseille</p>
+                                <p class="text-slate-400 mt-2">Financial markets, portfolio management, risk control</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Hedge Fund -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-blue-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-blue-500 text-sm font-medium">1998 - 2012</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Hedge Fund Founder & CEO</h3>
+                                <p class="text-slate-500 text-sm">Baron Finances / Jupiter Finances — Paris & Marseille</p>
+                                <p class="text-slate-400 mt-2">International index futures trading, risk management, trader training</p>
+                            </div>
+                        </div>
+
+                        <!-- Market Maker -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-green-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-green-500 text-sm font-medium">1992 - 1996</span>
+                                <h3 class="text-xl font-bold text-white mt-1">CAC 40 Options Market Maker</h3>
+                                <p class="text-slate-500 text-sm">Transoption Finances — Paris (Palais Brongniart)</p>
+                                <p class="text-slate-400 mt-2">Market making, Black-Scholes modeling, real-time risk management</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Education -->
+                        <div class="relative pl-20">
+                            <div class="absolute left-5 w-6 h-6 bg-slate-500 rounded-full border-4 border-slate-800"></div>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                <span class="text-slate-400 text-sm font-medium">1989 - 1991</span>
+                                <h3 class="text-xl font-bold text-white mt-1">Education</h3>
+                                <p class="text-slate-400 mt-2">Master in Risk Management & Financial Instruments — IAE Aix-en-Provence<br>MSc Econometrics • BSc Applied Mathematics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-2xl font-bold text-white mb-4">Let's Discuss Your Project</h2>
+                <p class="text-slate-400 mb-8">Available for opportunities in Asset Management, Project Finance or Bid Management in solar</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="mailto:bernard.pugnet13400@gmail.com" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors text-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        Send me an email
+                    </a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors text-lg">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        View my LinkedIn
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the Site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Home</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="economy.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Economy</p>
+                </a>
+                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                </a>
+                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
+                </a>
+                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/contact.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Publisher:</strong> Bernard Pugnet - Personal informational website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com" class="text-amber-500 hover:underline">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA</p>
+                        <p><strong class="text-slate-400">Personal Data:</strong> This site does not collect any personal data. No tracking cookies are used.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    </script>
+</body>
+</html>

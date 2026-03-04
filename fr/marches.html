@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marchés Internationaux Solaires - SolarMetrics</title>
+    <meta name="description" content="Marchés solaires internationaux: Europe, France, Espagne, Allemagne, Suisse, EAU. Réglementation EU et acteurs français du photovoltaïque.">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Recrutez-moi</a>
+                    <a href="etude-de-cas.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Étude de cas</a>
+                    <a href="outils.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Outils</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="ia-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">IA & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="marches.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Marchés</a>
+                    <a href="ressources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Ressources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                        <a href="../en/markets.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Recrutez-moi</a>
+                <a href="etude-de-cas.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Étude de cas</a>
+                <a href="outils.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Outils</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="ia-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">IA & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="marches.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Marchés</a>
+                <a href="ressources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Ressources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+    <!-- Section Marchés Internationaux -->
+    <section id="international" class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Image Hero -->
+            <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80" 
+                     alt="Globe terrestre vue de l'espace" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-cyan-500/20 backdrop-blur-sm rounded-xl border border-cyan-500/30">
+                            <svg class="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-white">Marchés Internationaux</h2>
+                            <p class="text-slate-300">Europe, tendances mondiales et opportunités</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marché mondial -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-500 text-lg font-bold">1</span>
+                    Le solaire dans le monde
+                </h3>
+
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <p class="text-4xl font-bold text-amber-500">1.6 TW</p>
+                        <p class="text-slate-400 text-sm mt-2">Capacité installée mondiale</p>
+                        <p class="text-slate-500 text-xs">fin 2024</p>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <p class="text-4xl font-bold text-green-500">420 GW</p>
+                        <p class="text-slate-400 text-sm mt-2">Ajouts en 2024</p>
+                        <p class="text-slate-500 text-xs">+30% vs 2023</p>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <p class="text-4xl font-bold text-blue-500">5.5%</p>
+                        <p class="text-slate-400 text-sm mt-2">Part dans le mix électrique mondial</p>
+                        <p class="text-slate-500 text-xs">vs 1% en 2015</p>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <p class="text-4xl font-bold text-purple-500">$200 Mds</p>
+                        <p class="text-slate-400 text-sm mt-2">Investissements 2024</p>
+                        <p class="text-slate-500 text-xs">Source : BNEF</p>
+                    </div>
+                </div>
+
+                <!-- Top pays -->
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h4 class="text-xl font-semibold text-white mb-6">Top 10 des capacités installées (fin 2024)</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 text-slate-500 text-sm">1.</span>
+                            <span class="w-8">🇨🇳</span>
+                            <span class="text-white font-medium w-32">Chine</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-6 overflow-hidden">
+                                <div class="bg-gradient-to-r from-red-500 to-red-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 100%">
+                                    <span class="text-white text-xs font-medium">750 GW</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 text-slate-500 text-sm">2.</span>
+                            <span class="w-8">🇺🇸</span>
+                            <span class="text-white font-medium w-32">États-Unis</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-6 overflow-hidden">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 26%">
+                                    <span class="text-white text-xs font-medium">190 GW</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 text-slate-500 text-sm">3.</span>
+                            <span class="w-8">🇪🇺</span>
+                            <span class="text-white font-medium w-32">Union Européenne</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-6 overflow-hidden">
+                                <div class="bg-gradient-to-r from-amber-500 to-amber-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 32%">
+                                    <span class="text-white text-xs font-medium">240 GW</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 text-slate-500 text-sm">4.</span>
+                            <span class="w-8">🇮🇳</span>
+                            <span class="text-white font-medium w-32">Inde</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-6 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 12%">
+                                    <span class="text-white text-xs font-medium">90 GW</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 text-slate-500 text-sm">5.</span>
+                            <span class="w-8">🇯🇵</span>
+                            <span class="text-white font-medium w-32">Japon</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-6 overflow-hidden">
+                                <div class="bg-gradient-to-r from-pink-500 to-pink-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 11%">
+                                    <span class="text-white text-xs font-medium">85 GW</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-xs mt-4">Source : IRENA, SolarPower Europe, BNEF 2024</p>
+                </div>
+            </div>
+
+            <!-- Marchés européens -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-500 text-lg font-bold">2</span>
+                    Focus marchés européens
+                </h3>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Allemagne -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇩🇪</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Allemagne</h4>
+                                <p class="text-slate-500 text-xs">Leader européen</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">82 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2030</span>
+                                <span class="text-amber-500 font-medium">215 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">LCOE utility</span>
+                                <span class="text-white font-medium">45-65 €/MWh</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Marché PPA corporate très actif</p>
+                            <p>✓ Forte croissance rooftop</p>
+                        </div>
+                    </div>
+
+                    <!-- Espagne -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇪🇸</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Espagne</h4>
+                                <p class="text-slate-500 text-xs">Champion du LCOE</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">42 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2030</span>
+                                <span class="text-amber-500 font-medium">76 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">LCOE utility</span>
+                                <span class="text-green-500 font-medium">25-40 €/MWh</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Meilleur irradiation EU</p>
+                            <p>✓ Hub PPA pour l'Europe</p>
+                        </div>
+                    </div>
+
+                    <!-- Italie -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇮🇹</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Italie</h4>
+                                <p class="text-slate-500 text-xs">Reprise forte</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">32 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2030</span>
+                                <span class="text-amber-500 font-medium">80 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">LCOE utility</span>
+                                <span class="text-white font-medium">35-50 €/MWh</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Agrivoltaïsme en forte croissance</p>
+                            <p>✓ Prix électricité élevés = autoconso attractive</p>
+                        </div>
+                    </div>
+
+                    <!-- France -->
+                    <div class="bg-gradient-to-br from-blue-500/10 to-red-500/10 rounded-2xl p-6 border border-blue-500/30">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇫🇷</span>
+                            <div>
+                                <h4 class="text-white font-semibold">France</h4>
+                                <p class="text-slate-500 text-xs">En accélération</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">21 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2030</span>
+                                <span class="text-amber-500 font-medium">54-60 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">LCOE utility</span>
+                                <span class="text-white font-medium">45-65 €/MWh</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Simplification permitting en cours</p>
+                            <p>✓ Agrivoltaïsme cadre réglementaire</p>
+                        </div>
+                    </div>
+
+                    <!-- UK -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇬🇧</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Royaume-Uni</h4>
+                                <p class="text-slate-500 text-xs">Marché merchant</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">16 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2035</span>
+                                <span class="text-amber-500 font-medium">70 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">LCOE utility</span>
+                                <span class="text-white font-medium">40-55 £/MWh</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Pas de subventions (merchant/CfD)</p>
+                            <p>✓ Marché PPA très développé</p>
+                        </div>
+                    </div>
+
+                    <!-- Pologne -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇵🇱</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Pologne</h4>
+                                <p class="text-slate-500 text-xs">Croissance explosive</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">18 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Croissance 2024</span>
+                                <span class="text-green-500 font-medium">+45%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Dominante</span>
+                                <span class="text-white font-medium">Prosumer</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Sortie du charbon = opportunité</p>
+                            <p>✓ Segment résidentiel très fort</p>
+                        </div>
+                    </div>
+
+                    <!-- Suisse -->
+                    <div class="bg-gradient-to-br from-red-500/10 to-white/5 rounded-2xl p-6 border border-red-500/30">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇨🇭</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Suisse</h4>
+                                <p class="text-slate-500 text-xs">Marché premium</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">6.5 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2035</span>
+                                <span class="text-amber-500 font-medium">35 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Prix électricité</span>
+                                <span class="text-green-500 font-medium">Élevé</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Subventions fédérales (PRU)</p>
+                            <p>✓ Alpine solar en développement</p>
+                            <p>✓ Autoconso très rentable</p>
+                        </div>
+                    </div>
+
+                    <!-- Émirats Arabes Unis -->
+                    <div class="bg-gradient-to-br from-amber-500/10 to-yellow-500/5 rounded-2xl p-6 border border-amber-500/30">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🇦🇪</span>
+                            <div>
+                                <h4 class="text-white font-semibold">Émirats Arabes Unis</h4>
+                                <p class="text-slate-500 text-xs">Hub solaire mondial</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Capacité installée</span>
+                                <span class="text-white font-medium">5 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Objectif 2030</span>
+                                <span class="text-amber-500 font-medium">14 GW</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">LCOE record</span>
+                                <span class="text-green-500 font-medium">~15 $/MWh</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            <p>✓ Irradiation exceptionnelle (2000+ kWh/m²)</p>
+                            <p>✓ Projets GW-scale (Al Dhafra, Noor Abu Dhabi)</p>
+                            <p>✓ Ambition net-zero 2050</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Note sur marchés hors-EU -->
+                <div class="mt-6 bg-gradient-to-r from-amber-500/10 to-cyan-500/10 rounded-2xl p-6 border border-amber-500/20">
+                    <h4 class="text-white font-semibold mb-3">🌍 Marchés à fort potentiel hors Europe</h4>
+                    <div class="grid md:grid-cols-4 gap-4 text-sm">
+                        <div class="text-center">
+                            <span class="text-2xl">🇦🇪</span>
+                            <p class="text-white font-medium">EAU / Golfe</p>
+                            <p class="text-slate-400 text-xs">LCOE le plus bas mondial</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-2xl">🇸🇦</span>
+                            <p class="text-white font-medium">Arabie Saoudite</p>
+                            <p class="text-slate-400 text-xs">Vision 2030, 58 GW objectif</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-2xl">🇲🇦</span>
+                            <p class="text-white font-medium">Maroc</p>
+                            <p class="text-slate-400 text-xs">Leader Afrique, Noor Ouarzazate</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-2xl">🇦🇺</span>
+                            <p class="text-white font-medium">Australie</p>
+                            <p class="text-slate-400 text-xs">Rooftop #1 mondial per capita</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparatif LCOE Europe -->
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h4 class="text-xl font-semibold text-white mb-6">Comparatif LCOE utility-scale en Europe (2024)</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-24 text-slate-400 text-sm">Espagne</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-green-500 to-green-600 h-full rounded-full flex items-center px-3" style="width: 35%">
+                                    <span class="text-white text-xs font-medium">25-40 €/MWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-24 text-slate-400 text-sm">Portugal</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-green-500 to-green-600 h-full rounded-full flex items-center px-3" style="width: 38%">
+                                    <span class="text-white text-xs font-medium">28-42 €/MWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-24 text-slate-400 text-sm">Italie</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-amber-500 to-amber-600 h-full rounded-full flex items-center px-3" style="width: 45%">
+                                    <span class="text-white text-xs font-medium">35-50 €/MWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-24 text-slate-400 text-sm">France</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full flex items-center px-3" style="width: 55%">
+                                    <span class="text-white text-xs font-medium">45-65 €/MWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-24 text-slate-400 text-sm">Allemagne</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full flex items-center px-3" style="width: 58%">
+                                    <span class="text-white text-xs font-medium">45-65 €/MWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-24 text-slate-400 text-sm">Pays-Bas</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-red-500 h-full rounded-full flex items-center px-3" style="width: 65%">
+                                    <span class="text-white text-xs font-medium">55-75 €/MWh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-xs mt-4">Sources : IRENA, Lazard, analyses marché 2024. LCOE hors coûts de raccordement et terrain.</p>
+                </div>
+            </div>
+
+            <!-- Réglementation EU -->
+            <div class="mb-20" id="reglementation">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-500 text-lg font-bold">3</span>
+                    Cadre réglementaire européen
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">🇪🇺 RED III - Renewable Energy Directive</h4>
+                        <p class="text-slate-400 text-sm mb-4">
+                            Directive révisée (2023) fixant les objectifs contraignants pour les États membres :
+                        </p>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-green-500 font-medium">42.5% d'EnR dans le mix EU d'ici 2030</p>
+                                <p class="text-slate-500 text-xs">Objectif contraignant, relevé de 32% à 42.5%</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-amber-500 font-medium">Accélération du permitting</p>
+                                <p class="text-slate-500 text-xs">Délais max : 12 mois (zones accélération) à 24 mois</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-blue-500 font-medium">Intérêt public supérieur</p>
+                                <p class="text-slate-500 text-xs">Les EnR présumées d'intérêt public majeur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">🌱 Taxonomie européenne</h4>
+                        <p class="text-slate-400 text-sm mb-4">
+                            Classification des activités économiques durables pour orienter les flux financiers :
+                        </p>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-green-500/10 rounded-xl border border-green-500/20">
+                                <p class="text-green-500 font-medium">Solaire PV = Activité verte</p>
+                                <p class="text-slate-500 text-xs">Éligible et alignée à la taxonomie</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-white font-medium">Critères techniques</p>
+                                <p class="text-slate-500 text-xs">Contribution substantielle + Do No Significant Harm (DNSH)</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-white font-medium">Impact financement</p>
+                                <p class="text-slate-500 text-xs">Accès facilité aux green bonds et prêts verts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PPA Corporate -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-500 text-lg font-bold">4</span>
+                    PPA Corporate en Europe
+                </h3>
+
+                <div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl p-8 border border-cyan-500/20 mb-8">
+                    <h4 class="text-xl font-semibold text-white mb-4">Explosion des PPA corporate</h4>
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-cyan-500">15 GW</p>
+                            <p class="text-slate-400 text-sm mt-1">PPA signés en Europe en 2024</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-green-500">+25%</p>
+                            <p class="text-slate-400 text-sm mt-1">Croissance annuelle</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-amber-500">10-15 ans</p>
+                            <p class="text-slate-400 text-sm mt-1">Durée moyenne des contrats</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm">
+                        Les grands corporates (tech, industrie, retail) sécurisent leur approvisionnement en électricité verte 
+                        via des PPA long terme, réduisant leur exposition au prix de marché et leurs émissions scope 2.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h5 class="text-white font-semibold mb-4">Top acheteurs PPA en Europe</h5>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-300">Amazon</span>
+                                <span class="text-amber-500 font-medium">4+ GW</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-300">Google</span>
+                                <span class="text-amber-500 font-medium">2+ GW</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-300">Microsoft</span>
+                                <span class="text-amber-500 font-medium">1.5+ GW</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-300">BASF, Mercedes, ArcelorMittal...</span>
+                                <span class="text-slate-500 font-medium">Industriels</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h5 class="text-white font-semibold mb-4">Structures de PPA cross-border</h5>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-slate-800/50 rounded-xl border-l-4 border-green-500">
+                                <p class="text-white font-medium">Physical PPA</p>
+                                <p class="text-slate-500 text-xs">Livraison physique d'électricité, même zone de marché</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl border-l-4 border-blue-500">
+                                <p class="text-white font-medium">Virtual PPA (VPPA)</p>
+                                <p class="text-slate-500 text-xs">Contrat financier (CfD), pas de livraison physique</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl border-l-4 border-purple-500">
+                                <p class="text-white font-medium">Sleeved PPA</p>
+                                <p class="text-slate-500 text-xs">Via un intermédiaire (utility/agrégateur)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acteurs du marché français -->
+            <div class="mb-8" id="acteurs-france">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-500 text-lg font-bold">5</span>
+                    Acteurs du marché français
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Développeurs / IPP -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-2xl">🏗️</span> Développeurs / IPP
+                        </h4>
+                        <p class="text-slate-400 text-sm mb-4">Producteurs indépendants développant et exploitant des centrales</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Neoen</p>
+                                    <p class="text-slate-500 text-xs">Leader français, présent sur 5 continents</p>
+                                </div>
+                                <span class="text-amber-500 text-sm font-medium">7+ GW</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Akuo Energy</p>
+                                    <p class="text-slate-500 text-xs">Multi-EnR, stockage, agrivoltaïsme</p>
+                                </div>
+                                <span class="text-amber-500 text-sm font-medium">2+ GW</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Voltalia</p>
+                                    <p class="text-slate-500 text-xs">International, Brésil, Europe, Afrique</p>
+                                </div>
+                                <span class="text-amber-500 text-sm font-medium">3+ GW</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Tenergie</p>
+                                    <p class="text-slate-500 text-xs">Rooftop, ombrières, agrivoltaïsme</p>
+                                </div>
+                                <span class="text-amber-500 text-sm font-medium">1+ GW</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grands groupes -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-2xl">🏢</span> Grands groupes énergéticiens
+                        </h4>
+                        <p class="text-slate-400 text-sm mb-4">Utilities et pétroliers diversifiés dans le solaire</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">TotalEnergies</p>
+                                    <p class="text-slate-500 text-xs">Via SunPower, Total Quadran</p>
+                                </div>
+                                <span class="text-blue-500 text-sm font-medium">25+ GW monde</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">EDF Renouvelables</p>
+                                    <p class="text-slate-500 text-xs">Filiale EnR du groupe EDF</p>
+                                </div>
+                                <span class="text-blue-500 text-sm font-medium">15+ GW monde</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Engie</p>
+                                    <p class="text-slate-500 text-xs">Via Engie Green, Solairedirect</p>
+                                </div>
+                                <span class="text-blue-500 text-sm font-medium">10+ GW monde</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">SNCF Énergie</p>
+                                    <p class="text-slate-500 text-xs">Autoconsommation, PPA corporate</p>
+                                </div>
+                                <span class="text-blue-500 text-sm font-medium">Nouveau</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spécialistes segments -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-2xl">🎯</span> Spécialistes par segment
+                        </h4>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-green-500 text-sm font-medium mb-2">Agrivoltaïsme</p>
+                                <p class="text-slate-400 text-sm">Sun'Agri, TSE, Ombrea, REM Tec</p>
+                            </div>
+                            <div>
+                                <p class="text-blue-500 text-sm font-medium mb-2">Ombrières & Rooftop</p>
+                                <p class="text-slate-400 text-sm">Urbasolar (Axpo), Reden Solar, Apex Energies, Générale du Solaire</p>
+                            </div>
+                            <div>
+                                <p class="text-purple-500 text-sm font-medium mb-2">Autoconsommation / C&I</p>
+                                <p class="text-slate-400 text-sm">Helexia, GreenYellow, Solarbox, Eneria</p>
+                            </div>
+                            <div>
+                                <p class="text-amber-500 text-sm font-medium mb-2">Résidentiel</p>
+                                <p class="text-slate-400 text-sm">Otovo, EDF ENR, Engie My Power, Sunology</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Investisseurs / Asset Managers -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-2xl">💰</span> Investisseurs & Asset Managers
+                        </h4>
+                        <p class="text-slate-400 text-sm mb-4">Fonds et gestionnaires de portefeuilles solaires</p>
+                        
+                        <div class="space-y-3">
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-white font-medium">Banque des Territoires (CDC)</p>
+                                <p class="text-slate-500 text-xs">Financement projets territoriaux</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-white font-medium">Mirova (Natixis)</p>
+                                <p class="text-slate-500 text-xs">Fonds infrastructure EnR</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-white font-medium">Tikehau Capital</p>
+                                <p class="text-slate-500 text-xs">Private equity transition énergétique</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-white font-medium">Omnes Capital, Eurazeo, Ardian</p>
+                                <p class="text-slate-500 text-xs">Fonds infra actifs dans le solaire</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Besoin d'une analyse financière pour votre projet ?</h2>
+            <p class="text-slate-400 mb-8">20 ans d'expérience en finance de marché au service du solaire</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Me contacter
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    Voir mon profil LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explorer le site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Accueil</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="economie.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Économie</p>
+                </a>
+                <a href="ia-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
+                    <span class="text-2xl">🤖</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">IA & Data</p>
+                </a>
+                <a href="outils.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Outils</p>
+                </a>
+                <a href="ressources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Ressources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/markets.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
+        function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener(

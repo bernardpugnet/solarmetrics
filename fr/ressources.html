@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressources & Glossaire - SolarMetrics</title>
+    <meta name="description" content="Ressources & Glossaire - SolarMetrics par Bernard Pugnet">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}</style>
+</head>
+<body class="bg-slate-900 text-white">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Recrutez-moi</a>
+                    <a href="etude-de-cas.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Étude de cas</a>
+                    <a href="outils.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Outils</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="ia-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">IA & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="ressources.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Ressources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                        <a href="../en/resources.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                    </div>
+                    <button id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Recrutez-moi</a>
+                <a href="etude-de-cas.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Étude de cas</a>
+                <a href="outils.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Outils</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="ia-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">IA & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="ressources.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Ressources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+    <!-- Section Ressources -->
+    <section id="ressources" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <div class="w-16 h-16 mx-auto mb-6 p-4 bg-indigo-500/20 rounded-2xl">
+                    <svg class="w-full h-full text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-bold text-white mb-4">Ressources</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Glossaire, sources de référence et liens utiles pour approfondir vos connaissances</p>
+            </div>
+
+            <!-- Glossaire -->
+            <div class="mb-20" id="glossaire">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center text-indigo-500 text-lg font-bold">1</span>
+                    Glossaire solaire FR/EN
+                </h3>
+
+                <!-- Filtres -->
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button onclick="filterGlossary(this,'all')" class="glossary-filter active px-4 py-2 bg-indigo-500 text-white text-sm rounded-lg transition-colors" data-filter="all">Tous</button>
+                    <button onclick="filterGlossary(this,'tech')" class="glossary-filter px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm rounded-lg transition-colors" data-filter="tech">Technique</button>
+                    <button onclick="filterGlossary(this,'finance')" class="glossary-filter px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm rounded-lg transition-colors" data-filter="finance">Finance</button>
+                    <button onclick="filterGlossary(this,'market')" class="glossary-filter px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm rounded-lg transition-colors" data-filter="market">Marché</button>
+                    <button onclick="filterGlossary(this,'regulation')" class="glossary-filter px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm rounded-lg transition-colors" data-filter="regulation">Réglementation</button>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" id="glossaryContainer">
+                    <!-- Technique -->
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">PERC</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Passivated Emitter and Rear Cell</p>
+                        <p class="text-slate-400 text-sm">Technologie de cellule PV avec couche de passivation arrière. Standard actuel du marché.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">TOPCon</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Tunnel Oxide Passivated Contact</p>
+                        <p class="text-slate-400 text-sm">Cellule avec couche d'oxyde tunnel. Meilleur rendement que PERC, en forte croissance.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">HJT</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Heterojunction Technology</p>
+                        <p class="text-slate-400 text-sm">Cellule hybride silicium cristallin + amorphe. Rendement max, bon coefficient thermique.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">PR</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Performance Ratio</p>
+                        <p class="text-slate-400 text-sm">Ratio entre production réelle et théorique. KPI clé de performance d'une centrale (75-85%).</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">GHI</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Global Horizontal Irradiance</p>
+                        <p class="text-slate-400 text-sm">Irradiation solaire totale sur surface horizontale. Exprimée en kWh/m²/an.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">BESS</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Battery Energy Storage System</p>
+                        <p class="text-slate-400 text-sm">Système de stockage par batteries. Généralement Li-ion (LFP) pour utility-scale.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">LFP</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Lithium Fer Phosphate</p>
+                        <p class="text-slate-400 text-sm">Chimie de batterie sans cobalt. Standard pour le stockage stationnaire (sécurité, coût).</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">BOS</h4>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Balance of System</p>
+                        <p class="text-slate-400 text-sm">Tous les composants hors modules : câbles, connecteurs, protections, monitoring.</p>
+                    </div>
+
+                    <!-- Finance -->
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">LCOE</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Levelized Cost of Energy</p>
+                        <p class="text-slate-400 text-sm">Coût actualisé de production de l'électricité sur la durée de vie. Exprimé en €/MWh.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">TRI / IRR</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Taux de Rentabilité Interne / Internal Rate of Return</p>
+                        <p class="text-slate-400 text-sm">Taux d'actualisation qui annule la VAN. Indicateur clé de rentabilité projet.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">VAN / NPV</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Valeur Actuelle Nette / Net Present Value</p>
+                        <p class="text-slate-400 text-sm">Somme des cash-flows actualisés moins l'investissement initial.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">DSCR</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Debt Service Coverage Ratio</p>
+                        <p class="text-slate-400 text-sm">Ratio de couverture de la dette. Cash-flow / Service de la dette. Min 1.2x généralement.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">CAPEX</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Capital Expenditure</p>
+                        <p class="text-slate-400 text-sm">Dépenses d'investissement initial. Pour le PV : 650-850 €/kWc (utility-scale France).</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">OPEX</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Operating Expenditure</p>
+                        <p class="text-slate-400 text-sm">Dépenses d'exploitation annuelles. O&M, assurance, terrain, taxes. ~15-25 €/kWc/an.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">SPV</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Special Purpose Vehicle</p>
+                        <p class="text-slate-400 text-sm">Société de projet dédiée, isolant les risques du projet de ceux du sponsor.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">EPC</h4>
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Engineering, Procurement, Construction</p>
+                        <p class="text-slate-400 text-sm">Contrat clé en main pour la construction d'une centrale. Inclut garanties de performance.</p>
+                    </div>
+
+                    <!-- Marché -->
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">PPA</h4>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Power Purchase Agreement</p>
+                        <p class="text-slate-400 text-sm">Contrat d'achat d'électricité long terme entre producteur et acheteur (corporate ou utility).</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">VPPA</h4>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Virtual Power Purchase Agreement</p>
+                        <p class="text-slate-400 text-sm">PPA financier (Contract for Difference). Pas de livraison physique, settlement sur écart de prix.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">Merchant</h4>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">—</p>
+                        <p class="text-slate-400 text-sm">Exposition au prix de marché spot sans contrat long terme. Risque prix plus élevé.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">GO / GC</h4>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Garantie d'Origine / Guarantee of Origin</p>
+                        <p class="text-slate-400 text-sm">Certificat attestant l'origine renouvelable de l'électricité. 1 GO = 1 MWh.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">FCR</h4>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Frequency Containment Reserve</p>
+                        <p class="text-slate-400 text-sm">Service système de réserve primaire. Réponse automatique aux écarts de fréquence.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">VPP</h4>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Virtual Power Plant</p>
+                        <p class="text-slate-400 text-sm">Agrégation de plusieurs actifs décentralisés pilotés comme une centrale virtuelle.</p>
+                    </div>
+
+                    <!-- Réglementation -->
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="regulation">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">OA</h4>
+                            <span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">Réglementation</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Obligation d'Achat</p>
+                        <p class="text-slate-400 text-sm">Mécanisme français de soutien avec tarif garanti sur 20 ans. Guichet ouvert ≤500 kWc.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="regulation">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">CRE</h4>
+                            <span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">Réglementation</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Commission de Régulation de l'Énergie</p>
+                        <p class="text-slate-400 text-sm">Autorité de régulation française. Organise les appels d'offres PV (>500 kWc).</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="regulation">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">PPE</h4>
+                            <span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">Réglementation</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Programmation Pluriannuelle de l'Énergie</p>
+                        <p class="text-slate-400 text-sm">Feuille de route française fixant les objectifs de capacité EnR par filière.</p>
+                    </div>
+
+                    <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="regulation">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-white font-semibold">RED III</h4>
+                            <span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">Réglementation</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mb-1">Renewable Energy Directive III</p>
+                        <p class="text-slate-400 text-sm">Directive européenne fixant 42.5% d'EnR dans le mix EU d'ici 2030.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sources -->
+            <div class="mb-20" id="sources">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center text-indigo-500 text-lg font-bold">2</span>
+                    Sources & Données de référence
+                </h3>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Institutionnel -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-2xl">🏛️</span> Institutionnel
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://www.irena.org/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">IRENA</p>
+                                <p class="text-slate-500 text-xs">Agence internationale pour les énergies renouvelables</p>
+                            </a>
+                            <a href="https://www.iea.org/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">IEA</p>
+                                <p class="text-slate-500 text-xs">Agence internationale de l'énergie</p>
+                            </a>
+                            <a href="https://www.cre.fr/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">CRE</p>
+                                <p class="text-slate-500 text-xs">Commission de régulation de l'énergie (France)</p>
+                            </a>
+                            <a href="https://www.rte-france.com/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">RTE</p>
+                                <p class="text-slate-500 text-xs">Gestionnaire du réseau de transport (France)</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Industrie -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-2xl">☀️</span> Industrie solaire
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://www.solarpowereurope.org/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">SolarPower Europe</p>
+                                <p class="text-slate-500 text-xs">Association européenne du solaire</p>
+                            </a>
+                            <a href="https://www.syndicat-energies-renouvelables.fr/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">SER</p>
+                                <p class="text-slate-500 text-xs">Syndicat des énergies renouvelables (France)</p>
+                            </a>
+                            <a href="https://www.pv-magazine.com/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">PV Magazine</p>
+                                <p class="text-slate-500 text-xs">Actualités et analyses du secteur PV</p>
+                            </a>
+                            <a href="https://www.tecsol.blogs.com/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">Tecsol Blog</p>
+                                <p class="text-slate-500 text-xs">Actualités et analyses du solaire (France)</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Données & Outils -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-2xl">📊</span> Données & Outils
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://re.jrc.ec.europa.eu/pvg_tools/fr/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">PVGIS</p>
+                                <p class="text-slate-500 text-xs">Simulateur solaire européen (gratuit)</p>
+                            </a>
+                            <a href="https://about.bnef.com/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">BloombergNEF</p>
+                                <p class="text-slate-500 text-xs">Analyses et données de marché (payant)</p>
+                            </a>
+                            <a href="https://www.lazard.com/perspective/levelized-cost-of-energy/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">Lazard LCOE</p>
+                                <p class="text-slate-500 text-xs">Rapport annuel LCOE de référence</p>
+                            </a>
+                            <a href="https://www.nrel.gov/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-900/50 rounded-xl hover:bg-slate-700/50 transition-colors">
+                                <p class="text-white font-medium">NREL</p>
+                                <p class="text-slate-500 text-xs">Laboratoire national US (publications)</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="mb-8" id="faq">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center text-indigo-500 text-lg font-bold">3</span>
+                    Questions fréquentes
+                </h3>
+
+                <div class="space-y-4">
+                    <div class="bg-slate-800/50 rounded-2xl border border-slate-700/50 overflow-hidden">
+                        <button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium">Quelle est la durée de vie d'une centrale solaire ?</span>
+                            <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 pb-6">
+                            <p class="text-slate-400">Une centrale PV a une durée de vie de <strong class="text-white">25 à 35 ans</strong>. Les modules sont généralement garantis 25 ans à 80% de puissance initiale. Les onduleurs ont une durée de vie plus courte (10-15 ans) et doivent être remplacés. Avec un bon entretien, les centrales peuvent produire au-delà de 30 ans.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl border border-slate-700/50 overflow-hidden">
+                        <button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium">Quel est le temps de retour énergétique d'un panneau solaire ?</span>
+                            <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 pb-6">
+                            <p class="text-slate-400">Le temps de retour énergétique (EPBT) est de <strong class="text-white">1 à 3 ans</strong> selon la technologie et la localisation. Un panneau installé en France rembourse l'énergie nécessaire à sa fabrication en environ 2 ans, puis produit de l'énergie "nette" pendant 23+ ans.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl border border-slate-700/50 overflow-hidden">
+                        <button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium">Que se passe-t-il quand il n'y a pas de soleil ?</span>
+                            <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 pb-6">
+                            <p class="text-slate-400">Les panneaux produisent même par temps nuageux (lumière diffuse), mais moins. L'intermittence est gérée par : le <strong class="text-white">stockage batteries</strong>, le <strong class="text-white">foisonnement</strong> (diversité géographique), les <strong class="text-white">autres sources</strong> (éolien, hydraulique, gaz), et la <strong class="text-white">flexibilité de la demande</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl border border-slate-700/50 overflow-hidden">
+                        <button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium">Comment sont recyclés les panneaux solaires ?</span>
+                            <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 pb-6">
+                            <p class="text-slate-400">En Europe, la directive DEEE impose le recyclage. <strong class="text-white">95%</strong> des matériaux sont récupérables : verre, aluminium, silicium, cuivre. Des filières spécialisées existent (Soren/PV Cycle en France). Le coût est intégré via une éco-participation à l'achat.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Script Glossaire & FAQ -->
+    <script>
+        // Filtre glossaire - prend le bouton cliqué en paramètre
+        function filterGlossary(btn, category) {
+            const items = document.querySelectorAll('.glossary-item');
+            const buttons = document.querySelectorAll('.glossary-filter');
+            
+            buttons.forEach(b => {
+                b.classList.remove('bg-indigo-500', 'text-white');
+                b.classList.add('bg-slate-700', 'text-slate-300');
+            });
+            btn.classList.remove('bg-slate-700', 'text-slate-300');
+            btn.classList.add('bg-indigo-500', 'text-white');
+            
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle FAQ
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+    </script>
+
+    <!-- About Section -->
+    </main>
+    
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Besoin d'une analyse financière pour votre projet ?</h2>
+            <p class="text-slate-400 mb-8">20 ans d'expérience en finance de marché au service du solaire</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Me contacter
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    Voir mon profil LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explorer le site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Accueil</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="economie.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Économie</p>
+                </a>
+                <a href="marches.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Marchés</p>
+                </a>
+                <a href="outils.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Outils</p>
+                </a>
+                <a href="ressources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Ressources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/resources.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site est la propriété de Bernard Pugnet ou de ses sources citées.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
+        function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener(

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Data in Solar - SolarMetrics</title>
+    <meta name="description" content="AI & Data in Solar - SolarMetrics by Bernard Pugnet">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}</style>
+</head>
+<body class="bg-slate-900 text-white">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
+                    <a href="case-study.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Case Study</a>
+                    <a href="tools.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Tools</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="ai-data.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">IA & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Resources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../fr/ia-data.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                    </div>
+                    <button id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
+                <a href="case-study.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Case Study</a>
+                <a href="tools.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="ai-data.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">IA & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="resources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+                <a href="tools.html" class="block px-4 py-2 Mtext-slate-400 hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="resources.html" class="block px-4 py-2 Mtext-slate-400 hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 Mtext-slate-400 hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+    </section>
+    <section id="ia-data" class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Image Hero -->
+            <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1600&q=80" 
+                     alt="Artificial intelligence and data" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-purple-500/20 backdrop-blur-sm rounded-xl border border-purple-500/30">
+                            <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-white">AI & Data in Solar</h2>
+                            <p class="text-slate-300">How artificial intelligence is transforming the sector</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute top-4 right-4 px-3 py-1 bg-purple-500/20 backdrop-blur-sm text-purple-500 text-xs font-medium rounded-full border border-purple-500/30">
+                    MAJOR TREND
+                </div>
+            </div>
+
+            <!-- Introduction -->
+            <div class="mb-20" id="ia-intro">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 text-lg font-bold">1</span>
+                    AI is transforming solar
+                </h3>
+                
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Why now?</h4>
+                        <p class="text-slate-400 mb-6">
+                            The convergence of three factors is accelerating AI adoption in the solar sector:
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-amber-500 font-bold text-sm">1</span>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Data explosion</p>
+                                    <p class="text-slate-500 text-sm">Real-time monitoring, smart meters, weather data, satellites → terabytes of data available</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-blue-500 font-bold text-sm">2</span>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Algorithm maturity</p>
+                                    <p class="text-slate-500 text-sm">Deep learning, transformers, time series models → unprecedented accuracy</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-green-500 font-bold text-sm">3</span>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Growing financial stakes</p>
+                                    <p class="text-slate-500 text-sm">Larger parks, volatile markets, imbalance penalties → every % counts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Key market figures</h4>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-800/50 rounded-xl">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Global AI + Energy market</span>
+                                    <span class="text-2xl font-bold text-purple-500">$10 Mds</span>
+                                </div>
+                                <p class="text-slate-500 text-xs mt-1">2024 → $30 Mds en 2030 (CAGR 20%)</p>
+                            </div>
+                            <div class="p-4 bg-slate-800/50 rounded-xl">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">OPEX reduction with AI</span>
+                                    <span class="text-2xl font-bold text-green-500">10-25%</span>
+                                </div>
+                                <p class="text-slate-500 text-xs mt-1">Predictive maintenance, O&M optimization</p>
+                            </div>
+                            <div class="p-4 bg-slate-800/50 rounded-xl">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Forecast improvement</span>
+                                    <span class="text-2xl font-bold text-amber-500">30-50%</span>
+                                </div>
+                                <p class="text-slate-500 text-xs mt-1">vs traditional statistical methods (NREL)</p>
+                            </div>
+                            <div class="p-4 bg-slate-800/50 rounded-xl">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Optimized trading gains</span>
+                                    <span class="text-2xl font-bold text-blue-500">+15-30%</span>
+                                </div>
+                                <p class="text-slate-500 text-xs mt-1">Merchant revenues with smart dispatch</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-500 text-xs mt-4">Sources : McKinsey, NREL, BloombergNEF, MarketsandMarkets</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prévision de production -->
+            <div class="mb-20" id="ia-forecast">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 text-lg font-bold">2</span>
+                    Production Forecasting
+                </h3>
+
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <p class="text-slate-400 mb-6">
+                        <strong class="text-white">Production forecasting</strong> is the most mature AI application in solar. 
+                        Elle permet d'anticiper la production à différents horizons (J-1, H-1, infra-horaire) pour optimiser 
+                        trading and reduce imbalance penalties on markets.
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-amber-500/20">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                                    <span class="text-amber-500 font-bold">J-1</span>
+                                </div>
+                                <h5 class="text-white font-semibold">Day-ahead</h5>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-3">Forecast for the next day, basis for market nominations.</p>
+                            <div class="text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">AI Accuracy</span>
+                                    <span class="text-green-500 font-medium">90-95%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">vs Persistence</span>
+                                    <span class="text-amber-500 font-medium">+20-30%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-blue-500/20">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                    <span class="text-blue-500 font-bold">H-1</span>
+                                </div>
+                                <h5 class="text-white font-semibold">Intraday</h5>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-3">Hourly adjustment to refine positions on the intraday market.</p>
+                            <div class="text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">AI Accuracy</span>
+                                    <span class="text-green-500 font-medium">95-98%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Gap reduction</span>
+                                    <span class="text-blue-500 font-medium">40-60%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-purple-500/20">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                    <span class="text-purple-500 font-bold text-sm">15'</span>
+                                </div>
+                                <h5 class="text-white font-semibold">Nowcasting</h5>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-3">Ultra short term for storage control and grid services.</p>
+                            <div class="text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Horizon</span>
+                                    <span class="text-white font-medium">15-60 min</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Usage</span>
+                                    <span class="text-purple-500 font-medium">Dispatch BESS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Models used -->
+                    <h5 class="text-white font-semibold mb-4">Models and techniques used</h5>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-4 bg-slate-800/50 rounded-xl text-center">
+                            <p class="text-purple-500 font-semibold mb-1">LSTM / GRU</p>
+                            <p class="text-slate-500 text-xs">Recurrent networks for time series</p>
+                        </div>
+                        <div class="p-4 bg-slate-800/50 rounded-xl text-center">
+                            <p class="text-blue-500 font-semibold mb-1">Transformers</p>
+                            <p class="text-slate-500 text-xs">Attention mechanism, state of the art</p>
+                        </div>
+                        <div class="p-4 bg-slate-800/50 rounded-xl text-center">
+                            <p class="text-green-500 font-semibold mb-1">Ensemble ML</p>
+                            <p class="text-slate-500 text-xs">XGBoost, Random Forest, stacking</p>
+                        </div>
+                        <div class="p-4 bg-slate-800/50 rounded-xl text-center">
+                            <p class="text-amber-500 font-semibold mb-1">NWP + ML</p>
+                            <p class="text-slate-500 text-xs">Weather models + ML correction</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact financier -->
+                <div class="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-8 border border-purple-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-4">💰 Financial impact of forecasting</h4>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-slate-400 mb-4">For a park of <strong class="text-white">10 MWc</strong> in France :</p>
+                            <div class="space-y-3">
+                                <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <span class="text-slate-400">Annual production</span>
+                                    <span class="text-white font-medium">~12 000 MWh</span>
+                                </div>
+                                <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <span class="text-slate-400">Imbalance penalties (without AI)</span>
+                                    <span class="text-red-400 font-medium">~50-80 k€/an</span>
+                                </div>
+                                <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <span class="text-slate-400">Imbalance penalties (with AI)</span>
+                                    <span class="text-green-500 font-medium">~20-35 k€/an</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 mb-4">Savings and ROI :</p>
+                            <div class="space-y-3">
+                                <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <span class="text-slate-400">Annual savings</span>
+                                    <span class="text-green-500 font-bold">30-45 k€/an</span>
+                                </div>
+                                <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <span class="text-slate-400">Forecasting solution cost</span>
+                                    <span class="text-white font-medium">5-15 k€/an</span>
+                                </div>
+                                <div class="flex justify-between p-3 bg-green-500/20 rounded-lg border border-green-500/30">
+                                    <span class="text-green-500">ROI</span>
+                                    <span class="text-green-500 font-bold">3-6x</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predictive Maintenance -->
+            <div class="mb-20" id="ia-maintenance">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 text-lg font-bold">3</span>
+                    Predictive Maintenance
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Real-time anomaly detection</h4>
+                        <p class="text-slate-400 text-sm mb-6">
+                            ML algorithms continuously analyze monitoring data (current, voltage, temperature, PR) 
+                            pour détecter les anomalies avant qu'elles ne deviennent critiques.
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <span class="text-white text-sm">Hotspots (abnormal heating)</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+                                <span class="text-white text-sm">Inverter degradation (failure patterns)</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <span class="text-white text-sm">Soiling (progressive PR decrease)</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                                <span class="text-white text-sm">Unexpected shading (vegetation, construction)</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                                <span class="text-white text-sm">Cabling / connector faults</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Image Analysis with Computer Vision</h4>
+                        <p class="text-slate-400 text-sm mb-6">
+                            Les drones équipés de caméras thermiques et RGB survolent les parcs. 
+                            L'IA analyse automatiquement les images pour identifier les défauts.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-800/50 rounded-xl border-l-4 border-red-500">
+                                <h5 class="text-white font-medium mb-1">IR Thermography</h5>
+                                <p class="text-slate-500 text-sm">Hotspot detection, faulty cells, bypass diodes</p>
+                                <p class="text-green-500 text-xs mt-1">Detection accuracy : >95%</p>
+                            </div>
+                            <div class="p-4 bg-slate-800/50 rounded-xl border-l-4 border-blue-500">
+                                <h5 class="text-white font-medium mb-1">Electroluminescence (EL)</h5>
+                                <p class="text-slate-500 text-sm">Microcracks, PID, cell degradation</p>
+                                <p class="text-green-500 text-xs mt-1">Early detection before production impact</p>
+                            </div>
+                            <div class="p-4 bg-slate-800/50 rounded-xl border-l-4 border-green-500">
+                                <h5 class="text-white font-medium mb-1">RGB Visual Inspection</h5>
+                                <p class="text-slate-500 text-sm">Glass breakage, delamination, snail trails, soiling</p>
+                                <p class="text-green-500 text-xs mt-1">Automated counting and classification</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bénéfices -->
+                <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl p-8 border border-green-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-6">Benefits of predictive maintenance</h4>
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-500">-30%</p>
+                            <p class="text-slate-400 text-sm mt-1">Maintenance costs</p>
+                            <p class="text-slate-500 text-xs">(preventive vs corrective)</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-blue-500">+2-3%</p>
+                            <p class="text-slate-400 text-sm mt-1">Recovered production</p>
+                            <p class="text-slate-500 text-xs">(fast detection)</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-amber-500">>99%</p>
+                            <p class="text-slate-400 text-sm mt-1">Availability</p>
+                            <p class="text-slate-500 text-xs">(vs 97-98% without AI)</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-purple-500">-50%</p>
+                            <p class="text-slate-400 text-sm mt-1">Inspection time</p>
+                            <p class="text-slate-500 text-xs">(drone + AI vs manual)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trading & Optimisation -->
+            <div class="mb-20" id="ia-trading">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 text-lg font-bold">4</span>
+                    Trading & Optimisation
+                </h3>
+
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <p class="text-slate-400 mb-6">
+                        AI is revolutionizing solar electricity trading, especially for assets 
+                        en <strong class="text-white">merchant</strong> (exposed to market prices) ou avec 
+                        <strong class="text-white">stockage</strong>.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h5 class="text-white font-semibold mb-4">Smart spot arbitrage</h5>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800/50 rounded-xl">
+                                    <p class="text-white font-medium text-sm">Spot price prediction</p>
+                                    <p class="text-slate-500 text-xs">ML on price history, weather, demand, imports/exports</p>
+                                </div>
+                                <div class="p-3 bg-slate-800/50 rounded-xl">
+                                    <p class="text-white font-medium text-sm">Nomination optimization</p>
+                                    <p class="text-slate-500 text-xs">Day-ahead vs intraday vs imbalance arbitrage</p>
+                                </div>
+                                <div class="p-3 bg-slate-800/50 rounded-xl">
+                                    <p class="text-white font-medium text-sm">Hedging strategies</p>
+                                    <p class="text-slate-500 text-xs">Dynamic hedging, price risk management</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="text-white font-semibold mb-4">Storage optimization (BESS)</h5>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800/50 rounded-xl">
+                                    <p class="text-white font-medium text-sm">Optimal dispatch</p>
+                                    <p class="text-slate-500 text-xs">When to charge/discharge to maximize revenues</p>
+                                </div>
+                                <div class="p-3 bg-slate-800/50 rounded-xl">
+                                    <p class="text-white font-medium text-sm">Multi-market co-optimization</p>
+                                    <p class="text-slate-500 text-xs">Arbitrage + FCR + capacity simultaneously</p>
+                                </div>
+                                <div class="p-3 bg-slate-800/50 rounded-xl">
+                                    <p class="text-white font-medium text-sm">Degradation management</p>
+                                    <p class="text-slate-500 text-xs">Optimize cycles vs revenues vs lifetime</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gains trading -->
+                <div class="bg-gradient-to-r from-amber-500/10 to-purple-500/10 rounded-2xl p-8 border border-amber-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-4">📈 Algorithmic trading gains</h4>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="p-4 bg-slate-900/50 rounded-xl text-center">
+                            <p class="text-slate-400 text-sm mb-2">PV merchant</p>
+                            <p class="text-2xl font-bold text-amber-500">+5-15%</p>
+                            <p class="text-slate-500 text-xs">revenues vs baseline</p>
+                        </div>
+                        <div class="p-4 bg-slate-900/50 rounded-xl text-center">
+                            <p class="text-slate-400 text-sm mb-2">PV + BESS optimisé</p>
+                            <p class="text-2xl font-bold text-green-500">+15-30%</p>
+                            <p class="text-slate-500 text-xs">revenus vs simple rules</p>
+                        </div>
+                        <div class="p-4 bg-slate-900/50 rounded-xl text-center">
+                            <p class="text-slate-400 text-sm mb-2">Imbalance reduction</p>
+                            <p class="text-2xl font-bold text-blue-500">-40-60%</p>
+                            <p class="text-slate-500 text-xs">imbalance costs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Players & Solutions -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 text-lg font-bold">5</span>
+                    Players & Solutions du marché
+                </h3>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Forecasting -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                                </svg>
+                            </div>
+                            <h5 class="text-white font-semibold">Forecasting</h5>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p class="text-slate-300">• <strong>Reuniwatt</strong> (FR)</p>
+                            <p class="text-slate-300">• <strong>Steadysun</strong> (FR)</p>
+                            <p class="text-slate-300">• <strong>Solcast</strong> (AUS)</p>
+                            <p class="text-slate-300">• <strong>Meteomatics</strong> (CH)</p>
+                        </div>
+                    </div>
+
+                    <!-- Monitoring & Analytics -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h5 class="text-white font-semibold">Monitoring & AM</h5>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p class="text-slate-300">• <strong>Also Energy</strong> (US)</p>
+                            <p class="text-slate-300">• <strong>Bazefield</strong> (NO)</p>
+                            <p class="text-slate-300">• <strong>3E</strong> (BE)</p>
+                            <p class="text-slate-300">• <strong>Greenbyte</strong> (SE)</p>
+                        </div>
+                    </div>
+
+                    <!-- Inspection drone -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h5 class="text-white font-semibold">AI Drone Inspection</h5>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p class="text-slate-300">• <strong>Raptor Maps</strong> (US)</p>
+                            <p class="text-slate-300">• <strong>Above Surveying</strong> (UK)</p>
+                            <p class="text-slate-300">• <strong>Sitemark</strong> (BE)</p>
+                            <p class="text-slate-300">• <strong>DroneBase</strong> (US)</p>
+                        </div>
+                    </div>
+
+                    <!-- Trading & Optimisation -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                            </div>
+                            <h5 class="text-white font-semibold">Trading / Optimization</h5>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p class="text-slate-300">• <strong>Fluence</strong> (US/DE)</p>
+                            <p class="text-slate-300">• <strong>Stem</strong> (US)</p>
+                            <p class="text-slate-300">• <strong>Habitat Energy</strong> (UK)</p>
+                            <p class="text-slate-300">• <strong>Modo Energy</strong> (UK)</p>
+                        </div>
+                    </div>
+
+                    <!-- Digital Twin -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                                </svg>
+                            </div>
+                            <h5 class="text-white font-semibold">Digital Twin</h5>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p class="text-slate-300">• <strong>Akselos</strong> (CH)</p>
+                            <p class="text-slate-300">• <strong>DNV</strong> (NO)</p>
+                            <p class="text-slate-300">• <strong>GE Digital</strong> (US)</p>
+                            <p class="text-slate-300">• <strong>Siemens</strong> (DE)</p>
+                        </div>
+                    </div>
+
+                    <!-- Agrégateurs -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                </svg>
+                            </div>
+                            <h5 class="text-white font-semibold">VPP Aggregators</h5>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p class="text-slate-300">• <strong>Next Kraftwerke</strong> (DE)</p>
+                            <p class="text-slate-300">• <strong>Flexitricity</strong> (UK)</p>
+                            <p class="text-slate-300">• <strong>Energy Pool</strong> (FR)</p>
+                            <p class="text-slate-300">• <strong>Centrica</strong> (UK)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ma vision -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 text-lg font-bold">6</span>
+                    Ma vision : Finance + Data
+                </h3>
+
+                <div class="bg-gradient-to-r from-purple-500/10 to-amber-500/10 rounded-2xl p-8 border border-purple-500/20">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-white mb-4">Le pont entre deux mondes</h4>
+                            <p class="text-slate-400 mb-4">
+                                Mon parcours de 20 ans en <strong class="text-white">finance de marché</strong> 
+                                (trading, options, risk management) me donne une perspective unique sur la transformation digitale du solaire :
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-amber-500">→</span>
+                                    <span class="text-slate-300">Les modèles de pricing PPA ressemblent aux dérivés énergétiques</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-amber-500">→</span>
+                                    <span class="text-slate-300">L'optimisation stockage = problème d'allocation dynamique</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-amber-500">→</span>
+                                    <span class="text-slate-300">La gestion du risque ressource = VaR et stress testing</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-amber-500">→</span>
+                                    <span class="text-slate-300">Le forecasting = séries temporelles et modèles stochastiques</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-white mb-4">Positionnement unique</h4>
+                            <p class="text-slate-400 mb-4">
+                                Les profils qui combinent expertise finance, connaissance technique solaire, 
+                                et compréhension des outils data/IA sont <strong class="text-white">rares et recherchés</strong>.
+                            </p>
+                            <div class="p-4 bg-slate-900/50 rounded-xl border border-amber-500/20">
+                                <p class="text-amber-500 font-semibold mb-2">Postes cibles</p>
+                                <div class="space-y-1 text-sm text-slate-300">
+                                    <p>• Asset Manager - Digital / Data-driven</p>
+                                    <p>• Quantitative Analyst - Renewables</p>
+                                    <p>• Head of Trading - Solar/Storage</p>
+                                    <p>• Director Business Intelligence - Energy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    </main>
+    
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Need a financial analysis for your project?</h2>
+            <p class="text-slate-400 mb-8">20 years of market finance experience serving solar energy</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Contact Me
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    View my LinkedIn profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the Site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Home</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="economy.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Economy</p>
+                </a>
+                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                </a>
+                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
+                </a>
+                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/ia-data.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Publisher:</strong> Bernard Pugnet - Personal informational website - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site est la propriété de Bernard Pugnet ou de ses sources citées.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
+        function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener(

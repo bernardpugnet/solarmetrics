@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Économie & Financement Solaire - SolarMetrics</title>
+    <meta name="description" content="LCOE, PPA, Project Finance, Asset Management, montages financiers solaires. Rentabilité et financement de projets photovoltaïques.">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Recrutez-moi</a>
+                    <a href="etude-de-cas.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Étude de cas</a>
+                    <a href="outils.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Outils</a>
+                    <a href="economie.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Économie</a>
+                    <a href="ia-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">IA & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="ressources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Ressources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                        <a href="../en/economy.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Recrutez-moi</a>
+                <a href="etude-de-cas.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Étude de cas</a>
+                <a href="outils.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Outils</a>
+                <a href="economie.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Économie</a>
+                <a href="ia-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">IA & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="ressources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Ressources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+<!-- Section Économie & Financement - Phase 3 -->
+    <section id="economie" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Image Hero -->
+            <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1600&q=80" 
+                     alt="Graphiques financiers" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-blue-500/20 backdrop-blur-sm rounded-xl border border-blue-500/30">
+                            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-white">Économie & Financement</h2>
+                            <p class="text-slate-300">LCOE, montages financiers, Asset Management et rentabilité</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- SECTION 1: LCOE -->
+            <!-- ======================= -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-500 text-lg font-bold">1</span>
+                    LCOE - Levelized Cost of Energy
+                </h3>
+                
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Définition -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Définition</h4>
+                        <p class="text-slate-400 mb-4">
+                            Le <strong class="text-white">LCOE (Levelized Cost of Energy)</strong> ou "coût actualisé de l'énergie" 
+                            représente le coût moyen de production d'un MWh sur la durée de vie d'une installation, 
+                            en tenant compte de tous les coûts actualisés.
+                        </p>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/50 mb-4">
+                            <p class="text-amber-500 font-mono text-center text-lg mb-2">
+                                LCOE = Σ(CAPEX + OPEX) / Σ(Production)
+                            </p>
+                            <p class="text-slate-500 text-xs text-center">Tous les flux actualisés au taux d'actualisation choisi</p>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                <span class="text-slate-400"><strong class="text-white">CAPEX</strong> : Coût d'investissement initial (modules, onduleurs, structure, installation)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span class="text-slate-400"><strong class="text-white">OPEX</strong> : Coûts d'exploitation annuels (O&M, assurance, location terrain)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                <span class="text-slate-400"><strong class="text-white">Production</strong> : kWh produits annuellement (avec dégradation)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formule détaillée -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Formule détaillée</h4>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/50 mb-4 overflow-x-auto">
+                            <p class="text-amber-500 font-mono text-center whitespace-nowrap">
+                                LCOE = [I₀ + Σ(Oₜ/(1+r)ᵗ)] / [Σ(Eₜ/(1+r)ᵗ)]
+                            </p>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400">I₀</span>
+                                <span class="text-white">Investissement initial (€)</span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400">Oₜ</span>
+                                <span class="text-white">OPEX année t (€)</span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400">Eₜ</span>
+                                <span class="text-white">Énergie produite année t (MWh)</span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400">r</span>
+                                <span class="text-white">Taux d'actualisation (WACC)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">t</span>
+                                <span class="text-white">Année (1 à n, durée de vie)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Évolution des coûts -->
+                <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl p-8 border border-green-500/20 mb-8">
+                    <h4 class="text-xl font-semibold text-white mb-6">Évolution spectaculaire des coûts</h4>
+                    <div class="grid md:grid-cols-4 gap-6 mb-6">
+                        <div class="text-center">
+                            <p class="text-slate-400 text-sm mb-1">LCOE 2010</p>
+                            <p class="text-3xl font-bold text-red-400">381 €/MWh</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-slate-400 text-sm mb-1">LCOE 2015</p>
+                            <p class="text-3xl font-bold text-orange-400">126 €/MWh</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-slate-400 text-sm mb-1">LCOE 2020</p>
+                            <p class="text-3xl font-bold text-amber-400">57 €/MWh</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-slate-400 text-sm mb-1">LCOE 2024</p>
+                            <p class="text-3xl font-bold text-green-500">30-45 €/MWh</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="h-2 flex-1 bg-gradient-to-r from-red-500 via-amber-500 to-green-500 rounded-full"></div>
+                    </div>
+                    <p class="text-center text-green-500 font-semibold mt-4 text-lg">-89% en 14 ans</p>
+                    <p class="text-center text-slate-500 text-sm mt-2">Source : IRENA Renewable Power Generation Costs 2024</p>
+                </div>
+
+                <!-- Comparatif LCOE -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h4 class="text-xl font-semibold text-white mb-6">Comparatif LCOE par source d'énergie (2024)</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-slate-400 text-sm">Solaire PV</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-amber-500 to-amber-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 25%">
+                                    <span class="text-white text-xs font-medium">30-45 €</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-slate-400 text-sm">Éolien terrestre</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 30%">
+                                    <span class="text-white text-xs font-medium">35-55 €</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-slate-400 text-sm">Éolien offshore</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 50%">
+                                    <span class="text-white text-xs font-medium">70-100 €</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-slate-400 text-sm">Nucléaire (nouv.)</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 75%">
+                                    <span class="text-white text-xs font-medium">100-150 €</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-slate-400 text-sm">Gaz CCGT</span>
+                            <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
+                                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 55%">
+                                    <span class="text-white text-xs font-medium">70-120 €</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-xs mt-4">€/MWh - Source : Lazard LCOE Analysis v17, IRENA 2024. Hors coûts de stockage/intermittence.</p>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- SECTION 2: MONTAGES FINANCIERS -->
+            <!-- ======================= -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-500 text-lg font-bold">2</span>
+                    Montages financiers
+                </h3>
+
+                <!-- Introduction pédagogique -->
+                <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-8 border border-blue-500/20 mb-8">
+                    <h4 class="text-xl font-semibold text-white mb-4">🎯 La question centrale</h4>
+                    <p class="text-slate-300 text-lg mb-4">
+                        Un projet solaire coûte cher à construire mais génère des revenus pendant 25-30 ans.
+                    </p>
+                    <p class="text-slate-400">
+                        La question est : <strong class="text-white">Qui paie ? Qui possède ? Qui vend l'électricité ?</strong>
+                        Les différents montages financiers répondent à ces questions selon les besoins de chaque acteur.
+                    </p>
+                </div>
+
+                <!-- Tableau comparatif simple -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <h4 class="text-xl font-semibold text-white mb-6">Vue d'ensemble : les 4 grands montages</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Montage</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Qui investit ?</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Qui exploite ?</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Pour qui ?</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr>
+                                    <td class="py-3 px-4"><span class="text-amber-500 font-medium">PPA</span></td>
+                                    <td class="py-3 px-4 text-slate-300">Producteur (IPP)</td>
+                                    <td class="py-3 px-4 text-slate-300">Producteur</td>
+                                    <td class="py-3 px-4 text-slate-400">Corporates qui veulent du vert sans investir</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4"><span class="text-green-500 font-medium">Tiers-invest</span></td>
+                                    <td class="py-3 px-4 text-slate-300">Investisseur tiers</td>
+                                    <td class="py-3 px-4 text-slate-300">Investisseur</td>
+                                    <td class="py-3 px-4 text-slate-400">PME/collectivités avec toiture, 0€ CAPEX</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4"><span class="text-purple-500 font-medium">Project Finance</span></td>
+                                    <td class="py-3 px-4 text-slate-300">Banque (70%) + Sponsor (30%)</td>
+                                    <td class="py-3 px-4 text-slate-300">SPV dédié</td>
+                                    <td class="py-3 px-4 text-slate-400">Grands projets utility-scale</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4"><span class="text-cyan-500 font-medium">Autoconso / OA</span></td>
+                                    <td class="py-3 px-4 text-slate-300">Propriétaire du site</td>
+                                    <td class="py-3 px-4 text-slate-300">Propriétaire</td>
+                                    <td class="py-3 px-4 text-slate-400">Particuliers, agriculteurs, PME</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PPA détaillé -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-amber-500/30 mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                            <span class="text-amber-500 font-bold text-xl">1</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-white">PPA - Power Purchase Agreement</h4>
+                            <p class="text-amber-500 text-sm">Le contrat roi des grands projets</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-900/50 rounded-xl p-6 mb-6">
+                        <p class="text-slate-300 mb-4">
+                            <strong class="text-white">En simple :</strong> Un producteur construit un parc solaire et vend toute sa production 
+                            à un acheteur (entreprise, utility) à un <span class="text-amber-500 font-semibold">prix fixe pendant 10-25 ans</span>.
+                        </p>
+                        <p class="text-slate-400 text-sm">
+                            → Le producteur a des revenus garantis (bankable)<br>
+                            → L'acheteur a un prix fixe et de l'électricité verte (reporting ESG)
+                        </p>
+                    </div>
+
+                    <!-- Schéma PPA simplifié -->
+                    <div class="bg-slate-900/30 rounded-xl p-6 mb-6">
+                        <h5 class="text-white font-semibold mb-4 text-center">Comment ça marche ?</h5>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                            <div class="bg-amber-500/20 rounded-xl p-4 border border-amber-500/30 text-center min-w-[140px]">
+                                <p class="text-amber-500 font-semibold">🏭 Producteur</p>
+                                <p class="text-slate-400 text-xs mt-1">Construit le parc</p>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="text-slate-500 text-2xl">→</div>
+                                <p class="text-green-500 text-xs font-medium">Électricité</p>
+                            </div>
+                            <div class="bg-green-500/20 rounded-xl p-4 border border-green-500/30 text-center min-w-[140px]">
+                                <p class="text-green-500 font-semibold">🏢 Acheteur</p>
+                                <p class="text-slate-400 text-xs mt-1">Corporate / Utility</p>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="text-slate-500 text-2xl">→</div>
+                                <p class="text-amber-500 text-xs font-medium">€ Prix fixe</p>
+                            </div>
+                            <div class="bg-amber-500/20 rounded-xl p-4 border border-amber-500/30 text-center min-w-[140px]">
+                                <p class="text-amber-500 font-semibold">🏭 Producteur</p>
+                                <p class="text-slate-400 text-xs mt-1">Revenus garantis</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3 types de PPA -->
+                    <h5 class="text-white font-semibold mb-4">Les 3 variantes de PPA</h5>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-green-500">
+                            <h6 class="text-green-500 font-semibold mb-2">PPA On-site</h6>
+                            <p class="text-slate-400 text-sm mb-3">Panneaux installés chez le client (toiture, parking). Il consomme directement.</p>
+                            <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Usine avec 500 kWc sur son toit</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-blue-500">
+                            <h6 class="text-blue-500 font-semibold mb-2">PPA Off-site</h6>
+                            <p class="text-slate-400 text-sm mb-3">Parc solaire ailleurs, électricité livrée via le réseau (avec agrégateur).</p>
+                            <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Amazon achète à un parc en Espagne</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-purple-500">
+                            <h6 class="text-purple-500 font-semibold mb-2">Virtual PPA (VPPA)</h6>
+                            <p class="text-slate-400 text-sm mb-3">Contrat financier uniquement. Pas de livraison physique, juste un prix de référence.</p>
+                            <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Google "achète" du solaire en Suède depuis les USA</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiers-investissement détaillé -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-green-500/30 mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                            <span class="text-green-500 font-bold text-xl">2</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-white">Tiers-investissement</h4>
+                            <p class="text-green-500 text-sm">0€ d'investissement pour le client</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-900/50 rounded-xl p-6 mb-6">
+                        <p class="text-slate-300 mb-4">
+                            <strong class="text-white">En simple :</strong> Un investisseur finance et installe les panneaux sur votre toit. 
+                            Vous ne payez rien, vous achetez juste l'électricité produite <span class="text-green-500 font-semibold">moins cher que le réseau</span>.
+                        </p>
+                    </div>
+
+                    <!-- Exemple chiffré -->
+                    <div class="bg-slate-900/30 rounded-xl p-6 mb-6">
+                        <h5 class="text-white font-semibold mb-4">📊 Exemple concret : Supermarché avec toiture</h5>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <p class="text-slate-400 text-sm mb-3">Le supermarché :</p>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">✓</span>
+                                        <span class="text-slate-300">A une grande toiture disponible</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">✓</span>
+                                        <span class="text-slate-300">Consomme beaucoup la journée</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-red-400 mt-1">✗</span>
+                                        <span class="text-slate-300">Ne veut pas investir 200 k€</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-sm mb-3">L'investisseur propose :</p>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">→</span>
+                                        <span class="text-slate-300">Je mets 300 kWc sur ton toit</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">→</span>
+                                        <span class="text-slate-300">Tu me paies <strong class="text-green-500">0.12 €/kWh</strong> pendant 20 ans</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">→</span>
+                                        <span class="text-slate-300">vs EDF à <strong class="text-amber-500">0.18 €/kWh</strong></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                            <p class="text-green-500 text-sm font-medium">💰 Résultat : Le supermarché économise ~30% sur sa facture, l'investisseur a un rendement de 8-10%</p>
+                        </div>
+                    </div>
+
+                    <!-- Schéma tiers-invest -->
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+                        <div class="bg-green-500/20 rounded-xl p-4 border border-green-500/30 min-w-[140px]">
+                            <p class="text-green-500 font-semibold">💰 Investisseur</p>
+                            <p class="text-slate-400 text-xs mt-1">Finance + installe</p>
+                        </div>
+                        <div class="text-slate-500 text-2xl md:rotate-0 rotate-90">⇄</div>
+                        <div class="bg-slate-700/50 rounded-xl p-4 border border-slate-600 min-w-[140px]">
+                            <p class="text-white font-semibold">🏢 Toiture client</p>
+                            <p class="text-slate-400 text-xs mt-1">300 kWc installés</p>
+                        </div>
+                        <div class="text-slate-500 text-2xl md:rotate-0 rotate-90">⇄</div>
+                        <div class="bg-amber-500/20 rounded-xl p-4 border border-amber-500/30 min-w-[140px]">
+                            <p class="text-amber-500 font-semibold">⚡ Client</p>
+                            <p class="text-slate-400 text-xs mt-1">Paie 0.12 €/kWh</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Finance détaillé -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-purple-500/30 mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                            <span class="text-purple-500 font-bold text-xl">3</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-white">Project Finance</h4>
+                            <p class="text-purple-500 text-sm">Pour les grands projets (plusieurs M€)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-900/50 rounded-xl p-6 mb-6">
+                        <p class="text-slate-300 mb-4">
+                            <strong class="text-white">En simple :</strong> On crée une société dédiée (SPV) juste pour le projet. 
+                            Elle emprunte 70-80% à la banque, les sponsors mettent 20-30%. La dette se rembourse uniquement sur les revenus du projet.
+                        </p>
+                    </div>
+
+                    <!-- Schéma Project Finance -->
+                    <div class="bg-slate-900/30 rounded-xl p-6 mb-6">
+                        <h5 class="text-white font-semibold mb-4 text-center">Structure type d'un Project Finance</h5>
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                                <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-500/30 text-center min-w-[140px]">
+                                    <p class="text-blue-500 font-semibold">🏦 Banques</p>
+                                    <p class="text-2xl font-bold text-white mt-1">70-80%</p>
+                                    <p class="text-slate-400 text-xs">Dette senior</p>
+                                </div>
+                                <div class="bg-amber-500/20 rounded-xl p-4 border border-amber-500/30 text-center min-w-[140px]">
+                                    <p class="text-amber-500 font-semibold">👥 Sponsors</p>
+                                    <p class="text-2xl font-bold text-white mt-1">20-30%</p>
+                                    <p class="text-slate-400 text-xs">Equity</p>
+                                </div>
+                            </div>
+                            <div class="text-slate-500 text-2xl">↓</div>
+                            <div class="bg-purple-500/20 rounded-xl p-4 border border-purple-500/30 text-center min-w-[200px]">
+                                <p class="text-purple-500 font-semibold">📋 SPV</p>
+                                <p class="text-slate-400 text-xs mt-1">Société de projet dédiée</p>
+                            </div>
+                            <div class="text-slate-500 text-2xl">↓</div>
+                            <div class="bg-green-500/20 rounded-xl p-4 border border-green-500/30 text-center min-w-[200px]">
+                                <p class="text-green-500 font-semibold">☀️ Centrale solaire</p>
+                                <p class="text-slate-400 text-xs mt-1">10-50 MWc</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exemple chiffré -->
+                    <div class="bg-slate-900/50 rounded-xl p-6">
+                        <h5 class="text-white font-semibold mb-4">📊 Exemple : Projet de 10 MWc</h5>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="text-center p-4 bg-slate-800/50 rounded-lg">
+                                <p class="text-slate-400 text-sm">CAPEX total</p>
+                                <p class="text-2xl font-bold text-white">8 M€</p>
+                            </div>
+                            <div class="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                                <p class="text-blue-500 text-sm">Dette bancaire (75%)</p>
+                                <p class="text-2xl font-bold text-white">6 M€</p>
+                                <p class="text-slate-500 text-xs">Taux ~4-5%</p>
+                            </div>
+                            <div class="text-center p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                                <p class="text-amber-500 text-sm">Equity sponsor (25%)</p>
+                                <p class="text-2xl font-bold text-white">2 M€</p>
+                                <p class="text-slate-500 text-xs">TRI cible 10-15%</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                            <p class="text-purple-400 text-sm"><strong class="text-white">Pourquoi un SPV ?</strong> Isole le risque. Si le projet échoue, la banque ne peut pas saisir les autres actifs du sponsor.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Autoconsommation et OA -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Autoconsommation -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-cyan-500/30">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center">
+                                <span class="text-cyan-500 font-bold text-xl">4a</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-white">Autoconsommation</h4>
+                                <p class="text-cyan-500 text-sm">Consommer sa propre production</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4">
+                            Vous investissez, vous consommez directement. Le surplus est vendu à EDF OA ou stocké.
+                        </p>
+
+                        <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+                            <p class="text-white font-medium mb-3">Calcul de rentabilité :</p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Vous consommez →</span>
+                                    <span class="text-green-500 font-medium">Économie 0.18-0.25 €/kWh</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Surplus vendu →</span>
+                                    <span class="text-amber-500 font-medium">0.04 €/kWh (≤9 kWc)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
+                            <p class="text-cyan-500 text-sm font-medium">💡 Conseil : Maximiser l'autoconsommation = maximiser la rentabilité</p>
+                        </div>
+                    </div>
+
+                    <!-- Obligation d'Achat -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-blue-500/30">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                                <span class="text-blue-500 font-bold text-xl">4b</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-white">Obligation d'Achat (OA)</h4>
+                                <p class="text-blue-500 text-sm">Tarif garanti par l'État</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-slate-400 text-sm mb-4">
+                            L'État garantit un prix d'achat fixe pendant 20 ans pour les petites installations (≤500 kWc).
+                        </p>
+
+                        <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+                            <p class="text-white font-medium mb-3">Tarifs 2025 (révisés trimestriellement) :</p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                    <span class="text-slate-400">≤ 9 kWc (surplus)</span>
+                                    <span class="text-white font-medium">0.04 €/kWh</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                    <span class="text-slate-400">9-36 kWc (vente totale)</span>
+                                    <span class="text-white font-medium">~0.105 €/kWh</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                    <span class="text-slate-400">36-100 kWc</span>
+                                    <span class="text-white font-medium">~0.091 €/kWh</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">>500 kWc</span>
+                                    <span class="text-white font-medium">Appel d'offres CRE</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-slate-500 text-xs">⚠️ Vente totale supprimée ≤9 kWc depuis mars 2025</p>
+                    </div>
+                </div>
+
+                <!-- Résumé visuel final -->
+                <div class="mt-8 bg-gradient-to-r from-amber-500/10 to-green-500/10 rounded-2xl p-8 border border-amber-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-6 text-center">🎯 Quel montage pour quel besoin ?</h4>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                            <p class="text-amber-500 font-semibold mb-2">PPA</p>
+                            <p class="text-slate-400 text-sm">"Je suis un corporate, je veux du vert sans investir"</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                            <p class="text-green-500 font-semibold mb-2">Tiers-invest</p>
+                            <p class="text-slate-400 text-sm">"J'ai un toit, 0€ à mettre, je veux économiser"</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                            <p class="text-purple-500 font-semibold mb-2">Project Finance</p>
+                            <p class="text-slate-400 text-sm">"Je développe un grand projet, je veux du levier"</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                            <p class="text-cyan-500 font-semibold mb-2">Autoconso / OA</p>
+                            <p class="text-slate-400 text-sm">"Je suis particulier/PME, j'investis moi-même"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- SECTION 3: ASSET MANAGEMENT -->
+            <!-- ======================= -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-500 text-lg font-bold">3</span>
+                    Asset Management Solaire
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <!-- KPIs -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-6">KPIs de performance</h4>
+                        <div class="space-y-6">
+                            <!-- PR -->
+                            <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h5 class="text-white font-semibold">PR - Performance Ratio</h5>
+                                    <span class="text-green-500 font-bold">75-85%</span>
+                                </div>
+                                <p class="text-slate-400 text-sm mb-2">Ratio entre production réelle et production théorique (STC).</p>
+                                <div class="bg-slate-800/50 rounded-lg p-2">
+                                    <p class="text-amber-500 font-mono text-sm text-center">PR = E_réelle / (Irradiation × Puissance_crête × Heures)</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Yield -->
+                            <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h5 class="text-white font-semibold">Yield - Productible</h5>
+                                    <span class="text-green-500 font-bold">1000-1400 kWh/kWc</span>
+                                </div>
+                                <p class="text-slate-400 text-sm mb-2">Production annuelle par kWc installé. Varie selon localisation.</p>
+                                <div class="grid grid-cols-3 gap-2 text-xs text-center">
+                                    <div class="bg-slate-800/50 rounded-lg p-2">
+                                        <p class="text-white font-medium">Nord France</p>
+                                        <p class="text-slate-400">900-1100</p>
+                                    </div>
+                                    <div class="bg-slate-800/50 rounded-lg p-2">
+                                        <p class="text-white font-medium">Centre</p>
+                                        <p class="text-slate-400">1100-1250</p>
+                                    </div>
+                                    <div class="bg-slate-800/50 rounded-lg p-2">
+                                        <p class="text-white font-medium">Sud / PACA</p>
+                                        <p class="text-slate-400">1300-1500</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Disponibilité -->
+                            <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h5 class="text-white font-semibold">Disponibilité technique</h5>
+                                    <span class="text-green-500 font-bold">> 98%</span>
+                                </div>
+                                <p class="text-slate-400 text-sm">Temps de fonctionnement effectif vs temps théorique. Objectif contractuel O&M.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Due Diligence -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-6">Due Diligence technique</h4>
+                        <p class="text-slate-400 mb-4 text-sm">
+                            Audit complet avant acquisition ou refinancement d'un parc solaire. Points clés analysés :
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <span class="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-blue-500 text-xs">1</span>
+                                </span>
+                                <div>
+                                    <p class="text-white font-medium">Analyse de production</p>
+                                    <p class="text-slate-400 text-xs">Historique vs P50/P90, identification des sous-performances</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-blue-500 text-xs">2</span>
+                                </span>
+                                <div>
+                                    <p class="text-white font-medium">Inspection des équipements</p>
+                                    <p class="text-slate-400 text-xs">Modules (thermographie IR, EL), onduleurs, câblage, structures</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-blue-500 text-xs">3</span>
+                                </span>
+                                <div>
+                                    <p class="text-white font-medium">Revue contractuelle</p>
+                                    <p class="text-slate-400 text-xs">PPA, bail, raccordement, garanties, assurances</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-blue-500 text-xs">4</span>
+                                </span>
+                                <div>
+                                    <p class="text-white font-medium">Conformité réglementaire</p>
+                                    <p class="text-slate-400 text-xs">Permis, ICPE, normes électriques, environnement</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-blue-500 text-xs">5</span>
+                                </span>
+                                <div>
+                                    <p class="text-white font-medium">Budget CAPEX résiduel</p>
+                                    <p class="text-slate-400 text-xs">Provisions pour remplacement onduleurs, revamping modules</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Valorisation -->
+                <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-8 border border-blue-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-6">Valorisation d'un parc solaire</h4>
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
+                            <p class="text-slate-400 text-sm mb-2">Méthode DCF</p>
+                            <p class="text-white font-semibold mb-2">Discounted Cash Flows</p>
+                            <p class="text-slate-400 text-xs">Actualisation des flux de trésorerie futurs au WACC. Standard pour les actifs de rendement.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
+                            <p class="text-slate-400 text-sm mb-2">Multiple €/MWc</p>
+                            <p class="text-2xl font-bold text-blue-500 mb-2">0.8-1.2 M€/MWc</p>
+                            <p class="text-slate-400 text-xs">Valorisation par la capacité installée. Varie selon âge, localisation, contrat.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
+                            <p class="text-slate-400 text-sm mb-2">Yield attendu</p>
+                            <p class="text-2xl font-bold text-green-500 mb-2">5-8%</p>
+                            <p class="text-slate-400 text-xs">IRR equity attendu par les investisseurs institutionnels sur actifs solaires.</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-sm">
+                        <strong class="text-white">Facteurs de prime/décote :</strong> Durée PPA résiduelle, qualité de l'offtaker (investment grade), 
+                        localisation (irradiation, risque pays), état technique, taille du portefeuille.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- SECTION 4: RENTABILITÉ PROJET -->
+            <!-- ======================= -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-500 text-lg font-bold">4</span>
+                    Rentabilité d'un projet solaire
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Structure CAPEX -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-6">Structure CAPEX (utility-scale)</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-400">Modules PV</span>
+                                    <span class="text-white">35-45%</span>
+                                </div>
+                                <div class="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div class="h-full bg-amber-500 rounded-full" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-400">Onduleurs</span>
+                                    <span class="text-white">8-12%</span>
+                                </div>
+                                <div class="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 10%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-400">Structure / Montage</span>
+                                    <span class="text-white">15-20%</span>
+                                </div>
+                                <div class="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 rounded-full" style="width: 17%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-400">BOS (câbles, protections)</span>
+                                    <span class="text-white">10-15%</span>
+                                </div>
+                                <div class="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div class="h-full bg-purple-500 rounded-full" style="width: 12%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-400">Raccordement réseau</span>
+                                    <span class="text-white">8-15%</span>
+                                </div>
+                                <div class="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div class="h-full bg-cyan-500 rounded-full" style="width: 11%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-400">Développement / Soft costs</span>
+                                    <span class="text-white">5-10%</span>
+                                </div>
+                                <div class="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div class="h-full bg-pink-500 rounded-full" style="width: 8%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-700/50">
+                            <div class="flex justify-between text-lg">
+                                <span class="text-white font-semibold">CAPEX total (France)</span>
+                                <span class="text-amber-500 font-bold">650-850 €/kWc</span>
+                            </div>
+                            <p class="text-slate-500 text-xs mt-1">Ground-mounted utility-scale, 2024-2025</p>
+                        </div>
+                    </div>
+
+                    <!-- Structure OPEX -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-6">Structure OPEX annuelle</h4>
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">O&M (exploitation & maintenance)</p>
+                                    <p class="text-slate-500 text-xs">Préventif, correctif, monitoring</p>
+                                </div>
+                                <span class="text-amber-500 font-bold">8-12 €/kWc/an</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Assurance</p>
+                                    <p class="text-slate-500 text-xs">Tous risques, perte d'exploitation</p>
+                                </div>
+                                <span class="text-amber-500 font-bold">2-4 €/kWc/an</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Location terrain / Loyer</p>
+                                    <p class="text-slate-500 text-xs">Variable selon localisation</p>
+                                </div>
+                                <span class="text-amber-500 font-bold">1-3 €/kWc/an</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Frais de gestion / Asset Management</p>
+                                    <p class="text-slate-500 text-xs">Reporting, comptabilité, juridique</p>
+                                </div>
+                                <span class="text-amber-500 font-bold">1-2 €/kWc/an</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <div>
+                                    <p class="text-white font-medium">Taxes (IFER, CFE)</p>
+                                    <p class="text-slate-500 text-xs">Imposition forfaitaire entreprises réseau</p>
+                                </div>
+                                <span class="text-amber-500 font-bold">~7 €/kWc/an</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-700/50">
+                            <div class="flex justify-between text-lg">
+                                <span class="text-white font-semibold">OPEX total</span>
+                                <span class="text-amber-500 font-bold">15-25 €/kWc/an</span>
+                            </div>
+                            <p class="text-slate-500 text-xs mt-1">~2-3% du CAPEX par an</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Indicateurs financiers -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <h4 class="text-xl font-semibold text-white mb-6">Indicateurs de rentabilité</h4>
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-600/30">
+                            <p class="text-slate-400 text-sm mb-2">TRI Projet (IRR)</p>
+                            <p class="text-3xl font-bold text-green-500">6-10%</p>
+                            <p class="text-slate-500 text-xs mt-2">Taux de rentabilité interne sur fonds propres + dette</p>
+                        </div>
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-600/30">
+                            <p class="text-slate-400 text-sm mb-2">TRI Equity</p>
+                            <p class="text-3xl font-bold text-blue-500">8-15%</p>
+                            <p class="text-slate-500 text-xs mt-2">Rentabilité pour l'actionnaire (effet de levier)</p>
+                        </div>
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-600/30">
+                            <p class="text-slate-400 text-sm mb-2">Payback</p>
+                            <p class="text-3xl font-bold text-amber-500">7-12 ans</p>
+                            <p class="text-slate-500 text-xs mt-2">Temps de retour sur investissement</p>
+                        </div>
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-600/30">
+                            <p class="text-slate-400 text-sm mb-2">DSCR min</p>
+                            <p class="text-3xl font-bold text-purple-500">≥ 1.2x</p>
+                            <p class="text-slate-500 text-xs mt-2">Debt Service Coverage Ratio exigé par les banques</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Facteurs de risque -->
+                <div class="bg-gradient-to-r from-red-500/10 to-amber-500/10 rounded-2xl p-8 border border-red-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-6">Facteurs de risque</h4>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                                <h5 class="text-white font-medium">Risque ressource</h5>
+                            </div>
+                            <p class="text-slate-400 text-xs">Variabilité de l'irradiation d'une année sur l'autre (±5-10%). Atténué par les études P50/P90.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-3 h-3 bg-amber-500 rounded-full"></span>
+                                <h5 class="text-white font-medium">Risque prix</h5>
+                            </div>
+                            <p class="text-slate-400 text-xs">Exposition au prix de marché post-PPA ou en merchant. Volatilité des prix spot.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-3 h-3 bg-orange-500 rounded-full"></span>
+                                <h5 class="text-white font-medium">Risque contrepartie</h5>
+                            </div>
+                            <p class="text-slate-400 text-xs">Solvabilité de l'offtaker (PPA). Importance du rating crédit.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                                <h5 class="text-white font-medium">Risque technique</h5>
+                            </div>
+                            <p class="text-slate-400 text-xs">Pannes, sous-performance, dégradation accélérée. Couvert par garanties et O&M.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-3 h-3 bg-purple-500 rounded-full"></span>
+                                <h5 class="text-white font-medium">Risque réglementaire</h5>
+                            </div>
+                            <p class="text-slate-400 text-xs">Évolution des tarifs, fiscalité, normes. Risque de rétroactivité.</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
+                                <h5 class="text-white font-medium">Risque taux</h5>
+                            </div>
+                            <p class="text-slate-400 text-xs">Impact du coût de la dette sur le TRI equity. Hedging recommandé (swap).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    </main>
+    
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Besoin d'une analyse financière pour votre projet ?</h2>
+            <p class="text-slate-400 mb-8">20 ans d'expérience en finance de marché au service du solaire</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Me contacter
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    Voir mon profil LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explorer le site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Accueil</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="marches.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Marchés</p>
+                </a>
+                <a href="ia-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
+                    <span class="text-2xl">🤖</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">IA & Data</p>
+                </a>
+                <a href="outils.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Outils</p>
+                </a>
+                <a href="ressources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Ressources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/economy.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
+        function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener(

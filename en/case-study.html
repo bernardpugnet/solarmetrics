@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study - 20 MWp Solar Project - SolarMetrics</title>
+    <meta name="description" content="Complete case study: financial analysis of a 20 MWp solar PV project. PERC vs TOPCon comparison, fixed vs trackers, project finance structure.">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>*{font-family:'Inter',sans-serif}html{scroll-behavior:smooth}</style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
+                    <a href="case-study.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Case Study</a>
+                    <a href="tools.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Tools</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="ai-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">AI & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Resources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../fr/etude-de-cas.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
+                <a href="case-study.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Case Study</a>
+                <a href="tools.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="ai-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">AI & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="resources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-16 bg-gradient-to-b from-slate-900 to-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full mb-6">
+                        <span class="text-amber-500">📊</span>
+                        <span class="text-amber-500 text-sm font-medium">Detailed Case Study</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Project "SunField Alpha"</h1>
+                    <p class="text-xl text-slate-400 mb-2">Ground-Mounted Solar Plant — 20 MWp — Southern France</p>
+                    <p class="text-slate-500">Comparative analysis: technologies, configurations and profitability</p>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700">
+                        <p class="text-3xl font-bold text-amber-500">20</p>
+                        <p class="text-slate-400 text-sm">MWp installed</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700">
+                        <p class="text-3xl font-bold text-amber-500">32 ha</p>
+                        <p class="text-slate-400 text-sm">Land area</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700">
+                        <p class="text-3xl font-bold text-amber-500">1,480</p>
+                        <p class="text-slate-400 text-sm">kWh/kWp/year (PVGIS)</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700">
+                        <p class="text-3xl font-bold text-amber-500">25 yrs</p>
+                        <p class="text-slate-400 text-sm">Operating lifetime</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="py-12 bg-slate-800/50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-slate-300 text-lg leading-relaxed mb-4">
+                    This case study presents the financial analysis of a fictional but realistic solar photovoltaic project, based on verified market data. The objective is to compare different technical configurations (PERC vs TOPCon panels, fixed vs trackers) and evaluate their impact on profitability.
+                </p>
+                <p class="text-slate-300 text-lg leading-relaxed">
+                    We analyze <strong class="text-white">4 scenarios</strong> to identify the optimal combination between investment and production, while respecting standard project finance constraints.
+                </p>
+            </div>
+        </section>
+
+        <!-- Modeling Assumptions -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">⚙️</span>
+                    Modeling Assumptions
+                </h2>
+                <p class="text-slate-400 mb-6">Key parameters used for financial analysis — essential for assessing project bankability.</p>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+                        <h3 class="text-base font-semibold text-white mb-3">Sizing</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>DC Power</span><span class="text-white">20 MWp</span></li>
+                            <li class="flex justify-between"><span>AC Power</span><span class="text-white">16 MW</span></li>
+                            <li class="flex justify-between"><span>DC/AC Ratio</span><span class="text-amber-500 font-medium">1.25</span></li>
+                            <li class="flex justify-between"><span>Land Area</span><span class="text-white">32 ha (~1.6 ha/MWp)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+                        <h3 class="text-base font-semibold text-white mb-3">Financial Parameters</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>WACC</span><span class="text-white">6.5%</span></li>
+                            <li class="flex justify-between"><span>Discount Rate</span><span class="text-white">7%</span></li>
+                            <li class="flex justify-between"><span>Construction Period</span><span class="text-white">12 months</span></li>
+                            <li class="flex justify-between"><span>IDC (Interest During Constr.)</span><span class="text-white">~€180k</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+                        <h3 class="text-base font-semibold text-white mb-3">Indexation & Provisions</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Tariff Indexation</span><span class="text-white">L + 0.5×ICHT</span></li>
+                            <li class="flex justify-between"><span>OPEX Escalation</span><span class="text-white">2%/year</span></li>
+                            <li class="flex justify-between"><span>Decommissioning Reserve</span><span class="text-white">€50k/MWp</span></li>
+                            <li class="flex justify-between"><span>Inverter Replacement</span><span class="text-white">Year 12</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location & Solar Resource -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">📍</span>
+                    Location & Solar Resource
+                </h2>
+                <p class="text-slate-400 mb-8">The site is located in Southern France, benefiting from excellent solar irradiation. Solar resource was assessed using PVGIS, the European reference for yield studies.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Site Characteristics</h3>
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex justify-between"><span>Location</span><span class="text-white font-medium">Montpellier (34)</span></li>
+                            <li class="flex justify-between"><span>Latitude / Longitude</span><span class="text-white font-medium">43.6° N / 3.9° E</span></li>
+                            <li class="flex justify-between"><span>Altitude</span><span class="text-white font-medium">50 m</span></li>
+                            <li class="flex justify-between"><span>Land Type</span><span class="text-white font-medium">Agricultural wasteland</span></li>
+                            <li class="flex justify-between"><span>Land Area</span><span class="text-white font-medium">32 hectares</span></li>
+                            <li class="flex justify-between"><span>Grid Connection</span><span class="text-white font-medium">Substation 2.5 km</span></li>
+                        </ul>
+                        <p class="text-xs text-slate-500 mt-4">Note: 32 ha corresponds to ~1.6 ha/MWp, standard ratio for trackers including access roads and technical areas.</p>
+                    </div>
+                    
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Irradiation Data (PVGIS)</h3>
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex justify-between"><span>GHI (Global Horizontal)</span><span class="text-white font-medium">1,720 kWh/m²/year</span></li>
+                            <li class="flex justify-between"><span>DNI (Direct Normal)</span><span class="text-white font-medium">1,950 kWh/m²/year</span></li>
+                            <li class="flex justify-between"><span>Optimal Tilt</span><span class="text-white font-medium">33°</span></li>
+                            <li class="flex justify-between"><span>Yield (fixed 33°)</span><span class="text-white font-medium">1,480 kWh/kWp/year</span></li>
+                            <li class="flex justify-between"><span>Yield (1-axis tracker)</span><span class="text-white font-medium">1,720 kWh/kWp/year</span></li>
+                        </ul>
+                        <p class="text-xs text-slate-500 mt-4">Source: PVGIS 5.2 — European Commission (2024)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Technology Comparison -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">⚡</span>
+                    Panel Technology Comparison
+                </h2>
+                <p class="text-slate-400 mb-8">Module selection is critical for long-term performance. We compare PERC monocrystalline (current standard) and TOPCon bifacial (next generation).</p>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <!-- PERC Mono -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white">PERC Mono</h3>
+                            <span class="px-3 py-1 bg-slate-600 text-slate-200 text-xs rounded-full">Standard</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4">Proven technology, best price/performance ratio today</p>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Reference Manufacturer</span><span class="text-white">Longi / Jinko / Trina</span></li>
+                            <li class="flex justify-between"><span>Unit Power</span><span class="text-white">550 Wp</span></li>
+                            <li class="flex justify-between"><span>Module Efficiency</span><span class="text-white">21.5%</span></li>
+                            <li class="flex justify-between"><span>Number of Modules</span><span class="text-white">36,364 modules</span></li>
+                            <li class="flex justify-between"><span>Annual Degradation</span><span class="text-white">0.45%/year</span></li>
+                            <li class="flex justify-between"><span>Performance Warranty</span><span class="text-white">84.8% at 25 years</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Module Price</span><span class="text-amber-500 font-bold">€0.11/Wp</span></li>
+                            <li class="flex justify-between"><span class="font-medium">Total Module Cost</span><span class="text-amber-500 font-bold">€2.2M</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- TOPCon Bifacial -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-amber-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white">TOPCon Bifacial</h3>
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-500 text-xs rounded-full">Premium</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4">Next-gen technology with passivated contact cells and bifacial production</p>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Reference Manufacturer</span><span class="text-white">Longi Hi-MO 7 / Jinko Neo</span></li>
+                            <li class="flex justify-between"><span>Unit Power</span><span class="text-white">580 Wp</span></li>
+                            <li class="flex justify-between"><span>Module Efficiency</span><span class="text-white">22.8%</span></li>
+                            <li class="flex justify-between"><span>Number of Modules</span><span class="text-white">34,483 modules</span></li>
+                            <li class="flex justify-between"><span>Annual Degradation</span><span class="text-white">0.40%/year</span></li>
+                            <li class="flex justify-between"><span>Performance Warranty</span><span class="text-white">87.4% at 25 years</span></li>
+                            <li class="flex justify-between"><span>Bifacial Gain</span><span class="text-green-400">+5 to 10% (albedo dependent)</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Module Price</span><span class="text-amber-500 font-bold">€0.14/Wp</span></li>
+                            <li class="flex justify-between"><span class="font-medium">Total Module Cost</span><span class="text-amber-500 font-bold">€2.8M</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700">
+                    <p class="text-slate-400 text-sm"><strong class="text-white">Analysis:</strong> The TOPCon premium (+27%) can be offset by a production gain of <strong class="text-white">5 to 10%</strong>, varying by site conditions. Bifacial gain strongly depends on ground albedo (reflectivity), mounting height, and GCR (Ground Coverage Ratio). On light-colored soil with elevated trackers: +8-10%. On dark soil with low fixed structure: +3-5%.</p>
+                    <p class="text-xs text-slate-500 mt-2">Sources: IRENA Renewable Power Generation Costs 2024, PV Magazine Market Survey Q4 2024</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mounting Structure Comparison -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">🔧</span>
+                    Mounting Structure Comparison
+                </h2>
+                <p class="text-slate-400 mb-8">The choice between fixed structure and trackers impacts production and investment. Single-axis trackers follow the sun from East to West, optimizing energy capture throughout the day.</p>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <!-- Fixed Structure -->
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white">Fixed Structure</h3>
+                            <span class="px-3 py-1 bg-slate-600 text-slate-200 text-xs rounded-full">Economic</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4">Simple, reliable solution with minimal maintenance</p>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Type</span><span class="text-white">Galvanized steel fixed tables</span></li>
+                            <li class="flex justify-between"><span>Tilt</span><span class="text-white">33° (PVGIS optimized)</span></li>
+                            <li class="flex justify-between"><span>Orientation</span><span class="text-white">South (azimuth 0°)</span></li>
+                            <li class="flex justify-between"><span>Minimum Height</span><span class="text-white">0.8 m</span></li>
+                            <li class="flex justify-between"><span>Yield</span><span class="text-white">1,480 kWh/kWp/year</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Structure Price</span><span class="text-amber-500 font-bold">€0.05/Wp</span></li>
+                            <li class="flex justify-between"><span class="font-medium">Total Cost</span><span class="text-amber-500 font-bold">€1.0M</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Trackers -->
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-amber-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white">Single-Axis Trackers</h3>
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-500 text-xs rounded-full">Performance</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4">East-West solar tracking maximizing energy production</p>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Type</span><span class="text-white">Horizontal N-S single-axis tracker</span></li>
+                            <li class="flex justify-between"><span>Manufacturer</span><span class="text-white">Nextracker / Array Tech</span></li>
+                            <li class="flex justify-between"><span>Rotation</span><span class="text-white">±60°</span></li>
+                            <li class="flex justify-between"><span>Pivot Height</span><span class="text-white">1.5 m</span></li>
+                            <li class="flex justify-between"><span>Yield</span><span class="text-white">1,720 kWh/kWp/year</span></li>
+                            <li class="flex justify-between"><span>Gain vs Fixed</span><span class="text-green-400">+16.2%</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Structure Price</span><span class="text-amber-500 font-bold">€0.10/Wp</span></li>
+                            <li class="flex justify-between"><span class="font-medium">Total Cost</span><span class="text-amber-500 font-bold">€2.0M</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700">
+                    <p class="text-slate-400 text-sm"><strong class="text-white">Analysis:</strong> Trackers double structure cost (+€1M) but increase production by 16%. With a tariff of €75/MWh, the additional production generates approximately €360k/year in extra revenue (20 MWp × 240 kWh/kWp × €75/MWh). The premium is paid back in less than 3 years, making trackers very attractive in high-irradiance locations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inverters & Electrical Equipment -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">🔌</span>
+                    Inverters & Electrical Equipment
+                </h2>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Central Inverters</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Model</span><span class="text-white">Huawei SUN2000-330KTL</span></li>
+                            <li class="flex justify-between"><span>Unit Power</span><span class="text-white">330 kVA</span></li>
+                            <li class="flex justify-between"><span>Efficiency</span><span class="text-white">99.0%</span></li>
+                            <li class="flex justify-between"><span>Quantity</span><span class="text-white">60 inverters</span></li>
+                            <li class="flex justify-between"><span>MPPT</span><span class="text-white">12 per inverter</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Unit Price</span><span class="text-amber-500">€18,000</span></li>
+                            <li class="flex justify-between"><span class="font-medium">Total Cost</span><span class="text-amber-500 font-bold">€1.08M</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Delivery Substation</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Voltage</span><span class="text-white">20 kV / 400 V</span></li>
+                            <li class="flex justify-between"><span>Transformers</span><span class="text-white">4 × 5 MVA</span></li>
+                            <li class="flex justify-between"><span>MV Cells</span><span class="text-white">8 cells</span></li>
+                            <li class="flex justify-between"><span>Protection</span><span class="text-white">SEPAM Relay</span></li>
+                            <li class="flex justify-between"><span>Metering</span><span class="text-white">Class 0.5</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Substation Cost</span><span class="text-amber-500 font-bold">€450k</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Cabling & BOS</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>DC Cables</span><span class="text-white">85 km (6 mm²)</span></li>
+                            <li class="flex justify-between"><span>LV AC Cables</span><span class="text-white">12 km</span></li>
+                            <li class="flex justify-between"><span>MV Cables</span><span class="text-white">3.5 km (240 mm²)</span></li>
+                            <li class="flex justify-between"><span>Connectors</span><span class="text-white">MC4 (145,000 pcs)</span></li>
+                            <li class="flex justify-between"><span>Grounding</span><span class="text-white">Bare copper 35 mm²</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">BOS Cost</span><span class="text-amber-500 font-bold">€1.2M</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAPEX Breakdown -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">💰</span>
+                    CAPEX Breakdown — 4 Scenarios
+                </h2>
+                <p class="text-slate-400 mb-8">Investment cost breakdown by item. Scenarios range from lowest cost (A) to highest performance (D). The 1.25 DC/AC ratio is integrated into inverter sizing.</p>
+
+                <!-- CAPEX Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-700">
+                                <th class="text-left py-3 px-4 text-slate-400 font-medium">Item</th>
+                                <th class="text-right py-3 px-4 text-slate-400 font-medium">A: PERC + Fixed</th>
+                                <th class="text-right py-3 px-4 text-slate-400 font-medium">B: TOPCon + Fixed</th>
+                                <th class="text-right py-3 px-4 text-slate-400 font-medium">C: PERC + Trackers</th>
+                                <th class="text-right py-3 px-4 text-amber-500 font-medium">D: TOPCon + Trackers</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-300">
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">PV Modules</td>
+                                <td class="text-right py-3 px-4">€2,200k</td>
+                                <td class="text-right py-3 px-4">€2,800k</td>
+                                <td class="text-right py-3 px-4">€2,200k</td>
+                                <td class="text-right py-3 px-4 text-white">€2,800k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Structure / Trackers</td>
+                                <td class="text-right py-3 px-4">€1,000k</td>
+                                <td class="text-right py-3 px-4">€1,000k</td>
+                                <td class="text-right py-3 px-4">€2,000k</td>
+                                <td class="text-right py-3 px-4 text-white">€2,000k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Inverters</td>
+                                <td class="text-right py-3 px-4">€1,080k</td>
+                                <td class="text-right py-3 px-4">€1,080k</td>
+                                <td class="text-right py-3 px-4">€1,080k</td>
+                                <td class="text-right py-3 px-4 text-white">€1,080k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Substation & Grid Connection</td>
+                                <td class="text-right py-3 px-4">€850k</td>
+                                <td class="text-right py-3 px-4">€850k</td>
+                                <td class="text-right py-3 px-4">€850k</td>
+                                <td class="text-right py-3 px-4 text-white">€850k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Cabling & BOS</td>
+                                <td class="text-right py-3 px-4">€1,200k</td>
+                                <td class="text-right py-3 px-4">€1,200k</td>
+                                <td class="text-right py-3 px-4">€1,200k</td>
+                                <td class="text-right py-3 px-4 text-white">€1,200k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Civil Works & Fencing</td>
+                                <td class="text-right py-3 px-4">€600k</td>
+                                <td class="text-right py-3 px-4">€600k</td>
+                                <td class="text-right py-3 px-4">€700k</td>
+                                <td class="text-right py-3 px-4 text-white">€700k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Installation & Labor</td>
+                                <td class="text-right py-3 px-4">€1,400k</td>
+                                <td class="text-right py-3 px-4">€1,400k</td>
+                                <td class="text-right py-3 px-4">€1,600k</td>
+                                <td class="text-right py-3 px-4 text-white">€1,600k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Development & Permitting</td>
+                                <td class="text-right py-3 px-4">€800k</td>
+                                <td class="text-right py-3 px-4">€800k</td>
+                                <td class="text-right py-3 px-4">€800k</td>
+                                <td class="text-right py-3 px-4 text-white">€800k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Insurance & Financial Costs</td>
+                                <td class="text-right py-3 px-4">€370k</td>
+                                <td class="text-right py-3 px-4">€390k</td>
+                                <td class="text-right py-3 px-4">€415k</td>
+                                <td class="text-right py-3 px-4 text-white">€440k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Contingency Reserve (5%)</td>
+                                <td class="text-right py-3 px-4">€475k</td>
+                                <td class="text-right py-3 px-4">€506k</td>
+                                <td class="text-right py-3 px-4">€542k</td>
+                                <td class="text-right py-3 px-4 text-white">€574k</td>
+                            </tr>
+                            <tr class="bg-amber-500/10">
+                                <td class="py-3 px-4 font-bold text-white">TOTAL CAPEX</td>
+                                <td class="text-right py-3 px-4 font-bold text-white">€9,975k</td>
+                                <td class="text-right py-3 px-4 font-bold text-white">€10,626k</td>
+                                <td class="text-right py-3 px-4 font-bold text-white">€11,387k</td>
+                                <td class="text-right py-3 px-4 font-bold text-amber-500">€12,044k</td>
+                            </tr>
+                            <tr class="bg-slate-700/30">
+                                <td class="py-3 px-4 font-medium text-slate-300">CAPEX / Wp</td>
+                                <td class="text-right py-3 px-4 font-medium text-slate-300">€0.50/Wp</td>
+                                <td class="text-right py-3 px-4 font-medium text-slate-300">€0.53/Wp</td>
+                                <td class="text-right py-3 px-4 font-medium text-slate-300">€0.57/Wp</td>
+                                <td class="text-right py-3 px-4 font-medium text-amber-400">€0.60/Wp</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">Sources: IRENA Renewable Power Generation Costs 2024, Berkeley Lab Utility-Scale Solar 2024, French market experience</p>
+            </div>
+        </section>
+
+        <!-- Production & Revenue -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">📈</span>
+                    Production & Annual Revenue
+                </h2>
+                <p class="text-slate-400 mb-8">Production depends on solar resource, equipment performance, and system losses. Revenue is calculated under two schemes: the CRE tender contract (secured) and spot market sales (merchant).</p>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Production Assumptions -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Production Assumptions</h3>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Performance Ratio (PR)</span><span class="text-white">82%</span></li>
+                            <li class="flex justify-between"><span>Technical Availability</span><span class="text-white">98%</span></li>
+                            <li class="flex justify-between"><span>Grid/Clipping Losses</span><span class="text-white">2%</span></li>
+                            <li class="flex justify-between"><span>Y1 Degradation</span><span class="text-white">2%</span></li>
+                            <li class="flex justify-between"><span>Annual Degradation</span><span class="text-white">0.40-0.45%/year</span></li>
+                            <li class="flex justify-between"><span>Bifacial Gain (TOPCon)</span><span class="text-green-400">+7%</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Production by Scenario -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Year 1 Production (P50)</h3>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>A: PERC + Fixed</span><span class="text-white font-medium">29,600 MWh</span></li>
+                            <li class="flex justify-between"><span>B: TOPCon + Fixed</span><span class="text-white font-medium">31,680 MWh</span><span class="text-green-400 text-xs">+7%</span></li>
+                            <li class="flex justify-between"><span>C: PERC + Trackers</span><span class="text-white font-medium">34,400 MWh</span><span class="text-green-400 text-xs">+16%</span></li>
+                            <li class="flex justify-between"><span>D: TOPCon + Trackers</span><span class="text-amber-500 font-bold">36,800 MWh</span><span class="text-green-400 text-xs">+24%</span></li>
+                        </ul>
+                        <div class="mt-4 pt-4 border-t border-slate-600">
+                            <p class="text-slate-400 text-xs">25-year cumulative production (Scenario D): <span class="text-white">~850 GWh</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Scheme -->
+                <h3 class="text-xl font-semibold text-white mb-6">CRE Tender vs Merchant Comparison</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-lg font-bold text-white">CRE Tender (Support Contract)</h4>
+                            <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Secured</span>
+                        </div>
+                        <p class="text-slate-400 text-xs mb-3">Guaranteed feed-in premium through PPE2 competitive tenders.</p>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Average Tariff 2024</span><span class="text-white">€75/MWh</span></li>
+                            <li class="flex justify-between"><span>Contract Duration</span><span class="text-white">20 years</span></li>
+                            <li class="flex justify-between"><span>Indexation</span><span class="text-white">L + 0.5×ICHT (~1.5%/yr)</span></li>
+                            <li class="flex justify-between"><span>Y1 Revenue (Scenario D)</span><span class="text-amber-500 font-bold">€2,760k</span></li>
+                        </ul>
+                        <p class="text-slate-400 text-xs mt-4">✅ Bankable: senior debt financing up to 80%</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-lg font-bold text-white">Merchant (Spot Market)</h4>
+                            <span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full">Risky</span>
+                        </div>
+                        <p class="text-slate-400 text-xs mb-3">Direct sales on EPEX Spot, exposed to volatility and solar cannibalization.</p>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Average Spot Price 2024</span><span class="text-white">€65-85/MWh</span></li>
+                            <li class="flex justify-between"><span>Solar Capture Price</span><span class="text-white">~€55-65/MWh</span></li>
+                            <li class="flex justify-between"><span>Capture Rate</span><span class="text-orange-400">~80-85%</span></li>
+                            <li class="flex justify-between"><span>Estimated Y1 Revenue</span><span class="text-white">€2,000 - 2,400k</span></li>
+                        </ul>
+                        <p class="text-slate-400 text-xs mt-4">⚠️ Cannibalization: prices drop when solar produces. Equity &gt;40% required.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financing Structure -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">🏦</span>
+                    Financing Structure (Scenario D — CRE Tender)
+                </h2>
+                <p class="text-slate-400 mb-8">Standard project finance structure with senior debt and sponsor equity, applicable to Scenario D (TOPCon + Trackers) under CRE tender contract.</p>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Senior Debt</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Amount</span><span class="text-white font-bold">€9,635k</span></li>
+                            <li class="flex justify-between"><span>Gearing</span><span class="text-white">80%</span></li>
+                            <li class="flex justify-between"><span>Rate (margin + Euribor)</span><span class="text-white">5.5%</span></li>
+                            <li class="flex justify-between"><span>Tenor</span><span class="text-white">18 years</span></li>
+                            <li class="flex justify-between"><span>Minimum DSCR</span><span class="text-white">1.20x</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Equity</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>Amount</span><span class="text-white font-bold">€2,409k</span></li>
+                            <li class="flex justify-between"><span>Share</span><span class="text-white">20%</span></li>
+                            <li class="flex justify-between"><span>Investor</span><span class="text-white">Sponsor / IPP</span></li>
+                            <li class="flex justify-between"><span>Target IRR</span><span class="text-white">&gt;12%</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">Annual OPEX</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between"><span>O&M (€12/kWp/yr)</span><span class="text-white">€240k</span></li>
+                            <li class="flex justify-between"><span>Insurance</span><span class="text-white">€60k</span></li>
+                            <li class="flex justify-between"><span>Land Lease</span><span class="text-white">€48k</span></li>
+                            <li class="flex justify-between"><span>Taxes (IFER, CFE)</span><span class="text-white">€85k</span></li>
+                            <li class="flex justify-between"><span>Asset Management</span><span class="text-white">€55k</span></li>
+                            <li class="flex justify-between border-t border-slate-600 pt-2 mt-2"><span class="font-medium">Total OPEX</span><span class="text-amber-500 font-bold">€488k/year</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Results -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">🎯</span>
+                    Financial Results — 4-Scenario Comparison
+                </h2>
+
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-700">
+                                <th class="text-left py-3 px-4 text-slate-400 font-medium">Indicator</th>
+                                <th class="text-right py-3 px-4 text-slate-400 font-medium">A: PERC + Fixed</th>
+                                <th class="text-right py-3 px-4 text-slate-400 font-medium">B: TOPCon + Fixed</th>
+                                <th class="text-right py-3 px-4 text-slate-400 font-medium">C: PERC + Trackers</th>
+                                <th class="text-right py-3 px-4 text-amber-500 font-medium">D: TOPCon + Trackers</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-300">
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Total CAPEX</td>
+                                <td class="text-right py-3 px-4">€9.98M</td>
+                                <td class="text-right py-3 px-4">€10.63M</td>
+                                <td class="text-right py-3 px-4">€11.39M</td>
+                                <td class="text-right py-3 px-4 text-white">€12.04M</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Y1 Production</td>
+                                <td class="text-right py-3 px-4">29,600 MWh</td>
+                                <td class="text-right py-3 px-4">31,680 MWh</td>
+                                <td class="text-right py-3 px-4">34,400 MWh</td>
+                                <td class="text-right py-3 px-4 text-white">36,800 MWh</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Y1 Revenue (€75 tariff)</td>
+                                <td class="text-right py-3 px-4">€2,220k</td>
+                                <td class="text-right py-3 px-4">€2,376k</td>
+                                <td class="text-right py-3 px-4">€2,580k</td>
+                                <td class="text-right py-3 px-4 text-white">€2,760k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Y1 EBITDA</td>
+                                <td class="text-right py-3 px-4">€1,732k</td>
+                                <td class="text-right py-3 px-4">€1,888k</td>
+                                <td class="text-right py-3 px-4">€2,092k</td>
+                                <td class="text-right py-3 px-4 text-white">€2,272k</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50 bg-slate-800/30">
+                                <td class="py-3 px-4 font-medium">LCOE</td>
+                                <td class="text-right py-3 px-4 font-medium">€42.5/MWh</td>
+                                <td class="text-right py-3 px-4 font-medium">€41.2/MWh</td>
+                                <td class="text-right py-3 px-4 font-medium">€39.8/MWh</td>
+                                <td class="text-right py-3 px-4 font-medium text-green-400">€38.6/MWh</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50 bg-slate-800/30">
+                                <td class="py-3 px-4 font-medium">Project IRR (pre-tax)</td>
+                                <td class="text-right py-3 px-4 font-medium">7.8%</td>
+                                <td class="text-right py-3 px-4 font-medium">8.2%</td>
+                                <td class="text-right py-3 px-4 font-medium">8.6%</td>
+                                <td class="text-right py-3 px-4 font-medium text-green-400">9.1%</td>
+                            </tr>
+                            <tr class="bg-amber-500/10">
+                                <td class="py-3 px-4 font-bold text-white">Equity IRR (leveraged)</td>
+                                <td class="text-right py-3 px-4 font-bold text-white">11.2%</td>
+                                <td class="text-right py-3 px-4 font-bold text-white">12.4%</td>
+                                <td class="text-right py-3 px-4 font-bold text-white">13.1%</td>
+                                <td class="text-right py-3 px-4 font-bold text-amber-500">14.2%</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Payback (equity)</td>
+                                <td class="text-right py-3 px-4">8.5 years</td>
+                                <td class="text-right py-3 px-4">7.8 years</td>
+                                <td class="text-right py-3 px-4">7.2 years</td>
+                                <td class="text-right py-3 px-4 text-white">6.7 years</td>
+                            </tr>
+                            <tr class="border-b border-slate-700/50">
+                                <td class="py-3 px-4">Average DSCR</td>
+                                <td class="text-right py-3 px-4">1.28x</td>
+                                <td class="text-right py-3 px-4">1.35x</td>
+                                <td class="text-right py-3 px-4">1.42x</td>
+                                <td class="text-right py-3 px-4 text-white">1.48x</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Conclusion -->
+                <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl p-6 border border-amber-500/30">
+                    <h3 class="text-xl font-bold text-white mb-4">🏆 Analysis Conclusion</h3>
+                    <p class="text-slate-300 mb-4">
+                        <strong class="text-amber-500">Scenario D (TOPCon bifacial + Trackers)</strong> delivers the best returns despite a 21% higher CAPEX versus the baseline. The 24% production gain more than compensates for the additional investment.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-4 mt-6">
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-amber-500">14.2%</p>
+                            <p class="text-slate-400 text-sm">Equity IRR</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-400">€38.6</p>
+                            <p class="text-slate-400 text-sm">LCOE / MWh</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-white">6.7 yrs</p>
+                            <p class="text-slate-400 text-sm">Equity Payback</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk Analysis -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">⚠️</span>
+                    Risk Analysis
+                </h2>
+                <p class="text-slate-400 mb-8">Identification and classification of project risks by mitigation level. This framework is essential for investment committees and lenders.</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-green-500/30">
+                        <h3 class="text-lg font-semibold text-green-400 mb-4">✅ Mitigated Risks</h3>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li><strong class="text-white">Price Risk:</strong> 20-year CRE contract with indexed tariff</li>
+                            <li><strong class="text-white">Resource Risk:</strong> PVGIS validated data, P90 -8%</li>
+                            <li><strong class="text-white">Technology Risk:</strong> Proven technologies, manufacturer warranties</li>
+                            <li><strong class="text-white">Construction Risk:</strong> Turnkey EPC, performance guarantee</li>
+                            <li><strong class="text-white">Operational Risk:</strong> Contracted O&M, 98% availability guaranteed</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-orange-500/30">
+                        <h3 class="text-lg font-semibold text-orange-400 mb-4">⚠️ Residual Risks</h3>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li><strong class="text-white">Regulatory Risk:</strong> Tax changes (IFER), permit delays</li>
+                            <li><strong class="text-white">Interest Rate Risk:</strong> Euribor impact on debt service</li>
+                            <li><strong class="text-white">Counterparty Risk:</strong> Off-taker solvency (if corporate PPA)</li>
+                            <li><strong class="text-white">Grid Risk:</strong> Curtailment, network congestion</li>
+                            <li><strong class="text-white">Tail Risk:</strong> Terminal value post-contract (years 21-25)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sources -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-xl font-bold text-white mb-6">📚 Sources & References</h2>
+                <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-400">
+                    <div>
+                        <p class="mb-2"><strong class="text-slate-300">IRENA</strong> — Renewable Power Generation Costs in 2023 (June 2024)</p>
+                        <p class="mb-2"><strong class="text-slate-300">CRE</strong> — PPE2 Ground-Mount Solar Tender Results (2023-2024)</p>
+                        <p class="mb-2"><strong class="text-slate-300">PVGIS</strong> — Photovoltaic Geographical Information System v5.2</p>
+                    </div>
+                    <div>
+                        <p class="mb-2"><strong class="text-slate-300">Berkeley Lab</strong> — Utility-Scale Solar Data Update 2024</p>
+                        <p class="mb-2"><strong class="text-slate-300">PV Magazine</strong> — Module Price Index Q4 2024</p>
+                        <p class="mb-2"><strong class="text-slate-300">BloombergNEF</strong> — Solar PV Equipment Tracker</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-2xl font-bold text-white mb-4">Need financial analysis for your project?</h2>
+                <p class="text-slate-400 mb-8">20 years of capital markets experience at the service of solar</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="tools.html" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                        Try the LCOE Calculator →
+                    </a>
+                    <a href="hire-me.html" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-xl transition-colors">
+                        View My Profile
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> Bernard Pugnet. All rights reserved.</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/etude-de-cas.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

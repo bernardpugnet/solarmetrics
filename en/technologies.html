@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Technologies & Storage - SolarMetrics</title>
+    <meta name="description" content="Photovoltaic technologies: PERC, TOPCon, HJT, pérovskites. Agrivoltaics, carports. Battery storage Li-ion, LFP, hydrogen.">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
+                    <a href="case-study.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Case Study</a>
+                    <a href="tools.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Tools</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="ai-data.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">IA & Data</a>
+                    <a href="technologies.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Technologies</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Resources</a>
+                    <a href="contact.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../fr/technologies.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</span>
+                        <a href="../fr/technologies.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
+                <a href="case-study.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Case Study</a>
+                <a href="tools.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="ai-data.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">IA & Data</a>
+                <a href="technologies.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Technologies</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="resources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Resources</a>
+                <a href="contact.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+    <!-- Section Le Solaire - Phase 2 -->
+    <section id="solaire" class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Image Hero -->
+            <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80" 
+                     alt="Aerial view of solar farm" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-amber-500/20 backdrop-blur-sm rounded-xl border border-amber-500/30">
+                            <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-white">Solar Photovoltaics</h2>
+                            <p class="text-slate-300">Technologies, efficiencies and market developments</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute bottom-2 right-4 text-xs text-slate-500">Photo: Andreas Gücklhorn / Unsplash</div>
+            </div>
+
+            <!-- How it works -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-500 text-lg font-bold">1</span>
+                    How it works
+                </h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">The photovoltaic effect</h4>
+                        <p class="text-slate-400 mb-4">
+                            The photovoltaic effect est la conversion directe de la lumière en électricité au niveau atomique. 
+                            Discovered by Edmond Becquerel in 1839, it relies on semiconductor properties.
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-amber-500 text-xs">1</span>
+                                </div>
+                                <p class="text-slate-300 text-sm">Photons strike the cell and transfer their energy to silicon electrons</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-amber-500 text-xs">2</span>
+                                </div>
+                                <p class="text-slate-300 text-sm">The P-N junction creates an electric field that separates charges</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-amber-500 text-xs">3</span>
+                                </div>
+                                <p class="text-slate-300 text-sm">Direct current (DC) is collected and converted to alternating current (AC) by the inverter</p>
+                            </div>
+                        </div>
+                        <!-- Image cellule solaire -->
+                        <div class="mt-6 rounded-xl overflow-hidden">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800&q=80" 
+                                 alt="Solar cells close-up" 
+                                 class="w-full h-40 object-cover">
+                            <p class="text-xs text-slate-500 mt-1">Photo: American Public Power Association / Unsplash</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">System components</h4>
+                        <!-- Image installation -->
+                        <div class="mb-6 rounded-xl overflow-hidden">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80" 
+                                 alt="Rooftop solar panel installation" 
+                                 class="w-full h-40 object-cover">
+                            <p class="text-xs text-slate-500 mt-1">Photo: Vivint Solar / Unsplash</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">PV Modules</p>
+                                    <p class="text-slate-400 text-sm">Conversion lumière → électricité DC</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Inverter (Inverter)</p>
+                                    <p class="text-slate-400 text-sm">Conversion DC → AC + MPPT</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-3 bg-slate-800/50 rounded-xl">
+                                <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Compteur / Monitoring</p>
+                                    <p class="text-slate-400 text-sm">Mesure production et injection réseau</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cell technologies -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-500 text-lg font-bold">2</span>
+                    Cell technologies
+                </h3>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Monocrystalline -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded-full">Dominant</span>
+                            <span class="text-slate-500 text-sm">~95% du marché</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">Monocrystalline (mono-Si)</h4>
+                        <p class="text-slate-400 text-sm mb-4">Pure silicon with single crystal structure. Uniform black cells.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency cellule</span>
+                                <span class="text-white font-medium">22-24%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency module</span>
+                                <span class="text-white font-medium">20-22%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Lifespan</span>
+                                <span class="text-white font-medium">25-30 ans</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Dégradation</span>
+                                <span class="text-white font-medium">0.3-0.5%/an</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-green-500 text-xs">✓ Meilleur rendement surfacique</p>
+                            <p class="text-green-500 text-xs">✓ Performances élevées faible luminosité</p>
+                        </div>
+                    </div>
+
+                    <!-- PERC -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-blue-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-500 text-xs font-medium rounded-full">Current standard</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">PERC / PERC+</h4>
+                        <p class="text-slate-400 text-sm mb-4">Passivated Emitter and Rear Cell. Rear reflective layer.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency cellule</span>
+                                <span class="text-white font-medium">23-24%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency module</span>
+                                <span class="text-white font-medium">21-22%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Gain vs standard</span>
+                                <span class="text-white font-medium">+1-2%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Market share</span>
+                                <span class="text-white font-medium">~70%</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-green-500 text-xs">✓ Excellent rapport qualité/prix</p>
+                            <p class="text-green-500 text-xs">✓ Technologie mature et fiable</p>
+                        </div>
+                    </div>
+
+                    <!-- TOPCon -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-purple-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-500 text-xs font-medium rounded-full">Nouvelle génération</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">TOPCon</h4>
+                        <p class="text-slate-400 text-sm mb-4">Tunnel Oxide Passivated Contact. Contacts passivés par oxyde tunnel.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency cellule</span>
+                                <span class="text-white font-medium">25-26%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency module</span>
+                                <span class="text-white font-medium">22-23%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Coeff. température</span>
+                                <span class="text-white font-medium">-0.30%/°C</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Bifacialité</span>
+                                <span class="text-white font-medium">80-85%</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-green-500 text-xs">✓ Meilleur comportement thermique</p>
+                            <p class="text-green-500 text-xs">✓ Idéal pour bifacial</p>
+                        </div>
+                    </div>
+
+                    <!-- HJT -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-cyan-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-cyan-500/20 text-cyan-500 text-xs font-medium rounded-full">Premium</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">HJT (Heterojunction)</h4>
+                        <p class="text-slate-400 text-sm mb-4">Heterojunction Technology. Couches de silicium amorphe sur cristallin.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency cellule</span>
+                                <span class="text-white font-medium">26-27%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency module</span>
+                                <span class="text-white font-medium">23-24%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Coeff. température</span>
+                                <span class="text-white font-medium">-0.26%/°C</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Bifacialité</span>
+                                <span class="text-white font-medium">90-95%</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-green-500 text-xs">✓ Efficiency record</p>
+                            <p class="text-green-500 text-xs">✓ Excellente bifacialité</p>
+                            <p class="text-red-400 text-xs">✗ Cost plus élevé</p>
+                        </div>
+                    </div>
+
+                    <!-- Bifacial -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-green-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-green-500/20 text-green-500 text-xs font-medium rounded-full">Trend forte</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">Modules Bifaciaux</h4>
+                        <p class="text-slate-400 text-sm mb-4">Captent la lumière des deux côtés. Gain via réflexion du sol (albédo).</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Gain bifacial</span>
+                                <span class="text-white font-medium">5-30%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Albédo herbe</span>
+                                <span class="text-white font-medium">~20%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Albédo sable/béton</span>
+                                <span class="text-white font-medium">30-40%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Albédo neige</span>
+                                <span class="text-white font-medium">80-90%</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-green-500 text-xs">✓ Surproduction significative</p>
+                            <p class="text-green-500 text-xs">✓ Idéal utility-scale et trackers</p>
+                        </div>
+                    </div>
+
+                    <!-- Perovskites -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-pink-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-pink-500/20 text-pink-500 text-xs font-medium rounded-full">R&D / Futur</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">Perovskites</h4>
+                        <p class="text-slate-400 text-sm mb-4">Matériaux cristallins ABX₃. Prometteurs en tandem avec silicium.</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency labo</span>
+                                <span class="text-white font-medium">26% (seul)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Tandem Si-Perov</span>
+                                <span class="text-white font-medium">33%+ (labo)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Commercialisation</span>
+                                <span class="text-white font-medium">2026-2028</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Défi principal</span>
+                                <span class="text-white font-medium">Stabilité</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-green-500 text-xs">✓ Potentiel rendement &gt;30%</p>
+                            <p class="text-green-500 text-xs">✓ Cost fabrication faible</p>
+                            <p class="text-red-400 text-xs">✗ Durabilité à prouver</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tableau comparatif -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-500 text-lg font-bold">3</span>
+                    Comparatif des technologies
+                </h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-slate-900/50 rounded-2xl overflow-hidden">
+                        <thead>
+                            <tr class="bg-slate-800/50">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-white">Technologie</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Efficiency</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Coeff. Temp.</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Prix (€/Wc)</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Bifacialité</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Maturity</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">PERC Mono</td>
+                                <td class="px-6 py-4 text-center text-slate-300">21-22%</td>
+                                <td class="px-6 py-4 text-center text-slate-300">-0.35%/°C</td>
+                                <td class="px-6 py-4 text-center text-green-500">0.15-0.20</td>
+                                <td class="px-6 py-4 text-center text-slate-300">70%</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-green-500/20 text-green-500 text-xs rounded-full">Mature</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">TOPCon</td>
+                                <td class="px-6 py-4 text-center text-slate-300">22-23%</td>
+                                <td class="px-6 py-4 text-center text-slate-300">-0.30%/°C</td>
+                                <td class="px-6 py-4 text-center text-amber-500">0.18-0.25</td>
+                                <td class="px-6 py-4 text-center text-slate-300">85%</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-blue-500/20 text-blue-500 text-xs rounded-full">Croissance</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">HJT</td>
+                                <td class="px-6 py-4 text-center text-slate-300">23-24%</td>
+                                <td class="px-6 py-4 text-center text-green-500">-0.26%/°C</td>
+                                <td class="px-6 py-4 text-center text-red-400">0.25-0.35</td>
+                                <td class="px-6 py-4 text-center text-slate-300">92%</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-purple-500/20 text-purple-500 text-xs rounded-full">Premium</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">Tandem Perovskite</td>
+                                <td class="px-6 py-4 text-center text-slate-300">28-33%</td>
+                                <td class="px-6 py-4 text-center text-slate-500">TBD</td>
+                                <td class="px-6 py-4 text-center text-slate-500">TBD</td>
+                                <td class="px-6 py-4 text-center text-slate-500">N/A</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-pink-500/20 text-pink-500 text-xs rounded-full">R&D</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-slate-500 text-sm mt-4">* Prix indicatifs modules utility-scale, Q1 2025. Source: PV InfoLink, BNEF</p>
+            </div>
+
+            <!-- Trends et innovations -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-500 text-lg font-bold">4</span>
+                    Trends & Innovations
+                </h3>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Agrivoltaics -->
+                    <div class="bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-2xl p-6 border border-green-500/20 overflow-hidden">
+                        <div class="rounded-xl overflow-hidden mb-4 -mx-2 -mt-2">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" 
+                                 alt="Champ agricole avec soleil" 
+                                 class="w-full h-28 object-cover">
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-2">Agrivoltaics</h4>
+                        <p class="text-slate-400 text-sm mb-3">Synergie agriculture et PV. Protection des cultures, double revenu.</p>
+                        <div class="text-green-500 text-sm font-medium">+40% projets en 2024</div>
+                    </div>
+
+                    <!-- Floating Solar -->
+                    <div class="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-2xl p-6 border border-blue-500/20 overflow-hidden">
+                        <div class="rounded-xl overflow-hidden mb-4 -mx-2 -mt-2">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=600&q=80" 
+                                 alt="Lac avec reflets" 
+                                 class="w-full h-28 object-cover">
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-2">Floating Solar</h4>
+                        <p class="text-slate-400 text-sm mb-3">PV flottant sur lacs, bassins. Refroidissement naturel, pas d'emprise foncière.</p>
+                        <div class="text-blue-500 text-sm font-medium">6 GW installés monde</div>
+                    </div>
+
+                    <!-- BIPV -->
+                    <div class="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-2xl p-6 border border-purple-500/20 overflow-hidden">
+                        <div class="rounded-xl overflow-hidden mb-4 -mx-2 -mt-2">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80" 
+                                 alt="Bâtiment moderne avec façade vitrée" 
+                                 class="w-full h-28 object-cover">
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-2">BIPV</h4>
+                        <p class="text-slate-400 text-sm mb-3">Building Integrated PV. Tuiles, façades, vitrages solaires.</p>
+                        <div class="text-purple-500 text-sm font-medium">Marché €5Mds en 2030</div>
+                    </div>
+
+                    <!-- Trackers -->
+                    <div class="bg-gradient-to-br from-amber-500/10 to-amber-600/5 rounded-2xl p-6 border border-amber-500/20 overflow-hidden">
+                        <div class="rounded-xl overflow-hidden mb-4 -mx-2 -mt-2">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=600&q=80" 
+                                 alt="Rangées de panels solaires" 
+                                 class="w-full h-28 object-cover">
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-2">Trackers solaires</h4>
+                        <p class="text-slate-400 text-sm mb-3">Suivi mono/bi-axial du soleil. +25-35% de production.</p>
+                        <div class="text-amber-500 text-sm font-medium">Standard utility-scale</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agrivoltaics & Carports - Section détaillée -->
+            <div class="mb-8" id="agrivoltaisme">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">5</span>
+                    Agrivoltaics & Carports
+                    <span class="px-3 py-1 bg-green-500/20 text-green-500 text-xs font-medium rounded-full ml-2">Strong growth</span>
+                </h3>
+
+                <!-- Agrivoltaics -->
+                <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-8 border border-green-500/20 mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🌾</span>
+                        <div>
+                            <h4 class="text-xl font-semibold text-white">Agrivoltaics</h4>
+                            <p class="text-green-500 text-sm">Synergie agriculture + énergie solaire</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-8 mb-6">
+                        <div>
+                            <p class="text-slate-300 mb-4">
+                                L'<strong class="text-white">agrivoltaïsme</strong> combine production agricole et production d'électricité sur une même parcelle. 
+                                Les panels protègent les cultures (chaleur, grêle, gel) tout en générant un revenu complémentaire pour l'agriculteur.
+                            </p>
+                            
+                            <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+                                <h5 class="text-white font-medium mb-3">Types d'installations</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">→</span>
+                                        <div>
+                                            <span class="text-white">Panneaux surélevés (3-5m)</span>
+                                            <span class="text-slate-500"> - Passage d'engins agricoles</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">→</span>
+                                        <div>
+                                            <span class="text-white">Trackers verticaux</span>
+                                            <span class="text-slate-500"> - Entre les rangs de culture</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">→</span>
+                                        <div>
+                                            <span class="text-white">Serres photovoltaïques</span>
+                                            <span class="text-slate-500"> - Rooftop semi-transparente</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">→</span>
+                                        <div>
+                                            <span class="text-white">Élevage + PV</span>
+                                            <span class="text-slate-500"> - Pâturage sous panels (ovins)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+                                <h5 class="text-white font-medium mb-3">Réglementation France (2024)</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Décret agrivoltaïsme</span>
+                                        <span class="text-white">Avril 2024</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Taux de couverture max</span>
+                                        <span class="text-white">40% de la parcelle</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Perte de rendement agricole max</span>
+                                        <span class="text-white">10%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Service rendu obligatoire</span>
+                                        <span class="text-green-500">Oui (protection, eau...)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-2xl font-bold text-green-500">+40%</p>
+                                    <p class="text-slate-400 text-xs">Projets en 2024</p>
+                                </div>
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-2xl font-bold text-amber-500">3-5 GW</p>
+                                    <p class="text-slate-400 text-xs">Potentiel France 2030</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-green-500/10 rounded-xl border border-green-500/20">
+                        <p class="text-green-400 text-sm">
+                            <strong class="text-white">💡 Point clé :</strong> L'agrivoltaïsme n'est pas du "PV au sol déguisé". 
+                            Le décret impose un <strong>service rendu à l'agriculture</strong> (protection climatique, réduction stress hydrique, amélioration bien-être animal).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Carports de parking -->
+                <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl p-8 border border-blue-500/20">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🅿️</span>
+                        <div>
+                            <h4 class="text-xl font-semibold text-white">Carports de parking</h4>
+                            <p class="text-blue-500 text-sm">Obligation légale + forte rentabilité</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-8 mb-6">
+                        <div>
+                            <p class="text-slate-300 mb-4">
+                                Les <strong class="text-white">ombrières photovoltaïques</strong> couvrent les parkings extérieurs. 
+                                Elles produisent de l'électricité tout en protégeant les véhicules (soleil, grêle) et en réduisant les îlots de chaleur.
+                            </p>
+
+                            <div class="bg-slate-900/50 rounded-xl p-4">
+                                <h5 class="text-white font-medium mb-3">⚠️ Obligation légale (Loi APER 2023)</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Parkings > 1 500 m²</span>
+                                        <span class="text-amber-500 font-medium">50% couvert d'ici 2028</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Parkings > 10 000 m²</span>
+                                        <span class="text-amber-500 font-medium">50% couvert d'ici 2026</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Parkings > 500 places (existants)</span>
+                                        <span class="text-amber-500 font-medium">50% couvert d'ici 2028</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+                                <h5 class="text-white font-medium mb-3">Données économiques</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">CAPEX</span>
+                                        <span class="text-white">1 000 - 1 400 €/kWc</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Surcoût vs sol</span>
+                                        <span class="text-white">+30-50% (structure)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                                        <span class="text-slate-400">Puissance typique</span>
+                                        <span class="text-white">150-250 Wc/place</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">TRI projet</span>
+                                        <span class="text-green-500 font-medium">8-12%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-2xl font-bold text-blue-500">11 GW</p>
+                                    <p class="text-slate-400 text-xs">Potentiel France</p>
+                                </div>
+                                <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+                                    <p class="text-2xl font-bold text-cyan-500">+IRVE</p>
+                                    <p class="text-slate-400 text-xs">Synergie bornes EV</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                        <p class="text-blue-400 text-sm">
+                            <strong class="text-white">💡 Opportunité :</strong> La combinaison <strong>ombrière + bornes de recharge (IRVE)</strong> 
+                            maximise la valeur du projet : autoconsommation directe pour la recharge VE, image verte, et conformité réglementaire.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="stockage" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Image Hero -->
+            <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=1600&q=80" 
+                     alt="Batteries and energy storage" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-green-500/20 backdrop-blur-sm rounded-xl border border-green-500/30">
+                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-white">Stockage & Batteries</h2>
+                            <p class="text-slate-300">Technologies, economics and solar + storage hybridization</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute top-4 right-4 px-3 py-1 bg-green-500/20 backdrop-blur-sm text-green-500 text-xs font-medium rounded-full border border-green-500/30">
+                    INCONTOURNABLE 2025
+                </div>
+            </div>
+
+            <!-- Why storage -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">1</span>
+                    Why storage has become essential
+                </h3>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">Intermittence</h4>
+                        <p class="text-slate-400 text-sm">Le solaire ne produit que le jour. Le stockage permet de consommer le soir.</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">Arbitrage prix</h4>
+                        <p class="text-slate-400 text-sm">Stocker quand les prix sont bas, vendre quand ils sont hauts.</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">Grid services</h4>
+                        <p class="text-slate-400 text-sm">Réserve primaire, réglage fréquence, capacité = revenus additionnels.</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 bg-green-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">Éviter curtailment</h4>
+                        <p class="text-slate-400 text-sm">Stocker plutôt que perdre la production lors des pics.</p>
+                    </div>
+                </div>
+
+                <!-- Chiffres clés stockage -->
+                <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl p-8 border border-green-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-6">Chiffres clés du marché BESS (Battery Energy Storage System)</h4>
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-500">-89%</p>
+                            <p class="text-slate-400 text-sm mt-1">Baisse coût batteries since 2010</p>
+                            <p class="text-slate-500 text-xs">Source : IRENA 2024</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-blue-500">$150-200/kWh</p>
+                            <p class="text-slate-400 text-sm mt-1">Cost système BESS installé</p>
+                            <p class="text-slate-500 text-xs">Source : BNEF, IRENA 2024</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-amber-500">50 GW</p>
+                            <p class="text-slate-400 text-sm mt-1">Déploiement mondial 2024</p>
+                            <p class="text-slate-500 text-xs">+80% vs 2023</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-purple-500">$100/kWh</p>
+                            <p class="text-slate-400 text-sm mt-1">Objectif 2030</p>
+                            <p class="text-slate-500 text-xs">Seuil de compétitivité</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battery technologies -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">2</span>
+                    Battery technologies
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Lithium-ion NMC -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-500 text-xs font-medium rounded-full">Leader historique</span>
+                            <span class="text-slate-500 text-xs">Li-ion NMC</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Lithium-ion NMC</h4>
+                        <p class="text-slate-400 text-sm mb-4">Nickel-Manganèse-Cobalt. High energy density, utilisé dans les véhicules électriques et le stockage stationnaire.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Densité énergétique</span>
+                                <span class="text-white font-medium">150-250 Wh/kg</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cycles de vie</span>
+                                <span class="text-white font-medium">2000-4000</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency</span>
+                                <span class="text-white font-medium">90-95%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cost</span>
+                                <span class="text-white font-medium">$150-200/kWh</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-700/50 text-xs">
+                            <p class="text-green-500">✓ Haute densité, maturité industrielle</p>
+                            <p class="text-red-400">✗ Cobalt (coût, éthique), risque thermique</p>
+                        </div>
+                    </div>
+
+                    <!-- LFP -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-green-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-green-500/20 text-green-500 text-xs font-medium rounded-full">Trend forte</span>
+                            <span class="text-slate-500 text-xs">Li-ion LFP</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Lithium Fer Phosphate (LFP)</h4>
+                        <p class="text-slate-400 text-sm mb-4">Sans cobalt, plus sûr et moins cher. Devient le standard pour le stockage stationnaire utility-scale.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Densité énergétique</span>
+                                <span class="text-white font-medium">90-160 Wh/kg</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cycles de vie</span>
+                                <span class="text-white font-medium">4000-10000</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency</span>
+                                <span class="text-white font-medium">92-96%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cost</span>
+                                <span class="text-green-500 font-medium">$100-150/kWh</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-700/50 text-xs">
+                            <p class="text-green-500">✓ Sécurité, longévité, sans cobalt, coût</p>
+                            <p class="text-red-400">✗ Densité plus faible (encombrement)</p>
+                        </div>
+                    </div>
+
+                    <!-- Sodium-ion -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-amber-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded-full">Emerging</span>
+                            <span class="text-slate-500 text-xs">Na-ion</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Sodium-ion (Na-ion)</h4>
+                        <p class="text-slate-400 text-sm mb-4">Alternative sans lithium. Matériaux abondants et bon marché. CATL et BYD lancent la production de masse.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Densité énergétique</span>
+                                <span class="text-white font-medium">100-160 Wh/kg</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cycles de vie</span>
+                                <span class="text-white font-medium">3000-6000</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency</span>
+                                <span class="text-white font-medium">88-92%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cost cible</span>
+                                <span class="text-amber-500 font-medium">$50-80/kWh</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-700/50 text-xs">
+                            <p class="text-green-500">✓ Matériaux abondants, coût très bas</p>
+                            <p class="text-red-400">✗ Densité plus faible, maturité à prouver</p>
+                        </div>
+                    </div>
+
+                    <!-- Flow batteries -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-purple-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-500 text-xs font-medium rounded-full">Longue durée</span>
+                            <span class="text-slate-500 text-xs">Redox-flow</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Batteries à flux (Vanadium)</h4>
+                        <p class="text-slate-400 text-sm mb-4">Stockage longue durée (4-12h). Énergie stockée dans des électrolytes liquides. Scalable indépendamment puissance/énergie.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Durée de décharge</span>
+                                <span class="text-white font-medium">4-12+ heures</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Cycles de vie</span>
+                                <span class="text-white font-medium">15000-20000</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Efficiency</span>
+                                <span class="text-white font-medium">70-80%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Lifespan</span>
+                                <span class="text-white font-medium">20-25 ans</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-700/50 text-xs">
+                            <p class="text-green-500">✓ Longue durée, scalable, durée de vie</p>
+                            <p class="text-red-400">✗ Efficiency plus faible, encombrement</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tableau comparatif batteries -->
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-slate-800/50 rounded-2xl overflow-hidden">
+                        <thead>
+                            <tr class="bg-slate-700/50">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-white">Technologie</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Densité (Wh/kg)</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Cycles</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Efficiency</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Cost ($/kWh)</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-white">Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">Li-ion NMC</td>
+                                <td class="px-6 py-4 text-center text-slate-300">150-250</td>
+                                <td class="px-6 py-4 text-center text-slate-300">2000-4000</td>
+                                <td class="px-6 py-4 text-center text-slate-300">90-95%</td>
+                                <td class="px-6 py-4 text-center text-slate-300">150-200</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-blue-500/20 text-blue-500 text-xs rounded-full">EV / Grid</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30 transition-colors bg-green-500/5">
+                                <td class="px-6 py-4 text-white font-medium">LFP</td>
+                                <td class="px-6 py-4 text-center text-slate-300">90-160</td>
+                                <td class="px-6 py-4 text-center text-green-500 font-medium">4000-10000</td>
+                                <td class="px-6 py-4 text-center text-slate-300">92-96%</td>
+                                <td class="px-6 py-4 text-center text-green-500 font-medium">100-150</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-green-500/20 text-green-500 text-xs rounded-full">Standard Grid</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">Na-ion</td>
+                                <td class="px-6 py-4 text-center text-slate-300">100-160</td>
+                                <td class="px-6 py-4 text-center text-slate-300">3000-6000</td>
+                                <td class="px-6 py-4 text-center text-slate-300">88-92%</td>
+                                <td class="px-6 py-4 text-center text-amber-500 font-medium">50-80*</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs rounded-full">Emerging</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                <td class="px-6 py-4 text-white font-medium">Vanadium Flow</td>
+                                <td class="px-6 py-4 text-center text-slate-300">15-25</td>
+                                <td class="px-6 py-4 text-center text-purple-500 font-medium">15000+</td>
+                                <td class="px-6 py-4 text-center text-slate-300">70-80%</td>
+                                <td class="px-6 py-4 text-center text-slate-300">300-500</td>
+                                <td class="px-6 py-4 text-center"><span class="px-2 py-1 bg-purple-500/20 text-purple-500 text-xs rounded-full">Long Duration</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-slate-500 text-xs mt-2">* Cost cible 2025-2026. Sources : BNEF, Wood Mackenzie, IRENA 2024.</p>
+                </div>
+            </div>
+
+            <!-- Solaire + Stockage : Business Models -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">3</span>
+                    Solaire + Stockage : nouveaux business models
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Revenue Stacking -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Revenue Stacking (empilement des revenus)</h4>
+                        <p class="text-slate-400 text-sm mb-6">Combiner plusieurs sources de revenus pour maximiser la rentabilité d'un système hybride :</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl">
+                                <div class="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-amber-500 text-sm font-bold">1</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium text-sm">Arbitrage énergie</p>
+                                    <p class="text-slate-500 text-xs">Acheter/stocker en heures creuses, vendre en pointe</p>
+                                </div>
+                                <span class="text-amber-500 text-sm font-medium">30-50%</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl">
+                                <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-blue-500 text-sm font-bold">2</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium text-sm">Réserve primaire (FCR)</p>
+                                    <p class="text-slate-500 text-xs">Frequency regulation réseau, contrats RTE</p>
+                                </div>
+                                <span class="text-blue-500 text-sm font-medium">20-30%</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl">
+                                <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-purple-500 text-sm font-bold">3</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium text-sm">Capacité</p>
+                                    <p class="text-slate-500 text-xs">Mécanisme de capacité, garantie de disponibilité</p>
+                                </div>
+                                <span class="text-purple-500 text-sm font-medium">15-25%</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-green-500 text-sm font-bold">4</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium text-sm">Peak shaving</p>
+                                    <p class="text-slate-500 text-xs">Réduction puissance souscrite pour les industriels</p>
+                                </div>
+                                <span class="text-green-500 text-sm font-medium">10-20%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configurations hybrides -->
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Configurations hybrides</h4>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-900/50 rounded-xl border-l-4 border-amber-500">
+                                <h5 class="text-white font-medium mb-1">AC-coupled</h5>
+                                <p class="text-slate-400 text-sm">Battery connected on AC side via dedicated inverter. More flexible, allows retrofit on existing plants.</p>
+                            </div>
+                            <div class="p-4 bg-slate-900/50 rounded-xl border-l-4 border-blue-500">
+                                <h5 class="text-white font-medium mb-1">DC-coupled</h5>
+                                <p class="text-slate-400 text-sm">Battery connected on DC side, shares PV inverter. More efficient (fewer conversions), lower cost.</p>
+                            </div>
+                            <div class="p-4 bg-slate-900/50 rounded-xl border-l-4 border-green-500">
+                                <h5 class="text-white font-medium mb-1">Hybride AC+DC</h5>
+                                <p class="text-slate-400 text-sm">Combine les deux approches. Optimal pour grands projets utility-scale. Flexibilité maximale.</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-green-500/10 rounded-xl border border-green-500/20">
+                            <p class="text-green-500 font-medium text-sm">💡 Trend 2025</p>
+                            <p class="text-slate-400 text-sm mt-1">Le DC coupling devient le standard pour les nouveaux projets utility-scale PV+BESS.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LCOE hybride -->
+                <div class="bg-gradient-to-r from-amber-500/10 to-green-500/10 rounded-2xl p-8 border border-amber-500/20">
+                    <h4 class="text-xl font-semibold text-white mb-6">LCOE des systèmes hybrides PV + Stockage</h4>
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl">
+                            <p class="text-slate-400 text-sm mb-2">PV seul (utility-scale)</p>
+                            <p class="text-3xl font-bold text-amber-500">30-45 €/MWh</p>
+                        </div>
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl">
+                            <p class="text-slate-400 text-sm mb-2">PV + Batterie (2-4h)</p>
+                            <p class="text-3xl font-bold text-green-500">50-80 €/MWh</p>
+                        </div>
+                        <div class="text-center p-4 bg-slate-900/50 rounded-xl">
+                            <p class="text-slate-400 text-sm mb-2">PV + Batterie (4h+) + Services</p>
+                            <p class="text-3xl font-bold text-blue-500">Compétitif vs gaz</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm">
+                        <strong class="text-white">Point clé :</strong> Avec le revenue stacking (arbitrage + FCR + capacité), 
+                        les projets hybrides atteignent des TRI equity de <span class="text-green-500 font-semibold">10-15%</span>, 
+                        supérieurs au PV seul.
+                    </p>
+                    <p class="text-slate-500 text-xs mt-2">Source : IRENA 2024, projets US hybrides : LCOE moyen $0.079/kWh (4.5 GW PV + 7.7 GWh stockage)</p>
+                </div>
+            </div>
+
+            <!-- Hydrogène vert -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">4</span>
+                    Hydrogène vert : le stockage longue durée
+                </h3>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Principle</h4>
+                        <p class="text-slate-400 mb-6">
+                            L'<strong class="text-white">hydrogen vert</strong> est produit par électrolyse de l'eau 
+                            à partir d'électricité renouvelable (solaire, éolien). Il permet de stocker l'énergie 
+                            sur de longues durées (jours, semaines, saisons).
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium">1. Production solaire</p>
+                                    <p class="text-slate-500 text-sm">Électricité verte à bas coût</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium">2. Électrolyse</p>
+                                    <p class="text-slate-500 text-sm">H₂O → H₂ + O₂ (rendement 60-80%)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-white font-medium">3. Stockage / Transport</p>
+                                    <p class="text-slate-500 text-sm">Compression, liquéfaction, ou conversion (ammoniac)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-xl font-semibold text-white mb-4">Économie de l'hydrogen vert</h4>
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <span class="text-slate-400">Cost H₂ vert 2024</span>
+                                <span class="text-white font-bold">4-7 €/kg</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <span class="text-slate-400">Objectif 2030</span>
+                                <span class="text-green-500 font-bold">2-3 €/kg</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <span class="text-slate-400">Parité H₂ gris</span>
+                                <span class="text-amber-500 font-bold">~1.5-2 €/kg</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                                <span class="text-slate-400">Cost électrolyseur</span>
+                                <span class="text-white font-bold">500-1000 €/kW</span>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                            <p class="text-amber-500 font-medium text-sm">🎯 Facteur clé</p>
+                            <p class="text-slate-400 text-sm mt-1">Le coût de l'électricité représente 60-70% du coût de l'H₂. Un LCOE solaire bas = H₂ vert compétitif.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    </main>
+    
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Need a financial analysis for your project?</h2>
+            <p class="text-slate-400 mb-8">20 years of market finance experience serving solar energy</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Contact Me
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    View my LinkedIn profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the Site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Home</p>
+                </a>
+                <a href="economy.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Economy</p>
+                </a>
+                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                </a>
+                <a href="ai-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
+                    <span class="text-2xl">🤖</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">IA & Data</p>
+                </a>
+                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
+                </a>
+                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/technologies.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <!-- Legal Notice -->
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Publisher:</strong> Bernard Pugnet - Personal website à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé. Seuls des cookies techniques peuvent être déposés par les services tiers (CDN).</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement. L'éditeur décline toute responsabilité quant à l'utilisation qui pourrait être faite de ces informations.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
+        function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener(
