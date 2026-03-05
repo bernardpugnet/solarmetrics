@@ -5,17 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SolarMetrics - Bernard Pugnet | Expert Finance & Énergie Solaire</title>
     <meta name="description" content="SolarMetrics - Expertise en financement de projets solaires, asset management PV, LCOE, PPA et analyse de rentabilité. 20 ans d'expérience en finance de marché.">
-    <meta name="keywords" content="solaire, photovoltaïque, PV, LCOE, PPA, asset management, financement projet, énergie renouvelable, Bernard Pugnet">
+    <meta name="keywords" content="solaire, photovoltaïque, PV, LCOE, PPA, asset management, financement projet, énergie renouvelable, Bernard Pugnet, SolarMetrics">
     <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/index.html">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/index.html">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/index.html">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/index.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/index.html">
+    <meta property="og:site_name" content="SolarMetrics">
     <meta property="og:title" content="SolarMetrics - Expert Finance & Énergie Solaire">
-    <meta property="og:description" content="Expertise en financement de projets solaires, asset management PV, analyse de rentabilité.">
+    <meta property="og:description" content="Expertise en financement de projets solaires, asset management PV, LCOE, PPA et analyse de rentabilité. 20 ans d'expérience en finance de marché.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SolarMetrics - Expert Finance & Énergie Solaire">
+    <meta name="twitter:description" content="Expertise en financement de projets solaires, asset management PV, LCOE, PPA et analyse de rentabilité.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SolarMetrics",
+      "url": "https://solarmetrics.netlify.app/fr/",
+      "description": "Expertise en financement de projets solaires, asset management PV, LCOE, PPA et analyse de rentabilité.",
+      "author": {
+        "@type": "Person",
+        "name": "Bernard Pugnet",
+        "jobTitle": "Expert Finance & Énergie Solaire",
+        "url": "https://www.linkedin.com/in/bernard-pugnet/",
+        "sameAs": ["https://www.linkedin.com/in/bernard-pugnet/"]
+      },
+      "inLanguage": "fr"
+    }
+    </script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts: preconnect + font-display swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>
         *{font-family:'Inter',sans-serif}
@@ -23,11 +60,15 @@
         .animate-float{animation:float 6s ease-in-out infinite}
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
         html{scroll-behavior:smooth}
+        /* Critical: reduce layout shift from font loading */
+        body{font-display:swap}
     </style>
 </head>
 <body class="bg-slate-900 text-white">
+    <!-- Skip to content (accessibility) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium">Aller au contenu principal</a>
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="index.html" class="flex items-center gap-3">
@@ -53,8 +94,8 @@
                         <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
                         <a href="../en/index.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
                     </div>
-                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
             </div>
@@ -76,7 +117,7 @@
         </div>
     </nav>
 
-    <main>
+    <main id="main-content">
         <!-- Hero Section -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
             <!-- Background Effects -->
@@ -124,7 +165,7 @@
                         <h2 class="text-2xl font-bold text-white">📰 Actualités & Veille</h2>
                         <p class="text-slate-400 mt-1">Analyses et tendances du marché solaire</p>
                     </div>
-                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="text-amber-500 hover:text-amber-400 text-sm font-medium flex items-center gap-2">
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-amber-400 text-sm font-medium flex items-center gap-2">
                         Suivre sur LinkedIn
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
@@ -134,25 +175,25 @@
                     <!-- News Item 1 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">Mars 2026</div>
-                        <h3 class="text-white font-semibold mb-2">Appels d'offres CRE : 79 €/MWh</h3>
-                        <p class="text-slate-400 text-sm mb-3">Les derniers résultats PPE2 confirment la stabilisation des prix PV sol autour de 79-80 €/MWh.</p>
-                        <span class="text-amber-500 text-xs font-medium">Source : CRE</span>
+                        <h3 class="text-white font-semibold mb-2">PPE3 publiée : 54-59 GW de PV d'ici 2030</h3>
+                        <p class="text-slate-400 text-sm mb-3">La Programmation Pluriannuelle de l'Énergie (PPE3), publiée en février 2026, fixe un objectif de 54 à 59 GW de photovoltaïque installés d'ici 2030, et jusqu'à 98 GW en 2035. La France a progressé de +24% en 2025 avec +1,5 GW raccordés au T4.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source : Ministère de la Transition Énergétique</span>
                     </div>
-                    
+
                     <!-- News Item 2 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">Février 2026</div>
-                        <h3 class="text-white font-semibold mb-2">IRENA 2024 : LCOE global à 43 $/MWh</h3>
-                        <p class="text-slate-400 text-sm mb-3">Le coût moyen mondial du solaire PV continue sa baisse, avec des disparités régionales importantes.</p>
-                        <span class="text-amber-500 text-xs font-medium">Source : IRENA</span>
+                        <h3 class="text-white font-semibold mb-2">LCOE solaire : -97% depuis 2010, encore -30% d'ici 2035</h3>
+                        <p class="text-slate-400 text-sm mb-3">BloombergNEF prévoit une baisse supplémentaire de 30% du LCOE solaire d'ici 2035. Malgré une hausse ponctuelle de 6% en 2025 (39 $/MWh), le solaire reste la source d'électricité la plus compétitive au monde.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source : BloombergNEF, Wood Mackenzie</span>
                     </div>
-                    
+
                     <!-- News Item 3 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
-                        <div class="text-xs text-slate-500 mb-2">Janvier 2026</div>
-                        <h3 class="text-white font-semibold mb-2">IA & Monitoring : tendances 2026</h3>
-                        <p class="text-slate-400 text-sm mb-3">L'intelligence artificielle transforme la gestion d'actifs solaires : détection d'anomalies, prédiction de production.</p>
-                        <span class="text-amber-500 text-xs font-medium">Analyse</span>
+                        <div class="text-xs text-slate-500 mb-2">Février 2026</div>
+                        <h3 class="text-white font-semibold mb-2">UE : 406 GW installés, mais contraction en vue</h3>
+                        <p class="text-slate-400 text-sm mb-3">L'UE a dépassé son objectif de 380 GW avec 406 GW fin 2025. Mais SolarPower Europe alerte sur un ralentissement 2026-2027 : le résidentiel chute de 28% à 14% du marché. Retour aux niveaux 2025 prévu seulement en 2030.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source : SolarPower Europe</span>
                     </div>
                 </div>
             </div>
@@ -377,4 +418,17 @@
             menuBtn.setAttribute('aria-expanded', 'false');
         }
         
-        menuBtn.addEventListener('click
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+</body>
+</html>

@@ -746,4 +746,9 @@
         const mobileMenu = document.getElementById('mobileMenu');
         function toggleMenu() { const h = mobileMenu.classList.toggle('hidden'); menuBtn.setAttribute('aria-expanded', !h); }
         function closeMenu() { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); }
-        menuBtn.addEventListener(
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+        window.addEventListener('resize', function() { if (window.innerWidth >= 1024) closeMenu(); });
+    </script>
+</body>
+</html>

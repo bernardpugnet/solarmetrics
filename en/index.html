@@ -5,17 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SolarMetrics - Bernard Pugnet | Solar Finance & Energy Expert</title>
     <meta name="description" content="SolarMetrics - Expertise in solar project financing, PV asset management, LCOE, PPA and profitability analysis. 20 years of market finance experience.">
-    <meta name="keywords" content="solar, photovoltaic, PV, LCOE, PPA, asset management, project finance, renewable energy, Bernard Pugnet">
+    <meta name="keywords" content="solar, photovoltaic, PV, LCOE, PPA, asset management, project finance, renewable energy, Bernard Pugnet, SolarMetrics">
     <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/index.html">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/index.html">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/index.html">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/index.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://solarmetrics.netlify.app/en/index.html">
+    <meta property="og:site_name" content="SolarMetrics">
     <meta property="og:title" content="SolarMetrics - Solar Finance & Energy Expert">
-    <meta property="og:description" content="Expertise in solar project financing, PV asset management, profitability analysis.">
+    <meta property="og:description" content="Expertise in solar project financing, PV asset management, LCOE, PPA and profitability analysis. 20 years of market finance experience.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SolarMetrics - Solar Finance & Energy Expert">
+    <meta name="twitter:description" content="Expertise in solar project financing, PV asset management, LCOE, PPA and profitability analysis.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SolarMetrics",
+      "url": "https://solarmetrics.netlify.app/en/",
+      "description": "Expertise in solar project financing, PV asset management, LCOE, PPA and profitability analysis.",
+      "author": {
+        "@type": "Person",
+        "name": "Bernard Pugnet",
+        "jobTitle": "Solar Finance & Energy Expert",
+        "url": "https://www.linkedin.com/in/bernard-pugnet/",
+        "sameAs": ["https://www.linkedin.com/in/bernard-pugnet/"]
+      },
+      "inLanguage": "en"
+    }
+    </script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts: preconnect + font-display swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>
         *{font-family:'Inter',sans-serif}
@@ -23,11 +60,14 @@
         .animate-float{animation:float 6s ease-in-out infinite}
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
         html{scroll-behavior:smooth}
+        body{font-display:swap}
     </style>
 </head>
 <body class="bg-slate-900 text-white">
+    <!-- Skip to content (accessibility) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium">Skip to main content</a>
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="index.html" class="flex items-center gap-3">
@@ -53,8 +93,8 @@
                         <a href="../fr/index.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
                         <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
                     </div>
-                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
             </div>
@@ -76,7 +116,7 @@
         </div>
     </nav>
 
-    <main>
+    <main id="main-content">
         <!-- Hero Section -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
             <!-- Background Effects -->
@@ -124,7 +164,7 @@
                         <h2 class="text-2xl font-bold text-white">📰 News & Market Watch</h2>
                         <p class="text-slate-400 mt-1">Analysis and solar market trends</p>
                     </div>
-                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="text-amber-500 hover:text-amber-400 text-sm font-medium flex items-center gap-2">
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-amber-400 text-sm font-medium flex items-center gap-2">
                         Follow on LinkedIn
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
@@ -134,25 +174,25 @@
                     <!-- News Item 1 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">March 2026</div>
-                        <h3 class="text-white font-semibold mb-2">CRE Tenders: €79/MWh</h3>
-                        <p class="text-slate-400 text-sm mb-3">Latest PPE2 results confirm ground-mount PV price stabilization around €79-80/MWh.</p>
-                        <span class="text-amber-500 text-xs font-medium">Source: CRE</span>
+                        <h3 class="text-white font-semibold mb-2">France PPE3: 54-59 GW of PV by 2030</h3>
+                        <p class="text-slate-400 text-sm mb-3">France's new energy plan (PPE3), published in February 2026, targets 54-59 GW of installed PV by 2030 and up to 98 GW by 2035. France grew +24% in 2025 with +1.5 GW connected in Q4 alone.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source: French Ministry of Energy Transition</span>
                     </div>
-                    
+
                     <!-- News Item 2 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">February 2026</div>
-                        <h3 class="text-white font-semibold mb-2">IRENA 2024: Global LCOE at $43/MWh</h3>
-                        <p class="text-slate-400 text-sm mb-3">Average global solar PV cost continues to decline, with significant regional disparities.</p>
-                        <span class="text-amber-500 text-xs font-medium">Source: IRENA</span>
+                        <h3 class="text-white font-semibold mb-2">Solar LCOE: -97% since 2010, another -30% by 2035</h3>
+                        <p class="text-slate-400 text-sm mb-3">BloombergNEF forecasts an additional 30% drop in solar LCOE by 2035. Despite an anomalous 6% rise in 2025 ($39/MWh), solar remains the world's most competitive power source.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source: BloombergNEF, Wood Mackenzie</span>
                     </div>
-                    
+
                     <!-- News Item 3 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
-                        <div class="text-xs text-slate-500 mb-2">January 2026</div>
-                        <h3 class="text-white font-semibold mb-2">AI & Monitoring: 2026 Trends</h3>
-                        <p class="text-slate-400 text-sm mb-3">Artificial intelligence is transforming solar asset management: anomaly detection, production forecasting.</p>
-                        <span class="text-amber-500 text-xs font-medium">Analysis</span>
+                        <div class="text-xs text-slate-500 mb-2">February 2026</div>
+                        <h3 class="text-white font-semibold mb-2">EU: 406 GW installed, but contraction ahead</h3>
+                        <p class="text-slate-400 text-sm mb-3">The EU exceeded its 380 GW target with 406 GW by end of 2025. But SolarPower Europe warns of a 2026-2027 slowdown: residential dropped from 28% to 14% of the market. Return to 2025 levels expected only by 2030.</p>
+                        <span class="text-amber-500 text-xs font-medium">Source: SolarPower Europe</span>
                     </div>
                 </div>
             </div>

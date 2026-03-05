@@ -2,7 +2,12 @@
   publish = "."
   command = ""
 
+# Redirect root to French homepage (301 for SEO)
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  from = "/"
+  to = "/fr/index.html"
+  status = 301
+  force = true
+
+# Custom 404 page (instead of catch-all 200 that breaks SEO)
+# Netlify will show its default 404 for unknown paths
