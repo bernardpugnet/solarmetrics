@@ -22,6 +22,31 @@
         .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         html{scroll-behavior:smooth}
     </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Navigation -->
@@ -98,7 +123,7 @@
             <div class="mb-20">
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                     <span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-500 text-lg font-bold">1</span>
-                    Le solaire dans le monde
+                    Solar Around the World
                 </h3>
 
                 <div class="grid md:grid-cols-4 gap-6 mb-8">
@@ -108,7 +133,7 @@
                         <p class="text-slate-500 text-xs">end of 2024</p>
                     </div>
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 text-center">
-                        <p class="text-4xl font-bold text-green-500">600 GW</p>
+                        <p class="text-4xl font-bold text-green-500">600 <abbr title="Gigawatt">GW</abbr></p>
                         <p class="text-slate-400 text-sm mt-2">Ajouts en 2024</p>
                         <p class="text-slate-500 text-xs">+33% vs 2023</p>
                     </div>
@@ -179,7 +204,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-slate-500 text-xs mt-4">Source : IEA-PVPS Snapshot 2025, SolarPower Europe 2025</p>
+                    <p class="text-slate-500 text-xs mt-4">Source : <abbr title="International Energy Agency">IEA</abbr>-PVPS Snapshot 2025, SolarPower Europe 2025</p>
                 </div>
             </div>
 
@@ -210,12 +235,12 @@
                                 <span class="text-amber-500 font-medium">215 GW</span>
                             </div>
                             <div class="flex justify-between text-sm">
-                                <span class="text-slate-400">LCOE utility</span>
-                                <span class="text-white font-medium">45-65 €/MWh</span>
+                                <span class="text-slate-400"><abbr title="Levelized Cost of Energy">LCOE</abbr> utility</span>
+                                <span class="text-white font-medium">45-65 €/<abbr title="Megawatt-hour">MWh</abbr></span>
                             </div>
                         </div>
                         <div class="text-xs text-slate-400">
-                            <p>✓ Very active corporate PPA market</p>
+                            <p>✓ Very active corporate <abbr title="Power Purchase Agreement">PPA</abbr> market</p>
                             <p>✓ Forte croissance rooftop</p>
                         </div>
                     </div>
@@ -419,7 +444,7 @@
                             </div>
                         </div>
                         <div class="text-xs text-slate-400">
-                            <p>✓ Irradiation exceptionnelle (2000+ kWh/m²)</p>
+                            <p>✓ Irradiation exceptionnelle (2000+ <abbr title="Kilowatt-hour">kWh</abbr>/m²)</p>
                             <p>✓ Projets GW-scale (Al Dhafra, Noor Abu Dhabi)</p>
                             <p>✓ Ambition net-zero 2050</p>
                         </div>
@@ -506,7 +531,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-slate-500 text-xs mt-4">Sources : IRENA, Lazard, analyses market 2024. LCOE hors coûts de raccordement et terrain.</p>
+                    <p class="text-slate-500 text-xs mt-4">Sources : <abbr title="International Renewable Energy Agency">IRENA</abbr>, Lazard, analyses market 2024. LCOE hors coûts de raccordement et terrain.</p>
                 </div>
             </div>
 
@@ -546,7 +571,7 @@
                         </p>
                         <div class="space-y-3">
                             <div class="p-3 bg-green-500/10 rounded-xl border border-green-500/20">
-                                <p class="text-green-500 font-medium">Solaire PV = Activité verte</p>
+                                <p class="text-green-500 font-medium">Solaire <abbr title="Photovoltaic">PV</abbr> = Activité verte</p>
                                 <p class="text-slate-500 text-xs">Éligible et alignée à la taxonomie</p>
                             </div>
                             <div class="p-3 bg-slate-800/50 rounded-xl">
@@ -622,7 +647,7 @@
                                 <p class="text-slate-500 text-xs">Livraison physique d'électricité, même zone de market</p>
                             </div>
                             <div class="p-3 bg-slate-800/50 rounded-xl border-l-4 border-blue-500">
-                                <p class="text-white font-medium">Virtual PPA (VPPA)</p>
+                                <p class="text-white font-medium">Virtual PPA (<abbr title="Virtual Power Purchase Agreement">VPPA</abbr>)</p>
                                 <p class="text-slate-500 text-xs">Contrat financier (CfD), pas de livraison physique</p>
                             </div>
                             <div class="p-3 bg-slate-800/50 rounded-xl border-l-4 border-purple-500">
@@ -645,7 +670,7 @@
                     <!-- Développeurs / IPP -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                            <span class="text-2xl">🏗️</span> Développeurs / IPP
+                            <span class="text-2xl">🏗️</span> Développeurs / <abbr title="Independent Power Producer">IPP</abbr>
                         </h4>
                         <p class="text-slate-400 text-sm mb-4">Producteurs indépendants développant et exploitant des centrales</p>
                         

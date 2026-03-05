@@ -16,6 +16,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}</style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
@@ -142,14 +167,14 @@
                                     <span class="text-slate-400">Global AI + Energy market</span>
                                     <span class="text-2xl font-bold text-purple-500">$10 Mds</span>
                                 </div>
-                                <p class="text-slate-500 text-xs mt-1">2024 → $30 Mds en 2030 (CAGR 20%)</p>
+                                <p class="text-slate-500 text-xs mt-1">2024 → $30 Mds en 2030 (<abbr title="Compound Annual Growth Rate">CAGR</abbr> 20%)</p>
                             </div>
                             <div class="p-4 bg-slate-800/50 rounded-xl">
                                 <div class="flex justify-between items-center">
-                                    <span class="text-slate-400">OPEX reduction with AI</span>
+                                    <span class="text-slate-400"><abbr title="Operating Expenditure">OPEX</abbr> reduction with AI</span>
                                     <span class="text-2xl font-bold text-green-500">10-25%</span>
                                 </div>
-                                <p class="text-slate-500 text-xs mt-1">Predictive maintenance, O&M optimization</p>
+                                <p class="text-slate-500 text-xs mt-1">Predictive maintenance, <abbr title="Operation & Maintenance">O&M</abbr> optimization</p>
                             </div>
                             <div class="p-4 bg-slate-800/50 rounded-xl">
                                 <div class="flex justify-between items-center">
@@ -241,7 +266,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-slate-500">Usage</span>
-                                    <span class="text-purple-500 font-medium">Dispatch BESS</span>
+                                    <span class="text-purple-500 font-medium">Dispatch <abbr title="Battery Energy Storage System">BESS</abbr></span>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +303,7 @@
                             <div class="space-y-3">
                                 <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
                                     <span class="text-slate-400">Annual production</span>
-                                    <span class="text-white font-medium">~12 000 MWh</span>
+                                    <span class="text-white font-medium">~12 000 <abbr title="Megawatt-hour">MWh</abbr></span>
                                 </div>
                                 <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
                                     <span class="text-slate-400">Imbalance penalties (without AI)</span>
@@ -291,7 +316,7 @@
                             </div>
                         </div>
                         <div>
-                            <p class="text-slate-400 mb-4">Savings and ROI :</p>
+                            <p class="text-slate-400 mb-4">Savings and <abbr title="Return on Investment">ROI</abbr> :</p>
                             <div class="space-y-3">
                                 <div class="flex justify-between p-3 bg-slate-900/50 rounded-lg">
                                     <span class="text-slate-400">Annual savings</span>
@@ -460,7 +485,7 @@
                     <h4 class="text-xl font-semibold text-white mb-4">📈 Algorithmic trading gains</h4>
                     <div class="grid md:grid-cols-3 gap-6">
                         <div class="p-4 bg-slate-900/50 rounded-xl text-center">
-                            <p class="text-slate-400 text-sm mb-2">PV merchant</p>
+                            <p class="text-slate-400 text-sm mb-2"><abbr title="Photovoltaic">PV</abbr> merchant</p>
                             <p class="text-2xl font-bold text-amber-500">+5-15%</p>
                             <p class="text-slate-500 text-xs">revenues vs baseline</p>
                         </div>
@@ -615,7 +640,7 @@
                             <div class="space-y-3">
                                 <div class="flex items-center gap-3">
                                     <span class="text-amber-500">→</span>
-                                    <span class="text-slate-300">Les modèles de pricing PPA ressemblent aux dérivés énergétiques</span>
+                                    <span class="text-slate-300">Les modèles de pricing <abbr title="Power Purchase Agreement">PPA</abbr> ressemblent aux dérivés énergétiques</span>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="text-amber-500">→</span>

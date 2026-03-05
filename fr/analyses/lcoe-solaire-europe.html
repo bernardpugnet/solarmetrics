@@ -73,6 +73,31 @@
         .toc a{color:#94A3B8;text-decoration:none;transition:color 0.15s}
         .toc a:hover{color:#F59E0B}
     </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Skip to content -->
@@ -130,7 +155,7 @@
                 <span>/</span>
                 <a href="./" class="hover:text-slate-300">Analyses</a>
                 <span>/</span>
-                <span class="text-slate-400">LCOE solaire en Europe</span>
+                <span class="text-slate-400"><abbr title="Coût Actualisé de l'Énergie (Levelized Cost of Energy)">LCOE</abbr> solaire en Europe</span>
             </nav>
             <!-- Tags -->
             <div class="flex flex-wrap gap-2 mb-4">
@@ -165,7 +190,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 not-prose">
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
                         <div class="text-2xl font-bold text-amber-400">$43</div>
-                        <div class="text-xs text-slate-500 mt-1">Moyenne mondiale $/MWh<br>(IRENA, 2024)</div>
+                        <div class="text-xs text-slate-500 mt-1">Moyenne mondiale $/<abbr title="Mégawatt-heure">MWh</abbr><br>(<abbr title="Agence Internationale des Énergies Renouvelables">IRENA</abbr>, 2024)</div>
                     </div>
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
                         <div class="text-2xl font-bold text-amber-400">€24</div>
@@ -177,20 +202,20 @@
                     </div>
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
                         <div class="text-2xl font-bold text-amber-400">-20%</div>
-                        <div class="text-xs text-slate-500 mt-1">Projection d'ici 2030<br>(ETIP PV)</div>
+                        <div class="text-xs text-slate-500 mt-1">Projection d'ici 2030<br>(ETIP <abbr title="Photovoltaïque">PV</abbr>)</div>
                     </div>
                 </div>
 
                 <h2 id="introduction">Qu'est-ce que le LCOE solaire et pourquoi est-ce important ?</h2>
-                <p>Le <strong>Coût Nivelé de l'Énergie (LCOE)</strong> représente le coût moyen de production d'un mégawattheure (MWh) d'électricité sur la durée de vie d'une centrale solaire, en comptabilisant toutes les dépenses en capital (CAPEX), les coûts d'exploitation (OPEX), les coûts de financement et la production d'énergie attendue. C'est la métrique la plus importante pour comparer la compétitivité économique de l'énergie solaire par rapport aux autres sources d'électricité.</p>
+                <p>Le <strong>Coût Nivelé de l'Énergie (LCOE)</strong> représente le coût moyen de production d'un mégawattheure (MWh) d'électricité sur la durée de vie d'une centrale solaire, en comptabilisant toutes les dépenses en capital (<abbr title="Dépenses d'Investissement (Capital Expenditure)">CAPEX</abbr>), les coûts d'exploitation (<abbr title="Dépenses d'Exploitation (Operating Expenditure)">OPEX</abbr>), les coûts de financement et la production d'énergie attendue. C'est la métrique la plus importante pour comparer la compétitivité économique de l'énergie solaire par rapport aux autres sources d'électricité.</p>
                 <p>Pour les développeurs, les investisseurs et les gestionnaires d'actifs, le LCOE détermine si un projet est finançable. Pour les décideurs politiques, il façonne les niveaux de subvention et les prix plafonds des enchères. Comprendre comment le LCOE varie selon les pays européens est essentiel pour prendre des décisions d'investissement éclairées.</p>
 
                 <h2 id="global-benchmark">Référence mondiale du LCOE solaire (2024)</h2>
-                <p>Selon le rapport <strong>Renewable Power Generation Costs in 2024 de l'IRENA</strong> (publié en juin 2025), le LCOE moyen pondéré mondial pour les centrales solaires photovoltaïques à l'échelle des services publics s'élevait à <strong>$0,043/kWh ($43/MWh)</strong> en 2024. Cela représente une augmentation marginale de 0,6% d'une année à l'autre, suite à une baisse de 12% entre 2022 et 2023.</p>
+                <p>Selon le rapport <strong>Renewable Power Generation Costs in 2024 de l'IRENA</strong> (publié en juin 2025), le LCOE moyen pondéré mondial pour les centrales solaires photovoltaïques à l'échelle des services publics s'élevait à <strong>$0,043/<abbr title="Kilowatt-heure">kWh</abbr> ($43/MWh)</strong> en 2024. Cela représente une augmentation marginale de 0,6% d'une année à l'autre, suite à une baisse de 12% entre 2022 et 2023.</p>
                 <p>Le photovoltaïque solaire reste la deuxième source d'électricité la plus abordable au monde, derrière l'énergie éolienne terrestre à $34/MWh. Son coût est inférieur de moitié au LCOE des turbines à gaz à cycle combiné ($102/MWh) et inférieur d'un cinquième au nucléaire ($258/MWh), selon le rapport LCOE 2026 de BloombergNEF.</p>
 
                 <h3>Disparités régionales</h3>
-                <p>Le LCOE varie considérablement selon les régions, principalement en raison de l'irradiance solaire, des coûts de financement (WACC) et de la maturité de la chaîne d'approvisionnement locale. La Chine et l'Inde réalisent les LCOE nationaux les plus bas avec environ $33/MWh et $38/MWh respectivement. Les LCOE européens ont tendance à être plus élevés en raison d'une irradiance plus faible aux latitudes nord, de coûts de main-d'œuvre plus élevés et de processus d'autorisation plus complexes.</p>
+                <p>Le LCOE varie considérablement selon les régions, principalement en raison de l'irradiance solaire, des coûts de financement (<abbr title="Coût Moyen Pondéré du Capital (Weighted Average Cost of Capital)">WACC</abbr>) et de la maturité de la chaîne d'approvisionnement locale. La Chine et l'Inde réalisent les LCOE nationaux les plus bas avec environ $33/MWh et $38/MWh respectivement. Les LCOE européens ont tendance à être plus élevés en raison d'une irradiance plus faible aux latitudes nord, de coûts de main-d'œuvre plus élevés et de processus d'autorisation plus complexes.</p>
 
                 <h2 id="europe-overview">LCOE solaire en Europe : comparaison par pays</h2>
                 <p>Le paysage du LCOE solaire en Europe est très hétérogène. Les marchés du sud de l'Europe avec des niveaux d'irradiance élevés réalisent des coûts considérablement plus faibles que les marchés du nord. Le tableau suivant synthétise les données de l'IRENA, Wood Mackenzie et ETIP PV pour le photovoltaïque solaire à l'échelle des services publics en 2024-2025 :</p>
@@ -286,17 +311,17 @@
                 <p>L'irradiance solaire annuelle varie d'environ 900 kWh/m² en Scandinavie à plus de 1 800 kWh/m² dans le sud de l'Espagne. Cela impacte directement le facteur de charge, qui mesure la production d'énergie réelle par rapport au maximum théorique. Des facteurs de charge plus élevés signifient plus de kWh produits par kW installé, répartissant les coûts fixes sur une plus grande production et réduisant le LCOE.</p>
 
                 <h3>2. CAPEX (Dépenses en capital)</h3>
-                <p>Le CAPEX solaire à l'échelle des services publics en Europe varie généralement de <strong>€450-700/kWc</strong> en 2025, selon le marché. Les prix des modules ont chuté à environ €0,11/Wc pour les modules PERC mono (baisse de 22% d'une année à l'autre), mais les coûts de balance-of-system (BoS), la connexion au réseau et les frais d'autorisation varient considérablement selon les pays.</p>
+                <p>Le CAPEX solaire à l'échelle des services publics en Europe varie généralement de <strong>€450-700/<abbr title="Kilowatt-crête (puissance maximale)">kWc</abbr></strong> en 2025, selon le marché. Les prix des modules ont chuté à environ €0,11/Wc pour les modules <abbr title="Cellule Passivée à l'Arrière (Passivated Emitter and Rear Cell)">PERC</abbr> mono (baisse de 22% d'une année à l'autre), mais les coûts de balance-of-system (BoS), la connexion au réseau et les frais d'autorisation varient considérablement selon les pays.</p>
 
                 <h3>3. WACC (Coût moyen pondéré du capital)</h3>
-                <p>Selon l'IRENA, le WACC réel après impôts pour les projets solaires dans l'UE varie de <strong>2,3% à 7,5%</strong>. Une augmentation d'un point de pourcentage du WACC peut ajouter €3-6/MWh au LCOE, ce qui en fait l'une des variables les plus impactantes. C'est pourquoi les instruments de réduction des risques (contrats PPA, garanties gouvernementales, obligations vertes) sont essentiels pour réduire le LCOE.</p>
+                <p>Selon l'IRENA, le WACC réel après impôts pour les projets solaires dans l'UE varie de <strong>2,3% à 7,5%</strong>. Une augmentation d'un point de pourcentage du WACC peut ajouter €3-6/MWh au LCOE, ce qui en fait l'une des variables les plus impactantes. C'est pourquoi les instruments de réduction des risques (contrats <abbr title="Accord d'Achat d'Électricité (Power Purchase Agreement)">PPA</abbr>, garanties gouvernementales, obligations vertes) sont essentiels pour réduire le LCOE.</p>
 
                 <h3>4. OPEX (Dépenses d'exploitation)</h3>
                 <p>L'OPEX annuel pour le photovoltaïque à l'échelle des services publics en Europe représente généralement <strong>€8-15/kWc/an</strong>, couvrant la maintenance, l'assurance, la location des terres, la gestion d'actifs et les frais de connexion au réseau. Bien que l'OPEX soit un composant plus petit que le CAPEX dans la formule LCOE, il s'accumule sur la durée de vie du projet de 25-35 ans.</p>
 
                 <h2 id="trends">Tendances historiques et projections</h2>
                 <p>Le photovoltaïque solaire a connu une baisse extraordinaire des coûts. Le LCOE mondial a baissé d'environ <strong>89% depuis 2010</strong>, passant de plus de $350/MWh à $43/MWh en 2024 (IRENA). Cependant, le taux de baisse s'est modéré ces dernières années, avec une légère augmentation de 0,6% en 2024 imputable aux perturbations de la chaîne d'approvisionnement et à l'augmentation des coûts de balance-of-system dans certains marchés.</p>
-                <p>La perspective 2026 de BloombergNEF note une augmentation de 6% de la référence mondiale du LCOE solaire à $39/MWh en 2025, l'attribuant aux coûts plus élevés des onduleurs et aux dépenses croissantes de connexion au réseau. Cependant, ils projettent un redémarrage d'une <strong>baisse de 30% d'ici 2035</strong> à mesure que les technologies de prochaine génération (TOPCon, HJT, tandems de pérovskite) atteindront la production de masse.</p>
+                <p>La perspective 2026 de BloombergNEF note une augmentation de 6% de la référence mondiale du LCOE solaire à $39/MWh en 2025, l'attribuant aux coûts plus élevés des onduleurs et aux dépenses croissantes de connexion au réseau. Cependant, ils projettent un redémarrage d'une <strong>baisse de 30% d'ici 2035</strong> à mesure que les technologies de prochaine génération (<abbr title="Contact Passivé par Oxyde Tunnel (Tunnel Oxide Passivated Contact)">TOPCon</abbr>, <abbr title="Technologie Hétérojonction (Heterojunction Technology)">HJT</abbr>, tandems de pérovskite) atteindront la production de masse.</p>
                 <p>Pour l'Europe spécifiquement, ETIP PV projette que le LCOE solaire en Europe du sud pourrait atteindre <strong>€19/MWh d'ici 2030</strong> et <strong>€13/MWh d'ici 2050</strong>, entraîné par les améliorations continues de l'efficacité des modules et les coûts de financement plus faibles.</p>
 
                 <h2 id="methodology">Formule LCOE et méthodologie</h2>
@@ -313,7 +338,7 @@
                 <ul>
                     <li><strong>L'Europe du sud reste le point idéal</strong> — L'Espagne, le Portugal et la Grèce offrent les LCOE les plus faibles avec une liquidité croissante du marché des PPA.</li>
                     <li><strong>Le WACC est aussi important que l'irradiance</strong> — Un projet en Allemagne avec un facteur de charge de 12% mais un WACC de 3,5% peut rivaliser avec un projet grec à 20% de facteur de charge mais 7,5% de WACC.</li>
-                    <li><strong>Le stockage par batterie devient un changement de jeu</strong> — Avec le LCOE des BESS tombant à $78/MWh en 2025 (BNEF), les projets co-implantés solaire+stockage débloquent de nouveaux flux de revenus via l'arbitrage et les services auxiliaires.</li>
+                    <li><strong>Le stockage par batterie devient un changement de jeu</strong> — Avec le LCOE des <abbr title="Système de Stockage par Batterie (Battery Energy Storage System)">BESS</abbr> tombant à $78/MWh en 2025 (BNEF), les projets co-implantés solaire+stockage débloquent de nouveaux flux de revenus via l'arbitrage et les services auxiliaires.</li>
                     <li><strong>Le choix technologique compte de plus en plus</strong> — Les modules bifaciaux avec trackers à axe unique peuvent augmenter le rendement de 10-25% par rapport aux systèmes monofaciaux à inclinaison fixe, impactant significativement le LCOE sur les marchés à haute irradiance.</li>
                 </ul>
 

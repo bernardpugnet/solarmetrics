@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarMetrics — Maquette Corporate Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #151D2E;
+            --bg-secondary: #1B2540;
+            --bg-card: #212D48;
+            --border: #2A3A5C;
+            --accent: #C9A84C;
+            --accent-light: #E2C670;
+            --text-primary: #F1F5F9;
+            --text-secondary: #A8B8D0;
+            --text-muted: #7A8DA8;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); background-image: linear-gradient(180deg, #080C14 0%, #121A2A 25%, #1E2D44 50%, #2C3E56 75%, #3D5068 100%); background-attachment: fixed; min-height: 100vh; color: var(--text-primary); line-height: 1.6; }
+
+        /* NAV */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(21,29,46,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent-light)); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .logo-icon svg { width: 20px; height: 20px; stroke: var(--bg-primary); fill: none; stroke-width: 2; }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.5px; }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; letter-spacing: 0.3px; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--accent); background: rgba(201,168,76,0.08); }
+        .nav-cta { background: var(--accent) !important; color: var(--bg-primary) !important; font-weight: 600 !important; }
+        .nav-cta:hover { background: var(--accent-light) !important; }
+
+        /* HERO */
+        .hero { padding: 160px 24px 100px; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%); }
+        .hero-overline { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 24px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 700; line-height: 1.15; margin-bottom: 24px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero p { font-size: 18px; color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px; font-weight: 300; line-height: 1.7; }
+        .hero-stats { display: flex; justify-content: center; gap: 60px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); }
+        .stat { text-align: center; }
+        .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 4px; }
+
+        /* SECTIONS */
+        .section { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-overline { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 12px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; margin-bottom: 16px; }
+        .section-desc { color: var(--text-secondary); max-width: 560px; margin: 0 auto; font-weight: 300; }
+
+        /* CARDS */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 32px; transition: all 0.3s; }
+        .card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); }
+        .card-icon { width: 44px; height: 44px; background: rgba(201,168,76,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .card-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+        .card h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+        .card p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; font-weight: 300; }
+        .card-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 500; margin-top: 16px; text-transform: uppercase; letter-spacing: 1px; }
+        .card-link:hover { color: var(--accent-light); }
+
+        /* DIVIDER */
+        .divider { width: 60px; height: 1px; background: var(--accent); margin: 0 auto; }
+
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+        footer p { color: var(--text-muted); font-size: 13px; }
+
+        /* BANNER */
+        .banner { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 16px; padding: 60px; text-align: center; max-width: 900px; margin: 0 auto 80px; }
+        .banner h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 16px; }
+        .banner p { color: var(--text-secondary); margin-bottom: 28px; font-weight: 300; }
+        .btn { display: inline-block; padding: 12px 32px; background: var(--accent); color: var(--bg-primary); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; text-decoration: none; border-radius: 8px; transition: all 0.2s; }
+        .btn:hover { background: var(--accent-light); }
+
+        @media (max-width: 768px) {
+            .hero-stats { flex-direction: column; gap: 24px; }
+            .nav-links { display: none; }
+            .banner { padding: 40px 24px; }
+        }
+    </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </div>
+                <span class="logo-text">SolarMetrics</span>
+            </a>
+            <div class="nav-links">
+                <a href="#">Technologies</a>
+                <a href="#">Économie</a>
+                <a href="#">Marchés</a>
+                <a href="#">Analyses</a>
+                <a href="#">Outils</a>
+                <a href="#" class="nav-cta">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-overline">Finance & Énergie Solaire</div>
+        <h1>Expertise financière au service de la transition solaire</h1>
+        <p>Analyse de coûts, modélisation de rentabilité et intelligence de marché pour les professionnels du solaire photovoltaïque.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Années d'expérience</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">€2Md+</div>
+                <div class="stat-label">Actifs analysés</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Marchés européens</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-overline">Domaines d'expertise</div>
+            <h2 class="section-title">Une approche structurée de l'investissement solaire</h2>
+            <p class="section-desc">De l'analyse technique à la modélisation financière, une couverture complète des enjeux du secteur.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </div>
+                <h3>Technologies <abbr title="Photovoltaic">PV</abbr></h3>
+                <p><abbr title="Passivated Emitter and Rear Cell">PERC</abbr>, <abbr title="Tunnel Oxide Passivated Contact">TOPCon</abbr>, <abbr title="Heterojunction Technology">HJT</abbr>, pérovskites — analyse comparative des rendements et des courbes de coûts par technologie.</p>
+                <a href="#" class="card-link">Explorer →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
+                <h3>Économie & Financement</h3>
+                <p><abbr title="Levelized Cost of Energy">LCOE</abbr>, <abbr title="Weighted Average Cost of Capital">WACC</abbr>, structure de <abbr title="Power Purchase Agreement">PPA</abbr>, modèles de rentabilité et analyse de sensibilité pour projets utility-scale.</p>
+                <a href="#" class="card-link">Explorer →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3>Marchés internationaux</h3>
+                <p>Panorama des marchés solaires européens, résultats d'appels d'offres, prix PPA et cadres réglementaires.</p>
+                <a href="#" class="card-link">Explorer →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3>IA & Data</h3>
+                <p>Machine learning appliqué à la prévision de production, détection d'anomalies et optimisation de portefeuille.</p>
+                <a href="#" class="card-link">Explorer →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+                </div>
+                <h3>Analyses & Insights</h3>
+                <p>LCOE par pays, tendances <abbr title="Capital Expenditure">CAPEX</abbr>/<abbr title="Operating Expenditure">OPEX</abbr>, facteurs de charge et benchmarks sectoriels actualisés.</p>
+                <a href="#" class="card-link">Explorer →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                </div>
+                <h3>Outils interactifs</h3>
+                <p>Calculateurs LCOE, comparateurs technologiques et simulateurs de rentabilité en accès libre.</p>
+                <a href="#" class="card-link">Explorer →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="banner">
+            <h2>Collaborons ensemble</h2>
+            <p>Senior Finance Manager en transition vers l'Asset Management ENR.<br>Disponible pour des missions de conseil, d'analyse et de due diligence.</p>
+            <a href="#" class="btn">Prendre contact</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© <span id="y">2026</span> SolarMetrics — Bernard Pugnet</p>
+    </footer>
+</body>
+</html>

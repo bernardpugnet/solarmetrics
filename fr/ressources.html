@@ -16,6 +16,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}</style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
@@ -97,16 +122,16 @@
                     <!-- Technique -->
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">PERC</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Cellule Passivée à l'Arrière (Passivated Emitter and Rear Cell)">PERC</abbr></h4>
                             <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Passivated Emitter and Rear Cell</p>
-                        <p class="text-slate-400 text-sm">Technologie de cellule PV avec couche de passivation arrière. Standard actuel du marché.</p>
+                        <p class="text-slate-400 text-sm">Technologie de cellule <abbr title="Photovoltaïque">PV</abbr> avec couche de passivation arrière. Standard actuel du marché.</p>
                     </div>
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">TOPCon</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Contact Passivé par Oxyde Tunnel (Tunnel Oxide Passivated Contact)">TOPCon</abbr></h4>
                             <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Tunnel Oxide Passivated Contact</p>
@@ -115,7 +140,7 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">HJT</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Technologie Hétérojonction (Heterojunction Technology)">HJT</abbr></h4>
                             <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Heterojunction Technology</p>
@@ -133,16 +158,16 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">GHI</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Irradiance Horizontale Globale (Global Horizontal Irradiance)">GHI</abbr></h4>
                             <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Global Horizontal Irradiance</p>
-                        <p class="text-slate-400 text-sm">Irradiation solaire totale sur surface horizontale. Exprimée en kWh/m²/an.</p>
+                        <p class="text-slate-400 text-sm">Irradiation solaire totale sur surface horizontale. Exprimée en <abbr title="Kilowatt-heure">kWh</abbr>/m²/an.</p>
                     </div>
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="tech">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">BESS</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Système de Stockage par Batterie (Battery Energy Storage System)">BESS</abbr></h4>
                             <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">Tech</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Battery Energy Storage System</p>
@@ -170,25 +195,25 @@
                     <!-- Finance -->
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">LCOE</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Coût Actualisé de l'Énergie (Levelized Cost of Energy)">LCOE</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Levelized Cost of Energy</p>
-                        <p class="text-slate-400 text-sm">Coût actualisé de production de l'électricité sur la durée de vie. Exprimé en €/MWh.</p>
+                        <p class="text-slate-400 text-sm">Coût actualisé de production de l'électricité sur la durée de vie. Exprimé en €/<abbr title="Mégawatt-heure">MWh</abbr>.</p>
                     </div>
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">TRI / IRR</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Taux de Rentabilité Interne (Internal Rate of Return)">TRI</abbr> / <abbr title="Taux de Rentabilité Interne">IRR</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Taux de Rentabilité Interne / Internal Rate of Return</p>
-                        <p class="text-slate-400 text-sm">Taux d'actualisation qui annule la VAN. Indicateur clé de rentabilité projet.</p>
+                        <p class="text-slate-400 text-sm">Taux d'actualisation qui annule la <abbr title="Valeur Actuelle Nette (Net Present Value)">VAN</abbr>. Indicateur clé de rentabilité projet.</p>
                     </div>
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">VAN / NPV</h4>
+                            <h4 class="text-white font-semibold">VAN / <abbr title="Valeur Actuelle Nette">NPV</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Valeur Actuelle Nette / Net Present Value</p>
@@ -197,7 +222,7 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">DSCR</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Ratio de Couverture de la Dette (Debt Service Coverage Ratio)">DSCR</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Debt Service Coverage Ratio</p>
@@ -206,25 +231,25 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">CAPEX</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Dépenses d'Investissement (Capital Expenditure)">CAPEX</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Capital Expenditure</p>
-                        <p class="text-slate-400 text-sm">Dépenses d'investissement initial. Pour le PV : 650-850 €/kWc (utility-scale France).</p>
+                        <p class="text-slate-400 text-sm">Dépenses d'investissement initial. Pour le PV : 650-850 €/<abbr title="Kilowatt-crête (puissance maximale)">kWc</abbr> (utility-scale France).</p>
                     </div>
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">OPEX</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Dépenses d'Exploitation (Operating Expenditure)">OPEX</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Operating Expenditure</p>
-                        <p class="text-slate-400 text-sm">Dépenses d'exploitation annuelles. O&M, assurance, terrain, taxes. ~15-25 €/kWc/an.</p>
+                        <p class="text-slate-400 text-sm">Dépenses d'exploitation annuelles. <abbr title="Exploitation et Maintenance (Operation & Maintenance)">O&M</abbr>, assurance, terrain, taxes. ~15-25 €/kWc/an.</p>
                     </div>
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">SPV</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Société de Projet Dédiée (Special Purpose Vehicle)">SPV</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Special Purpose Vehicle</p>
@@ -233,7 +258,7 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="finance">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">EPC</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Ingénierie, Approvisionnement, Construction">EPC</abbr></h4>
                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Finance</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Engineering, Procurement, Construction</p>
@@ -243,7 +268,7 @@
                     <!-- Marché -->
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">PPA</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Accord d'Achat d'Électricité (Power Purchase Agreement)">PPA</abbr></h4>
                             <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Power Purchase Agreement</p>
@@ -252,7 +277,7 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="market">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">VPPA</h4>
+                            <h4 class="text-white font-semibold"><abbr title="PPA Virtuel (Virtual Power Purchase Agreement)">VPPA</abbr></h4>
                             <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Marché</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Virtual Power Purchase Agreement</p>
@@ -307,7 +332,7 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="regulation">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">CRE</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Commission de Régulation de l'Énergie">CRE</abbr></h4>
                             <span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">Réglementation</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Commission de Régulation de l'Énergie</p>
@@ -316,7 +341,7 @@
 
                     <div class="glossary-item bg-slate-800/50 rounded-xl p-4 border border-slate-700/50" data-category="regulation">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-white font-semibold">PPE</h4>
+                            <h4 class="text-white font-semibold"><abbr title="Programmation Pluriannuelle de l'Énergie">PPE</abbr></h4>
                             <span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">Réglementation</span>
                         </div>
                         <p class="text-slate-500 text-xs mb-1">Programmation Pluriannuelle de l'Énergie</p>

@@ -62,6 +62,31 @@
         html{scroll-behavior:smooth}
         body{font-display:swap}
     </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Skip to content (accessibility) -->
@@ -168,7 +193,7 @@
                     <!-- News Item 1 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">March 2026</div>
-                        <h3 class="text-white font-semibold mb-2">France PPE3: 54-59 GW of PV by 2030</h3>
+                        <h3 class="text-white font-semibold mb-2">France PPE3: 54-59 <abbr title="Gigawatt">GW</abbr> of <abbr title="Photovoltaic">PV</abbr> by 2030</h3>
                         <p class="text-slate-400 text-sm mb-3">France's new energy plan (PPE3), published in February 2026, targets 54-59 GW of installed PV by 2030 and up to 98 GW by 2035. France connected a record 5.9 GW in 2025 (+28% vs 2024), bringing total capacity to 31 GW.</p>
                         <span class="text-amber-500 text-xs font-medium">Source: French Ministry of Energy Transition</span>
                     </div>
@@ -176,8 +201,8 @@
                     <!-- News Item 2 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">February 2026</div>
-                        <h3 class="text-white font-semibold mb-2">Solar LCOE: -97% since 2010, another -30% by 2035</h3>
-                        <p class="text-slate-400 text-sm mb-3">BloombergNEF forecasts an additional 30% drop in solar LCOE by 2035. Despite an anomalous 6% rise in 2025 ($39/MWh), solar remains the world's most competitive power source.</p>
+                        <h3 class="text-white font-semibold mb-2">Solar <abbr title="Levelized Cost of Energy">LCOE</abbr>: -97% since 2010, another -30% by 2035</h3>
+                        <p class="text-slate-400 text-sm mb-3">BloombergNEF forecasts an additional 30% drop in solar LCOE by 2035. Despite an anomalous 6% rise in 2025 ($39/<abbr title="Megawatt-hour">MWh</abbr>), solar remains the world's most competitive power source.</p>
                         <span class="text-amber-500 text-xs font-medium">Source: BloombergNEF, Wood Mackenzie</span>
                     </div>
 
@@ -231,7 +256,7 @@
                     </div>
                 </div>
                 
-                <p class="text-center text-slate-500 text-sm mt-8">Sources: RTE, IRENA, SER, Observ'ER 2024</p>
+                <p class="text-center text-slate-500 text-sm mt-8">Sources: RTE, <abbr title="International Renewable Energy Agency">IRENA</abbr>, SER, Observ'ER 2024</p>
             </div>
         </section>
 

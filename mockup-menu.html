@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarMetrics — Comparaison Menu Actuel vs Nouveau</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        html{scroll-behavior:smooth}
+    </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
+</head>
+<body class="bg-slate-950 text-white">
+
+    <!-- HEADER -->
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold mb-2">Comparaison des menus</h1>
+        <p class="text-slate-400 mb-12">Menu actuel (10 items) vs nouveau menu simplifié (7 items + Analyses)</p>
+
+        <!-- ============ MENU ACTUEL (FR) ============ -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs font-semibold rounded-full uppercase tracking-wide">Actuel — FR</span>
+                <span class="text-slate-500 text-sm">10 items — trop chargé</span>
+            </div>
+            <div class="bg-slate-900/95 border border-slate-800 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between h-16 px-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <span class="text-lg font-bold">SolarMetrics</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="px-3 py-1.5 text-amber-500 font-medium text-sm">Accueil</span>
+                        <span class="px-3 py-1.5 bg-amber-500/20 text-amber-500 text-sm font-medium rounded-lg">Collaborer</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Projets</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Outils</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Économie</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">IA & Data</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Technologies</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Marchés</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Ressources</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Contact</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 text-slate-400 text-xs rounded border border-slate-700">EN</span>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-red-400/70 text-sm mt-3 pl-2">↑ 10 items dans la barre — difficile à scanner, surtout sur écrans < 1400px</p>
+        </div>
+
+        <!-- ============ NOUVEAU MENU (FR) ============ -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full uppercase tracking-wide">Nouveau — FR</span>
+                <span class="text-slate-500 text-sm">7 items — clair et aéré, "Analyses" ajouté</span>
+            </div>
+            <div class="bg-slate-900/95 border border-slate-800 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between h-16 px-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <span class="text-lg font-bold">SolarMetrics</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="px-3 py-1.5 text-amber-500 font-medium text-sm">Accueil</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Technologies</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Économie</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Marchés</span>
+                        <span class="px-3 py-1.5 bg-amber-500/10 text-amber-400 text-sm font-medium rounded-lg border border-amber-500/20">Analyses ✦</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Outils</span>
+                        <span class="px-3 py-1.5 bg-amber-500/20 text-amber-500 text-sm font-medium rounded-lg">Collaborer</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 text-slate-400 text-xs rounded border border-slate-700">EN</span>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-emerald-400/70 text-sm mt-3 pl-2">↑ 7 items — plus lisible, "Analyses" se démarque visuellement, Collaborer en CTA</p>
+        </div>
+
+        <!-- ============ NOUVEAU MENU (EN) ============ -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full uppercase tracking-wide">Nouveau — EN</span>
+                <span class="text-slate-500 text-sm">Version anglaise équivalente</span>
+            </div>
+            <div class="bg-slate-900/95 border border-slate-800 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between h-16 px-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <span class="text-lg font-bold">SolarMetrics</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="px-3 py-1.5 text-amber-500 font-medium text-sm">Home</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Technologies</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Economy</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Markets</span>
+                        <span class="px-3 py-1.5 bg-amber-500/10 text-amber-400 text-sm font-medium rounded-lg border border-amber-500/20">Insights ✦</span>
+                        <span class="px-3 py-1.5 text-slate-400 text-sm">Tools</span>
+                        <span class="px-3 py-1.5 bg-amber-500/20 text-amber-500 text-sm font-medium rounded-lg">Hire Me</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <span class="px-2 py-1 text-slate-400 text-xs rounded border border-slate-700">FR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ MOBILE ============ -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full uppercase tracking-wide">Nouveau — Mobile FR</span>
+                <span class="text-slate-500 text-sm">Menu hamburger déplié</span>
+            </div>
+            <div class="max-w-sm">
+                <div class="bg-slate-900/95 border border-slate-800 rounded-xl overflow-hidden">
+                    <div class="flex items-center justify-between h-14 px-4">
+                        <div class="flex items-center gap-2">
+                            <div class="p-1.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                            </div>
+                            <span class="text-base font-bold">SolarMetrics</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-1.5 py-0.5 text-slate-400 text-xs rounded border border-slate-700">EN</span>
+                            <span class="px-1.5 py-0.5 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 space-y-1 border-t border-slate-800">
+                        <div class="px-3 py-2.5 text-amber-500 font-medium text-sm rounded-lg">Accueil</div>
+                        <div class="px-3 py-2.5 text-slate-400 text-sm rounded-lg">Technologies</div>
+                        <div class="px-3 py-2.5 text-slate-400 text-sm rounded-lg">Économie</div>
+                        <div class="px-3 py-2.5 text-slate-400 text-sm rounded-lg">Marchés</div>
+                        <div class="px-3 py-2.5 bg-amber-500/10 text-amber-400 text-sm font-medium rounded-lg border border-amber-500/20 flex items-center justify-between">
+                            <span>Analyses ✦</span>
+                            <span class="text-xs text-amber-500/60">20 études</span>
+                        </div>
+                        <div class="px-3 py-2.5 text-slate-400 text-sm rounded-lg">Outils</div>
+                        <div class="px-3 py-2.5 bg-amber-500/20 text-amber-500 text-sm font-medium rounded-lg">Collaborer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ CHANGEMENTS ============ -->
+        <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-8 mb-16">
+            <h2 class="text-xl font-bold mb-6">Résumé des changements</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-red-400 font-semibold text-sm uppercase tracking-wide mb-3">Supprimé du menu (3 items)</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3 text-slate-400 text-sm">
+                            <span class="text-red-400">✕</span>
+                            <span><strong class="text-slate-300">IA & Data</strong> — accessible depuis la page hub Analyses</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-400 text-sm">
+                            <span class="text-red-400">✕</span>
+                            <span><strong class="text-slate-300">Ressources</strong> — contenu intégrable dans Analyses + footer</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-400 text-sm">
+                            <span class="text-red-400">✕</span>
+                            <span><strong class="text-slate-300">Projets / Case Study</strong> — accessible depuis Analyses</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-emerald-400 font-semibold text-sm uppercase tracking-wide mb-3">Ajouté au menu (1 item)</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3 text-slate-400 text-sm">
+                            <span class="text-emerald-400">✓</span>
+                            <span><strong class="text-amber-400">Analyses / Insights</strong> — page hub vers les 20 études + projets + IA & Data + ressources</span>
+                        </div>
+                    </div>
+                    <h3 class="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-3 mt-6">Conservé sans changement (5 items)</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3 text-slate-400 text-sm">
+                            <span class="text-blue-400">—</span>
+                            <span>Accueil, Technologies, Économie, Marchés, Outils</span>
+                        </div>
+                    </div>
+                    <h3 class="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-3 mt-6">Conservé (1 CTA)</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3 text-slate-400 text-sm">
+                            <span class="text-blue-400">—</span>
+                            <span>Collaborer / Hire Me + Contact (fusionné dans Collaborer)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STRUCTURE DES URLS -->
+        <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-8">
+            <h2 class="text-xl font-bold mb-6">Structure des URLs pour les analyses</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-amber-400 font-semibold text-sm mb-3">FR — /fr/analyses/</h3>
+                    <div class="bg-slate-950 rounded-lg p-4 font-mono text-xs space-y-1.5 text-slate-400">
+                        <div>/fr/analyses/ <span class="text-amber-400">← page hub</span></div>
+                        <div>/fr/analyses/lcoe-solaire-europe</div>
+                        <div>/fr/analyses/prix-ppa-europe</div>
+                        <div>/fr/analyses/facteur-charge-solaire-europe</div>
+                        <div>/fr/analyses/capex-solaire-europe</div>
+                        <div>/fr/analyses/comparaison-france-allemagne-espagne</div>
+                        <div class="text-slate-600">... (20 pages)</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-amber-400 font-semibold text-sm mb-3">EN — /en/insights/</h3>
+                    <div class="bg-slate-950 rounded-lg p-4 font-mono text-xs space-y-1.5 text-slate-400">
+                        <div>/en/insights/ <span class="text-amber-400">← hub page</span></div>
+                        <div>/en/insights/solar-lcoe-europe</div>
+                        <div>/en/insights/solar-ppa-prices-europe</div>
+                        <div>/en/insights/solar-capacity-factor-europe</div>
+                        <div>/en/insights/solar-capex-trends-europe</div>
+                        <div>/en/insights/solar-market-france-germany-spain</div>
+                        <div class="text-slate-600">... (20 pages)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

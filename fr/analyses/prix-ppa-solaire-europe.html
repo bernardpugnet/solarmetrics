@@ -73,6 +73,31 @@
         .toc a{color:#94A3B8;text-decoration:none;transition:color 0.15s}
         .toc a:hover{color:#F59E0B}
     </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Skip to content -->
@@ -130,7 +155,7 @@
                 <span>/</span>
                 <a href="./" class="hover:text-slate-300">Analyses</a>
                 <span>/</span>
-                <span class="text-slate-400">Prix PPA Solaire en Europe</span>
+                <span class="text-slate-400">Prix <abbr title="Accord d'Achat d'Électricité (Power Purchase Agreement)">PPA</abbr> Solaire en Europe</span>
             </nav>
             <!-- Tags -->
             <div class="flex flex-wrap gap-2 mb-4">
@@ -165,14 +190,14 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 not-prose">
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
                         <div class="text-2xl font-bold text-amber-400">€57</div>
-                        <div class="text-xs text-slate-500 mt-1">Prix moyen PPA<br>/MWh (Q3 2025)</div>
+                        <div class="text-xs text-slate-500 mt-1">Prix moyen PPA<br>/<abbr title="Mégawatt-heure">MWh</abbr> (Q3 2025)</div>
                     </div>
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
                         <div class="text-2xl font-bold text-amber-400">-13%</div>
                         <div class="text-xs text-slate-500 mt-1">Baisse annuelle<br>Q4 2024 vs 2023</div>
                     </div>
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
-                        <div class="text-2xl font-bold text-amber-400">19 GW</div>
+                        <div class="text-2xl font-bold text-amber-400">19 <abbr title="Gigawatt">GW</abbr></div>
                         <div class="text-xs text-slate-500 mt-1">Volume PPA<br>contracté 2024</div>
                     </div>
                     <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
@@ -184,7 +209,7 @@
                 <h2 id="what-is-ppa">Qu'est-ce qu'un PPA solaire et pourquoi est-ce important ?</h2>
                 <p>Un <strong>Power Purchase Agreement (PPA) solaire</strong> est un contrat à long terme (généralement 10-25 ans) entre un producteur solaire et un acheteur (offtaker) d'électricité. Les offtakers peuvent être des entreprises recherchant de l'électricité renouvelable pour leurs objectifs de durabilité, des distributeurs d'énergie, ou des entités gouvernementales. Le PPA fixe le prix de l'électricité avant la construction, éliminant ainsi une grande partie du risque de marché (prix marchands volatiles) associé aux projets solaires sans contrat (projets « merchant »).</p>
                 <p>Il existe plusieurs variantes de structure de PPA : les <strong>PPAs physiques</strong> impliquent une livraison directe d'électricité, tandis que les <strong>PPAs virtuels</strong> opèrent sur une base financière avec le producteur vendant sur le marché de gros et l'offtaker recevant les bénéfices/supportant les pertes. Les PPAs peuvent être à <strong>prix fixe</strong> (le prix reste constant sur la durée du contrat) ou <strong>indexés</strong> (le prix s'ajuste selon une formule, par exemple par rapport à l'inflation ou aux prix de marché). Pour les développeurs et investisseurs, les PPAs à prix fixe offrent une visibilité sur les flux de trésorerie et améliorent la bancabilité des projets.</p>
-                <p>Comprendre l'évolution des prix des PPAs solaires en Europe est essentiel pour évaluer la compétitivité économique des nouveaux projets solaires et pour négocier des contrats favorables. Le prix d'un PPA reflète à la fois le LCOE du projet et la prime de risque demandée par le producteur.</p>
+                <p>Comprendre l'évolution des prix des PPAs solaires en Europe est essentiel pour évaluer la compétitivité économique des nouveaux projets solaires et pour négocier des contrats favorables. Le prix d'un PPA reflète à la fois le <abbr title="Coût Actualisé de l'Énergie (Levelized Cost of Energy)">LCOE</abbr> du projet et la prime de risque demandée par le producteur.</p>
 
                 <h2 id="price-evolution">Évolution des prix PPA 2022-2025</h2>
                 <p>Les prix des PPAs solaires européens ont connu une volatilité significative au cours des trois dernières années, reflétant les chocs des marchés énergétiques mondiaux, les changements de politiques de soutien aux énergies renouvelables, et l'imbalance croissante entre l'offre et la demande d'électricité solaire en Europe.</p>
@@ -196,13 +221,13 @@
                 <p>À partir du Q4 2024, l'indice <strong>LevelTen European PPA Price Index</strong> (qui suivi les offres indicatives de prix des producteurs solaires) s'établissait à <strong>€62,31/MWh</strong>, représentant une baisse d'environ <strong>-22% en un an</strong>. Le Q1 2025 a enregistré une légère augmentation à <strong>€63,11/MWh (+1,3% QoQ)</strong>, mais les données transactionnelles (prix réellement signés) de Pexapark révèlent que les deals réels se situaient significativement plus bas, entre <strong>€34-50/MWh</strong> selon le pays et les caractéristiques du projet.</p>
 
                 <h3>Q3 2025 : Accélération de la baisse</h3>
-                <p>Au Q3 2025, <strong>PV Tech</strong> rapportait que les prix signés sur le marché solaire européen pour les nouveaux deals étaient tombés en-dessous de <strong>€35/MWh</strong> sur les marchés les plus compétitifs (Espagne, Portugal). L'indice LevelTen Q3 2025 s'établissait à environ <strong>€57/MWh</strong>, mais cette moyenne masque une dispersion croissante : les projets premium avec faible risque ou localisation exceptionnelle atteignaient des prix supérieurs, tandis que les projets exposés au risque de cannibalisation solaire se négociaient bien plus bas.</p>
+                <p>Au Q3 2025, <strong><abbr title="Photovoltaïque">PV</abbr> Tech</strong> rapportait que les prix signés sur le marché solaire européen pour les nouveaux deals étaient tombés en-dessous de <strong>€35/MWh</strong> sur les marchés les plus compétitifs (Espagne, Portugal). L'indice LevelTen Q3 2025 s'établissait à environ <strong>€57/MWh</strong>, mais cette moyenne masque une dispersion croissante : les projets premium avec faible risque ou localisation exceptionnelle atteignaient des prix supérieurs, tandis que les projets exposés au risque de cannibalisation solaire se négociaient bien plus bas.</p>
 
                 <h3>Important : distinction entre indices et transactions réelles</h3>
                 <p>Il est crucial de noter la distinction entre deux sources de données : l'<strong>indice LevelTen</strong>, qui reflète les offres indicatives de prix (« ask prices ») de producteurs solaires, tend à être plus élevé que les prix réellement transigés. Les prix signés observés par <strong>Pexapark</strong> et rapportés par <strong>Wood Mackenzie</strong> représentent davantage les prix de marché réels, qui incorporent les négociations, les conditions de bankabilité, et l'acceptation de risques. Pour les comparaisons entre pays et pour les analyses d'investissement, privilégier les données de transactions réelles est préférable.</p>
 
                 <h2 id="country-comparison">Comparaison des prix PPA par pays</h2>
-                <p>Le prix d'un PPA solaire varie significativement selon le pays, en fonction du LCOE local (irradiance, coûts CAPEX/OPEX, WACC), de la maturité du marché, du cadre réglementaire, et du degré de concurrence entre producteurs. Voici un tableau synthétisant les données de LevelTen, Pexapark, Wood Mackenzie et PV Tech pour H1-Q3 2025 :</p>
+                <p>Le prix d'un PPA solaire varie significativement selon le pays, en fonction du LCOE local (irradiance, coûts <abbr title="Dépenses d'Investissement (Capital Expenditure)">CAPEX</abbr>/<abbr title="Dépenses d'Exploitation (Operating Expenditure)">OPEX</abbr>, <abbr title="Coût Moyen Pondéré du Capital (Weighted Average Cost of Capital)">WACC</abbr>), de la maturité du marché, du cadre réglementaire, et du degré de concurrence entre producteurs. Voici un tableau synthétisant les données de LevelTen, Pexapark, Wood Mackenzie et PV Tech pour H1-Q3 2025 :</p>
 
                 <!-- PPA Pricing Table -->
                 <div class="overflow-x-auto mb-8 not-prose">
@@ -243,7 +268,7 @@
                                 <td class="text-center py-3 px-4 text-amber-400 font-semibold">45–55</td>
                                 <td class="text-center py-3 px-4">N/A</td>
                                 <td class="text-center py-3 px-4">+184% surge</td>
-                                <td class="text-center py-3 px-4 text-slate-400">Marché décollant, deal 420 MW</td>
+                                <td class="text-center py-3 px-4 text-slate-400">Marché décollant, deal 420 <abbr title="Mégawatt">MW</abbr></td>
                             </tr>
                             <tr class="border-b border-slate-800 hover:bg-slate-800/40">
                                 <td class="py-3 px-4 font-medium">Pologne</td>
@@ -308,7 +333,7 @@
                 <p>En Allemagne et en Espagne, le nombre annuel d'heures avec prix négatif (où les producteurs doivent payer pour injecter de l'électricité sur le réseau) a atteint plusieurs centaines d'heures en 2024-2025. Cette tendance s'accélère : on estime qu'en Allemagne, la proportion d'heures de prix négatif pourrait atteindre <strong>5-10%</strong> du temps d'ici 2030 sans déploiement massif de stockage. Pour les projets sans couverture de prix dans ces heures, les revenus peuvent devenir négatifs.</p>
 
                 <h3>Solutions émergentes : stockage et hybridation</h3>
-                <p>Pour pallier cette menace, les développeurs de nouveaux projets intègrent de plus en plus du <strong>stockage par batterie (BESS)</strong> ou des structures <strong>hybrides solaire+stockage</strong>. Une batterie permet de décaler la production solaire de midi vers les heures d'après-midi/soirée, quand les prix sont plus élevés, améliorant significativement le taux de capture. Les coûts des BESS ayant chuté à environ <strong>€78-100/MWh</strong> (2025), de nombreux nouveaux projets incorporent du stockage directement, avec des PPAs reflétant une valeur plus élevée grâce à la meilleure courbe de production.</p>
+                <p>Pour pallier cette menace, les développeurs de nouveaux projets intègrent de plus en plus du <strong>stockage par batterie (<abbr title="Système de Stockage par Batterie (Battery Energy Storage System)">BESS</abbr>)</strong> ou des structures <strong>hybrides solaire+stockage</strong>. Une batterie permet de décaler la production solaire de midi vers les heures d'après-midi/soirée, quand les prix sont plus élevés, améliorant significativement le taux de capture. Les coûts des BESS ayant chuté à environ <strong>€78-100/MWh</strong> (2025), de nombreux nouveaux projets incorporent du stockage directement, avec des PPAs reflétant une valeur plus élevée grâce à la meilleure courbe de production.</p>
                 <p>D'autres solutions comprennent :</p>
                 <ul>
                     <li><strong>Contrôle de la production (curtailment)</strong> — Réduire la production pendant les heures de prix bas pour améliorer le taux de capture moyen.</li>

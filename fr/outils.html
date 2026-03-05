@@ -17,6 +17,31 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}.tooltip{position:relative;cursor:help}.tooltip .tooltiptext{visibility:hidden;width:280px;background-color:#1e293b;color:#f1f5f9;text-align:left;border-radius:0.5rem;padding:0.75rem;position:absolute;z-index:1000;bottom:120%;left:50%;margin-left:-140px;opacity:0;transition:opacity 0.3s;border:1px solid #475569;font-size:0.75rem;line-height:1.4}.tooltip:hover .tooltiptext{visibility:visible;opacity:1}.input-group input[type="number"]{-moz-appearance:textfield}.input-group input[type="number"]::-webkit-inner-spin-button,.input-group input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}</style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
@@ -82,7 +107,7 @@
             <div class="mb-20" id="calculateur">
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                     <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">1</span>
-                    Calculateur LCOE & TRI Projet
+                    Calculateur <abbr title="Coût Actualisé de l'Énergie (Levelized Cost of Energy)">LCOE</abbr> & <abbr title="Taux de Rentabilité Interne (Internal Rate of Return)">TRI</abbr> Projet
                 </h3>
 
                 <div class="grid lg:grid-cols-3 gap-8">
@@ -121,7 +146,7 @@
                                         <span class="text-slate-400">Technologie modules</span>
                                         <span class="tooltip inline-block">
                                             <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">PERC: dégradation 0.50%/an. TOPCon: 0.40%/an + 5% bonus bifacial. HJT: 0.35%/an + 7% bonus bifacial.</span>
+                                            <span class="tooltiptext"><abbr title="Cellule Passivée à l'Arrière (Passivated Emitter and Rear Cell)">PERC</abbr>: dégradation 0.50%/an. <abbr title="Contact Passivé par Oxyde Tunnel (Tunnel Oxide Passivated Contact)">TOPCon</abbr>: 0.40%/an + 5% bonus bifacial. <abbr title="Technologie Hétérojonction (Heterojunction Technology)">HJT</abbr>: 0.35%/an + 7% bonus bifacial.</span>
                                         </span>
                                     </label>
                                     <select id="technology" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
@@ -182,10 +207,10 @@
                                             <span class="text-slate-400">Productible année 1</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">kWh générés par kWc par an. Source: PVGIS / JRC European Commission.</span>
+                                                <span class="tooltiptext"><abbr title="Kilowatt-heure">kWh</abbr> générés par <abbr title="Kilowatt-crête (puissance maximale)">kWc</abbr> par an. Source: <abbr title="Système d'Information Géographique <abbr title="Photovoltaïque">PV</abbr> (outil européen)">PVGIS</abbr> / JRC European Commission.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="yieldDisplay">1160</span> kWh/kWp/yr</span>
+                                        <span class="text-white font-medium"><span id="yieldDisplay">1160</span> kWh/<abbr title="Kilowatt-crête (puissance maximale)">kWp</abbr>/yr</span>
                                     </label>
                                     <input type="number" id="yield" value="1160" min="800" max="1600" step="10"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
@@ -241,7 +266,7 @@
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">CAPEX</span>
+                                            <span class="text-slate-400"><abbr title="Dépenses d'Investissement (Capital Expenditure)">CAPEX</abbr></span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
                                                 <span class="tooltiptext">Coût capital par kWc. Fraunhofer ISE Photovoltaics Report 2024: 710 €/kWp.</span>
@@ -257,10 +282,10 @@
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">OPEX fixe</span>
+                                            <span class="text-slate-400"><abbr title="Dépenses d'Exploitation (Operating Expenditure)">OPEX</abbr> fixe</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Coûts opérationnels annuels (maintenance, assurance). IEA-PVPS average EU: 13.3 €/kW/yr.</span>
+                                                <span class="tooltiptext">Coûts opérationnels annuels (maintenance, assurance). <abbr title="Agence Internationale de l'Énergie">IEA</abbr>-PVPS average EU: 13.3 €/kW/yr.</span>
                                             </span>
                                         </span>
                                         <span class="text-white font-medium"><span id="opexDisplay">13.3</span> €/kW/yr</span>
@@ -276,7 +301,7 @@
                                             <span class="text-slate-400">Inflation annuelle</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Taux d'inflation appliqué aux OPEX et PPA (le cas échéant).</span>
+                                                <span class="tooltiptext">Taux d'inflation appliqué aux OPEX et <abbr title="Accord d'Achat d'Électricité (Power Purchase Agreement)">PPA</abbr> (le cas échéant).</span>
                                             </span>
                                         </span>
                                         <span class="text-white font-medium"><span id="inflationDisplay">1.8</span> %/yr</span>
@@ -292,7 +317,7 @@
                                             <span class="text-slate-400">Taux d'actualisation</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">WACC moyen projets PV EU. IRENA 2024: 5.3%.</span>
+                                                <span class="tooltiptext"><abbr title="Coût Moyen Pondéré du Capital (Weighted Average Cost of Capital)">WACC</abbr> moyen projets PV EU. <abbr title="Agence Internationale des Énergies Renouvelables">IRENA</abbr> 2024: 5.3%.</span>
                                             </span>
                                         </span>
                                         <span class="text-white font-medium"><span id="discountDisplay">5.3</span> %/yr</span>
@@ -308,7 +333,7 @@
                                             <span class="text-slate-400">Prix PPA année 1</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Prix de vente de l'électricité. Average EU solar PPA Q4 2024: 74 €/MWh (LevelTen Energy).</span>
+                                                <span class="tooltiptext">Prix de vente de l'électricité. Average EU solar PPA Q4 2024: 74 €/<abbr title="Mégawatt-heure">MWh</abbr> (LevelTen Energy).</span>
                                             </span>
                                         </span>
                                         <span class="text-white font-medium"><span id="ppaDisplay">74</span> €/MWh</span>
@@ -350,7 +375,7 @@
                                 </div>
 
                                 <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
-                                    <p class="text-slate-400 text-xs mb-1">VAN (à 5.3%)</p>
+                                    <p class="text-slate-400 text-xs mb-1"><abbr title="Valeur Actuelle Nette (Net Present Value)">VAN</abbr> (à 5.3%)</p>
                                     <p class="text-2xl font-bold text-green-500"><span id="npvResult">2.1</span> M€</p>
                                 </div>
 
@@ -404,7 +429,7 @@
                             <h4 class="text-xl font-semibold text-white mb-4">Productible moyen en France</h4>
                             <p class="text-slate-400 text-sm mb-6">
                                 Le productible (kWh/kWc/an) varie fortement selon la localisation.
-                                Il dépend de l'irradiation (GHI), de l'orientation, de l'inclinaison et des ombrages.
+                                Il dépend de l'irradiation (<abbr title="Irradiance Horizontale Globale (Global Horizontal Irradiance)">GHI</abbr>), de l'orientation, de l'inclinaison et des ombrages.
                             </p>
                             <div class="space-y-3">
                                 <div class="flex items-center gap-4">

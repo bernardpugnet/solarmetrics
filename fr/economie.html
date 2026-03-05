@@ -22,6 +22,31 @@
         .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         html{scroll-behavior:smooth}
     </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Navigation -->
@@ -88,7 +113,7 @@
                         <div>
                             <h1 class="text-4xl font-bold text-white">Économie & Financement</h1>
 <p class="text-slate-500 text-sm mt-2">Mis à jour : mars 2026</p>
-                            <p class="text-slate-300">LCOE, montages financiers, Asset Management et rentabilité</p>
+                            <p class="text-slate-300"><abbr title="Coût Actualisé de l'Énergie (Levelized Cost of Energy)">LCOE</abbr>, montages financiers, Asset Management et rentabilité</p>
                         </div>
                     </div>
                 </div>
@@ -109,12 +134,12 @@
                         <h4 class="text-xl font-semibold text-white mb-4">Définition</h4>
                         <p class="text-slate-400 mb-4">
                             Le <strong class="text-white">LCOE (Levelized Cost of Energy)</strong> ou "coût actualisé de l'énergie" 
-                            représente le coût moyen de production d'un MWh sur la durée de vie d'une installation, 
+                            représente le coût moyen de production d'un <abbr title="Mégawatt-heure">MWh</abbr> sur la durée de vie d'une installation, 
                             en tenant compte de tous les coûts actualisés.
                         </p>
                         <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/50 mb-4">
                             <p class="text-amber-500 font-mono text-center text-lg mb-2">
-                                LCOE = Σ(CAPEX + OPEX) / Σ(Production)
+                                LCOE = Σ(<abbr title="Dépenses d'Investissement (Capital Expenditure)">CAPEX</abbr> + <abbr title="Dépenses d'Exploitation (Operating Expenditure)">OPEX</abbr>) / Σ(Production)
                             </p>
                             <p class="text-slate-500 text-xs text-center">Tous les flux actualisés au taux d'actualisation choisi</p>
                         </div>
@@ -125,11 +150,11 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                                <span class="text-slate-400"><strong class="text-white">OPEX</strong> : Coûts d'exploitation annuels (O&M, assurance, location terrain)</span>
+                                <span class="text-slate-400"><strong class="text-white">OPEX</strong> : Coûts d'exploitation annuels (<abbr title="Exploitation et Maintenance (Operation & Maintenance)">O&M</abbr>, assurance, location terrain)</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
-                                <span class="text-slate-400"><strong class="text-white">Production</strong> : kWh produits annuellement (avec dégradation)</span>
+                                <span class="text-slate-400"><strong class="text-white">Production</strong> : <abbr title="Kilowatt-heure">kWh</abbr> produits annuellement (avec dégradation)</span>
                             </div>
                         </div>
                     </div>
@@ -157,7 +182,7 @@
                             </div>
                             <div class="flex justify-between border-b border-slate-700/50 pb-2">
                                 <span class="text-slate-400">r</span>
-                                <span class="text-white">Taux d'actualisation (WACC)</span>
+                                <span class="text-white">Taux d'actualisation (<abbr title="Coût Moyen Pondéré du Capital (Weighted Average Cost of Capital)">WACC</abbr>)</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-400">t</span>
@@ -192,7 +217,7 @@
                         <div class="h-2 flex-1 bg-gradient-to-r from-red-500 via-amber-500 to-green-500 rounded-full"></div>
                     </div>
                     <p class="text-center text-green-500 font-semibold mt-4 text-lg">-89% en 14 ans</p>
-                    <p class="text-center text-slate-500 text-sm mt-2">Source : IRENA Renewable Power Generation Costs 2024</p>
+                    <p class="text-center text-slate-500 text-sm mt-2">Source : <abbr title="Agence Internationale des Énergies Renouvelables">IRENA</abbr> Renewable Power Generation Costs 2024</p>
                 </div>
 
                 <!-- Comparatif LCOE -->
@@ -200,7 +225,7 @@
                     <h4 class="text-xl font-semibold text-white mb-6">Comparatif LCOE par source d'énergie (2024)</h4>
                     <div class="space-y-4">
                         <div class="flex items-center gap-4">
-                            <span class="w-32 text-slate-400 text-sm">Solaire PV</span>
+                            <span class="w-32 text-slate-400 text-sm">Solaire <abbr title="Photovoltaïque">PV</abbr></span>
                             <div class="flex-1 bg-slate-700/50 rounded-full h-8 overflow-hidden">
                                 <div class="bg-gradient-to-r from-amber-500 to-amber-600 h-full rounded-full flex items-center justify-end pr-3" style="width: 25%">
                                     <span class="text-white text-xs font-medium">30-45 €</span>
@@ -280,8 +305,8 @@
                             </thead>
                             <tbody class="divide-y divide-slate-700/50">
                                 <tr>
-                                    <td class="py-3 px-4"><span class="text-amber-500 font-medium">PPA</span></td>
-                                    <td class="py-3 px-4 text-slate-300">Producteur (IPP)</td>
+                                    <td class="py-3 px-4"><span class="text-amber-500 font-medium"><abbr title="Accord d'Achat d'Électricité (Power Purchase Agreement)">PPA</abbr></span></td>
+                                    <td class="py-3 px-4 text-slate-300">Producteur (<abbr title="Producteur d'Électricité Indépendant">IPP</abbr>)</td>
                                     <td class="py-3 px-4 text-slate-300">Producteur</td>
                                     <td class="py-3 px-4 text-slate-400">Corporates qui veulent du vert sans investir</td>
                                 </tr>
@@ -294,7 +319,7 @@
                                 <tr>
                                     <td class="py-3 px-4"><span class="text-purple-500 font-medium">Project Finance</span></td>
                                     <td class="py-3 px-4 text-slate-300">Banque (70%) + Sponsor (30%)</td>
-                                    <td class="py-3 px-4 text-slate-300">SPV dédié</td>
+                                    <td class="py-3 px-4 text-slate-300"><abbr title="Société de Projet Dédiée (Special Purpose Vehicle)">SPV</abbr> dédié</td>
                                     <td class="py-3 px-4 text-slate-400">Grands projets utility-scale</td>
                                 </tr>
                                 <tr>
@@ -327,7 +352,7 @@
                         </p>
                         <p class="text-slate-400 text-sm">
                             → Le producteur a des revenus garantis (bankable)<br>
-                            → L'acheteur a un prix fixe et de l'électricité verte (reporting ESG)
+                            → L'acheteur a un prix fixe et de l'électricité verte (reporting <abbr title="Environnemental, Social, Gouvernance">ESG</abbr>)
                         </p>
                     </div>
 
@@ -364,7 +389,7 @@
                         <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-green-500">
                             <h6 class="text-green-500 font-semibold mb-2">PPA On-site</h6>
                             <p class="text-slate-400 text-sm mb-3">Panneaux installés chez le client (toiture, parking). Il consomme directement.</p>
-                            <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Usine avec 500 kWc sur son toit</p>
+                            <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Usine avec 500 <abbr title="Kilowatt-crête (puissance maximale)">kWc</abbr> sur son toit</p>
                         </div>
                         <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-blue-500">
                             <h6 class="text-blue-500 font-semibold mb-2">PPA Off-site</h6>
@@ -372,7 +397,7 @@
                             <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Amazon achète à un parc en Espagne</p>
                         </div>
                         <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-purple-500">
-                            <h6 class="text-purple-500 font-semibold mb-2">Virtual PPA (VPPA)</h6>
+                            <h6 class="text-purple-500 font-semibold mb-2">Virtual PPA (<abbr title="PPA Virtuel (Virtual Power Purchase Agreement)">VPPA</abbr>)</h6>
                             <p class="text-slate-400 text-sm mb-3">Contrat financier uniquement. Pas de livraison physique, juste un prix de référence.</p>
                             <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Google "achète" du solaire en Suède depuis les USA</p>
                         </div>
@@ -525,7 +550,7 @@
                             <div class="text-center p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
                                 <p class="text-amber-500 text-sm">Equity sponsor (25%)</p>
                                 <p class="text-2xl font-bold text-white">2 M€</p>
-                                <p class="text-slate-500 text-xs">TRI cible 10-15%</p>
+                                <p class="text-slate-500 text-xs"><abbr title="Taux de Rentabilité Interne (Internal Rate of Return)">TRI</abbr> cible 10-15%</p>
                             </div>
                         </div>
                         <div class="mt-4 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
@@ -604,7 +629,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">>500 kWc</span>
-                                    <span class="text-white font-medium">Appel d'offres CRE</span>
+                                    <span class="text-white font-medium">Appel d'offres <abbr title="Commission de Régulation de l'Énergie">CRE</abbr></span>
                                 </div>
                             </div>
                         </div>
@@ -770,7 +795,7 @@
                         <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
                             <p class="text-slate-400 text-sm mb-2">Yield attendu</p>
                             <p class="text-2xl font-bold text-green-500 mb-2">5-8%</p>
-                            <p class="text-slate-400 text-xs">IRR equity attendu par les investisseurs institutionnels sur actifs solaires.</p>
+                            <p class="text-slate-400 text-xs"><abbr title="Taux de Rentabilité Interne">IRR</abbr> equity attendu par les investisseurs institutionnels sur actifs solaires.</p>
                         </div>
                     </div>
                     <p class="text-slate-500 text-sm">
@@ -928,7 +953,7 @@
                             <p class="text-slate-500 text-xs mt-2">Temps de retour sur investissement</p>
                         </div>
                         <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-600/30">
-                            <p class="text-slate-400 text-sm mb-2">DSCR min</p>
+                            <p class="text-slate-400 text-sm mb-2"><abbr title="Ratio de Couverture de la Dette (Debt Service Coverage Ratio)">DSCR</abbr> min</p>
                             <p class="text-3xl font-bold text-purple-500">≥ 1.2x</p>
                             <p class="text-slate-500 text-xs mt-2">Debt Service Coverage Ratio exigé par les banques</p>
                         </div>

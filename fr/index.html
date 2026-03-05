@@ -63,6 +63,31 @@
         /* Critical: reduce layout shift from font loading */
         body{font-display:swap}
     </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Skip to content (accessibility) -->
@@ -169,7 +194,7 @@
                     <!-- News Item 1 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">Mars 2026</div>
-                        <h3 class="text-white font-semibold mb-2">PPE3 publiée : 54-59 GW de PV d'ici 2030</h3>
+                        <h3 class="text-white font-semibold mb-2">PPE3 publiée : 54-59 <abbr title="Gigawatt">GW</abbr> de <abbr title="Photovoltaïque">PV</abbr> d'ici 2030</h3>
                         <p class="text-slate-400 text-sm mb-3">La Programmation Pluriannuelle de l'Énergie (PPE3), publiée en février 2026, fixe un objectif de 54 à 59 GW de photovoltaïque installés d'ici 2030, et jusqu'à 98 GW en 2035. La France a raccordé 5,9 GW en 2025, un record (+28% vs 2024), portant la capacité totale à 31 GW.</p>
                         <span class="text-amber-500 text-xs font-medium">Source : Ministère de la Transition Énergétique</span>
                     </div>
@@ -177,8 +202,8 @@
                     <!-- News Item 2 -->
                     <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors">
                         <div class="text-xs text-slate-500 mb-2">Février 2026</div>
-                        <h3 class="text-white font-semibold mb-2">LCOE solaire : -97% depuis 2010, encore -30% d'ici 2035</h3>
-                        <p class="text-slate-400 text-sm mb-3">BloombergNEF prévoit une baisse supplémentaire de 30% du LCOE solaire d'ici 2035. Malgré une hausse ponctuelle de 6% en 2025 (39 $/MWh), le solaire reste la source d'électricité la plus compétitive au monde.</p>
+                        <h3 class="text-white font-semibold mb-2"><abbr title="Coût Actualisé de l'Énergie (Levelized Cost of Energy)">LCOE</abbr> solaire : -97% depuis 2010, encore -30% d'ici 2035</h3>
+                        <p class="text-slate-400 text-sm mb-3">BloombergNEF prévoit une baisse supplémentaire de 30% du LCOE solaire d'ici 2035. Malgré une hausse ponctuelle de 6% en 2025 (39 $/<abbr title="Mégawatt-heure">MWh</abbr>), le solaire reste la source d'électricité la plus compétitive au monde.</p>
                         <span class="text-amber-500 text-xs font-medium">Source : BloombergNEF, Wood Mackenzie</span>
                     </div>
 
@@ -232,7 +257,7 @@
                     </div>
                 </div>
                 
-                <p class="text-center text-slate-500 text-sm mt-8">Sources : RTE, IRENA, SER, Observ'ER 2024</p>
+                <p class="text-center text-slate-500 text-sm mt-8">Sources : RTE, <abbr title="Agence Internationale des Énergies Renouvelables">IRENA</abbr>, SER, Observ'ER 2024</p>
             </div>
         </section>
 

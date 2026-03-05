@@ -16,6 +16,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>*{font-family:'Inter',sans-serif}html{scroll-behavior:smooth}</style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Navigation -->
@@ -89,7 +114,7 @@
                     </div>
                     <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700">
                         <p class="text-3xl font-bold text-amber-500">1,480</p>
-                        <p class="text-slate-400 text-sm">kWh/kWp/year (PVGIS)</p>
+                        <p class="text-slate-400 text-sm"><abbr title="Kilowatt-hour">kWh</abbr>/<abbr title="Kilowatt-peak (maximum power)">kWp</abbr>/year (<abbr title="Photovoltaic Geographical Information System (EU tool)">PVGIS</abbr>)</p>
                     </div>
                     <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700">
                         <p class="text-3xl font-bold text-amber-500">25 yrs</p>
@@ -103,7 +128,7 @@
         <section class="py-12 bg-slate-800/50">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <p class="text-slate-300 text-lg leading-relaxed mb-4">
-                    This case study presents the financial analysis of a fictional but realistic solar photovoltaic project, based on verified market data. The objective is to compare different technical configurations (PERC vs TOPCon panels, fixed vs trackers) and evaluate their impact on profitability.
+                    This case study presents the financial analysis of a fictional but realistic solar photovoltaic project, based on verified market data. The objective is to compare different technical configurations (<abbr title="Passivated Emitter and Rear Cell">PERC</abbr> vs <abbr title="Tunnel Oxide Passivated Contact">TOPCon</abbr> panels, fixed vs trackers) and evaluate their impact on profitability.
                 </p>
                 <p class="text-slate-300 text-lg leading-relaxed">
                     We analyze <strong class="text-white">4 scenarios</strong> to identify the optimal combination between investment and production, while respecting standard project finance constraints.
@@ -125,7 +150,7 @@
                         <h3 class="text-base font-semibold text-white mb-3">Sizing</h3>
                         <ul class="space-y-2 text-slate-300 text-sm">
                             <li class="flex justify-between"><span>DC Power</span><span class="text-white">20 MWp</span></li>
-                            <li class="flex justify-between"><span>AC Power</span><span class="text-white">16 MW</span></li>
+                            <li class="flex justify-between"><span>AC Power</span><span class="text-white">16 <abbr title="Megawatt">MW</abbr></span></li>
                             <li class="flex justify-between"><span>DC/AC Ratio</span><span class="text-amber-500 font-medium">1.25</span></li>
                             <li class="flex justify-between"><span>Land Area</span><span class="text-white">32 ha (~1.6 ha/MWp)</span></li>
                         </ul>
@@ -133,7 +158,7 @@
                     <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
                         <h3 class="text-base font-semibold text-white mb-3">Financial Parameters</h3>
                         <ul class="space-y-2 text-slate-300 text-sm">
-                            <li class="flex justify-between"><span>WACC</span><span class="text-white">6.5%</span></li>
+                            <li class="flex justify-between"><span><abbr title="Weighted Average Cost of Capital">WACC</abbr></span><span class="text-white">6.5%</span></li>
                             <li class="flex justify-between"><span>Discount Rate</span><span class="text-white">7%</span></li>
                             <li class="flex justify-between"><span>Construction Period</span><span class="text-white">12 months</span></li>
                             <li class="flex justify-between"><span>IDC (Interest During Constr.)</span><span class="text-white">~€180k</span></li>
@@ -143,7 +168,7 @@
                         <h3 class="text-base font-semibold text-white mb-3">Indexation & Provisions</h3>
                         <ul class="space-y-2 text-slate-300 text-sm">
                             <li class="flex justify-between"><span>Tariff Indexation</span><span class="text-white">L + 0.5×ICHT</span></li>
-                            <li class="flex justify-between"><span>OPEX Escalation</span><span class="text-white">2%/year</span></li>
+                            <li class="flex justify-between"><span><abbr title="Operating Expenditure">OPEX</abbr> Escalation</span><span class="text-white">2%/year</span></li>
                             <li class="flex justify-between"><span>Decommissioning Reserve</span><span class="text-white">€50k/MWp</span></li>
                             <li class="flex justify-between"><span>Inverter Replacement</span><span class="text-white">Year 12</span></li>
                         </ul>
@@ -178,7 +203,7 @@
                     <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
                         <h3 class="text-lg font-semibold text-white mb-4">Irradiation Data (PVGIS)</h3>
                         <ul class="space-y-3 text-slate-300">
-                            <li class="flex justify-between"><span>GHI (Global Horizontal)</span><span class="text-white font-medium">1,720 kWh/m²/year</span></li>
+                            <li class="flex justify-between"><span><abbr title="Global Horizontal Irradiance">GHI</abbr> (Global Horizontal)</span><span class="text-white font-medium">1,720 kWh/m²/year</span></li>
                             <li class="flex justify-between"><span>DNI (Direct Normal)</span><span class="text-white font-medium">1,950 kWh/m²/year</span></li>
                             <li class="flex justify-between"><span>Optimal Tilt</span><span class="text-white font-medium">33°</span></li>
                             <li class="flex justify-between"><span>Yield (fixed 33°)</span><span class="text-white font-medium">1,480 kWh/kWp/year</span></li>
@@ -242,7 +267,7 @@
 
                 <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700">
                     <p class="text-slate-400 text-sm"><strong class="text-white">Analysis:</strong> The TOPCon premium (+27%) can be offset by a production gain of <strong class="text-white">5 to 10%</strong>, varying by site conditions. Bifacial gain strongly depends on ground albedo (reflectivity), mounting height, and GCR (Ground Coverage Ratio). On light-colored soil with elevated trackers: +8-10%. On dark soil with low fixed structure: +3-5%.</p>
-                    <p class="text-xs text-slate-500 mt-2">Sources: IRENA Renewable Power Generation Costs 2024, PV Magazine Market Survey Q4 2024</p>
+                    <p class="text-xs text-slate-500 mt-2">Sources: <abbr title="International Renewable Energy Agency">IRENA</abbr> Renewable Power Generation Costs 2024, <abbr title="Photovoltaic">PV</abbr> Magazine Market Survey Q4 2024</p>
                 </div>
             </div>
         </section>
@@ -296,7 +321,7 @@
                 </div>
 
                 <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700">
-                    <p class="text-slate-400 text-sm"><strong class="text-white">Analysis:</strong> Trackers double structure cost (+€1M) but increase production by 16%. With a tariff of €75/MWh, the additional production generates approximately €360k/year in extra revenue (20 MWp × 240 kWh/kWp × €75/MWh). The premium is paid back in less than 3 years, making trackers very attractive in high-irradiance locations.</p>
+                    <p class="text-slate-400 text-sm"><strong class="text-white">Analysis:</strong> Trackers double structure cost (+€1M) but increase production by 16%. With a tariff of €75/<abbr title="Megawatt-hour">MWh</abbr>, the additional production generates approximately €360k/year in extra revenue (20 MWp × 240 kWh/kWp × €75/MWh). The premium is paid back in less than 3 years, making trackers very attractive in high-irradiance locations.</p>
                 </div>
             </div>
         </section>
@@ -355,7 +380,7 @@
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
                     <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">💰</span>
-                    CAPEX Breakdown — 4 Scenarios
+                    <abbr title="Capital Expenditure">CAPEX</abbr> Breakdown — 4 Scenarios
                 </h2>
                 <p class="text-slate-400 mb-8">Investment cost breakdown by item. Scenarios range from lowest cost (A) to highest performance (D). The 1.25 DC/AC ratio is integrated into inverter sizing.</p>
 
@@ -470,7 +495,7 @@
                     <span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">📈</span>
                     Production & Annual Revenue
                 </h2>
-                <p class="text-slate-400 mb-8">Production depends on solar resource, equipment performance, and system losses. Revenue is calculated under two schemes: the CRE tender contract (secured) and spot market sales (merchant).</p>
+                <p class="text-slate-400 mb-8">Production depends on solar resource, equipment performance, and system losses. Revenue is calculated under two schemes: the <abbr title="French Energy Regulatory Commission">CRE</abbr> tender contract (secured) and spot market sales (merchant).</p>
 
                 <div class="grid md:grid-cols-2 gap-8 mb-8">
                     <!-- Production Assumptions -->
@@ -554,7 +579,7 @@
                             <li class="flex justify-between"><span>Gearing</span><span class="text-white">80%</span></li>
                             <li class="flex justify-between"><span>Rate (margin + Euribor)</span><span class="text-white">5.5%</span></li>
                             <li class="flex justify-between"><span>Tenor</span><span class="text-white">18 years</span></li>
-                            <li class="flex justify-between"><span>Minimum DSCR</span><span class="text-white">1.20x</span></li>
+                            <li class="flex justify-between"><span>Minimum <abbr title="Debt Service Coverage Ratio">DSCR</abbr></span><span class="text-white">1.20x</span></li>
                         </ul>
                     </div>
 
@@ -563,15 +588,15 @@
                         <ul class="space-y-2 text-slate-300 text-sm">
                             <li class="flex justify-between"><span>Amount</span><span class="text-white font-bold">€2,409k</span></li>
                             <li class="flex justify-between"><span>Share</span><span class="text-white">20%</span></li>
-                            <li class="flex justify-between"><span>Investor</span><span class="text-white">Sponsor / IPP</span></li>
-                            <li class="flex justify-between"><span>Target IRR</span><span class="text-white">&gt;12%</span></li>
+                            <li class="flex justify-between"><span>Investor</span><span class="text-white">Sponsor / <abbr title="Independent Power Producer">IPP</abbr></span></li>
+                            <li class="flex justify-between"><span>Target <abbr title="Internal Rate of Return">IRR</abbr></span><span class="text-white">&gt;12%</span></li>
                         </ul>
                     </div>
 
                     <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
                         <h3 class="text-lg font-semibold text-white mb-4">Annual OPEX</h3>
                         <ul class="space-y-2 text-slate-300 text-sm">
-                            <li class="flex justify-between"><span>O&M (€12/kWp/yr)</span><span class="text-white">€240k</span></li>
+                            <li class="flex justify-between"><span><abbr title="Operation & Maintenance">O&M</abbr> (€12/kWp/yr)</span><span class="text-white">€240k</span></li>
                             <li class="flex justify-between"><span>Insurance</span><span class="text-white">€60k</span></li>
                             <li class="flex justify-between"><span>Land Lease</span><span class="text-white">€48k</span></li>
                             <li class="flex justify-between"><span>Taxes (IFER, CFE)</span><span class="text-white">€85k</span></li>
@@ -632,7 +657,7 @@
                                 <td class="text-right py-3 px-4 text-white">€2,272k</td>
                             </tr>
                             <tr class="border-b border-slate-700/50 bg-slate-800/30">
-                                <td class="py-3 px-4 font-medium">LCOE</td>
+                                <td class="py-3 px-4 font-medium"><abbr title="Levelized Cost of Energy">LCOE</abbr></td>
                                 <td class="text-right py-3 px-4 font-medium">€42.5/MWh</td>
                                 <td class="text-right py-3 px-4 font-medium">€41.2/MWh</td>
                                 <td class="text-right py-3 px-4 font-medium">€39.8/MWh</td>
@@ -710,7 +735,7 @@
                             <li><strong class="text-white">Price Risk:</strong> 20-year CRE contract with indexed tariff</li>
                             <li><strong class="text-white">Resource Risk:</strong> PVGIS validated data, P90 -8%</li>
                             <li><strong class="text-white">Technology Risk:</strong> Proven technologies, manufacturer warranties</li>
-                            <li><strong class="text-white">Construction Risk:</strong> Turnkey EPC, performance guarantee</li>
+                            <li><strong class="text-white">Construction Risk:</strong> Turnkey <abbr title="Engineering, Procurement, Construction">EPC</abbr>, performance guarantee</li>
                             <li><strong class="text-white">Operational Risk:</strong> Contracted O&M, 98% availability guaranteed</li>
                         </ul>
                     </div>
@@ -720,7 +745,7 @@
                         <ul class="space-y-3 text-slate-300 text-sm">
                             <li><strong class="text-white">Regulatory Risk:</strong> Tax changes (IFER), permit delays</li>
                             <li><strong class="text-white">Interest Rate Risk:</strong> Euribor impact on debt service</li>
-                            <li><strong class="text-white">Counterparty Risk:</strong> Off-taker solvency (if corporate PPA)</li>
+                            <li><strong class="text-white">Counterparty Risk:</strong> Off-taker solvency (if corporate <abbr title="Power Purchase Agreement">PPA</abbr>)</li>
                             <li><strong class="text-white">Grid Risk:</strong> Curtailment, network congestion</li>
                             <li><strong class="text-white">Tail Risk:</strong> Terminal value post-contract (years 21-25)</li>
                         </ul>
