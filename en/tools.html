@@ -621,12 +621,12 @@ abbr[title]:hover::after {
                         <span class="text-amber-500">⚡</span> Visual Guide: Plug & Play Solar Installation
                     </h4>
                     <p class="text-slate-400 text-sm mb-4">Discover how a plug & play solar installation works with our interactive diagram. Click on components for details, and switch countries to see local subsidies and surplus resale options.</p>
-                    <div class="relative w-full rounded-xl overflow-hidden border border-slate-700/50" style="padding-bottom:68%;">
-                        <iframe src="schema-plug-and-play.html" sandbox="allow-scripts allow-same-origin allow-popups" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" loading="lazy" title="Plug and play solar installation diagram"></iframe>
-                    </div>
-                    <p class="text-xs text-slate-500 mt-3 text-center">
-                        <a href="schema-plug-and-play.html" target="_blank" class="text-amber-400 hover:text-amber-300 underline">Open fullscreen ↗</a>
-                    </p>
+                    <a href="schema-plug-and-play.html" target="_blank" class="block relative group rounded-xl overflow-hidden border border-slate-700/50">
+                        <img src="../images/schema-plug-and-play-preview.png" alt="Plug and play solar installation diagram" class="w-full rounded-xl" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="bg-amber-500 text-slate-900 px-6 py-3 rounded-lg font-semibold text-sm shadow-lg">Open interactive diagram ↗</span>
+                        </div>
+                    </a>
                 </div>
 
                 <!-- Sources & Disclaimers -->
