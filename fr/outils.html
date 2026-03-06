@@ -371,6 +371,7 @@ abbr[title]:hover::after {
                                         <span class="text-white font-medium">€<span id="resElecPriceDisplay">0.22</span>/kWh</span>
                                     </label>
                                     <input type="number" id="resElecPrice" value="0.22" min="0.05" max="0.50" step="0.01"
+                                           oninput="document.getElementById('resElecPriceDisplay').textContent = parseFloat(this.value).toFixed(2)"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
@@ -387,6 +388,7 @@ abbr[title]:hover::after {
                                         <span class="text-white font-medium">€<span id="resFeedinDisplay">0.15</span>/kWh</span>
                                     </label>
                                     <input type="number" id="resFeedir" value="0.15" min="0.01" max="0.50" step="0.01"
+                                           oninput="document.getElementById('resFeedinDisplay').textContent = parseFloat(this.value).toFixed(2)"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
@@ -435,6 +437,7 @@ abbr[title]:hover::after {
                                         <span class="text-white font-medium">€<span id="resSubsidiesDisplay">3000</span></span>
                                     </label>
                                     <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100"
+                                           oninput="document.getElementById('resSubsidiesDisplay').textContent = this.value"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
@@ -1165,6 +1168,12 @@ abbr[title]:hover::after {
             const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
             const discountRate = parseFloat(document.getElementById('resDiscount').value) / 100;
 
+            // Validation
+            if (isNaN(surface) || isNaN(tilt) || isNaN(shading) || isNaN(consumption) || isNaN(elecPrice) || surface <= 0) {
+                alert('Veuillez vérifier les paramètres saisis.');
+                return;
+            }
+
             // Calculate installed capacity: kWc = surface × 0.85 (coverage) × efficiency
             const kwc = surface * 0.85 * panelEff;
             document.getElementById('resKwc').textContent = kwc.toFixed(2);
@@ -1222,9 +1231,16 @@ abbr[title]:hover::after {
                 document.getElementById('resInstallCost').textContent = totalCost.toFixed(0);
                 document.getElementById('resNetCost').textContent = netCost.toFixed(0);
 
-                // Payback period
-                const payback = annualSavings > 0 ? netCost / annualSavings : 99;
-                document.getElementById('resPayback').textContent = payback.toFixed(1);
+                // Payback period (with degradation and price increase)
+                let payback = 99;
+                let cumulPayback = 0;
+                for (let y = 1; y <= 25; y++) {
+                    const yProd = production * Math.pow(1 - degradation, y - 1);
+                    const yPrice = elecPrice * Math.pow(1 + priceIncrease, y - 1);
+                    cumulPayback += yProd * selfConsum * yPrice + yProd * (1 - selfConsum) * feedinTariff;
+                    if (cumulPayback >= netCost) { payback = y; break; }
+                }
+                document.getElementById('resPayback').textContent = payback < 99 ? payback.toFixed(0) : '>25';
 
                 // 25-year NPV calculation with degradation and price increase
                 let npv = -netCost;
@@ -1294,7 +1310,9 @@ abbr[title]:hover::after {
                 const netCost = Math.max(0, totalCost - subsidies);
                 document.getElementById('resInstallCost').textContent = totalCost.toFixed(0);
                 document.getElementById('resNetCost').textContent = netCost.toFixed(0);
-                document.getElementById('resPayback').textContent = (netCost / annualSavings).toFixed(1);
+                // Simple payback for fallback
+                let paybackFb = annualSavings > 0 ? Math.ceil(netCost / annualSavings) : 99;
+                document.getElementById('resPayback').textContent = paybackFb < 99 ? paybackFb : '>25';
 
                 const annualCo2 = production * co2PerKwh / 1000;
                 document.getElementById('resCo2').textContent = annualCo2.toFixed(0);
@@ -1341,10 +1359,12 @@ abbr[title]:hover::after {
             let cumul = -netCost;
             for (let i = 0; i <= 25; i++) {
                 years.push(i);
-                const yearProd = production * Math.pow(1 - degradation, i);
-                const yearElecPrice = elecPrice * Math.pow(1 + priceIncrease, i);
-                const savings = yearProd * selfConsum * yearElecPrice + yearProd * (1 - selfConsum) * feedinTariff;
-                cumul += savings;
+                if (i > 0) {
+                    const yearProd = production * Math.pow(1 - degradation, i - 1);
+                    const yearElecPrice = elecPrice * Math.pow(1 + priceIncrease, i - 1);
+                    const savings = yearProd * selfConsum * yearElecPrice + yearProd * (1 - selfConsum) * feedinTariff;
+                    cumul += savings;
+                }
                 cumulative.push(cumul.toFixed(0));
             }
 
@@ -1412,21 +1432,32 @@ abbr[title]:hover::after {
         }
 
         function resetResidential() {
+            document.getElementById('resCountry').value = 'FR';
             document.getElementById('resSurface').value = '30';
+            document.getElementById('resSurfaceDisplay').textContent = '30';
             document.getElementById('resOrientation').value = '0';
             document.getElementById('resTilt').value = '30';
+            document.getElementById('resTiltDisplay').textContent = '30';
             document.getElementById('resShading').value = '0';
+            document.getElementById('resShadingDisplay').textContent = '0';
             document.getElementById('resPanelType').value = '0.21';
             document.getElementById('resConsumption').value = '4000';
+            document.getElementById('resConsumptionDisplay').textContent = '4000';
             document.getElementById('resSelfConsum').value = '50';
-            document.getElementById('resElecPrice').value = '0.22';
-            document.getElementById('resFeedir').value = '0.15';
-            document.getElementById('resSubsidies').value = '3000';
+            document.getElementById('resSelfConsumDisplay').textContent = '50';
             document.getElementById('resDegradation').value = '0.5';
+            document.getElementById('resDegraDisplay').textContent = '0.5';
             document.getElementById('resPriceIncrease').value = '2.5';
+            document.getElementById('resPriceIncDisplay').textContent = '2.5';
             document.getElementById('resDiscount').value = '4';
+            document.getElementById('resDiscountDisplay').textContent = '4';
+            document.getElementById('resSubsidies').value = '3000';
+            document.getElementById('resSubsidiesDisplay').textContent = '3000';
+            document.getElementById('resInstallCostOverride').value = '';
+            document.getElementById('resBatteryCostOverride').value = '';
             document.getElementById('resBatteryToggle').checked = false;
             toggleBatteryCapacity();
+            // Use solar-data.js values for prices
             updateLocationData();
         }
 
