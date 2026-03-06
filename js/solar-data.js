@@ -37,7 +37,7 @@ const SOLAR_DATA = {
             "MaPrimeRénov' : sous conditions de revenus (rénovation globale)",
             "Exonération d'impôt sur le revenu pour ≤3 kWc"
           ],
-          officialLink: "https://www.economie.gouv.fr/particuliers/aides-installation-panneaux-solaires",
+          officialLink: "https://www.economie.gouv.fr/particuliers/faire-des-economies-denergie/maprimerenov-parcours-par-geste-la-prime-pour-la-renovation-energetique",
           officialLabel: "economie.gouv.fr"
         },
         en: {
@@ -49,7 +49,7 @@ const SOLAR_DATA = {
             "MaPrimeRénov': income-based (whole-house renovation)",
             "Income tax exemption for ≤3 kWp"
           ],
-          officialLink: "https://www.economie.gouv.fr/particuliers/aides-installation-panneaux-solaires",
+          officialLink: "https://www.economie.gouv.fr/particuliers/faire-des-economies-denergie/maprimerenov-parcours-par-geste-la-prime-pour-la-renovation-energetique",
           officialLabel: "economie.gouv.fr"
         }
       },
