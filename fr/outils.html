@@ -545,6 +545,23 @@ abbr[title]:hover::after {
                     </div>
                 </div>
 
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mt-8 mb-12 justify-center">
+                    <button onclick="calculateResidential()" class="px-8 py-3 bg-amber-500 text-slate-900 rounded-lg font-semibold hover:bg-amber-600 transition-colors">
+                        Calculer
+                    </button>
+                    <button onclick="resetResidential()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Réinitialiser
+                    </button>
+                    <button onclick="window.print()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Exporter PDF
+                    </button>
+                    <button onclick="updateEurostatPrices()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Actualiser les prix (Eurostat)
+                    </button>
+                </div>
+                <p id="eurostatStatus" class="text-center text-xs text-slate-500 mb-8"></p>
+
                 <!-- Chart Section -->
                 <div class="grid lg:grid-cols-2 gap-8 mb-12">
                     <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
@@ -577,22 +594,6 @@ abbr[title]:hover::after {
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap gap-4 mt-8 justify-center">
-                    <button onclick="calculateResidential()" class="px-8 py-3 bg-amber-500 text-slate-900 rounded-lg font-semibold hover:bg-amber-600 transition-colors">
-                        Calculer
-                    </button>
-                    <button onclick="resetResidential()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
-                        Réinitialiser
-                    </button>
-                    <button onclick="window.print()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
-                        Exporter PDF
-                    </button>
-                    <button onclick="updateEurostatPrices()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
-                        Actualiser les prix (Eurostat)
-                    </button>
-                </div>
-                <p id="eurostatStatus" class="text-center text-xs text-slate-500 mt-3"></p>
             </div>
 
             <!-- Pro Section (LCOE Calculator - Hidden by Default) -->

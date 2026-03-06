@@ -543,6 +543,23 @@ abbr[title]:hover::after {
                     </div>
                 </div>
 
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mt-8 mb-12 justify-center">
+                    <button onclick="calculateResidential()" class="px-8 py-3 bg-amber-500 text-slate-900 rounded-lg font-semibold hover:bg-amber-600 transition-colors">
+                        Calculate
+                    </button>
+                    <button onclick="resetResidential()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Reset
+                    </button>
+                    <button onclick="window.print()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Export PDF
+                    </button>
+                    <button onclick="updateEurostatPrices()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Update prices (Eurostat)
+                    </button>
+                </div>
+                <p id="eurostatStatus" class="text-center text-xs text-slate-500 mb-8"></p>
+
                 <!-- Chart Section -->
                 <div class="grid lg:grid-cols-2 gap-8 mb-12">
                     <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
@@ -568,29 +585,12 @@ abbr[title]:hover::after {
                     <h4 class="text-lg font-semibold text-white mb-4">Sources and information</h4>
                     <div class="text-slate-400 text-sm space-y-4">
                         <p><strong>Irradiation data:</strong> PVGIS (Photovoltaic Geographical Information System) - European Commission</p>
-                        <p><strong>Electricity tariffs:</strong> INSEE/Eurostat - Average residential all-inclusive tariffs</p>
-                        <p><strong>Subsidies:</strong> Government grants, Energy Efficiency Certificates, regional programs</p>
+                        <p><strong>Electricity tariffs:</strong> Eurostat - Average residential all-taxes-included tariffs</p>
+                        <p><strong>Subsidies:</strong> Government grants, tax credits, regional programs</p>
                         <p><strong>Assumptions:</strong> System efficiency 80% (DC/AC losses), annual degradation 0.5%, panel lifespan 25 years</p>
                         <p class="text-xs text-slate-500 pt-4 border-t border-slate-700">This tool is provided for informational purposes. Results are estimates and may differ from reality depending on local conditions, installation quality, and tariff changes. Consult a professional for a personalized quote.</p>
                     </div>
                 </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap gap-4 mt-8 justify-center">
-                    <button onclick="calculateResidential()" class="px-8 py-3 bg-amber-500 text-slate-900 rounded-lg font-semibold hover:bg-amber-600 transition-colors">
-                        Calculate
-                    </button>
-                    <button onclick="resetResidential()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
-                        Reset
-                    </button>
-                    <button onclick="window.print()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
-                        Export PDF
-                    </button>
-                    <button onclick="updateEurostatPrices()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
-                        Update prices (Eurostat)
-                    </button>
-                </div>
-                <p id="eurostatStatus" class="text-center text-xs text-slate-500 mt-3"></p>
             </div>
 
             <!-- Pro Section (LCOE Calculator - Hidden by Default) -->
