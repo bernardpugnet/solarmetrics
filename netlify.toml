@@ -1,6 +1,7 @@
 [build]
   publish = "."
   command = ""
+  functions = "netlify/functions"
 
 # Redirect root to French homepage (301 for SEO)
 [[redirects]]

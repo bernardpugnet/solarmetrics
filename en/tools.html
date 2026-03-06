@@ -15,6 +15,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/solar-data.js"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}.tooltip{position:relative;cursor:help}.tooltip .tooltiptext{visibility:hidden;width:280px;background-color:#1e293b;color:#f1f5f9;text-align:left;border-radius:0.5rem;padding:0.75rem;position:absolute;z-index:1000;bottom:120%;left:50%;margin-left:-140px;opacity:0;transition:opacity 0.3s;border:1px solid #475569;font-size:0.75rem;line-height:1.4}.tooltip:hover .tooltiptext{visibility:visible;opacity:1}.input-group input[type="number"]{-moz-appearance:textfield}.input-group input[type="number"]::-webkit-inner-spin-button,.input-group input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}</style>
 <style>
@@ -41,10 +44,19 @@ abbr[title]:hover::after {
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
+#map {
+  height: 400px;
+  border-radius: 1rem;
+  border: 1px solid #334155;
+  margin-bottom: 1.5rem;
+}
+.leaflet-container {
+  background: #1e293b;
+}
 </style>
 </head>
 <body class="bg-slate-900 text-white">
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main Navigation">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="index.html" class="flex items-center gap-3">
@@ -55,10 +67,10 @@ abbr[title]:hover::after {
                 </a>
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
-                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economics</a>
+                    <a href="economics.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economics</a>
                     <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
                     <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
-                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
                     <a href="tools.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Tools</a>
                     <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
                 </div>
@@ -77,10 +89,10 @@ abbr[title]:hover::after {
         <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
             <div class="px-4 py-4 space-y-2">
                 <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
-                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economics</a>
+                <a href="economics.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economics</a>
                 <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
                 <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
-                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
                 <a href="tools.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Tools</a>
                 <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
             </div>
@@ -88,7 +100,7 @@ abbr[title]:hover::after {
     </nav>
     <main class="pt-16">
 
-    <section id="outils" class="py-20 bg-slate-800">
+    <section id="tools" class="py-20 bg-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Header -->
@@ -100,14 +112,493 @@ abbr[title]:hover::after {
                 </div>
                 <h1 class="text-4xl font-bold text-white mb-4">Interactive Tools</h1>
                 <p class="text-slate-500 text-sm mt-2">Updated: March 2026</p>
-                <p class="text-slate-400 max-w-2xl mx-auto">Calculate the profitability of your solar projects and explore industry data</p>
+                <p class="text-slate-400 max-w-2xl mx-auto">Calculate the profitability of your solar projects and explore sector data</p>
             </div>
 
-            <!-- LCOE & IRR Calculator -->
-            <div class="mb-20" id="calculateur">
+            <!-- Toggle Pro / Homeowner -->
+            <div class="flex justify-center mb-12">
+                <div class="bg-slate-900/50 rounded-xl p-1.5 border border-slate-700/50 flex gap-1">
+                    <button id="btn-homeowner" onclick="switchMode('homeowner')" class="px-6 py-3 rounded-lg text-sm font-semibold transition-all bg-amber-500 text-slate-900">
+                        🏠 Homeowner
+                    </button>
+                    <button id="btn-pro" onclick="switchMode('pro')" class="px-6 py-3 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white">
+                        🏢 Professional
+                    </button>
+                </div>
+            </div>
+
+            <!-- Homeowner Section -->
+            <div id="homeowner-section" style="display:block;">
+                <!-- Intro Text -->
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Residential Solar Simulator</h2>
+                    <p class="text-slate-400 mb-4">Use this tool to estimate the profitability of a photovoltaic solar installation on your home. The simulator takes into account your location, electricity consumption, local tariffs, and available subsidies.</p>
+                    <p class="text-slate-400 text-sm">Calculations use <abbr title="Photovoltaic Geographical Information System">PVGIS</abbr> data for solar irradiation and <abbr title="National Institute of Statistics and Economic Studies">INSEE</abbr> for electricity tariffs.</p>
+                </div>
+
+                <!-- Main Calculator -->
+                <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                    <!-- Inputs -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Location Section -->
+                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                            <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                                <span class="text-amber-500">●</span> Location
+                            </h4>
+                            <div class="space-y-6">
+                                <!-- Country Selection -->
+                                <div>
+                                    <label class="text-sm text-slate-400 mb-2 block">Country</label>
+                                    <select id="resCountry" onchange="updateLocationData()" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="FR">France</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="IT">Italy</option>
+                                        <option value="NL">Netherlands</option>
+                                        <option value="BE">Belgium</option>
+                                        <option value="PT">Portugal</option>
+                                        <option value="PL">Poland</option>
+                                        <option value="AT">Austria</option>
+                                        <option value="GR">Greece</option>
+                                    </select>
+                                </div>
+
+                                <!-- Map -->
+                                <div id="map" style="height:300px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
+                                <p class="text-xs text-slate-500 mt-1">Click on the map to position your home precisely</p>
+
+                                <!-- Location Inputs -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
+                                        <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                    </div>
+                                    <div>
+                                        <label class="text-sm text-slate-400 mb-2 block">Longitude</label>
+                                        <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Section -->
+                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                            <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                                <span class="text-amber-500">●</span> Solar System
+                            </h4>
+                            <div class="space-y-6">
+                                <!-- Surface -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Available roof area</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Sunny roof area available for installation. Include safety overhang.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resSurfaceDisplay">30</span> m²</span>
+                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="resSurface" min="5" max="100" value="30" step="1"
+                                               oninput="document.getElementById('resSurfaceDisplay').textContent = this.value"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="resSurfaceNum" value="30" min="5" max="100" step="1"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Orientation -->
+                                <div>
+                                    <label class="flex items-center gap-2 text-sm mb-2">
+                                        <span class="text-slate-400">Roof orientation</span>
+                                        <span class="tooltip inline-block">
+                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                            <span class="tooltiptext">Cardinal direction of the roof. South = 0°, West = 90°, North = 180°, East = 270°.</span>
+                                        </span>
+                                    </label>
+                                    <select id="resOrientation" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0">South (optimal)</option>
+                                        <option value="45">South-West</option>
+                                        <option value="90">West</option>
+                                        <option value="315">South-East</option>
+                                        <option value="270">East</option>
+                                        <option value="180">North (low production)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Tilt -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Panel tilt</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Angle of inclination of the panels relative to horizontal. Optimal = site latitude.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resTiltDisplay">30</span>°</span>
+                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="resTilt" min="0" max="60" value="30" step="1"
+                                               oninput="document.getElementById('resTiltDisplay').textContent = this.value"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="resTiltNum" value="30" min="0" max="60" step="1"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Shading -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Estimated shading</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Percentage of average annual shading from trees, buildings, etc. 0% = full sun.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resShadingDisplay">0</span>%</span>
+                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="resShading" min="0" max="40" value="0" step="1"
+                                               oninput="document.getElementById('resShadingDisplay').textContent = this.value"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="resShadingNum" value="0" min="0" max="40" step="1"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Panel Type -->
+                                <div>
+                                    <label class="flex items-center gap-2 text-sm mb-2">
+                                        <span class="text-slate-400">Panel type</span>
+                                        <span class="tooltip inline-block">
+                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                            <span class="tooltiptext">Standard (~21% efficiency): most common, good value (~4.76 m²/kWc). Premium (~23%): higher performance per m², ideal if space is limited (~4.35 m²/kWc).</span>
+                                        </span>
+                                    </label>
+                                    <select id="resPanelType" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0.21">Standard (~21% efficiency, ~4.76 m²/kWc)</option>
+                                        <option value="0.23">Premium (~23% efficiency, ~4.35 m²/kWc)</option>
+                                    </select>
+                                    <a href="https://www.irena.org/publications" target="_blank" class="text-xs text-cyan-400 hover:underline mt-1 inline-block">IRENA / SolarPower Europe Report →</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Consumption Section -->
+                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                            <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                                <span class="text-amber-500">●</span> Consumption & Grid
+                            </h4>
+                            <div class="space-y-6">
+                                <!-- Annual Consumption -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Annual consumption</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Annual electricity consumption in kWh. Average French home: 3500-4500 kWh.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resConsumptionDisplay">4000</span> kWh</span>
+                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="resConsumption" min="1000" max="10000" value="4000" step="100"
+                                               oninput="document.getElementById('resConsumptionDisplay').textContent = this.value"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="resConsumptionNum" value="4000" min="1000" max="10000" step="100"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Self-Consumption Slider -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Self-consumption rate</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">% of solar production consumed locally. Remainder = fed back to grid.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resSelfConsumDisplay">50</span>%</span>
+                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="resSelfConsum" min="20" max="90" value="50" step="5"
+                                               oninput="document.getElementById('resSelfConsumDisplay').textContent = this.value; updateBatteryDefault()"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="resSelfConsumNum" value="50" min="20" max="90" step="5"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Battery Toggle -->
+                                <div>
+                                    <label class="flex items-center gap-3 mb-4">
+                                        <input type="checkbox" id="resBatteryToggle" onchange="toggleBatteryCapacity()" class="w-4 h-4 rounded border-slate-600 text-amber-500 cursor-pointer">
+                                        <span class="text-sm text-slate-400 flex items-center gap-2">
+                                            Add battery storage
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Batteries allow you to store energy for use in evening/night.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <div id="batteryCapacitySection" style="display:none;">
+                                        <label class="text-sm text-slate-400 mb-2 block">Battery capacity</label>
+                                        <select id="resBatteryCapacity" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                            <option value="5">5 kWh (small)</option>
+                                            <option value="10" selected>10 kWh (medium)</option>
+                                            <option value="15">15 kWh (large)</option>
+                                            <option value="20">20 kWh (very large)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Electricity Price -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Electricity tariff</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Average all-inclusive electricity tariff consumed from grid (€/kWh).</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium">€<span id="resElecPriceDisplay">0.22</span>/kWh</span>
+                                    </label>
+                                    <input type="number" id="resElecPrice" value="0.22" min="0.05" max="0.50" step="0.01"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+
+                                <!-- Feed-in Tariff -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Feed-in tariff</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Tariff at which the grid buys back excess energy from you (€/kWh).</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium">€<span id="resFeedinDisplay">0.15</span>/kWh</span>
+                                    </label>
+                                    <input type="number" id="resFeedir" value="0.15" min="0.01" max="0.50" step="0.01"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+
+                                <!-- Subsidies -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Subsidies & grants</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Total amount of subsidies received (government grants, regional aid, etc.).</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium">€<span id="resSubsidiesDisplay">3000</span></span>
+                                    </label>
+                                    <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Parameters -->
+                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                            <button onclick="toggleAdvanced()" class="flex items-center justify-between w-full">
+                                <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+                                    <span class="text-amber-500">●</span> Advanced parameters
+                                </h4>
+                                <span id="advancedToggleIcon" class="text-slate-400">▼</span>
+                            </button>
+                            <div id="advancedSection" style="display:none;" class="mt-6 space-y-6">
+                                <!-- Degradation -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Annual panel degradation</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Performance decrease per year (0.5-0.8%). Modern panels: 0.5%/year.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resDegraDisplay">0.5</span>%</span>
+                                    </label>
+                                    <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+
+                                <!-- Price Increase -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Annual price increase</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Annual increase in electricity tariff (%). Historical: 2-4%/year.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resPriceIncDisplay">2.5</span>%</span>
+                                    </label>
+                                    <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+
+                                <!-- Discount Rate -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Discount rate</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Rate used for NPV calculations. Typically 3-5% for residential.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="resDiscountDisplay">4</span>%</span>
+                                    </label>
+                                    <input type="number" id="resDiscount" value="4" min="1" max="10" step="0.5"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Panel -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 sticky top-32">
+                            <h4 class="text-lg font-semibold text-white mb-6">Results</h4>
+                            <div class="space-y-6">
+                                <!-- Production -->
+                                <div>
+                                    <div class="text-xs text-slate-500 mb-1">Annual solar production</div>
+                                    <div class="text-3xl font-bold text-green-500"><span id="resProduction">0</span> kWh</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        <span id="resProductionPerKwc">0</span> kWh/kWc/year
+                                    </div>
+                                </div>
+
+                                <!-- Installed Capacity -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Installed capacity</div>
+                                    <div class="text-2xl font-bold text-amber-500"><span id="resKwc">0</span> kWc</div>
+                                </div>
+
+                                <!-- Annual Savings -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Annual savings</div>
+                                    <div class="text-2xl font-bold text-green-400">€<span id="resAnnualSavings">0</span></div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        Self-consumption: €<span id="resSavingsAutocons">0</span><br>
+                                        Feed-in: €<span id="resSavingsFeedin">0</span>
+                                    </div>
+                                </div>
+
+                                <!-- Investment Cost -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Installation cost</div>
+                                    <div class="text-2xl font-bold text-white">€<span id="resInstallCost">0</span></div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        After subsidies: €<span id="resNetCost">0</span>
+                                    </div>
+                                </div>
+
+                                <!-- Payback -->
+                                <div class="pt-6 border-t border-slate-700/50 bg-amber-500/10 rounded-lg p-4">
+                                    <div class="text-xs text-slate-500 mb-1">Payback period</div>
+                                    <div class="text-3xl font-bold text-amber-500"><span id="resPayback">0</span> years</div>
+                                    <div class="text-xs text-slate-600 mt-1">with subsidies applied</div>
+                                </div>
+
+                                <!-- NPV -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">NPV 25 years (4% discount)</div>
+                                    <div class="text-2xl font-bold text-green-500">€<span id="resNpv">0</span></div>
+                                </div>
+
+                                <!-- TRI -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">IRR (Internal Rate of Return)
+                                        <span class="tooltip inline-block ml-1"><span class="text-xs text-slate-500 cursor-help">ⓘ</span><span class="tooltiptext">The annual return on your investment, comparable to a financial investment. Above 5% = very good for solar.</span></span>
+                                    </div>
+                                    <div class="text-2xl font-bold text-cyan-400"><span id="resTri">0</span>%</div>
+                                </div>
+
+                                <!-- CO2 Avoided -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">CO₂ avoided per year
+                                        <span class="tooltip inline-block ml-1"><span class="text-xs text-slate-500 cursor-help">ⓘ</span><span class="tooltiptext">Greenhouse gas emissions you avoid by producing green electricity. Source: Ember [2025].</span></span>
+                                    </div>
+                                    <div class="text-2xl font-bold text-blue-400"><span id="resCo2">0</span> kg</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        (~<span id="resCo2Equiv">0</span> trees/year)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Section -->
+                <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-6">Cumulative payback</h4>
+                        <canvas id="paybackChart"></canvas>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-6">Annual energy balance</h4>
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Subsidy Info Box -->
+                <div id="subsidyInfoBox" class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-12">
+                    <h4 class="text-lg font-semibold text-white mb-4">Available subsidies</h4>
+                    <div id="subsidyContent" class="text-slate-400 text-sm space-y-3">
+                        <p>Click on "Calculate" to see recommended subsidies for your region.</p>
+                    </div>
+                </div>
+
+                <!-- Sources & Disclaimers -->
+                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h4 class="text-lg font-semibold text-white mb-4">Sources and information</h4>
+                    <div class="text-slate-400 text-sm space-y-4">
+                        <p><strong>Irradiation data:</strong> PVGIS (Photovoltaic Geographical Information System) - European Commission</p>
+                        <p><strong>Electricity tariffs:</strong> INSEE/Eurostat - Average residential all-inclusive tariffs</p>
+                        <p><strong>Subsidies:</strong> Government grants, Energy Efficiency Certificates, regional programs</p>
+                        <p><strong>Assumptions:</strong> System efficiency 80% (DC/AC losses), annual degradation 0.5%, panel lifespan 25 years</p>
+                        <p class="text-xs text-slate-500 pt-4 border-t border-slate-700">This tool is provided for informational purposes. Results are estimates and may differ from reality depending on local conditions, installation quality, and tariff changes. Consult a professional for a personalized quote.</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mt-8 justify-center">
+                    <button onclick="calculateResidential()" class="px-8 py-3 bg-amber-500 text-slate-900 rounded-lg font-semibold hover:bg-amber-600 transition-colors">
+                        Calculate
+                    </button>
+                    <button onclick="resetResidential()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Reset
+                    </button>
+                    <button onclick="window.print()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Export PDF
+                    </button>
+                    <button onclick="updateEurostatPrices()" class="px-8 py-3 bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-600 transition-colors">
+                        Update prices (Eurostat)
+                    </button>
+                </div>
+                <p id="eurostatStatus" class="text-center text-xs text-slate-500 mt-3"></p>
+            </div>
+
+            <!-- Pro Section (LCOE Calculator - Hidden by Default) -->
+            <div id="pro-section" style="display:none;">
+                <div class="mb-20" id="calculateur">
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                     <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">1</span>
-                    <abbr title="Levelized Cost of Energy">LCOE</abbr> & Project <abbr title="Internal Rate of Return">IRR</abbr> Calculator
+                    <abbr title="Levelized Cost of Energy">LCOE</abbr> & <abbr title="Internal Rate of Return">IRR</abbr> Project Calculator
                 </h3>
 
                 <div class="grid lg:grid-cols-3 gap-8">
@@ -124,10 +615,10 @@ abbr[title]:hover::after {
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Installed Capacity</span>
+                                            <span class="text-slate-400">Installed capacity</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Total capacity in megawatts-peak. Default: 10 MWp for average utility-scale project.</span>
+                                                <span class="tooltiptext">Total capacity in megawatts-peak. Base: 10 MWp for average utility-scale project.</span>
                                             </span>
                                         </span>
                                         <span class="text-white font-medium"><span id="capacityDisplay">10</span> MWp</span>
@@ -143,327 +634,345 @@ abbr[title]:hover::after {
                                 <!-- Module Technology -->
                                 <div>
                                     <label class="flex items-center gap-2 text-sm mb-2">
-                                        <span class="text-slate-400">Module Technology</span>
+                                        <span class="text-slate-400">Module technology</span>
                                         <span class="tooltip inline-block">
                                             <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext"><abbr title="Passivated Emitter and Rear Cell">PERC</abbr>: 0.50%/yr degradation. <abbr title="Tunnel Oxide Passivated Contact">TOPCon</abbr>: 0.40%/yr + 5% bifacial bonus. <abbr title="Heterojunction Technology">HJT</abbr>: 0.35%/yr + 7% bifacial bonus.</span>
-                                        </span>
-                                    </label>
-                                    <select id="technology" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="PERC">PERC (0.50%/yr)</option>
-                                        <option value="TOPCon">TOPCon (0.40%/yr, +5% bifacial)</option>
-                                        <option value="HJT">HJT (0.35%/yr, +7% bifacial)</option>
+                                            <span class="tooltiptext"><abbr title="Passivated Emitter and Rear Cell">PERC</abbr>: degradation 0.50%/year. <abbr title="Tunnel Oxide Passivated Contact">TOPCon</abbr>: 0.40%/year + 5% bifacial bonus. <abbr title="Heterojunction Technology">HJT</abbr>: 0.35%/year + 7% bifacial bonus.</span>
+                                        </span></label>
+                                    <select id="moduletech" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="PERC">PERC (Passivated rear)</option>
+                                        <option value="TOPCon" selected>TOPCon (Passivated contact)</option>
+                                        <option value="HJT">HJT (Heterojunction)</option>
                                     </select>
                                 </div>
 
-                                <!-- Mounting Type -->
-                                <div>
-                                    <label class="flex items-center gap-2 text-sm mb-2">
-                                        <span class="text-slate-400">Mounting Type</span>
-                                        <span class="tooltip inline-block">
-                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">Fixed: static structure. Tracker: single-axis tracking, +16% average production.</span>
-                                        </span>
-                                    </label>
-                                    <select id="mounting" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="Fixed">Fixed</option>
-                                        <option value="Tracker">Single-axis Tracker (+16%)</option>
-                                    </select>
-                                </div>
-
-                                <!-- Project Duration -->
+                                <!-- Annual Degradation -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Project Duration</span>
+                                            <span class="text-slate-400">Annual degradation</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Economic lifetime of the project. 30 years is the standard duration.</span>
+                                                <span class="tooltiptext">Performance decrease per year. PERC: 0.50%, TOPCon: 0.40%, HJT: 0.35%.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="durationDisplay">30</span> years</span>
+                                        <span class="text-white font-medium"><span id="degradationDisplay">0.40</span>%</span>
+                                    </label>
+                                    <input type="number" id="degradation" value="0.40" min="0.2" max="1" step="0.05"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                </div>
+
+                                <!-- Bifacial Bonus -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Bifacial bonus</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Production gain from rear reflection. TOPCon: 5%, HJT: 7%.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="bifacialDisplay">5</span>%</span>
+                                    </label>
+                                    <input type="number" id="bifacial" value="5" min="0" max="10" step="1"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                </div>
+
+                                <!-- Project Lifespan -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Project lifespan</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Economic analysis period. Standard: 25 years (panel warranty duration).</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="lifespanDisplay">25</span> years</span>
                                     </label>
                                     <div class="flex gap-3">
-                                        <input type="range" id="duration" min="20" max="40" value="30" step="1"
+                                        <input type="range" id="lifespan" min="10" max="40" value="25" step="1"
                                                class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                                        <input type="number" id="durationNum" value="30" min="20" max="40" step="1"
+                                        <input type="number" id="lifespanNum" value="25" min="10" max="40" step="1"
                                                class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section 2: Production -->
+                        <!-- Section 2: Site & Energy -->
                         <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
                             <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-                                <span class="text-green-500">●</span> Production
+                                <span class="text-amber-500">●</span> Site & Energy
                             </h4>
 
                             <div class="space-y-6">
-                                <!-- Year 1 Yield -->
+                                <!-- Site Annual Irradiance -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Year 1 Yield</span>
+                                            <span class="text-slate-400">Annual irradiance (optimal plane)</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext"><abbr title="Kilowatt-hour">kWh</abbr> generated per <abbr title="Kilowatt-peak (maximum power)">kWp</abbr> per year. Source: <abbr title="Photovoltaic Geographical Information System (EU tool)">PVGIS</abbr> / JRC European Commission.</span>
+                                                <span class="tooltiptext"><abbr title="Kilowatt-hours per square meter">kWh/m²</abbr>/year. France: 1000-1400. Mediterranean region: 1300-1500.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="yieldDisplay">1160</span> kWh/kWp/yr</span>
+                                        <span class="text-white font-medium"><span id="irradianceDisplay">1200</span> kWh/m²</span>
                                     </label>
-                                    <input type="number" id="yield" value="1160" min="800" max="1600" step="10"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="grid grid-cols-3 gap-2 mt-2">
-                                        <button class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-xs text-slate-300">North (950)</button>
-                                        <button class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-xs text-slate-300">Central (1160)</button>
-                                        <button class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-xs text-slate-300">South (1400)</button>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="irradiance" min="800" max="1600" value="1200" step="10"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="irradianceNum" value="1200" min="800" max="1600" step="10"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                     </div>
                                 </div>
 
-                                <!-- Degradation -->
+                                <!-- System Efficiency -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Annual Degradation</span>
+                                            <span class="text-slate-400">Overall system efficiency</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Performance loss per year (auto-filled by technology, editable).</span>
+                                                <span class="tooltiptext">DC→AC efficiency. Includes inverters, cables, transformers. Typical: 76-80%.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="degradationDisplay">0.50</span> %/yr</span>
+                                        <span class="text-white font-medium"><span id="efficiencyDisplay">78</span>%</span>
                                     </label>
-                                    <input type="number" id="degradation" value="0.50" min="0.1" max="1" step="0.05"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="flex gap-3">
+                                        <input type="range" id="efficiency" min="70" max="85" value="78" step="1"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="efficiencyNum" value="78" min="70" max="85" step="1"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
                                 </div>
 
-                                <!-- Curtailment -->
+                                <!-- Annual Energy Production -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="text-slate-400">Estimated annual production</span>
+                                        <span class="text-white font-medium"><span id="productionDisplay">0</span> GWh</span>
+                                    </label>
+                                    <input type="number" id="production" value="0" min="0" step="0.1" readonly
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm opacity-50">
+                                </div>
+
+                                <!-- Grid Connection Cost -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Curtailment</span>
+                                            <span class="text-slate-400">Grid connection cost</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Production reduction from grid management or congestion (0-20%).</span>
+                                                <span class="tooltiptext">Network connection cost per MWp. France: 30-100 k€/MWp depending on distance.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="curtailmentDisplay">0</span> %</span>
+                                        <span class="text-white font-medium">€<span id="gridcostDisplay">50</span>k/MWp</span>
                                     </label>
-                                    <input type="number" id="curtailment" value="0" min="0" max="20" step="0.5"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="flex gap-3">
+                                        <input type="range" id="gridcost" min="20" max="200" value="50" step="5"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="gridcostNum" value="50" min="20" max="200" step="5"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section 3: Finance -->
+                        <!-- Section 3: Economics -->
                         <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
                             <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-                                <span class="text-blue-500">●</span> Finance
+                                <span class="text-amber-500">●</span> Economics
                             </h4>
 
                             <div class="space-y-6">
-                                <!-- CAPEX -->
+                                <!-- Capital Costs -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400"><abbr title="Capital Expenditure">CAPEX</abbr></span>
+                                            <span class="text-slate-400">Panels + BOP cost</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Capital cost per kWp. Fraunhofer ISE Photovoltaics Report 2024: 710 €/kWp.</span>
+                                                <span class="tooltiptext">Panels + inverters + structure cost. Trend: 1.0-1.5 M€/MWp (2026).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="capexDisplay">710</span> €/kWp</span>
+                                        <span class="text-white font-medium">€<span id="eqcostDisplay">1.2</span>M/MWp</span>
                                     </label>
-                                    <input type="number" id="capex" value="710" min="400" max="1200" step="10"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="flex gap-3">
+                                        <input type="range" id="eqcost" min="0.5" max="2.5" value="1.2" step="0.1"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="eqcostNum" value="1.2" min="0.5" max="2.5" step="0.1"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
                                 </div>
 
-                                <!-- Fixed OPEX -->
+                                <!-- Operation & Maintenance -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Fixed <abbr title="Operating Expenditure">OPEX</abbr></span>
+                                            <span class="text-slate-400">Annual O&M</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Annual operating costs (maintenance, insurance). <abbr title="International Energy Agency">IEA</abbr>-PVPS average EU: 13.3 €/kW/yr.</span>
+                                                <span class="tooltiptext">Operation & maintenance annually. Typical: 1.5-2.5% CapEx/year.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="opexDisplay">13.3</span> €/kW/yr</span>
+                                        <span class="text-white font-medium"><span id="omDisplay">2</span>% CapEx</span>
                                     </label>
-                                    <input type="number" id="opex" value="13.3" min="5" max="30" step="0.1"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="flex gap-3">
+                                        <input type="range" id="om" min="1" max="4" value="2" step="0.5"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="omNum" value="2" min="1" max="4" step="0.5"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
                                 </div>
 
-                                <!-- Inflation -->
+                                <!-- Electricity Selling Price -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Annual Inflation</span>
+                                            <span class="text-slate-400">Electricity selling price</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Inflation rate applied to OPEX and <abbr title="Power Purchase Agreement">PPA</abbr> (if indexed).</span>
+                                                <span class="tooltiptext">Average remuneration tariff. PPA contracts: 30-80 €/MWh (2026).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="inflationDisplay">1.8</span> %/yr</span>
+                                        <span class="text-white font-medium">€<span id="elpiceDisplay">55</span>/MWh</span>
                                     </label>
-                                    <input type="number" id="inflation" value="1.8" min="0" max="5" step="0.1"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="flex gap-3">
+                                        <input type="range" id="elprice" min="20" max="150" value="55" step="5"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="elpriceNum" value="55" min="20" max="150" step="5"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Annual Price Increase -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Price inflation</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Annual increase in selling price. Trend: 2-3%/year.</span>
+                                            </span>
+                                        </span>
+                                        <span class="text-white font-medium"><span id="inflationDisplay">2.5</span>%</span>
+                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="inflation" min="0" max="5" value="2.5" step="0.5"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="inflationNum" value="2.5" min="0" max="5" step="0.5"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
                                 </div>
 
                                 <!-- Discount Rate -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Discount Rate</span>
+                                            <span class="text-slate-400">WACC discount rate</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext"><abbr title="Weighted Average Cost of Capital">WACC</abbr> average for EU <abbr title="Photovoltaic">PV</abbr> projects. <abbr title="International Renewable Energy Agency">IRENA</abbr> 2024: 5.3%.</span>
+                                                <span class="tooltiptext"><abbr title="Weighted Average Cost of Capital">WACC</abbr> (cost of capital). Typical: 4-7% for utility-scale.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="discountDisplay">5.3</span> %/yr</span>
+                                        <span class="text-white font-medium"><span id="discountDisplay">5.5</span>%</span>
                                     </label>
-                                    <input type="number" id="discount" value="5.3" min="1" max="15" step="0.1"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Year 1 PPA Price -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Year 1 PPA Price</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Electricity selling price. Average EU solar PPA Q4 2024: 74 €/<abbr title="Megawatt-hour">MWh</abbr> (LevelTen Energy).</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="ppaDisplay">74</span> €/MWh</span>
-                                    </label>
-                                    <input type="number" id="ppa" value="74" min="30" max="150" step="1"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- PPA Indexed Toggle -->
-                                <div class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg">
-                                    <input type="checkbox" id="ppaIndexed" checked class="w-4 h-4 rounded accent-amber-500">
-                                    <label for="ppaIndexed" class="flex items-center gap-2 text-sm text-slate-300 cursor-pointer flex-1">
-                                        <span>PPA Indexed to Inflation</span>
-                                        <span class="tooltip inline-block">
-                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">If checked, PPA increases with inflation each year.</span>
-                                        </span>
-                                    </label>
+                                    <div class="flex gap-3">
+                                        <input type="range" id="discount" min="2" max="12" value="5.5" step="0.5"
+                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                        <input type="number" id="discountNum" value="5.5" min="2" max="12" step="0.5"
+                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Results Panel -->
-                    <div class="lg:col-span-1">
-                        <div class="sticky top-24 space-y-6">
-                            <!-- LCOE Main Result -->
-                            <div class="bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-2xl p-8 border border-amber-500/30">
-                                <p class="text-slate-400 text-sm mb-2">Levelized Cost of Energy</p>
-                                <p class="text-5xl font-bold text-amber-500 mb-2"><span id="lcoeResult">38</span></p>
-                                <p class="text-slate-400 text-sm">€/MWh</p>
+                    <div class="space-y-6">
+                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 sticky top-32">
+                            <h4 class="text-lg font-semibold text-white mb-6">Results</h4>
+
+                            <div class="space-y-6">
+                                <!-- LCOE -->
+                                <div>
+                                    <div class="text-xs text-slate-500 mb-1">Levelized cost of energy</div>
+                                    <div class="text-3xl font-bold text-green-500">€<span id="lcoeResult">0.00</span>/MWh</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        Production: <span id="totalproductionResult">0</span> GWh
+                                    </div>
+                                </div>
+
+                                <!-- IRR -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Internal rate of return</div>
+                                    <div class="text-3xl font-bold text-amber-500"><span id="irrResult">0.00</span>%</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        over <span id="lifetimeDisplay">25</span> years
+                                    </div>
+                                </div>
+
+                                <!-- NPV -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Net present value</div>
+                                    <div class="text-2xl font-bold text-blue-400">€<span id="npvResult">0</span>M</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        Discount rate: <span id="discountRateDisplay">5.5</span>%
+                                    </div>
+                                </div>
+
+                                <!-- Investment -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Total investment</div>
+                                    <div class="text-2xl font-bold text-white">€<span id="investResult">0</span>M</div>
+                                </div>
+
+                                <!-- Payback -->
+                                <div class="pt-6 border-t border-slate-700/50 bg-amber-500/10 rounded-lg p-4">
+                                    <div class="text-xs text-slate-500 mb-1">Simple payback period</div>
+                                    <div class="text-2xl font-bold text-amber-500"><span id="paybackResult">0.00</span> years</div>
+                                </div>
+
+                                <!-- Annual Revenue -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Annual revenue</div>
+                                    <div class="text-2xl font-bold text-green-400">€<span id="revenueResult">0</span>k</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        Year 1
+                                    </div>
+                                </div>
+
+                                <!-- Annual O&M -->
+                                <div class="pt-6 border-t border-slate-700/50">
+                                    <div class="text-xs text-slate-500 mb-1">Annual O&M costs</div>
+                                    <div class="text-2xl font-bold text-red-400">€<span id="omcostResult">0</span>k</div>
+                                    <div class="text-xs text-slate-600 mt-1">
+                                        Year 1
+                                    </div>
+                                </div>
                             </div>
-
-                            <!-- Secondary Metrics -->
-                            <div class="space-y-4">
-                                <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
-                                    <p class="text-slate-400 text-xs mb-1">Project IRR</p>
-                                    <p class="text-3xl font-bold text-green-500"><span id="irrResult">8.5</span>%</p>
-                                </div>
-
-                                <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
-                                    <p class="text-slate-400 text-xs mb-1"><abbr title="Net Present Value">NPV</abbr> (at 5.3%)</p>
-                                    <p class="text-2xl font-bold text-green-500"><span id="npvResult">2.1</span> M€</p>
-                                </div>
-
-                                <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
-                                    <p class="text-slate-400 text-xs mb-1">Breakeven Price</p>
-                                    <p class="text-2xl font-bold text-blue-500"><span id="breakevenResult">65</span> €/MWh</p>
-                                </div>
-
-                                <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
-                                    <p class="text-slate-400 text-xs mb-1">Simple Payback</p>
-                                    <p class="text-2xl font-bold text-blue-500"><span id="paybackResult">10.2</span> years</p>
-                                </div>
-                            </div>
-
-                            <!-- Reset Button -->
-                            <button id="resetBtn" class="w-full px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm text-slate-300 transition-colors">
-                                Reset
-                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Chart -->
-                <div class="mt-8 bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
-                    <h4 class="text-lg font-semibold text-white mb-6">Annual Cash Flows</h4>
-                    <div style="position: relative; height: 400px;">
-                        <canvas id="cashflowChart"></canvas>
+                <!-- Charts -->
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-6">Cumulative cash flow</h4>
+                        <canvas id="cashFlowChart"></canvas>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-6">Cumulative net present value</h4>
+                        <canvas id="npvChart"></canvas>
                     </div>
                 </div>
 
-                <!-- Disclaimer -->
-                <div class="mt-6 p-4 bg-slate-900/30 rounded-xl border border-slate-700/30">
-                    <p class="text-slate-500 text-xs text-center">
-                        ⚠️ This tool provides detailed financial estimates for indicative purposes. Results depend heavily on the assumptions entered.
-                        A feasibility study by a professional is recommended for any investment project. Default values are based on EU market data 2024
-                        (Fraunhofer ISE, IEA-PVPS, IRENA, LevelTen Energy, PVGIS).
-                    </p>
+                <!-- Inputs Sync -->
+                <div class="bg-slate-800/50 rounded-xl p-6 flex items-center justify-center min-h-80">
+                    <p class="text-slate-400 text-center text-sm">Interactive map coming soon</p>
                 </div>
             </div>
-
-            <!-- Sunlight Map -->
-            <div class="mb-20" id="carte">
-                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">2</span>
-                    Solar Yield by Region
-                </h3>
-
-                <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold text-white mb-4">Average Yield in France</h4>
-                            <p class="text-slate-400 text-sm mb-6">
-                                Solar yield (kWh/kWp/yr) varies greatly by location.
-                                It depends on irradiance (<abbr title="Global Horizontal Irradiance">GHI</abbr>), orientation, tilt angle, and shading.
-                            </p>
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-4 h-4 bg-red-500 rounded"></div>
-                                    <span class="text-slate-300 flex-1">PACA, Corsica, South Occitanie</span>
-                                    <span class="text-white font-semibold">1350-1500 kWh/kWp</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-4 h-4 bg-orange-500 rounded"></div>
-                                    <span class="text-slate-300 flex-1">New Aquitaine, Auvergne-RA</span>
-                                    <span class="text-white font-semibold">1200-1350 kWh/kWp</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-4 h-4 bg-amber-500 rounded"></div>
-                                    <span class="text-slate-300 flex-1">Centre, Loire Valley, Burgundy</span>
-                                    <span class="text-white font-semibold">1100-1200 kWh/kWp</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-4 h-4 bg-yellow-500 rounded"></div>
-                                    <span class="text-slate-300 flex-1">Île-de-France, Grand Est</span>
-                                    <span class="text-white font-semibold">1000-1100 kWh/kWp</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-4 h-4 bg-blue-500 rounded"></div>
-                                    <span class="text-slate-300 flex-1">North France, Normandy, Brittany</span>
-                                    <span class="text-white font-semibold">900-1050 kWh/kWp</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-slate-800/50 rounded-xl p-6 flex items-center justify-center min-h-80">
-                            <p class="text-slate-400 text-center text-sm">Interactive map coming soon</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -482,506 +991,651 @@ abbr[title]:hover::after {
                 </div>
                 <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
                 <div class="flex items-center gap-4">
-                    <a href="../fr/outils.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="tools.html" class="text-slate-400 hover:text-white text-sm">English</a>
                     <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
                 </div>
             </div>
-            <div class="mt-8 pt-6 border-t border-slate-800">
-                <details class="text-center">
-                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
-                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
-                        <p><strong class="text-slate-400">Editor:</strong> Bernard Pugnet - Personal informational website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
-                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
-                        <p><strong class="text-slate-400">Intellectual Property:</strong> All website content is owned by Bernard Pugnet or cited sources.</p>
-                        <p><strong class="text-slate-400">Personal Data:</strong> This site collects no personal data. No tracking cookies are used.</p>
-                        <p><strong class="text-slate-400">Liability:</strong> Information is provided for informational purposes and does not constitute investment advice.</p>
-                    </div>
-                </details>
-            </div>
         </div>
     </footer>
+
     <script>
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        function toggleMenu() {
-            const isHidden = mobileMenu.classList.toggle('hidden');
-            menuBtn.setAttribute('aria-expanded', !isHidden);
-        }
-        function closeMenu() {
-            mobileMenu.classList.add('hidden');
-            menuBtn.setAttribute('aria-expanded', 'false');
-        }
-        menuBtn.addEventListener('click', toggleMenu);
-        mobileMenu.querySelectorAll('a').forEach(function(a) {
-            a.addEventListener('click', closeMenu);
-        });
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 1024) closeMenu();
-        });
-
-        // CALCULATOR LOGIC
-        const state = {
-            capacity: 10,
-            technology: 'PERC',
-            mounting: 'Fixed',
-            duration: 30,
-            yield: 1160,
-            degradation: 0.50,
-            curtailment: 0,
-            capex: 710,
-            opex: 13.3,
-            inflation: 1.8,
-            discount: 5.3,
-            ppa: 74,
-            ppaIndexed: true
-        };
-
-        // Technology degradation mapping
-        const techDegradation = {
-            'PERC': 0.50,
-            'TOPCon': 0.40,
-            'HJT': 0.35
-        };
-
-        const techBifacial = {
-            'PERC': 0,
-            'TOPCon': 0.05,
-            'HJT': 0.07
-        };
-
-        const mountingBonus = {
-            'Fixed': 0,
-            'Tracker': 0.16
-        };
-
-        // Input Elements
-        const inputs = {
-            capacity: document.getElementById('capacity'),
-            capacityNum: document.getElementById('capacityNum'),
-            technology: document.getElementById('technology'),
-            mounting: document.getElementById('mounting'),
-            duration: document.getElementById('duration'),
-            durationNum: document.getElementById('durationNum'),
-            yield: document.getElementById('yield'),
-            degradation: document.getElementById('degradation'),
-            curtailment: document.getElementById('curtailment'),
-            capex: document.getElementById('capex'),
-            opex: document.getElementById('opex'),
-            inflation: document.getElementById('inflation'),
-            discount: document.getElementById('discount'),
-            ppa: document.getElementById('ppa'),
-            ppaIndexed: document.getElementById('ppaIndexed')
-        };
-
-        // Display elements
-        const displays = {
-            capacityDisplay: document.getElementById('capacityDisplay'),
-            durationDisplay: document.getElementById('durationDisplay'),
-            yieldDisplay: document.getElementById('yieldDisplay'),
-            degradationDisplay: document.getElementById('degradationDisplay'),
-            curtailmentDisplay: document.getElementById('curtailmentDisplay'),
-            capexDisplay: document.getElementById('capexDisplay'),
-            opexDisplay: document.getElementById('opexDisplay'),
-            inflationDisplay: document.getElementById('inflationDisplay'),
-            discountDisplay: document.getElementById('discountDisplay'),
-            ppaDisplay: document.getElementById('ppaDisplay'),
-            lcoeResult: document.getElementById('lcoeResult'),
-            irrResult: document.getElementById('irrResult'),
-            npvResult: document.getElementById('npvResult'),
-            breakevenResult: document.getElementById('breakevenResult'),
-            paybackResult: document.getElementById('paybackResult')
-        };
-
-        // Sync range and number inputs
-        function syncInputs(rangeName, numName, displayName) {
-            inputs[rangeName].addEventListener('input', function() {
-                const val = parseFloat(this.value);
-                inputs[numName].value = val;
-                displays[displayName].textContent = val.toFixed(rangeName === 'capacity' || rangeName === 'duration' ? 0 : 2);
-                calculate();
-            });
-            inputs[numName].addEventListener('input', function() {
-                let val = parseFloat(this.value);
-                const range = inputs[rangeName];
-                const min = parseFloat(range.min);
-                const max = parseFloat(range.max);
-                if (val < min) val = min;
-                if (val > max) val = max;
-                inputs[rangeName].value = val;
-                displays[displayName].textContent = val.toFixed(rangeName === 'capacity' || rangeName === 'duration' ? 0 : 2);
-                calculate();
-            });
-        }
-
-        syncInputs('capacity', 'capacityNum', 'capacityDisplay');
-        syncInputs('duration', 'durationNum', 'durationDisplay');
-
-        // Regular number inputs
-        const numberInputs = ['yield', 'degradation', 'curtailment', 'capex', 'opex', 'inflation', 'discount', 'ppa'];
-        numberInputs.forEach(field => {
-            inputs[field].addEventListener('input', function() {
-                displays[field + 'Display'].textContent = parseFloat(this.value).toFixed(field === 'yield' || field === 'capex' ? 0 : field === 'curtailment' ? 1 : 2);
-                calculate();
-            });
-        });
-
-        // Technology change
-        inputs.technology.addEventListener('change', function() {
-            const tech = this.value;
-            inputs.degradation.value = techDegradation[tech];
-            displays.degradationDisplay.textContent = techDegradation[tech].toFixed(2);
-            calculate();
-        });
-
-        // Other select inputs
-        inputs.mounting.addEventListener('change', calculate);
-        inputs.ppaIndexed.addEventListener('change', calculate);
-
-        // Preset buttons for yield
-        const yieldSection = inputs.yield.closest('.input-group');
-        if (yieldSection) {
-            const buttons = yieldSection.querySelectorAll('button');
-            if (buttons.length >= 3) {
-                buttons[0].addEventListener('click', () => {
-                    inputs.yield.value = 950;
-                    displays.yieldDisplay.textContent = '950';
-                    calculate();
-                });
-                buttons[1].addEventListener('click', () => {
-                    inputs.yield.value = 1160;
-                    displays.yieldDisplay.textContent = '1160';
-                    calculate();
-                });
-                buttons[2].addEventListener('click', () => {
-                    inputs.yield.value = 1400;
-                    displays.yieldDisplay.textContent = '1400';
-                    calculate();
-                });
-            }
-        }
-
-        // Reset button
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            inputs.capacity.value = 10;
-            inputs.capacityNum.value = 10;
-            displays.capacityDisplay.textContent = '10';
-
-            inputs.technology.value = 'PERC';
-            inputs.mounting.value = 'Fixed';
-
-            inputs.duration.value = 30;
-            inputs.durationNum.value = 30;
-            displays.durationDisplay.textContent = '30';
-
-            inputs.yield.value = 1160;
-            displays.yieldDisplay.textContent = '1160';
-
-            inputs.degradation.value = 0.50;
-            displays.degradationDisplay.textContent = '0.50';
-
-            inputs.curtailment.value = 0;
-            displays.curtailmentDisplay.textContent = '0';
-
-            inputs.capex.value = 710;
-            displays.capexDisplay.textContent = '710';
-
-            inputs.opex.value = 13.3;
-            displays.opexDisplay.textContent = '13.30';
-
-            inputs.inflation.value = 1.8;
-            displays.inflationDisplay.textContent = '1.80';
-
-            inputs.discount.value = 5.3;
-            displays.discountDisplay.textContent = '5.30';
-
-            inputs.ppa.value = 74;
-            displays.ppaDisplay.textContent = '74';
-
-            inputs.ppaIndexed.checked = true;
-
-            calculate();
-        });
-
-        // Calculate function
-        function calculate() {
-            // Read all inputs
-            const capacity = parseFloat(inputs.capacity.value);
-            const technology = inputs.technology.value;
-            const mounting = inputs.mounting.value;
-            const duration = parseInt(inputs.duration.value);
-            const yield1 = parseFloat(inputs.yield.value);
-            const baseDegradation = parseFloat(inputs.degradation.value) / 100;
-            const curtailment = parseFloat(inputs.curtailment.value) / 100;
-            const capex = parseFloat(inputs.capex.value);
-            const opex = parseFloat(inputs.opex.value);
-            const inflation = parseFloat(inputs.inflation.value) / 100;
-            const discount = parseFloat(inputs.discount.value) / 100;
-            const ppa1 = parseFloat(inputs.ppa.value);
-            const ppaIndexed = inputs.ppaIndexed.checked;
-
-            // Apply bonuses
-            const bifacialBonus = techBifacial[technology];
-            const trackerBonus = mountingBonus[mounting];
-            const totalYieldBonus = 1 + bifacialBonus + trackerBonus;
-            const adjustedYield1 = yield1 * totalYieldBonus;
-
-            // Initialize arrays
-            const cashFlows = [];
-            let totalCost = 0;
-            let totalProduction = 0;
-            let cumulativeCashFlow = 0;
-            const annualData = [];
-
-            // Year 0: CAPEX
-            const totalCapex = capacity * capex;
-            cashFlows.push(-totalCapex);
-
-            // Years 1 to duration
-            for (let year = 1; year <= duration; year++) {
-                // Production: includes degradation and curtailment
-                const degradedYield = adjustedYield1 * Math.pow(1 - baseDegradation, year - 1);
-                const production = capacity * 1000 * degradedYield * (1 - curtailment); // in MWh
-
-                // OPEX: indexed with inflation
-                const opexYear = capacity * opex * Math.pow(1 + inflation, year - 1);
-
-                // Revenue: PPA price potentially indexed
-                const ppaYear = ppaIndexed ? ppa1 * Math.pow(1 + inflation, year - 1) : ppa1;
-                const revenue = (production / 1000) * ppaYear;
-                const revenueYear = production * ppaYear / 1000;
-
-                // Cash flow (before discounting)
-                const cashFlow = revenueYear - opexYear;
-                cashFlows.push(cashFlow);
-
-                // Track for NPV, LCOE, etc.
-                totalProduction += production / Math.pow(1 + discount, year);
-                totalCost += opexYear / Math.pow(1 + discount, year);
-                cumulativeCashFlow += cashFlow;
-
-                annualData.push({
-                    year: year,
-                    production: production,
-                    revenue: revenueYear,
-                    opex: opexYear,
-                    cashFlow: cashFlow,
-                    discountFactor: Math.pow(1 + discount, year),
-                    discountedCashFlow: cashFlow / Math.pow(1 + discount, year)
-                });
-            }
-
-            // LCOE = (CAPEX + sum(discounted OPEX)) / sum(discounted production)
-            const discountedCapex = totalCapex;
-            const discountedOpex = totalCost;
-            const lcoe = (discountedCapex + discountedOpex) / (totalProduction / 1000);
-
-            // NPV at discount rate
-            let npv = -totalCapex;
-            for (const data of annualData) {
-                npv += data.discountedCashFlow;
-            }
-
-            // IRR: find rate r where NPV(r) = 0
-            const irr = calculateIRR(cashFlows);
-
-            // Breakeven Price: find PPA where NPV = 0
-            const breakeven = calculateBreakeven(capacity, duration, adjustedYield1, baseDegradation, curtailment, capex, opex, inflation, discount, ppaIndexed);
-
-            // Payback Period: simple payback
-            let paybackYears = duration + 1;
-            let cumCash = -totalCapex;
-            for (let i = 0; i < annualData.length; i++) {
-                cumCash += annualData[i].cashFlow;
-                if (cumCash >= 0) {
-                    paybackYears = i + 1 + (cumCash - annualData[i].cashFlow) / annualData[i].cashFlow;
-                    break;
-                }
-            }
-
-            // Update displays
-            displays.lcoeResult.textContent = lcoe.toFixed(1);
-            displays.irrResult.textContent = (irr * 100).toFixed(2);
-            displays.npvResult.textContent = (npv / 1e6).toFixed(2);
-            displays.breakevenResult.textContent = breakeven.toFixed(0);
-            displays.paybackResult.textContent = paybackYears.toFixed(1);
-
-            // Update chart
-            updateChart(annualData);
-        }
-
-        // IRR calculation using Newton-Raphson
-        function calculateIRR(cashFlows) {
-            let rate = 0.1;
-            const maxIterations = 100;
-            const tolerance = 1e-6;
-
-            for (let i = 0; i < maxIterations; i++) {
-                let npv = 0;
-                let npvDerivative = 0;
-
-                for (let year = 0; year < cashFlows.length; year++) {
-                    const cf = cashFlows[year];
-                    npv += cf / Math.pow(1 + rate, year);
-                    if (year > 0) {
-                        npvDerivative -= year * cf / Math.pow(1 + rate, year + 1);
-                    }
-                }
-
-                if (Math.abs(npv) < tolerance) return rate;
-                if (npvDerivative === 0) break;
-
-                rate = rate - npv / npvDerivative;
-
-                if (rate < -0.99) rate = -0.99;
-                if (rate > 1) rate = 1;
-            }
-
-            return Math.max(-0.99, Math.min(rate, 1));
-        }
-
-        // Breakeven PPA calculation using bisection
-        function calculateBreakeven(capacity, duration, adjustedYield1, baseDegradation, curtailment, capex, opex, inflation, discount, ppaIndexed) {
-            let lowPrice = 10;
-            let highPrice = 200;
-            const tolerance = 0.1;
-
-            for (let iter = 0; iter < 50; iter++) {
-                const midPrice = (lowPrice + highPrice) / 2;
-                const npv = calculateNPVForPrice(capacity, duration, adjustedYield1, baseDegradation, curtailment, capex, opex, inflation, discount, ppaIndexed, midPrice);
-
-                if (Math.abs(npv) < tolerance) return midPrice;
-                if (npv > 0) highPrice = midPrice;
-                else lowPrice = midPrice;
-            }
-
-            return (lowPrice + highPrice) / 2;
-        }
-
-        function calculateNPVForPrice(capacity, duration, adjustedYield1, baseDegradation, curtailment, capex, opex, inflation, discount, ppaIndexed, ppaPrice) {
-            let npv = -capacity * capex;
-
-            for (let year = 1; year <= duration; year++) {
-                const degradedYield = adjustedYield1 * Math.pow(1 - baseDegradation, year - 1);
-                const production = capacity * 1000 * degradedYield * (1 - curtailment);
-                const opexYear = capacity * opex * Math.pow(1 + inflation, year - 1);
-                const ppaYear = ppaIndexed ? ppaPrice * Math.pow(1 + inflation, year - 1) : ppaPrice;
-                const revenueYear = production * ppaYear / 1000;
-                const cashFlow = revenueYear - opexYear;
-
-                npv += cashFlow / Math.pow(1 + discount, year);
-            }
-
-            return npv;
-        }
-
-        // Chart initialization
-        let chart = null;
-
-        function updateChart(annualData) {
-            const ctx = document.getElementById('cashflowChart').getContext('2d');
-
-            const labels = annualData.map(d => d.year);
-            const revenues = annualData.map(d => d.revenue / 1000); // in k€
-            const opexes = annualData.map(d => -(d.opex / 1000)); // negative
-
-            let cumulativeNPV = [-10 * 710 / 1000]; // Initial CAPEX in k€
-            let sum = -10 * 710 / 1000;
-            const discount = parseFloat(inputs.discount.value) / 100;
-            for (let i = 0; i < annualData.length; i++) {
-                const npvContribution = annualData[i].discountedCashFlow / 1000;
-                sum += npvContribution;
-                cumulativeNPV.push(sum);
-            }
-
-            if (chart) {
-                chart.data.labels = labels;
-                chart.data.datasets[0].data = revenues;
-                chart.data.datasets[1].data = opexes;
-                chart.data.datasets[2].data = cumulativeNPV.slice(1);
-                chart.update();
+        // Toggle function
+        function switchMode(mode) {
+            const homeSection = document.getElementById('homeowner-section');
+            const proSection = document.getElementById('pro-section');
+            const btnHome = document.getElementById('btn-homeowner');
+            const btnPro = document.getElementById('btn-pro');
+            if (mode === 'homeowner') {
+                homeSection.style.display = 'block';
+                proSection.style.display = 'none';
+                btnHome.className = 'px-6 py-3 rounded-lg text-sm font-semibold transition-all bg-amber-500 text-slate-900';
+                btnPro.className = 'px-6 py-3 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white';
             } else {
-                chart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Revenue (k€)',
-                                data: revenues,
-                                backgroundColor: 'rgba(34, 197, 94, 0.6)',
-                                borderColor: 'rgba(34, 197, 94, 1)',
-                                borderWidth: 1,
-                                yAxisID: 'y',
-                                order: 2
-                            },
-                            {
-                                label: 'OPEX (k€)',
-                                data: opexes,
-                                backgroundColor: 'rgba(239, 68, 68, 0.6)',
-                                borderColor: 'rgba(239, 68, 68, 1)',
-                                borderWidth: 1,
-                                yAxisID: 'y',
-                                order: 2
-                            },
-                            {
-                                label: 'Cumulative NPV (k€)',
-                                data: cumulativeNPV.slice(1),
-                                borderColor: 'rgba(251, 146, 60, 1)',
-                                backgroundColor: 'transparent',
-                                borderWidth: 2,
-                                type: 'line',
-                                yAxisID: 'y1',
-                                tension: 0.3,
-                                pointRadius: 2,
-                                pointBackgroundColor: 'rgba(251, 146, 60, 1)',
-                                order: 1
+                homeSection.style.display = 'none';
+                proSection.style.display = 'block';
+                btnPro.className = 'px-6 py-3 rounded-lg text-sm font-semibold transition-all bg-amber-500 text-slate-900';
+                btnHome.className = 'px-6 py-3 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white';
+            }
+        }
+
+        // Advanced section toggle
+        function toggleAdvanced() {
+            const section = document.getElementById('advancedSection');
+            const icon = document.getElementById('advancedToggleIcon');
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                icon.textContent = '▲';
+            } else {
+                section.style.display = 'none';
+                icon.textContent = '▼';
+            }
+        }
+
+        // Map initialization
+        let map;
+        let marker;
+        // Build coords from solar-data.js
+        const countryCoords = {};
+        if (window.SOLAR_DATA) {
+            Object.keys(SOLAR_DATA.countries).forEach(code => {
+                const c = SOLAR_DATA.countries[code];
+                countryCoords[code] = { lat: c.defaultLat, lon: c.defaultLon, zoom: c.mapZoom || 6 };
+            });
+        } else {
+            // Fallback
+            countryCoords['FR'] = { lat: 46.6, lon: 2.2, zoom: 6 };
+        }
+
+        function initMap() {
+            const startCoord = countryCoords['FR'];
+            map = L.map('map').setView([startCoord.lat, startCoord.lon], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19,
+                tileSize: 256,
+                className: 'grayscale'
+            }).addTo(map);
+
+            marker = L.marker([startCoord.lat, startCoord.lon]).addTo(map);
+
+            map.on('click', function(e) {
+                const lat = e.latlng.lat;
+                const lon = e.latlng.lng;
+                document.getElementById('resLatitude').value = lat.toFixed(4);
+                document.getElementById('resLongitude').value = lon.toFixed(4);
+                if (marker) map.removeLayer(marker);
+                marker = L.marker([lat, lon]).addTo(map);
+            });
+        }
+
+        function updateLocationData() {
+            const country = document.getElementById('resCountry').value;
+            const coords = countryCoords[country] || countryCoords['FR'];
+            document.getElementById('resLatitude').value = coords.lat;
+            document.getElementById('resLongitude').value = coords.lon;
+            if (map) {
+                map.setView([coords.lat, coords.lon], coords.zoom || 6);
+                if (marker) map.removeLayer(marker);
+                marker = L.marker([coords.lat, coords.lon]).addTo(map);
+            }
+            // Update electricity price and feed-in tariff from solar-data.js
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
+            if (countryData) {
+                document.getElementById('resElecPrice').value = countryData.electricityPrice;
+                document.getElementById('resElecPriceDisplay').textContent = countryData.electricityPrice.toFixed(4);
+                document.getElementById('resFeedir').value = countryData.feedInTariff;
+                document.getElementById('resFeedinDisplay').textContent = countryData.feedInTariff.toFixed(4);
+            }
+            // Update subsidy info
+            updateSubsidyInfo(country);
+        }
+
+        function updateBatteryDefault() {
+            const selfConsum = parseFloat(document.getElementById('resSelfConsum').value);
+            if (selfConsum < 60 && !document.getElementById('resBatteryToggle').checked) {
+                document.getElementById('resBatteryToggle').checked = true;
+                toggleBatteryCapacity();
+            }
+        }
+
+        function toggleBatteryCapacity() {
+            const section = document.getElementById('batteryCapacitySection');
+            if (document.getElementById('resBatteryToggle').checked) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        // Residential calculator
+        function calculateResidential() {
+            const country = document.getElementById('resCountry').value;
+            const lat = parseFloat(document.getElementById('resLatitude').value);
+            const lon = parseFloat(document.getElementById('resLongitude').value);
+            const surface = parseFloat(document.getElementById('resSurface').value);
+            const orientation = parseFloat(document.getElementById('resOrientation').value);
+            const tilt = parseFloat(document.getElementById('resTilt').value);
+            const shading = parseFloat(document.getElementById('resShading').value);
+            const panelEff = parseFloat(document.getElementById('resPanelType').value);
+            const consumption = parseFloat(document.getElementById('resConsumption').value);
+            const selfConsum = parseFloat(document.getElementById('resSelfConsum').value) / 100;
+            const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
+            const feedinTariff = parseFloat(document.getElementById('resFeedir').value);
+            const subsidies = parseFloat(document.getElementById('resSubsidies').value);
+            const hasBattery = document.getElementById('resBatteryToggle').checked;
+            const batteryCapacity = hasBattery ? parseFloat(document.getElementById('resBatteryCapacity').value) : 0;
+            const degradation = parseFloat(document.getElementById('resDegradation').value) / 100;
+            const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
+            const discountRate = parseFloat(document.getElementById('resDiscount').value) / 100;
+
+            // Calculate installed capacity: kWc = surface × 0.85 (coverage) × efficiency
+            const kwc = surface * 0.85 * panelEff;
+            document.getElementById('resKwc').textContent = kwc.toFixed(2);
+
+            // Get country data from solar-data.js
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
+            const costPerKwc = countryData ? countryData.installCostPerKwc.avg : 1500;
+            const co2PerKwh = countryData ? countryData.co2Factor : 300;  // gCO₂/kWh
+            const batteryCostPerKwh = countryData ? countryData.batteryCostPerKwh : 430;
+
+            // Get PVGIS data or use fallback
+            fetchPVGISData(lat, lon, tilt, orientation).then(pvgisResult => {
+                let production;
+                if (pvgisResult && pvgisResult.annual_energy) {
+                    // PVGIS returns kWh/kWp/year — multiply by kWc, apply shading
+                    const shadingFactor = 1 - (shading / 100);
+                    production = pvgisResult.annual_energy * kwc * shadingFactor;
+                    document.getElementById('resProductionPerKwc').textContent = pvgisResult.annual_energy.toFixed(0);
+                } else {
+                    // Fallback: use orientation/tilt coefficients from solar-data.js
+                    const orientMap = {'0':'S','45':'SW','90':'W','315':'SE','270':'E','180':'N'};
+                    const orientKey = orientMap[String(orientation)] || 'S';
+                    const orientCoeff = (window.SOLAR_DATA && window.SOLAR_DATA.orientationCoefficients[orientKey]) || 1.0;
+                    const tiltCoeffs = window.SOLAR_DATA ? window.SOLAR_DATA.tiltCoefficients : {};
+                    const nearestTilt = Math.round(tilt / 5) * 5;
+                    const tiltCoeff = tiltCoeffs[nearestTilt] || 1.0;
+                    const prFactor = shading > 10 ? 0.75 : 0.80;
+                    // Use average irradiation ~1200 kWh/kWp as baseline
+                    production = kwc * 1200 * orientCoeff * tiltCoeff * prFactor * (1 - shading / 100);
+                    document.getElementById('resProductionPerKwc').textContent = (production / kwc).toFixed(0);
+                }
+
+                document.getElementById('resProduction').textContent = Math.round(production);
+
+                // Annual savings
+                const autoconsSavings = production * selfConsum * elecPrice;
+                const feedinSavings = production * (1 - selfConsum) * feedinTariff;
+                const annualSavings = autoconsSavings + feedinSavings;
+
+                document.getElementById('resSavingsAutocons').textContent = autoconsSavings.toFixed(0);
+                document.getElementById('resSavingsFeedin').textContent = feedinSavings.toFixed(0);
+                document.getElementById('resAnnualSavings').textContent = annualSavings.toFixed(0);
+
+                // Installation cost from country data
+                let totalCost = kwc * costPerKwc;
+                if (hasBattery) {
+                    totalCost += batteryCapacity * batteryCostPerKwh;
+                }
+                const netCost = Math.max(0, totalCost - subsidies);
+
+                document.getElementById('resInstallCost').textContent = totalCost.toFixed(0);
+                document.getElementById('resNetCost').textContent = netCost.toFixed(0);
+
+                // Payback period
+                const payback = annualSavings > 0 ? netCost / annualSavings : 99;
+                document.getElementById('resPayback').textContent = payback.toFixed(1);
+
+                // 25-year NPV calculation with degradation and price increase
+                let npv = -netCost;
+                let totalSavings25 = 0;
+                const cashFlows = [-netCost];
+                for (let year = 1; year <= 25; year++) {
+                    const yearProd = production * Math.pow(1 - degradation, year - 1);
+                    const yearPrice = elecPrice * Math.pow(1 + priceIncrease, year - 1);
+                    const yearSavings = yearProd * selfConsum * yearPrice + yearProd * (1 - selfConsum) * feedinTariff;
+                    const pv = yearSavings / Math.pow(1 + discountRate, year);
+                    npv += pv;
+                    totalSavings25 += yearSavings;
+                    cashFlows.push(yearSavings);
+                }
+                document.getElementById('resNpv').textContent = npv.toFixed(0);
+
+                // TRI (IRR) calculation - Newton-Raphson
+                let irr = 0.08;
+                for (let iter = 0; iter < 100; iter++) {
+                    let npvAt = 0, npvDer = 0;
+                    for (let i = 0; i < cashFlows.length; i++) {
+                        npvAt += cashFlows[i] / Math.pow(1 + irr, i);
+                        if (i > 0) npvDer -= i * cashFlows[i] / Math.pow(1 + irr, i + 1);
+                    }
+                    if (Math.abs(npvAt) < 0.01 || Math.abs(npvDer) < 0.0001) break;
+                    irr = irr - npvAt / npvDer;
+                }
+                // Display TRI if we have the element
+                const triEl = document.getElementById('resTri');
+                if (triEl) triEl.textContent = (irr * 100).toFixed(1);
+
+                // CO2 avoided using country-specific factor from Ember
+                const annualCo2 = production * co2PerKwh / 1000;  // kg/year
+                document.getElementById('resCo2').textContent = annualCo2.toFixed(0);
+                // 1 mature tree absorbs ~22 kg CO₂/year
+                document.getElementById('resCo2Equiv').textContent = (annualCo2 / 22).toFixed(0);
+
+                // Update subsidy info from solar-data.js
+                updateSubsidyInfo(country);
+
+                // Update charts
+                updatePaybackChart(production, annualSavings, netCost, degradation, priceIncrease, discountRate, selfConsum, elecPrice, feedinTariff);
+                updateEnergyChart(production, selfConsum, consumption);
+            }).catch(err => {
+                console.error('PVGIS error:', err);
+                // Fallback calculation
+                const prFactor = shading > 10 ? 0.75 : 0.80;
+                const production = kwc * 1100 * prFactor * (1 - shading / 100);
+                document.getElementById('resProduction').textContent = Math.round(production);
+                document.getElementById('resProductionPerKwc').textContent = (production / kwc).toFixed(0);
+
+                const autoconsSavings = production * selfConsum * elecPrice;
+                const feedinSavings = production * (1 - selfConsum) * feedinTariff;
+                const annualSavings = autoconsSavings + feedinSavings;
+                document.getElementById('resAnnualSavings').textContent = annualSavings.toFixed(0);
+                document.getElementById('resSavingsAutocons').textContent = autoconsSavings.toFixed(0);
+                document.getElementById('resSavingsFeedin').textContent = feedinSavings.toFixed(0);
+
+                let totalCost = kwc * costPerKwc;
+                if (hasBattery) totalCost += batteryCapacity * batteryCostPerKwh;
+                const netCost = Math.max(0, totalCost - subsidies);
+                document.getElementById('resInstallCost').textContent = totalCost.toFixed(0);
+                document.getElementById('resNetCost').textContent = netCost.toFixed(0);
+                document.getElementById('resPayback').textContent = (netCost / annualSavings).toFixed(1);
+
+                const annualCo2 = production * co2PerKwh / 1000;
+                document.getElementById('resCo2').textContent = annualCo2.toFixed(0);
+                document.getElementById('resCo2Equiv').textContent = (annualCo2 / 22).toFixed(0);
+
+                updateSubsidyInfo(country);
+                updateEnergyChart(production, selfConsum, consumption);
+            });
+        }
+
+        function fetchPVGISData(lat, lon, tilt, aspect) {
+            // PVGIS API call via Netlify Function (avoids CORS)
+            const url = `/.netlify/functions/pvgis?lat=${lat}&lon=${lon}&peakpower=1&loss=14&angle=${tilt}&aspect=${aspect}`;
+            return fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.annual && data.annual.energyPerKwp) {
+                        return { annual_energy: data.annual.energyPerKwp };
+                    }
+                    return null;
+                })
+                .catch(e => {
+                    console.warn('PVGIS via Function failed, trying direct...', e);
+                    // Fallback: try direct PVGIS (may fail CORS)
+                    return fetch(`https://re.jrc.ec.europa.eu/api/v5_3/PVcalc?lat=${lat}&lon=${lon}&peakpower=1&loss=14&angle=${tilt}&aspect=${aspect}&outputformat=json`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.outputs && data.outputs.totals && data.outputs.totals.fixed) {
+                                return { annual_energy: data.outputs.totals.fixed.E_y };
                             }
-                        ]
+                            return null;
+                        })
+                        .catch(() => null);
+                });
+        }
+
+        function updatePaybackChart(production, annualSavings, netCost, degradation, priceIncrease, discountRate) {
+            const ctx = document.getElementById('paybackChart');
+            if (!ctx) return;
+            if (window.paybackChartInstance) window.paybackChartInstance.destroy();
+
+            const years = [];
+            const cumulative = [];
+            let cumul = -netCost;
+            for (let i = 0; i <= 25; i++) {
+                years.push(i);
+                const yearProd = production * Math.pow(1 - degradation, i);
+                const yearPrice = Math.pow(1 + priceIncrease, i);
+                const savings = yearProd * yearPrice * 0.5; // Simplified
+                cumul += savings;
+                cumulative.push(cumul.toFixed(0));
+            }
+
+            window.paybackChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Net cumulative (€)',
+                        data: cumulative,
+                        borderColor: cumulative[cumulative.length - 1] > 0 ? '#10b981' : '#ef4444',
+                        backgroundColor: cumulative[cumulative.length - 1] > 0 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                labels: { color: '#cbd5e1' }
-                            }
+                    scales: {
+                        y: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { drawOnChartArea: false }
                         },
-                        scales: {
-                            y: {
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                ticks: { color: '#94a3b8' },
-                                grid: { color: '#334155' },
-                                title: {
-                                    display: true,
-                                    text: 'Annual cash flows (k€)',
-                                    color: '#cbd5e1'
-                                }
-                            },
-                            y1: {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                ticks: { color: '#94a3b8' },
-                                grid: { drawOnChartArea: false },
-                                title: {
-                                    display: true,
-                                    text: 'Cumulative NPV (k€)',
-                                    color: '#cbd5e1'
-                                }
-                            },
-                            x: {
-                                ticks: { color: '#94a3b8' },
-                                grid: { color: '#334155' }
-                            }
+                        x: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: '#334155' }
                         }
                     }
+                }
+            });
+        }
+
+        function updateEnergyChart(production, selfConsum, consumption) {
+            const ctx = document.getElementById('energyChart');
+            if (!ctx) return;
+            if (window.energyChartInstance) window.energyChartInstance.destroy();
+
+            const autocons = production * selfConsum;
+            const feedin = production * (1 - selfConsum);
+            const fromGrid = consumption - autocons;
+
+            window.energyChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Self-consumption', 'Grid feed-in', 'From grid'],
+                    datasets: [{
+                        data: [autocons, feedin, Math.max(0, fromGrid)],
+                        backgroundColor: ['#f59e0b', '#06b6d4', '#6b7280']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#cbd5e1' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetResidential() {
+            document.getElementById('resSurface').value = '30';
+            document.getElementById('resOrientation').value = '0';
+            document.getElementById('resTilt').value = '30';
+            document.getElementById('resShading').value = '0';
+            document.getElementById('resPanelType').value = '0.21';
+            document.getElementById('resConsumption').value = '4000';
+            document.getElementById('resSelfConsum').value = '50';
+            document.getElementById('resElecPrice').value = '0.22';
+            document.getElementById('resFeedir').value = '0.15';
+            document.getElementById('resSubsidies').value = '3000';
+            document.getElementById('resDegradation').value = '0.5';
+            document.getElementById('resPriceIncrease').value = '2.5';
+            document.getElementById('resDiscount').value = '4';
+            document.getElementById('resBatteryToggle').checked = false;
+            toggleBatteryCapacity();
+            updateLocationData();
+        }
+
+        function updateSubsidyInfo(countryCode) {
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            if (!countryData || !countryData.subsidies || !countryData.subsidies.en) {
+                document.getElementById('subsidyContent').innerHTML = '<p>Select a country and click Calculate.</p>';
+                return;
+            }
+            const sub = countryData.subsidies.en;
+            let html = `<h5 class="text-white font-semibold mb-3">${sub.title}</h5><ul class="list-disc list-inside space-y-1.5">`;
+            sub.items.forEach(item => {
+                html += `<li>${item}</li>`;
+            });
+            html += `</ul>`;
+            html += `<p class="mt-4"><a href="${sub.officialLink}" target="_blank" class="text-cyan-400 hover:underline">Official website: ${sub.officialLabel} →</a></p>`;
+            // Add comparator link
+            if (countryData.comparator) {
+                html += `<p class="mt-2"><a href="${countryData.comparator.url}" target="_blank" class="text-amber-400 hover:underline">Compare installers: ${countryData.comparator.name} →</a></p>`;
+            }
+            html += `<p class="mt-3 text-xs text-slate-500">Variable spot rate; check your current contract. Subsidies vary depending on power, contract type, and sometimes income.</p>`;
+            document.getElementById('subsidyContent').innerHTML = html;
+        }
+
+        function updateEurostatPrices() {
+            const countryCode = document.getElementById('resCountry').value;
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            const eurostatCode = countryData ? countryData.eurostatCode : countryCode;
+            const statusEl = document.getElementById('eurostatStatus');
+
+            // Eurostat API supports CORS — direct browser call
+            const url = `https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?geo=${eurostatCode}&unit=KWH&currency=EUR&tax=X_TAX&nrg_cons=4141902&format=JSON`;
+
+            if (statusEl) statusEl.textContent = 'Loading Eurostat...';
+
+            fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    // Extract latest price from Eurostat response
+                    if (data && data.value) {
+                        const values = Object.values(data.value);
+                        const latestPrice = values[values.length - 1];
+                        if (latestPrice && latestPrice > 0) {
+                            document.getElementById('resElecPrice').value = latestPrice.toFixed(4);
+                            document.getElementById('resElecPriceDisplay').textContent = latestPrice.toFixed(4);
+                            // Get period
+                            const dims = data.dimension && data.dimension.time && data.dimension.time.category;
+                            const periods = dims ? Object.keys(dims.index) : [];
+                            const lastPeriod = periods[periods.length - 1] || '?';
+                            if (statusEl) statusEl.textContent = `Eurostat price ${eurostatCode}: ${latestPrice.toFixed(4)} €/kWh (${lastPeriod}, all-inclusive, medium band)`;
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.warn('Eurostat API error:', err);
+                    if (statusEl) statusEl.textContent = 'Eurostat error — default price used';
+                    // Use default from solar-data.js
+                    if (countryData) {
+                        document.getElementById('resElecPrice').value = countryData.electricityPrice;
+                        document.getElementById('resElecPriceDisplay').textContent = countryData.electricityPrice.toFixed(4);
+                    }
+                });
+        }
+
+        // Initialize map on load
+        window.addEventListener('load', function() {
+            initMap();
+            resetResidential();
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Sync sliders with number inputs
+            ['resSurface', 'resTilt', 'resShading', 'resConsumption', 'resSelfConsum', 'resDegradation', 'resPriceIncrease', 'resDiscount', 'resElecPrice', 'resFeedir', 'resSubsidies'].forEach(id => {
+                const slider = document.getElementById(id);
+                const input = document.getElementById(id + 'Num');
+                if (slider && input) {
+                    slider.addEventListener('input', () => input.value = slider.value);
+                    input.addEventListener('change', () => slider.value = input.value);
+                }
+            });
+
+            // Pro section sliders
+            ['capacity', 'irradiance', 'efficiency', 'lifespan', 'eqcost', 'om', 'elprice', 'inflation', 'discount', 'gridcost'].forEach(id => {
+                const slider = document.getElementById(id);
+                const input = document.getElementById(id + 'Num');
+                if (slider && input) {
+                    slider.addEventListener('input', () => input.value = slider.value);
+                    input.addEventListener('change', () => slider.value = input.value);
+                }
+            });
+        });
+
+        // Module technology change
+        document.addEventListener('DOMContentLoaded', () => {
+            const moduleSelect = document.getElementById('moduletech');
+            if (moduleSelect) {
+                moduleSelect.addEventListener('change', function() {
+                    const tech = this.value;
+                    const degradations = { 'PERC': 0.50, 'TOPCon': 0.40, 'HJT': 0.35 };
+                    const bifacials = { 'PERC': 0, 'TOPCon': 5, 'HJT': 7 };
+                    document.getElementById('degradation').value = degradations[tech];
+                    document.getElementById('degradationDisplay').textContent = degradations[tech];
+                    document.getElementById('bifacial').value = bifacials[tech];
+                    document.getElementById('bifacialDisplay').textContent = bifacials[tech];
                 });
             }
+        });
+
+        // Pro LCOE Calculator
+        function calculate() {
+            const capacity = parseFloat(document.getElementById('capacity').value);
+            const irradiance = parseFloat(document.getElementById('irradiance').value);
+            const efficiency = parseFloat(document.getElementById('efficiency').value) / 100;
+            const lifespan = parseFloat(document.getElementById('lifespan').value);
+            const eqcost = parseFloat(document.getElementById('eqcost').value);
+            const gridcost = parseFloat(document.getElementById('gridcost').value);
+            const om = parseFloat(document.getElementById('om').value) / 100;
+            const elprice = parseFloat(document.getElementById('elprice').value);
+            const inflation = parseFloat(document.getElementById('inflation').value) / 100;
+            const discount = parseFloat(document.getElementById('discount').value) / 100;
+            const degradation = parseFloat(document.getElementById('degradation').value) / 100;
+            const bifacial = parseFloat(document.getElementById('bifacial').value) / 100;
+
+            // Production: kWh/MWh annually
+            const production = capacity * irradiance * efficiency * (1 + bifacial) * 1000;
+            document.getElementById('production').value = (production / 1e6).toFixed(2);
+            document.getElementById('totalproductionResult').textContent = (production / 1e6).toFixed(2);
+
+            // Total CapEx
+            const capitalCost = capacity * (eqcost * 1000 + gridcost * 1000);
+            document.getElementById('investResult').textContent = (capitalCost / 1e6).toFixed(1);
+
+            // LCOE calculation
+            let pv_costs = capitalCost;
+            let pv_energy = 0;
+            for (let year = 1; year <= lifespan; year++) {
+                const yearProduction = production * Math.pow(1 - degradation, year - 1);
+                const omCost = capitalCost * om;
+                pv_costs += omCost / Math.pow(1 + discount, year);
+                pv_energy += yearProduction / Math.pow(1 + discount, year);
+            }
+            const lcoe = (pv_costs / pv_energy) * 1000; // €/MWh
+            document.getElementById('lcoeResult').textContent = lcoe.toFixed(2);
+
+            // IRR and NPV
+            let npv = -capitalCost;
+            let cashFlows = [-capitalCost];
+            for (let year = 1; year <= lifespan; year++) {
+                const yearProduction = production * Math.pow(1 - degradation, year - 1);
+                const revenue = yearProduction * elprice * Math.pow(1 + inflation, year - 1) / 1000;
+                const omCost = capitalCost * om;
+                const cf = revenue - omCost;
+                npv += cf / Math.pow(1 + discount, year);
+                cashFlows.push(cf);
+            }
+            document.getElementById('npvResult').textContent = (npv / 1e6).toFixed(1);
+
+            // Simple payback
+            const firstYearRevenue = production * elprice / 1000;
+            const firstYearOM = capitalCost * om;
+            const payback = capitalCost / (firstYearRevenue - firstYearOM);
+            document.getElementById('paybackResult').textContent = payback.toFixed(2);
+
+            // Revenue & OM
+            document.getElementById('revenueResult').textContent = (firstYearRevenue / 1000).toFixed(0);
+            document.getElementById('omcostResult').textContent = (firstYearOM / 1000).toFixed(0);
+
+            // IRR (Newton-Raphson)
+            let irr = 0.1;
+            for (let iter = 0; iter < 100; iter++) {
+                let npvAt = 0, npvDer = 0;
+                for (let i = 0; i < cashFlows.length; i++) {
+                    npvAt += cashFlows[i] / Math.pow(1 + irr, i);
+                    if (i > 0) npvDer -= i * cashFlows[i] / Math.pow(1 + irr, i + 1);
+                }
+                if (Math.abs(npvAt) < 0.01) break;
+                irr = irr - npvAt / npvDer;
+            }
+            document.getElementById('irrResult').textContent = (irr * 100).toFixed(2);
+
+            // Charts
+            updateCashFlowChart(cashFlows, discount);
+            updateNPVChart(cashFlows, discount, lifespan);
+        }
+
+        function updateCashFlowChart(cashFlows, discount) {
+            const ctx = document.getElementById('cashFlowChart');
+            if (!ctx || !window.Chart) return;
+            if (window.cfChartInstance) window.cfChartInstance.destroy();
+
+            const years = Array.from({ length: cashFlows.length }, (_, i) => i);
+            const cumulative = [];
+            let sum = 0;
+            cashFlows.forEach(cf => {
+                sum += cf;
+                cumulative.push((sum / 1e6).toFixed(2));
+            });
+
+            window.cfChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Cumulative flow (€M)',
+                        data: cumulative,
+                        backgroundColor: cumulative.map(v => v >= 0 ? '#10b981' : '#ef4444')
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { color: '#94a3b8' }, grid: { drawOnChartArea: false } },
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+                    }
+                }
+            });
+        }
+
+        function updateNPVChart(cashFlows, discount, lifespan) {
+            const ctx = document.getElementById('npvChart');
+            if (!ctx || !window.Chart) return;
+            if (window.npvChartInstance) window.npvChartInstance.destroy();
+
+            const years = Array.from({ length: cashFlows.length }, (_, i) => i);
+            const npvData = [];
+            let cumNpv = 0;
+            cashFlows.forEach((cf, i) => {
+                cumNpv += cf / Math.pow(1 + discount, i);
+                npvData.push((cumNpv / 1e6).toFixed(2));
+            });
+
+            window.npvChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Cumulative NPV (€M)',
+                        data: npvData,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { color: '#94a3b8' }, grid: { drawOnChartArea: false } },
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+                    }
+                }
+            });
         }
 
         // Initial calculation
