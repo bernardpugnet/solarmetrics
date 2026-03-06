@@ -1,0 +1,693 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" font-family="Inter, Arial, sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#0c2340"/>
+    </linearGradient>
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="flowDC" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444"/>
+      <stop offset="100%" style="stop-color:#f97316"/>
+    </linearGradient>
+    <linearGradient id="flowAC" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="greenFlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#22c55e"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowSun">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- Arrow markers -->
+    <marker id="arrowRed" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 4, 0 8" fill="#f97316"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 4, 0 8" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 4, 0 8" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowGreenR" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 4, 0 8" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowGrey" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 4, 0 8" fill="#64748b"/>
+    </marker>
+
+    <!-- Animated dash for energy flow -->
+    <style>
+      @keyframes flowRight {
+        to { stroke-dashoffset: -20; }
+      }
+      @keyframes flowDown {
+        to { stroke-dashoffset: -20; }
+      }
+      @keyframes flowLeft {
+        to { stroke-dashoffset: 20; }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes sunRays {
+        0%, 100% { opacity: 0.3; transform: rotate(0deg); }
+        50% { opacity: 0.6; transform: rotate(5deg); }
+      }
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+      .flow-dc {
+        stroke-dasharray: 8 6;
+        animation: flowRight 0.6s linear infinite;
+      }
+      .flow-ac {
+        stroke-dasharray: 8 6;
+        animation: flowRight 0.6s linear infinite;
+      }
+      .flow-down {
+        stroke-dasharray: 8 6;
+        animation: flowDown 0.6s linear infinite;
+      }
+      .flow-left {
+        stroke-dasharray: 8 6;
+        animation: flowLeft 0.6s linear infinite;
+      }
+      .sun-pulse {
+        animation: pulse 3s ease-in-out infinite;
+      }
+      .component:hover .comp-bg {
+        stroke: #f59e0b;
+        stroke-width: 2;
+        filter: url(#glow);
+      }
+      .component:hover .comp-label {
+        fill: #fbbf24;
+      }
+      .tooltip-box {
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+      }
+      .component:hover .tooltip-box {
+        opacity: 1;
+      }
+      .led-blink {
+        animation: blink 2s ease-in-out infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#skyGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" fill="#f59e0b" font-size="24" font-weight="700">Installation Solaire Plug &amp; Play — Comment ça marche ?</text>
+  <text x="600" y="70" text-anchor="middle" fill="#94a3b8" font-size="13">Survolez chaque élément pour plus de détails</text>
+
+  <!-- ============ SUN ============ -->
+  <g class="sun-pulse">
+    <circle cx="130" cy="150" r="45" fill="url(#sunGrad)" filter="url(#glowSun)" opacity="0.9"/>
+    <!-- Sun rays -->
+    <g stroke="#fbbf24" stroke-width="2.5" opacity="0.5">
+      <line x1="130" y1="90" x2="130" y2="75"/>
+      <line x1="130" y1="210" x2="130" y2="225"/>
+      <line x1="70" y1="150" x2="55" y2="150"/>
+      <line x1="190" y1="150" x2="205" y2="150"/>
+      <line x1="87" y1="107" x2="77" y2="97"/>
+      <line x1="173" y1="107" x2="183" y2="97"/>
+      <line x1="87" y1="193" x2="77" y2="203"/>
+      <line x1="173" y1="193" x2="183" y2="203"/>
+    </g>
+    <text x="130" y="155" text-anchor="middle" fill="#78350f" font-size="14" font-weight="700">☀️</text>
+  </g>
+
+  <!-- Sun rays to panel (animated) -->
+  <line x1="175" y1="165" x2="290" y2="220" stroke="#fbbf24" stroke-width="1.5" opacity="0.3" stroke-dasharray="4 4">
+    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/>
+  </line>
+  <line x1="175" y1="175" x2="290" y2="250" stroke="#fbbf24" stroke-width="1.5" opacity="0.3" stroke-dasharray="4 4">
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite"/>
+  </line>
+  <line x1="170" y1="185" x2="290" y2="280" stroke="#fbbf24" stroke-width="1.5" opacity="0.3" stroke-dasharray="4 4">
+    <animate attributeName="opacity" values="0.2;0.4;0.2" dur="1.8s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- ============ 1. SOLAR PANEL ============ -->
+  <g class="component" cursor="pointer">
+    <!-- Panel body -->
+    <rect class="comp-bg" x="270" y="195" width="180" height="120" rx="6" fill="url(#panelGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Panel grid lines -->
+    <line x1="330" y1="195" x2="330" y2="315" stroke="#1e3a5f" stroke-width="0.5" opacity="0.6"/>
+    <line x1="390" y1="195" x2="390" y2="315" stroke="#1e3a5f" stroke-width="0.5" opacity="0.6"/>
+    <line x1="270" y1="235" x2="450" y2="235" stroke="#1e3a5f" stroke-width="0.5" opacity="0.6"/>
+    <line x1="270" y1="275" x2="450" y2="275" stroke="#1e3a5f" stroke-width="0.5" opacity="0.6"/>
+    <!-- Shine effect -->
+    <rect x="275" y="200" width="50" height="30" rx="2" fill="#fff" opacity="0.05"/>
+
+    <!-- Number badge -->
+    <circle cx="285" cy="210" r="12" fill="#f59e0b"/>
+    <text x="285" y="215" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800">1</text>
+
+    <!-- Label -->
+    <text class="comp-label" x="360" y="340" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Panneau solaire</text>
+    <text x="360" y="356" text-anchor="middle" fill="#64748b" font-size="10">300-400W · Balcon / Jardin</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="245" y="362" width="230" height="80" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1" opacity="0.95"/>
+      <text x="260" y="382" fill="#fbbf24" font-size="11" font-weight="600">Panneau photovoltaïque</text>
+      <text x="260" y="398" fill="#cbd5e1" font-size="10">• 1 à 4 panneaux (300-400W chacun)</text>
+      <text x="260" y="412" fill="#cbd5e1" font-size="10">• Se pose sur balcon, terrasse ou jardin</text>
+      <text x="260" y="426" fill="#cbd5e1" font-size="10">• Convertit la lumière en courant DC</text>
+      <text x="260" y="440" fill="#94a3b8" font-size="9">⚡ Produit du courant continu (DC)</text>
+    </g>
+  </g>
+
+  <!-- ============ DC FLOW: Panel → Micro-inverter ============ -->
+  <!-- Cable: Panel → Micro-inverter -->
+  <line x1="450" y1="255" x2="525" y2="255" stroke="#475569" stroke-width="5" stroke-linecap="round"/>
+  <line x1="450" y1="255" x2="525" y2="255" class="flow-dc" stroke="url(#flowDC)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowRed)"/>
+  <text x="490" y="243" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700">DC ⚡</text>
+
+  <!-- ============ 2. MICRO-INVERTER ============ -->
+  <g class="component" cursor="pointer">
+    <rect class="comp-bg" x="530" y="225" width="120" height="60" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Icon -->
+    <text x="555" y="262" fill="#06b6d4" font-size="18">⚡</text>
+    <text x="575" y="258" fill="#94a3b8" font-size="11">→</text>
+    <text x="595" y="262" fill="#3b82f6" font-size="14">∿</text>
+    <!-- LED indicator -->
+    <circle cx="635" cy="238" r="3" fill="#22c55e" class="led-blink"/>
+
+    <!-- Number badge -->
+    <circle cx="543" cy="238" r="12" fill="#f59e0b"/>
+    <text x="543" y="243" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800">2</text>
+
+    <text class="comp-label" x="590" y="305" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Micro-onduleur</text>
+    <text x="590" y="321" text-anchor="middle" fill="#64748b" font-size="10">DC → AC · Intégré au panneau</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="505" y="330" width="240" height="95" rx="8" fill="#0f172a" stroke="#06b6d4" stroke-width="1" opacity="0.95"/>
+      <text x="520" y="350" fill="#22d3ee" font-size="11" font-weight="600">Micro-onduleur</text>
+      <text x="520" y="366" fill="#cbd5e1" font-size="10">• Convertit DC (panneau) en AC (maison)</text>
+      <text x="520" y="380" fill="#cbd5e1" font-size="10">• Intégré ou fixé derrière le panneau</text>
+      <text x="520" y="394" fill="#cbd5e1" font-size="10">• Norme CE obligatoire</text>
+      <text x="520" y="408" fill="#cbd5e1" font-size="10">• Coupure auto si panne réseau</text>
+      <text x="520" y="422" fill="#94a3b8" font-size="9">🔒 Sécurité : anti-îlotage intégré</text>
+    </g>
+  </g>
+
+  <!-- ============ AC FLOW: Micro-inverter → Plug ============ -->
+  <!-- Cable: Micro-inverter → Plug -->
+  <line x1="650" y1="255" x2="725" y2="255" stroke="#475569" stroke-width="5" stroke-linecap="round"/>
+  <line x1="650" y1="255" x2="725" y2="255" class="flow-ac" stroke="url(#flowAC)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+  <text x="690" y="243" text-anchor="middle" fill="#06b6d4" font-size="10" font-weight="700">AC 230V</text>
+
+  <!-- ============ 3. WALL PLUG ============ -->
+  <g class="component" cursor="pointer">
+    <rect class="comp-bg" x="730" y="220" width="80" height="70" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Plug icon -->
+    <circle cx="770" cy="250" r="18" fill="#334155" stroke="#64748b" stroke-width="1"/>
+    <circle cx="762" cy="243" r="3" fill="#94a3b8"/>
+    <circle cx="778" cy="243" r="3" fill="#94a3b8"/>
+    <rect x="766" y="256" width="8" height="6" rx="1" fill="#94a3b8"/>
+
+    <!-- Number badge -->
+    <circle cx="743" cy="233" r="12" fill="#f59e0b"/>
+    <text x="743" y="238" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800">3</text>
+
+    <text class="comp-label" x="770" y="310" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Prise murale</text>
+    <text x="770" y="326" text-anchor="middle" fill="#64748b" font-size="10">Prise classique 230V</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="690" y="330" width="230" height="95" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1" opacity="0.95"/>
+      <text x="705" y="350" fill="#fbbf24" font-size="11" font-weight="600">Branchement sur prise</text>
+      <text x="705" y="366" fill="#cbd5e1" font-size="10">• Simple prise domestique 230V</text>
+      <text x="705" y="380" fill="#cbd5e1" font-size="10">• Câble fourni avec le kit</text>
+      <text x="705" y="394" fill="#cbd5e1" font-size="10">• Pas de travaux électriques</text>
+      <text x="705" y="408" fill="#cbd5e1" font-size="10">• Prise dédiée recommandée (16A)</text>
+      <text x="705" y="422" fill="#94a3b8" font-size="9">✅ Installation en 30 min, sans électricien</text>
+    </g>
+  </g>
+
+  <!-- ============ AC FLOW: Plug → House electrical panel ============ -->
+  <!-- Cable: Plug → House -->
+  <line x1="810" y1="255" x2="875" y2="255" stroke="#475569" stroke-width="5" stroke-linecap="round"/>
+  <line x1="810" y1="255" x2="875" y2="255" class="flow-ac" stroke="url(#flowAC)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+  <!-- ============ 4. HOUSE / ELECTRICAL PANEL ============ -->
+  <g class="component" cursor="pointer">
+    <!-- House shape -->
+    <rect class="comp-bg" x="880" y="210" width="130" height="100" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Roof -->
+    <polygon points="875,215 945,175 1015,215" fill="#334155" stroke="#475569" stroke-width="1"/>
+    <!-- Door -->
+    <rect x="925" y="260" width="25" height="35" rx="3" fill="#475569"/>
+    <!-- Windows -->
+    <rect x="895" y="235" width="20" height="18" rx="2" fill="#fbbf24" opacity="0.3"/>
+    <rect x="960" y="235" width="20" height="18" rx="2" fill="#fbbf24" opacity="0.3"/>
+
+    <!-- Number badge -->
+    <circle cx="893" cy="223" r="12" fill="#f59e0b"/>
+    <text x="893" y="228" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800">4</text>
+
+    <text class="comp-label" x="945" y="330" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Tableau électrique</text>
+    <text x="945" y="346" text-anchor="middle" fill="#64748b" font-size="10">Circuit domestique</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="840" y="350" width="245" height="95" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1" opacity="0.95"/>
+      <text x="855" y="370" fill="#34d399" font-size="11" font-weight="600">Réseau domestique</text>
+      <text x="855" y="386" fill="#cbd5e1" font-size="10">• L'électricité solaire alimente vos appareils</text>
+      <text x="855" y="400" fill="#cbd5e1" font-size="10">• Priorité à l'autoconsommation</text>
+      <text x="855" y="414" fill="#cbd5e1" font-size="10">• Le réseau complète si besoin</text>
+      <text x="855" y="428" fill="#cbd5e1" font-size="10">• Économie immédiate sur la facture</text>
+      <text x="855" y="442" fill="#94a3b8" font-size="9">💡 Vos appareils consomment le solaire en priorité</text>
+    </g>
+  </g>
+
+  <!-- ============ APPLIANCES (right side) ============ -->
+  <g opacity="0.7">
+    <text x="1050" y="200" text-anchor="middle" fill="#64748b" font-size="10">Appareils alimentés</text>
+    <!-- Fridge -->
+    <rect x="1030" y="210" width="40" height="50" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="1050" y="240" text-anchor="middle" font-size="16">🧊</text>
+    <text x="1050" y="272" text-anchor="middle" fill="#64748b" font-size="8">Frigo</text>
+    <!-- TV -->
+    <rect x="1090" y="210" width="40" height="50" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="1110" y="240" text-anchor="middle" font-size="16">📺</text>
+    <text x="1110" y="272" text-anchor="middle" fill="#64748b" font-size="8">TV</text>
+    <!-- Washing machine -->
+    <rect x="1030" y="285" width="40" height="50" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="1050" y="315" text-anchor="middle" font-size="16">🫧</text>
+    <text x="1050" y="347" text-anchor="middle" fill="#64748b" font-size="8">Lave-linge</text>
+    <!-- PC -->
+    <rect x="1090" y="285" width="40" height="50" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="1110" y="315" text-anchor="middle" font-size="16">💻</text>
+    <text x="1110" y="347" text-anchor="middle" fill="#64748b" font-size="8">PC</text>
+  </g>
+  <!-- Flow house to appliances -->
+  <!-- Cable: House → Appliances -->
+  <line x1="1010" y1="260" x2="1025" y2="260" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1010" y1="260" x2="1025" y2="260" class="flow-ac" stroke="url(#greenFlow)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+
+  <!-- ============ 5. LINKY METER (below house) ============ -->
+  <g class="component" cursor="pointer">
+    <rect class="comp-bg" x="905" y="480" width="80" height="100" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Linky screen -->
+    <rect x="915" y="495" width="60" height="30" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+    <text x="945" y="515" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600" class="led-blink">1247 kWh</text>
+    <!-- Linky brand -->
+    <text x="945" y="555" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600">LINKY</text>
+    <!-- LEDs -->
+    <circle cx="920" cy="565" r="2" fill="#22c55e" class="led-blink"/>
+    <circle cx="930" cy="565" r="2" fill="#06b6d4"/>
+
+    <!-- Number badge -->
+    <circle cx="918" cy="493" r="12" fill="#f59e0b"/>
+    <text x="918" y="498" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800">5</text>
+
+    <text class="comp-label" x="945" y="600" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Compteur Linky</text>
+    <text x="945" y="616" text-anchor="middle" fill="#64748b" font-size="10">Mesure production + conso</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="830" y="620" width="255" height="95" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1" opacity="0.95"/>
+      <text x="845" y="640" fill="#34d399" font-size="11" font-weight="600">Compteur communicant Linky</text>
+      <text x="845" y="656" fill="#cbd5e1" font-size="10">• Mesure l'énergie injectée sur le réseau</text>
+      <text x="845" y="670" fill="#cbd5e1" font-size="10">• Déclaration Enedis obligatoire (gratuite)</text>
+      <text x="845" y="684" fill="#cbd5e1" font-size="10">• Limite 3 kWc sans autorisation</text>
+      <text x="845" y="698" fill="#cbd5e1" font-size="10">• Convention d'autoconsommation</text>
+      <text x="845" y="712" fill="#94a3b8" font-size="9">📋 Déclaration sur : https://connect-racco.enedis.fr</text>
+    </g>
+  </g>
+
+  <!-- Flow: House → Linky -->
+  <!-- Cable: House → Linky -->
+  <line x1="945" y1="310" x2="945" y2="475" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+  <line x1="945" y1="310" x2="945" y2="475" class="flow-down" stroke="url(#flowAC)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+  <!-- ============ 6. GRID (below Linky) ============ -->
+  <g class="component" cursor="pointer">
+    <rect class="comp-bg" x="905" y="735" width="80" height="50" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <!-- Pylon icon -->
+    <text x="945" y="767" text-anchor="middle" font-size="20">🏭</text>
+
+    <!-- Number badge -->
+    <circle cx="918" cy="748" r="12" fill="#f59e0b"/>
+    <text x="918" y="753" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800">6</text>
+
+    <text class="comp-label" x="1030" y="758" fill="#e2e8f0" font-size="12" font-weight="600">Réseau EDF</text>
+    <text x="1030" y="774" fill="#64748b" font-size="10">Surplus injecté gratuitement*</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="815" y="680" width="260" height="50" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="1" opacity="0.95"/>
+      <text x="830" y="698" fill="#cbd5e1" font-size="10">• Surplus injecté gratuitement (≤3 kWc)</text>
+      <text x="830" y="714" fill="#cbd5e1" font-size="10">• Ou contrat OA pour revendre (0,13 €/kWh)</text>
+    </g>
+  </g>
+
+  <!-- Flow: Linky → Grid (surplus) -->
+  <line x1="945" y1="580" x2="945" y2="730" stroke="#64748b" stroke-width="2" stroke-dasharray="6 4" opacity="0.5" marker-end="url(#arrowGrey)"/>
+  <text x="960" y="660" fill="#64748b" font-size="9" transform="rotate(90, 960, 660)">Surplus</text>
+
+  <!-- ============ 7. BATTERY (optional, left bottom) ============ -->
+  <g class="component" cursor="pointer">
+    <rect class="comp-bg" x="530" y="490" width="130" height="80" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)" stroke-dasharray="6 3"/>
+    <!-- Battery icon -->
+    <rect x="560" y="510" width="50" height="30" rx="4" fill="#334155" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="610" y="518" width="6" height="14" rx="2" fill="#22c55e"/>
+    <!-- Battery level -->
+    <rect x="563" y="513" width="35" height="24" rx="2" fill="#22c55e" opacity="0.3"/>
+    <rect x="563" y="513" width="25" height="24" rx="2" fill="#22c55e" opacity="0.5"/>
+    <!-- Percentage -->
+    <text x="585" y="530" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">75%</text>
+
+    <!-- Optional badge -->
+    <rect x="625" y="498" width="28" height="14" rx="4" fill="#f59e0b" opacity="0.8"/>
+    <text x="639" y="508" text-anchor="middle" fill="#0f172a" font-size="7" font-weight="700">OPT.</text>
+
+    <text class="comp-label" x="595" y="590" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">Batterie</text>
+    <text x="595" y="606" text-anchor="middle" fill="#64748b" font-size="10">Optionnel · 1-5 kWh</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="490" y="612" width="250" height="95" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1" opacity="0.95"/>
+      <text x="505" y="632" fill="#34d399" font-size="11" font-weight="600">Batterie de stockage (optionnelle)</text>
+      <text x="505" y="648" fill="#cbd5e1" font-size="10">• Stocke le surplus pour le soir/nuit</text>
+      <text x="505" y="662" fill="#cbd5e1" font-size="10">• Capacité typique : 1 à 5 kWh</text>
+      <text x="505" y="676" fill="#cbd5e1" font-size="10">• Augmente l'autoconsommation à 60-80%</text>
+      <text x="505" y="690" fill="#cbd5e1" font-size="10">• Coût : 400-600 €/kWh installé</text>
+      <text x="505" y="704" fill="#94a3b8" font-size="9">⚠️ Rentabilité encore limitée en 2026</text>
+    </g>
+  </g>
+
+  <!-- Flow: Panel area → Battery (dashed, optional) -->
+  <path d="M 360 315 L 360 530 L 525 530" class="flow-dc" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-dasharray="6 4" opacity="0.6" marker-end="url(#arrowGreen)"/>
+  <text x="390" y="420" fill="#22c55e" font-size="10" font-weight="600" opacity="0.7" transform="rotate(90,390,420)">Stockage ▶</text>
+
+  <!-- Flow: Battery → House (restitution soir/nuit, dashed, optional) -->
+  <path d="M 660 530 L 880 530 L 880 315" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-dasharray="6 4" opacity="0.6" marker-end="url(#arrowGreenR)"/>
+  <text x="760" y="548" fill="#22c55e" font-size="10" font-weight="600" opacity="0.7">Restitution soir/nuit ▲</text>
+
+  <!-- ============ 8. MONITORING APP (top right) ============ -->
+  <g class="component" cursor="pointer">
+    <!-- Phone shape -->
+    <rect class="comp-bg" x="550" y="105" width="65" height="100" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Screen -->
+    <rect x="557" y="118" width="51" height="70" rx="4" fill="#0f172a"/>
+    <!-- Graph bars -->
+    <rect x="563" y="160" width="8" height="20" rx="1" fill="#22c55e" opacity="0.7"/>
+    <rect x="574" y="150" width="8" height="30" rx="1" fill="#22c55e" opacity="0.8"/>
+    <rect x="585" y="140" width="8" height="40" rx="1" fill="#22c55e"/>
+    <rect x="596" y="155" width="8" height="25" rx="1" fill="#22c55e" opacity="0.6"/>
+    <!-- Title on screen -->
+    <text x="583" y="133" text-anchor="middle" fill="#94a3b8" font-size="7">Production</text>
+    <!-- Home button -->
+    <circle cx="583" cy="197" r="3" fill="#334155" stroke="#475569" stroke-width="0.5"/>
+
+    <!-- Wifi icon -->
+    <text x="630" y="135" fill="#64748b" font-size="10">📶</text>
+
+    <text class="comp-label" x="583" y="225" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">App monitoring</text>
+    <text x="583" y="240" text-anchor="middle" fill="#64748b" font-size="10">Suivi en temps réel</text>
+
+    <!-- Tooltip -->
+    <g class="tooltip-box">
+      <rect x="470" y="245" width="225" height="80" rx="8" fill="#0f172a" stroke="#8b5cf6" stroke-width="1" opacity="0.95"/>
+      <text x="485" y="265" fill="#a78bfa" font-size="11" font-weight="600">Application de suivi</text>
+      <text x="485" y="281" fill="#cbd5e1" font-size="10">• Suivi production en temps réel (Wi-Fi)</text>
+      <text x="485" y="295" fill="#cbd5e1" font-size="10">• Historique jour/mois/année</text>
+      <text x="485" y="309" fill="#cbd5e1" font-size="10">• Alertes en cas de dysfonctionnement</text>
+      <text x="485" y="323" fill="#94a3b8" font-size="9">📱 Appli fournie avec la plupart des kits</text>
+    </g>
+  </g>
+
+  <!-- Dashed line: inverter → monitoring -->
+  <line x1="590" y1="225" x2="590" y2="205" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+
+  <!-- ============ LEGEND / INFO BOX (bottom left) — INTERACTIVE ============ -->
+  <g id="regBox">
+    <rect x="30" y="460" width="290" height="230" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1" opacity="0.9"/>
+    <text x="50" y="484" fill="#f59e0b" font-size="13" font-weight="700" id="regTitle">📋 Aides — France</text>
+
+    <!-- Country buttons row 1: FR DE ES IT NL -->
+    <g id="btn-FR" cursor="pointer" onclick="selectCountry('FR')"><rect x="44" y="494" width="43" height="17" rx="4" fill="#f59e0b" id="btnBg-FR"/><text x="65" y="506" text-anchor="middle" fill="#0f172a" font-size="9" font-weight="700" id="btnTx-FR" pointer-events="none">🇫🇷 FR</text></g>
+    <g id="btn-DE" cursor="pointer" onclick="selectCountry('DE')"><rect x="91" y="494" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-DE"/><text x="112" y="506" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-DE" pointer-events="none">🇩🇪 DE</text></g>
+    <g id="btn-ES" cursor="pointer" onclick="selectCountry('ES')"><rect x="138" y="494" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-ES"/><text x="159" y="506" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-ES" pointer-events="none">🇪🇸 ES</text></g>
+    <g id="btn-IT" cursor="pointer" onclick="selectCountry('IT')"><rect x="185" y="494" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-IT"/><text x="206" y="506" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-IT" pointer-events="none">🇮🇹 IT</text></g>
+    <g id="btn-NL" cursor="pointer" onclick="selectCountry('NL')"><rect x="232" y="494" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-NL"/><text x="253" y="506" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-NL" pointer-events="none">🇳🇱 NL</text></g>
+
+    <!-- Country buttons row 2: BE PT PL AT GR -->
+    <g id="btn-BE" cursor="pointer" onclick="selectCountry('BE')"><rect x="44" y="515" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-BE"/><text x="65" y="527" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-BE" pointer-events="none">🇧🇪 BE</text></g>
+    <g id="btn-PT" cursor="pointer" onclick="selectCountry('PT')"><rect x="91" y="515" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-PT"/><text x="112" y="527" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-PT" pointer-events="none">🇵🇹 PT</text></g>
+    <g id="btn-PL" cursor="pointer" onclick="selectCountry('PL')"><rect x="138" y="515" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-PL"/><text x="159" y="527" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-PL" pointer-events="none">🇵🇱 PL</text></g>
+    <g id="btn-AT" cursor="pointer" onclick="selectCountry('AT')"><rect x="185" y="515" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-AT"/><text x="206" y="527" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-AT" pointer-events="none">🇦🇹 AT</text></g>
+    <g id="btn-GR" cursor="pointer" onclick="selectCountry('GR')"><rect x="232" y="515" width="43" height="17" rx="4" fill="#1e293b" stroke="#475569" stroke-width="0.5" id="btnBg-GR"/><text x="253" y="527" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600" id="btnTx-GR" pointer-events="none">🇬🇷 GR</text></g>
+
+    <line x1="44" y1="538" x2="305" y2="538" stroke="#334155" stroke-width="0.5"/>
+
+    <!-- Dynamic regulation content (updated by JS) -->
+    <text id="regItem0" x="50" y="554" fill="#cbd5e1" font-size="10">✅ Pas d'autorisation si ≤ 3 kWc</text>
+    <text id="regItem1" x="50" y="569" fill="#cbd5e1" font-size="10">✅ Déclaration Enedis obligatoire</text>
+    <text id="regItem2" x="50" y="584" fill="#cbd5e1" font-size="10">✅ Déclaration préalable mairie (si visible)</text>
+    <text id="regItem3" x="50" y="599" fill="#cbd5e1" font-size="10">✅ Norme NF C 15-100 · CE/VDE</text>
+    <text id="regItem4" x="50" y="614" fill="#a7f3d0" font-size="10">💶 Surplus : OA 0,13 €/kWh ou injection gratuite</text>
+    <text id="regNote" x="50" y="636" fill="#94a3b8" font-size="9">⚠️ Copropriété : vérifiez le règlement</text>
+    <a id="regLinkA" href="https://www.economie.gouv.fr/particuliers/faire-des-economies-denergie/maprimerenov-parcours-par-geste-la-prime-pour-la-renovation-energetique" target="_blank">
+      <text id="regLink" x="50" y="656" fill="#38bdf8" font-size="9" text-decoration="underline">🔗 economie.gouv.fr — Site officiel</text>
+    </a>
+  </g>
+
+  <!-- ============ COST BOX (bottom left) ============ -->
+  <g>
+    <rect x="30" y="700" width="290" height="95" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1" opacity="0.9"/>
+    <text x="50" y="727" fill="#22c55e" font-size="13" font-weight="700">💰 Budget indicatif (2026)</text>
+    <line x1="50" y1="737" x2="300" y2="737" stroke="#334155" stroke-width="0.5"/>
+    <text x="50" y="757" fill="#cbd5e1" font-size="10">Kit 400W (1 panneau) : 300 - 500 €</text>
+    <text x="50" y="775" fill="#cbd5e1" font-size="10">Kit 800W (2 panneaux) : 500 - 900 €</text>
+    <text x="50" y="793" fill="#94a3b8" font-size="9">Rentabilisé en 3 à 6 ans selon ensoleillement</text>
+  </g>
+
+  <!-- ============ ENERGY FLOW LEGEND ============ -->
+  <g>
+    <rect x="30" y="380" width="220" height="75" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1" opacity="0.9"/>
+    <text x="50" y="402" fill="#94a3b8" font-size="11" font-weight="600">Flux d'énergie :</text>
+    <line x1="50" y1="420" x2="80" y2="420" stroke="url(#flowDC)" stroke-width="3" stroke-dasharray="6 4"/>
+    <text x="90" y="424" fill="#ef4444" font-size="10">Courant continu (DC)</text>
+    <line x1="50" y1="440" x2="80" y2="440" stroke="url(#flowAC)" stroke-width="3" stroke-dasharray="6 4"/>
+    <text x="90" y="444" fill="#06b6d4" font-size="10">Courant alternatif (AC)</text>
+  </g>
+
+  <!-- ============ FOOTER ============ -->
+  <text x="600" y="812" text-anchor="middle" fill="#475569" font-size="9">SolarMetrics © 2026 — Schéma informatif, consultez un professionnel pour votre installation</text>
+
+  <!-- ============ INTERACTIVE COUNTRY SWITCHING ============ -->
+  <script type="text/javascript"><![CDATA[
+    var countries = ['FR','DE','ES','IT','NL','BE','PT','PL','AT','GR'];
+    var activeCountry = 'FR';
+
+    var regData = {
+      FR: {
+        title: '📋 Aides — France',
+        items: [
+          '✅ Pas d\'autorisation si ≤ 3 kWc',
+          '✅ Déclaration Enedis obligatoire',
+          '✅ Déclaration préalable mairie (si visible)',
+          '✅ Norme NF C 15-100 · CE/VDE',
+          '💶 Surplus : OA 0,13 €/kWh ou injection gratuite'
+        ],
+        note: '⚠️ Copropriété : vérifiez le règlement',
+        linkUrl: 'https://www.economie.gouv.fr/particuliers/faire-des-economies-denergie/maprimerenov-parcours-par-geste-la-prime-pour-la-renovation-energetique',
+        linkLabel: '🔗 economie.gouv.fr — Site officiel'
+      },
+      DE: {
+        title: '📋 Aides — Allemagne',
+        items: [
+          '✅ TVA 0% sur PV résidentiel (depuis 2023)',
+          '✅ Prêts KfW à taux bonifiés (prog. 270)',
+          '✅ Primes régionales variables (Länder)',
+          '✅ Balkonkraftwerk ≤800W sans autorisation',
+          '💶 Surplus : rachat EEG ~0,08 €/kWh (20 ans)'
+        ],
+        note: 'ℹ️ Tarif garanti même pour petites installations',
+        linkUrl: 'https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestandsimmobilie/F%C3%B6rderprodukte/Erneuerbare-Energien-Standard-(270)/',
+        linkLabel: '🔗 kfw.de — Site officiel'
+      },
+      ES: {
+        title: '📋 Aides — Espagne',
+        items: [
+          '✅ IRPF : déduction 20-60% (autonomies)',
+          '✅ IBI : -30 à 50% taxe foncière, 3-5 ans',
+          '✅ IDAE : subvention jusqu\'à 40% du coût',
+          '✅ TVA réduite 10% (certaines régions)',
+          '💶 Surplus : compensation simplifiée ~0,075 €/kWh'
+        ],
+        note: 'ℹ️ Modèle orienté autoconsommation',
+        linkUrl: 'https://www.idae.es/ayudas-y-financiacion/para-energias-renovables',
+        linkLabel: '🔗 idae.es — Site officiel'
+      },
+      IT: {
+        title: '📋 Aides — Italie',
+        items: [
+          '✅ Bonus 50% déduction fiscale sur 10 ans',
+          '✅ Scambio sul Posto (compensation surplus)',
+          '✅ Superbonus résiduel : vérifier conditions',
+          '✅ TVA réduite 10% installations résidentielles',
+          '💶 Surplus : Scambio + rachat ~0,10 €/kWh'
+        ],
+        note: 'ℹ️ Déduction sur résidence principale uniquement',
+        linkUrl: 'https://www.gse.it/servizi-per-te/fotovoltaico',
+        linkLabel: '🔗 gse.it — Site officiel'
+      },
+      NL: {
+        title: '📋 Aides — Pays-Bas',
+        items: [
+          '✅ TVA 0% sur panneaux solaires (depuis 2023)',
+          '✅ Subventions municipales variables',
+          '✅ ISDE : aide batteries + pompes à chaleur',
+          '✅ Saldering (net metering 1:1)',
+          '💶 Surplus : compensation 1:1 (fin prévue 2027)'
+        ],
+        note: '⚠️ Net metering en cours de suppression !',
+        linkUrl: 'https://www.rvo.nl/subsidies-financiering/isde',
+        linkLabel: '🔗 rvo.nl — Site officiel'
+      },
+      BE: {
+        title: '📋 Aides — Belgique',
+        items: [
+          '✅ Wallonie : prime Qualiwatt',
+          '✅ Flandre : prime batterie + injection nette',
+          '✅ Bruxelles : certificats verts (Brugel)',
+          '✅ TVA 6% rénovation (bâtiment >10 ans)',
+          '💶 Surplus : injection nette (varie par région)'
+        ],
+        note: 'ℹ️ Aides différentes selon la région',
+        linkUrl: 'https://energie.wallonie.be/fr/aides-et-primes.html',
+        linkLabel: '🔗 energie.wallonie.be — Site officiel'
+      },
+      PT: {
+        title: '📋 Aides — Portugal',
+        items: [
+          '✅ Fundo Ambiental : jusqu\'à 2 500 €',
+          '✅ TVA réduite 6% sur panneaux solaires',
+          '✅ Programme PRR rénovation énergétique',
+          '✅ Déduction IRS investissements verts',
+          '💶 Surplus : compensation faible ~0,06 €/kWh'
+        ],
+        note: 'ℹ️ Modèle orienté autoconsommation',
+        linkUrl: 'https://www.fundoambiental.pt/',
+        linkLabel: '🔗 fundoambiental.pt — Site officiel'
+      },
+      PL: {
+        title: '📋 Aides — Pologne',
+        items: [
+          '✅ Mój Prąd 6.0 : ~1 600 € pour PV',
+          '✅ Bonus batterie : ~3 700 €',
+          '✅ Déduction fiscale thermomodernisation',
+          '✅ Net-billing au prix du marché',
+          '💶 Surplus : net-billing ~0,05 €/kWh (prix marché)'
+        ],
+        note: 'ℹ️ Programme Mój Prąd très populaire',
+        linkUrl: 'https://mojprad.gov.pl/',
+        linkLabel: '🔗 mojprad.gov.pl — Site officiel'
+      },
+      AT: {
+        title: '📋 Aides — Autriche',
+        items: [
+          '✅ Prime EAG : jusqu\'à 285 €/kWc (≤10 kWc)',
+          '✅ TVA 0% PV ≤35 kWc (depuis 2024)',
+          '✅ OeMAG : tarif de rachat garanti',
+          '✅ Subventions régionales (Länder)',
+          '💶 Surplus : rachat OeMAG ~0,08 €/kWh'
+        ],
+        note: 'ℹ️ Conditions très favorables en Autriche',
+        linkUrl: 'https://www.oem-ag.at/de/foerderung/',
+        linkLabel: '🔗 oem-ag.at — Site officiel'
+      },
+      GR: {
+        title: '📋 Aides — Grèce',
+        items: [
+          '✅ Fotovoltaïka sto Stegi : subvention PV',
+          '✅ Communautés énergétiques (cadre favorable)',
+          '✅ Exonérations fiscales investissements verts',
+          '✅ Net metering virtuel',
+          '💶 Surplus : net metering virtuel ~0,07 €/kWh'
+        ],
+        note: 'ℹ️ Fort ensoleillement = retour rapide',
+        linkUrl: 'https://ypen.gov.gr/energeia/',
+        linkLabel: '🔗 ypen.gov.gr — Site officiel'
+      }
+    };
+
+    function selectCountry(code) {
+      var data = regData[code];
+      if (!data) return;
+
+      // Update title
+      document.getElementById('regTitle').textContent = data.title;
+
+      // Update items
+      for (var i = 0; i < 5; i++) {
+        document.getElementById('regItem' + i).textContent = data.items[i] || '';
+      }
+
+      // Update note
+      document.getElementById('regNote').textContent = data.note;
+
+      // Update link
+      var linkA = document.getElementById('regLinkA');
+      linkA.setAttributeNS('http://www.w3.org/1999/xlink', 'href', data.linkUrl);
+      linkA.setAttribute('href', data.linkUrl);
+      document.getElementById('regLink').textContent = data.linkLabel;
+
+      // Update button styles
+      for (var j = 0; j < countries.length; j++) {
+        var c = countries[j];
+        var bg = document.getElementById('btnBg-' + c);
+        var tx = document.getElementById('btnTx-' + c);
+        if (c === code) {
+          bg.setAttribute('fill', '#f59e0b');
+          bg.removeAttribute('stroke');
+          tx.setAttribute('fill', '#0f172a');
+          tx.setAttribute('font-weight', '700');
+        } else {
+          bg.setAttribute('fill', '#1e293b');
+          bg.setAttribute('stroke', '#475569');
+          bg.setAttribute('stroke-width', '0.5');
+          tx.setAttribute('fill', '#94a3b8');
+          tx.setAttribute('font-weight', '600');
+        }
+      }
+      activeCountry = code;
+    }
+
+    // onclick handlers are set directly on each button group via the onclick attribute
+  ]]></script>
+</svg>
