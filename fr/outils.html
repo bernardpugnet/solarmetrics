@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/solar-data.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>*{font-family:'Inter',sans-serif}.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}html{scroll-behavior:smooth}.tooltip{position:relative;cursor:help}.tooltip .tooltiptext{visibility:hidden;width:280px;background-color:#1e293b;color:#f1f5f9;text-align:left;border-radius:0.5rem;padding:0.75rem;position:absolute;z-index:1000;bottom:120%;left:50%;margin-left:-140px;opacity:0;transition:opacity 0.3s;border:1px solid #475569;font-size:0.75rem;line-height:1.4}.tooltip:hover .tooltiptext{visibility:visible;opacity:1}.input-group input[type="number"]{-moz-appearance:textfield}.input-group input[type="number"]::-webkit-inner-spin-button,.input-group input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}</style>
 <style>
@@ -390,6 +388,38 @@ abbr[title]:hover::after {
                                     </label>
                                     <input type="number" id="resFeedir" value="0.15" min="0.01" max="0.50" step="0.01"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+
+                                <!-- Installation Cost Override -->
+                                <div class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Coût réel de l'installation</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Montant total devis panneaux + pose + onduleur (€). Si vide, le coût moyen du pays est utilisé.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <input type="number" id="resInstallCostOverride" placeholder="Laisser vide = coût moyen du pays" min="0" max="100000" step="100"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgCostHint">—</span> €/kWc</p>
+                                </div>
+
+                                <!-- Battery Cost Override -->
+                                <div id="batteryCostSection" style="display:none;" class="input-group">
+                                    <label class="flex justify-between items-center text-sm mb-2">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-slate-400">Coût réel de la batterie</span>
+                                            <span class="tooltip inline-block">
+                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                                <span class="tooltiptext">Coût total de la batterie installée (€). Si vide, le coût moyen du pays est utilisé.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <input type="number" id="resBatteryCostOverride" placeholder="Laisser vide = coût moyen du pays" min="0" max="50000" step="100"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgBatteryCostHint">—</span> €/kWh</p>
                                 </div>
 
                                 <!-- Subsidies -->
@@ -1091,6 +1121,11 @@ abbr[title]:hover::after {
                 document.getElementById('resFeedir').value = countryData.feedInTariff;
                 document.getElementById('resFeedinDisplay').textContent = countryData.feedInTariff.toFixed(4);
             }
+            // Update cost hints
+            if (countryData) {
+                document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
+                document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
+            }
             // Update subsidy info
             updateSubsidyInfo(country);
         }
@@ -1104,12 +1139,9 @@ abbr[title]:hover::after {
         }
 
         function toggleBatteryCapacity() {
-            const section = document.getElementById('batteryCapacitySection');
-            if (document.getElementById('resBatteryToggle').checked) {
-                section.style.display = 'block';
-            } else {
-                section.style.display = 'none';
-            }
+            const isChecked = document.getElementById('resBatteryToggle').checked;
+            document.getElementById('batteryCapacitySection').style.display = isChecked ? 'block' : 'none';
+            document.getElementById('batteryCostSection').style.display = isChecked ? 'block' : 'none';
         }
 
         // Residential calculator
@@ -1176,11 +1208,15 @@ abbr[title]:hover::after {
                 document.getElementById('resSavingsFeedin').textContent = feedinSavings.toFixed(0);
                 document.getElementById('resAnnualSavings').textContent = annualSavings.toFixed(0);
 
-                // Installation cost from country data
-                let totalCost = kwc * costPerKwc;
+                // Installation cost: use user override if provided, else country average
+                const installOverride = document.getElementById('resInstallCostOverride').value;
+                let panelCost = installOverride ? parseFloat(installOverride) : kwc * costPerKwc;
+                let batteryCost = 0;
                 if (hasBattery) {
-                    totalCost += batteryCapacity * batteryCostPerKwh;
+                    const batteryOverride = document.getElementById('resBatteryCostOverride').value;
+                    batteryCost = batteryOverride ? parseFloat(batteryOverride) : batteryCapacity * batteryCostPerKwh;
                 }
+                let totalCost = panelCost + batteryCost;
                 const netCost = Math.max(0, totalCost - subsidies);
 
                 document.getElementById('resInstallCost').textContent = totalCost.toFixed(0);
@@ -1247,8 +1283,14 @@ abbr[title]:hover::after {
                 document.getElementById('resSavingsAutocons').textContent = autoconsSavings.toFixed(0);
                 document.getElementById('resSavingsFeedin').textContent = feedinSavings.toFixed(0);
 
-                let totalCost = kwc * costPerKwc;
-                if (hasBattery) totalCost += batteryCapacity * batteryCostPerKwh;
+                const installOverrideFb = document.getElementById('resInstallCostOverride').value;
+                let panelCostFb = installOverrideFb ? parseFloat(installOverrideFb) : kwc * costPerKwc;
+                let batteryCostFb = 0;
+                if (hasBattery) {
+                    const batteryOverrideFb = document.getElementById('resBatteryCostOverride').value;
+                    batteryCostFb = batteryOverrideFb ? parseFloat(batteryOverrideFb) : batteryCapacity * batteryCostPerKwh;
+                }
+                let totalCost = panelCostFb + batteryCostFb;
                 const netCost = Math.max(0, totalCost - subsidies);
                 document.getElementById('resInstallCost').textContent = totalCost.toFixed(0);
                 document.getElementById('resNetCost').textContent = netCost.toFixed(0);
@@ -1289,7 +1331,7 @@ abbr[title]:hover::after {
                 });
         }
 
-        function updatePaybackChart(production, annualSavings, netCost, degradation, priceIncrease, discountRate) {
+        function updatePaybackChart(production, annualSavings, netCost, degradation, priceIncrease, discountRate, selfConsum, elecPrice, feedinTariff) {
             const ctx = document.getElementById('paybackChart');
             if (!ctx) return;
             if (window.paybackChartInstance) window.paybackChartInstance.destroy();
@@ -1300,8 +1342,8 @@ abbr[title]:hover::after {
             for (let i = 0; i <= 25; i++) {
                 years.push(i);
                 const yearProd = production * Math.pow(1 - degradation, i);
-                const yearPrice = Math.pow(1 + priceIncrease, i);
-                const savings = yearProd * yearPrice * 0.5; // Simplified
+                const yearElecPrice = elecPrice * Math.pow(1 + priceIncrease, i);
+                const savings = yearProd * selfConsum * yearElecPrice + yearProd * (1 - selfConsum) * feedinTariff;
                 cumul += savings;
                 cumulative.push(cumul.toFixed(0));
             }
@@ -1452,6 +1494,7 @@ abbr[title]:hover::after {
         // Initialize map on load
         window.addEventListener('load', function() {
             initMap();
+            updateLocationData();
             resetResidential();
             document.getElementById('currentYear').textContent = new Date().getFullYear();
 
