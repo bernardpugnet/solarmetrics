@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embeddable Solar Widgets — SolarMetrics</title>
+    <meta name="description" content="Integrate SolarMetrics solar widgets on your website: real-time LCOE, simplified simulator, CO₂ counter, France rates.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/widgets">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/widgets">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/widgets">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .copy-button{transition:all 0.3s ease}
+        .copy-button.copied{background-color:#10b981}
+        .code-block{position:relative;background:#0f172a;border:1px solid #1e293b;border-radius:0.5rem;padding:1rem;font-family:monospace;font-size:0.875rem;color:#cbd5e1;overflow-x:auto;word-break:break-all}
+        .copy-btn{position:absolute;top:0.5rem;right:0.5rem;padding:0.5rem 1rem;background:#f59e0b;color:#000;border:none;border-radius:0.375rem;cursor:pointer;font-size:0.875rem;font-weight:600;transition:all 0.3s ease}
+        .copy-btn:hover{background:#d97706}
+        .copy-btn.copied{background:#10b981}
+        .widget-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;overflow:hidden;transition:all 0.3s ease}
+        .widget-card:hover{border-color:#475569;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+        .widget-preview{background:#0f172a;border-bottom:1px solid #334155;padding:1rem;display:flex;align-items:center;justify-content:center;min-height:250px}
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Tools menu">
+                            Tools
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Residential</div>
+                                        <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="tools-autoconsumption.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Self-Consumption</div>
+                                        <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industrial</div>
+                                        <div class="text-xs text-slate-400">Plants · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="technology-comparison.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparator</div>
+                                        <div class="text-xs text-slate-400">Technologies · Inverters · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/widgets.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-autoconsumption.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Self-Consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
+                <a href="technology-comparison.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparator</a>
+                <a href="widgets.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">📊 Widgets</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Embeddable Solar Widgets</h1>
+                <p class="text-xl text-slate-300 mb-8">Integrate SolarMetrics widgets for free on your website. Updated data, responsive and easy to implement.</p>
+                <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                    <h3 class="font-semibold text-amber-400 mb-3">How to use?</h3>
+                    <ol class="text-slate-300 space-y-2">
+                        <li class="flex gap-3"><span class="text-amber-500 font-bold">1.</span> Select the widget you're interested in</li>
+                        <li class="flex gap-3"><span class="text-amber-500 font-bold">2.</span> Click "Copy integration code"</li>
+                        <li class="flex gap-3"><span class="text-amber-500 font-bold">3.</span> Paste the code into your HTML page</li>
+                        <li class="flex gap-3"><span class="text-amber-500 font-bold">4.</span> The widget will display automatically</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Widgets Section -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-12">Available Widgets</h2>
+
+                <!-- Widget 1: Mini LCOE -->
+                <div class="widget-card mb-12">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-amber-400">Mini LCOE</h3>
+                            <p class="text-slate-300 mb-4">Display the levelized cost of solar electricity (LCOE) in real-time, compared to competing sources.</p>
+                            <div class="widget-preview rounded-lg">
+                                <div class="w-full" style="width: 320px; height: 220px;">
+                                    <iframe src="widgets/lcoe-mini.html" width="320" height="220" frameborder="0" style="border: none; border-radius: 0.5rem;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-semibold text-slate-200 mb-3">Integration code</h4>
+                            <div class="code-block mb-4">
+&lt;iframe src="https://solarmetrics.netlify.app/widgets/lcoe-mini.html" width="320" height="220" frameborder="0"&gt;&lt;/iframe&gt;
+                                <button class="copy-btn" onclick="copyCode(this, '&lt;iframe src=&quot;https://solarmetrics.netlify.app/widgets/lcoe-mini.html&quot; width=&quot;320&quot; height=&quot;220&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;')">Copy</button>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-700 rounded p-3 text-xs text-slate-400">
+                                <p><strong class="text-slate-300">Dimensions:</strong> 320 × 220 px</p>
+                                <p><strong class="text-slate-300">Data:</strong> LCOE EU utility-scale 2026</p>
+                                <p><strong class="text-slate-300">Update:</strong> Daily</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget 2: CO₂ Counter -->
+                <div class="widget-card mb-12">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-cyan-400">CO₂ Avoided Counter</h3>
+                            <p class="text-slate-300 mb-4">Display in real-time the amount of CO₂ avoided since page load, based on a 6 kWc installation.</p>
+                            <div class="widget-preview rounded-lg">
+                                <div class="w-full" style="width: 320px; height: 220px;">
+                                    <iframe src="widgets/co2-counter.html" width="320" height="220" frameborder="0" style="border: none; border-radius: 0.5rem;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-semibold text-slate-200 mb-3">Integration code</h4>
+                            <div class="code-block mb-4">
+&lt;iframe src="https://solarmetrics.netlify.app/widgets/co2-counter.html" width="320" height="220" frameborder="0"&gt;&lt;/iframe&gt;
+                                <button class="copy-btn" onclick="copyCode(this, '&lt;iframe src=&quot;https://solarmetrics.netlify.app/widgets/co2-counter.html&quot; width=&quot;320&quot; height=&quot;220&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;')">Copy</button>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-700 rounded p-3 text-xs text-slate-400">
+                                <p><strong class="text-slate-300">Dimensions:</strong> 320 × 220 px</p>
+                                <p><strong class="text-slate-300">Assumption:</strong> 6 kWc + 1100 kWh/year</p>
+                                <p><strong class="text-slate-300">Factor:</strong> 55 gCO₂/kWh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget 3: France Rates -->
+                <div class="widget-card mb-12">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-emerald-400">France Rates</h3>
+                            <p class="text-slate-300 mb-4">Display current electricity rates, mandatory purchase tariffs and self-consumption subsidies in France.</p>
+                            <div class="widget-preview rounded-lg">
+                                <div class="w-full" style="width: 320px; height: 220px;">
+                                    <iframe src="widgets/tarifs-france.html" width="320" height="220" frameborder="0" style="border: none; border-radius: 0.5rem;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-semibold text-slate-200 mb-3">Integration code</h4>
+                            <div class="code-block mb-4">
+&lt;iframe src="https://solarmetrics.netlify.app/widgets/tarifs-france.html" width="320" height="220" frameborder="0"&gt;&lt;/iframe&gt;
+                                <button class="copy-btn" onclick="copyCode(this, '&lt;iframe src=&quot;https://solarmetrics.netlify.app/widgets/tarifs-france.html&quot; width=&quot;320&quot; height=&quot;220&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;')">Copy</button>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-700 rounded p-3 text-xs text-slate-400">
+                                <p><strong class="text-slate-300">Dimensions:</strong> 320 × 220 px</p>
+                                <p><strong class="text-slate-300">Data:</strong> Electricity price, OA, subsidies</p>
+                                <p><strong class="text-slate-300">Update:</strong> Q1 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget 4: Mini Simulator -->
+                <div class="widget-card">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-orange-400">Mini Simulator</h3>
+                            <p class="text-slate-300 mb-4">Simplified tool allowing your visitors to quickly calculate savings with a solar installation.</p>
+                            <div class="widget-preview rounded-lg">
+                                <div class="w-full" style="width: 320px; height: 220px;">
+                                    <iframe src="widgets/simulateur-mini.html" width="320" height="220" frameborder="0" style="border: none; border-radius: 0.5rem;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-semibold text-slate-200 mb-3">Integration code</h4>
+                            <div class="code-block mb-4">
+&lt;iframe src="https://solarmetrics.netlify.app/widgets/simulateur-mini.html" width="320" height="220" frameborder="0"&gt;&lt;/iframe&gt;
+                                <button class="copy-btn" onclick="copyCode(this, '&lt;iframe src=&quot;https://solarmetrics.netlify.app/widgets/simulateur-mini.html&quot; width=&quot;320&quot; height=&quot;220&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;')">Copy</button>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-700 rounded p-3 text-xs text-slate-400">
+                                <p><strong class="text-slate-300">Dimensions:</strong> 320 × 220 px</p>
+                                <p><strong class="text-slate-300">Inputs:</strong> Power, zone, consumption</p>
+                                <p><strong class="text-slate-300">Output:</strong> Savings €/year + payback</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-800/30 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <details class="bg-slate-800 rounded-lg p-4 cursor-pointer group">
+                        <summary class="font-semibold text-slate-200 flex items-center justify-between">
+                            Are the widgets free?
+                            <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p class="text-slate-400 mt-3">Yes, all our widgets are 100% free and unlimited. No API key required.</p>
+                    </details>
+                    <details class="bg-slate-800 rounded-lg p-4 cursor-pointer group">
+                        <summary class="font-semibold text-slate-200 flex items-center justify-between">
+                            Can I customize the widget style?
+                            <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p class="text-slate-400 mt-3">Widgets are optimized to adapt to your design via their dimensions. For advanced customization, contact us.</p>
+                    </details>
+                    <details class="bg-slate-800 rounded-lg p-4 cursor-pointer group">
+                        <summary class="font-semibold text-slate-200 flex items-center justify-between">
+                            Is widget data updated in real-time?
+                            <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p class="text-slate-400 mt-3">Yes, data (LCOE, rates, productivity) is updated daily or at each widget load.</p>
+                    </details>
+                    <details class="bg-slate-800 rounded-lg p-4 cursor-pointer group">
+                        <summary class="font-semibold text-slate-200 flex items-center justify-between">
+                            Can I use multiple widgets on the same page?
+                            <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p class="text-slate-400 mt-3">Of course! You can combine as many widgets as you want on a single page.</p>
+                    </details>
+                    <details class="bg-slate-800 rounded-lg p-4 cursor-pointer group">
+                        <summary class="font-semibold text-slate-200 flex items-center justify-between">
+                            What technical support is available?
+                            <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p class="text-slate-400 mt-3">For any questions or issues, contact us at bernard.pugnet13400@gmail.com. We'll help you quickly.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/widgets.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal notices</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Editor:</strong> Bernard Pugnet - Personal information-focused website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Host:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual property:</strong> All content on this site (text, images, graphics) is the property of Bernard Pugnet or its cited sources. Reproduction is prohibited without permission.</p>
+                        <p><strong class="text-slate-400">Personal data:</strong> This site does not collect personal data. No tracking cookies are used.</p>
+                        <p><strong class="text-slate-400">Liability:</strong> Information on this site is provided for informational purposes and does not constitute investment advice.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+            this.setAttribute('aria-expanded', mobileMenu.classList.contains('hidden') ? 'false' : 'true');
+        });
+
+        // Copy code function
+        function copyCode(button, code) {
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Error copying:', err);
+                alert('Error copying code');
+            });
+        }
+    </script>
+</body>
+</html>

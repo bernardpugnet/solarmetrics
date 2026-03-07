@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compteur CO₂ - SolarMetrics Widget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .widget {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .header h3 {
+            color: #06b6d4;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .header p {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+        .counter-section {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+        .counter-value {
+            color: #06b6d4;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        .counter-label {
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            font-weight: 500;
+        }
+        .info-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+        .info-box strong {
+            color: #cbd5e1;
+        }
+        .animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #334155;
+        }
+        .footer a {
+            color: #06b6d4;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .footer a:hover {
+            color: #22d3ee;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <h3>Compteur CO₂ Évité</h3>
+            <p>Depuis le chargement de cette page</p>
+        </div>
+
+        <div class="counter-section">
+            <div class="counter-value animation" id="co2Counter">0</div>
+            <div class="counter-label">kg de CO₂ évités</div>
+        </div>
+
+        <div class="info-box">
+            <strong>Hypothèse :</strong> Installation 6 kWc<br/>
+            <strong>Productivité :</strong> 1100 kWh/an<br/>
+            <strong>Facteur :</strong> 55 gCO₂/kWh
+        </div>
+
+        <div class="footer">
+            <a href="https://solarmetrics.netlify.app/fr" target="_blank">▸ SolarMetrics</a>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        const POWER_KWC = 6; // 6 kWc installation
+        const ANNUAL_PRODUCTION = 1100; // kWh/year
+        const CO2_FACTOR = 55; // gCO2/kWh
+        const SECONDS_PER_YEAR = 365.25 * 24 * 3600;
+
+        // Calculate CO2 per second: (1100 kWh/year * 55 gCO2/kWh) / seconds per year
+        const CO2_PER_SECOND = (ANNUAL_PRODUCTION * CO2_FACTOR) / SECONDS_PER_YEAR / 1000; // in kg
+
+        const startTime = Date.now();
+
+        function updateCounter() {
+            const elapsedSeconds = (Date.now() - startTime) / 1000;
+            const co2Avoided = elapsedSeconds * CO2_PER_SECOND;
+            const displayValue = Math.floor(co2Avoided * 100) / 100; // 2 decimals
+
+            const counter = document.getElementById('co2Counter');
+            counter.textContent = displayValue.toLocaleString('fr-FR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            requestAnimationFrame(updateCounter);
+        }
+
+        updateCounter();
+    </script>
+</body>
+</html>

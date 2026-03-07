@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emerging Solar Technologies — SolarMetrics</title>
+    <meta name="description" content="Perovskites, tandem, bifacial, floating solar, agrivoltaics: the solar technologies that will transform the market by 2035.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/emerging-technologies">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/emerging-technologies">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies-emergentes">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .tech-card{transition:all 0.3s ease;border:1px solid rgba(71,85,105,0.5);background:rgba(15,23,42,0.6)}
+        .tech-card:hover{border-color:rgba(245,158,11,0.5);background:rgba(245,158,11,0.05)}
+        .tech-card:hover .tech-icon{transform:scale(1.1)}
+        .tech-icon{transition:transform 0.3s ease;font-size:2rem}
+        .efficiency-bar{background:rgba(245,158,11,0.2);border-radius:0.5rem;overflow:hidden;height:1.5rem}
+        .efficiency-fill{background:linear-gradient(to right,#F59E0B,#EA580C);height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:0.5rem;color:#000;font-weight:600;font-size:0.75rem}
+        .timeline-item{transition:all 0.3s ease;position:relative;padding-left:2rem}
+        .timeline-item::before{content:'';position:absolute;left:0;top:0.5rem;width:1rem;height:1rem;background:rgba(245,158,11,0.3);border:2px solid rgba(245,158,11,0.6);border-radius:50%;transition:all 0.3s ease}
+        .timeline-item.milestone::before{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);border-color:rgba(245,158,11,1)}
+        .comparison-table{border-collapse:collapse;width:100%;font-size:0.875rem}
+        .comparison-table th,.comparison-table td{border:1px solid rgba(71,85,105,0.3);padding:0.75rem}
+        .comparison-table thead{background:rgba(71,85,105,0.2)}
+        .comparison-table tbody tr:nth-child(even){background:rgba(71,85,105,0.1)}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-amber-500 font-medium hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 font-medium rounded-lg text-sm flex items-center gap-1 hover:text-white" aria-label="Tools menu">
+                            Tools
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Residential</div>
+                                        <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Self-Consumption</div>
+                                        <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industrial</div>
+                                        <div class="text-xs text-slate-400">Power plants · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparison Tool</div>
+                                        <div class="text-xs text-slate-400">Technologies · Inverters · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/technologies-emergentes.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 text-white font-medium hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Self-Consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparison Tool</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-16 sm:py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <div class="inline-block mb-4">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-full text-xs font-medium text-blue-300">
+                            🔬 Horizon 2035
+                        </span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Emerging Solar Technologies</h1>
+                    <p class="text-xl text-slate-300 mb-6">The next generation of photovoltaic innovation</p>
+                    <p class="text-slate-400">Perovskites, tandem cells, bifacial modules, floating solar, agrivoltaics, and advanced storage: technologies poised to revolutionize global solar energy by 2035.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Why do emerging technologies matter?</h2>
+                    <p class="text-slate-300 mb-4">
+                        Silicon technology has plateaued near its theoretical Shockley-Queisser limit (~29% efficiency). To continue cost reduction and efficiency gains, the solar industry is investing heavily in next-generation technologies. These innovations could:
+                    </p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex gap-3">
+                            <span class="text-amber-400 font-bold">→</span>
+                            <span>Increase efficiency to 35-50% (tandem cells, perovskites)</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-amber-400 font-bold">→</span>
+                            <span>Reduce manufacturing costs by 50-70% (perovskites, thin-film)</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-amber-400 font-bold">→</span>
+                            <span>Enable new applications (building integration, flexible modules, agrivoltaics)</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-amber-400 font-bold">→</span>
+                            <span>Decrease global LCOE to $0.01-0.02/kWh by 2035</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Cards Grid -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-white">Key emerging technologies</h2>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Perovskites -->
+                    <div class="tech-card rounded-lg p-6">
+                        <div class="tech-icon mb-3">🔱</div>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Perovskite Solar Cells</h3>
+                        <div class="space-y-3 text-sm text-slate-300">
+                            <div>
+                                <p class="font-semibold text-white mb-1">Efficiency</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 32%">32%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Lab record: 34% (2025)</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Cost</p>
+                                <p>$0.10-0.15/W (lab); $0.30/W (commercial target 2028)</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Timeline</p>
+                                <p>Commercial production: 2027-2028</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-700">
+                                <p><strong>Key strengths:</strong> Ultra-low cost, high efficiency, printable (direct ink deposition).</p>
+                                <p class="mt-2"><strong>Challenges:</strong> Stability (5-10 year durability in development), lead toxicity, humidity sensitivity.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tandem Cells -->
+                    <div class="tech-card rounded-lg p-6">
+                        <div class="tech-icon mb-3">🔀</div>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Tandem/Multi-Junction Cells</h3>
+                        <div class="space-y-3 text-sm text-slate-300">
+                            <div>
+                                <p class="font-semibold text-white mb-1">Efficiency</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 38%">38%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Perovskite/silicon: lab 34%; commercial target 30-32%</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Cost</p>
+                                <p>$0.80-1.20/W (2025 prototypes)</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Timeline</p>
+                                <p>Commercial: 2028-2030</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-700">
+                                <p><strong>Key strengths:</strong> Highest efficiency potential (40%+), uses proven silicon base layer.</p>
+                                <p class="mt-2"><strong>Challenges:</strong> Manufacturing complexity, cost, interface degradation.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bifacial Modules -->
+                    <div class="tech-card rounded-lg p-6">
+                        <div class="tech-icon mb-3">⬅️➡️</div>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Bifacial Modules</h3>
+                        <div class="space-y-3 text-sm text-slate-300">
+                            <div>
+                                <p class="font-semibold text-white mb-1">Effective Efficiency Gain</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 20%">+15-20%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Front 20%+ rear 5-15% (albedo-dependent)</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Cost Premium</p>
+                                <p>+10-15% vs monofacial (declining)</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Market Adoption</p>
+                                <p>Already 20% of new capacity in 2026</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-700">
+                                <p><strong>Key strengths:</strong> Proven, already deployed at scale, easy ROI calculation.</p>
+                                <p class="mt-2"><strong>Best for:</strong> Ground-mounted, rooftop with white/reflective substrate.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Solar (Aquavoltaics) -->
+                    <div class="tech-card rounded-lg p-6">
+                        <div class="tech-icon mb-3">🌊</div>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Floating Solar (Aquavoltaics)</h3>
+                        <div class="space-y-3 text-sm text-slate-300">
+                            <div>
+                                <p class="font-semibold text-white mb-1">Efficiency Boost</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 22%">+10-15%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Water cooling improves output</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Deployment</p>
+                                <p>Reservoirs, lakes, ponds, wastewater treatment</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Market Growth</p>
+                                <p>30% CAGR (2025-2035)</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-700">
+                                <p><strong>Key strengths:</strong> Land-free, cooling benefit, water conservation (40% reduction in evaporation).</p>
+                                <p class="mt-2"><strong>Challenges:</strong> Anchoring, storms, biofilm/maintenance.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agrivoltaics -->
+                    <div class="tech-card rounded-lg p-6">
+                        <div class="tech-icon mb-3">🌾</div>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Agrivoltaics</h3>
+                        <div class="space-y-3 text-sm text-slate-300">
+                            <div>
+                                <p class="font-semibold text-white mb-1">Dual Output</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 75%">Electricity + Crops/Grazing</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Optimized row spacing for light transmission</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Revenue Model</p>
+                                <p>Dual land use: farming + 5-8 MW/hectare</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Adoption Trend</p>
+                                <p>Rapid growth in EU, US, India (2024+)</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-700">
+                                <p><strong>Key strengths:</strong> Land efficiency, farmer income diversification, biodiversity benefits.</p>
+                                <p class="mt-2"><strong>Challenges:</strong> Row spacing design, crop compatibility, permitting.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Inverters & AI -->
+                    <div class="tech-card rounded-lg p-6">
+                        <div class="tech-icon mb-3">⚙️🤖</div>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Smart Inverters & AI Optimization</h3>
+                        <div class="space-y-3 text-sm text-slate-300">
+                            <div>
+                                <p class="font-semibold text-white mb-1">Efficiency Gains</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 18%">+2-3%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Real-time MPPT, frequency response</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Grid Services</p>
+                                <p>Voltage support, frequency regulation, storage dispatch</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Evolution</p>
+                                <p>Increasing autonomy + grid integration (2026+)</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-700">
+                                <p><strong>Key benefit:</strong> Enables high penetration of solar without grid destabilization.</p>
+                                <p class="mt-2"><strong>Trend:</strong> AI-powered predictive dispatch, islanding capability.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Maturity Matrix -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Technology maturity & readiness</h2>
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Technology</th>
+                                <th>TRL 2026</th>
+                                <th>Commercial Launch</th>
+                                <th>Market Size 2035 (GW)</th>
+                                <th>Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-amber-400">Bifacial (PERC/TOPCon)</td>
+                                <td>TRL 9 (Commercial)</td>
+                                <td>2018-2024</td>
+                                <td>600-800</td>
+                                <td class="text-emerald-400">Low</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-amber-400">Floating Solar</td>
+                                <td>TRL 8-9</td>
+                                <td>2016+</td>
+                                <td>80-120</td>
+                                <td class="text-yellow-400">Medium</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-amber-400">TOPCon Cells</td>
+                                <td>TRL 8-9</td>
+                                <td>2023-2025</td>
+                                <td>400-600</td>
+                                <td class="text-emerald-400">Low</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-amber-400">HJT (Heterojunction)</td>
+                                <td>TRL 8</td>
+                                <td>2024-2026</td>
+                                <td>100-200</td>
+                                <td class="text-yellow-400">Medium</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-amber-400">Perovskite</td>
+                                <td>TRL 5-6</td>
+                                <td>2027-2029</td>
+                                <td>20-100</td>
+                                <td class="text-red-400">High</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-amber-400">Tandem (Pero/Si)</td>
+                                <td>TRL 6-7</td>
+                                <td>2028-2031</td>
+                                <td>50-200</td>
+                                <td class="text-red-400">High</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-amber-400">Agrivoltaics</td>
+                                <td>TRL 7-8</td>
+                                <td>2023+</td>
+                                <td>30-80</td>
+                                <td class="text-yellow-400">Medium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-6 text-sm text-slate-400"><strong>TRL Scale:</strong> TRL 1-4 = Research; TRL 5-6 = Prototype; TRL 7-8 = Pilot/Demo; TRL 9 = Commercial deployment</p>
+            </div>
+        </section>
+
+        <!-- Efficiency & Cost Roadmap -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Efficiency & cost trajectory to 2035</h2>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Efficiency Chart -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-white mb-6">Efficiency Potential</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">Silicon (monocrystalline)</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 23%">23%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Theoretical limit: 29% (Shockley-Queisser)</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">TOPCon/HJT (2026)</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 27%">27%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Near-term commercial</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">Tandem (2030)</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 32%">32%</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Perovskite/silicon stack</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">Theoretical (multi-junction)</p>
+                                <div class="efficiency-bar">
+                                    <div class="efficiency-fill" style="width: 50%">50%+</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Lab record: 47.6% (3-junction, 2024)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cost Trajectory -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-white mb-6">Module Cost (2026 vs 2035)</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">Silicon PERC/TOPCon</p>
+                                <p class="text-sm text-slate-400">2026: $0.12-0.15/W → 2035: $0.08-0.10/W</p>
+                                <p class="text-xs text-emerald-400 mt-1">Cost reduction: 30-35%</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">Perovskite</p>
+                                <p class="text-sm text-slate-400">2026: Lab ($0.50) → 2035: $0.20-0.30/W (commercial)</p>
+                                <p class="text-xs text-yellow-400 mt-1">Potential: 60% reduction</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-300 mb-2">Tandem (Pero/Si)</p>
+                                <p class="text-sm text-slate-400">2026: $1.00+ → 2035: $0.35-0.45/W</p>
+                                <p class="text-xs text-blue-400 mt-1">Cost-efficiency frontier</p>
+                            </div>
+                            <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded mt-4">
+                                <p class="text-xs text-amber-300"><strong>LCOE projection:</strong> Global average reaching $0.015-0.025/kWh by 2035 (vs $0.03-0.05 today)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Adoption Timeline -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Market adoption timeline</h2>
+
+                <div class="space-y-4">
+                    <div class="timeline-item milestone">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                            <h3 class="font-bold text-amber-400 mb-1">2026-2027: Acceleration Phase</h3>
+                            <p class="text-sm text-slate-300">TOPCon & HJT reach 30-40% market share; Perovskite pilot production begins; Bifacial 25% of total capacity</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                            <h3 class="font-bold text-white mb-1">2027-2028: Scale-Up</h3>
+                            <p class="text-sm text-slate-300">Perovskite first commercial GW-scale deployment; Tandem R&D accelerates; Agrivoltaics 50+ GW cumulative</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                            <h3 class="font-bold text-white mb-1">2029-2030: Mainstream Adoption</h3>
+                            <p class="text-sm text-slate-300">Perovskite 5-10% market share; Tandem commercial production; Floating solar 20+ GW annual</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                            <h3 class="font-bold text-white mb-1">2031-2035: Convergence</h3>
+                            <p class="text-sm text-slate-300">Technology landscape dominated by tandem & perovskite (40-60% share); Next-gen silicon phaseout begins; Multi-junction pursuit for premium markets</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Performance Comparisons -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Detailed technology comparison</h2>
+
+                <div class="overflow-x-auto">
+                    <table class="comparison-table w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Metric</th>
+                                <th>Silicon (2026)</th>
+                                <th>TOPCon</th>
+                                <th>HJT</th>
+                                <th>Perovskite</th>
+                                <th>Tandem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold">Efficiency (%)  </td>
+                                <td>22-23</td>
+                                <td>23-24</td>
+                                <td>24-25</td>
+                                <td>28-32</td>
+                                <td>30-35</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Module Cost ($/W)</td>
+                                <td>0.12-0.15</td>
+                                <td>0.13-0.16</td>
+                                <td>0.15-0.18</td>
+                                <td>0.30-0.50</td>
+                                <td>0.80-1.20</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Degradation (%/yr)</td>
+                                <td>0.5-0.7</td>
+                                <td>0.4-0.6</td>
+                                <td>0.3-0.5</td>
+                                <td>1-2 (developing)</td>
+                                <td>0.5-0.8</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Warranty (years)</td>
+                                <td>25-30</td>
+                                <td>25-30</td>
+                                <td>25-30</td>
+                                <td>5-10 (target 20+)</td>
+                                <td>20-25</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Temperature Coeff. (%/K)</td>
+                                <td>-0.36 to -0.40</td>
+                                <td>-0.33 to -0.37</td>
+                                <td>-0.28 to -0.32</td>
+                                <td>-0.20 to -0.25</td>
+                                <td>-0.25 to -0.30</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Bifaciality (%)</td>
+                                <td>60-75 (std); 85+ (bifacial)</td>
+                                <td>75-85</td>
+                                <td>80-90</td>
+                                <td>70-80</td>
+                                <td>75-85</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Commercial Stage</td>
+                                <td class="text-emerald-400">Mature</td>
+                                <td class="text-emerald-400">Growing</td>
+                                <td class="text-yellow-400">Emerging</td>
+                                <td class="text-red-400">R&D/Pilot</td>
+                                <td class="text-red-400">R&D</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Outlook -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Investment & risk considerations</h2>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                        <h3 class="font-bold text-emerald-400 mb-4">Lower Risk / Near-Term</h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex gap-2">
+                                <span class="text-emerald-400">✓</span>
+                                <span><strong>TOPCon & HJT:</strong> Already in mass production, proven supply chains, cost trajectory clear</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-emerald-400">✓</span>
+                                <span><strong>Bifacial modules:</strong> Economically proven, 20%+ of market already, no technology risk</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-emerald-400">✓</span>
+                                <span><strong>Floating solar:</strong> 1,000+ MW deployed globally, standardized engineering</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-emerald-400">✓</span>
+                                <span><strong>Smart inverters:</strong> Increasingly mandatory for grid compliance; clear ROI in 5-7 years</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                        <h3 class="font-bold text-red-400 mb-4">Higher Risk / Long-Term</h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex gap-2">
+                                <span class="text-red-400">⚠</span>
+                                <span><strong>Perovskites:</strong> Stability/durability unproven at 20-year timescale; lead toxicity concerns; supply chain nascent</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-red-400">⚠</span>
+                                <span><strong>Tandem cells:</strong> Manufacturing complexity, interfacial degradation, cost parity uncertain</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-red-400">⚠</span>
+                                <span><strong>Agrivoltaics:</strong> Regulatory uncertainty, crop compatibility unknowns, land-use trade-offs</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-red-400">⚠</span>
+                                <span><strong>Advanced storage:</strong> Battery costs may surprise; grid regulation still evolving</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
+                    <h3 class="font-bold text-blue-300 mb-3">Investment recommendation (2026 horizon):</h3>
+                    <p class="text-sm text-slate-300">For residential & commercial installations: prioritize TOPCon/HJT + bifacial (proven, cost-effective). Monitor perovskites & tandem for 2028-2030 deployment window. Agrivoltaics and floating solar for scale-up projects. Avoid perovskite for warranty-sensitive applications until durability is validated.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-16 bg-gradient-to-b from-slate-900 to-slate-950">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-4 text-white">Stay ahead of solar innovation</h2>
+                <p class="text-slate-300 mb-8">Use our technology comparison tool to evaluate next-gen modules and inverters for your project.</p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <a href="tools-industrial.html" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-amber-500/50 transition-all">
+                        Technology Comparison
+                    </a>
+                    <a href="insights/" class="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg border border-slate-700 hover:bg-slate-700 transition-colors">
+                        Latest Insights
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Navigation</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="economy.html" class="hover:text-white transition-colors">Economy</a></li>
+                        <li><a href="markets.html" class="hover:text-white transition-colors">Markets</a></li>
+                        <li><a href="technologies.html" class="hover:text-white transition-colors">Technologies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Tools</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="tools-residential.html" class="hover:text-white transition-colors">Residential</a></li>
+                        <li><a href="tools-residential.html" class="hover:text-white transition-colors">Self-Consumption</a></li>
+                        <li><a href="tools-industrial.html" class="hover:text-white transition-colors">Industrial</a></li>
+                        <li><a href="tools-industrial.html" class="hover:text-white transition-colors">Comparison</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="insights/" class="hover:text-white transition-colors">Insights</a></li>
+                        <li><a href="https://www.maprimerenov.gouv.fr" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">MaPrimeRénov'</a></li>
+                        <li><a href="https://www.qualit-enr.org" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">RGE Certification</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">About</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="hire-me.html" class="hover:text-white transition-colors">Collaborate</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
+                <p>SolarMetrics © 2026 • Crafted by Bernard Pugnet • Data updated March 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+            this.setAttribute('aria-expanded', !this.getAttribute('aria-expanded') === 'false');
+        });
+    </script>
+</body>
+</html>

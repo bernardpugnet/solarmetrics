@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille Réglementaire Solaire — SolarMetrics</title>
+    <meta name="description" content="Veille réglementaire solaire : PPE3, tarifs OA, TURPE, taxonomie verte, CSRD, CBAM et évolutions réglementaires impactant les projets PV en France et en Europe.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/veille-reglementaire">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/veille-reglementaire">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/veille-reglementaire">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        html { scroll-behavior: smooth; }
+        .radar-card { transition: all 0.3s ease; }
+        .radar-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); }
+        .badge-urgency { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; }
+        .urgency-critical { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; }
+        .urgency-moderate { background: rgba(217, 119, 6, 0.15); border: 1px solid rgba(217, 119, 6, 0.3); color: #fed7aa; }
+        .urgency-watch { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); color: #86efac; }
+        .expand-btn { cursor: pointer; user-select: none; }
+        .expand-icon { transition: transform 0.3s ease; }
+        .expand-icon.open { transform: rotate(180deg); }
+        .timeline { position: relative; padding-left: 2rem; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, #F59E0B 0%, #EA580C 100%); }
+        .timeline-item { position: relative; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(30, 41, 59, 0.5); }
+        .timeline-item::before { content: ''; position: absolute; left: -1.25rem; top: 0; width: 0.75rem; height: 0.75rem; background: #F59E0B; border: 3px solid #0f172a; border-radius: 50%; }
+        .timeline-item:last-child { border-bottom: none; margin-bottom: 0; }
+        .detail-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 1rem; padding: 1.5rem; }
+        .detail-card.expanded { background: rgba(30, 41, 59, 0.7); border-color: rgba(245, 158, 11, 0.3); }
+        .source-link { color: #60a5fa; text-decoration: none; font-weight: 500; }
+        .source-link:hover { text-decoration: underline; color: #bfdbfe; }
+        .badge-dataset { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 0.5rem; color: #86efac; font-size: 0.875rem; text-decoration: none; font-weight: 500; }
+        .badge-dataset:hover { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.5); }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · < 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparateur</div>
+                                        <div class="text-xs text-slate-400">Technologies · Onduleurs · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../en/regulatory-watch.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Résidentiel</a>
+                <a href="outils-autoconsommation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Autoconsommation</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
+                <a href="comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparateur</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=80"
+                         alt="Réglementation solaire"
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-3 bg-amber-500/20 backdrop-blur-sm rounded-xl border border-amber-500/30">
+                                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-4xl font-bold text-white">Veille Réglementaire Solaire</h1>
+                                <p class="text-slate-300">France & Europe 2026 — PPE3, Tarifs, Taxonomie verte & CBAM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Badge -->
+                <div class="flex flex-wrap items-center gap-4 mb-12">
+                    <a href="hypotheses.html" class="badge-dataset">
+                        📊 Dataset réglementaire v2026-03
+                    </a>
+                    <p class="text-slate-400 text-sm">Suivi en temps réel des évolutions législatives et réglementaires impactant les projets photovoltaïques</p>
+                </div>
+
+                <!-- Introduction -->
+                <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 mb-12">
+                    <h2 class="text-2xl font-bold mb-4">Pourquoi suivre la réglementation ?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <div class="text-amber-500 font-bold mb-2">💰 Tarifs</div>
+                            <p class="text-slate-300 text-sm">Les tarifs OA, primes autoconsommation et TURPE évoluent trimestriellement ou annuellement, impactant directement le ROI et la bankabilité des projets.</p>
+                        </div>
+                        <div>
+                            <div class="text-amber-500 font-bold mb-2">⚖️ Conformité</div>
+                            <p class="text-slate-300 text-sm">Nouvelles obligations réglementaires (CSRD, CBAM, taxonomie) affectent les critères d'éligibilité des projets et les obligations de reporting.</p>
+                        </div>
+                        <div>
+                            <div class="text-amber-500 font-bold mb-2">📈 Opportunités</div>
+                            <p class="text-slate-300 text-sm">PPE3 et REPowerEU ouvrent des cadres nouveaux (zones d'accélération, agrivoltaïsme) avec potentiel de financement accru.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Radar Réglementaire -->
+        <section id="radar" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Radar Réglementaire 2026-2030</h2>
+                    <p class="text-slate-400">Évolutions clés avec indicateurs d'urgence</p>
+                </div>
+
+                <!-- France Section -->
+                <div class="mb-16">
+                    <h3 class="text-xl font-bold text-amber-500 mb-6 flex items-center gap-2">
+                        🇫🇷 France
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- PPE3 -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">PPE3</h4>
+                                <span class="badge-urgency urgency-critical">🔴 Imminent</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Programmation pluriannuelle de l'énergie 2024-2033 — Augmentation des capacités PV.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Cible :</strong> 54–59 GW d'ici 2030</p>
+                                <p><strong>Horizon :</strong> 75–100 GW d'ici 2035</p>
+                                <p><strong>Entrée vigueur :</strong> Février 2026 (publiée)</p>
+                            </div>
+                        </div>
+
+                        <!-- Tarifs OA T1 2026 -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Tarifs OA T1 2026</h4>
+                                <span class="badge-urgency urgency-critical">🔴 Critique</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Ajustement trimestriel des tarifs d'obligation d'achat par la CRE.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Tendance :</strong> Baissière (prix de marché)</p>
+                                <p><strong>Segments :</strong> Résidentiel, petit commercial, sol</p>
+                                <p><strong>Impact :</strong> Affecte bankabilité des nouveaux projets</p>
+                            </div>
+                        </div>
+
+                        <!-- TURPE 7 -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">TURPE 7</h4>
+                                <span class="badge-urgency urgency-moderate">🟡 Moyen terme</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Nouveau tarif d'utilisation des réseaux publics d'électricité (entrée vigueur 2026-2027).</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Changement :</strong> Tarification réseaux (HTB, HTA, BT)</p>
+                                <p><strong>Impact autoconsommation :</strong> Modifie l'économie collective</p>
+                                <p><strong>Révision :</strong> Annuelle (coûts réseau)</p>
+                            </div>
+                        </div>
+
+                        <!-- Loi APER -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Loi APER</h4>
+                                <span class="badge-urgency urgency-moderate">🟡 Mise en œuvre</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Accélération des énergies renouvelables (mars 2023) — Zones d'accélération communales.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Simplification :</strong> Permis de construire streamlinés</p>
+                                <p><strong>Zones :</strong> Communales et régionales d'accélération</p>
+                                <p><strong>Effet :</strong> Réduit délais d'instruction et coûts</p>
+                            </div>
+                        </div>
+
+                        <!-- Décret Agrivoltaïsme -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Agrivoltaïsme</h4>
+                                <span class="badge-urgency urgency-moderate">🟡 Cadre établi</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Décret 2024 — Cadre réglementaire pour PV associés à production agricole.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Critères :</strong> Rendement agricole minimum à démontrer</p>
+                                <p><strong>Segments :</strong> Éligibles OA dédiée et prime autoconso</p>
+                                <p><strong>Potentiel :</strong> Haute rentabilité agricole double</p>
+                            </div>
+                        </div>
+
+                        <!-- Prime Autoconsommation -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Prime Autoconso</h4>
+                                <span class="badge-urgency urgency-watch">🟢 Long terme</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Évolution progressive — Baisse attendue de la prime à l'investissement.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Actuellement :</strong> ~80 €/kWc (décroissance programmée)</p>
+                                <p><strong>Horizon 2027 :</strong> Potentiellement < 50 €/kWc</p>
+                                <p><strong>Logique :</strong> Maturité technologique</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Europe Section -->
+                <div>
+                    <h3 class="text-xl font-bold text-amber-500 mb-6 flex items-center gap-2">
+                        🇪🇺 Europe
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- REPowerEU -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">REPowerEU</h4>
+                                <span class="badge-urgency urgency-critical">🔴 Cible 2030</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Plan européen d'indépendance énergétique — Objectif énergies renouvelables relevé.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Cible PV :</strong> 600 GW d'ici 2030 (relevé)</p>
+                                <p><strong>Obligation :</strong> Toitures bâtiments neufs & publics</p>
+                                <p><strong>Financement :</strong> NextGenerationEU, fonds structurels</p>
+                            </div>
+                        </div>
+
+                        <!-- Taxonomie verte -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Taxonomie UE</h4>
+                                <span class="badge-urgency urgency-moderate">🟡 Référence</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Critères techniques de durabilité — Solaire PV bien classé.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Classification :</strong> Activité verte certifiée</p>
+                                <p><strong>Enjeu :</strong> Accès financement vert (obligations vertes)</p>
+                                <p><strong>Mise à jour :</strong> Révisions régulières des critères</p>
+                            </div>
+                        </div>
+
+                        <!-- CSRD -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">CSRD</h4>
+                                <span class="badge-urgency urgency-moderate">🟡 2025-2026</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Directive reporting durabilité d'entreprise — Obligation déclaration énergie.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Scope :</strong> Grandes entreprises (> 250 salariés)</p>
+                                <p><strong>Entrée :</strong> Rapports 2025 publiés avril 2026</p>
+                                <p><strong>Données :</strong> Consommation & production électrique détaillée</p>
+                            </div>
+                        </div>
+
+                        <!-- CBAM -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">CBAM</h4>
+                                <span class="badge-urgency urgency-moderate">🟡 Transition</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Carbon Border Adjustment Mechanism — Tarif carbone import/export.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Phase :</strong> Transition 2023-2025 (déclaration)</p>
+                                <p><strong>Plein régime :</strong> Janvier 2026 (tarif)</p>
+                                <p><strong>Impact PV :</strong> Coûts panneaux chinois + 8–15%</p>
+                            </div>
+                        </div>
+
+                        <!-- Net Zero Industry Act -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Net Zero Industry Act</h4>
+                                <span class="badge-urgency urgency-watch">🟢 Vision 2030</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Souveraineté technologique — 40% fabrication locale technologies propres.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Cible :</strong> 40% production UE (modules, onduleurs)</p>
+                                <p><strong>Mesures :</strong> Permitting accéléré, financement R&D</p>
+                                <p><strong>Horizon :</strong> Progressif jusqu'à 2030</p>
+                            </div>
+                        </div>
+
+                        <!-- Écoconception -->
+                        <div class="radar-card detail-card">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-bold text-lg">Écoconception PV</h4>
+                                <span class="badge-urgency urgency-watch">🟢 2028</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4">Passeport produit numérique — Traçabilité et fin de vie des modules.</p>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p><strong>Contenu :</strong> Matériaux, impact enviro, recyclabilité</p>
+                                <p><strong>Mise en place :</strong> 2028-2030 (étapes)</p>
+                                <p><strong>Enjeu :</strong> Circularité et compétitivité</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fiches Détaillées -->
+        <section id="details" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Fiches Détaillées — 4 Évolutions Clés</h2>
+                    <p class="text-slate-400">Accédez aux textes de référence et impacts chiffrés</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- PPE3 Detail -->
+                    <div class="detail-card">
+                        <button class="expand-btn w-full flex items-start justify-between py-2" onclick="toggleDetail(this)">
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">PPE3 — Programmation Pluriannuelle de l'Énergie 2024-2033</h3>
+                                <p class="text-slate-400 text-sm">Objectifs capacité photovoltaïque révisés à la hausse</p>
+                            </div>
+                            <svg class="expand-icon w-6 h-6 text-amber-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="detail-content hidden mt-6 pt-6 border-t border-slate-700 space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Texte de référence</h4>
+                                <p class="text-slate-300 text-sm"><a href="https://www.legifrance.gouv.fr" class="source-link">Légifrance — Décret PPE3</a> · Publication février 2026</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Date d'entrée en vigueur</h4>
+                                <p class="text-slate-300 text-sm">Février 2026 (déjà publiée) — Effective pour appels d'offres CRE 2026-2027</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Impact quantifié sur les projets</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Augmentation des capacités : 54–59 GW d'ici 2030 (+20–25% vs PPE2)</li>
+                                    <li>Potentiel de marché : 8–10 GW/an en moyenne jusqu'à 2030</li>
+                                    <li>Appels d'offres : Volumes accrus (+30–50% par rapport aux années précédentes)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Ce qui change concrètement</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Augmentation des zones d'accélération communales (APER)</li>
+                                    <li>Financement accru pour projets collectifs et agrivoltaïques</li>
+                                    <li>Simplification des démarches administratives prévue en parallèle</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Sources</h4>
+                                <p class="text-slate-300 text-sm">DGEC (Direction Générale de l'Énergie et du Climat) · Commission Européenne · SER (Syndicat des Énergies Renouvelables)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarifs OA Detail -->
+                    <div class="detail-card">
+                        <button class="expand-btn w-full flex items-start justify-between py-2" onclick="toggleDetail(this)">
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">Tarifs OA T1 2026 — Obligation d'Achat (Ajustement CRE)</h3>
+                                <p class="text-slate-400 text-sm">Tarification trimestrielle et tendance baissière</p>
+                            </div>
+                            <svg class="expand-icon w-6 h-6 text-amber-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="detail-content hidden mt-6 pt-6 border-t border-slate-700 space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Texte de référence</h4>
+                                <p class="text-slate-300 text-sm"><a href="https://www.cre.fr" class="source-link">CRE — Commission de Régulation de l'Énergie</a> · Décision trimestrielle sur tarifs OA</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Date d'entrée en vigueur</h4>
+                                <p class="text-slate-300 text-sm">T1 2026 (janvier–mars) ; ajustements T2, T3, T4 : avril–décembre 2026</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Impact quantifié</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Tarif résidentiel (≤9 kWc) : ~80–110 €/MWh (baisse de 5–10% vs T4 2025)</li>
+                                    <li>Tarif petit commercial (9–100 kWc) : ~65–95 €/MWh</li>
+                                    <li>Tarif sol et agrivoltaïsme (>100 kWc) : ~50–75 €/MWh</li>
+                                    <li>Impact ROI : -5 à -8% sur 20 ans vs tarifs T4 2025</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Ce qui change concrètement</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Bankabilité réduite pour petits projets sans autres revenus (prime, autoconso)</li>
+                                    <li>Appels d'offres : Compétition accrue, marges réduites pour installateurs</li>
+                                    <li>Combinaison prime + OA + autoconsommation redevient stratégique</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Sources</h4>
+                                <p class="text-slate-300 text-sm">CRE (Commission de Régulation de l'Énergie) · Légifrance · Arrêté tarifaire</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- REPowerEU Detail -->
+                    <div class="detail-card">
+                        <button class="expand-btn w-full flex items-start justify-between py-2" onclick="toggleDetail(this)">
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">REPowerEU — Plan d'Indépendance Énergétique Européenne</h3>
+                                <p class="text-slate-400 text-sm">600 GW PV d'ici 2030 et obligation toitures</p>
+                            </div>
+                            <svg class="expand-icon w-6 h-6 text-amber-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="detail-content hidden mt-6 pt-6 border-t border-slate-700 space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Texte de référence</h4>
+                                <p class="text-slate-300 text-sm"><a href="https://ec.europa.eu/energy" class="source-link">Commission Européenne — REPowerEU Strategy</a> · Directive (EU) 2023/... (RED IV)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Date d'entrée en vigueur</h4>
+                                <p class="text-slate-300 text-sm">Progressif 2023–2030 ; obligation toitures entrée en vigueur 2026–2027 (États membres)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Impact quantifié</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Cible collective UE : 600 GW PV d'ici 2030 (vs 400 GW avant REPowerEU)</li>
+                                    <li>France : ~75 GW estimés à contribuer d'ici 2030 (harmonisation)</li>
+                                    <li>Obligation toitures : Tous bâtiments neufs, 50% bâtiments publics existants</li>
+                                    <li>Marché supplémentaire : +15–20 GW/an en Europe 2026–2030</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Ce qui change concrètement</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Obligation légale solaire sur toitures neuves à partir 2026</li>
+                                    <li>Budget financement vert accru (obligataire, subventions)</li>
+                                    <li>Standardisation EU des critères de performance et écoconception</li>
+                                    <li>Demande institutionnelle et collective forte (décentralisée)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Sources</h4>
+                                <p class="text-slate-300 text-sm">Commission Européenne · SolarPower Europe · ACER (Agency for Cooperation of Energy Regulators)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CBAM Detail -->
+                    <div class="detail-card">
+                        <button class="expand-btn w-full flex items-start justify-between py-2" onclick="toggleDetail(this)">
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">CBAM — Carbon Border Adjustment Mechanism (Mécanisme d'Ajustement Carbone)</h3>
+                                <p class="text-slate-400 text-sm">Tarif carbone aux frontières UE — Impact sur coûts panneaux importés</p>
+                            </div>
+                            <svg class="expand-icon w-6 h-6 text-amber-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="detail-content hidden mt-6 pt-6 border-t border-slate-700 space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Texte de référence</h4>
+                                <p class="text-slate-300 text-sm"><a href="https://ec.europa.eu/clima" class="source-link">Commission Européenne — Fit for 55 Package</a> · Règlement (UE) 2023/956 (CBAM)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Date d'entrée en vigueur</h4>
+                                <p class="text-slate-300 text-sm">Phase transitoire : 2023–2025 (déclaration) ; Plein régime : 1er janvier 2026 (tarif appliqué)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Impact quantifié</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Tarif carbone UE ETS : ~90–110 €/tonne CO₂ (2026)</li>
+                                    <li>Impact panneaux silicium chinois : +8–15% en coût d'achat</li>
+                                    <li>Panneaux européens : Compétitivité améliorée (+3–5% prix préférentiel)</li>
+                                    <li>Exemple : Panneau 400€ HT → 430–460€ HT après CBAM</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Ce qui change concrètement</h4>
+                                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                                    <li>Rééquilibrage coûts : Panneaux UE (Allemagne, France) moins pénalisés</li>
+                                    <li>Sourcing : Stratégies approvisionnement diversifiées (UE vs Asie)</li>
+                                    <li>Bankabilité : Prévisions de coûts à réviser (+8–12% matériel)</li>
+                                    <li>Potentiel marché local : Fabrication PV européenne attractive</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-400 mb-2">Sources</h4>
+                                <p class="text-slate-300 text-sm">Commission Européenne (DG Taxud) · ENTSO-E · SolarPower Europe</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Graphique -->
+        <section id="timeline" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Timeline des Évolutions 2023-2030</h2>
+                    <p class="text-slate-400">Jalons clés de la réglementation solaire</p>
+                </div>
+
+                <div class="max-w-3xl timeline">
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2023</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>Loi APER</strong> — Accélération énergies renouvelables (mars 2023)</li>
+                            <li><strong>CSRD début</strong> — Directive reporting durabilité d'entreprise</li>
+                            <li><strong>CBAM phase transitoire</strong> — Commencement suivi exports</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2024</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>Décret Agrivoltaïsme</strong> — Cadre réglementaire établi</li>
+                            <li><strong>CBAM phase transitoire</strong> — Poursuite déclaration (phase 2/3)</li>
+                            <li><strong>Zones d'accélération</strong> — Mise en place massive (APER)</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2025</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>CSRD grandes entreprises</strong> — Reporting obligatoire (rapports 2025, pub. avril 2026)</li>
+                            <li><strong>REPowerEU objectifs intermédiaires</strong> — Jalons 2025 pour États</li>
+                            <li><strong>CBAM phase transitoire fin</strong> — Transition vers plein régime</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2026</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>PPE3 publication</strong> — Nouvelles cibles de capacité (54-59 GW 2030)</li>
+                            <li><strong>TURPE 7</strong> — Nouveau tarif réseaux d'électricité (entrée vigueur)</li>
+                            <li><strong>Tarifs OA ajustés</strong> — T1, T2, T3, T4 2026 (baisse tendancielle)</li>
+                            <li><strong>CBAM plein régime</strong> — Tarif carbone appliqué (+8–15% panneaux importés)</li>
+                            <li><strong>Obligation toitures REPowerEU</strong> — Bâtiments neufs solaire obligatoire</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2027</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>CBAM consolidation</strong> — Réajustement phases transition vers plein régime</li>
+                            <li><strong>Réforme prime autoconsommation</strong> — Baisse progressive (80→50 €/kWc potentiel)</li>
+                            <li><strong>Bilan PPE3</strong> — Premiers jalons intermédiaires</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2028</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>Écoconception PV</strong> — Passeport produit numérique en discussion/mise en place</li>
+                            <li><strong>Net Zero Industry Act</strong> — Premiers jalons pour fabrication locale UE</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="text-amber-500 font-bold mb-2">2030</div>
+                        <ul class="text-slate-300 text-sm space-y-1 list-disc list-inside">
+                            <li><strong>Objectifs PPE3</strong> — Atteinte cibles 54–59 GW PV (France)</li>
+                            <li><strong>REPowerEU 600 GW</strong> — Capacité totale photovoltaïque UE</li>
+                            <li><strong>Écoconception PV</strong> — Passeport numérique finalisé pour la plupart des produits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Liens Utiles -->
+        <section id="links" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Liens Utiles — Ressources Officielles</h2>
+                    <p class="text-slate-400">Accédez directement aux sources réglementaires et données</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <a href="https://www.legifrance.gouv.fr" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">📋 Légifrance</h3>
+                        <p class="text-slate-400 text-sm">Textes légaux français officiels — Décrets, lois, arrêtés solaires & EnR</p>
+                    </a>
+
+                    <a href="https://www.cre.fr" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">💡 CRE</h3>
+                        <p class="text-slate-400 text-sm">Commission de Régulation de l'Énergie — Tarifs OA, statistiques, analyses</p>
+                    </a>
+
+                    <a href="https://www.fonction-publique.gouv.fr/dgec" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">🏛️ DGEC</h3>
+                        <p class="text-slate-400 text-sm">Direction Générale de l'Énergie et du Climat — PPE, stratégies énergétiques</p>
+                    </a>
+
+                    <a href="https://ec.europa.eu/energy" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">🇪🇺 Commission Européenne (Énergie)</h3>
+                        <p class="text-slate-400 text-sm">REPowerEU, Fit for 55, taxonomie verte, directives et règlements</p>
+                    </a>
+
+                    <a href="https://eur-lex.europa.eu" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">📜 EUR-Lex</h3>
+                        <p class="text-slate-400 text-sm">Journal Officiel UE — Directives, règlements et actes délégués</p>
+                    </a>
+
+                    <a href="https://www.acer.europa.eu" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">⚡ ACER</h3>
+                        <p class="text-slate-400 text-sm">Agency for Cooperation of Energy Regulators — Analyses, recommandations</p>
+                    </a>
+
+                    <a href="https://www.entsoe.eu" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">🔌 ENTSO-E</h3>
+                        <p class="text-slate-400 text-sm">European Network of Transmission System Operators — Réseau, statistiques</p>
+                    </a>
+
+                    <a href="https://www.ser-synergies.fr" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">☀️ SER (Syndicat EnR)</h3>
+                        <p class="text-slate-400 text-sm">Syndicat des Énergies Renouvelables — Actualités, données marché solaire</p>
+                    </a>
+
+                    <a href="https://www.solarpowereurope.org" target="_blank" rel="noopener noreferrer" class="detail-card hover:border-amber-500/50 transition-all">
+                        <h3 class="font-bold text-lg mb-2">🌍 SolarPower Europe</h3>
+                        <p class="text-slate-400 text-sm">Industrie solaire européenne — Rapports, position paper, analyses réglementaires</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sources -->
+        <section id="sources" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold mb-6">Sources et Références</h2>
+                    <div class="space-y-4 text-slate-300 text-sm">
+                        <p><strong class="text-amber-400">CRE (Commission de Régulation de l'Énergie) :</strong> Tarifs OA trimestriels, statistiques électricité, analyses marché photovoltaïque</p>
+                        <p><strong class="text-amber-400">DGEC (Direction Générale de l'Énergie et du Climat) :</strong> PPE3 2024-2033, stratégies énergétiques gouvernementales</p>
+                        <p><strong class="text-amber-400">Légifrance :</strong> Loi APER (mars 2023), Décret Agrivoltaïsme (2024), codes de l'énergie</p>
+                        <p><strong class="text-amber-400">Commission Européenne :</strong> REPowerEU (mai 2022), Fit for 55 package, Taxonomie verte, CBAM, CSRD, Directives RED IV</p>
+                        <p><strong class="text-amber-400">SER (Syndicat des Énergies Renouvelables) :</strong> Actualités réglementaires, données marché français</p>
+                        <p><strong class="text-amber-400">SolarPower Europe :</strong> Rapports d'analyse, position paper industrie, prévisions capacités 2026-2030</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
+                <div>
+                    <h3 class="text-white font-bold mb-4">SolarMetrics</h3>
+                    <p class="text-slate-400 text-sm">Référence impartiale sur l'énergie solaire photovoltaïque en France & Europe — Calculs, analyses, réglementation et données 2025-2026.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-slate-400 hover:text-amber-500 transition-colors">Accueil</a></li>
+                        <li><a href="economie.html" class="text-slate-400 hover:text-amber-500 transition-colors">Économie</a></li>
+                        <li><a href="marches.html" class="text-slate-400 hover:text-amber-500 transition-colors">Marchés</a></li>
+                        <li><a href="technologies.html" class="text-slate-400 hover:text-amber-500 transition-colors">Technologies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Ressources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="hypotheses.html" class="text-slate-400 hover:text-amber-500 transition-colors">Hypothèses</a></li>
+                        <li><a href="recrutez-moi.html" class="text-slate-400 hover:text-amber-500 transition-colors">Collaborer</a></li>
+                        <li><a href="veille-reglementaire.html" class="text-amber-500 font-semibold">Veille Réglementaire</a></li>
+                        <li><a href="analyses/" class="text-slate-400 hover:text-amber-500 transition-colors">Analyses</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8">
+                <div class="text-center text-slate-500 text-sm">
+                    <p>&copy; <span id="currentYear">2026</span> Bernard Pugnet. <strong>SolarMetrics</strong> — Énergie solaire photovoltaïque.</p>
+                    <p class="mt-2">Données publiques · Analyses indépendantes · Pas de liens commerciaux</p>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+
+        // Toggle detail cards
+        function toggleDetail(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.expand-icon');
+            const card = button.closest('.detail-card');
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('open');
+                card.classList.add('expanded');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('open');
+                card.classList.remove('expanded');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Technology Comparator — SolarMetrics</title>
+    <meta name="description" content="Interactive solar technology comparator: PERC vs TOPCon vs HJT, inverters (String, Micro, Hybrid), LFP batteries. Real-time calculations with 2025-2026 data.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/comparator">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/comparator">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparateur">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        input[type="range"]{accent-color:#F59E0B}
+        .slider-container{position:relative}
+        .slider-value{color:#F59E0B;font-weight:600;font-size:0.875rem}
+        .tech-card{transition:all 0.3s ease;border:1px solid rgba(71,85,105,0.5)}
+        .tech-card:hover{border-color:rgba(245,158,11,0.5);background:rgba(245,158,11,0.05)}
+        .recommended{border:2px solid #F59E0B;background:rgba(245,158,11,0.1)}
+        .row-header{background:rgba(15,23,42,0.5);font-weight:600}
+        .comparison-row{border-bottom:1px solid rgba(71,85,105,0.3)}
+        abbr[title] {
+            text-decoration: underline dotted rgba(6,182,212,0.5);
+            text-underline-offset: 3px;
+            cursor: help;
+            position: relative;
+        }
+        abbr[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid rgba(6,182,212,0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .calc-result{padding:1rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem}
+        .badge-dataset{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:0.5rem;color:#86efac;font-size:0.875rem;text-decoration:none;font-weight:500}
+        .badge-dataset:hover{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.5)}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Tools menu">
+                            Tools
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Residential</div>
+                                        <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWp</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Self-consumption</div>
+                                        <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industrial</div>
+                                        <div class="text-xs text-slate-400">Power plants · 100 kWp — 10+ MWp</div>
+                                    </div>
+                                </a>
+                                <a href="comparator.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparator</div>
+                                        <div class="text-xs text-slate-400">Technologies · Inverters · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/comparateur.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Self-consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
+                <a href="comparator.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">🔍 Comparator</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1596465267910-b2a7a52c0220?w=1600&q=80"
+                         alt="Comparison of solar technologies"
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-3 bg-amber-500/20 backdrop-blur-sm rounded-xl border border-amber-500/30">
+                                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-4xl font-bold text-white">Solar Technology Comparator</h1>
+                                <p class="text-slate-300">PERC, TOPCon, HJT • Inverters • Batteries — 2025-2026 Data</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Badge -->
+                <div class="flex flex-wrap items-center gap-4 mb-8">
+                    <a href="hypotheses.html" class="badge-dataset">
+                        📊 Dataset v2026-03
+                    </a>
+                    <p class="text-slate-400 text-sm">Interactive comparisons and real-time calculations based on 2025-2026 public data</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Comparateur Cellules PV -->
+        <section id="pv-cells" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Photovoltaic Cell Comparator</h2>
+                    <p class="text-slate-400">PERC vs <abbr title="Tunnel Oxide Passivated Contact">TOPCon</abbr> vs <abbr title="Heterojunction Technology">HJT</abbr></p>
+                </div>
+
+                <!-- Interactive Controls -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <div>
+                        <label class="block text-sm font-semibold mb-3">
+                            Solar Irradiance (kWh/m²/year)
+                            <span class="slider-value ml-2" id="solarVal">1200</span>
+                        </label>
+                        <input type="range" id="solarSlider" min="900" max="1900" value="1200" class="w-full">
+                        <div class="flex justify-between text-xs text-slate-500 mt-2">
+                            <span>900</span>
+                            <span>1900</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-3">
+                            System Size (kWp)
+                            <span class="slider-value ml-2" id="powerVal">9</span>
+                        </label>
+                        <input type="range" id="powerSlider" min="3" max="100" value="9" class="w-full">
+                        <div class="flex justify-between text-xs text-slate-500 mt-2">
+                            <span>3</span>
+                            <span>100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PV Comparison Table -->
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="row-header">
+                                <th class="text-left px-4 py-3">Criteria</th>
+                                <th class="text-center px-4 py-3">PERC</th>
+                                <th class="text-center px-4 py-3">TOPCon</th>
+                                <th class="text-center px-4 py-3">HJT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Cell Efficiency</td>
+                                <td class="text-center px-4 py-3">22-23%</td>
+                                <td class="text-center px-4 py-3 text-amber-400 font-semibold">24-25.5%</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">25-26.5%</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Module Cost (€/Wp)</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">0.08-0.10</td>
+                                <td class="text-center px-4 py-3">0.09-0.11</td>
+                                <td class="text-center px-4 py-3">0.12-0.15</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Market Share 2025</td>
+                                <td class="text-center px-4 py-3 text-red-400">~35% (declining)</td>
+                                <td class="text-center px-4 py-3 text-amber-400 font-semibold">~49%</td>
+                                <td class="text-center px-4 py-3 text-cyan-400">~10%</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300"><abbr title="Temperature coefficient">Temp. Coeff.</abbr></td>
+                                <td class="text-center px-4 py-3">-0.35%/°C</td>
+                                <td class="text-center px-4 py-3 text-amber-400">-0.30%/°C</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">-0.25%/°C</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Degradation/Year</td>
+                                <td class="text-center px-4 py-3">0.55%</td>
+                                <td class="text-center px-4 py-3 text-amber-400">0.40%</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">0.35%</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300"><abbr title="Bifacial generation">Bifaciality</abbr></td>
+                                <td class="text-center px-4 py-3">Limited</td>
+                                <td class="text-center px-4 py-3 text-amber-400">Good (10-20%)</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">Excellent (15-25%)</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300"><abbr title="Light Induced Degradation / Light and Elevated Temperature Induced Degradation">LID/LeTID</abbr></td>
+                                <td class="text-center px-4 py-3 text-red-400 font-semibold">Susceptible</td>
+                                <td class="text-center px-4 py-3 text-amber-400">Low</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">Very Low</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Warranty Period</td>
+                                <td class="text-center px-4 py-3">25 years</td>
+                                <td class="text-center px-4 py-3 text-amber-400 font-semibold">30 years</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">30 years</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Best Use Case</td>
+                                <td class="text-center px-4 py-3 text-sm">Tight budget<br/>Standard residential</td>
+                                <td class="text-center px-4 py-3 text-sm text-amber-400">Best value<br/>for money</td>
+                                <td class="text-center px-4 py-3 text-sm">Hot roofs<br/>Premium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Production Calculation -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="calc-result">
+                        <div class="text-xs uppercase tracking-wide text-slate-400 mb-2">Annual Production PERC</div>
+                        <div class="text-3xl font-bold text-white" id="prodPerc">—</div>
+                        <div class="text-xs text-slate-500 mt-1">kWh/year (estimate)</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="text-xs uppercase tracking-wide text-amber-500 mb-2">TOPCon Gain vs PERC</div>
+                        <div class="text-3xl font-bold text-amber-400" id="gainTopcon">—</div>
+                        <div class="text-xs text-slate-500 mt-1">kWh/year (+%)</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="text-xs uppercase tracking-wide text-green-500 mb-2">HJT Gain vs PERC</div>
+                        <div class="text-3xl font-bold text-green-400" id="gainHjt">—</div>
+                        <div class="text-xs text-slate-500 mt-1">kWh/year (+%)</div>
+                    </div>
+                </div>
+
+                <!-- Recommendation -->
+                <div id="pvRecommendation" class="p-6 rounded-2xl border-2 border-amber-500/50 bg-amber-500/10">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl mt-1">💡</span>
+                        <div>
+                            <h3 class="font-semibold mb-1">Personalized Recommendation</h3>
+                            <p id="recText" class="text-slate-300 text-sm">Adjust the parameters to see the recommendation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Comparateur Onduleurs -->
+        <section id="inverters" class="py-16 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Inverter Comparator</h2>
+                    <p class="text-slate-400">String vs Microinverters vs Hybrid</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="row-header">
+                                <th class="text-left px-4 py-3">Criteria</th>
+                                <th class="text-center px-4 py-3">String</th>
+                                <th class="text-center px-4 py-3">Microinverter</th>
+                                <th class="text-center px-4 py-3">Hybrid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Cost (€/kW)</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">35-44</td>
+                                <td class="text-center px-4 py-3 text-red-400">150-300 €/unit</td>
+                                <td class="text-center px-4 py-3 text-amber-400">86-97</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Efficiency</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">97-98%</td>
+                                <td class="text-center px-4 py-3">95-97%</td>
+                                <td class="text-center px-4 py-3 text-amber-400">96-97.5%</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Monitoring</td>
+                                <td class="text-center px-4 py-3">Central</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">Per panel</td>
+                                <td class="text-center px-4 py-3 text-amber-400">Central + battery</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Partial Shading</td>
+                                <td class="text-center px-4 py-3 text-red-400">Susceptible</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">Tolerant</td>
+                                <td class="text-center px-4 py-3 text-red-400">Susceptible</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Expansion</td>
+                                <td class="text-center px-4 py-3 text-red-400">Difficult</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">Easy</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">Easy</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Lifespan</td>
+                                <td class="text-center px-4 py-3">10-15 years</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">20-25 years</td>
+                                <td class="text-center px-4 py-3">10-15 years</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Best Use Case</td>
+                                <td class="text-center px-4 py-3 text-sm">No shading<br/>Large roof</td>
+                                <td class="text-center px-4 py-3 text-sm text-green-400">Shading<br/>Complex roof</td>
+                                <td class="text-center px-4 py-3 text-sm">With battery<br/>Storage</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-8 p-6 bg-blue-500/10 border border-blue-500/30 rounded-2xl">
+                    <h3 class="font-semibold mb-3 flex items-center gap-2">
+                        <span class="text-lg">ℹ️</span>
+                        Practical Tips
+                    </h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li>✓ <strong>String</strong>: Optimal for small roofs without shading, limited budget</li>
+                        <li>✓ <strong>Microinverters</strong>: Ideal for complex roofs, partial shading, or future expansions</li>
+                        <li>✓ <strong>Hybrid</strong>: Essential for systems with battery storage (self-consumption)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Comparateur Batteries -->
+        <section id="batteries" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Residential Battery Comparator</h2>
+                    <p class="text-slate-400"><abbr title="Lithium Iron Phosphate">LFP</abbr> Technologies 2025-2026</p>
+                </div>
+
+                <div class="overflow-x-auto mb-12">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="row-header">
+                                <th class="text-left px-4 py-3">Model</th>
+                                <th class="text-center px-4 py-3">Capacity</th>
+                                <th class="text-center px-4 py-3">Installed Cost</th>
+                                <th class="text-center px-4 py-3">Chemistry</th>
+                                <th class="text-center px-4 py-3">Cycles</th>
+                                <th class="text-center px-4 py-3">Warranty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Tesla Powerwall 3</td>
+                                <td class="text-center px-4 py-3">13.5 kWh</td>
+                                <td class="text-center px-4 py-3 text-amber-400 font-semibold">~1200 €/kWh</td>
+                                <td class="text-center px-4 py-3">LFP</td>
+                                <td class="text-center px-4 py-3 text-green-400">10000+</td>
+                                <td class="text-center px-4 py-3">10 years</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">BYD HVS/HVM</td>
+                                <td class="text-center px-4 py-3">5-22 kWh</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">~700 €/kWh</td>
+                                <td class="text-center px-4 py-3">LFP</td>
+                                <td class="text-center px-4 py-3">8000</td>
+                                <td class="text-center px-4 py-3">10 years</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Huawei LUNA</td>
+                                <td class="text-center px-4 py-3">5-30 kWh</td>
+                                <td class="text-center px-4 py-3 text-green-400">~750 €/kWh</td>
+                                <td class="text-center px-4 py-3">LFP</td>
+                                <td class="text-center px-4 py-3">6000</td>
+                                <td class="text-center px-4 py-3">10 years</td>
+                            </tr>
+                            <tr class="comparison-row">
+                                <td class="px-4 py-3 font-medium text-slate-300">Enphase IQ 5P</td>
+                                <td class="text-center px-4 py-3">5-60 kWh</td>
+                                <td class="text-center px-4 py-3">~900 €/kWh</td>
+                                <td class="text-center px-4 py-3">LFP</td>
+                                <td class="text-center px-4 py-3">7000</td>
+                                <td class="text-center px-4 py-3 text-green-400 font-semibold">15 years</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Battery Calculator -->
+                <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 mb-8">
+                    <h3 class="text-xl font-bold mb-6">Battery ROI Calculator</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-3">
+                                Battery Size (kWh)
+                                <span class="slider-value ml-2" id="batteryVal">9</span>
+                            </label>
+                            <input type="range" id="batterySlider" min="5" max="30" value="9" class="w-full">
+                            <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                <span>5</span>
+                                <span>30</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-3">
+                                Installed Price (€/kWh)
+                                <span class="slider-value ml-2" id="priceVal">800</span>
+                            </label>
+                            <input type="range" id="priceSlider" min="600" max="1200" value="800" class="w-full">
+                            <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                <span>600</span>
+                                <span>1200</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-3">
+                                Self-consumption Gain (kWh/year)
+                                <span class="slider-value ml-2" id="autoconsoVal">1500</span>
+                            </label>
+                            <input type="range" id="autoconsoSlider" min="500" max="3000" value="1500" step="100" class="w-full">
+                            <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                <span>500</span>
+                                <span>3000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-3">
+                            Electricity Price (€/kWh)
+                            <span class="slider-value ml-2" id="electricityVal">0.2516</span>
+                        </label>
+                        <input type="range" id="electricitySlider" min="0.15" max="0.40" value="0.2516" step="0.01" class="w-full">
+                        <div class="flex justify-between text-xs text-slate-500 mt-2">
+                            <span>0.15</span>
+                            <span>0.40</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Battery Results -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="calc-result">
+                        <div class="text-xs uppercase tracking-wide text-slate-400 mb-2">Total Battery Cost</div>
+                        <div class="text-3xl font-bold text-white" id="batteryTotalCost">—</div>
+                        <div class="text-xs text-slate-500 mt-1">euros inc. (estimate)</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="text-xs uppercase tracking-wide text-amber-500 mb-2">Annual Savings</div>
+                        <div class="text-3xl font-bold text-amber-400" id="batterySavings">—</div>
+                        <div class="text-xs text-slate-500 mt-1">euros/year</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="text-xs uppercase tracking-wide text-cyan-500 mb-2">Battery Payback</div>
+                        <div class="text-3xl font-bold text-cyan-400" id="batteryPayback">—</div>
+                        <div class="text-xs text-slate-500 mt-1">years</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Sources -->
+        <section id="sources" class="py-16 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold mb-8">Data Sources</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-amber-400">Reference Data</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>🔬 <strong>Fraunhofer ISE 2025</strong> — PV cell and module efficiencies</li>
+                            <li>📊 <strong>IRENA</strong> — Global solar costs and markets</li>
+                            <li>💹 <strong>BNEF</strong> — Component prices and forecasts</li>
+                            <li>⚡ <strong>PV Tech</strong> — Photovoltaic technology benchmarks</li>
+                            <li>🌍 <strong>Clean Energy Reviews</strong> — Independent analysis</li>
+                            <li>🇪🇺 <strong>European Solar Trade Body</strong> — European market data</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-cyan-400">Methodology</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>✓ Data updated regularly (v2026-03)</li>
+                            <li>✓ Calculations based on standard European conditions</li>
+                            <li>✓ Production formulas: G × P × Eff × (1 - Degr)</li>
+                            <li>✓ Assumptions visible in <a href="hypotheses.html" class="text-amber-400 hover:text-amber-300">hypotheses.html</a></li>
+                            <li>✓ All calculations real-time (no approximation)</li>
+                            <li>✓ Comparisons based on verifiable public data</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl">
+                    <h3 class="font-semibold mb-2 flex items-center gap-2">
+                        <span class="text-lg">⚠️</span>
+                        Disclaimer
+                    </h3>
+                    <p class="text-sm text-slate-300">
+                        These comparisons are indicative. Actual costs vary by region, supplier, installation, and site conditions.
+                        For personalized analysis, consult a certified installer.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/comparateur.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Information</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Publisher:</strong> Bernard Pugnet - Personal informational website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual Property:</strong> All content on this site (text, images, graphics) is the property of Bernard Pugnet or cited sources. Reproduction is prohibited without authorization.</p>
+                        <p><strong class="text-slate-400">Personal Data:</strong> This site collects no personal data. No tracking cookies are used.</p>
+                        <p><strong class="text-slate-400">Liability:</strong> Information on this site is provided for informational purposes and does not constitute investment advice.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+
+        // ===== PV CELLS CALCULATIONS =====
+        const solarSlider = document.getElementById('solarSlider');
+        const powerSlider = document.getElementById('powerSlider');
+        const solarVal = document.getElementById('solarVal');
+        const powerVal = document.getElementById('powerVal');
+
+        function updatePVCalcs() {
+            const solar = parseFloat(solarSlider.value);
+            const power = parseFloat(powerSlider.value);
+
+            solarVal.textContent = solar;
+            powerVal.textContent = power;
+
+            // Production calculation: kWh/an = Irradiance(kWh/m²) × Power(kWc) × Efficiency × (1-Loss)
+            // Assuming typical system loss ~15%, perf ratio ~85%
+            const baseProduction = solar * power * 0.85;
+
+            // Individual tech productions (efficiency factor):
+            // PERC: baseline (22.5% avg)
+            // TOPCon: +10% efficiency gain
+            // HJT: +18% efficiency gain
+            const prodPerc = baseProduction;
+            const prodTopcon = baseProduction * 1.10;
+            const prodHjt = baseProduction * 1.18;
+
+            document.getElementById('prodPerc').textContent = Math.round(prodPerc).toLocaleString('en-US');
+
+            const gainTopconVal = prodTopcon - prodPerc;
+            const gainTopconPercent = ((gainTopconVal / prodPerc) * 100).toFixed(1);
+            document.getElementById('gainTopcon').textContent = Math.round(gainTopconVal) + ' (+' + gainTopconPercent + '%)';
+
+            const gainHjtVal = prodHjt - prodPerc;
+            const gainHjtPercent = ((gainHjtVal / prodPerc) * 100).toFixed(1);
+            document.getElementById('gainHjt').textContent = Math.round(gainHjtVal) + ' (+' + gainHjtPercent + '%)';
+
+            // Recommendation logic
+            let recText = '';
+            let recColor = 'amber';
+
+            if (solar < 1100) {
+                recText = '🎯 <strong>Low Irradiance</strong>: PERC remains competitive. Good budget option for low-sun climates.';
+                recColor = 'blue';
+            } else if (solar < 1300) {
+                recText = '🎯 <strong>Moderate Irradiance (1100-1300)</strong>: TOPCon offers best ROI. Optimal price-performance balance for standard European residential.';
+                recColor = 'amber';
+            } else {
+                recText = '🎯 <strong>High Irradiance (> 1300)</strong>: HJT excels long-term. Premium but best annual degradation and bifaciality for South/sloped roofs.';
+                recColor = 'green';
+            }
+
+            const recDiv = document.getElementById('pvRecommendation');
+            if (recColor === 'amber') {
+                recDiv.className = 'p-6 rounded-2xl border-2 border-amber-500/50 bg-amber-500/10';
+            } else if (recColor === 'green') {
+                recDiv.className = 'p-6 rounded-2xl border-2 border-green-500/50 bg-green-500/10';
+            } else {
+                recDiv.className = 'p-6 rounded-2xl border-2 border-blue-500/50 bg-blue-500/10';
+            }
+            document.getElementById('recText').innerHTML = recText;
+        }
+
+        solarSlider.addEventListener('input', updatePVCalcs);
+        powerSlider.addEventListener('input', updatePVCalcs);
+        updatePVCalcs();
+
+        // ===== BATTERY CALCULATIONS =====
+        const batterySlider = document.getElementById('batterySlider');
+        const priceSlider = document.getElementById('priceSlider');
+        const autoconsoSlider = document.getElementById('autoconsoSlider');
+        const electricitySlider = document.getElementById('electricitySlider');
+
+        const batteryVal = document.getElementById('batteryVal');
+        const priceVal = document.getElementById('priceVal');
+        const autoconsoVal = document.getElementById('autoconsoVal');
+        const electricityVal = document.getElementById('electricityVal');
+
+        function updateBatteryCalcs() {
+            const batterySize = parseFloat(batterySlider.value);
+            const pricePerKwh = parseFloat(priceSlider.value);
+            const autoconsoGain = parseFloat(autoconsoSlider.value);
+            const electricityPrice = parseFloat(electricitySlider.value);
+
+            batteryVal.textContent = batterySize;
+            priceVal.textContent = pricePerKwh;
+            autoconsoVal.textContent = autoconsoGain;
+            electricityVal.textContent = electricityPrice.toFixed(4);
+
+            // Total cost (with 20% installation overhead)
+            const totalCost = batterySize * pricePerKwh * 1.20;
+
+            // Annual savings (electricity avoided)
+            const annualSavings = autoconsoGain * electricityPrice;
+
+            // Payback period
+            const paybackYears = totalCost / annualSavings;
+
+            document.getElementById('batteryTotalCost').textContent = Math.round(totalCost).toLocaleString('en-US') + ' €';
+            document.getElementById('batterySavings').textContent = Math.round(annualSavings).toLocaleString('en-US') + ' €';
+            document.getElementById('batteryPayback').textContent = paybackYears.toFixed(1) + ' years';
+        }
+
+        batterySlider.addEventListener('input', updateBatteryCalcs);
+        priceSlider.addEventListener('input', updateBatteryCalcs);
+        autoconsoSlider.addEventListener('input', updateBatteryCalcs);
+        electricitySlider.addEventListener('input', updateBatteryCalcs);
+        updateBatteryCalcs();
+    </script>
+</body>
+</html>

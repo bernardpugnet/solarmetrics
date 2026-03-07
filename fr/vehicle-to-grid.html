@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle-to-Grid (V2G) — L'Avenir du Stockage Mobile</title>
+    <meta name="description" content="Vehicle-to-Grid : comment votre voiture électrique peut devenir une batterie domestique et participer à l'équilibrage du réseau électrique.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .flow-diagram{display:flex;align-items:center;gap:1rem;margin:2rem 0;padding:2rem;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.2);border-radius:1rem}
+        .flow-box{padding:1.5rem;background:rgba(15,23,42,0.6);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem;flex:1;text-center;font-weight:600}
+        .flow-arrow{font-size:2rem;color:#F59E0B;flex-shrink:0}
+        .tech-card{padding:1.5rem;background:rgba(71,85,105,0.3);border:1px solid rgba(245,158,11,0.2);border-radius:0.75rem;transition:all 0.3s ease}
+        .tech-card:hover{border-color:rgba(245,158,11,0.5);background:rgba(245,158,11,0.08)}
+        .highlight-box{padding:1.5rem;background:rgba(34,197,94,0.08);border-left:4px solid #22c55e;border-radius:0.5rem;margin:1.5rem 0}
+        abbr[title]{text-decoration:underline dotted rgba(6,182,212,0.5);text-underline-offset:3px;cursor:help}
+        section{margin-bottom:4rem}
+        h2{font-size:2rem;font-weight:700;margin-bottom:1.5rem;line-height:1.2}
+        h3{font-size:1.5rem;font-weight:600;margin-bottom:1rem}
+        p{line-height:1.7;margin-bottom:1rem;color:#e2e8f0}
+        ul{margin-left:1.5rem;margin-bottom:1.5rem}
+        li{margin-bottom:0.75rem;line-height:1.6}
+        strong{font-weight:600;color:#f1f5f9}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Dimensionnement PPE</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="menuBtn" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-800 transition-colors" aria-label="Menu mobile" aria-expanded="false">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden lg:hidden py-4 space-y-2 border-t border-slate-800">
+                <a href="index.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Outils Résidentiel</a>
+                <a href="outils-autoconsommation.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Outils Autoconsommation</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Outils Industriel</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+
+        <!-- Hero Section -->
+        <div class="mb-12">
+            <h1 class="text-5xl font-bold mb-4 leading-tight">
+                <span class="gradient-text">Vehicle-to-Grid (V2G)</span>
+                <br/>L'Avenir du Stockage Mobile
+            </h1>
+            <p class="text-xl text-slate-400 leading-relaxed">
+                Comment votre voiture électrique peut devenir une batterie domestique et participer activement à l'équilibrage du réseau électrique. Découvrez comment combiner solaire et V2G pour maximiser l'autoconsommation et générer des revenus.
+            </p>
+        </div>
+
+        <!-- Section 1: Qu'est-ce que le V2G ? -->
+        <section id="definition">
+            <h2>Qu'est-ce que le V2G ?</h2>
+            <p>
+                Le <strong>Vehicle-to-Grid (V2G)</strong> est la technologie qui permet à la batterie d'une voiture électrique de restituer de l'électricité au réseau ou au bâtiment. Contrairement à la charge simple, le V2G est <strong>bidirectionnel</strong> : l'électricité peut circuler dans les deux sens.
+            </p>
+
+            <h3>Les trois variantes technologiques</h3>
+            <ul>
+                <li>
+                    <strong>V2G (Vehicle-to-Grid)</strong> : La voiture restitue l'électricité au réseau public via le gestionnaire de réseau. Permet de stabiliser le réseau et d'accéder aux marchés d'électricité. Réglementation complexe, infrastructure centralisée.
+                </li>
+                <li>
+                    <strong>V2H (Vehicle-to-Home)</strong> : La voiture alimente exclusivement votre maison. Décharge de la batterie vers onduleur bidirectionnel domestique. Pas de connexion réseau. Plus simple techniquement et réglementairement.
+                </li>
+                <li>
+                    <strong>V2L (Vehicle-to-Load)</strong> : La voiture alimente des appareils portables via une prise spécialisée (DC ou AC). Puissance limitée (1-11 kW). Utile pour camping, outillage, événements.
+                </li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Point clé :</strong> V2G nécessite une infrastructure réseau dédiée (Wallbox V2G, compteur bidirectionnel, contrat d'agrégation). V2H est plus accessible pour l'autoconsommation résidentielle. V2L est déjà disponible sur plusieurs modèles 2024-2025.
+            </div>
+        </section>
+
+        <!-- Section 2: Synergies V2G + Solaire -->
+        <section id="synergies">
+            <h2>Synergies V2G + Solaire</h2>
+            <p>
+                L'association d'une installation solaire et du V2G (ou V2H) crée une <strong>boucle vertueuse d'autoconsommation</strong> en décalant l'usage dans le temps.
+            </p>
+
+            <h3>Scénario type d'une journée</h3>
+            <div class="flow-diagram">
+                <div class="flow-box">
+                    <div class="text-sm text-slate-400 mb-2">Midi</div>
+                    <div>Pic solaire : +60% production</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">
+                    <div class="text-sm text-slate-400 mb-2">13h-15h</div>
+                    <div>Charge rapide VE</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">
+                    <div class="text-sm text-slate-400 mb-2">18h-22h</div>
+                    <div>Décharge V2H<br/>vers maison</div>
+                </div>
+            </div>
+
+            <h3>Impact sur l'autoconsommation</h3>
+            <ul>
+                <li><strong>Sans V2G/V2H :</strong> Taux d'autoconsommation solaire = 30-40% (surplus versé au réseau). Reste du temps : électricité du réseau.</li>
+                <li><strong>Avec V2G/V2H :</strong> Taux d'autoconsommation = 70-90% (batterie VE stocke le surplus de jour, restitue la nuit). Réduction drastique de l'électricité achetée à la pointe.</li>
+                <li><strong>Gain économique :</strong> Éviter l'achat d'électricité à 0,25-0,30 €/kWh la nuit = économies importantes sur la facture annuelle.</li>
+            </ul>
+
+            <h3>Diagramme de flux simplifié</h3>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(245,158,11,0.2);border-radius:0.75rem;padding:2rem;margin:1.5rem 0">
+                <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px">
+                    <!-- Sun -->
+                    <circle cx="100" cy="50" r="40" fill="#F59E0B" opacity="0.8"/>
+                    <text x="100" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">Soleil</text>
+
+                    <!-- Solar Panels -->
+                    <rect x="70" y="120" width="60" height="40" fill="none" stroke="#F59E0B" stroke-width="2" rx="4"/>
+                    <text x="100" y="150" text-anchor="middle" fill="#e2e8f0" font-size="12">Panneaux</text>
+
+                    <!-- House -->
+                    <rect x="200" y="100" width="80" height="80" fill="none" stroke="#e2e8f0" stroke-width="2" rx="4"/>
+                    <text x="240" y="150" text-anchor="middle" fill="#e2e8f0" font-size="12">Maison</text>
+
+                    <!-- Car Battery -->
+                    <rect x="370" y="100" width="80" height="80" fill="none" stroke="#22c55e" stroke-width="2" rx="4"/>
+                    <text x="410" y="145" text-anchor="middle" fill="#e2e8f0" font-size="12">Batterie</text>
+                    <text x="410" y="160" text-anchor="middle" fill="#e2e8f0" font-size="12">VE</text>
+
+                    <!-- Grid -->
+                    <rect x="520" y="100" width="60" height="80" fill="none" stroke="#64748b" stroke-width="2" rx="4"/>
+                    <text x="550" y="150" text-anchor="middle" fill="#e2e8f0" font-size="12">Réseau</text>
+
+                    <!-- Arrows: Day (Charging) -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#F59E0B"/>
+                        </marker>
+                        <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#22c55e"/>
+                        </marker>
+                    </defs>
+                    <path d="M 130 140 L 200 140" stroke="#F59E0B" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <text x="165" y="130" fill="#F59E0B" font-size="11" font-weight="bold">Jour</text>
+
+                    <path d="M 280 140 L 370 140" stroke="#F59E0B" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+                    <!-- Arrow: Night (Discharging) -->
+                    <path d="M 410 100 L 410 80 L 240 80 L 240 100" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowhead-green)" fill="none"/>
+                    <text x="325" y="70" fill="#22c55e" font-size="11" font-weight="bold">V2H Nuit</text>
+
+                    <!-- Excess to Grid -->
+                    <path d="M 450 140 L 520 140" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+                    <text x="485" y="130" fill="#94a3b8" font-size="10">Surplus</text>
+                </svg>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Règle d'or :</strong> Charger le VE quand le soleil brille (midi-15h) et décharger quand la demande est forte (soir 18h-22h). Le V2H/V2G transforme la batterie du VE en batterie domestique virtuelle.
+            </div>
+        </section>
+
+        <!-- Section 3: État du marché -->
+        <section id="marche">
+            <h2>État du Marché V2G en 2025-2026</h2>
+            <p>
+                L'infrastructure V2G se déploie progressivement en France et en Europe. Voici les standards, véhicules et pilotes à connaître.
+            </p>
+
+            <h3>Standards technologiques bidirectionnels</h3>
+            <ul>
+                <li>
+                    <strong>CHAdeMO</strong> : Standard japonais en charge rapide DC. <strong>Bidirectionnel depuis 2010</strong>. Utilisé par Nissan Leaf (2012+), Mitsubishi i-MiEV, Subaru e-Boxer. Peu de stations V2G en France mais historiquement le plus mature.
+                </li>
+                <li>
+                    <strong>CCS / ISO 15118-20</strong> : Standard européen combinant charge AC et DC. <strong>Bidirectionnalité en déploiement 2025-2026</strong>. Nouveau standard privilégié pour V2G. Utilisé par Hyundai Ioniq 5, Kia EV6, VW ID.4/ID.5 (avec firmware update), BMW iX xDrive50, Mercedes EQE.
+                </li>
+                <li>
+                    <strong>GB/T</strong> : Standard chinois (Chine, Hong Kong). Non compatible avec infrastructure européenne.
+                </li>
+            </ul>
+
+            <h3>Véhicules V2G/V2H compatibles (2024-2026)</h3>
+            <div class="space-y-2">
+                <div class="tech-card">
+                    <div><strong>✓ Nissan Leaf</strong> (Gen 2+) — CHAdeMO, V2G éprouvé depuis 2015, batterie 40-62 kWh.</div>
+                </div>
+                <div class="tech-card">
+                    <div><strong>✓ Hyundai Ioniq 5</strong> — CCS, V2L de série (11 kW), firmware V2G en cours (2025-2026).</div>
+                </div>
+                <div class="tech-card">
+                    <div><strong>✓ Kia EV6</strong> — CCS, V2L 11 kW, V2G compatible avec mise à jour OTA (2025).</div>
+                </div>
+                <div class="tech-card">
+                    <div><strong>✓ Volkswagen ID.x (ID.4, ID.5, ID.Buzz)</strong> — CCS, V2H/V2G avec bidirectional charging module (firmware update requis, partenariat VW-Elli).</div>
+                </div>
+                <div class="tech-card">
+                    <div><strong>✓ BMW i4 eDrive40</strong> — CCS, V2G compatible (partenariat BMW-Wallbox-Enel).</div>
+                </div>
+                <div class="tech-card">
+                    <div><strong>⚠ Tesla Model 3/Y</strong> — Connecteur propriétaire NACS/Super Charger. V2G théoriquement possible mais pas encore activé en France.</div>
+                </div>
+            </div>
+
+            <h3>Pilotes et services V2G en France</h3>
+            <ul>
+                <li>
+                    <strong>Dreev (partenariat Enedis)</strong> : Plateforme d'agrégation V2G. Teste avec Nissan Leaf, Hyundai Ioniq 5 en Île-de-France et Provence. Compensation estimée 200-300 €/an par participant.
+                </li>
+                <li>
+                    <strong>Nuvve</strong> : Opérateur V2G américain, pilote en France avec utilitaires électriques. Projets collectivités territoriales.
+                </li>
+                <li>
+                    <strong>Programme ADVENIR V2G</strong> : Subventions pour déploiement Wallbox bidirectionnels (jusqu'à 40% d'aide). Objectif 1 000 points V2G en France d'ici 2025.
+                </li>
+                <li>
+                    <strong>Partnerships Énergie :</strong> Volswagen-Elli (Allemagne), Hyundai-E.ON (Europe du Nord), Nissan-Enel (Italie).
+                </li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Bilan marché :</strong> CHAdeMO mature mais mourant. CCS/ISO 15118-20 est l'avenir. V2G reste limité en France (< 500 points opérationnels en 2025), mais accélère. V2H plus accessible via Wallbox bidirectionnels compatibles CCS.
+            </div>
+        </section>
+
+        <!-- Section 4: Modèle économique -->
+        <section id="economie">
+            <h2>Modèle Économique V2G</h2>
+            <p>
+                Le V2G génère des revenus via trois mécanismes complémentaires.
+            </p>
+
+            <h3>Trois sources de revenus</h3>
+            <ul>
+                <li>
+                    <strong>1. Agrégation - Effacement et arbitrage prix :</strong> L'agrégateur V2G propose votre batterie pour équilibrer le réseau ou arbitrer les prix spot.
+                    <ul style="margin-top:0.5rem;margin-left:1.5rem">
+                        <li>Effacement diffus (réduction de consommation) : 20-40 €/MW/h en France</li>
+                        <li>Arbitrage prix spot (recharge basse, décharge haute) : 30-60 €/MW/h selon EPEX Spot</li>
+                        <li>Réserves (FCR/aFRR/mFRR) : 5-15 €/MWh</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>2. Autoconsommation solaire optimisée :</strong> Éviter l'achat d'électricité à 0,25-0,30 €/kWh. Une batterie VE de 60 kWh utilisée pour V2H pendant 200 jours/an = 3 000-3 600 €/an d'électricité évitée.
+                </li>
+                <li>
+                    <strong>3. Services auxiliaires réseau :</strong> Stabilisation tension, compensation réactif. Rémunération faible actuellement (~5 €/MWh) mais croissante.
+                </li>
+            </ul>
+
+            <h3>Estimation annuelle réaliste</h3>
+            <ul>
+                <li><strong>V2G seul (agrégation marché) :</strong> 200-500 €/an pour un VE 60 kWh utilisé 80% du temps. Dépend fortement de l'opérateur et des prix spot.</li>
+                <li><strong>V2H + solaire (autoconsommation) :</strong> 1 500-3 000 €/an d'électricité évitée sur facture + 100-200 € d'agrégation complémentaire.</li>
+                <li><strong>Cumul V2G + V2H + solaire :</strong> Gain maximum 2 000-4 000 €/an selon profil de consommation, ensoleillement et puissance solaire installée.</li>
+            </ul>
+
+            <h3>Coûts d'infrastructure</h3>
+            <ul>
+                <li><strong>Wallbox V2G bidirectionnelle :</strong> 3 000-5 000 € (installation incluse). Avec ADVENIR : 1 800-3 000 € après aide.</li>
+                <li><strong>Onduleur bidirectionnel (V2H maison) :</strong> 4 000-6 000 € supplémentaires si besoin isolation réseau.</li>
+                <li><strong>Compteur bidirectionnel :</strong> Fourni par distributeur (Enedis), coût intégré dans tarif accès réseau.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Payback :</strong> Pour V2H + solaire : 4-7 ans (batterie VE + Wallbox bidirectionnelle = ~10 k€, économies annuelles 1.5-2 k€). Rentabilité dépend de la durée de possession du VE et stabilité des prix électricité.
+            </div>
+        </section>
+
+        <!-- Section 5: Défis et limitations -->
+        <section id="defis">
+            <h2>Défis et Limitations</h2>
+            <p>
+                Le V2G promet beaucoup mais fait face à obstacles techniques, réglementaires et de durabilité.
+            </p>
+
+            <h3>Dégradation batterie VE</h3>
+            <p>
+                <strong>Débat majeur :</strong> Le V2G accélère-t-il l'usure de la batterie du VE ?
+            </p>
+            <ul>
+                <li><strong>Arguments pour (bonne nouvelle) :</strong> Cycles de charge/décharge V2G généralement superficiels (10-30% de la capacité). Études IRENA (2020) et Nissan montrent que les cycles superficiels = impact limité. Une batterie supportant 1 000 cycles complets peut supporter 5 000-10 000 cycles à 20%.</li>
+                <li><strong>Arguments contre (risque) :</strong> Chaque cycle réduit légèrement la capacité. À long terme (8-10 ans), perte 10-20% possible si V2G intensif (> 100 cycles/an à 50% profondeur). Température batterie en décharge rapide = stress thermique supplémentaire.</li>
+                <li><strong>Verdict :</strong> V2G en V2H (décharge lente, 1-2 kW) = impact négligeable. V2G réseau (décharge rapide, 10+ kW) = impact mesurable mais faible avec gestion thermique appropriée.</li>
+            </ul>
+
+            <h3>Cadre réglementaire fragmenté</h3>
+            <ul>
+                <li><strong>France :</strong> Loi AGEC (2021) reconnaît V2G/V2H mais cadrages complexes. Décrets V2G en cours de finalisation. Comptage bidirectionnel = obstacle administratif.</li>
+                <li><strong>Europe :</strong> Directive Clean Energy Package (2019) autorise V2G mais chaque pays implémente différemment. Allemagne/Pays-Bas en avance, France/Italie plus lentes.</li>
+                <li><strong>Normes de sécurité :</strong> ISO 15118-20, IEC 61851-24 en finalisation. Risques : court-circuit, surcharge réseau, disconnexion involontaire.</li>
+            </ul>
+
+            <h3>Infrastructure réseau insuffisante</h3>
+            <ul>
+                <li>Nombre de Wallbox V2G/V2H limité (< 1 000 en France, ~10 000 en Europe).</li>
+                <li>Coût d'installation élevé et propriétaires immobiliers souvent réticents (condos, locations).</li>
+                <li>Besoin de comptage bidirectionnel = demande à distributeur (Enedis), délai 2-4 mois.</li>
+            </ul>
+
+            <h3>Garantie constructeur</h3>
+            <ul>
+                <li>Nissan : Couvre dégradation batterie <5% par an avec V2G via CHAdeMO. Hyundai/Kia : Non-couverture explicite V2G si dégradation prématurée. Tesla/BMW : Garantie ne mentionne pas V2G.</li>
+                <li>Risque : Si batterie défaillante due à V2G, fabricant peut refuser remplacement.</li>
+            </ul>
+
+            <h3>Modèle économique précoce</h3>
+            <ul>
+                <li>Revenus V2G volatiles (dépendent prix spot EPEX). Mauvaise prédictibilité à long terme.</li>
+                <li>Coûts fixes élevés (Wallbox, compteur bidirectionnel) vs. revenus annuels incertains.</li>
+                <li>Peu de contrats long-terme entre agrégateurs et propriétaires VE.</li>
+            </ul>
+        </section>
+
+        <!-- Section 6: Recommandations et sources -->
+        <section id="sources">
+            <h2>Pour Aller Plus Loin</h2>
+
+            <h3>Prise de décision</h3>
+            <ul>
+                <li><strong>V2H pour autoconsommation solaire</strong> : Recommandé si vous avez une installation solaire 6+ kWc, un VE compatible CCS et vous restez 8+ ans dans le logement. Payback 4-7 ans.</li>
+                <li><strong>V2G pour agrégation marché</strong> : Attendez maturité (2026-2027). Pilotez avec Dreev si basé Île-de-France ou Provence. Revenus < 500 €/an actuellement.</li>
+                <li><strong>V2L en attendant</strong> : Si votre VE supporte V2L (Ioniq 5, EV6), vous pouvez alimenter appareils portables sans infrastructure coûteuse. Pas de revenu mais utilité pratique.</li>
+            </ul>
+
+            <h3>Ressources clés</h3>
+            <ul>
+                <li><strong>IRENA (2019)</strong> : "Technology Roadmap - Electric Vehicles and the Power Grid"</li>
+                <li><strong>IEA (2021)</strong> : "Global EV Outlook - Vehicle-to-Grid (V2G) deployment in selected markets"</li>
+                <li><strong>RTE (2024)</strong> : Études sur flexibilité réseau et potentiel V2G en France</li>
+                <li><strong>Dreev</strong> : Plateforme d'agrégation V2G opérationnelle en France - dreev.com</li>
+                <li><strong>ADVENIR</strong> : Programme de subventions V2G/bornes rapides - advenir.mobi</li>
+                <li><strong>Commission EU</strong> : Clean Energy Package directives 2019/944 et 2019/941</li>
+                <li><strong>Enedis</strong> : Documentation comptage bidirectionnel et services auxiliaires réseau</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Conclusion :</strong> V2G est l'avenir du stockage distribué et de l'équilibrage réseau. Actuellement en phase pilote en France. V2H + solaire offre la meilleure rentabilité court-moyen terme (4-7 ans). V2G pur restera limité tant que revenus spot restent volatiles et infrastructure fragmentée.
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="p-1.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <span class="font-bold text-white">SolarMetrics</span>
+                    </div>
+                    <p class="text-slate-400 text-sm">Intelligence solaire et réseaux électriques pour la transition énergétique.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Navigation</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="index.html" class="hover:text-amber-500 transition-colors">Accueil</a></li>
+                        <li><a href="economie.html" class="hover:text-amber-500 transition-colors">Économie</a></li>
+                        <li><a href="marches.html" class="hover:text-amber-500 transition-colors">Marchés</a></li>
+                        <li><a href="technologies.html" class="hover:text-amber-500 transition-colors">Technologies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Outils</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="outils-residentiel.html" class="hover:text-amber-500 transition-colors">Résidentiel</a></li>
+                        <li><a href="outils-autoconsommation.html" class="hover:text-amber-500 transition-colors">Autoconsommation</a></li>
+                        <li><a href="outils-industriel.html" class="hover:text-amber-500 transition-colors">Industriel</a></li>
+                        <li><a href="comparateur.html" class="hover:text-amber-500 transition-colors">Comparateur</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Ressources</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="analyses/" class="hover:text-amber-500 transition-colors">Analyses</a></li>
+                        <li><a href="vehicle-to-grid.html" class="hover:text-amber-500 transition-colors">Vehicle-to-Grid</a></li>
+                        <li><a href="centrales-virtuelles.html" class="hover:text-amber-500 transition-colors">Centrales Virtuelles</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+</body>
+</html>

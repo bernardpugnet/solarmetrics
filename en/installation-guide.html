@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residential Solar Installation Guide — France 2026</title>
+    <meta name="description" content="Complete guide to installing solar panels in France: steps, administrative procedures, financial aid, installer selection and interactive checklist.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/installation-guide">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/installation-guide">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/guide-installation">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .stepper-step{transition:all 0.3s ease}
+        .stepper-step.active .step-indicator{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);color:white}
+        .stepper-step.completed .step-indicator{background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.5);color:#86efac}
+        .step-content{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+        .step-content.open{max-height:1000px}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+        .faq-answer.open{max-height:800px}
+        .checklist-item{transition:all 0.2s ease}
+        .checklist-item.checked{opacity:0.6}
+        .checklist-item input[type="checkbox"]{accent-color:#F59E0B}
+        .timeline-connector{height:3rem;background:linear-gradient(to bottom,rgba(245,158,11,0.3),rgba(245,158,11,0.1))}
+        .badge-dataset{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:0.5rem;color:#86efac;font-size:0.875rem;text-decoration:none;font-weight:500}
+        .badge-dataset:hover{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.5)}
+        .price-box{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem;padding:1.25rem}
+        .aid-card{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);border-radius:0.75rem;padding:1.25rem}
+        .step-indicator{width:2.5rem;height:2.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;border:2px solid rgba(71,85,105,0.5);transition:all 0.3s ease}
+        abbr[title]{text-decoration:underline dotted rgba(6,182,212,0.5);text-underline-offset:3px;cursor:help}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Tools menu">
+                            Tools
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Residential</div>
+                                        <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Self-Consumption</div>
+                                        <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industrial</div>
+                                        <div class="text-xs text-slate-400">Power plants · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparison Tool</div>
+                                        <div class="text-xs text-slate-400">Technologies · Inverters · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/guide-installation.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Self-Consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparison Tool</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-16 sm:py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <div class="inline-block mb-4">
+                        <a href="hypotheses.html" class="badge-dataset">
+                            <span>📊 Dataset v2026-03</span>
+                        </a>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Residential Solar Installation Guide</h1>
+                    <p class="text-xl text-slate-300 mb-6">The 7 steps to install solar panels at your home in France — 2026</p>
+                    <p class="text-slate-400">From feasibility study to commissioning, discover the complete process with financial aid, administrative procedures, and interactive checklist.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The 7 Steps Timeline Section -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-white">The 7 steps of your solar project</h2>
+
+                <div class="space-y-4">
+                    <!-- Step 1 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">1</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Feasibility Study</h3>
+                                <p class="text-sm text-slate-400">1-2 weeks • Analyze your roof and consumption</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Key points to verify:</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Roof orientation & inclination:</strong> south or south-east preferred (30-35° optimal)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Shading:</strong> verify absence of shadows (trees, adjacent buildings)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Available surface:</strong> ~8 m² per kWc (standard 400W panels)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Annual consumption:</strong> collect your last 3-12 EDF/Enedis meter readings (in kWh)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Local Urban Planning (PLU):</strong> check with your town hall (road distance, etc.)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>French Building Heritage Authority (ABF):</strong> if in protected sector/heritage area</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Co-ownership:</strong> syndic/co-owner approval required</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                                    <p class="text-sm text-cyan-300"><strong>Recommended tool:</strong> <a href="tools-residential.html" class="underline hover:no-underline">Self-consumption simulator</a> to estimate your production</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">2</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Configuration Selection</h3>
+                                <p class="text-sm text-slate-400">1 week • Power, self-consumption, battery</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Power recommendations:</h4>
+                                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">3 kWc</p>
+                                            <p class="text-sm text-slate-300">Studio, couple, consumption &lt; 3,500 kWh/year</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">6 kWc</p>
+                                            <p class="text-sm text-slate-300">Family, house, 3,500-7,500 kWh/year</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">9 kWc</p>
+                                            <p class="text-sm text-slate-300">Large house, electric vehicle, &gt; 7,500 kWh/year</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Installation type:</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Self-consumption with surplus:</strong> (RECOMMENDED) you consume directly, surplus fed to EDF grid. 2026 purchase price: €0.04/kWh (≤9 kWc)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Total sale:</strong> 100% fed to grid (20-year contract). Simpler but lower ROI.</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-blue-400">🔋</span>
+                                            <span><strong>Battery (expensive):</strong> LFP 10 kWh = €6,000-8,000 + installation. ROI &gt; 12-15 years. Rarely profitable before 2027.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                                    <p class="text-sm text-cyan-300"><strong>Tool:</strong> <a href="tools-industrial.html" class="underline hover:no-underline">Technology comparison</a> to explore panels & inverters</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">3</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Get Quotes</h3>
+                                <p class="text-sm text-slate-400">2-4 weeks • Compare 3+ RGE installers</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Steps to request quotes:</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">1.</span>
+                                            <span>Verify that the installer holds valid <strong>RGE QualiPV certification</strong> on <a href="https://www.qualit-enr.org" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">qualit-enr.org</a></span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">2.</span>
+                                            <span>Request a <strong>detailed quote</strong> with: power in kWc, panel & inverter brands, roof type, warranties, after-sales service</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">3.</span>
+                                            <span>Compare at least 3 quotes (timelines, prices, after-sales service, brands)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">4.</span>
+                                            <span>Verify that <strong>panel warranties</strong> cover 25-30 years &amp; inverter 10-15 years</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Indicative 2026 prices (turnkey):</h4>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">3 kWc</p>
+                                            <p class="text-sm text-slate-300">€6,000 - €7,500</p>
+                                            <p class="text-xs text-slate-400">~€2,000/kWc</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">6 kWc</p>
+                                            <p class="text-sm text-slate-300">€11,000 - €13,500</p>
+                                            <p class="text-xs text-slate-400">~€1,900/kWc</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">9 kWc</p>
+                                            <p class="text-sm text-slate-300">€16,500 - €20,000</p>
+                                            <p class="text-xs text-slate-400">~€1,850/kWc</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">4</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Explore Financial Aid</h3>
+                                <p class="text-sm text-slate-400">2-3 weeks • MaPrimeRénov', subsidy programs</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Main grants in France 2026:</h4>
+                                    <div class="space-y-3">
+                                        <div class="aid-card">
+                                            <h5 class="font-semibold text-emerald-400 mb-2">MaPrimeRénov' (French Renovation Grant)</h5>
+                                            <p class="text-sm text-slate-300 mb-2">Government aid based on income: up to €4,000 for solar panels</p>
+                                            <p class="text-xs text-slate-400">Apply at: <a href="https://www.maprimerenov.gouv.fr" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">maprimerenov.gouv.fr</a></p>
+                                        </div>
+                                        <div class="aid-card">
+                                            <h5 class="font-semibold text-emerald-400 mb-2">EDF OA (Obligation d'Achat)</h5>
+                                            <p class="text-sm text-slate-300 mb-2">Guaranteed purchase of self-consumption surplus for 20 years (€0.04/kWh in 2026)</p>
+                                            <p class="text-xs text-slate-400">Contract signed by your installer</p>
+                                        </div>
+                                        <div class="aid-card">
+                                            <h5 class="font-semibold text-emerald-400 mb-2">Regional/Local Subsidies</h5>
+                                            <p class="text-sm text-slate-300 mb-2">Many regions offer additional subsidies (variable by department). Check with your regional council.</p>
+                                            <p class="text-xs text-slate-400">Average boost: €500-1,500</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                                    <p class="text-sm text-amber-300"><strong>Important:</strong> Most subsidies require the installer to hold RGE certification. Always verify eligibility before signing.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">5</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Administrative Procedures</h3>
+                                <p class="text-sm text-slate-400">3-8 weeks • Building permit, grid connection declaration</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Required administrative steps:</h4>
+                                    <ul class="space-y-3 text-slate-300">
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 font-bold">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Building Permit (≤3 kWc = Declaration)</p>
+                                                <p class="text-sm text-slate-400">For installations &lt;3 kWc: file "Déclaration préalable de travaux" with town hall (3 weeks processing)</p>
+                                                <p class="text-sm text-slate-400">For ≥3 kWc: "Permis de construire" (8+ weeks processing)</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 font-bold">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Grid Connection (SOREN/Enedis)</p>
+                                                <p class="text-sm text-slate-400">Your installer files for connection with Enedis (network operator). Approval: 4-8 weeks. No connection cost for residential ≤36 kWc.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 font-bold">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Meter Installation (if self-consumption)</p>
+                                                <p class="text-sm text-slate-400">Linky meter replacement to track surplus sent to grid. Arranged by Enedis (free for all).</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">6</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Installation & Testing</h3>
+                                <p class="text-sm text-slate-400">1-3 days • Physical installation + safety checks</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Installation checklist:</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Day 1-2:</strong> Electrical work, mounting structure, panel installation, wiring, inverter</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Final tests:</strong> Electrical continuity, ground resistance, polarity, DC voltage</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Documentation:</strong> Receipt warranties, Linky meter photo, installer's test report</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Safety module:</strong> AC disconnect switch, main breaker, earth leakage protection</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                                    <p class="text-sm text-cyan-300"><strong>Expect:</strong> 1-2 day downtime, noise during mounting, access to electrical panel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 7 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">7</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Commissioning & Support</h3>
+                                <p class="text-sm text-slate-400">1 week • Grid approval, invoicing, maintenance</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Final steps:</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">✓</span>
+                                            <span><strong>Enedis approval:</strong> Final inspection, meter activation (1-2 weeks after declaration)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">✓</span>
+                                            <span><strong>System activation:</strong> First electricity production = start of 20-year EDF OA contract</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">✓</span>
+                                            <span><strong>Invoice & subsidies:</strong> Submit invoices to MaPrimeRénov' for reimbursement (1-3 months)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">✓</span>
+                                            <span><strong>Yearly monitoring:</strong> Annual production reports, warranty support from installer</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Overview -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Complete timeline</h2>
+                <div class="space-y-3">
+                    <div class="flex gap-4 items-center">
+                        <div class="w-24 text-amber-400 font-semibold text-sm">Week 1-2</div>
+                        <div class="flex-grow h-1 bg-gradient-to-r from-amber-500/50 to-transparent rounded"></div>
+                        <div class="flex-grow text-slate-300 text-sm">Feasibility study, installer research</div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <div class="w-24 text-amber-400 font-semibold text-sm">Week 3-6</div>
+                        <div class="flex-grow h-1 bg-gradient-to-r from-amber-500/50 to-transparent rounded"></div>
+                        <div class="flex-grow text-slate-300 text-sm">Get quotes, apply for subsidies</div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <div class="w-24 text-amber-400 font-semibold text-sm">Week 7-14</div>
+                        <div class="flex-grow h-1 bg-gradient-to-r from-amber-500/50 to-transparent rounded"></div>
+                        <div class="flex-grow text-slate-300 text-sm">Administrative procedures, permits</div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <div class="w-24 text-amber-400 font-semibold text-sm">Week 15</div>
+                        <div class="flex-grow h-1 bg-gradient-to-r from-amber-500/50 to-transparent rounded"></div>
+                        <div class="flex-grow text-slate-300 text-sm">Installation & testing</div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <div class="w-24 text-amber-400 font-semibold text-sm">Week 16+</div>
+                        <div class="flex-grow h-1 bg-gradient-to-r from-amber-500/50 to-transparent rounded"></div>
+                        <div class="flex-grow text-slate-300 text-sm">Commissioning, subsidy claims</div>
+                    </div>
+                </div>
+                <p class="mt-8 text-slate-400 text-sm"><strong>Total:</strong> 4-6 months from concept to first watt</p>
+            </div>
+        </section>
+
+        <!-- Installer Selection Checklist -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Pre-installation checklist</h2>
+                <div class="space-y-2">
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>Installer RGE-certified?</strong> Check qualit-enr.org</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>3 different quotes obtained?</strong> and compared</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>MaPrimeRénov' eligibility checked?</strong> Income, region, installation date</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>Building permit/declaration filed?</strong> With town hall, 3-8 weeks processing</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>Enedis grid connection declared?</strong> Installer handling, 4-8 weeks</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>Roof condition assessed?</strong> Check for repairs needed before installation</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>Contract signed with clear terms?</strong> Price, warranty, payment schedule, installation date</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>Insurance & guarantees reviewed?</strong> 25-30 year panel warranty, 10-15 year inverter warranty</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>After-sales service plan?</strong> Technical support, performance monitoring, maintenance</span>
+                    </label>
+                    <label class="flex gap-3 items-start p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 cursor-pointer checklist-item">
+                        <input type="checkbox" class="mt-1">
+                        <span class="text-slate-300"><strong>References checked?</strong> Contact 2-3 previous customers</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Frequently asked questions</h2>
+                <div class="space-y-3">
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">What's the best sun orientation for solar panels?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        South or south-east is optimal (true south = 180°). West is acceptable but less efficient. North is not suitable. Inclination should be 30-35° (matches your roof slope). Even off-optimal orientations work but with 10-30% lower output.
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">Can I install solar panels myself?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        DIY installation is technically possible but not recommended for residential grid-tied systems. You lose RGE certification benefits, subsidies, and warranty support. Electrical work must comply with NFC 15-100 and NFC 13-200 standards. Professional installation is required to claim MaPrimeRénov' aid.
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">How much can I earn from surplus feed-in?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        2026 rate: €0.04/kWh (≤9 kWc). For a 6 kWc system producing ~7,500 kWh/year with 50% self-consumption, you'd inject ~3,750 kWh = €150/year. Not significant income, but offsets 25-30% of system cost over 20 years. Main benefit is reduced bills from self-consumption (~€300-400/year).
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">What if my roof isn't south-facing?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        East or west-facing roofs produce 10-20% less than south. If only north is available, expect 50-60% lower output. The project is still viable but requires larger system size for same output. Request production estimates in your feasibility study. Many hybrid homes use multiple orientations.
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">Is a battery worth it in 2026?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        LFP batteries (10 kWh) cost €6,000-8,000 + installation. ROI: 12-15+ years. With current feed-in rates (€0.04/kWh), economics are marginal. Worth considering if: high self-consumption already, blackout risk, islanding capability needed, electricity rates expected to rise sharply. Otherwise, wait until battery costs drop 30-50% (2027-2028 forecast).
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">What happens if panels fail?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        Modern panels have 25-30 year warranties covering defects. Inverters have 10-15 year warranties (often extendable). Degradation: ~0.5%/year (normal). If a panel fails: replaced free within warranty period. Ask installer about warranty claim process and insurance. Check if they use Tier-1 manufacturers (Enphase, SMA, Huawei).
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">Do I need planning permission for solar?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        Yes. ≤3 kWc: "Déclaration préalable de travaux" (3 weeks). ≥3 kWc: "Permis de construire" (8+ weeks). In heritage zones or near monuments: may need ABF (Bâtiments de France) approval (add 2-4 weeks). Your installer should guide you. Failure to declare = fines €300-€1,500. Plan 3-8 weeks total for approvals.
+                    </div>
+
+                    <button class="w-full flex items-center justify-between p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleFAQ(this)">
+                        <span class="font-semibold text-white">What's the real ROI for residential solar?</span>
+                        <svg class="w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-4 py-4 bg-slate-800/25 border border-slate-700 rounded-lg text-slate-300 text-sm">
+                        Typical 6 kWc system: €12,000 installed, minus subsidies (€1,000-4,000) = €8,000-11,000 net cost. Annual savings: €400-500 (self-consumption) + €100-150 (surplus) = €500-650/year. Payback: 12-20 years depending on subsidies. After 20 years: €10,000-13,000 total savings. Best ROI in high-consumption households, regions with high electricity rates, and with maximum subsidies.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-16 bg-gradient-to-b from-slate-900 to-slate-950">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-4 text-white">Ready to start your solar journey?</h2>
+                <p class="text-slate-300 mb-8">Use our simulation tools to estimate production, savings, and ROI for your specific situation.</p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <a href="tools-residential.html" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-amber-500/50 transition-all">
+                        Residential Solar Calculator
+                    </a>
+                    <a href="tools-industrial.html" class="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg border border-slate-700 hover:bg-slate-700 transition-colors">
+                        Technology Comparison
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Navigation</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="economy.html" class="hover:text-white transition-colors">Economy</a></li>
+                        <li><a href="markets.html" class="hover:text-white transition-colors">Markets</a></li>
+                        <li><a href="technologies.html" class="hover:text-white transition-colors">Technologies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Tools</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="tools-residential.html" class="hover:text-white transition-colors">Residential</a></li>
+                        <li><a href="tools-residential.html" class="hover:text-white transition-colors">Self-Consumption</a></li>
+                        <li><a href="tools-industrial.html" class="hover:text-white transition-colors">Industrial</a></li>
+                        <li><a href="tools-industrial.html" class="hover:text-white transition-colors">Comparison</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="insights/" class="hover:text-white transition-colors">Insights</a></li>
+                        <li><a href="https://www.maprimerenov.gouv.fr" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">MaPrimeRénov'</a></li>
+                        <li><a href="https://www.qualit-enr.org" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">RGE Certification</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">About</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="hire-me.html" class="hover:text-white transition-colors">Collaborate</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
+                <p>SolarMetrics © 2026 • Crafted by Bernard Pugnet • Data updated March 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+            this.setAttribute('aria-expanded', !this.getAttribute('aria-expanded') === 'false');
+        });
+
+        // Step toggle
+        function toggleStep(button) {
+            const parent = button.parentElement;
+            parent.classList.toggle('active');
+            const content = parent.querySelector('.step-content');
+            content.classList.toggle('open');
+        }
+
+        // FAQ toggle
+        function toggleFAQ(button) {
+            button.classList.toggle('active');
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('open');
+            const svg = button.querySelector('svg');
+            svg.classList.toggle('rotate-180');
+        }
+
+        // Checklist interaction
+        document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked');
+            });
+        });
+    </script>
+</body>
+</html>

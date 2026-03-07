@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assumptions & Data — SolarMetrics</title>
+    <meta name="description" content="All SolarMetrics calculation assumptions: CAPEX, OPEX, WACC, yield, electricity prices, CO₂. Verified sources and downloadable.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/assumptions">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/assumptions">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/hypotheses">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+    </style>
+<style>
+abbr[title] {
+  text-decoration: underline dotted rgba(6,182,212,0.5);
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+abbr[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(6,182,212,0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+</style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+  <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+    Tools
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Residential</div>
+          <div class="text-xs text-slate-400">Solar kits · < 9 kWc</div>
+        </div>
+      </a>
+      <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Self-consumption</div>
+          <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+        </div>
+      </a>
+      <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Industrial</div>
+          <div class="text-xs text-slate-400">Plants · 100 kWc — 10+ MWc</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
+                                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/hypotheses.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="economy.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Self-consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
+                        </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+<!-- Assumptions & Data Section -->
+    <section id="assumptions" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Hero Image -->
+            <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80"
+                     alt="Data and calculations"
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-amber-500/20 backdrop-blur-sm rounded-xl border border-amber-500/30">
+                            <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-4xl font-bold text-white">Assumptions & Data</h1>
+<p class="text-slate-500 text-sm mt-2">All detailed SolarMetrics parameters</p>
+                            <p class="text-slate-300">All assumptions used in our calculations — verifiable, reproducible, versioned.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version Badge -->
+            <div class="mb-8 inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-slate-300">
+                <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
+                <span>Dataset <strong class="text-white">v2026-03</strong> · Updated: <strong class="text-white">March 7, 2026</strong></span>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="mb-12">
+                <div class="flex flex-wrap gap-2 bg-slate-800/30 p-2 rounded-xl border border-slate-700/50">
+                    <button class="tab-btn active px-4 py-2 rounded-lg font-medium text-sm transition-all" data-tab="capex">CAPEX</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium text-sm transition-all" data-tab="opex">OPEX</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium text-sm transition-all" data-tab="wacc">WACC</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium text-sm transition-all" data-tab="yield">Yield</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium text-sm transition-all" data-tab="prices">Prices & Tariffs</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium text-sm transition-all" data-tab="co2">CO₂</button>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- TAB 1: CAPEX -->
+            <!-- ======================= -->
+            <div id="capex" class="tab-content active mb-16">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">CAPEX — Capital Investment Costs</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Parameter</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Value</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Unit</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Note</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-amber-500 font-medium">PERC Modules</td>
+                                    <td class="py-3 px-4 text-slate-300">0.08 — 0.10</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">FOB, declining market share</td>
+                                    <td class="py-3 px-4 text-slate-300">Fraunhofer ISE 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-500 font-medium">TOPCon Modules</td>
+                                    <td class="py-3 px-4 text-slate-300">0.09 — 0.11</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">49% market share 2025</td>
+                                    <td class="py-3 px-4 text-slate-300">PV Tech, Fraunhofer ISE</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-blue-500 font-medium">HJT Modules</td>
+                                    <td class="py-3 px-4 text-slate-300">0.12 — 0.15</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">Premium, high efficiency</td>
+                                    <td class="py-3 px-4 text-slate-300">PV Tech</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-purple-500 font-medium">Europe Modules</td>
+                                    <td class="py-3 px-4 text-slate-300">0.095 — 0.115</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wp</td>
+                                    <td class="py-3 px-4 text-slate-300">Modules shipped Europe</td>
+                                    <td class="py-3 px-4 text-slate-300">Fraunhofer ISE 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-cyan-500 font-medium">String inverter <15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">44</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kW</td>
+                                    <td class="py-3 px-4 text-slate-300">Less than 15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">European Solar Trade Body Q3 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-cyan-500 font-medium">String inverter >15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">35</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kW</td>
+                                    <td class="py-3 px-4 text-slate-300">Greater than 15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">European Solar Trade Body Q3 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-indigo-500 font-medium">Micro-inverter</td>
+                                    <td class="py-3 px-4 text-slate-300">150 — 300</td>
+                                    <td class="py-3 px-4 text-slate-300">€/unit</td>
+                                    <td class="py-3 px-4 text-slate-300">Per panel</td>
+                                    <td class="py-3 px-4 text-slate-300">Installer quotes FR 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-teal-500 font-medium">Hybrid inverter <15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">97</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kW</td>
+                                    <td class="py-3 px-4 text-slate-300">Less than 15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">European Solar Trade Body Q3 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-teal-500 font-medium">Hybrid inverter >15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">86</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kW</td>
+                                    <td class="py-3 px-4 text-slate-300">Greater than 15 kW</td>
+                                    <td class="py-3 px-4 text-slate-300">European Solar Trade Body Q3 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-red-500 font-medium"><abbr title="Lithium Iron Phosphate">LFP</abbr> battery residential</td>
+                                    <td class="py-3 px-4 text-slate-300">600 — 1,200</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">Installed, VAT included</td>
+                                    <td class="py-3 px-4 text-slate-300">Clean Energy Reviews, quotes FR 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-orange-500 font-medium">Tesla Powerwall 3 Battery</td>
+                                    <td class="py-3 px-4 text-slate-300">1,200</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">13.5 kWh, installed</td>
+                                    <td class="py-3 px-4 text-slate-300">Clean Energy Reviews 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-yellow-500 font-medium">BYD Battery</td>
+                                    <td class="py-3 px-4 text-slate-300">700</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">10 kWh, installed</td>
+                                    <td class="py-3 px-4 text-slate-300">Installer quotes FR 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-yellow-600 font-medium">Huawei Battery</td>
+                                    <td class="py-3 px-4 text-slate-300">750</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">10 kWh, installed</td>
+                                    <td class="py-3 px-4 text-slate-300">Installer quotes FR 2025</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-pink-500 font-medium">Residential installation ≤3 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">2.00 — 2.50</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">VAT 5.5%</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA, Enerplan, SER</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-pink-600 font-medium">Residential installation 3-9 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">1.80 — 2.20</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">VAT 5.5%</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA, Enerplan, SER</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-rose-500 font-medium">C&I installation 36-100 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">1.20 — 1.60</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">VAT 20%</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA, Enerplan</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-rose-600 font-medium">Utility installation >250 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">0.70 — 0.90</td>
+                                    <td class="py-3 px-4 text-slate-300">€/Wc</td>
+                                    <td class="py-3 px-4 text-slate-300">Tracker</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA WETO 2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- TAB 2: OPEX -->
+            <!-- ======================= -->
+            <div id="opex" class="tab-content mb-16 hidden">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">OPEX — Operating Costs</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Parameter</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Value</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Unit</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Note</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-500 font-medium">Residential maintenance</td>
+                                    <td class="py-3 px-4 text-slate-300">15</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">Cleaning, monitoring</td>
+                                    <td class="py-3 px-4 text-slate-300">ADEME, installer FR</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-600 font-medium">C&I maintenance</td>
+                                    <td class="py-3 px-4 text-slate-300">10 — 15</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">O&M contract</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-700 font-medium">Utility maintenance</td>
+                                    <td class="py-3 px-4 text-slate-300">7 — 12</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">Outsourced O&M</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-cyan-500 font-medium">Insurance</td>
+                                    <td class="py-3 px-4 text-slate-300">0.3 — 0.5</td>
+                                    <td class="py-3 px-4 text-slate-300">% CAPEX/year</td>
+                                    <td class="py-3 px-4 text-slate-300">—</td>
+                                    <td class="py-3 px-4 text-slate-300">Market practice FR</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-blue-500 font-medium">Panel degradation</td>
+                                    <td class="py-3 px-4 text-slate-300">0.5</td>
+                                    <td class="py-3 px-4 text-slate-300">%/year</td>
+                                    <td class="py-3 px-4 text-slate-300">Typical manufacturer warranty</td>
+                                    <td class="py-3 px-4 text-slate-300">IEC 61215, manufacturers</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-purple-500 font-medium">Battery degradation</td>
+                                    <td class="py-3 px-4 text-slate-300">2.0</td>
+                                    <td class="py-3 px-4 text-slate-300">%/year</td>
+                                    <td class="py-3 px-4 text-slate-300"><abbr title="Lithium Iron Phosphate">LFP</abbr> typical</td>
+                                    <td class="py-3 px-4 text-slate-300">Manufacturers (BYD, Tesla)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- TAB 3: WACC -->
+            <!-- ======================= -->
+            <div id="wacc" class="tab-content mb-16 hidden">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">WACC / Discount Rate</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Parameter</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Value</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Unit</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Note</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-amber-500 font-medium">France residential</td>
+                                    <td class="py-3 px-4 text-slate-300">3.0</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300">Household opportunity cost</td>
+                                    <td class="py-3 px-4 text-slate-300">SolarMetrics hypothesis</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-orange-500 font-medium">France C&I</td>
+                                    <td class="py-3 px-4 text-slate-300">4.0 — 6.0</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300"><abbr title="Small and Medium Enterprises / Enterprise & Technical Institution">SME/ETI</abbr>, bank debt</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA, market practice</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-yellow-500 font-medium">France utility</td>
+                                    <td class="py-3 px-4 text-slate-300">5.0 — 7.0</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300">Project finance, <abbr title="Special Purpose Vehicle">SPV</abbr></td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA WETO 2024</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-red-500 font-medium">Southern Europe</td>
+                                    <td class="py-3 px-4 text-slate-300">4.5 — 6.5</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300">Spain, Italy, Greece</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-blue-500 font-medium">Northern Europe</td>
+                                    <td class="py-3 px-4 text-slate-300">5.0 — 7.5</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300">Germany, Netherlands, UK</td>
+                                    <td class="py-3 px-4 text-slate-300">IRENA</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- TAB 4: YIELD/PRODUCTIVITY -->
+            <!-- ======================= -->
+            <div id="yield" class="tab-content mb-16 hidden">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">Yield / Productivity</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Parameter</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Value</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Unit</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Note</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-blue-500 font-medium">Northern France</td>
+                                    <td class="py-3 px-4 text-slate-300">900 — 1,100</td>
+                                    <td class="py-3 px-4 text-slate-300">kWh/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">Paris, Lille, Brittany</td>
+                                    <td class="py-3 px-4 text-slate-300">PVGIS TMY</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-500 font-medium">Central France</td>
+                                    <td class="py-3 px-4 text-slate-300">1,100 — 1,300</td>
+                                    <td class="py-3 px-4 text-slate-300">kWh/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">Lyon, Bordeaux, Nantes</td>
+                                    <td class="py-3 px-4 text-slate-300">PVGIS TMY</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-yellow-500 font-medium">Southern France</td>
+                                    <td class="py-3 px-4 text-slate-300">1,300 — 1,550</td>
+                                    <td class="py-3 px-4 text-slate-300">kWh/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">Marseille, Montpellier, Nice</td>
+                                    <td class="py-3 px-4 text-slate-300">PVGIS TMY</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-orange-500 font-medium">Spain</td>
+                                    <td class="py-3 px-4 text-slate-300">1,500 — 1,900</td>
+                                    <td class="py-3 px-4 text-slate-300">kWh/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">—</td>
+                                    <td class="py-3 px-4 text-slate-300">PVGIS TMY</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-cyan-500 font-medium">Germany</td>
+                                    <td class="py-3 px-4 text-slate-300">800 — 1,100</td>
+                                    <td class="py-3 px-4 text-slate-300">kWh/kWc/year</td>
+                                    <td class="py-3 px-4 text-slate-300">—</td>
+                                    <td class="py-3 px-4 text-slate-300">PVGIS TMY</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-purple-500 font-medium">Typical system losses</td>
+                                    <td class="py-3 px-4 text-slate-300">10 — 16</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300">Wiring, inverter, dust, temperature</td>
+                                    <td class="py-3 px-4 text-slate-300">PVGIS default 14%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- TAB 5: PRICES & TARIFFS -->
+            <!-- ======================= -->
+            <div id="prices" class="tab-content mb-16 hidden">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">Electricity Prices & Tariffs</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Parameter</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Value</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Unit</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Note</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-amber-500 font-medium">France household electricity</td>
+                                    <td class="py-3 px-4 text-slate-300">0.2516</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">VAT incl., regulated tariff Q2 2025</td>
+                                    <td class="py-3 px-4 text-slate-300">Eurostat, <abbr title="Energy Regulatory Commission">CRE</abbr></td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-orange-500 font-medium">France C&I electricity</td>
+                                    <td class="py-3 px-4 text-slate-300">0.12 — 0.18</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">Contract, excl. <abbr title="Public Electricity Network Usage Tariff">TURPE</abbr></td>
+                                    <td class="py-3 px-4 text-slate-300">CRE</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-yellow-500 font-medium">France electricity price increase</td>
+                                    <td class="py-3 px-4 text-slate-300">3.0</td>
+                                    <td class="py-3 px-4 text-slate-300">%/year</td>
+                                    <td class="py-3 px-4 text-slate-300">10-year historical average</td>
+                                    <td class="py-3 px-4 text-slate-300">Eurostat, INSEE</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-500 font-medium">FIT self-consumption ≤9 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">0.04</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">Surplus, Q1 2026</td>
+                                    <td class="py-3 px-4 text-slate-300">photovoltaique.info</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-600 font-medium">FIT self-consumption 9-36 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">0.0536</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">9-36 kWc, Q1 2026</td>
+                                    <td class="py-3 px-4 text-slate-300">photovoltaique.info</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-700 font-medium">FIT self-consumption 36-100 kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">0.0792</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">36-100 kWc, Q1 2026</td>
+                                    <td class="py-3 px-4 text-slate-300">photovoltaique.info</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-cyan-500 font-medium">Self-consumption bonus</td>
+                                    <td class="py-3 px-4 text-slate-300">80</td>
+                                    <td class="py-3 px-4 text-slate-300">€/kWc</td>
+                                    <td class="py-3 px-4 text-slate-300">One-time payment, 2026</td>
+                                    <td class="py-3 px-4 text-slate-300">quelleenergie.fr, Légifrance</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-blue-500 font-medium"><abbr title="Value Added Tax">VAT</abbr> reduced</td>
+                                    <td class="py-3 px-4 text-slate-300">5.5</td>
+                                    <td class="py-3 px-4 text-slate-300">%</td>
+                                    <td class="py-3 px-4 text-slate-300">Installations ≤9 kWc, since oct 2025</td>
+                                    <td class="py-3 px-4 text-slate-300">Service-public.fr</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- TAB 6: CO2 -->
+            <!-- ======================= -->
+            <div id="co2" class="tab-content mb-16 hidden">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">CO₂ Emission Factors</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Parameter</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Value</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Unit</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Note</th>
+                                    <th class="text-left py-3 px-4 text-white font-semibold">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-blue-500 font-medium">France average mix</td>
+                                    <td class="py-3 px-4 text-slate-300">55</td>
+                                    <td class="py-3 px-4 text-slate-300">gCO₂/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">Annual average mix</td>
+                                    <td class="py-3 px-4 text-slate-300">RTE Electricity Report 2024</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-orange-500 font-medium">France marginal mix</td>
+                                    <td class="py-3 px-4 text-slate-300">400</td>
+                                    <td class="py-3 px-4 text-slate-300">gCO₂/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">Marginal (gas)</td>
+                                    <td class="py-3 px-4 text-slate-300">RTE, ADEME</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-green-500 font-medium">Solar life cycle</td>
+                                    <td class="py-3 px-4 text-slate-300">30</td>
+                                    <td class="py-3 px-4 text-slate-300">gCO₂/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">Manufacturing + transport + recycling</td>
+                                    <td class="py-3 px-4 text-slate-300"><abbr title="Intergovernmental Panel on Climate Change">IPCC</abbr> AR6, Fraunhofer ISE</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-gray-500 font-medium">Germany mix</td>
+                                    <td class="py-3 px-4 text-slate-300">350</td>
+                                    <td class="py-3 px-4 text-slate-300">gCO₂/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">—</td>
+                                    <td class="py-3 px-4 text-slate-300">UBA 2024</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-red-500 font-medium">Poland mix</td>
+                                    <td class="py-3 px-4 text-slate-300">650</td>
+                                    <td class="py-3 px-4 text-slate-300">gCO₂/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">—</td>
+                                    <td class="py-3 px-4 text-slate-300">EEA 2024</td>
+                                </tr>
+                                <tr class="odd:bg-slate-800/30">
+                                    <td class="py-3 px-4 text-slate-400 font-medium">Europe average mix</td>
+                                    <td class="py-3 px-4 text-slate-300">230</td>
+                                    <td class="py-3 px-4 text-slate-300">gCO₂/kWh</td>
+                                    <td class="py-3 px-4 text-slate-300">—</td>
+                                    <td class="py-3 px-4 text-slate-300">EEA 2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- LIMITATIONS SECTION -->
+            <!-- ======================= -->
+            <div class="mb-16">
+                <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-8">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 text-yellow-500 mt-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-yellow-500 mb-3">Limitations & Notes</h3>
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li class="flex gap-2">
+                                    <span class="text-yellow-500">•</span>
+                                    <span>Module prices are FOB (Free On Board) prices, excluding transport and European import taxes.</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="text-yellow-500">•</span>
+                                    <span>Residential installed costs include labor, Consuel connection and commissioning.</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="text-yellow-500">•</span>
+                                    <span>FIT tariffs change quarterly — check photovoltaique.info.</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="text-yellow-500">•</span>
+                                    <span>Self-consumption bonus may be modified by ministerial decree.</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="text-yellow-500">•</span>
+                                    <span>CO₂ factors vary by time of day (merit order).</span>
+                                </li>
+                                <li class="flex gap-2">
+                                    <span class="text-yellow-500">•</span>
+                                    <span>Battery prices evolve rapidly (-15-20%/year) — data to be updated.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- DOWNLOAD SECTION -->
+            <!-- ======================= -->
+            <div class="mb-16">
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-6">Download data</h3>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="/data/snapshots/2026-03/assumptions.json" download class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Download JSON
+                        </a>
+                        <button disabled class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-slate-400 font-semibold rounded-xl cursor-not-allowed opacity-50" title="CSV format coming soon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Download CSV
+                        </button>
+                    </div>
+                    <p class="text-slate-500 text-xs mt-4">CSV format available coming soon</p>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- METHODOLOGY SECTION -->
+            <!-- ======================= -->
+            <div class="bg-slate-800/30 rounded-2xl p-8 border border-slate-700/50 mb-16">
+                <h3 class="text-xl font-bold text-white mb-4">Methodology</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Compilation of verified public sources. All prices are in current euros unless noted otherwise. Ranges reflect geographic and technological dispersion. Each parameter is documented with its source, enabling full reproducibility of calculations. The dataset is versioned and dated to ensure traceability of assumptions used in our analyses. Quarterly updates are planned to reflect market evolution.
+                </p>
+            </div>
+
+            <!-- Footer Info -->
+            <div class="mt-16 text-center text-slate-500 text-xs border-t border-slate-800 pt-8">
+                <p class="mb-3"><strong class="text-slate-400">Last updated:</strong> March 7, 2026</p>
+                <p class="mb-4"><strong class="text-slate-400">Compiled by:</strong> Bernard Pugnet — SolarMetrics</p>
+                <p class="text-slate-600 text-xs"><strong class="text-slate-400">Main sources:</strong> Fraunhofer ISE, <abbr title="International Renewable Energy Agency">IRENA</abbr>, <abbr title="Bloomberg NEF - energy analysis">BNEF</abbr>, PV Tech, photovoltaique.info, Légifrance, RTE, ADEME, Eurostat, INSEE</p>
+            </div>
+
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Need financial analysis for your project?</h2>
+            <p class="text-slate-400 mb-8">20 years of market finance experience serving solar</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Contact me
+                </a>
+                <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    View my LinkedIn profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <section class="py-16 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the site</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+                    <span class="text-2xl">🏠</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Home</p>
+                </a>
+                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">☀️</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
+                </a>
+                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
+                    <span class="text-2xl">🌍</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                </a>
+                <a href="ia-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
+                    <span class="text-2xl">🤖</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">AI & Data</p>
+                </a>
+                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                    <span class="text-2xl">🧮</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
+                </a>
+                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                    <span class="text-2xl">📚</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../fr/hypotheses.html" class="text-slate-400 hover:text-white text-sm">Français</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal notices</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Editor:</strong> Bernard Pugnet - Personal informational website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual property:</strong> All content on this site (texts, images, graphics) is the property of Bernard Pugnet or cited sources. Reproduction is prohibited without permission.</p>
+                        <p><strong class="text-slate-400">Personal data:</strong> This site collects no personal data. No tracking cookies are used.</p>
+                        <p><strong class="text-slate-400">Liability:</strong> Information on this site is provided for informational purposes and does not constitute investment advice.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+
+                // Remove active state from all buttons and contents
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-amber-500/20', 'text-amber-500');
+                    btn.classList.add('text-slate-400');
+                });
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+
+                // Add active state to clicked button and corresponding content
+                this.classList.add('active', 'bg-amber-500/20', 'text-amber-500');
+                this.classList.remove('text-slate-400');
+                document.getElementById(tabName).classList.remove('hidden');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // Mobile menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+</body>
+</html>

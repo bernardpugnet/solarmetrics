@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycling & End-of-Life of Solar Panels — SolarMetrics</title>
+    <meta name="description" content="Recycling of solar panels in France and Europe: SOREN scheme, recycling rates, recovered components, WEEE regulations and circular economy.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/recycling-end-of-life">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/recycling-end-of-life">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/en/recycling-end-of-life">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        input[type="range"]{accent-color:#F59E0B}
+        .component-diagram{display:flex;flex-direction:column;gap:0.75rem}
+        .component-bar{display:flex;align-items:center;border-radius:0.5rem;padding:0.75rem 1rem;font-size:0.875rem;font-weight:500;color:white}
+        .stat-card{padding:1.5rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem}
+        .timeline-item{position:relative;padding-left:2rem;padding-bottom:1.5rem}
+        .timeline-item::before{content:'';position:absolute;left:0;top:0.375rem;width:0.75rem;height:0.75rem;background:#F59E0B;border-radius:50%;border:2px solid #0f172a}
+        .timeline-item::after{content:'';position:absolute;left:0.125rem;top:1.25rem;width:0.5rem;height:calc(100% + 0.5rem);background:rgba(245,158,11,0.3)}
+        .timeline-item:last-child::after{display:none}
+        .timeline-item .timeline-title{font-weight:600;margin-bottom:0.5rem;color:white}
+        .timeline-item .timeline-desc{font-size:0.875rem;color:#cbd5e1}
+        .badge-dataset{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:0.5rem;color:#86efac;font-size:0.875rem;text-decoration:none;font-weight:500}
+        .badge-dataset:hover{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.5)}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main Navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Tools Menu">
+                            Tools
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Residential</div>
+                                        <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWp</div>
+                                    </div>
+                                </a>
+                                <a href="tools-autoconsumption.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Self-Consumption</div>
+                                        <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industrial</div>
+                                        <div class="text-xs text-slate-400">Power plants · 100 kWp — 10+ MWp</div>
+                                    </div>
+                                </a>
+                                <a href="comparator.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparator</div>
+                                        <div class="text-xs text-slate-400">Technologies · Inverters · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborate</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
+                        <a href="../fr/recyclage-fin-de-vie.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Home</a>
+                <a href="economy.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-autoconsumption.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Self-Consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
+                <a href="comparator.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparator</a>
+                <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborate</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 bg-emerald-500/20 backdrop-blur-sm rounded-xl border border-emerald-500/30">
+                            <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-4xl font-bold text-white">Recycling & End-of-Life</h1>
+                            <p class="text-slate-300">Solar panels: circular economy, SOREN scheme, WEEE regulations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Badge -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="assumptions.html" class="badge-dataset">
+                        📊 SOREN 2024 + IRENA Sources
+                    </a>
+                    <p class="text-slate-400 text-sm">Complete guide to recycling photovoltaic panels in France and Europe</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Issue -->
+        <section id="issue" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">1. The Issue: From Waste to Resource</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-amber-400 mb-2">78 Mt</div>
+                        <div class="text-sm text-slate-300">Cumulative PV waste by 2050 (IRENA projection)</div>
+                        <p class="text-xs text-slate-500 mt-3">The worldwide installed solar base accumulated since 2010 will reach end-of-life en masse between 2040-2050</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-emerald-400 mb-2">25-35 years</div>
+                        <div class="text-sm text-slate-300">Actual lifespan of a solar panel</div>
+                        <p class="text-xs text-slate-500 mt-3">Average degradation of 0.3-0.5% per year. Panels retain 80-85% capacity after 25 years</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-cyan-400 mb-2">94-96%</div>
+                        <div class="text-sm text-slate-300">Recyclability by mass</div>
+                        <p class="text-xs text-slate-500 mt-3">Solar panels are NOT hazardous waste. Components are easily valorizable</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-orange-400 mb-2">0.70 €</div>
+                        <div class="text-sm text-slate-300">Eco-fee per panel (2024)</div>
+                        <p class="text-xs text-slate-500 mt-3">Recycling financing integrated into purchase price. Free for the panel owner</p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-6">
+                    <h3 class="font-semibold mb-3 flex items-center gap-2">
+                        <span class="text-lg">🔄</span>
+                        Circular Economy Challenge
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Solar panels are complex products containing high-quality glass, aluminum, crystalline silicon and rare metals. Rather than landfills, an efficient recycling stream transforms this "waste" into raw material for new panels or other industrial applications, creating a sustainable value loop.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Composition -->
+        <section id="composition" class="py-16 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">2. Solar Panel Composition (25 kg average)</h2>
+
+                <div class="component-diagram mb-8">
+                    <div class="component-bar bg-blue-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">75%</span>
+                        <span class="flex-1">Tempered glass (~10 kg) — Main structure, light transmission</span>
+                    </div>
+                    <div class="component-bar bg-slate-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">10%</span>
+                        <span class="flex-1">Aluminum frame — Mechanical support, sealing</span>
+                    </div>
+                    <div class="component-bar bg-indigo-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">5%</span>
+                        <span class="flex-1">Silicon cells — Photovoltaic conversion (core technology)</span>
+                    </div>
+                    <div class="component-bar bg-purple-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">5%</span>
+                        <span class="flex-1">EVA (ethylene-vinyl acetate) — Encapsulant, adhesive</span>
+                    </div>
+                    <div class="component-bar bg-red-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">3.5%</span>
+                        <span class="flex-1">Backsheet (Tedlar/plastic) — Rear insulation</span>
+                    </div>
+                    <div class="component-bar bg-yellow-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">1%</span>
+                        <span class="flex-1">Copper and connectors — Electrical circulation</span>
+                    </div>
+                    <div class="component-bar bg-amber-500/60">
+                        <span class="flex-shrink-0 w-16 font-semibold">&lt;0.5%</span>
+                        <span class="flex-1">Silver and tin — Contacts, high-tech solders</span>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                    <h3 class="font-semibold mb-3 text-emerald-400">Global Recycling Rate</h3>
+                    <div class="flex items-end gap-4">
+                        <div>
+                            <div class="text-4xl font-bold text-white">94-96%</div>
+                            <div class="text-sm text-slate-400">of total mass can be recovered and valorized</div>
+                        </div>
+                        <p class="text-xs text-slate-500 flex-1">
+                            Structural components (glass, aluminum) are readily accessible at beginning/end of chain. Crystalline silicon (most delicate) allows reprocessing toward re-wafer or industrial reuse.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: SOREN Scheme -->
+        <section id="soren" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">3. The SOREN Scheme in France</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-4 text-amber-400">🏛️ Institutional Status</h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li><strong>Former name:</strong> PV Cycle France</li>
+                            <li><strong>Renamed:</strong> SOREN in 2021</li>
+                            <li><strong>Status:</strong> Approved eco-organization</li>
+                            <li><strong>Approval:</strong> WEEE Directive (Waste Electrical and Electronic Equipment)</li>
+                            <li><strong>Financing:</strong> Eco-fee integrated into panel price</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-4 text-cyan-400">📊 Key Figures (2023-2024)</h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li><strong>2023 Collection:</strong> 5,500 tonnes (+40% vs 2022)</li>
+                            <li><strong>Network:</strong> 500+ collection points in France</li>
+                            <li><strong>Eco-fee:</strong> ~0.70 € per panel (2024)</li>
+                            <li><strong>Recovery rate:</strong> > 94%</li>
+                            <li><strong>Cost to owner:</strong> 100% FREE</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-green-500/10 border border-green-500/30 rounded-2xl p-6">
+                    <h3 class="font-semibold mb-3 flex items-center gap-2">
+                        <span class="text-lg">✅</span>
+                        How it Works
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        SOREN organizes collection, sorting and recycling of solar panels in France under state approval (extended producer responsibility). Manufacturers and importers finance the system via an eco-fee paid to SOREN. The owner of old panels has nothing to pay: SOREN finances collection and processing free of charge.
+                    </p>
+                    <p class="text-slate-300 text-sm">
+                        <strong>To recycle your panels:</strong> Contact SOREN (soren.eu) or drop them off with an approved installer or collection point in your region.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Recycling Process -->
+        <section id="process" class="py-16 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">4. Detailed Recycling Process</h2>
+
+                <div class="bg-slate-900/50 p-8 rounded-2xl border border-slate-700">
+                    <div class="component-diagram">
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 1: Collection and Transport</div>
+                            <div class="timeline-desc">Panels collected from households, installers or industrial sites. Secure transport to approved treatment centers.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 2: Sorting and Dismantling</div>
+                            <div class="timeline-desc">Separation of aluminum frames, junction boxes, cables. Visual inspection for hazards.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 3: Shredding of Laminates</div>
+                            <div class="timeline-desc">Laminates (glass + cells + EVA) mechanically shredded into fragments of a few millimeters.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 4: Thermal Processing</div>
+                            <div class="timeline-desc">Heating > 500°C to remove EVA (encapsulant) and plastic backsheet. Capture of valorizable gases.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 5: Mechanical Separation</div>
+                            <div class="timeline-desc">Glass-silicon separation by density difference (flotation/decantation). Glass recovery > 98% purity.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 6: Metal Refining</div>
+                            <div class="timeline-desc">Copper, silver, tin extraction via hydrochemical or hydrometallurgical processes. Recovery 95%+ of precious metals.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-title">Step 7: Second Life and Valorization</div>
+                            <div class="timeline-desc">Glass → thermal insulation, fiber optics, glassware. Aluminum → remelting (automotive, construction). Silicon → R&D re-wafer or silicon purification.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                    <h3 class="font-semibold mb-3 text-amber-400">⏱️ Overall Timeline</h3>
+                    <p class="text-slate-300 text-sm">
+                        From collection to final valorization: <strong>4-8 weeks</strong> on average (depends on volume and panel type).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Regulation -->
+        <section id="regulation" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">5. Regulatory Framework: WEEE and Extended Responsibility</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-4 text-purple-400">🇪🇺 EU Directive WEEE 2012/19/EU</h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li><strong>Classification:</strong> PV panels classified as WEEE since 2012</li>
+                            <li><strong>EU 2025 Target:</strong> 85% collection, 80% recycling</li>
+                            <li><strong>Responsibility:</strong> Manufacturer/importer finances collection and treatment</li>
+                            <li><strong>Waste Status:</strong> Not hazardous material (RoHS compliant)</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-4 text-cyan-400">🇫🇷 France: Regulatory Advance</h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li><strong>Decree 2014-928:</strong> Strict WEEE transposition</li>
+                            <li><strong>SOREN approved:</strong> Since 2014 (formerly PV Cycle)</li>
+                            <li><strong>Performance:</strong> Collection rate ~5% (continent lagging)</li>
+                            <li><strong>Trend:</strong> Collection rate projection 50%+ by 2030</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-500/10 border border-indigo-500/30 rounded-2xl p-6">
+                    <h3 class="font-semibold mb-3 flex items-center gap-2">
+                        <span class="text-lg">📋</span>
+                        New Developments: Ecodesign and Digital Product Passport
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <strong>EU Ecodesign Regulation (under discussion):</strong> Proposes mandatory "digital product passport" for each solar panel. Will contain: precise chemical composition, material flows, recyclability, historical traceability. Objective: facilitate recycling and circularity long-term.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Second Life -->
+        <section id="second-life" class="py-16 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">6. Second Life and Reuse: Emerging Market</h2>
+
+                <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700 mb-6">
+                    <h3 class="font-semibold mb-4 text-amber-400">♻️ Downrated Yet Functional Panels</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Some panels, aged but still operating at 80-90% capacity, don't justify immediate recycling. These modules can be reconditioned for less demanding applications (humanitarian projects, agriculture, off-grid electrification) before actual end-of-life.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="p-3 bg-slate-800 rounded border border-slate-600">
+                            <div class="font-semibold text-emerald-400 mb-1">Humanitarian Projects</div>
+                            <div class="text-slate-400">NGOs, village electrification, clinics</div>
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded border border-slate-600">
+                            <div class="font-semibold text-cyan-400 mb-1">Agriculture</div>
+                            <div class="text-slate-400">Irrigation, greenhouses, farm electrification</div>
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded border border-slate-600">
+                            <div class="font-semibold text-purple-400 mb-1">Emerging Markets</div>
+                            <div class="text-slate-400">Developing countries, off-grid rooftops</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-cyan-400">🔧 French Panel Reconditioning Platforms</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><strong>Sircome:</strong> Leading panel reconditioning provider France</li>
+                            <li><strong>Voltec Solar:</strong> Second-life specialist</li>
+                            <li><strong>Model:</strong> Functional test → cleaning → resale</li>
+                            <li><strong>Warranty:</strong> Often 5-10 years on reconditioned modules</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-orange-400">⚖️ Legal Framework</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><strong>Current status:</strong> Unclear, no harmonized WEEE standard</li>
+                            <li><strong>Classification:</strong> Varies by country (waste vs product)</li>
+                            <li><strong>Standardization:</strong> EN 50698 under discussion (reuse testing)</li>
+                            <li><strong>Trend:</strong> Clarification expected 2025-2026</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-6">
+                    <h3 class="font-semibold mb-2 flex items-center gap-2">
+                        <span class="text-lg">💡</span>
+                        Circular Economy Opportunity
+                    </h3>
+                    <p class="text-sm text-slate-300">
+                        Second-life panels significantly extend their lifecycle value and reduce pressure on recycling. EU objective: 50% of panels recovered via reuse before 2040, not just recycling.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Key Figures -->
+        <section id="key-figures" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">7. Circular Economy: Key Figures Summary</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="stat-card text-center">
+                        <div class="text-4xl font-bold text-emerald-400">94-96%</div>
+                        <div class="text-sm text-slate-300 mt-2">Recyclable by mass</div>
+                    </div>
+
+                    <div class="stat-card text-center">
+                        <div class="text-4xl font-bold text-amber-400">0.70 €</div>
+                        <div class="text-sm text-slate-300 mt-2">Eco-fee/panel</div>
+                    </div>
+
+                    <div class="stat-card text-center">
+                        <div class="text-4xl font-bold text-cyan-400">5,500 t</div>
+                        <div class="text-sm text-slate-300 mt-2">Collected France 2023</div>
+                    </div>
+
+                    <div class="stat-card text-center">
+                        <div class="text-4xl font-bold text-purple-400">78 Mt</div>
+                        <div class="text-sm text-slate-300 mt-2">PV waste by 2050</div>
+                    </div>
+
+                    <div class="stat-card text-center">
+                        <div class="text-4xl font-bold text-blue-400">30 years</div>
+                        <div class="text-sm text-slate-300 mt-2">Average lifespan</div>
+                    </div>
+
+                    <div class="stat-card text-center">
+                        <div class="text-4xl font-bold text-green-400">500+</div>
+                        <div class="text-sm text-slate-300 mt-2">SOREN collection points FR</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Sources -->
+        <section id="sources" class="py-16 bg-slate-800/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold mb-8">8. Sources and References</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-amber-400">Organizations and Bodies</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>🔗 <strong>SOREN</strong> — Approved eco-organization, France 2023-2024 collection data</li>
+                            <li>🔗 <strong>IRENA (International Renewable Energy Agency)</strong> — "End-of-Life Management of Photovoltaic Panels" Report 2016 + update 2024</li>
+                            <li>🔗 <strong>PV Cycle Europe</strong> — Historic data, European recycling best practices</li>
+                            <li>🔗 <strong>ADEME (Environment Agency)</strong> — French circular economy guides</li>
+                            <li>🔗 <strong>European Commission</strong> — WEEE Directive 2012/19/EU</li>
+                            <li>🔗 <strong>IEA PVPS Task 12</strong> — Recycling and Reuse of Photovoltaic Panels</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-cyan-400">Methodology and Data Quality</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>✓ 2024 Data: Official sources (SOREN, IRENA)</li>
+                            <li>✓ Panel composition: Standard crystalline technology specifications</li>
+                            <li>✓ Recycling rates: ISO-certified independent laboratory tests</li>
+                            <li>✓ Regulations: Up-to-date with WEEE Directive 2012/19/EU + Decree 2014-928</li>
+                            <li>✓ 2050 IRENA projections: Worldwide solar park growth model</li>
+                            <li>✓ Next update: 2026 (EU digital passport standard updates)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl">
+                    <h3 class="font-semibold mb-2 flex items-center gap-2">
+                        <span class="text-lg">⚠️</span>
+                        Warning and Limitation
+                    </h3>
+                    <p class="text-sm text-slate-300">
+                        This page provides reference information based on verifiable public data. Recycling rates and timelines may vary depending on panel technology, configuration (monocrystalline vs polycrystalline), age and operating conditions. For a personalized evaluation, contact SOREN directly or an approved treatment center.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal Notice</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Editor:</strong> Bernard Pugnet - Personal informational website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hosting:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual Property:</strong> All content on this website (texts, images, graphics) is the property of Bernard Pugnet or cited sources. Reproduction without permission is prohibited.</p>
+                        <p><strong class="text-slate-400">Personal Data:</strong> This website collects no personal data. No tracking cookies are used.</p>
+                        <p><strong class="text-slate-400">Liability:</strong> Information on this website is provided for informational purposes only and does not constitute investment advice.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+</body>
+</html>

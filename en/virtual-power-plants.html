@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Power Plants (VPP) — Distributed Grid Intelligence</title>
+    <meta name="description" content="Virtual Power Plants aggregate solar, batteries and flexibility to optimize distributed energy production.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/en/virtual-power-plants">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/virtual-power-plants">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/centrales-virtuelles">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .architecture-box{padding:1.5rem;background:rgba(71,85,105,0.2);border:1px solid rgba(245,158,11,0.2);border-radius:0.75rem;transition:all 0.3s ease}
+        .architecture-box:hover{border-color:rgba(245,158,11,0.5);background:rgba(245,158,11,0.06)}
+        .highlight-box{padding:1.5rem;background:rgba(34,197,94,0.08);border-left:4px solid #22c55e;border-radius:0.5rem;margin:1.5rem 0}
+        .warning-box{padding:1.5rem;background:rgba(59,130,246,0.08);border-left:4px solid #3b82f6;border-radius:0.5rem;margin:1.5rem 0}
+        .revenue-card{padding:1.5rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem;margin-bottom:1rem}
+        .use-case-card{padding:1.5rem;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.3);border-radius:0.75rem;margin-bottom:1rem}
+        abbr[title]{text-decoration:underline dotted rgba(6,182,212,0.5);text-underline-offset:3px;cursor:help}
+        section{margin-bottom:4rem}
+        h2{font-size:2rem;font-weight:700;margin-bottom:1.5rem;line-height:1.2}
+        h3{font-size:1.5rem;font-weight:600;margin-bottom:1rem}
+        p{line-height:1.7;margin-bottom:1rem;color:#e2e8f0}
+        ul{margin-left:1.5rem;margin-bottom:1.5rem}
+        li{margin-bottom:0.75rem;line-height:1.6}
+        strong{font-weight:600;color:#f1f5f9}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
+                    <a href="economy.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Economy</a>
+                    <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Tools menu">
+                            Tools
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Residential</div>
+                                        <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="tools-autoconsumption.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Self-Consumption</div>
+                                        <div class="text-xs text-slate-400">Advanced simulator · Battery</div>
+                                    </div>
+                                </a>
+                                <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industrial</div>
+                                        <div class="text-xs text-slate-400">PPE sizing</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="menuBtn" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-800 transition-colors" aria-label="Mobile menu" aria-expanded="false">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden lg:hidden py-4 space-y-2 border-t border-slate-800">
+                <a href="index.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Home</a>
+                <a href="economy.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Economy</a>
+                <a href="markets.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Markets</a>
+                <a href="technologies.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Technologies</a>
+                <a href="insights/" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Insights</a>
+                <a href="tools-residential.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Tools Residential</a>
+                <a href="tools-autoconsumption.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Tools Self-Consumption</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Tools Industrial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+
+        <!-- Hero Section -->
+        <div class="mb-12">
+            <h1 class="text-5xl font-bold mb-4 leading-tight">
+                <span class="gradient-text">Virtual Power Plants (VPP)</span>
+                <br/>Distributed Grid Intelligence
+            </h1>
+            <p class="text-xl text-slate-400 leading-relaxed">
+                Virtual Power Plants aggregate thousands of distributed sources (solar, batteries, electric vehicles, flexibility) orchestrated by artificial intelligence. Discover how this new infrastructure transforms electrical grids and creates revenue opportunities for decentralized producers.
+            </p>
+        </div>
+
+        <!-- Section 1: VPP Definition -->
+        <section id="definition">
+            <h2>What is a Virtual Power Plant (VPP)?</h2>
+            <p>
+                A <strong>Virtual Power Plant (VPP)</strong> is an energy aggregator that federates hundreds or thousands of distributed electricity sources and flexible loads, controlled by a centralized platform via <abbr title="Internet of Things">IoT</abbr> and cloud computing.
+            </p>
+
+            <p class="text-lg italic text-amber-500 font-semibold mb-4">
+                "A power plant that doesn't exist physically, but plays the role of a real power plant"
+            </p>
+
+            <h3>Fundamental principle</h3>
+            <p>
+                Instead of building a massive thermal or nuclear power plant, you aggregate thousands of small producers (residential solar panels, small wind turbines, home batteries, load shedding). This virtual aggregation reaches equivalent power and offers the same services as a real power plant, with more flexibility.
+            </p>
+
+            <h3>Concrete example</h3>
+            <ul>
+                <li><strong>Without VPP:</strong> 10,000 homes with 3 kWc solar each = total dispersion. Producers passive to grid. Uncoordinated production.</li>
+                <li><strong>With VPP:</strong> Platform aggregates these 30 MWc, adjusts battery discharge in real-time, optimizes collective self-consumption, accesses EPEX Spot markets. Power equivalent to a real power plant, but distributed and flexible.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Key point:</strong> VPP transforms passive producers into active market participants. Instead of selling electricity at fixed price to distributor, you can participate in market auctions and profit from price volatility.
+            </div>
+        </section>
+
+        <!-- Section 2: Architecture and Operation -->
+        <section id="architecture">
+            <h2>How It Works: VPP Architecture</h2>
+
+            <h3>4-layer information flow</h3>
+            <div class="space-y-3 mb-6">
+                <div class="architecture-box">
+                    <div class="font-semibold text-amber-500 mb-1">1. Assets Layer (distributed sources)</div>
+                    <div class="text-sm text-slate-300">Solar panels, LiFePO4 batteries, EVs (V2G), electric heaters, flexible loads (small consumer aggregates).</div>
+                </div>
+                <div class="architecture-box">
+                    <div class="font-semibold text-cyan-400 mb-1">2. Sensors/Smart Meters Layer</div>
+                    <div class="text-sm text-slate-300">IoT modules measure production/consumption in real-time (15 min to 1 sec granularity depending on equipment). Communicate via 4G/5G/WiFi to central platform.</div>
+                </div>
+                <div class="architecture-box">
+                    <div class="font-semibold text-emerald-500 mb-1">3. Aggregation Platform Layer (VPP Core)</div>
+                    <div class="text-sm text-slate-300">Cloud computing + AI / machine learning. Analyzes real-time flows, predicts production (weather models), optimizes battery discharge, calculates price offers, controls load shedding. Sub-second decisions.</div>
+                </div>
+                <div class="architecture-box">
+                    <div class="font-semibold text-orange-500 mb-1">4. Markets/Grid Layer</div>
+                    <div class="text-sm text-slate-300">Sells electricity on EPEX Spot, auxiliary services (FCR/aFRR/mFRR/voltage services), RTE adjustment mechanism. Buys/sells continuously based on market rates.</div>
+                </div>
+            </div>
+
+            <h3>Simplified diagram</h3>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(245,158,11,0.2);border-radius:0.75rem;padding:2rem;margin:1.5rem 0">
+                <svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px">
+                    <!-- Title -->
+                    <text x="350" y="25" text-anchor="middle" fill="#F59E0B" font-size="16" font-weight="bold">VPP Architecture - Information Flow</text>
+
+                    <!-- Layer 1: Assets -->
+                    <rect x="50" y="60" width="600" height="60" fill="rgba(245,158,11,0.1)" stroke="#F59E0B" stroke-width="2" rx="4"/>
+                    <text x="70" y="85" fill="#F59E0B" font-weight="bold" font-size="12">Distributed assets</text>
+                    <circle cx="120" cy="110" r="15" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                    <text x="120" y="115" text-anchor="middle" fill="#F59E0B" font-size="10">PV</text>
+                    <circle cx="180" cy="110" r="15" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                    <text x="180" y="115" text-anchor="middle" fill="#F59E0B" font-size="10">Battery</text>
+                    <circle cx="240" cy="110" r="15" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                    <text x="240" y="115" text-anchor="middle" fill="#F59E0B" font-size="10">EV</text>
+                    <circle cx="300" cy="110" r="15" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                    <text x="300" y="115" text-anchor="middle" fill="#F59E0B" font-size="10">Load</text>
+                    <circle cx="360" cy="110" r="15" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                    <text x="360" y="115" text-anchor="middle" fill="#F59E0B" font-size="10">Wind</text>
+
+                    <!-- Layer 2: IoT -->
+                    <rect x="50" y="150" width="600" height="50" fill="rgba(6,182,212,0.1)" stroke="#06b6d4" stroke-width="2" rx="4"/>
+                    <text x="70" y="170" fill="#06b6d4" font-weight="bold" font-size="12">Smart Meters / IoT (real-time measurement)</text>
+                    <text x="350" y="190" text-anchor="middle" fill="#06b6d4" font-size="11">4G/5G/WiFi → Cloud</text>
+
+                    <!-- Arrows Layer 1 to 2 -->
+                    <path d="M 120 125 L 120 150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+                    <path d="M 180 125 L 180 150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+                    <path d="M 240 125 L 240 150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+                    <path d="M 300 125 L 300 150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+                    <path d="M 360 125 L 360 150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+
+                    <!-- Layer 3: VPP Core -->
+                    <rect x="50" y="230" width="600" height="60" fill="rgba(34,197,94,0.1)" stroke="#22c55e" stroke-width="2" rx="4"/>
+                    <text x="70" y="250" fill="#22c55e" font-weight="bold" font-size="12">Aggregation Platform (VPP Core)</text>
+                    <text x="350" y="270" text-anchor="middle" fill="#22c55e" font-size="11">Cloud + AI: Optimizes production, predicts consumption, controls batteries</text>
+
+                    <!-- Arrows Layer 2 to 3 -->
+                    <path d="M 200 200 L 250 230" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+                    <path d="M 500 200 L 450 230" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+
+                    <!-- Layer 4: Markets -->
+                    <rect x="50" y="320" width="600" height="30" fill="rgba(245,158,11,0.1)" stroke="#F59E0B" stroke-width="2" rx="4"/>
+                    <text x="350" y="340" text-anchor="middle" fill="#F59E0B" font-weight="bold" font-size="11">Markets (EPEX Spot, RTE Adjustment, Auxiliary Services)</text>
+
+                    <!-- Arrows Layer 3 to 4 -->
+                    <path d="M 350 290 L 350 320" stroke="#F59E0B" stroke-width="2"/>
+
+                    <!-- Marker definition -->
+                    <defs>
+                        <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#22c55e"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <h3>Response times</h3>
+            <ul>
+                <li><strong>Production forecasting:</strong> 15 min to 24h ahead (weather models)</li>
+                <li><strong>Battery optimization:</strong> Continuous (every minute)</li>
+                <li><strong>Load shedding reaction:</strong> 1 to 15 minutes (depends on market requested)</li>
+                <li><strong>System services (FCR/aFRR):</strong> Sub-second (dedicated equipment)</li>
+            </ul>
+        </section>
+
+        <!-- Section 3: VPP Types -->
+        <section id="types">
+            <h2>Types of Virtual Power Plants</h2>
+
+            <h3>3 main categories</h3>
+
+            <div class="use-case-card">
+                <div class="font-semibold text-cyan-400 mb-2">1. Commercial VPP</div>
+                <p class="text-sm mb-2">Goal: Maximize market revenues (EPEX Spot, auxiliary services).</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Price arbitrage: Charge batteries when cheap, discharge when expensive</li>
+                    <li>Market load shedding: Reduces consumption during peak hours</li>
+                    <li>Reserves (FCR/aFRR/mFRR): Sells response capacity to RTE</li>
+                    <li>Typical: Independent aggregators (Next Kraftwerke, Voltalis), utilities (Engie, EDF)</li>
+                </ul>
+            </div>
+
+            <div class="use-case-card">
+                <div class="font-semibold text-emerald-500 mb-2">2. Technical VPP (or Network)</div>
+                <p class="text-sm mb-2">Goal: Stabilize and optimize electrical grid.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Voltage/frequency management in critical zones</li>
+                    <li>Congestion confinement (local discharge without transiting national network)</li>
+                    <li>Synthetic inertia (batteries react to frequency variations)</li>
+                    <li>Typical: Network operators (Enedis, RTE), local authorities (microgrids)</li>
+                </ul>
+            </div>
+
+            <div class="use-case-card">
+                <div class="font-semibold text-amber-500 mb-2">3. Hybrid VPP</div>
+                <p class="text-sm mb-2">Combines commercial + grid service objectives.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Optimizes revenues while respecting grid constraints</li>
+                    <li>Controlled by bidirectional contracts with distributor</li>
+                    <li>Typical: Future dominant model (Tesla VPP, Engie Flexibility)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: France Use Cases -->
+        <section id="usecases-fr">
+            <h2>Use Cases: VPP in France (2024-2025)</h2>
+
+            <h3>Major operators</h3>
+
+            <div class="architecture-box">
+                <div class="font-semibold text-amber-500 mb-2">Next Kraftwerke (acquired by Shell, 2022)</div>
+                <p class="text-sm mb-2">Leading independent European aggregator. In France since 2018.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Aggregates 35,000+ sites in Europe (12,000 in France). Mix: PV, batteries, EVs, heat, wind.</li>
+                    <li>Proprietary "Kiwi Power" platform: real-time optimization.</li>
+                    <li>Revenues: 50-150 €/MWh depending on market (EPEX Spot, RTE adjustment, FCR).</li>
+                </ul>
+            </div>
+
+            <div class="architecture-box">
+                <div class="font-semibold text-cyan-400 mb-2">Engie Flexibility</div>
+                <p class="text-sm mb-2">Flexibility division of French giant. Multi-service VPP.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Aggregates supply/demand mix: residential batteries, industrial load shedding, EVs, heaters.</li>
+                    <li>Contracts with RTE for auxiliary services (FCR, aFRR).</li>
+                    <li>Ambition: 5 GW aggregated flexibility by 2030.</li>
+                </ul>
+            </div>
+
+            <div class="architecture-box">
+                <div class="font-semibold text-emerald-500 mb-2">Voltalis (formerly Adept)</div>
+                <p class="text-sm mb-2">French specialist in residential diffuse load shedding.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Aggregates heaters, water heaters: short interruptions (20-30 min) imperceptible.</li>
+                    <li>Enedis partnership for local grid services.</li>
+                    <li>Load shedding revenues: 30-60 €/MW/h during calls.</li>
+                </ul>
+            </div>
+
+            <div class="architecture-box">
+                <div class="font-semibold text-orange-500 mb-2">Tesla Virtual Power Plant</div>
+                <p class="text-sm mb-2">Tesla strategy: residential Powerwall batteries + solar + EVs.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>USA (California): Already active. France: Rolling out 2025-2026.</li>
+                    <li>Real-time optimization: Charges on PV production/low prices, discharges on price spikes.</li>
+                    <li>Proprietary model: Tesla controls data, optimization.</li>
+                </ul>
+            </div>
+
+            <div class="architecture-box">
+                <div class="font-semibold text-blue-500 mb-2">Specialized PV aggregators</div>
+                <p class="text-sm mb-2">Small local operators aggregate solar producers.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Offer simple web portal + market optimization for small producers.</li>
+                    <li>Challenge: EPEX Spot market access (high technical thresholds without aggregation).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 5: Synergies with Solar -->
+        <section id="synergies">
+            <h2>VPP + Distributed Solar Synergies</h2>
+            <p>
+                A VPP transforms an isolated residential solar installation into an active system participant.
+            </p>
+
+            <h3>4 key synergies</h3>
+
+            <ul>
+                <li>
+                    <strong>1. PV surplus management:</strong> Without VPP, surplus PV = battery storage or grid rejection. With VPP, surplus coordinated with 1,000+ other producers: collective smoothing, fewer peaks, market access (direct EPEX sales).
+                </li>
+                <li>
+                    <strong>2. Production smoothing:</strong> Solar intermittency (clouds) = grid challenge. VPP compensates with distributed batteries: produces during solar dips acting as virtual battery for collective.
+                </li>
+                <li>
+                    <strong>3. Market access:</strong> Small producer alone = no EPEX Spot access (technical thresholds ~100 kW). Via VPP aggregator: participates directly in auctions. Can sell 1 kW if aggregated with 99 others.
+                </li>
+                <li>
+                    <strong>4. Intermittency mutualization:</strong> 1 solar site fluctuates ±20%. 100 sites = smoothed curve (standard deviation ±3%). VPP plays on this smoothing to sell more reliable electricity = price premium on markets.
+                </li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Concrete case:</strong> You have 6 kWc solar + 10 kWh battery. Alone: 40% self-consumption, surplus rejected. Via VPP: coordinated self-consumption 60%, EPEX market access, +150-300 €/year revenue. Battery pays for itself faster.
+            </div>
+        </section>
+
+        <!-- Section 6: Economics and Revenue -->
+        <section id="revenus">
+            <h2>Economic Model: VPP Revenues</h2>
+
+            <h3>Three revenue streams for aggregator</h3>
+
+            <div class="revenue-card">
+                <div class="font-semibold text-amber-500 mb-2">1. PV Aggregation - EPEX Spot Market</div>
+                <p class="text-sm mb-2">Wholesale electricity sales. Price fluctuates hourly.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>PV aggregation premium (for predictability value): +5-15 €/MWh above spot price</li>
+                    <li>Example: 80 €/MWh spot + 10 €/MWh premium = 90 €/MWh. VPP buys PV at 88 €/MWh, sells 90 €/MWh = 2 €/MWh margin.</li>
+                    <li>Magnitudes: Lone producer sells at 60 €/MWh (basic network rate). Via VPP: access 85-95 €/MWh prices.</li>
+                </ul>
+            </div>
+
+            <div class="revenue-card">
+                <div class="font-semibold text-emerald-500 mb-2">2. Diffuse Load Shedding - Adjustment Mechanism Market</div>
+                <p class="text-sm mb-2">Reduces consumption during peak hours. RTE requests, VPP provides offer.</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Load shedding compensation: 30-60 €/MW/h in France (varies by urgency)</li>
+                    <li>Example: VPP aggregates 500 homes. Reduces heating 30 min during peaks = 100 kW shed. Revenue: 100 kW × 50 €/MW/h = 5 €. Split: ~0.01 € per home this half-hour, but cumulative 100-200 h/year = 10-20 € individual revenue + electricity savings.</li>
+                </ul>
+            </div>
+
+            <div class="revenue-card">
+                <div class="font-semibold text-blue-500 mb-2">3. Storage Arbitrage - Distributed Battery</div>
+                <p class="text-sm mb-2">Charge battery at low prices (night), discharge at high (evening peak).</p>
+                <ul style="margin-left:1.5rem;font-size:0.9rem">
+                    <li>Price spread: Typical 30-100 €/MWh (night/evening gap)</li>
+                    <li>Round-trip efficiency: 85% (charge/discharge losses). Net revenues ~30-50 €/MWh after losses.</li>
+                    <li>Example: 10 kWh battery. Day cycle: charge 50 €/MWh, discharge 120 €/MWh. Revenue = (10 kWh × (120-50) €/MWh × 85% efficiency) = 60 € per cycle. 200 cycles/year = 12,000 € for 10 MWh aggregated = fast payback.</li>
+                </ul>
+            </div>
+
+            <h3>Grid auxiliary services (RTE)</h3>
+            <ul>
+                <li><strong>FCR (Frequency Containment Reserve):</strong> 50 Hz frequency stability. Compensation: 5-8 €/MWh/h (continuous).</li>
+                <li><strong>aFRR (Automatic Frequency Restoration Reserve):</strong> Faster recovery. 10-15 €/MWh/h.</li>
+                <li><strong>mFRR (Manual Frequency Restoration Reserve):</strong> RTE + manual intervention. 15-30 €/MWh/h.</li>
+            </ul>
+
+            <h3>Small producer revenue summary</h3>
+            <table class="w-full text-sm mt-4 border-collapse">
+                <thead>
+                    <tr style="border-bottom:2px solid rgba(245,158,11,0.3)">
+                        <td class="py-2 px-3 font-semibold">Service</td>
+                        <td class="py-2 px-3 font-semibold text-right">Annual revenue (6 kWc + 10 kWh battery)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid rgba(71,85,105,0.3)">
+                        <td class="py-2 px-3">PV Aggregation (EPEX)</td>
+                        <td class="py-2 px-3 text-right">+80-150 €</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(71,85,105,0.3)">
+                        <td class="py-2 px-3">Load Shedding (RTE adjustment)</td>
+                        <td class="py-2 px-3 text-right">+50-100 €</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(71,85,105,0.3)">
+                        <td class="py-2 px-3">Battery Arbitrage</td>
+                        <td class="py-2 px-3 text-right">+150-300 €</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 px-3 font-semibold">Total VPP</td>
+                        <td class="py-2 px-3 text-right font-semibold">280-550 €</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 7: Regulation -->
+        <section id="regulation">
+            <h2>Regulatory Framework in Europe and France</h2>
+
+            <h3>European directive (Clean Energy Package, 2019)</h3>
+            <ul>
+                <li><strong>Directive 2019/944:</strong> Recognizes producer right to aggregate and sell directly. Defines independent aggregator as neutral third party.</li>
+                <li><strong>Directive 2019/941:</strong> Framework for flexibility market rules and system services. Requires DSO/TSO to respect aggregator offers.</li>
+                <li><strong>Impact:</strong> Europe must transpose. Timeline: 2024-2025 for full applications.</li>
+            </ul>
+
+            <h3>France - Energy Code (AGEC Law, 2021)</h3>
+            <ul>
+                <li><strong>Independent aggregator status:</strong> Legalized. But strict obligations: price transparency, non-discrimination, balancing responsibility.</li>
+                <li><strong>EPEX Spot market:</strong> Small producer can participate via aggregator (article L. 311-5 Energy Code).</li>
+                <li><strong>Auxiliary services:</strong> RTE access for aggregators (FCR, aFRR, mFRR) governed by negotiated contracts.</li>
+                <li><strong>Bidirectional metering:</strong> Enedis obligation for surplus injection (injections > 3 kWc). Costs: free or 100-200 € depending on situation.</li>
+            </ul>
+
+            <h3>NEBEF (Notification Échange Blocs Effacement)</h3>
+            <p class="text-sm mb-2">
+                French diffuse load shedding mechanism. Aggregators notify RTE available "blocks" for reduction. Light administrative process.
+            </p>
+            <ul style="font-size:0.9rem">
+                <li>Minimum threshold: 100 kW shedding capacity (admin cost reason). Small producer alone cannot. Via VPP = yes.</li>
+                <li>Compensation: 30-60 €/MW/h per RTE/Enedis decision.</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Caution:</strong> VPP/aggregation regulation very fragmented by country. Aggregator contract = critical reading. Verify: commission taken, price transparency, easy exit clause, civil liability insurance coverage.
+            </div>
+        </section>
+
+        <!-- Section 8: Conclusion and Resources -->
+        <section id="sources">
+            <h2>Learn More</h2>
+
+            <h3>Decision making</h3>
+            <ul>
+                <li><strong>Join a VPP?</strong> Recommended if you have battery (storage) or large solar (> 9 kWc). Small producers alone (< 3 kWc): weak gains but no additional costs.</li>
+                <li><strong>Which aggregator?</strong> Compare commissions (typical 5-15%), price transparency, France location, financial stability. Next Kraftwerke and Engie Flexibility: references.</li>
+                <li><strong>Technical vs commercial VPP:</strong> Commercial (EPEX) = revenue, but market risk. Technical (Enedis) = stable, low revenue, grid services. Hybrid = best compromise 2025+.</li>
+            </ul>
+
+            <h3>Key resources</h3>
+            <ul>
+                <li><strong>IRENA (2022):</strong> "Renewable Power Generation Costs in 2022" - Costs and VPP potential.</li>
+                <li><strong>IEA (2021):</strong> "Energy Storage Integration with the Power Sector" - Global VPP roadmap.</li>
+                <li><strong>RTE (2024):</strong> "Forecast Balance 2024-2035" - France flexibility needs.</li>
+                <li><strong>EU Commission (2022):</strong> "REPowerEU" - Flexibility and aggregation acceleration plan.</li>
+                <li><strong>Next Kraftwerke:</strong> European VPP case studies (nextko.com).</li>
+                <li><strong>Voltalis:</strong> French diffuse load shedding specialist (voltalis.com).</li>
+                <li><strong>Enedis:</strong> Bidirectional metering documentation and local services.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Conclusion:</strong> VPP represents major shift from centralized (big power plants) to distributed and flexible (thousands of coordinated small assets). In France, deployment accelerating 2024-2025. Small solar producer benefits from joining VPP to maximize revenues (300-600 €/year additional vs. fixed-rate sales), with moderate market risk. Horizon: VPP becomes standard, not exception, by 2030.
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="p-1.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <span class="font-bold text-white">SolarMetrics</span>
+                    </div>
+                    <p class="text-slate-400 text-sm">Solar intelligence and electric grids for energy transition.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Navigation</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="index.html" class="hover:text-amber-500 transition-colors">Home</a></li>
+                        <li><a href="economy.html" class="hover:text-amber-500 transition-colors">Economy</a></li>
+                        <li><a href="markets.html" class="hover:text-amber-500 transition-colors">Markets</a></li>
+                        <li><a href="technologies.html" class="hover:text-amber-500 transition-colors">Technologies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Tools</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="tools-residential.html" class="hover:text-amber-500 transition-colors">Residential</a></li>
+                        <li><a href="tools-autoconsumption.html" class="hover:text-amber-500 transition-colors">Self-Consumption</a></li>
+                        <li><a href="tools-industrial.html" class="hover:text-amber-500 transition-colors">Industrial</a></li>
+                        <li><a href="technology-comparison.html" class="hover:text-amber-500 transition-colors">Comparator</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="insights/" class="hover:text-amber-500 transition-colors">Insights</a></li>
+                        <li><a href="vehicle-to-grid.html" class="hover:text-amber-500 transition-colors">Vehicle-to-Grid</a></li>
+                        <li><a href="virtual-power-plants.html" class="hover:text-amber-500 transition-colors">Virtual Power Plants</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Legal notices</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Editor:</strong> Bernard Pugnet - Personal information-focused website - Contact: <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Host:</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Intellectual property:</strong> All content on this site (text, images, graphics) is the property of Bernard Pugnet or its cited sources. Reproduction is prohibited without permission.</p>
+                        <p><strong class="text-slate-400">Personal data:</strong> This site does not collect personal data. No tracking cookies are used.</p>
+                        <p><strong class="text-slate-400">Liability:</strong> Information on this site is provided for informational purposes and does not constitute investment advice.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+</body>
+</html>
