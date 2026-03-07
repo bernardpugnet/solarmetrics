@@ -144,7 +144,7 @@ abbr[title]:hover::after {
                 <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
                     <h2 class="text-2xl font-bold text-white mb-4">Simulateur Solar pour Résidence</h2>
                     <p class="text-slate-400 mb-4">Utilisez cet outil pour estimer la rentabilité d'une installation solaire photovoltaïque sur votre maison. Le simulateur prend en compte votre localisation, votre consommation électrique, les tarifs locaux et les aides disponibles.</p>
-                    <p class="text-slate-400 text-sm">Les calculs utilisent les données <abbr title="Système d'Information Géographique Photovoltaïque - outil EU avec données d'irradiation solaire">PVGIS</abbr> pour l'irradiation solaire et l'<abbr title="Institut National de la Statistique et des Études Économiques - agence française de statistiques">INSEE</abbr> pour les tarifs d'électricité.</p>
+                    <p class="text-slate-400 text-sm">Les calculs utilisent les données <abbr title="Système d'Information Géographique Photovoltaïque - outil EU avec données d'irradiation solaire">PVGIS</abbr> pour l'irradiation solaire et <abbr title="Office statistique de l'Union européenne - données énergétiques harmonisées">Eurostat</abbr> pour les tarifs d'électricité.</p>
                 </div>
 
                 <!-- Main Calculator -->
@@ -224,15 +224,15 @@ abbr[title]:hover::after {
                                         <span class="text-slate-400">Orientation toiture</span>
                                         <span class="tooltip inline-block">
                                             <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">Direction cardinale de la toiture. Sud = 0°, Ouest = 90°, Nord = 180°, Est = 270°.</span>
+                                            <span class="tooltiptext">Direction cardinale de la toiture (convention PVGIS). Sud = 0°, Ouest = 90°, Est = -90°, Nord = ±180°.</span>
                                         </span>
                                     </label>
                                     <select id="resOrientation" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                         <option value="0">Sud (optimal)</option>
+                                        <option value="-45">Sud-Est</option>
                                         <option value="45">Sud-Ouest</option>
+                                        <option value="-90">Est</option>
                                         <option value="90">Ouest</option>
-                                        <option value="315">Sud-Est</option>
-                                        <option value="270">Est</option>
                                         <option value="180">Nord (faible production)</option>
                                     </select>
                                 </div>
@@ -644,7 +644,7 @@ abbr[title]:hover::after {
                     <h4 class="text-lg font-semibold text-white mb-4">Sources et informations</h4>
                     <div class="text-slate-400 text-sm space-y-4">
                         <p><strong>Données d'irradiation:</strong> PVGIS (Photovoltaic Geographical Information System) - Commission européenne</p>
-                        <p><strong>Tarifs électricité:</strong> INSEE/Eurostat - Tarifs TTC moyens résidentiels</p>
+                        <p><strong>Tarifs électricité:</strong> Eurostat - Tarifs TTC moyens résidentiels (nrg_pc_204)</p>
                         <p><strong>Aides:</strong> MaPrimeRénov', Certificats d'Économie d'Énergie (CEE), dispositifs régionaux</p>
                         <p><strong>Hypothèses:</strong> Rendement système 80% (pertes DC/AC), dégradation annuelle 0.5%, durée de vie panneaux 25 ans</p>
                         <p class="text-xs text-slate-500 pt-4 border-t border-slate-700">Cet outil est fourni à titre informatif. Les résultats sont des estimations et peuvent différer de la réalité selon les conditions locales, la qualité de l'installation et l'évolution des tarifs. Consultez un professionnel pour un devis personnalisé.</p>
@@ -817,7 +817,7 @@ abbr[title]:hover::after {
                     document.getElementById('resProductionPerKwc').textContent = pvgisResult.annual_energy.toFixed(0);
                 } else {
                     // Fallback: use orientation/tilt coefficients from solar-data.js
-                    const orientMap = {'0':'S','45':'SW','90':'W','315':'SE','270':'E','180':'N'};
+                    const orientMap = {'0':'S','45':'SW','90':'W','-45':'SE','-90':'E','180':'N'};
                     const orientKey = orientMap[String(orientation)] || 'S';
                     const orientCoeff = (window.SOLAR_DATA && window.SOLAR_DATA.orientationCoefficients[orientKey]) || 1.0;
                     const tiltCoeffs = window.SOLAR_DATA ? window.SOLAR_DATA.tiltCoefficients : {};

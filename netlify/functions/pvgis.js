@@ -105,8 +105,8 @@ exports.handler = async function(event, context) {
       },
       annual: {
         energyPerKwp: data.outputs?.totals?.fixed?.E_y || null,  // kWh/kWp/year
-        irradiation: data.outputs?.totals?.fixed?.["H(i)_y"] || null,  // kWh/m²/year
-        irradiationOptimal: data.outputs?.totals?.fixed?.["H(i)_y"] || null
+        irradiation: data.outputs?.totals?.fixed?.["H(i)_y"] || null,  // kWh/m²/year (plane of array)
+        irradiationOptimal: data.outputs?.totals?.fixed?.["H(i_opt)_y"] || data.outputs?.totals?.fixed?.["H(i)_y"] || null  // kWh/m²/year (optimal angle)
       },
       monthly: (data.outputs?.monthly?.fixed || []).map(m => ({
         month: m.month,

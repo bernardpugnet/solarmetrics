@@ -145,7 +145,7 @@ abbr[title]:hover::after {
                 <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
                     <h2 class="text-2xl font-bold text-white mb-4">Residential Solar Simulator</h2>
                     <p class="text-slate-400 mb-4">Use this tool to estimate the profitability of a photovoltaic solar installation on your home. The simulator takes into account your location, electricity consumption, local tariffs, and available subsidies.</p>
-                    <p class="text-slate-400 text-sm">Calculations use <abbr title="Photovoltaic Geographical Information System - EU tool with solar irradiation data">PVGIS</abbr> data for solar irradiation and <abbr title="National Institute of Statistics and Economic Studies - France's official statistics agency">INSEE</abbr> for electricity tariffs.</p>
+                    <p class="text-slate-400 text-sm">Calculations use <abbr title="Photovoltaic Geographical Information System - EU tool with solar irradiation data">PVGIS</abbr> data for solar irradiation and <abbr title="Statistical Office of the European Union - harmonised energy data">Eurostat</abbr> for electricity tariffs.</p>
                 </div>
 
                 <!-- Main Calculator -->
@@ -226,15 +226,15 @@ abbr[title]:hover::after {
                                         <span class="text-slate-400">Roof orientation</span>
                                         <span class="tooltip inline-block">
                                             <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">Cardinal direction of the roof. South = 0°, West = 90°, North = 180°, East = 270°.</span>
+                                            <span class="tooltiptext">Cardinal direction of the roof (PVGIS convention). South = 0°, West = 90°, East = -90°, North = ±180°.</span>
                                         </span>
                                     </label>
                                     <select id="resOrientation" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                         <option value="0">South (optimal)</option>
+                                        <option value="-45">South-East</option>
                                         <option value="45">South-West</option>
+                                        <option value="-90">East</option>
                                         <option value="90">West</option>
-                                        <option value="315">South-East</option>
-                                        <option value="270">East</option>
                                         <option value="180">North (low production)</option>
                                     </select>
                                 </div>

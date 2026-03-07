@@ -43,11 +43,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/outils</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils"/>
-    <lastmod>2026-03-05</lastmod>
+    <loc>https://solarmetrics.netlify.app/fr/outils-residentiel</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-residential"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/outils-industriel</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-industrial"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
+    <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -124,11 +132,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/tools</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils"/>
-    <lastmod>2026-03-05</lastmod>
+    <loc>https://solarmetrics.netlify.app/en/tools-residential</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-residential"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/en/tools-industrial</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-industrial"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
+    <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
