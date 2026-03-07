@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagram — Ground-Mounted Solar Farm · SolarMetrics</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f172a;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:system-ui,-apple-system,sans-serif;padding:10px}
+svg{max-width:1200px;width:100%;height:auto}
+.comp{cursor:pointer}
+.comp:hover .comp-bg{filter:brightness(1.25)}
+.country-btn{cursor:pointer}
+.country-btn:hover rect{filter:brightness(1.3)}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" role="img" aria-label="Technical diagram: Ground-mounted solar farm">
+<defs>
+  <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+  <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5f"/><stop offset="100%" stop-color="#0c2240"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#94a3b8"/></marker>
+  <marker id="arrowD" markerWidth="6" markerHeight="8" refX="3" refY="8" orient="auto"><path d="M0,0 L3,8 L6,0" fill="#94a3b8"/></marker>
+  <marker id="arrowL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><path d="M8,0 L0,3 L8,6" fill="#94a3b8"/></marker>
+</defs>
+
+<!-- Background -->
+<rect width="1200" height="850" fill="url(#bgGrad)"/>
+
+<!-- ========== HEADER ========== -->
+<rect x="0" y="0" width="1200" height="52" fill="#1e293b" opacity="0.8"/>
+<text x="600" y="22" text-anchor="middle" fill="#f59e0b" font-size="16" font-weight="800" letter-spacing="1">GROUND-MOUNTED SOLAR FARM</text>
+<text x="600" y="42" text-anchor="middle" fill="#94a3b8" font-size="11">Utility-Scale PV Plant · from 100 kWp to 10+ MWp · Interactive Technical Diagram</text>
+
+<!-- ========== SUN ========== -->
+<circle cx="85" cy="95" r="20" fill="#f59e0b" opacity="0.9" filter="url(#glow)">
+  <animate attributeName="r" values="18;22;18" dur="4s" repeatCount="indefinite"/>
+</circle>
+<g stroke="#f59e0b" stroke-width="2" opacity="0.5">
+  <line x1="85" y1="68" x2="85" y2="58"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/></line>
+  <line x1="107" y1="73" x2="114" y2="65"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="0.5s" repeatCount="indefinite"/></line>
+  <line x1="112" y1="95" x2="122" y2="95"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="1s" repeatCount="indefinite"/></line>
+  <line x1="63" y1="73" x2="56" y2="65"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="1.5s" repeatCount="indefinite"/></line>
+  <line x1="58" y1="95" x2="48" y2="95"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="2s" repeatCount="indefinite"/></line>
+</g>
+
+<!-- ========== COMPONENT 1 : SOLAR FIELD ========== -->
+<g class="comp" onclick="showTooltip(1)">
+  <rect class="comp-bg" x="30" y="68" width="1140" height="118" rx="12" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5" opacity="0.95"/>
+  <!-- Panel rows -->
+  <g opacity="0.7">
+    <!-- Row 1 -->
+    <rect x="140" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="230" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="320" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="410" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="500" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="590" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="680" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="770" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="860" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="950" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="1040" y="80" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <!-- Row 2 -->
+    <rect x="140" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="230" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="320" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="410" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="500" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="590" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="680" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="770" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="860" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="950" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <rect x="1040" y="116" width="80" height="28" rx="2" fill="url(#panelGrad)" stroke="#2563eb" stroke-width="0.5"/>
+    <!-- Grid lines on panels (decorative) -->
+    <g stroke="#3b82f6" stroke-width="0.3" opacity="0.4">
+      <line x1="140" y1="94" x2="1120" y2="94"/>
+      <line x1="140" y1="130" x2="1120" y2="130"/>
+    </g>
+  </g>
+  <!-- Badge -->
+  <circle cx="48" cy="82" r="10" fill="#f59e0b"/>
+  <text x="48" y="86" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="800">1</text>
+  <!-- Label -->
+  <text x="600" y="165" text-anchor="middle" fill="white" font-size="14" font-weight="700">☀️ Solar Field Array</text>
+  <text x="600" y="180" text-anchor="middle" fill="#94a3b8" font-size="10">Bifacial monocrystalline panels 400-600 Wp · Single-axis or fixed trackers</text>
+</g>
+
+<!-- ========== ARROW: Solar Field → Combiner (animated) ========== -->
+<line x1="148" y1="186" x2="148" y2="212" stroke="#f97316" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowD)">
+  <animate attributeName="stroke-dashoffset" from="14" to="0" dur="1.5s" repeatCount="indefinite"/>
+</line>
+<text x="162" y="204" fill="#f97316" font-size="8" opacity="0.7">DC strings</text>
+
+<!-- ========== COMPONENT 2 : COMBINER BOXES ========== -->
+<g class="comp" onclick="showTooltip(2)">
+  <rect class="comp-bg" x="40" y="216" width="215" height="78" rx="10" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
+  <circle cx="56" cy="230" r="9" fill="#f97316"/>
+  <text x="56" y="234" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="800">2</text>
+  <text x="148" y="250" text-anchor="middle" fill="white" font-size="12" font-weight="600">⚡ Combiner Boxes</text>
+  <text x="148" y="265" text-anchor="middle" fill="#94a3b8" font-size="9">String combiners · DC protection</text>
+  <text x="148" y="280" text-anchor="middle" fill="#f97316" font-size="8">Fuses · SPDs · Disconnects · AFCI</text>
+</g>
+
+<!-- ========== ARROW: Combiner → Inverter (animated) ========== -->
+<line x1="260" y1="255" x2="305" y2="255" stroke="#f97316" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowR)">
+  <animate attributeName="stroke-dashoffset" from="14" to="0" dur="1.5s" repeatCount="indefinite"/>
+</line>
+<text x="283" y="248" fill="#f97316" font-size="7" text-anchor="middle" opacity="0.7">DC</text>
+
+<!-- ========== COMPONENT 3 : INVERTER ========== -->
+<g class="comp" onclick="showTooltip(3)">
+  <rect class="comp-bg" x="310" y="216" width="215" height="78" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+  <circle cx="326" cy="230" r="9" fill="#10b981"/>
+  <text x="326" y="234" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="800">3</text>
+  <text x="418" y="250" text-anchor="middle" fill="white" font-size="12" font-weight="600">🔄 Central Inverter</text>
+  <text x="418" y="265" text-anchor="middle" fill="#94a3b8" font-size="9">DC → AC · 500 kW to 4 MW</text>
+  <text x="418" y="280" text-anchor="middle" fill="#10b981" font-size="8">Efficiency >98.5% · Conditioned shelter</text>
+</g>
+
+<!-- ========== ARROW: Inverter ↔ BESS ========== -->
+<line x1="530" y1="255" x2="575" y2="255" stroke="#06b6d4" stroke-width="2" marker-end="url(#arrowR)"/>
+<line x1="575" y1="260" x2="530" y2="260" stroke="#06b6d4" stroke-width="2" marker-end="url(#arrowL)"/>
+<text x="553" y="248" fill="#06b6d4" font-size="7" text-anchor="middle" opacity="0.7">AC/DC</text>
+
+<!-- ========== COMPONENT 5 : BESS ========== -->
+<g class="comp" onclick="showTooltip(5)">
+  <rect class="comp-bg" x="580" y="216" width="215" height="78" rx="10" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
+  <circle cx="596" cy="230" r="9" fill="#06b6d4"/>
+  <text x="596" y="234" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="800">5</text>
+  <text x="688" y="250" text-anchor="middle" fill="white" font-size="12" font-weight="600">🔋 BESS Storage</text>
+  <text x="688" y="265" text-anchor="middle" fill="#94a3b8" font-size="9">LFP lithium batteries · Containerized</text>
+  <text x="688" y="280" text-anchor="middle" fill="#06b6d4" font-size="8">500 kWh to 100+ MWh · 5000+ cycles</text>
+</g>
+
+<!-- ========== COMPONENT 7 : SCADA ========== -->
+<g class="comp" onclick="showTooltip(7)">
+  <rect class="comp-bg" x="860" y="216" width="210" height="190" rx="10" fill="#0f172a" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <circle cx="876" cy="230" r="9" fill="#14b8a6"/>
+  <text x="876" y="234" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="800">7</text>
+  <text x="965" y="250" text-anchor="middle" fill="white" font-size="12" font-weight="600">📊 SCADA / EMS</text>
+  <text x="965" y="268" text-anchor="middle" fill="#94a3b8" font-size="9">Supervision + Energy management</text>
+  <text x="965" y="286" text-anchor="middle" fill="#14b8a6" font-size="8">Weather station · Day-ahead forecast</text>
+  <text x="965" y="300" text-anchor="middle" fill="#14b8a6" font-size="8">Thermal imaging · Perimeter intrusion</text>
+  <text x="965" y="318" text-anchor="middle" fill="#14b8a6" font-size="8">AI predictive maintenance</text>
+  <text x="965" y="336" text-anchor="middle" fill="#14b8a6" font-size="8">OT/IT cybersecurity</text>
+  <text x="965" y="354" text-anchor="middle" fill="#14b8a6" font-size="8">KPI · PR · Reporting</text>
+  <!-- Dashed monitoring lines -->
+  <line x1="860" y1="260" x2="800" y2="260" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <line x1="860" y1="340" x2="800" y2="370" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <line x1="860" y1="380" x2="800" y2="390" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+</g>
+
+<!-- ========== ARROW: Inverter → Transformer ========== -->
+<line x1="418" y1="296" x2="418" y2="325" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowD)"/>
+<text x="432" y="314" fill="#3b82f6" font-size="7" opacity="0.7">AC LV</text>
+
+<!-- ========== COMPONENT 4 : TRANSFORMER ========== -->
+<g class="comp" onclick="showTooltip(4)">
+  <rect class="comp-bg" x="310" y="330" width="215" height="78" rx="10" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+  <circle cx="326" cy="344" r="9" fill="#3b82f6"/>
+  <text x="326" y="348" text-anchor="middle" fill="white" font-size="10" font-weight="800">4</text>
+  <text x="418" y="364" text-anchor="middle" fill="white" font-size="12" font-weight="600">⚡ Transformer</text>
+  <text x="418" y="379" text-anchor="middle" fill="#94a3b8" font-size="9">LV 400V → MV 20 kV</text>
+  <text x="418" y="394" text-anchor="middle" fill="#3b82f6" font-size="8">630 kVA to 10+ MVA · Prefab substation</text>
+</g>
+
+<!-- ========== ARROW: Transformer → Delivery ========== -->
+<line x1="530" y1="369" x2="575" y2="369" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowR)"/>
+<text x="553" y="362" fill="#8b5cf6" font-size="7" text-anchor="middle" opacity="0.7">MV</text>
+
+<!-- ========== COMPONENT 6 : DELIVERY POINT ========== -->
+<g class="comp" onclick="showTooltip(6)">
+  <rect class="comp-bg" x="580" y="330" width="215" height="78" rx="10" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <circle cx="596" cy="344" r="9" fill="#8b5cf6"/>
+  <text x="596" y="348" text-anchor="middle" fill="white" font-size="10" font-weight="800">6</text>
+  <text x="688" y="364" text-anchor="middle" fill="white" font-size="12" font-weight="600">🏢 Delivery Point</text>
+  <text x="688" y="379" text-anchor="middle" fill="#94a3b8" font-size="9">MV metering · Decoupling protection</text>
+  <text x="688" y="394" text-anchor="middle" fill="#8b5cf6" font-size="8">MV cells · Remote control</text>
+</g>
+
+<!-- ========== ARROW: Delivery → Grid ========== -->
+<path d="M795,369 L830,369 L830,390 L860,390" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowR)"/>
+<text x="830" y="362" fill="#ef4444" font-size="7" text-anchor="middle" opacity="0.7">MV 20kV</text>
+
+<!-- ========== COMPONENT 8 : GRID ========== -->
+<g class="comp" onclick="showTooltip(8)">
+  <rect class="comp-bg" x="860" y="415" width="210" height="55" rx="10" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+  <circle cx="876" cy="430" r="9" fill="#ef4444"/>
+  <text x="876" y="434" text-anchor="middle" fill="white" font-size="10" font-weight="800">8</text>
+  <text x="965" y="438" text-anchor="middle" fill="white" font-size="12" font-weight="600">🔌 MV / HV Grid</text>
+  <text x="965" y="458" text-anchor="middle" fill="#ef4444" font-size="8">Full injection · CARD/CRAE contract</text>
+</g>
+
+<!-- ========== FLOW LEGEND ========== -->
+<g transform="translate(40, 420)" opacity="0.6">
+  <text x="0" y="0" fill="#94a3b8" font-size="9" font-weight="600">Flow legend:</text>
+  <line x1="0" y1="10" x2="30" y2="10" stroke="#f97316" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="35" y="14" fill="#f97316" font-size="8">DC current</text>
+  <line x1="100" y1="10" x2="130" y2="10" stroke="#3b82f6" stroke-width="2"/>
+  <text x="135" y="14" fill="#3b82f6" font-size="8">AC LV current</text>
+  <line x1="210" y1="10" x2="240" y2="10" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="245" y="14" fill="#8b5cf6" font-size="8">MV 20kV</text>
+  <line x1="310" y1="10" x2="340" y2="10" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="345" y="14" fill="#14b8a6" font-size="8">SCADA data</text>
+</g>
+
+<!-- ========== TOOLTIP OVERLAY ========== -->
+<g id="tooltipOverlay" visibility="hidden">
+  <rect x="0" y="0" width="1200" height="850" fill="black" opacity="0.5" onclick="hideTooltip()"/>
+  <rect id="tooltipBg" x="150" y="120" width="900" height="260" rx="14" fill="#1e293b" stroke="#f59e0b" stroke-width="2" opacity="0.98"/>
+  <text id="tooltipClose" x="1030" y="145" fill="#94a3b8" font-size="18" text-anchor="middle" style="cursor:pointer" onclick="hideTooltip()">✕</text>
+  <text id="ttTitle" x="180" y="158" fill="#f59e0b" font-size="16" font-weight="700"></text>
+  <text id="ttLine1" x="180" y="185" fill="#e2e8f0" font-size="12"></text>
+  <text id="ttLine2" x="180" y="207" fill="#e2e8f0" font-size="12"></text>
+  <text id="ttLine3" x="180" y="229" fill="#e2e8f0" font-size="12"></text>
+  <text id="ttLine4" x="180" y="251" fill="#e2e8f0" font-size="12"></text>
+  <text id="ttLine5" x="180" y="273" fill="#e2e8f0" font-size="12"></text>
+  <text id="ttLine6" x="180" y="295" fill="#94a3b8" font-size="11"></text>
+  <text id="ttLine7" x="180" y="317" fill="#94a3b8" font-size="11"></text>
+  <text id="ttLine8" x="180" y="339" fill="#94a3b8" font-size="10" font-style="italic"></text>
+</g>
+
+<!-- ========== REGULATION BOX ========== -->
+<rect x="30" y="450" width="555" height="250" rx="12" fill="#0f172a" stroke="#f59e0b" stroke-width="1" opacity="0.9"/>
+
+<!-- Country buttons row 1 -->
+<g class="country-btn" onclick="selectCountry('FR')"><rect x="44" y="462" width="43" height="17" rx="4" fill="#f59e0b" id="btnBg-FR"/><text x="65" y="474" text-anchor="middle" fill="#0f172a" font-size="9" font-weight="700" pointer-events="none" id="btnTx-FR">🇫🇷 FR</text></g>
+<g class="country-btn" onclick="selectCountry('DE')"><rect x="94" y="462" width="43" height="17" rx="4" fill="#334155" id="btnBg-DE"/><text x="115" y="474" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-DE">🇩🇪 DE</text></g>
+<g class="country-btn" onclick="selectCountry('ES')"><rect x="144" y="462" width="43" height="17" rx="4" fill="#334155" id="btnBg-ES"/><text x="165" y="474" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-ES">🇪🇸 ES</text></g>
+<g class="country-btn" onclick="selectCountry('IT')"><rect x="194" y="462" width="43" height="17" rx="4" fill="#334155" id="btnBg-IT"/><text x="215" y="474" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-IT">🇮🇹 IT</text></g>
+<g class="country-btn" onclick="selectCountry('NL')"><rect x="244" y="462" width="43" height="17" rx="4" fill="#334155" id="btnBg-NL"/><text x="265" y="474" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-NL">🇳🇱 NL</text></g>
+<!-- Row 2 -->
+<g class="country-btn" onclick="selectCountry('BE')"><rect x="44" y="484" width="43" height="17" rx="4" fill="#334155" id="btnBg-BE"/><text x="65" y="496" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-BE">🇧🇪 BE</text></g>
+<g class="country-btn" onclick="selectCountry('PT')"><rect x="94" y="484" width="43" height="17" rx="4" fill="#334155" id="btnBg-PT"/><text x="115" y="496" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-PT">🇵🇹 PT</text></g>
+<g class="country-btn" onclick="selectCountry('PL')"><rect x="144" y="484" width="43" height="17" rx="4" fill="#334155" id="btnBg-PL"/><text x="165" y="496" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-PL">🇵🇱 PL</text></g>
+<g class="country-btn" onclick="selectCountry('AT')"><rect x="194" y="484" width="43" height="17" rx="4" fill="#334155" id="btnBg-AT"/><text x="215" y="496" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-AT">🇦🇹 AT</text></g>
+<g class="country-btn" onclick="selectCountry('GR')"><rect x="244" y="484" width="43" height="17" rx="4" fill="#334155" id="btnBg-GR"/><text x="265" y="496" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700" pointer-events="none" id="btnTx-GR">🇬🇷 GR</text></g>
+
+<!-- Regulation content -->
+<text id="regTitle" x="44" y="524" fill="#f59e0b" font-size="13" font-weight="700">📋 Regulation — France</text>
+<text id="regItem0" x="44" y="546" fill="#e2e8f0" font-size="10.5">📋 Building permit required (&gt; 250 kWp)</text>
+<text id="regItem1" x="44" y="564" fill="#e2e8f0" font-size="10.5">📋 Environmental impact study + public inquiry</text>
+<text id="regItem2" x="44" y="582" fill="#e2e8f0" font-size="10.5">⚡ CRE auction (&gt; 500 kWp) or open window</text>
+<text id="regItem3" x="44" y="600" fill="#e2e8f0" font-size="10.5">👷 Grid connection Enedis MV or RTE HV (&gt; 12 MW)</text>
+<text id="regItem4" x="44" y="618" fill="#e2e8f0" font-size="10.5">💶 CRE tariff: 50-80 €/MWh · Remuneration premium</text>
+<text id="regNote" x="44" y="643" fill="#fbbf24" font-size="9.5">⚠️ Development timeline: 2-5 years · Emphyteutic lease 30+ years</text>
+<a id="regLinkA" href="https://www.cre.fr/transition-energetique/appels-d-offres" target="_blank">
+  <text id="regLink" x="44" y="663" fill="#38bdf8" font-size="9.5" text-decoration="underline">🔗 cre.fr — Photovoltaic auctions</text>
+</a>
+
+<!-- ========== KEY DATA BOX ========== -->
+<rect x="615" y="450" width="555" height="250" rx="12" fill="#0f172a" stroke="#10b981" stroke-width="1" opacity="0.9"/>
+<text x="635" y="474" fill="#10b981" font-size="13" font-weight="700">📊 Key Data — Solar Farm</text>
+
+<text x="635" y="502" fill="#e2e8f0" font-size="11">💰 Installation cost: <tspan fill="#f59e0b" font-weight="600">500 — 800 €/kWp</tspan> (2025-2026)</text>
+<text x="635" y="524" fill="#e2e8f0" font-size="11">⚡ Average LCOE: <tspan fill="#f59e0b" font-weight="600">25 — 50 €/MWh</tspan> (southern Europe)</text>
+<text x="635" y="546" fill="#e2e8f0" font-size="11">📐 Required land: <tspan fill="#f59e0b" font-weight="600">~1.5 ha / MWp</tspan> installed</text>
+<text x="635" y="568" fill="#e2e8f0" font-size="11">☀️ Annual production: <tspan fill="#f59e0b" font-weight="600">1,100 — 1,600 kWh/kWp</tspan></text>
+<text x="635" y="590" fill="#e2e8f0" font-size="11">📅 Return on investment: <tspan fill="#f59e0b" font-weight="600">7 — 12 years</tspan></text>
+<text x="635" y="612" fill="#e2e8f0" font-size="11">🔧 Operational lifespan: <tspan fill="#f59e0b" font-weight="600">30 — 40 years</tspan></text>
+
+<text x="635" y="642" fill="#94a3b8" font-size="9.5">Average indicative values for Europe. Vary according to</text>
+<text x="635" y="656" fill="#94a3b8" font-size="9.5">irradiance, land costs and financing conditions.</text>
+
+<text x="635" y="682" fill="#10b981" font-size="9.5" font-weight="600">Comparison with residential Plug &amp; Play:</text>
+<text x="635" y="696" fill="#94a3b8" font-size="9">Plug &amp; Play: 1,500-2,000 €/kWp · Solar farm: 500-800 €/kWp → <tspan fill="#10b981">50-65% savings/kWp</tspan></text>
+
+<!-- ========== GLOSSARY ========== -->
+<rect x="30" y="715" width="1140" height="80" rx="10" fill="#0f172a" stroke="#475569" stroke-width="0.5" opacity="0.8"/>
+<text x="50" y="733" fill="#94a3b8" font-size="9" font-weight="600">📖 Glossary:</text>
+<text x="50" y="748" fill="#64748b" font-size="8">DC = Direct Current · AC = Alternating Current · LV = Low Voltage (&lt;1kV) · MV = Medium Voltage (1-50kV) · HV = High Voltage (&gt;50kV) · PV = Photovoltaic</text>
+<text x="50" y="762" fill="#64748b" font-size="8">BESS = Battery Energy Storage System · SCADA = Supervisory Control And Data Acquisition · EMS = Energy Management System · LFP = Lithium Iron Phosphate</text>
+<text x="50" y="776" fill="#64748b" font-size="8">LCOE = Levelized Cost of Energy · CRE = French Energy Regulation Commission · RTE = Electricity Grid Operator · MPPT = Maximum Power Point Tracking · KPI = Key Performance Indicators</text>
+<text x="50" y="790" fill="#64748b" font-size="8">IEC = International Electrotechnical Commission · ICPE = Industrial Installation for Environmental Protection · ROI = Return on Investment · PR = Performance Ratio</text>
+
+<!-- ========== FOOTER ========== -->
+<rect x="0" y="810" width="1200" height="40" fill="#1e293b" opacity="0.8"/>
+<text x="600" y="828" text-anchor="middle" fill="#64748b" font-size="9">SolarMetrics · Interactive diagram — Indicative data 2025-2026 · Click on each component for details</text>
+<text x="600" y="843" text-anchor="middle" fill="#475569" font-size="8">Regulations vary by capacity, location and grid connection. Consult a professional PV developer. Standards IEC 62446 / NF C 14-100.</text>
+
+</svg>
+
+<script>
+/* ===== TOOLTIP DATA ===== */
+var tooltips = {
+  1: {
+    title: '☀️ Solar Field Array',
+    lines: [
+      'Bifacial monocrystalline panels 400-600 Wp · DC→AC system losses 10-15%',
+      'Ground-mounted: fixed structures (30°) or single-axis trackers (+20% yield)',
+      'Foundations: driven piles, ground screws or concrete ballast',
+      'Land area: ~1.5 ha/MWp · Optimized row spacing (shadow mitigation)',
+      'Agrivoltaics: solar + agriculture integration (sheep grazing, beekeeping)',
+      'Biodiversity: hedgerows, ecological corridors, revegetation under panels',
+      '2027+ outlook: perovskite-silicon tandems (cell efficiency 28-33%)',
+      'PV carbon footprint: ~20-30 gCO₂/kWh · 90%+ recyclable (WEEE directive)'
+    ]
+  },
+  2: {
+    title: '⚡ Combiner Boxes / String Combiners',
+    lines: [
+      'DC string grouping in parallel',
+      'String fuses for overcurrent protection',
+      'DC surge protection devices (Type 1+2) against lightning',
+      'DC disconnectors for load-break isolation (maintenance)',
+      'Per-string current/voltage monitoring (fault detection)',
+      'Arc flash protection (AFCI)',
+      'IP65 rating minimum (outdoor)',
+      'One box per 8-24 strings depending on configuration'
+    ]
+  },
+  3: {
+    title: '🔄 Central Inverter',
+    lines: [
+      'Unit power: 500 kW to 4 MW · Efficiency >98.5% · AC losses ~2-5%',
+      'Conditioned shelter / container with forced ventilation',
+      'Multiple MPPTs for zone-level optimization across PV field',
+      'Alternative: distributed string inverters (more flexible, +1-2% yield)',
+      'Integrated EMS (Energy Management System): BESS + spot market arbitrage',
+      'SCADA feedback loop to inverter for real-time optimization',
+      'Modbus/TCP interface · Lifespan: 15-20 years · Preventive maintenance',
+      'Replacement planned at least once over project life (25-40 years)'
+    ]
+  },
+  4: {
+    title: '⚡ LV / MV Transformer',
+    lines: [
+      'Voltage step-up: 400 V (LV) → 20 kV or 33 kV (MV)',
+      'Power: 630 kVA to 10+ MVA per facility',
+      'Type: mineral oil (ONAN) or dry-type (epoxy resin)',
+      'MV cells: inlet, protection, metering, outlet',
+      'Prefab compact substation (concrete or steel)',
+      'Protection via MV circuit breaker + protective relays',
+      'Natural or forced cooling depending on power',
+      'Compliance NF C 13-100 / NF C 13-200'
+    ]
+  },
+  5: {
+    title: '🔋 BESS Storage (Battery Energy Storage System)',
+    lines: [
+      'Dominant chemistry: LFP (Lithium Iron Phosphate) — safe, long-lived',
+      'Emerging alternatives: sodium-ion (Na-ion), solid-state (2027+)',
+      '20/40-foot containers · BMS + active thermal management · 500 kWh to 100+ MWh',
+      'Services: peak shaving, spot arbitrage, frequency regulation, primary reserve',
+      'LFP lifespan: 15-20 years · 5,000 to 10,000 cycles · ~2%/year degradation',
+      'BESS cost declining: ~150-250 €/kWh installed (2025-2026)',
+      'ROI improved by grid services + storage mandate >50% PV (CRE 2026)',
+      'ICPE regulation per capacity · Fire risk managed by BMS'
+    ]
+  },
+  6: {
+    title: '🏢 Delivery Point / MV Substation',
+    lines: [
+      'Grid connection point on public distribution network',
+      'MV metering: current transformers (CT) and voltage transformers (VT)',
+      'Decoupling protection (per NF C 14-100)',
+      'MV cells: inlet, protection, metering, grid outlet',
+      'Remote control and remote signaling to grid operator',
+      'Contractual interface with Enedis or RTE',
+      'Production meter for billing (injection)',
+      'Compliance testing before commissioning (CONSUEL)'
+    ]
+  },
+  7: {
+    title: '📊 SCADA / EMS & Monitoring',
+    lines: [
+      'SCADA: real-time supervision (production, status, alarms)',
+      'EMS (Energy Management System): inverter + BESS + spot market control',
+      'Weather station: pyranometer, anemometer, temperature · Day-ahead forecast',
+      'Thermal cameras IR + perimeter video surveillance (anti-intrusion)',
+      'Cybersecurity: industrial firewall, VPN, OT/IT network segmentation',
+      'AI: dynamic tracker optimization, 3D shadow analysis, estimated +2-5% gain',
+      'KPI reporting: PR, availability, actual LCOE · AI predictive maintenance',
+      'Redundant 4G/fiber communication · 24/7 remote access · IEC 62443 standards'
+    ]
+  },
+  8: {
+    title: '🔌 Electrical Grid MV / HV',
+    lines: [
+      'Full production injection to 20 kV (MV) network',
+      'CARD contract (Grid Access and Distribution Convention)',
+      'Or CRAE for RTE connection (HV) if >12 MW',
+      'Designated balance responsible (market obligations)',
+      'Sales: CRE remuneration premium or bilateral PPA',
+      'Capacity certificates and guarantees of origin',
+      'Aggregator eligible for spot market optimization',
+      'Grid capacity verification before project launch'
+    ]
+  }
+};
+
+function showTooltip(id) {
+  var data = tooltips[id];
+  if (!data) return;
+  document.getElementById('ttTitle').textContent = data.title;
+  for (var i = 0; i < 8; i++) {
+    var el = document.getElementById('ttLine' + (i + 1));
+    if (el) el.textContent = data.lines[i] || '';
+  }
+  document.getElementById('tooltipOverlay').setAttribute('visibility', 'visible');
+}
+
+function hideTooltip() {
+  document.getElementById('tooltipOverlay').setAttribute('visibility', 'hidden');
+}
+
+/* ===== COUNTRY REGULATION DATA ===== */
+var regData = {
+  FR: {
+    title: '📋 Regulation — France',
+    items: [
+      '📋 Building permit required (> 250 kWp)',
+      '📋 Environmental impact study + public inquiry',
+      '⚡ CRE auction (> 500 kWp) or open window',
+      '👷 Grid connection Enedis MV or RTE HV (> 12 MW)',
+      '💶 CRE tariff: 50-80 €/MWh · Remuneration premium'
+    ],
+    note: '⚠️ Development timeline: 2-5 years · Emphyteutic lease 30+ years',
+    linkUrl: 'https://www.cre.fr/transition-energetique/appels-d-offres',
+    linkLabel: '🔗 cre.fr — Photovoltaic auctions'
+  },
+  DE: {
+    title: '📋 Regulations — Germany',
+    items: [
+      '📋 Land-use and development plan required',
+      '📋 BImSchG approval depending on location',
+      '⚡ EEG auction mandatory > 750 kWp',
+      '💶 Award values ~50-55 €/MWh (open field)',
+      '💶 Direct marketing mandatory > 100 kW'
+    ],
+    note: '⚠️ Check grid capacity · Approval 1-3 years',
+    linkUrl: 'https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/Ausschreibungen/start.html',
+    linkLabel: '🔗 bundesnetzagentur.de — Auctions'
+  },
+  ES: {
+    title: '📋 Regulation — Spain',
+    items: [
+      '📋 Prior administrative authorization + construction',
+      '📋 Environmental Impact Declaration (DIA)',
+      '⚡ Access and connection permit to grid node',
+      '💶 REER auctions or bilateral PPA',
+      '💶 Electricity market: OMIE pool + bilateral contracts'
+    ],
+    note: '⚠️ Grid node saturation · Processing 2-4 years',
+    linkUrl: 'https://energia.gob.es/renovables/Paginas/Index.aspx',
+    linkLabel: '🔗 energia.gob.es — Renewable energy'
+  },
+  IT: {
+    title: '📋 Regulation — Italy',
+    items: [
+      '📋 Single Authorization (AU) mandatory > 1 MW',
+      '📋 Simplified PAS < 1 MW · VIA if needed',
+      '⚡ TERNA connection (RTN) or e-distribuzione',
+      '💶 FER Decree / GSE auctions for incentives',
+      '💶 Corporate PPAs growing rapidly'
+    ],
+    note: '⚠️ Landscape constraints · Authorization 2-4 years',
+    linkUrl: 'https://www.gse.it/servizi-per-te/fotovoltaico',
+    linkLabel: '🔗 gse.it — Photovoltaic'
+  },
+  NL: {
+    title: '📋 Regulations — Netherlands',
+    items: [
+      '📋 Environmental permit required',
+      '📋 Spatial justification + local participation',
+      '⚡ SDE++ operating subsidy (15 years)',
+      '💶 Request transport indication from grid operator',
+      '💶 Grid congestion issues (long waiting lists)'
+    ],
+    note: '⚠️ Limited grid capacity · SDE++ open yearly',
+    linkUrl: 'https://www.rvo.nl/subsidies-financiering/sde',
+    linkLabel: '🔗 rvo.nl — SDE++ subsidy'
+  },
+  BE: {
+    title: '📋 Regulation — Belgium',
+    items: [
+      '📋 Environmental + urban planning permit (regional)',
+      '📋 Impact assessment if > 1 MW',
+      '⚡ Green certificates (regional mechanism: WAL/VL/BXL)',
+      '💶 Green certificate quota varies by region',
+      '💶 Prosumer rate or net injection per region'
+    ],
+    note: '⚠️ 3 regions = 3 regulations · Administrative complexity',
+    linkUrl: 'https://www.cwape.be/',
+    linkLabel: '🔗 cwape.be — Walloon regulator'
+  },
+  PT: {
+    title: '📋 Regulation — Portugal',
+    items: [
+      '📋 Production license mandatory > 1 MW',
+      '📋 EIA (Environmental Impact Assessment)',
+      '⚡ National solar auctions (DGEG)',
+      '💶 CIEG + grid access tariff',
+      '💶 Corporate PPAs expanding rapidly'
+    ],
+    note: '⚠️ Highly competitive auctions · Limited agricultural land',
+    linkUrl: 'https://www.dgeg.gov.pt/',
+    linkLabel: '🔗 dgeg.gov.pt — General Energy Directorate'
+  },
+  PL: {
+    title: '📋 Regulations — Poland',
+    items: [
+      '📋 Environmental decision + building conditions',
+      '📋 Construction permit > 50 kW',
+      '⚡ Renewable energy auction system (URE)',
+      '💶 Reference price ~300 PLN/MWh',
+      '💶 CfD / bilateral PPA available'
+    ],
+    note: '⚠️ Limited connection capacity in many regions',
+    linkUrl: 'https://www.ure.gov.pl/',
+    linkLabel: '🔗 ure.gov.pl — Energy Regulatory Office'
+  },
+  AT: {
+    title: '📋 Regulations — Austria',
+    items: [
+      '📋 EIA for installations > 10 ha area',
+      '📋 Building permit + spatial planning (federal state)',
+      '⚡ EAG market premium (auctions)',
+      '💶 OeMAG contract for injection',
+      '💶 Investment support up to 30% possible'
+    ],
+    note: '⚠️ Restrictive land zoning · Alpine regions protected',
+    linkUrl: 'https://www.oem-ag.at/',
+    linkLabel: '🔗 oem-ag.at — OeMAG'
+  },
+  GR: {
+    title: '📋 Regulations — Greece',
+    items: [
+      '📋 Environmental licensing (AEPO/HMPE)',
+      '📋 Production license > 1 MW (RAE/RAAEY)',
+      '⚡ ADMIE (RTN) or DEDDHE connection',
+      '💶 Feed-in premium (DAPEEP / DAΠΕΕΠ)',
+      '💶 Renewable auctions + bilateral PPA'
+    ],
+    note: '⚠️ Grid congestion on islands · Strong irradiation advantage',
+    linkUrl: 'https://www.rae.gr/',
+    linkLabel: '🔗 rae.gr — Regulatory Authority for Energy'
+  }
+};
+
+var countries = ['FR','DE','ES','IT','NL','BE','PT','PL','AT','GR'];
+
+function selectCountry(code) {
+  var data = regData[code];
+  if (!data) return;
+  document.getElementById('regTitle').textContent = data.title;
+  for (var i = 0; i < 5; i++) {
+    document.getElementById('regItem' + i).textContent = data.items[i] || '';
+  }
+  document.getElementById('regNote').textContent = data.note;
+  var linkA = document.getElementById('regLinkA');
+  linkA.setAttribute('href', data.linkUrl);
+  document.getElementById('regLink').textContent = data.linkLabel;
+  /* Update button styles */
+  for (var j = 0; j < countries.length; j++) {
+    var c = countries[j];
+    var bg = document.getElementById('btnBg-' + c);
+    var tx = document.getElementById('btnTx-' + c);
+    if (c === code) {
+      bg.setAttribute('fill', '#f59e0b');
+      tx.setAttribute('fill', '#0f172a');
+    } else {
+      bg.setAttribute('fill', '#334155');
+      tx.setAttribute('fill', '#94a3b8');
+    }
+  }
+}
+</script>
+</body>
+</html>

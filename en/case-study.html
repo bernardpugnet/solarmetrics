@@ -59,7 +59,30 @@ abbr[title]:hover::after {
                     <a href="markets.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Markets</a>
                     <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
                     <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
-                    <a href="tools.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Tools</a>
+                    <div class="relative group">
+                      <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+                        Tools
+                        <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                      </button>
+                      <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                          <a href="tools-residential.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                            <div>
+                              <div class="text-sm font-semibold text-white">Residential</div>
+                              <div class="text-xs text-slate-400">Solar kits · &lt; 9 kWp</div>
+                            </div>
+                          </a>
+                          <a href="tools-industrial.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                            <div>
+                              <div class="text-sm font-semibold text-white">Industrial</div>
+                              <div class="text-xs text-slate-400">Solar farms · 100 kWp — 10+ MWp</div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                     <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
                                 </div>
                 <div class="flex items-center gap-3">
@@ -81,7 +104,8 @@ abbr[title]:hover::after {
                 <a href="markets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Markets</a>
                 <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
                 <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Insights</a>
-                <a href="tools.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Tools</a>
+                <a href="tools-residential.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Residential</a>
+                <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
                 <a href="hire-me.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Hire Me</a>
                         </div>
         </div>

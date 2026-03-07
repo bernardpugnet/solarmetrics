@@ -65,7 +65,30 @@ abbr[title]:hover::after {
                     <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
                     <a href="technologies.html" class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm">Technologies</a>
                     <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
-                    <a href="outils.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Outils</a>
+                    <div class="relative group">
+  <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+    Outils
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Résidentiel</div>
+          <div class="text-xs text-slate-400">Kits solaires · &lt; 9 kWc</div>
+        </div>
+      </a>
+      <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Industriel</div>
+          <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
                     <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
                                 </div>
                 <div class="flex items-center gap-3">
@@ -87,7 +110,8 @@ abbr[title]:hover::after {
                 <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
                 <a href="technologies.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">Technologies</a>
                 <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
-                <a href="outils.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Outils</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Résidentiel</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
                 <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
                         </div>
         </div>
