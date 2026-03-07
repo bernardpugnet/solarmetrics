@@ -341,6 +341,19 @@
                     </div>
                 </div>
 
+                <!-- Plain Language Summary -->
+                <div id="res-summary" class="bg-gradient-to-r from-slate-800/80 to-slate-800/50 rounded-2xl p-6 border border-amber-500/20 mb-8">
+                    <div class="flex items-start gap-4">
+                        <div class="p-2 bg-amber-500/20 rounded-lg flex-shrink-0 mt-1">
+                            <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-semibold mb-3">En résumé</h3>
+                            <p id="res-summary-text" class="text-slate-300 leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Details Row -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
                     <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
@@ -561,6 +574,61 @@
             }
         }
 
+        function generateSummaryText(a, fin) {
+            const prod = a.production.toLocaleString('fr-FR');
+            const conso = a.consumption.toLocaleString('fr-FR');
+            const taux = a.tauxAutoconsommation;
+            const autoTotal = a.autoTotal.toLocaleString('fr-FR');
+            const injection = a.injection.toLocaleString('fr-FR');
+            const soutirage = a.soutirage.toLocaleString('fr-FR');
+            const eco1 = Math.round(fin.savingsYear1).toLocaleString('fr-FR');
+            const ecoMois = Math.round(fin.savingsYear1 / 12).toLocaleString('fr-FR');
+            const invest = Math.round(fin.totalInvestment).toLocaleString('fr-FR');
+            const hasBattery = a.autoBattery > 0;
+
+            // Évaluation du taux d'autoconsommation
+            let tauxComment;
+            if (taux >= 60) tauxComment = "C'est un <strong class='text-emerald-400'>excellent taux</strong>, votre installation est très bien dimensionnée par rapport à vos besoins.";
+            else if (taux >= 40) tauxComment = "C'est un <strong class='text-amber-400'>bon taux</strong>, typique d'une installation résidentielle bien calibrée.";
+            else if (taux >= 25) tauxComment = "C'est un <strong class='text-amber-400'>taux moyen</strong>. Une batterie ou un décalage de certains usages (machine à laver, chauffe-eau) aux heures solaires pourrait l'améliorer.";
+            else tauxComment = "C'est un <strong class='text-red-400'>taux faible</strong>. Votre installation produit beaucoup plus que ce que vous consommez en journée — une batterie serait particulièrement bénéfique.";
+
+            // Phrase batterie
+            let batteryComment = '';
+            if (hasBattery) {
+                const batteryPct = Math.round(a.autoBattery / a.consumption * 100);
+                batteryComment = ` Grâce à votre batterie, vous récupérez ${a.autoBattery.toLocaleString('fr-FR')} kWh supplémentaires (${batteryPct}% de votre consommation) qui auraient été perdus vers le réseau.`;
+            }
+
+            // Phrase payback
+            let paybackComment;
+            if (fin.paybackYear && fin.paybackYear <= 10) paybackComment = `Votre installation sera <strong class='text-emerald-400'>rentabilisée en ${fin.paybackYear} ans</strong>, ce qui est rapide.`;
+            else if (fin.paybackYear && fin.paybackYear <= 15) paybackComment = `Votre installation sera <strong class='text-amber-400'>rentabilisée en ${fin.paybackYear} ans</strong>, dans la moyenne des installations résidentielles.`;
+            else if (fin.paybackYear) paybackComment = `Votre installation sera rentabilisée en ${fin.paybackYear} ans. C'est un peu long — vérifiez si vous pouvez bénéficier d'aides ou primes à l'autoconsommation.`;
+            else paybackComment = "L'installation ne sera <strong class='text-red-400'>pas rentabilisée en 25 ans</strong> avec ces paramètres. Vérifiez les aides disponibles ou ajustez la taille de l'installation.";
+
+            // Surplus / injection
+            let surplusComment = '';
+            if (a.injection > 0) {
+                const injPct = Math.round(a.injection / a.production * 100);
+                surplusComment = ` Vous revendez ${injection} kWh de surplus au réseau (${injPct}% de votre production).`;
+            }
+
+            // Assemblage final
+            return `Vos panneaux produisent <strong class='text-amber-400'>${prod} kWh par an</strong>, tandis que vous consommez ${conso} kWh. `
+                + `Sur cette production, vous utilisez directement <strong class='text-amber-400'>${autoTotal} kWh</strong>, `
+                + `soit <strong class='text-amber-400'>${taux}%</strong> de votre consommation couverte par le solaire. `
+                + tauxComment
+                + batteryComment
+                + surplusComment
+                + `<br><br>`
+                + `Concrètement, cela représente une <strong class='text-emerald-400'>économie d'environ ${eco1} € la première année</strong> `
+                + `(soit ~${ecoMois} €/mois sur votre facture). `
+                + paybackComment
+                + ` Sur 25 ans, le bénéfice net estimé est de <strong class='text-emerald-400'>${Math.round(fin.totalSavings25y).toLocaleString('fr-FR')} €</strong> `
+                + `pour un investissement de ${invest} €.`;
+        }
+
         function displayResults(sim, fin, consoProfile) {
             const a = sim.annual;
 
@@ -580,6 +648,9 @@
             document.getElementById('res-invest-full').textContent = Math.round(fin.totalInvestment).toLocaleString('fr-FR') + ' €';
             document.getElementById('res-savings-y1').textContent = Math.round(fin.savingsYear1).toLocaleString('fr-FR') + ' €';
             document.getElementById('res-savings25').textContent = Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €';
+
+            // ─── Plain language summary ───
+            document.getElementById('res-summary-text').innerHTML = generateSummaryText(a, fin);
 
             const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
 
