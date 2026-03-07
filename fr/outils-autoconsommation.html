@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur Autoconsommation Solaire - SolarMetrics</title>
+    <meta name="description" content="Simulateur avancé d'autoconsommation photovoltaïque : production horaire PVGIS, simulation batterie LFP, projections financières sur 25 ans.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-selfconsumption">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/solar-data.js"></script>
+    <script src="../js/autoconsommation.js"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .tooltip{position:relative;cursor:help}
+        .tooltip .tooltiptext{visibility:hidden;width:280px;background-color:#1e293b;color:#f1f5f9;text-align:left;border-radius:0.5rem;padding:0.75rem;position:absolute;z-index:1000;bottom:120%;left:50%;margin-left:-140px;opacity:0;transition:opacity 0.3s;border:1px solid #475569;font-size:0.75rem;line-height:1.4}
+        .tooltip:hover .tooltiptext{visibility:visible;opacity:1}
+        .input-group input[type="number"]{-moz-appearance:textfield}
+        .input-group input[type="number"]::-webkit-inner-spin-button,.input-group input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+    </style>
+    <style>
+        abbr[title] {
+            text-decoration: underline dotted rgba(6,182,212,0.5);
+            text-underline-offset: 3px;
+            cursor: help;
+            position: relative;
+        }
+        abbr[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid rgba(6,182,212,0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        #map {
+            height: 300px;
+            border-radius: 1rem;
+            border: 1px solid #334155;
+        }
+        .leaflet-container {
+            background: #1e293b;
+        }
+        .chart-container {
+            height: 350px;
+            position: relative;
+        }
+        .spinner {
+            border: 4px solid #334155;
+            border-top-color: #f59e0b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-cyan-400 font-medium rounded-lg text-sm flex items-center gap-1 hover:bg-slate-800 transition-colors">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · < 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 bg-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../en/tools-selfconsumption.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Outils Résidentiel</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Outils Industriel</a>
+                <a href="outils-autoconsommation.html" class="block px-4 py-2 text-cyan-400 font-medium rounded-lg">⚡ Autoconsommation</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <div class="w-16 h-16 mx-auto mb-6 p-4 bg-amber-500/20 rounded-2xl">
+                        <svg class="w-full h-full text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-5xl font-bold mb-4 gradient-text">Simulateur d'Autoconsommation</h1>
+                    <p class="text-slate-400 max-w-3xl mx-auto text-lg">Analysez votre production solaire heure par heure, simulez batteries et calculez vos économies réelles</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Input Form Section -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Form Card -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+
+                    <!-- Row 1: Location with Map -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-white mb-4">Localisation</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Map -->
+                            <div class="lg:col-span-2">
+                                <div id="map" class="mb-4"></div>
+                                <p class="text-xs text-slate-400">Cliquez sur la carte pour définir votre localisation. Vous pouvez aussi déplacer le marqueur.</p>
+                            </div>
+                            <!-- Coordinates -->
+                            <div class="input-group space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Latitude</label>
+                                    <input type="number" id="simLat" min="-90" max="90" step="0.0001" value="48.8566" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Longitude</label>
+                                    <input type="number" id="simLon" min="-180" max="180" step="0.0001" value="2.3522" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Installation PV -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-white mb-4">Installation Photovoltaïque</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Puissance PV (kWc)</label>
+                                <input type="number" id="simPeakpower" min="0.5" max="36" step="0.5" value="3" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Inclinaison (°)</label>
+                                <input type="number" id="simAngle" min="0" max="90" step="1" value="30" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Orientation</label>
+                                <select id="simAspect" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                    <option value="0">Sud</option>
+                                    <option value="-45">Sud-Est</option>
+                                    <option value="45">Sud-Ouest</option>
+                                    <option value="-90">Est</option>
+                                    <option value="90">Ouest</option>
+                                    <option value="180">Nord</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Consommation -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-white mb-4">Consommation Électrique</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Consommation annuelle (kWh/an)</label>
+                                <input type="number" id="simConso" min="1000" max="20000" step="100" value="4500" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Profil de consommation</label>
+                                <select id="simProfile" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                    <option value="famille">Famille 4 personnes</option>
+                                    <option value="couple">Couple retraités</option>
+                                    <option value="telework">Télétravail</option>
+                                    <option value="heatpump">Tout-électrique (PAC)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Pertes ombrage (%)</label>
+                                <input type="number" id="simShading" min="0" max="50" step="1" value="5" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                <p class="text-xs text-slate-400 mt-1">Arbres, bâtiments voisins...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Batterie LFP -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-white mb-4">Stockage par Batterie LFP</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Capacité batterie (kWh)</label>
+                                <input type="number" id="simBattery" min="0" max="20" step="0.5" value="0" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                <p class="text-xs text-slate-400 mt-1">(0 = pas de batterie)</p>
+                            </div>
+                            <div class="bg-slate-900/30 rounded-lg p-4 border border-slate-700/30 flex items-center">
+                                <div>
+                                    <p class="text-sm font-medium text-slate-300 mb-2">Paramètres batterie</p>
+                                    <p class="text-xs text-slate-400">Rendement 95% · DoD 90% · C/2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Financial -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-white mb-4">Paramètres Financiers</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Prix électricité (€/kWh)</label>
+                                <input type="number" id="simPriceElec" min="0.05" max="1" step="0.01" value="0.2516" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Prix revente surplus (€/kWh)</label>
+                                <input type="number" id="simPriceRevente" min="0.05" max="0.5" step="0.01" value="0.13" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Coût installation PV (€)</label>
+                                <input type="number" id="simCostInstall" min="2000" max="20000" step="500" value="6000" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulate Button -->
+                    <div class="flex gap-4">
+                        <button id="simBtn" class="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-50">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/></svg>
+                            Lancer la simulation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="sim-loader" class="hidden bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 text-center">
+                    <div class="flex justify-center mb-4">
+                        <div class="spinner"></div>
+                    </div>
+                    <p id="loader-text" class="text-slate-400">Récupération des données PVGIS...</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="hidden py-12 bg-slate-900">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Key Indicators Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Taux Autoconsommation -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <p class="text-slate-400 text-sm font-medium mb-2">Taux d'autoconsommation</p>
+                        <p class="text-4xl font-bold text-amber-500" id="res-taux">--</p>
+                        <p class="text-xs text-slate-500 mt-2">Pourcentage consommé directement</p>
+                    </div>
+                    <!-- Production Annuelle -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <p class="text-slate-400 text-sm font-medium mb-2">Production annuelle</p>
+                        <p class="text-3xl font-bold text-amber-500" id="res-prod">-- kWh</p>
+                        <p class="text-xs text-slate-500 mt-2">Total généré par le système</p>
+                    </div>
+                    <!-- Économies Année 1 -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <p class="text-slate-400 text-sm font-medium mb-2">Économies année 1</p>
+                        <p class="text-3xl font-bold text-emerald-500" id="res-eco">-- €</p>
+                        <p class="text-xs text-slate-500 mt-2">Facture évitée + revente</p>
+                    </div>
+                    <!-- Rentabilité -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                        <p class="text-slate-400 text-sm font-medium mb-2">Payback</p>
+                        <p class="text-3xl font-bold text-amber-500" id="res-payback">-- ans</p>
+                        <p class="text-xs text-slate-500 mt-2">Amortissement de l'installation</p>
+                    </div>
+                </div>
+
+                <!-- Details Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+                    <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
+                        <p class="text-xs text-slate-400 mb-1">Autoconso directe</p>
+                        <p class="text-lg font-bold text-amber-500" id="res-auto-direct">-- kWh</p>
+                    </div>
+                    <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
+                        <p class="text-xs text-slate-400 mb-1">Autoconso batterie</p>
+                        <p class="text-lg font-bold text-emerald-500" id="res-auto-battery">-- kWh</p>
+                    </div>
+                    <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
+                        <p class="text-xs text-slate-400 mb-1">Injection réseau</p>
+                        <p class="text-lg font-bold text-cyan-500" id="res-injection">-- kWh</p>
+                    </div>
+                    <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
+                        <p class="text-xs text-slate-400 mb-1">Soutirage réseau</p>
+                        <p class="text-lg font-bold text-red-400" id="res-soutirage">-- kWh</p>
+                    </div>
+                    <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
+                        <p class="text-xs text-slate-400 mb-1">Taux autoproduction</p>
+                        <p class="text-lg font-bold text-amber-500" id="res-autoprod">--%</p>
+                    </div>
+                    <div class="bg-slate-800/30 rounded-lg p-4 border border-slate-700/30">
+                        <p class="text-xs text-slate-400 mb-1">Investissement total</p>
+                        <p class="text-lg font-bold text-white" id="res-invest">-- €</p>
+                    </div>
+                </div>
+
+                <!-- Monthly Chart -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-6">Production vs Consommation mensuelle</h3>
+                    <div class="chart-container">
+                        <canvas id="chart-monthly"></canvas>
+                    </div>
+                </div>
+
+                <!-- Daily Type Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h3 class="text-lg font-semibold text-white mb-6">Journée type été (juin-juillet)</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-daily-summer"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
+                        <h3 class="text-lg font-semibold text-white mb-6">Journée type hiver (déc-jan)</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-daily-winter"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Annual Breakdown Donut -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-6">Répartition annuelle de l'énergie</h3>
+                    <div class="chart-container">
+                        <canvas id="chart-donut"></canvas>
+                    </div>
+                </div>
+
+                <!-- Financial Summary -->
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-6">Bilan financier simplifié</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div>
+                            <p class="text-slate-400 text-sm mb-2">Investissement total</p>
+                            <p class="text-2xl font-bold text-white" id="res-invest-full">-- €</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm mb-2">Économies année 1</p>
+                            <p class="text-2xl font-bold text-emerald-500" id="res-savings-y1">-- €</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm mb-2">Cumul 25 ans</p>
+                            <p class="text-2xl font-bold text-amber-500" id="res-savings25">-- €</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart-cashflow"></canvas>
+                    </div>
+                    <!-- Disclaimer part fixe (GPT review) -->
+                    <div class="mt-6 p-4 bg-slate-700/30 rounded-xl border border-slate-600/30">
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            <span class="text-amber-500 font-semibold">Note :</span>
+                            Les économies calculées portent uniquement sur la <strong class="text-slate-300">part variable</strong> de votre facture d'électricité (prix au kWh).
+                            La <strong class="text-slate-300">part fixe</strong> (abonnement, taxes fixes, ~100-200 €/an en France) n'est pas réduite par l'autoconsommation.
+                            Les tarifs de revente (OA) sont indicatifs — vérifiez les conditions en vigueur.
+                            Dégradation panneaux : 0,5%/an · Dégradation batterie : 2%/an · Hausse prix élec : 3%/an.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/tools-selfconsumption.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Chart instances
+        let chartMonthly, chartDailySummer, chartDailyWinter, chartDonut, chartCashflow;
+        let map, marker;
+
+        // Initialize map
+        function initMap() {
+            map = L.map('map').setView([48.8566, 2.3522], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            marker = L.marker([48.8566, 2.3522], {draggable: true}).addTo(map);
+
+            // Click on map to set location
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                document.getElementById('simLat').value = e.latlng.lat.toFixed(4);
+                document.getElementById('simLon').value = e.latlng.lng.toFixed(4);
+            });
+
+            // Drag marker
+            marker.on('dragend', function(e) {
+                const pos = marker.getLatLng();
+                document.getElementById('simLat').value = pos.lat.toFixed(4);
+                document.getElementById('simLon').value = pos.lng.toFixed(4);
+            });
+        }
+
+        async function runSimulation() {
+            const btn = document.getElementById('simBtn');
+            const loader = document.getElementById('sim-loader');
+            const results = document.getElementById('results-section');
+
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            loader.classList.remove('hidden');
+            results.classList.add('hidden');
+
+            try {
+                // Get inputs
+                const lat = parseFloat(document.getElementById('simLat').value);
+                const lon = parseFloat(document.getElementById('simLon').value);
+                const peakpower = parseFloat(document.getElementById('simPeakpower').value);
+                const angle = parseFloat(document.getElementById('simAngle').value);
+                const aspect = parseFloat(document.getElementById('simAspect').value);
+                const annualKwh = parseFloat(document.getElementById('simConso').value);
+                const profileKey = document.getElementById('simProfile').value;
+                const shadingLoss = parseFloat(document.getElementById('simShading').value) / 100;
+                const batteryKwh = parseFloat(document.getElementById('simBattery').value);
+                const priceElec = parseFloat(document.getElementById('simPriceElec').value);
+                const priceRevente = parseFloat(document.getElementById('simPriceRevente').value);
+                const costInstall = parseFloat(document.getElementById('simCostInstall').value);
+
+                // Update loader text
+                document.getElementById('loader-text').textContent = 'Récupération des données PVGIS...';
+
+                // Fetch PVGIS hourly data
+                const pvgisData = await window.AutoconsommationSimulator.fetchPvgisHourly({
+                    lat, lon, peakpower, loss: 14, angle, aspect
+                });
+
+                document.getElementById('loader-text').textContent = 'Calcul en cours (8760 heures)...';
+
+                // Small delay so the user sees the text change
+                await new Promise(r => setTimeout(r, 100));
+
+                // Generate consumption profile
+                const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profileKey, annualKwh);
+
+                // Run simulation
+                const simResults = window.AutoconsommationSimulator.simulateAutoconsommation(
+                    pvgisData.hourly,
+                    consoProfile,
+                    { capacityKwh: batteryKwh },
+                    shadingLoss
+                );
+
+                // Calculate financials
+                const costBattery = batteryKwh * 600; // ~600€/kWh installed
+                const financials = window.AutoconsommationSimulator.calculateFinancials(simResults.annual, {
+                    priceElecKwh: priceElec,
+                    priceReventeKwh: priceRevente,
+                    costPv: costInstall,
+                    costBattery: costBattery
+                });
+
+                // Display results
+                displayResults(simResults, financials, consoProfile);
+
+                loader.classList.add('hidden');
+                results.classList.remove('hidden');
+                results.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                loader.classList.add('hidden');
+                alert('Erreur: ' + error.message);
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50');
+            }
+        }
+
+        function displayResults(sim, fin, consoProfile) {
+            const a = sim.annual;
+
+            // Key indicators
+            document.getElementById('res-taux').textContent = a.tauxAutoconsommation + '%';
+            document.getElementById('res-prod').textContent = a.production.toLocaleString('fr-FR') + ' kWh';
+            document.getElementById('res-eco').textContent = Math.round(fin.savingsYear1) + ' €';
+            document.getElementById('res-payback').textContent = fin.paybackYear ? Math.round(fin.paybackYear) + ' ans' : '> 25 ans';
+
+            // Also show sub-details
+            document.getElementById('res-auto-direct').textContent = Math.round(a.autoDirect).toLocaleString('fr-FR') + ' kWh';
+            document.getElementById('res-auto-battery').textContent = Math.round(a.autoBattery).toLocaleString('fr-FR') + ' kWh';
+            document.getElementById('res-injection').textContent = Math.round(a.injection).toLocaleString('fr-FR') + ' kWh';
+            document.getElementById('res-soutirage').textContent = Math.round(a.soutirage).toLocaleString('fr-FR') + ' kWh';
+            document.getElementById('res-autoprod').textContent = a.tauxAutoproduction + '%';
+            document.getElementById('res-invest').textContent = Math.round(fin.totalInvestment).toLocaleString('fr-FR') + ' €';
+            document.getElementById('res-invest-full').textContent = Math.round(fin.totalInvestment).toLocaleString('fr-FR') + ' €';
+            document.getElementById('res-savings-y1').textContent = Math.round(fin.savingsYear1).toLocaleString('fr-FR') + ' €';
+            document.getElementById('res-savings25').textContent = Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €';
+
+            const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+            // ─── Monthly chart ───
+            if (chartMonthly) chartMonthly.destroy();
+            chartMonthly = new Chart(document.getElementById('chart-monthly'), {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [
+                        { label: 'Autoconso directe', data: sim.monthly.autoDirect, backgroundColor: '#f59e0b', stack: 'auto' },
+                        { label: 'Autoconso batterie', data: sim.monthly.autoBattery, backgroundColor: '#10b981', stack: 'auto' },
+                        { label: 'Injection réseau', data: sim.monthly.injection, backgroundColor: '#06b6d4', stack: 'surplus' },
+                        { label: 'Soutirage réseau', data: sim.monthly.soutirage, backgroundColor: '#f87171', stack: 'grid' },
+                        { label: 'Consommation', data: sim.monthly.consumption, type: 'line', borderColor: '#ffffff', borderDash: [5,5], borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ffffff', fill: false, order: -1 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { size: 11 } } },
+                        tooltip: { mode: 'index' }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+                        y: { ticks: { color: '#94a3b8', callback: v => v.toFixed(0) + ' kWh' }, grid: { color: '#1e293b' } }
+                    }
+                }
+            });
+
+            // ─── Daily type charts ───
+            const hours = Array.from({length: 24}, (_, i) => i + 'h');
+            const typicalProd = window.AutoconsommationSimulator.getTypicalDays(sim.hourly.production);
+            const typicalConso = window.AutoconsommationSimulator.getTypicalDays(sim.hourly.consumption);
+            const typicalSoc = window.AutoconsommationSimulator.getTypicalDays(sim.hourly.soc);
+
+            function makeDailyChart(canvasId, chartRef, prodData, consoData, socData) {
+                if (chartRef) chartRef.destroy();
+                return new Chart(document.getElementById(canvasId), {
+                    type: 'line',
+                    data: {
+                        labels: hours,
+                        datasets: [
+                            { label: 'Production', data: prodData, borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,0.1)', borderWidth: 2, fill: true, tension: 0.3, yAxisID: 'y' },
+                            { label: 'Consommation', data: consoData, borderColor: '#ffffff', borderWidth: 2, borderDash: [4,4], fill: false, tension: 0.3, yAxisID: 'y' },
+                            { label: 'SoC Batterie', data: socData, borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.15)', borderWidth: 1.5, fill: true, tension: 0.3, yAxisID: 'y2' }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: '#1e293b' } },
+                            y: { position: 'left', ticks: { color: '#94a3b8', callback: v => v.toFixed(1) + ' kWh' }, grid: { color: '#1e293b' }, title: { display: true, text: 'kWh', color: '#94a3b8' } },
+                            y2: { position: 'right', ticks: { color: '#10b981', callback: v => v.toFixed(1) + ' kWh' }, grid: { display: false }, title: { display: true, text: 'SoC (kWh)', color: '#10b981' } }
+                        }
+                    }
+                });
+            }
+
+            chartDailySummer = makeDailyChart('chart-daily-summer', chartDailySummer, typicalProd.summer, typicalConso.summer, typicalSoc.summer);
+            chartDailyWinter = makeDailyChart('chart-daily-winter', chartDailyWinter, typicalProd.winter, typicalConso.winter, typicalSoc.winter);
+
+            // ─── Donut chart ───
+            if (chartDonut) chartDonut.destroy();
+            chartDonut = new Chart(document.getElementById('chart-donut'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Autoconso directe', 'Autoconso batterie', 'Injection réseau', 'Soutirage réseau'],
+                    datasets: [{
+                        data: [a.autoDirect, a.autoBattery, a.injection, a.soutirage],
+                        backgroundColor: ['#f59e0b', '#10b981', '#06b6d4', '#f87171'],
+                        borderColor: '#0f172a',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 11 }, padding: 15 } },
+                        tooltip: { callbacks: { label: (ctx) => ctx.label + ': ' + Math.round(ctx.parsed).toLocaleString('fr-FR') + ' kWh' } }
+                    }
+                }
+            });
+
+            // ─── Cash-flow chart ───
+            if (chartCashflow) chartCashflow.destroy();
+            const cfYears = fin.cashFlow.map(c => 'A' + c.year);
+            const cfSavings = fin.cashFlow.map(c => c.savings);
+            const cfCumul = fin.cashFlow.map(c => c.cumulative);
+
+            chartCashflow = new Chart(document.getElementById('chart-cashflow'), {
+                type: 'bar',
+                data: {
+                    labels: cfYears,
+                    datasets: [
+                        { label: 'Économies/an', data: cfSavings, backgroundColor: '#10b981', order: 2 },
+                        { label: 'Cumul', data: cfCumul, type: 'line', borderColor: '#f59e0b', borderWidth: 2, pointRadius: 0, fill: false, order: 1 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { size: 11 } } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { size: 9 }, maxRotation: 45 }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8', callback: v => Math.round(v).toLocaleString('fr-FR') + ' €' }, grid: { color: '#1e293b' } }
+                    }
+                }
+            });
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+            document.getElementById('simBtn').addEventListener('click', runSimulation);
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Mobile menu
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    menuBtn.setAttribute('aria-expanded', !mobileMenu.classList.contains('hidden'));
+                });
+            }
+        });
+    </script>
+</body>
+</html>
