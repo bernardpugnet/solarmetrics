@@ -90,6 +90,84 @@
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/outils</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/outils-autoconsommation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/prix-solaire</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/prix-solaire"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/prix-solaire"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/hypotheses</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/hypotheses"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/hypotheses"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/schema-plug-and-play</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/schema-grande-installation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/guide-installation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/guide-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/guide-installation"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/comparateur</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparateur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparateur"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/technologies-emergentes</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies-emergentes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/technologies-emergentes"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/risques-bankability</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/risques-bankability"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/risques-bankability"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/comparatif-pays</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparatif-pays"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparatif-pays"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
   <!-- EN Pages -->
   <url>
     <loc>https://solarmetrics.netlify.app/en/</loc>

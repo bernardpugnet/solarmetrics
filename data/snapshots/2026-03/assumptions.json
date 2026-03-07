@@ -1,0 +1,100 @@
+{
+  "version": "2026-03",
+  "date": "2026-03-07",
+  "author": "Bernard Pugnet — SolarMetrics",
+  "methodology": "Compilation de sources publiques vérifiées. Tous les prix sont en euros courants sauf mention contraire. Les fourchettes reflètent la dispersion géographique et technologique.",
+
+  "capex": {
+    "label": "CAPEX — Coûts d'investissement",
+    "unit": "€/Wc ou €/kWh",
+    "data": {
+      "modules_perc": { "min": 0.08, "max": 0.10, "unit": "€/Wc", "note": "FOB, déclin de part de marché", "source": "Fraunhofer ISE 2025" },
+      "modules_topcon": { "min": 0.09, "max": 0.11, "unit": "€/Wc", "note": "49% part de marché 2025", "source": "PV Tech, Fraunhofer ISE" },
+      "modules_hjt": { "min": 0.12, "max": 0.15, "unit": "€/Wc", "note": "Premium, haut rendement", "source": "PV Tech" },
+      "modules_europe": { "min": 0.095, "max": 0.115, "unit": "€/Wp", "note": "Modules livrés Europe", "source": "Fraunhofer ISE 2025" },
+      "onduleur_string_small": { "value": 44, "unit": "€/kW", "note": "<15 kW", "source": "European Solar Trade Body Q3 2025" },
+      "onduleur_string_large": { "value": 35, "unit": "€/kW", "note": ">15 kW", "source": "European Solar Trade Body Q3 2025" },
+      "onduleur_micro": { "min": 150, "max": 300, "unit": "€/unité", "note": "Par panneau", "source": "Devis installateurs FR 2025" },
+      "onduleur_hybride_small": { "value": 97, "unit": "€/kW", "note": "<15 kW", "source": "European Solar Trade Body Q3 2025" },
+      "onduleur_hybride_large": { "value": 86, "unit": "€/kW", "note": ">15 kW", "source": "European Solar Trade Body Q3 2025" },
+      "batterie_lfp_residentiel": { "min": 600, "max": 1200, "unit": "€/kWh", "note": "Installé, TVA incluse", "source": "Clean Energy Reviews, devis FR 2025" },
+      "batterie_tesla_pw3": { "value": 1200, "unit": "€/kWh", "note": "13.5 kWh, installé", "source": "Clean Energy Reviews 2025" },
+      "batterie_byd": { "value": 700, "unit": "€/kWh", "note": "10 kWh, installé", "source": "Devis installateurs FR 2025" },
+      "batterie_huawei": { "value": 750, "unit": "€/kWh", "note": "10 kWh, installé", "source": "Devis installateurs FR 2025" },
+      "install_residentiel_3kwc": { "min": 2.00, "max": 2.50, "unit": "€/Wc", "note": "≤3 kWc, TVA 5.5%", "source": "IRENA, Enerplan, SER" },
+      "install_residentiel_9kwc": { "min": 1.80, "max": 2.20, "unit": "€/Wc", "note": "3-9 kWc, TVA 5.5%", "source": "IRENA, Enerplan, SER" },
+      "install_ci": { "min": 1.20, "max": 1.60, "unit": "€/Wc", "note": "36-100 kWc, TVA 20%", "source": "IRENA, Enerplan" },
+      "install_utility": { "min": 0.70, "max": 0.90, "unit": "€/Wc", "note": ">250 kWc, tracker", "source": "IRENA WETO 2024" }
+    }
+  },
+
+  "opex": {
+    "label": "OPEX — Coûts d'exploitation",
+    "data": {
+      "maintenance_residentiel": { "value": 15, "unit": "€/kWc/an", "note": "Nettoyage, monitoring", "source": "ADEME, installateurs FR" },
+      "maintenance_ci": { "min": 10, "max": 15, "unit": "€/kWc/an", "note": "Contrat O&M", "source": "IRENA" },
+      "maintenance_utility": { "min": 7, "max": 12, "unit": "€/kWc/an", "note": "O&M externalisé", "source": "IRENA" },
+      "assurance": { "min": 0.3, "max": 0.5, "unit": "% CAPEX/an", "source": "Pratique marché FR" },
+      "degradation_panneaux": { "value": 0.5, "unit": "%/an", "note": "Garantie constructeur typique", "source": "IEC 61215, fabricants" },
+      "degradation_batterie": { "value": 2.0, "unit": "%/an", "note": "LFP typique", "source": "Fabricants (BYD, Tesla)" }
+    }
+  },
+
+  "wacc": {
+    "label": "WACC / Taux d'actualisation",
+    "data": {
+      "france_residentiel": { "value": 3.0, "unit": "%", "note": "Coût d'opportunité ménage", "source": "Hypothèse SolarMetrics" },
+      "france_ci": { "min": 4.0, "max": 6.0, "unit": "%", "note": "PME/ETI, dette bancaire", "source": "IRENA, pratique marché" },
+      "france_utility": { "min": 5.0, "max": 7.0, "unit": "%", "note": "Project finance, SPV", "source": "IRENA WETO 2024" },
+      "europe_south": { "min": 4.5, "max": 6.5, "unit": "%", "note": "Espagne, Italie, Grèce", "source": "IRENA" },
+      "europe_north": { "min": 5.0, "max": 7.5, "unit": "%", "note": "Allemagne, Pays-Bas, UK", "source": "IRENA" }
+    }
+  },
+
+  "yield": {
+    "label": "Productible / Rendement",
+    "data": {
+      "france_nord": { "min": 900, "max": 1100, "unit": "kWh/kWc/an", "note": "Paris, Lille, Bretagne", "source": "PVGIS TMY" },
+      "france_centre": { "min": 1100, "max": 1300, "unit": "kWh/kWc/an", "note": "Lyon, Bordeaux, Nantes", "source": "PVGIS TMY" },
+      "france_sud": { "min": 1300, "max": 1550, "unit": "kWh/kWc/an", "note": "Marseille, Montpellier, Nice", "source": "PVGIS TMY" },
+      "espagne": { "min": 1500, "max": 1900, "unit": "kWh/kWc/an", "source": "PVGIS TMY" },
+      "allemagne": { "min": 800, "max": 1100, "unit": "kWh/kWc/an", "source": "PVGIS TMY" },
+      "pertes_systeme_typiques": { "min": 10, "max": 16, "unit": "%", "note": "Câbles, onduleur, poussière, température", "source": "PVGIS default 14%" }
+    }
+  },
+
+  "prices": {
+    "label": "Prix de l'électricité & Tarifs",
+    "data": {
+      "prix_elec_fr_menage": { "value": 0.2516, "unit": "€/kWh", "note": "TTC, tarif réglementé S2 2025", "source": "Eurostat, CRE" },
+      "prix_elec_fr_ci": { "min": 0.12, "max": 0.18, "unit": "€/kWh", "note": "Contrat, hors TURPE", "source": "CRE" },
+      "hausse_prix_elec_fr": { "value": 3.0, "unit": "%/an", "note": "Moyenne historique 10 ans", "source": "Eurostat, INSEE" },
+      "oa_autoconso_9kwc": { "value": 0.04, "unit": "€/kWh", "note": "Surplus, T1 2026", "source": "photovoltaique.info" },
+      "oa_autoconso_36kwc": { "value": 0.0536, "unit": "€/kWh", "note": "9-36 kWc, T1 2026", "source": "photovoltaique.info" },
+      "oa_autoconso_100kwc": { "value": 0.0792, "unit": "€/kWh", "note": "36-100 kWc, T1 2026", "source": "photovoltaique.info" },
+      "prime_autoconso": { "value": 80, "unit": "€/kWc", "note": "Versée en une fois, 2026", "source": "quelleenergie.fr, Légifrance" },
+      "tva_reduite": { "value": 5.5, "unit": "%", "note": "Installations ≤9 kWc, depuis oct 2025", "source": "Service-public.fr" }
+    }
+  },
+
+  "co2": {
+    "label": "Facteurs d'émission CO₂",
+    "data": {
+      "mix_france_moyen": { "value": 55, "unit": "gCO₂/kWh", "note": "Mix moyen annuel", "source": "RTE Bilan électrique 2024" },
+      "mix_france_marginal": { "value": 400, "unit": "gCO₂/kWh", "note": "Marginal (gaz)", "source": "RTE, ADEME" },
+      "solaire_cycle_vie": { "value": 30, "unit": "gCO₂/kWh", "note": "Fabrication + transport + recyclage", "source": "IPCC AR6, Fraunhofer ISE" },
+      "mix_allemagne": { "value": 350, "unit": "gCO₂/kWh", "source": "UBA 2024" },
+      "mix_pologne": { "value": 650, "unit": "gCO₂/kWh", "source": "EEA 2024" },
+      "mix_europe_moyen": { "value": 230, "unit": "gCO₂/kWh", "source": "EEA 2024" }
+    }
+  },
+
+  "limitations": [
+    "Les prix modules sont des prix FOB (Free On Board), hors transport et taxes d'importation européennes.",
+    "Les coûts installés résidentiels incluent main d'œuvre, raccordement Consuel et mise en service.",
+    "Les tarifs OA changent trimestriellement — vérifiez sur photovoltaique.info.",
+    "La prime à l'autoconsommation peut être modifiée par arrêté ministériel.",
+    "Les facteurs CO₂ varient selon l'heure de la journée (merit order).",
+    "Les prix batteries évoluent rapidement (-15-20%/an) — données à actualiser."
+  ]
+}

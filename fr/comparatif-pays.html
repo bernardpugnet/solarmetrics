@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparatif Solaire par Pays — Europe 2026 | SolarMetrics</title>
+    <meta name="description" content="Comparaison des marchés solaires européens : capacité installée, LCOE, tarifs, aides et réglementation par pays. France, Allemagne, Espagne, Italie et plus.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/comparatif-pays">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparatif-pays">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparatif-pays">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+
+        /* Table styling */
+        .table-container {
+            overflow-x: auto;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comparison-table thead th {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 0.875rem;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        .comparison-table thead th:hover {
+            background: rgba(15, 23, 42, 0.9);
+            color: #fbbf24;
+        }
+        .comparison-table tbody td {
+            border: 1px solid rgba(71, 85, 105, 0.2);
+            padding: 0.75rem 1rem;
+            color: #cbd5e1;
+            font-size: 0.875rem;
+        }
+        .comparison-table tbody tr:hover {
+            background: rgba(245, 158, 11, 0.05);
+        }
+        .comparison-table tbody tr:nth-child(even) {
+            background: rgba(71, 85, 105, 0.08);
+        }
+        .country-cell {
+            font-weight: 600;
+            color: #fbbf24;
+            min-width: 120px;
+        }
+        .sort-indicator {
+            display: inline-block;
+            margin-left: 0.5rem;
+            color: #f59e0b;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .comparison-table thead th.sorted .sort-indicator {
+            opacity: 1;
+        }
+
+        /* Card styling for country details */
+        .country-card {
+            background: linear-gradient(135deg, rgba(71, 85, 105, 0.1) 0%, rgba(15, 23, 42, 0.3) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 0.75rem;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .country-card:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+        }
+        .country-card-header {
+            background: rgba(245, 158, 11, 0.1);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .country-card-header:hover {
+            background: rgba(245, 158, 11, 0.15);
+        }
+        .country-card-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fef3c7;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .country-card-toggle {
+            color: #f59e0b;
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+        .country-card-toggle.open {
+            transform: rotate(180deg);
+        }
+        .country-card-content {
+            display: none;
+            padding: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .country-card-content.open {
+            display: block;
+            max-height: 1000px;
+        }
+        .country-card-content h4 {
+            margin: 1rem 0 0.5rem 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .country-card-content h4:first-child {
+            margin-top: 0;
+        }
+        .country-card-content p {
+            margin: 0 0 1rem 0;
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .country-card-content ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .country-card-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Chart styling */
+        .lcoe-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.75rem;
+            height: 300px;
+            padding: 2rem 1rem 1rem 1rem;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+        }
+        .lcoe-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 40px;
+        }
+        .lcoe-bar-fill {
+            width: 100%;
+            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .lcoe-bar-fill:hover {
+            opacity: 0.8;
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4));
+        }
+        .lcoe-bar-label {
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            margin-top: 0.75rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        .lcoe-bar-value {
+            font-size: 0.75rem;
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+        }
+
+        /* Attractivity badges */
+        .stars {
+            color: #f59e0b;
+            letter-spacing: 2px;
+        }
+
+        /* Source reference */
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 0.5rem;
+            color: #67e8f9;
+            font-size: 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .source-badge:hover {
+            background: rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Utility Scale</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors" aria-label="Menu" aria-expanded="false">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden lg:hidden pb-4 border-t border-slate-800">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm">Outils</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                <span class="gradient-text">Comparatif Solaire par Pays</span>
+                <br/>Europe 2026
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl">
+                Analysez les marchés solaires européens : capacité installée, coûts, productivité, mécanismes de soutien et potentiel d'investissement par pays. Guide complet pour investisseurs, développeurs et prosumers.
+            </p>
+        </div>
+
+        <!-- Introduction Section -->
+        <section class="mb-16 p-6 bg-gradient-to-r from-slate-800/30 to-slate-900/30 border border-slate-700 rounded-xl">
+            <h2 class="text-2xl font-bold mb-4 text-amber-400">Pourquoi comparer les marchés solaires ?</h2>
+            <p class="text-slate-300 mb-3">
+                La capacité et la rentabilité des installations solaires varient considérablement entre les pays européens. Les différences en matière de <strong>coûts de production (LCOE)</strong>, de <strong>prix de l'électricité résidentielle</strong>, de <strong>productivité annuelle</strong> et de <strong>mécanismes de soutien</strong> créent des opportunités et des risques distincts pour chaque marché.
+            </p>
+            <p class="text-slate-300">
+                Cette comparaison interactif permet aux investisseurs, développeurs de projets et prosumers d'identifier rapidement les marchés les plus attractifs en fonction de leurs critères : rentabilité, potentiel de croissance, stabilité réglementaire et retour sur investissement.
+            </p>
+        </section>
+
+        <!-- Interactive Comparison Table -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-amber-400">Tableau Comparatif Interactif</h2>
+            <p class="text-slate-400 mb-4 text-sm">Cliquez sur les en-têtes pour trier par colonne</p>
+            <div class="table-container">
+                <table class="comparison-table" id="countryTable">
+                    <thead>
+                        <tr>
+                            <th data-column="country">Pays <span class="sort-indicator">▲</span></th>
+                            <th data-column="capacity">Capacité installée (GW) <span class="sort-indicator">▲</span></th>
+                            <th data-column="additions">Ajouts 2025 (GW) <span class="sort-indicator">▲</span></th>
+                            <th data-column="target">Objectif 2030 (GW) <span class="sort-indicator">▲</span></th>
+                            <th data-column="lcoe">LCOE utility (€/MWh) <span class="sort-indicator">▲</span></th>
+                            <th data-column="residential">Prix résidentiel (€/kWh) <span class="sort-indicator">▲</span></th>
+                            <th data-column="productivity">Productible (kWh/kWc/an) <span class="sort-indicator">▲</span></th>
+                            <th data-column="support">Mécanisme soutien <span class="sort-indicator">▲</span></th>
+                            <th data-column="attractivity">Attractivité <span class="sort-indicator">▲</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="countryTableBody">
+                        <tr>
+                            <td class="country-cell">🇫🇷 France</td>
+                            <td>31</td>
+                            <td>5.9</td>
+                            <td>54–59</td>
+                            <td>45–55</td>
+                            <td>0.2516</td>
+                            <td>900–1550</td>
+                            <td>OA + Prime autoconso</td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇩🇪 Allemagne</td>
+                            <td>96</td>
+                            <td>16.0</td>
+                            <td>215</td>
+                            <td>50–65</td>
+                            <td>0.35</td>
+                            <td>800–1100</td>
+                            <td>EEG Feed-in</td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇪🇸 Espagne</td>
+                            <td>37</td>
+                            <td>5.6</td>
+                            <td>76</td>
+                            <td>25–35</td>
+                            <td>0.18</td>
+                            <td>1500–1900</td>
+                            <td>Net billing</td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇮🇹 Italie</td>
+                            <td>35</td>
+                            <td>6.8</td>
+                            <td>80</td>
+                            <td>35–45</td>
+                            <td>0.25</td>
+                            <td>1200–1700</td>
+                            <td>Superbonus (réduit)</td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇳🇱 Pays-Bas</td>
+                            <td>28</td>
+                            <td>4.2</td>
+                            <td>38</td>
+                            <td>50–60</td>
+                            <td>0.28</td>
+                            <td>850–1050</td>
+                            <td>Net metering → saldering</td>
+                            <td><span class="stars">★★★☆☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇵🇱 Pologne</td>
+                            <td>20</td>
+                            <td>4.5</td>
+                            <td>29</td>
+                            <td>45–55</td>
+                            <td>0.18</td>
+                            <td>900–1100</td>
+                            <td>Net billing</td>
+                            <td><span class="stars">★★★☆☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇧🇪 Belgique</td>
+                            <td>10</td>
+                            <td>1.2</td>
+                            <td>18</td>
+                            <td>55–65</td>
+                            <td>0.30</td>
+                            <td>850–1050</td>
+                            <td>Tarif prosumer</td>
+                            <td><span class="stars">★★★☆☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇵🇹 Portugal</td>
+                            <td>5</td>
+                            <td>1.8</td>
+                            <td>20</td>
+                            <td>25–35</td>
+                            <td>0.16</td>
+                            <td>1400–1800</td>
+                            <td>Autoconsommation collective</td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇨🇭 Suisse</td>
+                            <td>7</td>
+                            <td>1.9</td>
+                            <td>35</td>
+                            <td>55–70</td>
+                            <td>0.27 CHF</td>
+                            <td>900–1300</td>
+                            <td>PRU (prime unique)</td>
+                            <td><span class="stars">★★★☆☆</span></td>
+                        </tr>
+                        <tr>
+                            <td class="country-cell">🇦🇹 Autriche</td>
+                            <td>6</td>
+                            <td>1.5</td>
+                            <td>21</td>
+                            <td>50–60</td>
+                            <td>0.25</td>
+                            <td>900–1200</td>
+                            <td>Primes + OeMAG</td>
+                            <td><span class="stars">★★★☆☆</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- LCOE Comparison Chart -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-amber-400">Comparaison des LCOE (Coût Levelisé)</h2>
+            <p class="text-slate-400 mb-4 text-sm">Plus faible = plus compétitif. Valeurs moyennes en €/MWh</p>
+            <div class="lcoe-chart" id="lcoeChart">
+                <!-- Generated by JavaScript -->
+            </div>
+            <p class="text-slate-500 text-xs mt-4">
+                Le LCOE (Levelized Cost of Energy) représente le coût moyen de production d'électricité sur la durée de vie d'une installation. Les pays avec les LCOE les plus bas (Espagne, Portugal) offrent la meilleure compétitivité économique pour les projets utility-scale.
+            </p>
+        </section>
+
+        <!-- Detailed Country Cards -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-amber-400">Fiches Détaillées des Principaux Marchés</h2>
+
+            <!-- France Card -->
+            <div class="country-card mb-6">
+                <div class="country-card-header" onclick="toggleCard(this)">
+                    <h3>🇫🇷 France</h3>
+                    <span class="country-card-toggle">▼</span>
+                </div>
+                <div class="country-card-content">
+                    <h4>Contexte Marché</h4>
+                    <p>
+                        La France possède la 3ème capacité installée en Europe (31 GW en 2025). Le marché française est en croissance régulière avec 5.9 GW ajoutés en 2025. L'objectif national pour 2030 est ambitieux (54–59 GW), soutenu par le contexte énergétique post-nucléaire et les attentes de réduction d'émissions.
+                    </p>
+
+                    <h4>Réglementation Clé</h4>
+                    <ul>
+                        <li><strong>Appels d'Offres (AO) :</strong> Mécanisme principal pour utility-scale, lancés régulièrement par CRE</li>
+                        <li><strong>Autoconsommation :</strong> Réglementée par décrets depuis 2017, prime simplifiée</li>
+                        <li><strong>Critères d'accès :</strong> Préférences pour projets sur bâtiments, toitures existantes</li>
+                        <li><strong>Tarif d'achat résidentiel :</strong> Révisé trimestriellement, actuellement ~0.25 €/kWh</li>
+                    </ul>
+
+                    <h4>Mécanisme de Soutien Détaillé</h4>
+                    <p>
+                        <strong>Appels d'Offres :</strong> Sélection compétitive pour grands projets (> 500 kWc). Tarifs récents : 45–55 €/MWh (2025).
+                        <br/><strong>Prime d'Autoconsommation :</strong> Aide à l'investissement dégressive (0.30–0.60 €/Wc selon technologie).
+                        <br/><strong>MaPrimeRénov' :</strong> Subvention résidentielle (éligibilité selon revenus).
+                    </p>
+
+                    <h4>Opportunités</h4>
+                    <ul>
+                        <li>Contexte énergétique favorable (indépendance énergétique)</li>
+                        <li>Marché résidentiel et autoconsommation dynamique</li>
+                        <li>Stabilité réglementaire et prédictibilité</li>
+                        <li>Potentiel de croissance significatif vers 2030</li>
+                    </ul>
+
+                    <h4>Risques</h4>
+                    <ul>
+                        <li>Concurrence accrue aux AO, marges sous pression</li>
+                        <li>LCOE élevé comparé à Espagne/Portugal</li>
+                        <li>Productivité réduite (climat tempéré, ensoleillement modéré)</li>
+                        <li>Délais administratifs dans les AO</li>
+                    </ul>
+
+                    <h4>Sources Principales</h4>
+                    <p class="mt-2">
+                        <a href="#" class="source-badge">CRE (Commission de Régulation de l'Énergie)</a>
+                        <a href="#" class="source-badge">SolarPower Europe 2025</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Germany Card -->
+            <div class="country-card mb-6">
+                <div class="country-card-header" onclick="toggleCard(this)">
+                    <h3>🇩🇪 Allemagne</h3>
+                    <span class="country-card-toggle">▼</span>
+                </div>
+                <div class="country-card-content">
+                    <h4>Contexte Marché</h4>
+                    <p>
+                        Le marché allemand est le plus grand d'Europe avec 96 GW installés et 16 GW ajoutés en 2025. L'Allemagne cible 215 GW d'ici 2030 dans le contexte de sa stratégie Energiewende. Forte demande résidentielle et croissance industrielle (PPA).
+                    </p>
+
+                    <h4>Réglementation Clé</h4>
+                    <ul>
+                        <li><strong>EEG 2023 :</strong> Nouvelle Loi sur les Énergies Renouvelables, tarifs feed-in garantis et indexés</li>
+                        <li><strong>Appels d'Offres :</strong> Pour projets > 750 kWc (utilitaire) ou > 300 kWc (toitures)</li>
+                        <li><strong>Autoconsommation :</strong> Exempte de certaines taxes, tarif d'achat réduit pour surplus</li>
+                        <li><strong>Batterie :</strong> Prime d'installation + exonération TVA pour systèmes autoconsommation</li>
+                    </ul>
+
+                    <h4>Mécanisme de Soutien Détaillé</h4>
+                    <p>
+                        <strong>Feed-in Tariff (EEG) :</strong> Tarif garanti pour 20 ans, actuellement 8–12 cents/kWh pour résidentiel (selon taille).
+                        <br/><strong>Appels d'Offres :</strong> Tarifs compétitifs, récemment 5–6 cents/kWh pour utility-scale.
+                        <br/><strong>Primes d'Investissement :</strong> Subventions pour autoconsommation, batterie, flexibilité.
+                    </p>
+
+                    <h4>Opportunités</h4>
+                    <ul>
+                        <li>Plus grand marché européen en volumes absolus</li>
+                        <li>Stabilité politique et confiance réglementaire</li>
+                        <li>Forte demande résidentielle et PME</li>
+                        <li>Écosystème mûr d'intégrateurs et fournisseurs</li>
+                    </ul>
+
+                    <h4>Risques</h4>
+                    <ul>
+                        <li>Surcharge réseau (congestion, renforcement infra coûteux)</li>
+                        <li>Productivité faible (ensoleillement limité)</li>
+                        <li>Coûts d'installation élevés (main-d'œuvre, logistique)</li>
+                        <li>Marges comprimées par concurrence intense</li>
+                    </ul>
+
+                    <h4>Sources Principales</h4>
+                    <p class="mt-2">
+                        <a href="#" class="source-badge">Bundesnetzagentur</a>
+                        <a href="#" class="source-badge">SolarPower Europe 2025</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Spain Card -->
+            <div class="country-card mb-6">
+                <div class="country-card-header" onclick="toggleCard(this)">
+                    <h3>🇪🇸 Espagne</h3>
+                    <span class="country-card-toggle">▼</span>
+                </div>
+                <div class="country-card-content">
+                    <h4>Contexte Marché</h4>
+                    <p>
+                        L'Espagne combine LCOE parmi les plus bas d'Europe (25–35 €/MWh) et productivité exceptionnelle (1500–1900 kWh/kWc/an). Avec 37 GW installés et objectif 76 GW d'ici 2030, c'est un moteur de croissance européen. Marché mature et prédictible pour utility-scale.
+                    </p>
+
+                    <h4>Réglementation Clé</h4>
+                    <ul>
+                        <li><strong>Net Billing :</strong> Rémunération du surplus injecté (depuis 2022), pas d'injection obligatoire</li>
+                        <li><strong>Autoconsumo :</strong> Régime d'autoconsommation simple et collectif</li>
+                        <li><strong>Appels d'Offres :</strong> Mécanisme transparent CNMC, tarifs très compétitifs</li>
+                        <li><strong>Absence de tarifs fixes :</strong> Modèle market-based plus efficace</li>
+                    </ul>
+
+                    <h4>Mécanisme de Soutien Détaillé</h4>
+                    <p>
+                        <strong>Net Billing :</strong> Autoconsommateurs compensés pour surplus (tarif spot - péréquation).
+                        <br/><strong>Appels d'Offres :</strong> Compétitifs, tarifs 25–40 €/MWh selon année et volume.
+                        <br/><strong>Exonérations :</strong> Taxes réduites pour autoconsommation et microproduction.
+                    </p>
+
+                    <h4>Opportunités</h4>
+                    <ul>
+                        <li>Meilleur LCOE européen = rentabilité maximale</li>
+                        <li>Ensoleillement excellent (1500–1900 kWh/kWc/an)</li>
+                        <li>Cadre réglementaire transparent et stable</li>
+                        <li>Croissance forte et durable (potentiel 2030)</li>
+                    </ul>
+
+                    <h4>Risques</h4>
+                    <ul>
+                        <li>Compression des marges (concurrence mondiale)</li>
+                        <li>Tarifs spot volatiles (impact net billing résidentiel)</li>
+                        <li>Accès réseau limité dans certaines régions</li>
+                        <li>Évolution réglementaire possible (taxation)</li>
+                    </ul>
+
+                    <h4>Sources Principales</h4>
+                    <p class="mt-2">
+                        <a href="#" class="source-badge">CNMC (Comisión Nacional de los Mercados de la Competencia)</a>
+                        <a href="#" class="source-badge">SolarPower Europe 2025</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Italy Card -->
+            <div class="country-card mb-6">
+                <div class="country-card-header" onclick="toggleCard(this)">
+                    <h3>🇮🇹 Italie</h3>
+                    <span class="country-card-toggle">▼</span>
+                </div>
+                <div class="country-card-content">
+                    <h4>Contexte Marché</h4>
+                    <p>
+                        L'Italie est un marché mature (35 GW installés) avec croissance modérée (6.8 GW/an) et objectif 80 GW en 2030. Le marché est dominé par les ménages (autoconsommation résidentielle) grâce aux incitations fiscales élevées. Marché secondaire pour utility-scale, mais opportunités en rénovation.
+                    </p>
+
+                    <h4>Réglementation Clé</h4>
+                    <ul>
+                        <li><strong>Superbonus 110% :</strong> Déduction fiscale rénovation (historiquement 110%, actuellement réduit à 65%)</li>
+                        <li><strong>Ecobonus :</strong> 50–65% déduction pour installer solaire seul</li>
+                        <li><strong>Scambio sul Posto :</strong> Compte de bilan annuel pour surplus (énergie virtuelle)</li>
+                        <li><strong>Appels d'Offres :</strong> Limités, réservés à utilitaire sans aide (concurrence faible)</li>
+                    </ul>
+
+                    <h4>Mécanisme de Soutien Détaillé</h4>
+                    <p>
+                        <strong>Superbonus (réduit) :</strong> Déduction fiscale 65% pour rénov énergétique (incluant solaire), étalée 5 ans ou plus.
+                        <br/><strong>Scambio sul Posto :</strong> Compensation annuelle en kWh (non monétaire), comptage virtuel.
+                        <br/><strong>Appels d'Offres GSE :</strong> Peu de volume, tarifs 35–50 €/MWh.
+                    </p>
+
+                    <h4>Opportunités</h4>
+                    <ul>
+                        <li>Marché résidentiel dynamique (agrégation M&A possible)</li>
+                        <li>Productivité excellente (ensoleillement sud)</li>
+                        <li>Incitations fiscales fortes (pour rénovation globale)</li>
+                        <li>Intégration batterie rentable</li>
+                    </ul>
+
+                    <h4>Risques</h4>
+                    <ul>
+                        <li>Réductions progressives incitations (tendance baisse 110% → 65%)</li>
+                        <li>Complexité fiscale (Superbonus bureaucratie)</li>
+                        <li>Scambio poco valorisant (virtuel, pas monétaire)</li>
+                        <li>Marché utility-scale limité</li>
+                    </ul>
+
+                    <h4>Sources Principales</h4>
+                    <p class="mt-2">
+                        <a href="#" class="source-badge">GSE (Gestore dei Servizi Energetici)</a>
+                        <a href="#" class="source-badge">IRENA</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Context Section -->
+        <section class="mb-16 p-6 bg-slate-800/30 border border-slate-700 rounded-xl">
+            <h2 class="text-xl font-bold mb-4 text-amber-400">Notes Méthodologiques</h2>
+            <ul class="text-slate-300 text-sm space-y-2">
+                <li><strong>LCOE :</strong> Coût levelisé production utility-scale (unités : €/MWh), données 2024–2025</li>
+                <li><strong>Productible :</strong> Production spécifique annuelle moyenne (kWh par kWc installé), fonction latitude et ensoleillement</li>
+                <li><strong>Tarifs résidentiel :</strong> Prix moyen électricité réseau pour ménage (2025), avec TVA incluse</li>
+                <li><strong>Attractivité :</strong> Notation synthétique ROI + stabilité marché + potentiel croissance, subjective</li>
+                <li><strong>Objectif 2030 :</strong> Capacité cumulée visée (PNEC, directives RED)</li>
+            </ul>
+        </section>
+
+        <!-- Sources Section -->
+        <section class="p-6 bg-slate-800/20 border border-slate-700 rounded-xl">
+            <h2 class="text-xl font-bold mb-4 text-amber-400">Sources Principales</h2>
+            <ul class="text-slate-300 text-sm space-y-2">
+                <li><strong>SolarPower Europe :</strong> Global Market Outlook 2025 — Données capacité, AO, prévisions 2030</li>
+                <li><strong>IRENA :</strong> Renewable Capacity Statistics, coûts technologie renouvelable</li>
+                <li><strong>Eurostat :</strong> Energy Prices (résidentiel, industriel, kWh moyen par pays)</li>
+                <li><strong>CRE (France) :</strong> Bilans d'activité AO, tarifs d'achat historiques</li>
+                <li><strong>Bundesnetzagentur (Allemagne) :</strong> Données EEG, registres installations</li>
+                <li><strong>CNMC (Espagne) :</strong> Mécanismes soutien, appels d'offres, tarifs</li>
+                <li><strong>GSE (Italie) :</strong> Registre Scambio sul Posto, statistiques Superbonus</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/country-comparison.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+
+        // ===== TABLE SORTING =====
+        const table = document.getElementById('countryTable');
+        const headers = table.querySelectorAll('thead th');
+        const tbody = document.getElementById('countryTableBody');
+
+        let currentSort = { column: null, ascending: true };
+
+        headers.forEach((header, index) => {
+            header.addEventListener('click', function() {
+                const columnKey = header.getAttribute('data-column');
+                const isCurrentSort = currentSort.column === columnKey;
+                const ascending = isCurrentSort ? !currentSort.ascending : true;
+
+                sortTable(columnKey, ascending);
+                currentSort = { column: columnKey, ascending };
+
+                // Update visual indicators
+                headers.forEach(h => h.classList.remove('sorted'));
+                header.classList.add('sorted');
+                const indicator = header.querySelector('.sort-indicator');
+                if (indicator) {
+                    indicator.textContent = ascending ? '▲' : '▼';
+                }
+            });
+        });
+
+        function sortTable(columnKey, ascending) {
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                const aCell = a.querySelector(`td:nth-child(${getColumnIndex(columnKey) + 1})`);
+                const bCell = b.querySelector(`td:nth-child(${getColumnIndex(columnKey) + 1})`);
+
+                let aValue = aCell.textContent.trim();
+                let bValue = bCell.textContent.trim();
+
+                // Parse numeric values
+                if (columnKey !== 'country' && columnKey !== 'support' && columnKey !== 'attractivity') {
+                    aValue = parseFloat(aValue.split('–')[0]) || parseFloat(aValue.split('–')[0].replace('€', '').replace('CHF', '')) || 0;
+                    bValue = parseFloat(bValue.split('–')[0]) || parseFloat(bValue.split('–')[0].replace('€', '').replace('CHF', '')) || 0;
+
+                    return ascending ? aValue - bValue : bValue - aValue;
+                }
+
+                // String comparison
+                return ascending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function getColumnIndex(columnKey) {
+            const columnMap = {
+                'country': 0,
+                'capacity': 1,
+                'additions': 2,
+                'target': 3,
+                'lcoe': 4,
+                'residential': 5,
+                'productivity': 6,
+                'support': 7,
+                'attractivity': 8
+            };
+            return columnMap[columnKey];
+        }
+
+        // ===== LCOE CHART =====
+        const lcoeData = [
+            { country: 'Espagne', lcoe: 30, emoji: '🇪🇸' },
+            { country: 'Portugal', lcoe: 30, emoji: '🇵🇹' },
+            { country: 'France', lcoe: 50, emoji: '🇫🇷' },
+            { country: 'Pologne', lcoe: 50, emoji: '🇵🇱' },
+            { country: 'Italie', lcoe: 40, emoji: '🇮🇹' },
+            { country: 'Allemagne', lcoe: 57.5, emoji: '🇩🇪' },
+            { country: 'Autriche', lcoe: 55, emoji: '🇦🇹' },
+            { country: 'Pays-Bas', lcoe: 55, emoji: '🇳🇱' },
+            { country: 'Belgique', lcoe: 60, emoji: '🇧🇪' },
+            { country: 'Suisse', lcoe: 62.5, emoji: '🇨🇭' }
+        ];
+
+        const maxLcoe = Math.max(...lcoeData.map(d => d.lcoe));
+        const chart = document.getElementById('lcoeChart');
+
+        lcoeData.forEach(data => {
+            const barHeight = (data.lcoe / maxLcoe) * 100;
+            const bar = document.createElement('div');
+            bar.className = 'lcoe-bar';
+            bar.innerHTML = `
+                <div class="lcoe-bar-fill" style="height: ${barHeight}%;" title="${data.country}: ${data.lcoe} €/MWh">
+                    <div class="lcoe-bar-value">${data.lcoe}</div>
+                </div>
+                <div class="lcoe-bar-label">${data.emoji} ${data.country}</div>
+            `;
+            chart.appendChild(bar);
+        });
+
+        // ===== CARD EXPAND/COLLAPSE =====
+        function toggleCard(header) {
+            const toggle = header.querySelector('.country-card-toggle');
+            const content = header.nextElementSibling;
+
+            toggle.classList.toggle('open');
+            content.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

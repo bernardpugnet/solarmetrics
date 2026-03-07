@@ -205,6 +205,35 @@ abbr[title]:hover::after {
                         Explorer le site
                     </a>
                 </div>
+
+                <!-- Geo-personalized widget -->
+                <div id="geoWidget" class="mt-10 max-w-xl mx-auto opacity-0 transition-opacity duration-700" style="display:none;">
+                    <div class="bg-slate-800/70 backdrop-blur border border-slate-700/60 rounded-2xl px-5 py-4">
+                        <div class="flex flex-col sm:flex-row items-center gap-3 text-sm">
+                            <span id="geoFlag" class="text-2xl">☀️</span>
+                            <div class="text-center sm:text-left flex-1">
+                                <p class="text-slate-300">
+                                    <span id="geoLabel">Dans votre région</span> :
+                                    <span id="geoYield" class="text-amber-400 font-semibold"></span> kWh/kWc/an
+                                </p>
+                                <p class="text-slate-500 text-xs mt-0.5">
+                                    Prix élec. <span id="geoPrice" class="text-slate-400"></span> ·
+                                    <span id="geoExtra" class="text-slate-400"></span>
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <select id="geoZoneSelect" class="bg-slate-700 text-slate-300 text-xs rounded-lg border border-slate-600 px-2 py-1.5 focus:border-amber-500 focus:outline-none" style="display:none;">
+                                    <option value="france_nord">Nord (Paris, Lille)</option>
+                                    <option value="france_centre">Centre (Lyon, Bordeaux)</option>
+                                    <option value="france_sud" selected>Sud (Marseille, Nice)</option>
+                                </select>
+                                <a href="outils-autoconsommation.html" class="whitespace-nowrap px-3 py-1.5 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 rounded-lg text-xs font-medium transition-colors">
+                                    Simuler →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -470,6 +499,89 @@ abbr[title]:hover::after {
         window.addEventListener('resize', function() {
             if (window.innerWidth >= 1024) closeMenu();
         });
+
+        /* ── Géolocalisation par fuseau horaire (aucun tracking, aucun cookie) ── */
+        (function() {
+            var GEO_DATA = {
+                france_nord:   { flag:'🇫🇷', label:'Nord de la France', yield:'900 – 1 100', price:'0,2516 €/kWh TTC', extra:'Prime autoconso 80 €/kWc' },
+                france_centre: { flag:'🇫🇷', label:'Centre de la France', yield:'1 100 – 1 300', price:'0,2516 €/kWh TTC', extra:'Prime autoconso 80 €/kWc' },
+                france_sud:    { flag:'🇫🇷', label:'Sud de la France', yield:'1 300 – 1 550', price:'0,2516 €/kWh TTC', extra:'Prime autoconso 80 €/kWc' },
+                espagne:       { flag:'🇪🇸', label:'Espagne', yield:'1 500 – 1 900', price:'0,18 €/kWh', extra:'LCOE ~25-35 €/MWh' },
+                allemagne:     { flag:'🇩🇪', label:'Allemagne', yield:'800 – 1 100', price:'0,35 €/kWh', extra:'Forte rentabilité résidentielle' },
+                italie:        { flag:'🇮🇹', label:'Italie', yield:'1 200 – 1 700', price:'0,25 €/kWh', extra:'Superbonus en baisse' },
+                portugal:      { flag:'🇵🇹', label:'Portugal', yield:'1 400 – 1 800', price:'0,16 €/kWh', extra:'Forte croissance autoconsommation' },
+                belgique:      { flag:'🇧🇪', label:'Belgique', yield:'850 – 1 050', price:'0,30 €/kWh', extra:'Tarif prosumer en vigueur' },
+                suisse:        { flag:'🇨🇭', label:'Suisse', yield:'900 – 1 300', price:'0,27 CHF/kWh', extra:'Rétribution unique (PRU)' },
+                uk:            { flag:'🇬🇧', label:'Royaume-Uni', yield:'800 – 1 100', price:'£0.24/kWh', extra:'Smart Export Guarantee' },
+                paysbas:       { flag:'🇳🇱', label:'Pays-Bas', yield:'850 – 1 050', price:'0,28 €/kWh', extra:'Net metering → phase-out' },
+                europe:        { flag:'🌍', label:'Europe', yield:'800 – 1 900', price:'Variable', extra:'LCOE moyen ~40-60 €/MWh' }
+            };
+
+            var TZ_MAP = {
+                'Europe/Paris': 'france_centre',
+                'Europe/Madrid': 'espagne',
+                'Europe/Berlin': 'allemagne',
+                'Europe/Rome': 'italie',
+                'Europe/Lisbon': 'portugal',
+                'Europe/Brussels': 'belgique',
+                'Europe/Zurich': 'suisse',
+                'Europe/London': 'uk',
+                'Europe/Amsterdam': 'paysbas',
+                'Atlantic/Canary': 'espagne'
+            };
+
+            try {
+                var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                var detectedZone = TZ_MAP[tz] || null;
+                var isFrance = detectedZone && detectedZone.startsWith('france');
+
+                // Si pas en Europe, ne rien afficher
+                if (!detectedZone && tz && !tz.startsWith('Europe/')) return;
+                if (!detectedZone) detectedZone = 'europe';
+
+                // Charger depuis localStorage si sauvegardé
+                var saved = null;
+                try { saved = localStorage.getItem('solarmetrics_geozone'); } catch(e) {}
+                if (saved && GEO_DATA[saved]) {
+                    detectedZone = saved;
+                    isFrance = detectedZone.startsWith('france');
+                }
+
+                var widget = document.getElementById('geoWidget');
+                var select = document.getElementById('geoZoneSelect');
+
+                function updateWidget(zone) {
+                    var d = GEO_DATA[zone];
+                    if (!d) return;
+                    document.getElementById('geoFlag').textContent = d.flag;
+                    document.getElementById('geoLabel').textContent = d.label;
+                    document.getElementById('geoYield').textContent = d.yield;
+                    document.getElementById('geoPrice').textContent = d.price;
+                    document.getElementById('geoExtra').textContent = d.extra;
+                }
+
+                // Afficher le sélecteur de zone pour la France
+                if (isFrance || detectedZone === 'france_centre' || detectedZone === 'france_nord' || detectedZone === 'france_sud') {
+                    select.style.display = '';
+                    select.value = detectedZone;
+                    select.addEventListener('change', function() {
+                        updateWidget(this.value);
+                        try { localStorage.setItem('solarmetrics_geozone', this.value); } catch(e) {}
+                    });
+                }
+
+                updateWidget(detectedZone);
+                widget.style.display = '';
+                // Fade in
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        widget.style.opacity = '1';
+                    });
+                });
+            } catch(e) {
+                // Si Intl non supporté, on n'affiche rien
+            }
+        })();
     </script>
 </body>
 </html>

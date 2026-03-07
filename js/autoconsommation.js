@@ -92,6 +92,64 @@ const PROFILES = {
 };
 
 /**
+ * Additional consumption profiles for specific equipment.
+ * These add EXTRA kWh/year on top of the base profile.
+ * Hourly shapes represent WHEN the equipment typically consumes.
+ * Annual consumption is fixed per equipment type.
+ *
+ * Sources:
+ *   - EV: RTE "Enjeux du développement de l'électromobilité" 2024,
+ *     ~2,500 kWh/year for 15,000 km (0.167 kWh/km), charging mostly evening/night
+ *   - PAC (heat pump): ADEME, ~4,000 kWh/year for a well-insulated house,
+ *     seasonal (mostly winter), runs during day when outdoor temp is higher
+ *   - ECS (hot water): ADEME, ~1,500 kWh/year thermodynamic water heater,
+ *     programmable → can be shifted to solar hours (midday)
+ */
+const ADDITIONAL_PROFILES = {
+  ev: {
+    label: { fr: "Véhicule électrique", en: "Electric vehicle" },
+    annualKwh: 2500, // ~15 000 km/an, 0.167 kWh/km
+    // Charging mostly 18h-06h (evening/night, home charger)
+    // Smart charging variant could shift to 11h-15h (solar)
+    hourly: [
+      0.80, 0.80, 0.70, 0.60, 0.50, 0.40,  // 00-05: overnight charge taper
+      0.20, 0.10, 0.05, 0.05, 0.05, 0.10,  // 06-11: car at work/out
+      0.10, 0.10, 0.10, 0.15, 0.20, 0.40,  // 12-17: returning home
+      1.00, 1.50, 1.60, 1.50, 1.30, 1.00   // 18-23: evening charge peak
+    ],
+    // Seasonal: slight increase in winter (heating, range loss ~15%)
+    seasonal: [1.15, 1.10, 1.05, 0.95, 0.90, 0.85, 0.85, 0.85, 0.90, 1.00, 1.10, 1.15]
+  },
+  pac: {
+    label: { fr: "Pompe à chaleur", en: "Heat pump" },
+    annualKwh: 4000, // well-insulated house, COP ~3
+    // Runs mostly during day (better COP with higher outdoor temp)
+    // Peak in morning (warm-up) and evening (comfort)
+    hourly: [
+      0.30, 0.25, 0.20, 0.20, 0.25, 0.40,  // 00-05: night setback
+      0.80, 1.20, 1.10, 0.90, 0.80, 0.70,  // 06-11: morning warm-up peak
+      0.60, 0.55, 0.55, 0.60, 0.70, 0.90,  // 12-17: midday maintenance
+      1.10, 1.20, 1.10, 0.90, 0.60, 0.40   // 18-23: evening comfort
+    ],
+    // Very seasonal: almost nothing in summer, heavy in winter
+    seasonal: [2.00, 1.80, 1.40, 0.70, 0.20, 0.05, 0.00, 0.00, 0.15, 0.60, 1.30, 1.90]
+  },
+  ecs: {
+    label: { fr: "Chauffe-eau thermodynamique", en: "Heat pump water heater" },
+    annualKwh: 1500, // ADEME typical
+    // Programmable — default: midday (solar-optimized) + evening top-up
+    hourly: [
+      0.10, 0.10, 0.10, 0.10, 0.10, 0.15,  // 00-05: standby
+      0.30, 0.50, 0.40, 0.30, 0.60, 1.20,  // 06-11: morning use + solar ramp
+      1.60, 1.50, 1.30, 1.00, 0.60, 0.50,  // 12-17: solar hours heating (programmé)
+      0.80, 1.00, 0.90, 0.60, 0.30, 0.15   // 18-23: evening top-up
+    ],
+    // Mild seasonality (hot water usage year-round, slightly more in winter)
+    seasonal: [1.15, 1.10, 1.05, 0.95, 0.90, 0.85, 0.85, 0.85, 0.90, 1.00, 1.10, 1.15]
+  }
+};
+
+/**
  * Weekend hourly shape modifiers per profile.
  * Applied on Saturday and Sunday to shift consumption patterns:
  *   - Morning peak later (sleep in), more midday consumption (home activities)
@@ -141,9 +199,10 @@ const WEEKEND_MODIFIERS = {
  *
  * @param {string} profileKey - One of: 'family', 'retired', 'telecommute', 'allElectric'
  * @param {number} annualKwh - Total annual consumption in kWh (e.g., 4500)
+ * @param {Array<string>} [addons=[]] - Additional equipment keys: 'ev', 'pac', 'ecs'
  * @returns {Float64Array} - 8760 values in kWh (energy per hour)
  */
-function generateConsumptionProfile(profileKey, annualKwh) {
+function generateConsumptionProfile(profileKey, annualKwh, addons) {
   const profile = PROFILES[profileKey];
   if (!profile) throw new Error(`Unknown profile: ${profileKey}`);
 
@@ -170,12 +229,42 @@ function generateConsumptionProfile(profileKey, annualKwh) {
     }
   }
 
-  // Step 2: Normalize so sum === annualKwh
+  // Step 2: Normalize base profile so sum === annualKwh
   let rawSum = 0;
   for (let i = 0; i < 8760; i++) rawSum += hourly[i];
 
   const normFactor = annualKwh / rawSum;
   for (let i = 0; i < 8760; i++) hourly[i] *= normFactor;
+
+  // Step 3: Add equipment profiles (EV, PAC, ECS)
+  if (addons && addons.length > 0) {
+    for (const addonKey of addons) {
+      const addon = ADDITIONAL_PROFILES[addonKey];
+      if (!addon) continue;
+
+      // Generate the addon's 8760 profile, normalized to addon.annualKwh
+      const addonHourly = new Float64Array(8760);
+      let addonIdx = 0;
+      let addonDay = 0;
+      let addonRawSum = 0;
+      for (let m = 0; m < 12; m++) {
+        const sFactor = addon.seasonal[m];
+        for (let d = 0; d < daysPerMonth[m]; d++) {
+          for (let h = 0; h < 24; h++) {
+            addonHourly[addonIdx] = addon.hourly[h] * sFactor;
+            addonRawSum += addonHourly[addonIdx];
+            addonIdx++;
+          }
+          addonDay++;
+        }
+      }
+      // Normalize addon to its annual kWh
+      const addonNorm = addon.annualKwh / addonRawSum;
+      for (let i = 0; i < 8760; i++) {
+        hourly[i] += addonHourly[i] * addonNorm;
+      }
+    }
+  }
 
   return hourly;
 }
@@ -501,10 +590,10 @@ function calculateFinancials(annual, financialParams) {
  * @returns {Promise<object>} PVGIS response with hourly array
  */
 async function fetchPvgisHourly(params) {
-  const { lat, lon, peakpower = 1, loss = 14, angle = 30, aspect = 0 } = params;
+  const { lat, lon, peakpower = 1, loss = 14, angle = 30, aspect = 0, mountingplace = 'free' } = params;
 
   // Cache key based on all parameters
-  const cacheKey = `pvgis_hourly_${lat}_${lon}_${peakpower}_${loss}_${angle}_${aspect}`;
+  const cacheKey = `pvgis_hourly_${lat}_${lon}_${peakpower}_${loss}_${angle}_${aspect}_${mountingplace}`;
 
   // Check sessionStorage cache first
   try {
@@ -523,7 +612,7 @@ async function fetchPvgisHourly(params) {
   // Build URL
   const url = `/.netlify/functions/pvgis?lat=${lat}&lon=${lon}`
     + `&peakpower=${peakpower}&loss=${loss}&angle=${angle}&aspect=${aspect}`
-    + `&mode=hourly`;
+    + `&mountingplace=${mountingplace}&mode=hourly`;
 
   const response = await fetch(url);
 
@@ -560,6 +649,7 @@ async function fetchPvgisHourly(params) {
 
 window.AutoconsommationSimulator = {
   PROFILES,
+  ADDITIONAL_PROFILES,
   BATTERY_DEFAULTS,
   generateConsumptionProfile,
   simulateAutoconsommation,

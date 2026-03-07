@@ -78,6 +78,16 @@
             to { transform: rotate(360deg); }
         }
     </style>
+    <style media="print">
+        body { background: white !important; color: black !important; }
+        nav, footer, #sim-form, .chart-container, button, #battery-reco-section { display: none !important; }
+        #results-section { display: block !important; }
+        .bg-slate-800\/50, .bg-gradient-to-r { background: #f8f8f8 !important; border: 1px solid #ddd !important; }
+        .text-white, .text-amber-400, .text-amber-500, .text-emerald-400, .text-emerald-500 { color: black !important; }
+        .text-slate-300, .text-slate-400, .text-slate-500 { color: #333 !important; }
+        strong { color: black !important; -webkit-text-fill-color: black !important; }
+        @page { margin: 2cm; }
+    </style>
 </head>
 <body class="bg-slate-900 text-white">
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
@@ -204,7 +214,7 @@
                     <!-- Row 2: Installation PV -->
                     <div class="mb-8">
                         <h2 class="text-xl font-semibold text-white mb-4">Installation Photovoltaïque</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
                             <div class="input-group">
                                 <label class="block text-sm font-medium text-slate-300 mb-2">Puissance PV (kWc)</label>
                                 <input type="number" id="simPeakpower" min="0.5" max="36" step="0.5" value="3" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
@@ -223,6 +233,21 @@
                                     <option value="90">Ouest</option>
                                     <option value="180">Nord</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Type de montage</label>
+                                <select id="simMounting" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                    <option value="free">Surimposé (toiture)</option>
+                                    <option value="building">Intégré au bâti (IAB)</option>
+                                </select>
+                                <p class="text-xs text-slate-400 mt-1">IAB : ventilation moindre → 3-5% de pertes en été</p>
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Pertes système (%)</label>
+                                <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                <p class="text-xs text-slate-400 mt-1">Câbles, onduleur, poussière... (typique : 10-16%)</p>
                             </div>
                         </div>
                     </div>
@@ -250,6 +275,24 @@
                                 <p class="text-xs text-slate-400 mt-1">Arbres, bâtiments voisins...</p>
                             </div>
                         </div>
+                        <!-- Equipment addons -->
+                        <div class="mt-4 p-4 bg-slate-900/30 rounded-lg border border-slate-700/30">
+                            <p class="text-sm font-medium text-slate-300 mb-3">Équipements supplémentaires <span class="text-xs text-slate-400">(ajoutent de la consommation au profil de base)</span></p>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer group">
+                                    <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500 focus:ring-amber-500 focus:ring-offset-0">
+                                    <span class="text-sm text-slate-300 group-hover:text-white transition-colors">🚗 Véhicule électrique <span class="text-xs text-slate-400">(+2 500 kWh/an)</span></span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer group">
+                                    <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500 focus:ring-amber-500 focus:ring-offset-0">
+                                    <span class="text-sm text-slate-300 group-hover:text-white transition-colors">🌡️ Pompe à chaleur <span class="text-xs text-slate-400">(+4 000 kWh/an)</span></span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer group">
+                                    <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500 focus:ring-amber-500 focus:ring-offset-0">
+                                    <span class="text-sm text-slate-300 group-hover:text-white transition-colors">💧 Chauffe-eau thermodynamique <span class="text-xs text-slate-400">(+1 500 kWh/an)</span></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Row 4: Batterie LFP -->
@@ -273,10 +316,15 @@
                     <!-- Row 5: Financial -->
                     <div class="mb-8">
                         <h2 class="text-xl font-semibold text-white mb-4">Paramètres Financiers</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div class="input-group">
                                 <label class="block text-sm font-medium text-slate-300 mb-2">Prix électricité (€/kWh)</label>
                                 <input type="number" id="simPriceElec" min="0.05" max="1" step="0.01" value="0.2516" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Hausse prix élec. (%/an)</label>
+                                <input type="number" id="simPriceIncrease" min="0" max="10" step="0.5" value="3" class="w-full px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:border-amber-500 focus:outline-none transition-colors">
+                                <p class="text-xs text-slate-400 mt-1">Historique FR : ~3%/an (Eurostat)</p>
                             </div>
                             <div class="input-group">
                                 <label class="block text-sm font-medium text-slate-300 mb-2">Prix revente surplus (€/kWh)</label>
@@ -414,6 +462,31 @@
                     </div>
                 </div>
 
+                <!-- Battery Recommendation -->
+                <div id="battery-reco-section" class="bg-gradient-to-r from-slate-800/80 to-slate-800/50 rounded-2xl p-8 border border-amber-500/20 mb-8 hidden">
+                    <h3 class="text-xl font-semibold text-white mb-2">🔋 Comparaison tailles de batterie</h3>
+                    <p class="text-slate-400 text-sm mb-6">Simulation automatique pour 3 capacités — quel est le meilleur compromis autonomie vs coût ?</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-700">
+                                    <th class="text-left text-slate-400 py-3 px-2">Batterie</th>
+                                    <th class="text-right text-slate-400 py-3 px-2">Taux auto.</th>
+                                    <th class="text-right text-slate-400 py-3 px-2">Gain vs sans</th>
+                                    <th class="text-right text-slate-400 py-3 px-2">Coût batterie</th>
+                                    <th class="text-right text-slate-400 py-3 px-2">Éco. an 1</th>
+                                    <th class="text-right text-slate-400 py-3 px-2">Payback</th>
+                                    <th class="text-right text-slate-400 py-3 px-2">Bénéfice 25 ans</th>
+                                    <th class="text-center text-slate-400 py-3 px-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="battery-reco-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    <p id="battery-reco-advice" class="text-slate-300 text-sm mt-4 pt-4 border-t border-slate-700/50"></p>
+                </div>
+
                 <!-- Financial Summary -->
                 <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
                     <h3 class="text-xl font-semibold text-white mb-6">Bilan financier simplifié</h3>
@@ -444,6 +517,18 @@
                             Dégradation panneaux : 0,5%/an · Dégradation batterie : 2%/an · Hausse prix élec : 3%/an.
                         </p>
                     </div>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="flex flex-wrap gap-4 mt-8 justify-center">
+                    <button onclick="exportCSV()" class="px-6 py-3 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/20 hover:bg-emerald-500/30 transition-colors flex items-center gap-2 text-sm font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Exporter CSV
+                    </button>
+                    <button onclick="exportPrint()" class="px-6 py-3 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/20 hover:bg-amber-500/30 transition-colors flex items-center gap-2 text-sm font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        Imprimer / PDF
+                    </button>
                 </div>
 
             </div>
@@ -520,7 +605,10 @@
                 const profileKey = document.getElementById('simProfile').value;
                 const shadingLoss = parseFloat(document.getElementById('simShading').value) / 100;
                 const batteryKwh = parseFloat(document.getElementById('simBattery').value);
+                const mountingplace = document.getElementById('simMounting').value;
+                const loss = parseFloat(document.getElementById('simLoss').value);
                 const priceElec = parseFloat(document.getElementById('simPriceElec').value);
+                const priceIncrease = parseFloat(document.getElementById('simPriceIncrease').value) / 100;
                 const priceRevente = parseFloat(document.getElementById('simPriceRevente').value);
                 const costInstall = parseFloat(document.getElementById('simCostInstall').value);
 
@@ -529,7 +617,7 @@
 
                 // Fetch PVGIS hourly data
                 const pvgisData = await window.AutoconsommationSimulator.fetchPvgisHourly({
-                    lat, lon, peakpower, loss: 14, angle, aspect
+                    lat, lon, peakpower, loss, angle, aspect, mountingplace
                 });
 
                 document.getElementById('loader-text').textContent = 'Calcul en cours (8760 heures)...';
@@ -537,8 +625,14 @@
                 // Small delay so the user sees the text change
                 await new Promise(r => setTimeout(r, 100));
 
-                // Generate consumption profile
-                const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profileKey, annualKwh);
+                // Collect equipment addons
+                const addons = [];
+                if (document.getElementById('addonEV').checked) addons.push('ev');
+                if (document.getElementById('addonPAC').checked) addons.push('pac');
+                if (document.getElementById('addonECS').checked) addons.push('ecs');
+
+                // Generate consumption profile (base + addons)
+                const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profileKey, annualKwh, addons);
 
                 // Run simulation
                 const simResults = window.AutoconsommationSimulator.simulateAutoconsommation(
@@ -554,11 +648,18 @@
                     priceElecKwh: priceElec,
                     priceReventeKwh: priceRevente,
                     costPv: costInstall,
-                    costBattery: costBattery
+                    costBattery: costBattery,
+                    priceIncreasePerYear: priceIncrease
                 });
 
                 // Display results
-                displayResults(simResults, financials, consoProfile);
+                const userInputs = { peakpower, annualKwh, batteryKwh, priceElec, priceRevente, costInstall, profileKey, lat, lon, loss, mountingplace, priceIncrease, addons };
+                displayResults(simResults, financials, consoProfile, userInputs);
+
+                // ── Battery comparison (3 sizes) ──
+                runBatteryComparison(pvgisData, consoProfile, shadingLoss, {
+                    priceElec, priceRevente, costInstall, priceIncrease, batteryKwh
+                });
 
                 loader.classList.add('hidden');
                 results.classList.remove('hidden');
@@ -574,69 +675,289 @@
             }
         }
 
-        function generateSummaryText(a, fin) {
-            const prod = a.production.toLocaleString('fr-FR');
-            const conso = a.consumption.toLocaleString('fr-FR');
+        function generateSummaryText(a, fin, monthly, inputs) {
+            const fmt = (n) => Math.round(n).toLocaleString('fr-FR');
+            const prod = fmt(a.production);
+            const conso = fmt(a.consumption);
             const taux = a.tauxAutoconsommation;
-            const autoTotal = a.autoTotal.toLocaleString('fr-FR');
-            const injection = a.injection.toLocaleString('fr-FR');
-            const soutirage = a.soutirage.toLocaleString('fr-FR');
-            const eco1 = Math.round(fin.savingsYear1).toLocaleString('fr-FR');
-            const ecoMois = Math.round(fin.savingsYear1 / 12).toLocaleString('fr-FR');
-            const invest = Math.round(fin.totalInvestment).toLocaleString('fr-FR');
+            const tauxProd = a.tauxAutoproduction;
+            const autoTotal = fmt(a.autoTotal);
+            const injection = fmt(a.injection);
+            const soutirage = fmt(a.soutirage);
+            const eco1 = fmt(fin.savingsYear1);
+            const ecoMois = fmt(fin.savingsYear1 / 12);
+            const invest = fmt(fin.totalInvestment);
             const hasBattery = a.autoBattery > 0;
 
-            // Évaluation du taux d'autoconsommation
-            let tauxComment;
-            if (taux >= 60) tauxComment = "C'est un <strong class='text-emerald-400'>excellent taux</strong>, votre installation est très bien dimensionnée par rapport à vos besoins.";
-            else if (taux >= 40) tauxComment = "C'est un <strong class='text-amber-400'>bon taux</strong>, typique d'une installation résidentielle bien calibrée.";
-            else if (taux >= 25) tauxComment = "C'est un <strong class='text-amber-400'>taux moyen</strong>. Une batterie ou un décalage de certains usages (machine à laver, chauffe-eau) aux heures solaires pourrait l'améliorer.";
-            else tauxComment = "C'est un <strong class='text-red-400'>taux faible</strong>. Votre installation produit beaucoup plus que ce que vous consommez en journée — une batterie serait particulièrement bénéfique.";
+            let parts = [];
 
-            // Phrase batterie
-            let batteryComment = '';
+            // ── 1. PRODUCTION & CONSOMMATION ──
+            // Ratio production/consommation
+            const ratio = a.production / a.consumption;
+            let dimensionComment = '';
+            if (ratio > 1.5) {
+                dimensionComment = `<br>⚠️ <strong class='text-amber-400'>Attention</strong> : votre installation produit ${Math.round(ratio * 100)}% de votre consommation annuelle. ` +
+                    `C'est surdimensionné — vous aurez beaucoup de surplus à revendre à un prix inférieur au prix d'achat. ` +
+                    `Envisagez une installation plus petite ou l'ajout d'usages (véhicule électrique, chauffe-eau thermodynamique).`;
+            } else if (ratio < 0.3) {
+                dimensionComment = `<br>💡 Votre installation ne couvre que ${Math.round(ratio * 100)}% de votre consommation. ` +
+                    `C'est un bon début, mais une installation plus grande maximiserait vos économies.`;
+            }
+
+            // Comparaison à la moyenne française (4 679 kWh/an, source : RTE 2024)
+            const moyFr = 4679;
+            let consoCompare = '';
+            if (inputs.annualKwh > moyFr * 1.3) {
+                consoCompare = ` (c'est ${Math.round((inputs.annualKwh / moyFr - 1) * 100)}% au-dessus de la moyenne française de ${fmt(moyFr)} kWh/an)`;
+            } else if (inputs.annualKwh < moyFr * 0.7) {
+                consoCompare = ` (c'est ${Math.round((1 - inputs.annualKwh / moyFr) * 100)}% en dessous de la moyenne française de ${fmt(moyFr)} kWh/an — profil sobre)`;
+            }
+
+            parts.push(
+                `<strong class='text-amber-400'>📊 Production vs Consommation</strong><br>` +
+                `Vos ${inputs.peakpower} kWc de panneaux produisent <strong class='text-amber-400'>${prod} kWh/an</strong>. ` +
+                `Votre foyer consomme ${conso} kWh/an${consoCompare}. ` +
+                `Sur cette production, vous utilisez directement <strong class='text-amber-400'>${autoTotal} kWh</strong> `+
+                `(taux d'autoconsommation : <strong class='text-amber-400'>${taux}%</strong>).` +
+                dimensionComment
+            );
+
+            // ── 2. ÉVALUATION DU TAUX D'AUTOCONSOMMATION ──
+            let tauxComment;
+            if (taux >= 60) tauxComment = "C'est un <strong class='text-emerald-400'>excellent taux</strong> — votre installation est très bien dimensionnée.";
+            else if (taux >= 40) tauxComment = "C'est un <strong class='text-amber-400'>bon taux</strong>, typique d'une installation résidentielle bien calibrée.";
+            else if (taux >= 25) tauxComment = "C'est un <strong class='text-amber-400'>taux moyen</strong>. Pour l'améliorer, essayez de décaler vos usages aux heures solaires (machine à laver, lave-vaisselle, chauffe-eau) ou ajoutez une batterie.";
+            else tauxComment = "C'est un <strong class='text-red-400'>taux faible</strong>. Votre installation produit beaucoup plus que ce que vous consommez en journée — une batterie ou un décalage d'usages serait très bénéfique.";
+            parts.push(tauxComment);
+
+            // ── 3. SAISONNALITÉ ──
+            if (monthly) {
+                const prodEte = (monthly.production[5] || 0) + (monthly.production[6] || 0) + (monthly.production[7] || 0); // juin-juil-août
+                const prodHiver = (monthly.production[11] || 0) + (monthly.production[0] || 0) + (monthly.production[1] || 0); // déc-jan-fév
+                const ratioSaison = prodHiver > 0 ? prodEte / prodHiver : 99;
+                parts.push(
+                    `<br><strong class='text-amber-400'>☀️ Saisonnalité</strong><br>` +
+                    `En été (juin-août), vos panneaux produisent ~${fmt(prodEte)} kWh contre ~${fmt(prodHiver)} kWh en hiver (déc-fév) — ` +
+                    `soit ${ratioSaison.toFixed(1)}× plus. ` +
+                    (ratioSaison > 3 ? `C'est normal pour votre latitude, mais pensez-y : en hiver, vous tirerez davantage du réseau.` :
+                     `Un rapport équilibré, bon signe pour une couverture solaire toute l'année.`)
+                );
+            }
+
+            // ── 4. BATTERIE ──
             if (hasBattery) {
                 const batteryPct = Math.round(a.autoBattery / a.consumption * 100);
-                batteryComment = ` Grâce à votre batterie, vous récupérez ${a.autoBattery.toLocaleString('fr-FR')} kWh supplémentaires (${batteryPct}% de votre consommation) qui auraient été perdus vers le réseau.`;
+                const tauxSansBat = Math.round(a.autoDirect / a.consumption * 100 * 10) / 10;
+                const gainBat = Math.round((taux - tauxSansBat) * 10) / 10;
+                parts.push(
+                    `<br><strong class='text-amber-400'>🔋 Batterie (${inputs.batteryKwh} kWh)</strong><br>` +
+                    `Votre batterie récupère <strong class='text-emerald-400'>${fmt(a.autoBattery)} kWh/an</strong> de surplus solaire ` +
+                    `(${batteryPct}% de votre consommation). ` +
+                    `Sans elle, votre taux d'autoconsommation serait de ${tauxSansBat}% au lieu de ${taux}% — la batterie apporte +${gainBat} points. ` +
+                    (gainBat < 5 ? `Le gain est modeste : la batterie est peut-être surdimensionnée pour votre profil.` :
+                     gainBat > 20 ? `Un gain très significatif — la batterie est parfaitement adaptée à votre profil.` :
+                     `Un gain appréciable, cohérent avec une batterie de cette taille.`)
+                );
+            } else if (taux < 50 && a.injection > 500) {
+                parts.push(
+                    `<br><strong class='text-amber-400'>🔋 Et avec une batterie ?</strong><br>` +
+                    `Vous injectez ${injection} kWh de surplus dans le réseau. Une batterie de 5 à 10 kWh pourrait capter une partie de ce surplus ` +
+                    `pour le consommer le soir, et augmenter votre taux d'autoconsommation de 10 à 25 points.`
+                );
             }
 
-            // Phrase payback
-            let paybackComment;
-            if (fin.paybackYear && fin.paybackYear <= 10) paybackComment = `Votre installation sera <strong class='text-emerald-400'>rentabilisée en ${fin.paybackYear} ans</strong>, ce qui est rapide.`;
-            else if (fin.paybackYear && fin.paybackYear <= 15) paybackComment = `Votre installation sera <strong class='text-amber-400'>rentabilisée en ${fin.paybackYear} ans</strong>, dans la moyenne des installations résidentielles.`;
-            else if (fin.paybackYear) paybackComment = `Votre installation sera rentabilisée en ${fin.paybackYear} ans. C'est un peu long — vérifiez si vous pouvez bénéficier d'aides ou primes à l'autoconsommation.`;
-            else paybackComment = "L'installation ne sera <strong class='text-red-400'>pas rentabilisée en 25 ans</strong> avec ces paramètres. Vérifiez les aides disponibles ou ajustez la taille de l'installation.";
-
-            // Surplus / injection
-            let surplusComment = '';
+            // ── 5. SURPLUS / INJECTION ──
             if (a.injection > 0) {
                 const injPct = Math.round(a.injection / a.production * 100);
-                surplusComment = ` Vous revendez ${injection} kWh de surplus au réseau (${injPct}% de votre production).`;
+                const revenueInj = Math.round(a.injection * (inputs.priceRevente || 0.13));
+                parts.push(
+                    `<br><strong class='text-amber-400'>📤 Surplus réinjecté</strong><br>` +
+                    `${injection} kWh sont revendus au réseau (${injPct}% de votre production), ` +
+                    `soit ~${fmt(revenueInj)} €/an au tarif de revente de ${inputs.priceRevente || 0.13} €/kWh. ` +
+                    (injPct > 50 ? `Plus de la moitié de votre production est revendue — un décalage d'usages ou une batterie limiterait cette perte de valeur.` : ``)
+                );
             }
 
-            // Assemblage final
-            return `Vos panneaux produisent <strong class='text-amber-400'>${prod} kWh par an</strong>, tandis que vous consommez ${conso} kWh. `
-                + `Sur cette production, vous utilisez directement <strong class='text-amber-400'>${autoTotal} kWh</strong>, `
-                + `soit <strong class='text-amber-400'>${taux}%</strong> de votre consommation couverte par le solaire. `
-                + tauxComment
-                + batteryComment
-                + surplusComment
-                + `<br><br>`
-                + `Concrètement, cela représente une <strong class='text-emerald-400'>économie d'environ ${eco1} € la première année</strong> `
-                + `(soit ~${ecoMois} €/mois sur votre facture). `
-                + paybackComment
-                + ` Sur 25 ans, le bénéfice net estimé est de <strong class='text-emerald-400'>${Math.round(fin.totalSavings25y).toLocaleString('fr-FR')} €</strong> `
-                + `pour un investissement de ${invest} €.`;
+            // ── 6. ÉCONOMIES & FACTURE ──
+            // Estimation facture annuelle sans solaire
+            const factureAnnuelle = a.consumption * inputs.priceElec;
+            const pctFacture = Math.round(fin.savingsYear1 / factureAnnuelle * 100);
+            parts.push(
+                `<br><strong class='text-emerald-400'>💰 Économies</strong><br>` +
+                `Vous économisez <strong class='text-emerald-400'>${eco1} € la première année</strong> (soit ~${ecoMois} €/mois). ` +
+                `Cela représente environ <strong class='text-emerald-400'>${pctFacture}%</strong> de votre facture d'électricité annuelle estimée à ${fmt(factureAnnuelle)} €. ` +
+                `Avec la hausse des prix de l'électricité (+${Math.round((inputs.priceIncrease || 0.03) * 100)}%/an), vos économies augmenteront chaque année.`
+            );
+
+            // ── 7. RENTABILITÉ / PAYBACK ──
+            let paybackComment;
+            if (fin.paybackYear && fin.paybackYear <= 8) paybackComment = `Investissement de ${invest} € → <strong class='text-emerald-400'>rentabilisé en ${fin.paybackYear} ans</strong>. C'est excellent — bien en dessous de la durée de garantie des panneaux (25 ans).`;
+            else if (fin.paybackYear && fin.paybackYear <= 12) paybackComment = `Investissement de ${invest} € → <strong class='text-emerald-400'>rentabilisé en ${fin.paybackYear} ans</strong>. C'est dans la bonne moyenne des installations résidentielles françaises (8-12 ans).`;
+            else if (fin.paybackYear && fin.paybackYear <= 18) paybackComment = `Investissement de ${invest} € → <strong class='text-amber-400'>rentabilisé en ${fin.paybackYear} ans</strong>. C'est un peu long. Vérifiez si vous pouvez bénéficier de la prime à l'autoconsommation (jusqu'à 370 €/kWc pour ≤3 kWc, en 2025).`;
+            else if (fin.paybackYear) paybackComment = `Investissement de ${invest} € → rentabilisé en ${fin.paybackYear} ans. C'est <strong class='text-red-400'>au-delà des 20 ans</strong> — revoyez la taille de l'installation ou vérifiez les aides disponibles.`;
+            else paybackComment = `L'installation ne sera <strong class='text-red-400'>pas rentabilisée en 25 ans</strong> avec ces paramètres. Vérifiez les aides disponibles ou réduisez l'investissement.`;
+
+            parts.push(
+                `<br><strong class='text-emerald-400'>📈 Rentabilité</strong><br>` +
+                paybackComment +
+                ` Sur 25 ans, le bénéfice net cumulé est de <strong class='text-emerald-400'>${fmt(fin.totalSavings25y)} €</strong>.`
+            );
+
+            // ── 8. IMPACT ENVIRONNEMENTAL ──
+            // ~30 gCO₂/kWh pour le solaire sur cycle de vie vs ~55 gCO₂/kWh mix FR (RTE 2024)
+            // L'autoconsommation évite du soutirage réseau → on compte l'évitement au mix marginal ~400 gCO₂/kWh (gaz)
+            // Approche conservatrice : mix moyen français 55 g/kWh
+            const co2EviteKg = Math.round(a.autoTotal * 0.055); // 55 gCO₂/kWh mix FR moyen
+            const co2Marginal = Math.round(a.autoTotal * 0.4);  // 400 gCO₂/kWh marginal (gaz)
+            const co2_25ans = Math.round(co2EviteKg * 25 / 1000); // tonnes sur 25 ans (mix moyen)
+            const eqVoiture = (co2EviteKg / 2000).toFixed(1); // ~2 tCO₂/an pour une voiture moyenne
+            const eqArbres = Math.round(co2EviteKg / 22); // ~22 kgCO₂/an absorbés par un arbre
+            parts.push(
+                `<br><strong class='text-emerald-400'>🌱 Impact environnemental</strong><br>` +
+                `Votre autoconsommation solaire évite l'émission de <strong class='text-emerald-400'>~${fmt(co2EviteKg)} kg de CO₂ par an</strong> ` +
+                `(base : mix électrique français moyen à 55 gCO₂/kWh — source RTE 2024). ` +
+                `Sur 25 ans, c'est ~${co2_25ans} tonnes de CO₂ évitées, soit l'équivalent de ${eqVoiture} année(s) de conduite automobile ` +
+                `ou ce qu'absorberaient ${eqArbres} arbres en un an.` +
+                (co2EviteKg < 100 ? `` : `<br><em class='text-slate-400'>Note : en France, le mix est déjà très décarboné (nucléaire). ` +
+                `Dans un pays au mix plus carboné (Allemagne : ~350 gCO₂/kWh), l'impact serait ~${fmt(co2Marginal)} kg CO₂/an évités.</em>`)
+            );
+
+            // ── 9. RECOMMANDATIONS ──
+            let recs = [];
+            if (taux < 40 && !hasBattery) recs.push("Envisagez une batterie de 5 à 10 kWh pour augmenter votre autoconsommation");
+            if (ratio > 1.5) recs.push("Votre installation est surdimensionnée — réduisez la puissance ou ajoutez des usages (VE, PAC, ECS)");
+            if (ratio < 0.3 && inputs.peakpower < 6) recs.push("Passez à une installation de 6 ou 9 kWc pour couvrir davantage de vos besoins");
+            if (a.injection > a.production * 0.5 && !hasBattery) recs.push("Plus de 50% de surplus — décalez vos usages en journée (machine, chauffe-eau) ou ajoutez une batterie");
+            if (fin.paybackYear && fin.paybackYear > 15) recs.push("Vérifiez les primes à l'autoconsommation et la TVA réduite à 5.5% (installations ≤3 kWc, France)");
+            if (inputs.priceElec < 0.20) recs.push("Votre prix d'électricité est bas — les économies seront plus faibles, mais augmenteront avec les hausses tarifaires");
+
+            if (recs.length > 0) {
+                parts.push(
+                    `<br><strong class='text-amber-400'>💡 Recommandations</strong><br>` +
+                    recs.map(r => `• ${r}`).join('<br>')
+                );
+            }
+
+            return parts.join('<br>');
         }
 
-        function displayResults(sim, fin, consoProfile) {
+        function runBatteryComparison(pvgisData, consoProfile, shadingLoss, params) {
+            const { priceElec, priceRevente, costInstall, priceIncrease, batteryKwh } = params;
+            const section = document.getElementById('battery-reco-section');
+            const tbody = document.getElementById('battery-reco-body');
+            const advice = document.getElementById('battery-reco-advice');
+
+            const sizes = [0, 5, 10, 15]; // kWh
+            const results = [];
+            const fmt = (n) => Math.round(n).toLocaleString('fr-FR');
+
+            for (const size of sizes) {
+                const sim = window.AutoconsommationSimulator.simulateAutoconsommation(
+                    pvgisData.hourly, consoProfile, { capacityKwh: size }, shadingLoss
+                );
+                const costBat = size * 600;
+                const fin = window.AutoconsommationSimulator.calculateFinancials(sim.annual, {
+                    priceElecKwh: priceElec,
+                    priceReventeKwh: priceRevente,
+                    costPv: costInstall,
+                    costBattery: costBat,
+                    priceIncreasePerYear: priceIncrease
+                });
+                results.push({ size, sim: sim.annual, fin, costBat });
+            }
+
+            // Baseline (no battery)
+            const baseline = results[0];
+
+            // Build table rows
+            tbody.innerHTML = '';
+            let bestIdx = 0;
+            let bestBenefit = -Infinity;
+
+            results.forEach((r, i) => {
+                const gain = r.sim.tauxAutoconsommation - baseline.sim.tauxAutoconsommation;
+                const isCurrentChoice = (r.size === batteryKwh);
+                // Best = highest 25y benefit
+                if (r.fin.totalSavings25y > bestBenefit) {
+                    bestBenefit = r.fin.totalSavings25y;
+                    bestIdx = i;
+                }
+
+                const row = document.createElement('tr');
+                row.className = `border-b border-slate-700/30 ${isCurrentChoice ? 'bg-amber-500/10' : ''}`;
+                row.innerHTML = `
+                    <td class="py-3 px-2 font-medium ${isCurrentChoice ? 'text-amber-400' : 'text-white'}">${r.size === 0 ? 'Sans batterie' : r.size + ' kWh'}</td>
+                    <td class="py-3 px-2 text-right text-white">${r.sim.tauxAutoconsommation}%</td>
+                    <td class="py-3 px-2 text-right ${gain > 0 ? 'text-emerald-400' : 'text-slate-400'}">${gain > 0 ? '+' + gain.toFixed(1) : '—'} pts</td>
+                    <td class="py-3 px-2 text-right text-slate-300">${r.costBat > 0 ? fmt(r.costBat) + ' €' : '—'}</td>
+                    <td class="py-3 px-2 text-right text-emerald-400">${fmt(r.fin.savingsYear1)} €</td>
+                    <td class="py-3 px-2 text-right text-white">${r.fin.paybackYear ? r.fin.paybackYear + ' ans' : '> 25'}</td>
+                    <td class="py-3 px-2 text-right font-semibold ${r.fin.totalSavings25y >= 0 ? 'text-emerald-400' : 'text-red-400'}">${fmt(r.fin.totalSavings25y)} €</td>
+                    <td class="py-3 px-2 text-center">${isCurrentChoice ? '<span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded">choisi</span>' : ''}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Advice
+            const best = results[bestIdx];
+            if (bestIdx === 0) {
+                advice.innerHTML = `<strong class='text-amber-400'>💡 Recommandation :</strong> Dans votre configuration, <strong class='text-white'>ne pas installer de batterie</strong> maximise le bénéfice sur 25 ans. Le surplus revendu au réseau rapporte plus que le coût de la batterie.`;
+            } else {
+                const gainVsSans = best.sim.tauxAutoconsommation - baseline.sim.tauxAutoconsommation;
+                advice.innerHTML = `<strong class='text-amber-400'>💡 Recommandation :</strong> La batterie de <strong class='text-white'>${best.size} kWh</strong> offre le meilleur compromis — elle augmente votre autoconsommation de +${gainVsSans.toFixed(1)} points pour un bénéfice net sur 25 ans de <strong class='text-emerald-400'>${fmt(best.fin.totalSavings25y)} €</strong>.`;
+            }
+
+            section.classList.remove('hidden');
+        }
+
+        // ── Animated counter ──
+        function animateValue(el, endVal, suffix, duration = 1200) {
+            const start = 0;
+            const startTime = performance.now();
+            function step(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+                const current = Math.round(start + (endVal - start) * eased);
+                el.textContent = current.toLocaleString('fr-FR') + suffix;
+                if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        function displayResults(sim, fin, consoProfile, userInputs) {
+            // Store for export
+            lastSimData = { sim, fin, inputs: userInputs };
             const a = sim.annual;
 
-            // Key indicators
-            document.getElementById('res-taux').textContent = a.tauxAutoconsommation + '%';
-            document.getElementById('res-prod').textContent = a.production.toLocaleString('fr-FR') + ' kWh';
-            document.getElementById('res-eco').textContent = Math.round(fin.savingsYear1) + ' €';
-            document.getElementById('res-payback').textContent = fin.paybackYear ? Math.round(fin.paybackYear) + ' ans' : '> 25 ans';
+            // Key indicators with animation
+            animateValue(document.getElementById('res-taux'), Math.round(a.tauxAutoconsommation), '%');
+            animateValue(document.getElementById('res-prod'), a.production, ' kWh');
+            animateValue(document.getElementById('res-eco'), Math.round(fin.savingsYear1), ' €');
+            if (fin.paybackYear) {
+                animateValue(document.getElementById('res-payback'), Math.round(fin.paybackYear), ' ans');
+            } else {
+                document.getElementById('res-payback').textContent = '> 25 ans';
+            }
+
+            // Dynamic color coding for taux autoconsommation
+            const tauxEl = document.getElementById('res-taux').closest('.bg-slate-800\\/50, [class*="bg-"]') || document.getElementById('res-taux');
+            if (a.tauxAutoconsommation >= 60) {
+                document.getElementById('res-taux').className = document.getElementById('res-taux').className.replace(/text-\w+-\d+/g, '') + ' text-emerald-400';
+            } else if (a.tauxAutoconsommation >= 40) {
+                document.getElementById('res-taux').className = document.getElementById('res-taux').className.replace(/text-\w+-\d+/g, '') + ' text-amber-400';
+            } else {
+                document.getElementById('res-taux').className = document.getElementById('res-taux').className.replace(/text-\w+-\d+/g, '') + ' text-red-400';
+            }
+
+            // Dynamic color for payback
+            const payEl = document.getElementById('res-payback');
+            if (fin.paybackYear && fin.paybackYear <= 10) {
+                payEl.className = payEl.className.replace(/text-\w+-\d+/g, '') + ' text-emerald-400';
+            } else if (fin.paybackYear && fin.paybackYear <= 15) {
+                payEl.className = payEl.className.replace(/text-\w+-\d+/g, '') + ' text-amber-400';
+            } else {
+                payEl.className = payEl.className.replace(/text-\w+-\d+/g, '') + ' text-red-400';
+            }
 
             // Also show sub-details
             document.getElementById('res-auto-direct').textContent = Math.round(a.autoDirect).toLocaleString('fr-FR') + ' kWh';
@@ -650,7 +971,7 @@
             document.getElementById('res-savings25').textContent = Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €';
 
             // ─── Plain language summary ───
-            document.getElementById('res-summary-text').innerHTML = generateSummaryText(a, fin);
+            document.getElementById('res-summary-text').innerHTML = generateSummaryText(a, fin, sim.monthly, userInputs);
 
             const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
 
@@ -769,6 +1090,67 @@
                     }
                 }
             });
+        }
+
+        // ── Export functions ──
+        let lastSimData = null; // Store last simulation for export
+
+        function exportCSV() {
+            if (!lastSimData) { alert('Lancez d\'abord une simulation.'); return; }
+            const { sim, fin, inputs } = lastSimData;
+            const a = sim.annual;
+            const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+            let csv = 'SolarMetrics — Résultats Autoconsommation\n';
+            csv += `Date,${new Date().toLocaleDateString('fr-FR')}\n`;
+            csv += `Puissance PV,${inputs.peakpower} kWc\n`;
+            csv += `Consommation annuelle,${inputs.annualKwh} kWh\n`;
+            csv += `Batterie,${inputs.batteryKwh} kWh\n`;
+            csv += `Prix électricité,${inputs.priceElec} €/kWh\n`;
+            csv += `Hausse prix/an,${Math.round(inputs.priceIncrease * 100)}%\n`;
+            csv += `Pertes système,${inputs.loss}%\n\n`;
+
+            csv += 'Résultats annuels\n';
+            csv += `Production,${a.production} kWh\n`;
+            csv += `Consommation totale,${a.consumption} kWh\n`;
+            csv += `Autoconsommation directe,${a.autoDirect} kWh\n`;
+            csv += `Autoconsommation batterie,${a.autoBattery} kWh\n`;
+            csv += `Autoconsommation totale,${a.autoTotal} kWh\n`;
+            csv += `Injection réseau,${a.injection} kWh\n`;
+            csv += `Soutirage réseau,${a.soutirage} kWh\n`;
+            csv += `Taux autoconsommation,${a.tauxAutoconsommation}%\n`;
+            csv += `Taux autoproduction,${a.tauxAutoproduction}%\n\n`;
+
+            csv += 'Résultats financiers\n';
+            csv += `Investissement total,${fin.totalInvestment} €\n`;
+            csv += `Économies année 1,${fin.savingsYear1} €\n`;
+            csv += `Payback,${fin.paybackYear ? fin.paybackYear + ' ans' : '> 25 ans'}\n`;
+            csv += `Bénéfice net 25 ans,${fin.totalSavings25y} €\n\n`;
+
+            csv += 'Détail mensuel\n';
+            csv += 'Mois,Production (kWh),Consommation (kWh),Autoconsommation directe (kWh),Autoconsommation batterie (kWh),Injection (kWh),Soutirage (kWh)\n';
+            for (let m = 0; m < 12; m++) {
+                csv += `${months[m]},${sim.monthly.production[m]},${sim.monthly.consumption[m]},${sim.monthly.autoDirect[m]},${sim.monthly.autoBattery[m]},${sim.monthly.injection[m]},${sim.monthly.soutirage[m]}\n`;
+            }
+
+            csv += '\nCash flow\n';
+            csv += 'Année,Économies (€),Cumul (€)\n';
+            fin.cashFlow.forEach(cf => {
+                csv += `${cf.year},${cf.savings},${cf.cumulative}\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `solarmetrics-autoconsommation-${inputs.peakpower}kWc.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportPrint() {
+            if (!lastSimData) { alert('Lancez d\'abord une simulation.'); return; }
+            window.print();
         }
 
         // Init

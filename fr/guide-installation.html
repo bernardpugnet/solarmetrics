@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Installation Solaire Résidentiel — France 2026</title>
+    <meta name="description" content="Guide complet pour installer des panneaux solaires en France : étapes, démarches administratives, aides financières, choix installateur et checklist.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/guide-installation">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/guide-installation">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/guide-installation">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .stepper-step{transition:all 0.3s ease}
+        .stepper-step.active .step-indicator{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);color:white}
+        .stepper-step.completed .step-indicator{background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.5);color:#86efac}
+        .step-content{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+        .step-content.open{max-height:1000px}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+        .faq-answer.open{max-height:800px}
+        .checklist-item{transition:all 0.2s ease}
+        .checklist-item.checked{opacity:0.6}
+        .checklist-item input[type="checkbox"]{accent-color:#F59E0B}
+        .timeline-connector{height:3rem;background:linear-gradient(to bottom,rgba(245,158,11,0.3),rgba(245,158,11,0.1))}
+        .badge-dataset{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:0.5rem;color:#86efac;font-size:0.875rem;text-decoration:none;font-weight:500}
+        .badge-dataset:hover{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.5)}
+        .price-box{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem;padding:1.25rem}
+        .aid-card{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);border-radius:0.75rem;padding:1.25rem}
+        .step-indicator{width:2.5rem;height:2.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;border:2px solid rgba(71,85,105,0.5);transition:all 0.3s ease}
+        abbr[title]{text-decoration:underline dotted rgba(6,182,212,0.5);text-underline-offset:3px;cursor:help}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparateur</div>
+                                        <div class="text-xs text-slate-400">Technologies · Onduleurs · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../en/installation-guide.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Résidentiel</a>
+                <a href="outils-autoconsommation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Autoconsommation</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
+                <a href="comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparateur</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-16 sm:py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <div class="inline-block mb-4">
+                        <a href="hypotheses.html" class="badge-dataset">
+                            <span>📊 Dataset v2026-03</span>
+                        </a>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Guide Installation Solaire Résidentiel</h1>
+                    <p class="text-xl text-slate-300 mb-6">Les 7 étapes pour installer des panneaux solaires chez vous en France — 2026</p>
+                    <p class="text-slate-400">De l'étude de faisabilité à la mise en service, découvrez le processus complet avec aides financières, démarches administratives et checklist interactive.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The 7 Steps Timeline Section -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-white">Les 7 étapes de votre projet solaire</h2>
+
+                <div class="space-y-4">
+                    <!-- Step 1 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">1</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Étude de faisabilité</h3>
+                                <p class="text-sm text-slate-400">1-2 semaines • Analyser votre toit et consommation</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Points clés à vérifier :</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Orientation & inclinaison du toit :</strong> sud ou sud-est de préférence (30-35° optimal)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Ombrage :</strong> vérifier l'absence d'ombres projetées (arbres, bâtiments adjacents)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Surface disponible :</strong> ~8 m² par kWc (panneaux standards 400W)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Consommation annuelle :</strong> relever vos 3-12 derniers relevés EDF/Enedis (en kWh)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Plan Local d'Urbanisme (PLU) :</strong> vérifier auprès de votre mairie (distance de route, etc.)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Architectes des Bâtiments de France (ABF) :</strong> si secteur protégé/patrimoine</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">✓</span>
+                                            <span><strong>Copropriété :</strong> accord syndic/copropriétaires obligatoire</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                                    <p class="text-sm text-cyan-300"><strong>Outil recommandé :</strong> <a href="outils-autoconsommation.html" class="underline hover:no-underline">Simulateur autoconsommation</a> pour estimer votre production</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">2</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Choix de la configuration</h3>
+                                <p class="text-sm text-slate-400">1 semaine • Puissance, autoconsommation, batterie</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Recommandations de puissance :</h4>
+                                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">3 kWc</p>
+                                            <p class="text-sm text-slate-300">Studio, couple, consommation &lt; 3 500 kWh/an</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">6 kWc</p>
+                                            <p class="text-sm text-slate-300">Famille, maison, 3 500-7 500 kWh/an</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">9 kWc</p>
+                                            <p class="text-sm text-slate-300">Grande maison, véhicule électrique, &gt; 7 500 kWh/an</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Type d'installation :</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Autoconsommation avec surplus :</strong> (RECOMMANDÉ) vous consommez directement, surplus injecté au réseau EDF. Tarif d'achat 2026 : 0.04 €/kWh (≤9 kWc)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-emerald-400">→</span>
+                                            <span><strong>Vente totale :</strong> 100% injecté au réseau (contrat 20 ans). Plus simple mais ROI inférieur.</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-blue-400">🔋</span>
+                                            <span><strong>Batterie (coûteux) :</strong> LFP 10 kWh = 6 000-8 000€ + installation. ROI &gt; 12-15 ans. Rarement rentable avant 2027.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                                    <p class="text-sm text-cyan-300"><strong>Outil :</strong> <a href="comparateur.html" class="underline hover:no-underline">Comparateur technologies</a> pour explorer panneaux & onduleurs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">3</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Demander des devis</h3>
+                                <p class="text-sm text-slate-400">2-4 semaines • Comparer 3+ installateurs RGE</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Étapes pour demander devis :</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">1.</span>
+                                            <span>Vérifier que l'installateur possède la <strong>certification RGE QualiPV</strong> valide sur <a href="https://www.qualit-enr.org" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">qualit-enr.org</a></span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">2.</span>
+                                            <span>Demander un devis <strong>détaillé</strong> avec : puissance kWc, marques panneaux & onduleur, type toiture, garanties, service après-vente</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">3.</span>
+                                            <span>Comparer au minimum 3 devis (délais, prix, SAV, marques)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">4.</span>
+                                            <span>Vérifier que les <strong>garanties panneaux</strong> couvrent 25-30 ans &amp; onduleur 10-15 ans</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Prix indicatifs 2026 (clé en main) :</h4>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">3 kWc</p>
+                                            <p class="text-sm text-slate-300">6 000 - 7 500 €</p>
+                                            <p class="text-xs text-slate-400">~2 000 €/kWc</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">6 kWc</p>
+                                            <p class="text-sm text-slate-300">10 800 - 13 200 €</p>
+                                            <p class="text-xs text-slate-400">~1 800 €/kWc</p>
+                                        </div>
+                                        <div class="price-box">
+                                            <p class="font-semibold text-amber-400 mb-2">9 kWc</p>
+                                            <p class="text-sm text-slate-300">16 200 - 19 800 €</p>
+                                            <p class="text-xs text-slate-400">~1 800 €/kWc</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                                    <p class="text-sm text-yellow-300"><strong>Note :</strong> ces prix sont HT, avant TVA réduite 5.5% et aides</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">4</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Démarches administratives</h3>
+                                <p class="text-sm text-slate-400">4-8 semaines • Déclaration, raccordement, contrats</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Démarches (généralement gérées par l'installateur) :</h4>
+                                    <ul class="space-y-3 text-slate-300">
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0 pt-0.5">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Déclaration préalable de travaux (Cerfa 13703)</p>
+                                                <p class="text-xs text-slate-400">À déposer auprès de votre mairie. Délai : 1 mois d'instruction. Installateur aide souvent.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0 pt-0.5">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Demande de raccordement Enedis</p>
+                                                <p class="text-xs text-slate-400">Sur <a href="https://www.raccordement-enedis.fr" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">raccordement-enedis.fr</a>. Délai : 2-4 semaines, gratuit jusqu'à 36 kWc.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0 pt-0.5">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Attestation Consuel</p>
+                                                <p class="text-xs text-slate-400">Organisme indépendant qui vérifie la conformité électrique. Obligatoire avant mise en service Enedis.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0 pt-0.5">✓</span>
+                                            <div>
+                                                <p class="font-semibold">Contrat EDF OA (Obligation d'Achat)</p>
+                                                <p class="text-xs text-slate-400">Pour autoconsommation avec surplus : contrat 20 ans, tarif fixe trimestrial (T1 2026 : 0.04 €/kWh pour ≤9 kWc)</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                                    <p class="text-sm text-yellow-300"><strong>Conseil :</strong> choisissez un installateur RGE pour bénéficier de la prime à l'autoconsommation et TVA réduite (elles exigent RGE)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">5</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Installation</h3>
+                                <p class="text-sm text-slate-400">1-2 jours • Pose panneaux &amp; mise en service technique</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Étapes de l'installation :</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">1.</span>
+                                            <span><strong>Préparation :</strong> vérification structure, démarcation toiture, mise en place EPI</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">2.</span>
+                                            <span><strong>Fixations & supports :</strong> installation rails, fixations anti-tempête (normes régionales)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">3.</span>
+                                            <span><strong>Panneaux :</strong> pose & serrage respectant orientation/inclinaison</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">4.</span>
+                                            <span><strong>Câblage DC :</strong> connecteurs MC4, gaine, vérifications isolement</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">5.</span>
+                                            <span><strong>Onduleur :</strong> installation intérieur/extérieur, connexions AC, mise à la terre</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">6.</span>
+                                            <span><strong>Compteur Linky :</strong> basculement en bidirectionnel (Enedis intervient)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">7.</span>
+                                            <span><strong>Tests :</strong> vérifications production, sécurité, démarrage application de monitoring</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">6</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Raccordement &amp; mise en service</h3>
+                                <p class="text-sm text-slate-400">1-4 semaines après • Consuel, Enedis, contrat OA</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Étapes finales :</h4>
+                                    <ul class="space-y-3 text-slate-300">
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0">→</span>
+                                            <div>
+                                                <p class="font-semibold">Passage Consuel</p>
+                                                <p class="text-xs text-slate-400">Vérification conformité électrique. Gratuit pour résidentiel ≤ 9 kWc. Délai 2-6 semaines.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0">→</span>
+                                            <div>
+                                                <p class="font-semibold">Intervention Enedis</p>
+                                                <p class="text-xs text-slate-400">Mise en place compteur Linky bidirectionnel, basculement du contrat. Gratuit, délai 1-4 semaines.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <span class="text-emerald-400 flex-shrink-0">→</span>
+                                            <div>
+                                                <p class="font-semibold">Activation contrat EDF OA</p>
+                                                <p class="text-xs text-slate-400">Une fois Linky bidirectionnel actif, contrat OA s'active = vous êtes rémunéré pour surplus</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+                                    <p class="text-sm text-green-300"><strong>✓ Félicitations !</strong> Votre installation est en production — vous commencez à générer des économies</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 7 -->
+                    <div class="stepper-step">
+                        <button class="w-full flex items-start gap-4 p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors border border-slate-700 text-left" onclick="toggleStep(this)">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="step-indicator text-amber-500 bg-slate-700">7</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-semibold text-lg text-white mb-1">Suivi &amp; maintenance</h3>
+                                <p class="text-sm text-slate-400">Continu • Monitoring, nettoyage, remplacement onduleur</p>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0 mt-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="step-content">
+                            <div class="px-16 py-6 space-y-4 bg-slate-800/25 border-b border-slate-700">
+                                <div>
+                                    <h4 class="font-semibold text-amber-400 mb-3">Maintenance & suivi :</h4>
+                                    <ul class="space-y-2 text-slate-300">
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">📊</span>
+                                            <span><strong>Monitoring production :</strong> installer app du fabricant (Enphase, SolarEdge, Huawei FusionSolar, etc.) pour surveiller courbe production</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">🧹</span>
+                                            <span><strong>Nettoyage panneaux :</strong> 1-2 fois/an (pluie suffit en climat tempéré, plus fréquent en milieu poussiéreux)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">⚡</span>
+                                            <span><strong>Onduleur :</strong> remplacement vers 12-15 ans de fonctionnement (coût ~2 000-4 000€ pour 6-9 kWc)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">📋</span>
+                                            <span><strong>Déclaration impôts :</strong> si installation &gt; 3 kWc, revenu imposable. ≤ 3 kWc = exonération impôt sur revenu (microcession)</span>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <span class="text-amber-400">💾</span>
+                                            <span><strong>Archiver documents :</strong> factures, Consuel, contrat EDF OA, manuels (utiles pour revente maison)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aides Financières Section -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-white">Aides financières 2026</h2>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <!-- Prime Autoconsommation -->
+                    <div class="aid-card">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-2xl">🎁</span>
+                            <h3 class="font-semibold text-lg text-white">Prime à l'autoconsommation</h3>
+                        </div>
+                        <div class="space-y-2 text-slate-300 text-sm">
+                            <p><strong class="text-emerald-400">80 €/kWc installé</strong></p>
+                            <ul class="space-y-1 ml-4 text-xs">
+                                <li>✓ Installation ≤ 9 kWc</li>
+                                <li>✓ Versée en une fois (T1 2026)</li>
+                                <li>✓ Installateur RGE obligatoire</li>
+                                <li>✓ Exemple : 6 kWc = 480 €</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- TVA Réduite -->
+                    <div class="aid-card">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-2xl">💰</span>
+                            <h3 class="font-semibold text-lg text-white">TVA réduite 5.5%</h3>
+                        </div>
+                        <div class="space-y-2 text-slate-300 text-sm">
+                            <p><strong class="text-emerald-400">Au lieu de 20%</strong></p>
+                            <ul class="space-y-1 ml-4 text-xs">
+                                <li>✓ Installation ≤ 9 kWc</li>
+                                <li>✓ Logement > 2 ans</li>
+                                <li>✓ Installateur RGE obligatoire</li>
+                                <li>✓ Économie ~900 € sur 6 kWc</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Obligation d'Achat EDF -->
+                    <div class="aid-card">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-2xl">📈</span>
+                            <h3 class="font-semibold text-lg text-white">Obligation d'Achat EDF OA</h3>
+                        </div>
+                        <div class="space-y-2 text-slate-300 text-sm">
+                            <p><strong class="text-emerald-400">Tarif garanti 20 ans</strong></p>
+                            <ul class="space-y-1 ml-4 text-xs">
+                                <li>✓ T1 2026 : 0.04 €/kWh (≤ 9 kWc)</li>
+                                <li>✓ T1 2026 : 0.0536 €/kWh (9-36 kWc)</li>
+                                <li>✓ Réévalué trimestriellement</li>
+                                <li>✓ Autoconsommation + surplus</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Exonération Impôt -->
+                    <div class="aid-card">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-2xl">✓</span>
+                            <h3 class="font-semibold text-lg text-white">Exonération impôt revenu</h3>
+                        </div>
+                        <div class="space-y-2 text-slate-300 text-sm">
+                            <p><strong class="text-emerald-400">Si ≤ 3 kWc</strong></p>
+                            <ul class="space-y-1 ml-4 text-xs">
+                                <li>✓ Zéro impôt sur revenu solaire</li>
+                                <li>✓ Régime microcession</li>
+                                <li>✓ Installation résidentielle</li>
+                                <li>✓ > 3 kWc = revenu imposable normal</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg mb-8">
+                    <h4 class="font-semibold text-blue-300 mb-2">ℹ️ Information importante</h4>
+                    <p class="text-sm text-slate-300">
+                        <strong>Les tarifs d'achat OA changent chaque trimestre.</strong> Vérifiez les tarifs actuels sur
+                        <a href="https://www.photovoltaique.info" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">photovoltaique.info</a>.
+                        MaPrimeRénov' ne propose pas d'aide directe PV résidentiel, mais combinable avec PAC.
+                    </p>
+                </div>
+
+                <div class="p-6 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                    <h3 class="font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                        💡 Exemple économique complet (6 kWc)
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm text-slate-300">
+                        <div>
+                            <p class="font-semibold text-white mb-2">Coûts :</p>
+                            <ul class="space-y-1 text-xs">
+                                <li>Installation HT : 11 000 €</li>
+                                <li>TVA 5.5% : 605 €</li>
+                                <li>Coût total TTC : <strong>11 605 €</strong></li>
+                                <li>Prime autoconsommation : -480 €</li>
+                                <li><strong>Coût net : 11 125 €</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-white mb-2">Gains annuels (climat France) :</p>
+                            <ul class="space-y-1 text-xs">
+                                <li>Production : ~7 500 kWh/an</li>
+                                <li>Autoconsommation 30% : 2 250 kWh @ 0.24 €/kWh = 540 €</li>
+                                <li>Surplus 70% : 5 250 kWh @ 0.04 €/kWh = 210 €</li>
+                                <li><strong>Gain annuel : ~750 €</strong></li>
+                                <li><strong>Amortissement : 14-15 ans</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Checklist Section -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-white">Votre checklist projet solaire</h2>
+
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="feasibility-orientation">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Vérifier orientation/inclinaison toit (sud/sud-est 30-35°)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="feasibility-ombrage">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Estimer l'ombrage (arbres, bâtiments, pentes)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="feasibility-surface">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Vérifier surface disponible (~8 m² par kWc)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="feasibility-consumption">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Estimer consommation annuelle (relever factures EDF/Enedis)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="feasibility-plu">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Vérifier contraintes PLU auprès de la mairie</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="feasibility-abf">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Vérifier si secteur protégé (ABF, patrimoine)</span>
+                    </label>
+
+                    <div class="h-px bg-slate-700 my-6"></div>
+
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="config-power">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Choisir puissance (3, 6 ou 9 kWc)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="config-type">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Décider autoconsommation + surplus vs vente totale</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="config-battery">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Évaluer besoin batterie (coûteux avant 2027)</span>
+                    </label>
+
+                    <div class="h-px bg-slate-700 my-6"></div>
+
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="quotes-3">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Demander au minimum 3 devis d'installateurs RGE</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="quotes-rge">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Vérifier certification RGE QualiPV sur qualit-enr.org</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="quotes-compare">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Comparer devis (prix, marques panneaux/onduleur, garanties, SAV)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="quotes-sign">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Signer devis avec installateur RGE</span>
+                    </label>
+
+                    <div class="h-px bg-slate-700 my-6"></div>
+
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="admin-decl">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Déposer déclaration préalable (Cerfa 13703) à la mairie</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="admin-enedis">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Demander raccordement Enedis sur raccordement-enedis.fr</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="admin-consuel">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Souscrire Attestation Consuel (vérification électrique)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="admin-oa">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Souscrire contrat EDF OA (Obligation d'Achat)</span>
+                    </label>
+
+                    <div class="h-px bg-slate-700 my-6"></div>
+
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="install-done">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Installation et test par l'installateur (1-2 jours)</span>
+                    </label
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="install-consuel">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Passage Consuel (vérification conformité)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="install-linky">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Mise en service Enedis (Linky bidirectionnel)</span>
+                    </label>
+
+                    <div class="h-px bg-slate-700 my-6"></div>
+
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="monitor-setup">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Configurer application monitoring (Enphase, SolarEdge, etc.)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors checklist-item" data-key="monitor-tax">
+                        <input type="checkbox" class="w-5 h-5 rounded" onchange="saveChecklist()">
+                        <span class="flex-grow text-slate-300">Déclarer revenus solaires aux impôts (1ère année)</span>
+                    </label>
+                </div>
+
+                <div class="mt-8 flex gap-4">
+                    <button onclick="resetChecklist()" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
+                        Réinitialiser checklist
+                    </button>
+                    <div id="checklistProgress" class="flex-grow flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-lg text-sm text-slate-300">
+                        <span id="checklistCount">0</span> / <span id="checklistTotal">0</span> complétée(s)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16 bg-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-white">Questions fréquemment posées</h2>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Combien coûte une installation solaire en 2026 ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p>Les coûts varient selon la puissance et l'installateur. En 2026, les prix indicatifs (clé en main, HT) sont :</p>
+                            <ul class="space-y-1 ml-4 text-sm">
+                                <li>• <strong>3 kWc :</strong> 6 000-7 500 € (~2 000 €/kWc)</li>
+                                <li>• <strong>6 kWc :</strong> 10 800-13 200 € (~1 800 €/kWc)</li>
+                                <li>• <strong>9 kWc :</strong> 16 200-19 800 € (~1 800 €/kWc)</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3"><strong>Après aides :</strong> TVA 5.5% + Prime 80€/kWc réduisent le coût net d'environ 1 100-1 500 €.</p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 2 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Quelle est la durée de rentabilité d'une installation solaire ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p>En France métropolitaine (climat tempéré, ensoleillement 1 100-1 300 kWh/m²/an) :</p>
+                            <ul class="space-y-1 ml-4 text-sm">
+                                <li>• <strong>Autoconsommation + surplus :</strong> amortissement en 13-15 ans</li>
+                                <li>• <strong>Vente totale :</strong> amortissement en 15-17 ans (moins de gains)</li>
+                                <li>• <strong>Avec batterie :</strong> &gt; 12-15 ans (coûteux actuellement)</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3">Durée de vie des panneaux : 25-30 ans (dégradation ~0.5-0.8%/an). Onduleur : remplacement vers 12-15 ans.</p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 3 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Faut-il installer une batterie avec son installation solaire ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p><strong>Généralement non, en 2026.</strong> Raisons :</p>
+                            <ul class="space-y-1 ml-4 text-sm">
+                                <li>• <strong>Coût :</strong> batterie LFP 10 kWh = 6 000-8 000 € + installation</li>
+                                <li>• <strong>ROI :</strong> &gt; 12-15 ans (se rentabilise vers 2037-2040)</li>
+                                <li>• <strong>Autoconsommation réseau :</strong> moins cher que batterie (injection surplus à 0.04 €/kWh)</li>
+                                <li>• <strong>Cas d'usage :</strong> batterie utile si zone isolée (pas de réseau), coupures fréquentes, ou très fort besoin du soir</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3"><strong>Conseil :</strong> commencer sans batterie, ajouter si besoin après 5-10 ans (technologie moins chère d'ici là).</p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 4 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Que se passe-t-il en cas de coupure de courant ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p><strong>Sans batterie :</strong> l'onduleur se coupe automatiquement (sécurité réseau). Vous n'avez plus de courant.</p>
+                            <ul class="space-y-1 ml-4 text-sm">
+                                <li>• Protège les techniciens Enedis qui travaillent sur les lignes</li>
+                                <li>• Évite les surcharges de tension</li>
+                                <li>• Vous êtes dans le noir comme le reste du quartier</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-2 pt-2 border-t border-slate-700"><strong>Avec batterie :</strong> vous restez alimenté (batterie prend le relais pendant la coupure)</p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 5 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Mon toit est-il compatible pour des panneaux solaires ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p><strong>Critères de compatibilité :</strong></p>
+                            <ul class="space-y-1 ml-4 text-sm">
+                                <li>✓ <strong>Orientation :</strong> sud ou sud-est (ouest acceptable)</li>
+                                <li>✓ <strong>Inclinaison :</strong> 25-40° optimal (pentes normales conviennent)</li>
+                                <li>✓ <strong>Ombrage :</strong> &lt; 30% du jour (arbres, bâtiments)</li>
+                                <li>✓ <strong>Structure :</strong> toiture doit supporter ~15-20 kg/m² (panneaux + fixation)</li>
+                                <li>✓ <strong>Surface :</strong> min. 12-15 m² pour 3 kWc</li>
+                                <li>✓ <strong>Âge toiture :</strong> idéalement &lt; 10 ans (sinon risque rénovation pendant contrat)</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3"><strong>Non compatible :</strong> toits nord/ouest ombragés, très anciens, amiante (interdit), secteur ABF strict.</p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 6 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Quelles sont les garanties sur les panneaux et l'onduleur ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p><strong>Standards d'industrie (à demander explicitement) :</strong></p>
+                            <ul class="space-y-2 ml-4 text-sm">
+                                <li>
+                                    <strong>Panneaux solaires :</strong>
+                                    <ul class="ml-3 mt-1 space-y-1">
+                                        <li>• Garantie matériau : 10 ans (défauts fabrication)</li>
+                                        <li>• Garantie performance : 25-30 ans (min. 80% après 25 ans)</li>
+                                        <li>• Réduction garantie : ~0.5%/an</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Onduleur :</strong>
+                                    <ul class="ml-3 mt-1 space-y-1">
+                                        <li>• Garantie constructeur : 10 ans (couvrant défaut électrique)</li>
+                                        <li>• Extension possible à 15-20 ans (coût ~3-5%)</li>
+                                        <li>• Durée vie moyenne : 12-15 ans (remplacement coûteux)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3"><strong>Important :</strong> vérifier que garanties couvrent tempêtes, usure normale, et incluent SAV (remplacement pièces).</p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 7 -->
+                    <details class="group bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-white hover:bg-slate-800/50 transition-colors">
+                            <span>Puis-je installer moi-même un kit solaire plug & play ?</span>
+                            <svg class="w-5 h-5 text-amber-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-300 space-y-2 border-t border-slate-700 pt-4">
+                            <p><strong>Techniquement oui, mais avec restrictions :</strong></p>
+                            <ul class="space-y-2 ml-4 text-sm">
+                                <li>✓ Kits plug & play 300-600W possibles (balcon, jardin)</li>
+                                <li>✗ <strong>PERTE aides :</strong> pas de prime 80€/kWc (necessite RGE)</li>
+                                <li>✗ <strong>PERTE TVA réduite :</strong> TVA 20% au lieu de 5.5%</li>
+                                <li>✗ <strong>PERTE contrat OA :</strong> pas de tarif garanti 20 ans</li>
+                                <li>⚠️ <strong>Démarches :</strong> déclaration Consuel obligatoire pour &gt; 600W</li>
+                                <li>⚠️ <strong>Assurance :</strong> vérifier couverture multirisques habitation</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3"><strong>Bilan :</strong> DIY perd ~3 000-4 000 € en aides sur 6 kWc. Recommandé installateur RGE.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sources Section -->
+        <section class="py-16 bg-slate-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8 text-white">Sources & ressources</h2>
+
+                <div class="space-y-4 text-sm text-slate-300">
+                    <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                        <p class="font-semibold text-white mb-2">📚 Ressources officielles :</p>
+                        <ul class="space-y-1 ml-4">
+                            <li>• <a href="https://www.service-public.fr/particuliers/vosdroits/F31460" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">Service-Public.fr</a> — Informations légales rénovation énergétique</li>
+                            <li>• <a href="https://www.photovoltaique.info" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">Photovoltaïque.info</a> — Tarifs OA EDF actuels, statistiques marché</li>
+                            <li>• <a href="https://www.qualit-enr.org" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">Qualit-enr.org</a> — Vérification certification RGE installateurs</li>
+                            <li>• <a href="https://www.raccordement-enedis.fr" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">Raccordement-enedis.fr</a> — Demande raccordement réseau</li>
+                            <li>• <a href="https://www.legifrance.gouv.fr" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">Légifrance</a> — Lois, décrets, arrêtés (Code de l'énergie)</li>
+                            <li>• <a href="https://www.ademe.fr" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">ADEME</a> — Agence Environnement & Maîtrise Énergie, guides rénovation</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                        <p class="font-semibold text-white mb-2">🔗 Outils SolarMetrics :</p>
+                        <ul class="space-y-1 ml-4">
+                            <li>• <a href="outils-autoconsommation.html" class="text-cyan-400 underline">Simulateur autoconsommation</a> — Estimez votre production & économies</li>
+                            <li>• <a href="comparateur.html" class="text-cyan-400 underline">Comparateur technologies</a> — PERC vs TOPCon vs HJT, onduleurs, batteries</li>
+                            <li>• <a href="prix-solaire.html" class="text-cyan-400 underline">Prix solaire 2026</a> — Historique tarifs, tendances marché</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                        <p class="font-semibold text-white mb-2">⚠️ Avertissement :</p>
+                        <p>Les informations de ce guide sont à titre informatif. Les tarifs, aides, et réglementations changent régulièrement. Consultez un installateur agréé RGE pour une étude personnalisée conforme à votre situation locale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/installation-guide.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+
+        // ===== STEPPER FUNCTIONALITY =====
+        function toggleStep(button) {
+            const content = button.nextElementSibling;
+            const isOpen = content.classList.contains('open');
+
+            // Close all other steps
+            document.querySelectorAll('.step-content.open').forEach(function(el) {
+                if (el !== content) {
+                    el.classList.remove('open');
+                    el.previousElementSibling.classList.remove('active');
+                }
+            });
+
+            // Toggle current step
+            content.classList.toggle('open');
+            button.parentElement.classList.toggle('active');
+        }
+
+        // ===== CHECKLIST FUNCTIONALITY =====
+        function saveChecklist() {
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const data = {};
+            let completed = 0;
+
+            checkboxes.forEach(function(cb) {
+                const key = cb.parentElement.dataset.key;
+                data[key] = cb.checked;
+                if (cb.checked) completed++;
+            });
+
+            localStorage.setItem('checklist', JSON.stringify(data));
+            updateChecklistProgress();
+        }
+
+        function loadChecklist() {
+            const data = JSON.parse(localStorage.getItem('checklist') || '{}');
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+
+            checkboxes.forEach(function(cb) {
+                const key = cb.parentElement.dataset.key;
+                if (data[key]) {
+                    cb.checked = true;
+                }
+            });
+
+            updateChecklistProgress();
+        }
+
+        function updateChecklistProgress() {
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const total = checkboxes.length;
+            let completed = 0;
+
+            checkboxes.forEach(function(cb) {
+                if (cb.checked) {
+                    completed++;
+                    cb.parentElement.classList.add('checked');
+                } else {
+                    cb.parentElement.classList.remove('checked');
+                }
+            });
+
+            document.getElementById('checklistCount').textContent = completed;
+            document.getElementById('checklistTotal').textContent = total;
+        }
+
+        function resetChecklist() {
+            if (confirm('Réinitialiser la checklist ? Cette action ne peut pas être annulée.')) {
+                document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(function(cb) {
+                    cb.checked = false;
+                });
+                localStorage.removeItem('checklist');
+                updateChecklistProgress();
+            }
+        }
+
+        // Initialize checklist on load
+        loadChecklist();
+    </script>
+</body>
+</html>

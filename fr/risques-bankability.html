@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risques & Bankability des Projets Solaires — SolarMetrics</title>
+    <meta name="description" content="Analyse des risques d'un projet solaire : technique, réglementaire, financier, contractuel. Critères de bankability et DSCR pour le financement.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/risques-bankability">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/risques-bankability">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/risques-bankability">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        input[type="range"]{accent-color:#F59E0B}
+        .slider-value{color:#F59E0B;font-weight:600;font-size:0.875rem}
+        /* Risk matrix styling */
+        .risk-cell{display:flex;align-items:center;justify-content:center;min-height:80px;border:1px solid rgba(45,212,191,0.2);border-radius:0.75rem;font-size:0.8rem;text-align:center;padding:0.5rem;transition:all 0.3s ease}
+        .risk-cell:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+        .risk-faible{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4)}
+        .risk-moyen{background:rgba(234,179,8,0.15);border-color:rgba(234,179,8,0.4)}
+        .risk-eleve{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4)}
+        .risk-type{font-size:0.75rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px}
+        .badge-dataset{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:0.5rem;color:#86efac;font-size:0.875rem;text-decoration:none;font-weight:500}
+        .badge-dataset:hover{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.5)}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · &lt; 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparateur</div>
+                                        <div class="text-xs text-slate-400">Technologies · Onduleurs · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../en/risk-bankability.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Résidentiel</a>
+                <a href="outils-autoconsommation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Autoconsommation</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
+                <a href="comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparateur</a>
+                <a href="risques-bankability.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">⚠️ Risques & Bankability</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80"
+                         alt="Analyse des risques projet solaire"
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-3 bg-amber-500/20 backdrop-blur-sm rounded-xl border border-amber-500/30">
+                                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4v2m0-18a9 9 0 110 18 9 9 0 010-18z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-4xl font-bold text-white">Risques & Bankability des Projets Solaires</h1>
+                                <p class="text-slate-300">Analyse systématique, due diligence, critères de financement</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Badge -->
+                <div class="flex flex-wrap items-center gap-4 mb-8">
+                    <a href="hypotheses.html" class="badge-dataset">
+                        📊 Méthodologie IRENA/IFC
+                    </a>
+                    <p class="text-slate-400 text-sm">Référentiels bankability et matrice des risques solaires</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Introduction -->
+        <section id="introduction" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Pourquoi analyser les risques ?</h2>
+                    <p class="text-slate-400 text-lg mb-6">Un projet solaire financé par tiers (banques, equity funds) requiert une due diligence rigoureuse. L'analyse des risques détermine :</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700 hover:border-amber-500/30 transition-colors">
+                        <div class="text-3xl mb-3">💰</div>
+                        <h3 class="font-semibold mb-2">Coût du financement</h3>
+                        <p class="text-slate-400 text-sm">Plus les risques sont élevés, plus le WACC (coût moyen pondéré du capital) augmente. Un projet bien couvert peut réduire ce coût de 2-4 points de pourcentage.</p>
+                    </div>
+
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700 hover:border-amber-500/30 transition-colors">
+                        <div class="text-3xl mb-3">✅</div>
+                        <h3 class="font-semibold mb-2">Approbation du crédit</h3>
+                        <p class="text-slate-400 text-sm">La bankability est le critère clé : les lenders acceptent ou refusent le projet selon les ratios financiers (DSCR, LTV, couverture d'intérêts).</p>
+                    </div>
+
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700 hover:border-amber-500/30 transition-colors">
+                        <div class="text-3xl mb-3">🛡️</div>
+                        <h3 class="font-semibold mb-2">Structuration du deal</h3>
+                        <p class="text-slate-400 text-sm">Chaque risque majeur doit être couvert : assurances, garanties contractuelles, clauses de révision tarifaire, covenants debt/equity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Matrice des Risques -->
+        <section id="risk-matrix" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Matrice des Risques Solaires</h2>
+                    <p class="text-slate-400">Impact vs Probabilité — Hiérarchisation des risques majeurs</p>
+                </div>
+
+                <!-- Risk Matrix -->
+                <div class="overflow-x-auto mb-12 bg-slate-800/30 rounded-2xl p-6 border border-slate-700">
+                    <div class="min-w-full">
+                        <!-- Header row -->
+                        <div class="grid gap-0.5 mb-4" style="grid-template-columns: 120px repeat(3, 1fr)">
+                            <div class="text-xs font-bold text-slate-400 text-center py-2">Impact ↓ / Proba →</div>
+                            <div class="text-xs font-bold text-slate-400 text-center py-2">Faible</div>
+                            <div class="text-xs font-bold text-slate-400 text-center py-2">Moyen</div>
+                            <div class="text-xs font-bold text-slate-400 text-center py-2">Élevé</div>
+                        </div>
+
+                        <!-- Élevé row -->
+                        <div class="grid gap-0.5 mb-4" style="grid-template-columns: 120px repeat(3, 1fr)">
+                            <div class="text-xs font-bold text-slate-400 py-2">Élevé</div>
+                            <div class="risk-cell risk-moyen">
+                                <div>
+                                    <div class="risk-type">Réglementaire</div>
+                                    <div class="text-sm font-semibold mt-1">Permis / ABF</div>
+                                    <div class="text-xs mt-1">Retards de construction</div>
+                                </div>
+                            </div>
+                            <div class="risk-cell risk-eleve">
+                                <div>
+                                    <div class="risk-type">Contractuel</div>
+                                    <div class="text-sm font-semibold mt-1">Défaillance EPC</div>
+                                    <div class="text-xs mt-1">Non-achèvement projet</div>
+                                </div>
+                            </div>
+                            <div class="risk-cell risk-eleve">
+                                <div>
+                                    <div class="risk-type">Financier</div>
+                                    <div class="text-sm font-semibold mt-1">Défaut PPA</div>
+                                    <div class="text-xs mt-1">Perte flux de revenus</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Moyen row -->
+                        <div class="grid gap-0.5 mb-4" style="grid-template-columns: 120px repeat(3, 1fr)">
+                            <div class="text-xs font-bold text-slate-400 py-2">Moyen</div>
+                            <div class="risk-cell risk-faible">
+                                <div>
+                                    <div class="risk-type">Météo</div>
+                                    <div class="text-sm font-semibold mt-1">Événement extrême</div>
+                                    <div class="text-xs mt-1">Tempête / grêle</div>
+                                </div>
+                            </div>
+                            <div class="risk-cell risk-moyen">
+                                <div>
+                                    <div class="risk-type">Technique</div>
+                                    <div class="text-sm font-semibold mt-1">Dégradation accélérée</div>
+                                    <div class="text-xs mt-1">PID / dégradation</div>
+                                </div>
+                            </div>
+                            <div class="risk-cell risk-moyen">
+                                <div>
+                                    <div class="risk-type">Réglementaire</div>
+                                    <div class="text-sm font-semibold mt-1">Tarif OA réduit</div>
+                                    <div class="text-xs mt-1">Changement fiscal</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Faible row -->
+                        <div class="grid gap-0.5" style="grid-template-columns: 120px repeat(3, 1fr)">
+                            <div class="text-xs font-bold text-slate-400 py-2">Faible</div>
+                            <div class="risk-cell risk-faible">
+                                <div>
+                                    <div class="risk-type">Technique</div>
+                                    <div class="text-sm font-semibold mt-1">Ombrage imprévu</div>
+                                    <div class="text-xs mt-1">Croissance végétation</div>
+                                </div>
+                            </div>
+                            <div class="risk-cell risk-moyen">
+                                <div>
+                                    <div class="risk-type">Financier</div>
+                                    <div class="text-sm font-semibold mt-1">Inflation OPEX</div>
+                                    <div class="text-xs mt-1">Hausse coûts exploit.</div>
+                                </div>
+                            </div>
+                            <div class="risk-cell risk-moyen">
+                                <div>
+                                    <div class="risk-type">Météo</div>
+                                    <div class="text-sm font-semibold mt-1">Variabilité P50/P90</div>
+                                    <div class="text-xs mt-1">Écart production</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="flex items-center gap-3 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                        <div class="w-4 h-4 rounded bg-green-500/40 border border-green-500/60"></div>
+                        <span><strong>Faible :</strong> risque maîtrisable, peu d'impact sur DSCR</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
+                        <div class="w-4 h-4 rounded bg-yellow-500/40 border border-yellow-500/60"></div>
+                        <span><strong>Moyen :</strong> à couvrir par assurance ou contrat</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                        <div class="w-4 h-4 rounded bg-red-500/40 border border-red-500/60"></div>
+                        <span><strong>Élevé :</strong> deal-breaker si non couvert</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Critères de Bankability -->
+        <section id="bankability-criteria" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Critères de Bankability</h2>
+                    <p class="text-slate-400">Qu'est-ce qui rend un projet solaire finançable ?</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Technologie -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">🔧</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-3">Technologie Éprouvée</h3>
+                                <ul class="space-y-2 text-slate-300 text-sm">
+                                    <li><strong>Modules :</strong> Tier 1 BNEF (Bloomberg NEF), certifications IEC 61215/61730</li>
+                                    <li><strong>Onduleurs :</strong> Certifiés, avec historique fiable (string, micro, central)</li>
+                                    <li><strong>Structure :</strong> Design approuvé par ingénieur, test mécanique vent/neige</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ressource -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">☀️</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-3">Ressource Solaire Confirmée</h3>
+                                <ul class="space-y-2 text-slate-300 text-sm">
+                                    <li><strong>Étude PVGIS/Solargis :</strong> Avec données P50, P75, P90 (au moins 2 sources indépendantes)</li>
+                                    <li><strong>Variabilité inter-annuelle :</strong> Écart P90/P50 &lt; 5-8% admissible</li>
+                                    <li><strong>Étude d'ombrage :</strong> Lidar ou photogrammétrie, perte &lt; 2% autorisée</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contrat -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">📋</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-3">Contrat de Vente de Puissance (PPA)</h3>
+                                <ul class="space-y-2 text-slate-300 text-sm">
+                                    <li><strong>Durée minimale :</strong> 15-20 ans (tarif OA France = 20 ans garanti)</li>
+                                    <li><strong>Indexation :</strong> Clairement définie (IPC, formule révision tarifaire)</li>
+                                    <li><strong>Contrepartie :</strong> AAA-rated si possible (utility, or corporate investment grade)</li>
+                                    <li><strong>Clauses :</strong> Pas de résiliation unilatérale possible</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assurance -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">🛡️</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-3">Couverture Assurances Complète</h3>
+                                <ul class="space-y-2 text-slate-300 text-sm">
+                                    <li><strong>TRC (Tous Risques Chantier) :</strong> Phase construction 100% couvert</li>
+                                    <li><strong>Exploitation :</strong> Tous risques matériels + responsabilité civile décennale</li>
+                                    <li><strong>Business Interruption :</strong> Perte de revenus assurée (indemnisation retard)</li>
+                                    <li><strong>Performance Risk :</strong> Garantie de production (optionnel, coûteux)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Structure Juridique -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">⚖️</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-3">Structure Juridique (SPV)</h3>
+                                <ul class="space-y-2 text-slate-300 text-sm">
+                                    <li><strong>SPV (Special Purpose Vehicle) :</strong> Société de projet dédiée, isolation des risques</li>
+                                    <li><strong>Capital :</strong> Debt/Equity typique 70/30 à 80/20</li>
+                                    <li><strong>Garanties :</strong> Nantissement des actifs, hypothèque si foncier propre</li>
+                                    <li><strong>Covenants :</strong> Ratios financiers min. (DSCR &gt; 1.20x), restrictions distribués</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DSCR -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">📊</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-3">Ratio de Couverture (DSCR)</h3>
+                                <ul class="space-y-2 text-slate-300 text-sm">
+                                    <li><strong>Minimum exigé :</strong> DSCR &gt; 1.20x (flux d'exploitation couvre bien la dette)</li>
+                                    <li><strong>Objectif :</strong> DSCR &gt; 1.30x pour sécurité cushion (covenants plus souples)</li>
+                                    <li><strong>Calcul :</strong> DSCR = (Revenus annuels - OPEX) / Service de dette annuel</li>
+                                    <li><strong>Sensibilités :</strong> Stress-test -10% production, +2% inflation OPEX</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Calculateur DSCR -->
+        <section id="dscr-calculator" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Calculateur DSCR Simplifié</h2>
+                    <p class="text-slate-400">Estimez rapidement si un projet est bancable</p>
+                </div>
+
+                <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Inputs -->
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-semibold mb-3">
+                                    Revenus annuels (€)
+                                    <span class="slider-value ml-2" id="revenueVal">50000</span>
+                                </label>
+                                <input type="range" id="revenueSlider" min="10000" max="200000" value="50000" step="5000" class="w-full">
+                                <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                    <span>10 k€</span>
+                                    <span>200 k€</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold mb-3">
+                                    OPEX annuel (€)
+                                    <span class="slider-value ml-2" id="opexVal">5000</span>
+                                </label>
+                                <input type="range" id="opexSlider" min="1000" max="30000" value="5000" step="500" class="w-full">
+                                <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                    <span>1 k€</span>
+                                    <span>30 k€</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold mb-3">
+                                    Service de dette annuel (€)
+                                    <span class="slider-value ml-2" id="debtVal">30000</span>
+                                </label>
+                                <input type="range" id="debtSlider" min="5000" max="100000" value="30000" step="2500" class="w-full">
+                                <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                    <span>5 k€</span>
+                                    <span>100 k€</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Result -->
+                        <div class="flex flex-col justify-center">
+                            <div id="dscrResult" class="p-8 rounded-2xl border-2 border-amber-500/50 bg-amber-500/10">
+                                <div class="text-sm font-semibold text-amber-400 mb-2">Ratio de Couverture de Dette</div>
+                                <div id="dscrValue" class="text-5xl font-bold mb-4">1.33</div>
+                                <div id="dscrStatus" class="text-sm text-slate-300 mb-4">✅ Bancable (> 1.20x)</div>
+                                <div id="dscrExplanation" class="text-xs text-slate-400 space-y-2">
+                                    <p><strong>Flux annuel net :</strong> <span id="netFlow">45,000</span> €</p>
+                                    <p><strong>Interprétation :</strong> Pour chaque euro de dette, le projet génère <span id="dscrMultiple">1.33</span> € de flux. Sain ✓</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                    <div class="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                        <div class="font-semibold text-red-400 mb-1">🔴 < 1.00</div>
+                        <p class="text-slate-300">Non-bancable. Flux insuffisant pour couvrir la dette.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
+                        <div class="font-semibold text-orange-400 mb-1">🟠 1.00 - 1.20</div>
+                        <p class="text-slate-300">Marginal. Difficulté à obtenir financement. Covenants stricts.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
+                        <div class="font-semibold text-yellow-400 mb-1">🟡 1.20 - 1.30</div>
+                        <p class="text-slate-300">Acceptable. Minimum bancable pour projets stables.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                        <div class="font-semibold text-green-400 mb-1">🟢 > 1.30</div>
+                        <p class="text-slate-300">Excellent. Fort coussin de sécurité. Meilleures conditions taux.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Checklist Due Diligence -->
+        <section id="dd-checklist" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Checklist Due Diligence</h2>
+                    <p class="text-slate-400">Éléments vérifiés par les lenders avant approbation</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Documentation Technique -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-xl">📋</span> Documentation Technique
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Datasheets modules/onduleurs :</strong> Certifications IEC, performance ratings</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Rapport PVGIS/Solargis :</strong> Données irradi­ance, production P50/P75/P90</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Étude d'ombrage :</strong> Lidar ou drone, perte quantifiée &lt; 2%</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Note de calcul structure :</strong> Vent, neige, ancrage au sol</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Schémas électriques :</strong> DC/AC, protection, mise à terre conforme NFC 15-100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documentation Juridique -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-xl">⚖️</span> Documentation Juridique
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Bail foncier :</strong> 20-30 ans min., droit de passage, responsabilité proprio/locataire</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Permis de construire :</strong> Délivré, pas d'opposition en cours</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Accord raccordement réseau :</strong> Devis ENEDIS approuvé, pas de dépassement capac.</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Contrat PPA/OA :</strong> Signé ou lettre d'intention, indexation claire</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Statuts SPV :</strong> Clauses restriction distribué, covenant DSCR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documentation Financière -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-xl">💰</span> Documentation Financière
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Modèle financier :</strong> 25-30 ans, inflation 2% OPEX, WACC 7-9%</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Cashflows annuels :</strong> Production × tarif - OPEX = Flux libres avant/après dette</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Analyse de sensibilité :</strong> -10% production, +2% inflation, +1% taux intérêt</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>LCOE / IRR / TRI :</strong> Rentabilité attendue 8-12% (senior debt), 15-20% (equity)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Calendrier réaliste :</strong> Phases permis, construction, mise en service</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assurances & Garanties -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-xl">🛡️</span> Assurances & Garanties
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>TRC (Tous Risques Chantier) :</strong> Devis assuré, travaux assurés, délais assurés</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Exploitation 25-30 ans :</strong> Tous risques matériels, RC décennale</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Business Interruption :</strong> Indemnise perte revenus si sinistre > 30j</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Garantie décennale EPC :</strong> 10 ans couverture constructeur</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Environnement & Réglementation -->
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span class="text-xl">🌍</span> Environnement & Réglementation
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Étude d'impact :</strong> Obligatoire si > 250 kWc, CNPN si zone protégée</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>ICPE / Autorisation unique :</strong> Si > 250 kWc ou < 20 m étanchéité</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Avis paysager / ABF :</strong> Zones historiques classées nécessitent accord</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 rounded accent-amber-500" disabled checked>
+                                <span class="text-slate-300"><strong>Conformité Schéma Régional :</strong> Vérifier cohérence SRADDET si demandé</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Sources -->
+        <section id="sources" class="py-16 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Sources & Référentiels</h2>
+                    <p class="text-slate-400">Méthodologies reconnues internationalement</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-blue-400">International</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>🌍 <strong>IRENA</strong> — Coûts et marchés solaires (Cost & Benefit Synthesis)</li>
+                            <li>🏦 <strong>IFC Solar Bankability Guidelines</strong> — Critères finançabilité projets solaires</li>
+                            <li>📊 <strong>BNEF Tier 1 Methodology</strong> — Classification modules (Bloomberg NEF)</li>
+                            <li>⚡ <strong>Fraunhofer ISE</strong> — Coûts systèmes PV mondiaux</li>
+                            <li>📈 <strong>Clean Energy Reviews</strong> — Analyses indépendantes marché</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-green-400">France</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>🇫🇷 <strong>CRE (Commission Régulation Énergie)</strong> — Tarif obligation achat, cahiers charges</li>
+                            <li>⚖️ <strong>France Énergie</strong> — Études secteur, meilleures pratiques financement</li>
+                            <li>🏛️ <strong>RTE/ENEDIS</strong> — Raccordement réseau, étude d'impact électrique</li>
+                            <li>📋 <strong>Norme NFC 15-100</strong> — Installation électrique conforme</li>
+                            <li>🔍 <strong>Pratiques marché lenders FR</strong> — BNP, Crédit Agricole, Engie Green Finance</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-cyan-400">Ressources Solaires</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>☀️ <strong>Solargis</strong> — Données irradi­ance mondiale, API décentralisée</li>
+                            <li>🗺️ <strong>PVGIS (JRC/EC)</strong> — Base données gratuite production PV européenne</li>
+                            <li>📡 <strong>NASA POWER</strong> — Données satellites climat libre accès</li>
+                            <li>🛰️ <strong>DronIT/Surveyer</strong> — Études d'ombrage lidar</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
+                        <h3 class="font-semibold mb-3 text-amber-400">Méthodologie</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>✓ Données actualisées 2025-2026</li>
+                            <li>✓ Calculs WACC = rf + β×(rm - rf) + risk premium</li>
+                            <li>✓ NPV/IRR modèles 25-30 ans horizon</li>
+                            <li>✓ Stress-test scénarios -10% prod., +2% inflation</li>
+                            <li>✓ Couverture par assurances (TRC, BI) obligatoire</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-blue-500/10 border border-blue-500/30 rounded-2xl">
+                    <h3 class="font-semibold mb-2 flex items-center gap-2">
+                        <span class="text-lg">ℹ️</span>
+                        À propos de cette page
+                    </h3>
+                    <p class="text-sm text-slate-300">
+                        Cette analyse synthétise les recommandations d'agences internationales (IRENA, IFC) et pratiques bancaires françaises (CRE, lenders majeurs).
+                        Les critères de bankability varient selon la région, le lender, et les conditions de marché (taux d'intérêt, volatilité tarif).
+                        Pour une étude détaillée, consultez un spécialiste financement énergétique reconnu.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disclaimer -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl">
+                    <h3 class="font-semibold mb-2 flex items-center gap-2">
+                        <span class="text-lg">⚠️</span>
+                        Avertissement légal
+                    </h3>
+                    <p class="text-sm text-slate-300">
+                        Ces informations sont fournies à titre purement informatif et éducatif. Elles ne constituent pas un conseil juridique, financier, ou d'investissement.
+                        La bankability et l'approbation de crédit dépendent de nombreux facteurs spécifiques au projet, au lender, et au contexte réglementaire local.
+                        Pour tout projet solaire, consultez des professionnels agréés : bureaux d'études énergétiques, avocats spécialisés énergies renouvelables, structureurs de projets.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/risk-bankability.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+
+        // DSCR Calculator
+        const revenueSlider = document.getElementById('revenueSlider');
+        const opexSlider = document.getElementById('opexSlider');
+        const debtSlider = document.getElementById('debtSlider');
+
+        const revenueVal = document.getElementById('revenueVal');
+        const opexVal = document.getElementById('opexVal');
+        const debtVal = document.getElementById('debtVal');
+
+        function updateDSCR() {
+            const revenue = parseFloat(revenueSlider.value);
+            const opex = parseFloat(opexSlider.value);
+            const debt = parseFloat(debtSlider.value);
+
+            revenueVal.textContent = revenue.toLocaleString('fr-FR');
+            opexVal.textContent = opex.toLocaleString('fr-FR');
+            debtVal.textContent = debt.toLocaleString('fr-FR');
+
+            const netFlow = revenue - opex;
+            const dscr = debt > 0 ? netFlow / debt : 0;
+
+            document.getElementById('netFlow').textContent = netFlow.toLocaleString('fr-FR');
+            document.getElementById('dscrValue').textContent = dscr.toFixed(2);
+            document.getElementById('dscrMultiple').textContent = dscr.toFixed(2);
+
+            // Update result styling and status
+            const result = document.getElementById('dscrResult');
+            let statusColor = 'amber';
+            let statusText = '✅ Bancable (> 1.20x)';
+
+            if (dscr < 1.0) {
+                statusColor = 'red';
+                statusText = '🔴 Non-bancable (< 1.00)';
+            } else if (dscr < 1.2) {
+                statusColor = 'orange';
+                statusText = '🟠 Marginal (1.00 - 1.20)';
+            } else if (dscr < 1.3) {
+                statusColor = 'yellow';
+                statusText = '🟡 Acceptable (1.20 - 1.30)';
+            } else {
+                statusColor = 'green';
+                statusText = '🟢 Excellent (> 1.30)';
+            }
+
+            result.className = 'p-8 rounded-2xl border-2 bg-' + statusColor + '-500/10 border-' + statusColor + '-500/50';
+            if (statusColor === 'amber') result.className = 'p-8 rounded-2xl border-2 bg-amber-500/10 border-amber-500/50';
+            if (statusColor === 'orange') result.className = 'p-8 rounded-2xl border-2 bg-orange-500/10 border-orange-500/50';
+            if (statusColor === 'red') result.className = 'p-8 rounded-2xl border-2 bg-red-500/10 border-red-500/50';
+            if (statusColor === 'yellow') result.className = 'p-8 rounded-2xl border-2 bg-yellow-500/10 border-yellow-500/50';
+            if (statusColor === 'green') result.className = 'p-8 rounded-2xl border-2 bg-green-500/10 border-green-500/50';
+
+            document.getElementById('dscrStatus').textContent = statusText;
+        }
+
+        revenueSlider.addEventListener('input', updateDSCR);
+        opexSlider.addEventListener('input', updateDSCR);
+        debtSlider.addEventListener('input', updateDSCR);
+        updateDSCR();
+    </script>
+</body>
+</html>

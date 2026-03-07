@@ -197,7 +197,7 @@ abbr[title]:hover::after {
             </div>
             <!-- Title -->
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">LCOE solaire en Europe<br><span class="gradient-text">Tendances et comparaison par pays</span></h1>
-<p class="text-slate-500 text-sm mt-2">Mis à jour : mars 2026</p>
+<p class="text-slate-500 text-sm mt-2">Mis à jour : mars 2026 · <a href="../hypotheses.html" class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-xs rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">📊 Dataset v2026-03</a></p>
             <!-- Meta -->
             <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 mt-6">
                 <div class="flex items-center gap-2">
@@ -364,6 +364,93 @@ abbr[title]:hover::after {
                     <div class="text-xs text-slate-500 mt-3">Où r = taux d'actualisation (WACC), E<sub>t</sub> = production d'énergie l'année t, en tenant compte de la dégradation</div>
                 </div>
                 <p>Les hypothèses clés qui affectent le résultat comprennent : la durée de vie du projet (généralement 25-35 ans), le taux de dégradation annuelle (0,4-0,7%/an pour le silicium cristallin), le taux d'actualisation (WACC), et si les coûts de fin de vie ou la valeur de récupération sont inclus.</p>
+
+                <!-- Interactive LCOE Calculator — Reproduce -->
+                <div class="bg-slate-800/60 border border-amber-500/20 rounded-2xl p-6 my-8 not-prose" id="lcoe-calc">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white">Calculez votre propre LCOE</h3>
+                        <button onclick="loadLcoeDefaults()" class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs rounded-lg border border-emerald-500/20 hover:bg-emerald-500/30 transition-colors flex items-center gap-1">
+                            🔄 Reproduce (v2026-03)
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-4">
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">CAPEX (€/kWc)</label>
+                            <input type="number" id="lcoe-capex" value="600" min="200" max="3000" step="10" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">OPEX (€/kWc/an)</label>
+                            <input type="number" id="lcoe-opex" value="10" min="0" max="50" step="1" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">WACC (%)</label>
+                            <input type="number" id="lcoe-wacc" value="6" min="1" max="15" step="0.5" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">Productible (kWh/kWc/an)</label>
+                            <input type="number" id="lcoe-yield" value="1200" min="500" max="2500" step="50" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">Durée (ans)</label>
+                            <input type="number" id="lcoe-life" value="25" min="10" max="40" step="5" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">Dégradation (%/an)</label>
+                            <input type="number" id="lcoe-degrad" value="0.5" min="0" max="2" step="0.1" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="calcLCOE()" class="px-4 py-2 bg-amber-500 text-slate-900 font-semibold rounded-lg hover:bg-amber-400 transition-colors text-sm">Calculer LCOE</button>
+                        <div id="lcoe-result" class="text-2xl font-bold text-amber-400"></div>
+                    </div>
+                    <p id="lcoe-detail" class="text-xs text-slate-500 mt-3"></p>
+                </div>
+                <script>
+                function calcLCOE() {
+                    const capex = parseFloat(document.getElementById('lcoe-capex').value);
+                    const opex = parseFloat(document.getElementById('lcoe-opex').value);
+                    const wacc = parseFloat(document.getElementById('lcoe-wacc').value) / 100;
+                    const yieldKwh = parseFloat(document.getElementById('lcoe-yield').value);
+                    const life = parseInt(document.getElementById('lcoe-life').value);
+                    const degrad = parseFloat(document.getElementById('lcoe-degrad').value) / 100;
+
+                    let totalCost = capex;
+                    let totalEnergy = 0;
+                    for (let t = 1; t <= life; t++) {
+                        totalCost += opex / Math.pow(1 + wacc, t);
+                        totalEnergy += yieldKwh * Math.pow(1 - degrad, t - 1) / Math.pow(1 + wacc, t);
+                    }
+                    const lcoe = (totalCost / totalEnergy) * 1000; // €/MWh
+                    document.getElementById('lcoe-result').textContent = lcoe.toFixed(1) + ' €/MWh';
+                    document.getElementById('lcoe-detail').textContent =
+                        `Coût total actualisé : ${Math.round(totalCost).toLocaleString('fr-FR')} €/kWc · Production actualisée : ${Math.round(totalEnergy).toLocaleString('fr-FR')} kWh/kWc · Soit ${(lcoe / 10).toFixed(2)} c€/kWh`;
+                }
+                function loadLcoeDefaults() {
+                    // Load Dataset v2026-03 defaults
+                    const defaults = {
+                        'lcoe-capex': 600, 'lcoe-opex': 10, 'lcoe-wacc': 6,
+                        'lcoe-yield': 1200, 'lcoe-life': 25, 'lcoe-degrad': 0.5
+                    };
+                    for (const [id, val] of Object.entries(defaults)) {
+                        document.getElementById(id).value = val;
+                    }
+                    calcLCOE();
+                    // Update URL for sharing
+                    const params = new URLSearchParams(defaults);
+                    params.set('assumptions', '2026-03');
+                    history.replaceState(null, '', '?' + params.toString() + '#lcoe-calc');
+                }
+                // On load: check URL params
+                (function() {
+                    const p = new URLSearchParams(window.location.search);
+                    if (p.has('lcoe-capex')) {
+                        ['lcoe-capex','lcoe-opex','lcoe-wacc','lcoe-yield','lcoe-life','lcoe-degrad'].forEach(id => {
+                            if (p.has(id)) document.getElementById(id).value = p.get(id);
+                        });
+                        calcLCOE();
+                    }
+                })();
+                </script>
 
                 <h2 id="implications">Implications pour l'investissement</h2>
                 <p>Pour les investisseurs et développeurs évaluant les opportunités solaires européennes, les données du LCOE soulignent plusieurs conclusions stratégiques :</p>

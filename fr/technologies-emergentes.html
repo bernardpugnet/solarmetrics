@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technologies Solaires Émergentes — SolarMetrics</title>
+    <meta name="description" content="Pérovskites, tandem, bifacial, solaire flottant, agrivoltaïsme : les technologies solaires qui transformeront le marché d'ici 2035.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/technologies-emergentes">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies-emergentes">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/technologies-emergentes">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .tech-card{transition:all 0.3s ease;border:1px solid rgba(71,85,105,0.5);background:rgba(15,23,42,0.6)}
+        .tech-card:hover{border-color:rgba(245,158,11,0.5);background:rgba(245,158,11,0.05)}
+        .badge-tech{display:inline-block;padding:0.375rem 0.75rem;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);border-radius:0.5rem;color:#FCD34D;font-size:0.875rem;font-weight:500}
+        .comparison-table{width:100%;border-collapse:collapse;border:1px solid rgba(71,85,105,0.3)}
+        .comparison-table th{background:rgba(15,23,42,0.8);padding:1rem;text-align:left;font-weight:600;border:1px solid rgba(71,85,105,0.3);color:#FCD34D}
+        .comparison-table td{padding:1rem;border:1px solid rgba(71,85,105,0.3);border-bottom:1px solid rgba(71,85,105,0.2)}
+        .comparison-table tbody tr:hover{background:rgba(245,158,11,0.05)}
+        .highlight-perovskite{border-left:4px solid #F59E0B;padding-left:1.5rem;background:rgba(245,158,11,0.08);border-radius:0.5rem;padding:1.5rem}
+        .highlight-bifacial{border-left:4px solid #06B6D4;padding-left:1.5rem;background:rgba(6,182,212,0.08);border-radius:0.5rem;padding:1.5rem}
+        .highlight-floating{border-left:4px solid #8B5CF6;padding-left:1.5rem;background:rgba(139,92,246,0.08);border-radius:0.5rem;padding:1.5rem}
+        .highlight-agrivoltaics{border-left:4px solid #10B981;padding-left:1.5rem;background:rgba(16,185,129,0.08);border-radius:0.5rem;padding:1.5rem}
+        .highlight-bipv{border-left:4px solid #EC4899;padding-left:1.5rem;background:rgba(236,72,153,0.08);border-radius:0.5rem;padding:1.5rem}
+        abbr[title] {
+            text-decoration: underline dotted rgba(6,182,212,0.5);
+            text-underline-offset: 3px;
+            cursor: help;
+        }
+        .stat-box{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:0.75rem;padding:1.5rem;margin:1rem 0}
+        .source-link{color:#93C5FD;text-decoration:none;border-bottom:1px solid rgba(147,197,253,0.3)}
+        .source-link:hover{color:#60A5FA;border-bottom-color:rgba(96,165,250,0.5)}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
+                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
+                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
+                                        <div class="text-xs text-slate-400">Kits solaires · < 9 kWc</div>
+                                    </div>
+                                </a>
+                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
+                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+                                    </div>
+                                </a>
+                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Industriel</div>
+                                        <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+                                    </div>
+                                </a>
+                                <a href="comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
+                                    <div>
+                                        <div class="text-sm font-semibold text-white">Comparateur</div>
+                                        <div class="text-xs text-slate-400">Technologies · Onduleurs · Batteries</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1">
+                        <a href="../en/emerging-technologies.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
+                <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Résidentiel</a>
+                <a href="outils-autoconsommation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Autoconsommation</a>
+                <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
+                <a href="comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparateur</a>
+                <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
+                    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1600&q=80"
+                         alt="Technologies solaires émergentes"
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-3 bg-amber-500/20 backdrop-blur-sm rounded-xl border border-amber-500/30">
+                                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-4xl font-bold text-white">Technologies Solaires Émergentes</h1>
+                                <p class="text-slate-300">Horizon 2025-2035 : les innovations qui transformeront le marché</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro -->
+                <div class="bg-slate-800/40 border border-slate-700 rounded-2xl p-8 mb-16">
+                    <p class="text-slate-300 text-lg leading-relaxed">
+                        Le secteur photovoltaïque entre dans une phase d'accélération technologique majeure. Entre les pérovskites qui promettent 30%+ de rendement, la bifacialité devenue standard, et les solutions innovantes comme le solaire flottant et l'agrivoltaïsme, les cinq prochaines années redessineront le paysage énergétique. Découvrez les technologies qui façonneront la transition énergétique mondiale.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Pérovskites et cellules tandem -->
+        <section id="perovskites" class="py-16 bg-slate-900 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="badge-tech">Horizon : 2027-2028</span>
+                    <h2 class="text-3xl font-bold mt-4 mb-2">Pérovskites et Cellules Tandem</h2>
+                    <p class="text-slate-400">Les cellules à rendement record qui pourraient révolutionner le marché</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="highlight-perovskite">
+                        <h3 class="text-xl font-bold mb-4 text-amber-300">Rendement Record : 33.9%</h3>
+                        <div class="space-y-3">
+                            <p class="text-slate-300">
+                                <strong>Oxford PV (2024) :</strong> Cellule tandem pérovskite/silicium certifiée à <strong>33.9%</strong> — un saut majeur par rapport aux ~23% des cellules monocristallines actuelles.
+                            </p>
+                            <p class="text-slate-300">
+                                <strong>Impact commercial :</strong> +45-50% de production à surface égale, réduisant le coût au watt installé.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-amber-400">Avantages clés</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li>✓ Fabrication moins énergivore (OLED-like, < 300°C)</li>
+                                <li>✓ Capture large spectre solaire (UV → infrarouge)</li>
+                                <li>✓ Cellules flexibles & ultrafines (< 500 μm)</li>
+                                <li>✓ Potentiel BIPV (intégration bâtiment)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-red-400">Défis persistants</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li>⚠ Stabilité limitée (< 5 ans actuellement vs 25-30 ans silicium)</li>
+                                <li>⚠ Contenu en plomb (toxicité environnementale)</li>
+                                <li>⚠ Passage à l'échelle industrielle complexe</li>
+                                <li>⚠ Certification LCA en cours</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                        <p class="text-slate-500 text-xs font-semibold uppercase mb-2">Timeline commercial</p>
+                        <p class="text-lg font-bold text-amber-400">2027-2028</p>
+                        <p class="text-xs text-slate-400 mt-2">Premières productions en masse attendues. LONGi, Qcells pilotent la R&D.</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                        <p class="text-slate-500 text-xs font-semibold uppercase mb-2">Acteurs majeurs</p>
+                        <p class="text-sm text-amber-400 font-semibold">Oxford PV, Qcells, LONGi, Meyer Burger</p>
+                        <p class="text-xs text-slate-400 mt-2">Investissements R&D massifs (>€500M/an)</p>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                        <p class="text-slate-500 text-xs font-semibold uppercase mb-2">Coût 2028 estimé</p>
+                        <p class="text-lg font-bold text-amber-400">0.40-0.50 €/W</p>
+                        <p class="text-xs text-slate-400 mt-2">vs 0.15-0.20 €/W pour silicium classique</p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+                    <p class="text-slate-300">
+                        <strong class="text-blue-400">Sources :</strong> <a href="https://www.nrel.gov" class="source-link">NREL</a>, <a href="https://www.ise.fraunhofer.de" class="source-link">Fraunhofer ISE</a>, <a href="https://www.nature.com/articles/s41560" class="source-link">Nature Energy (2024)</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Modules Bifaciaux -->
+        <section id="bifacial" class="py-16 bg-slate-900 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="badge-tech">Maturité : TRL 9 (Déploiement)</span>
+                    <h2 class="text-3xl font-bold mt-4 mb-2">Modules Bifaciaux</h2>
+                    <p class="text-slate-400">Du marché de niche à la technologie dominante en utility-scale</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="highlight-bifacial">
+                        <h3 class="text-xl font-bold mb-4 text-cyan-300">Production accrue : +10-25%</h3>
+                        <p class="text-slate-300 mb-4">
+                            La bifacialité capture le rayonnement réfléchi par le sol (albédo). Sur trackers solaires, les gains atteignent <strong>+20-25%</strong> contre le monofacial.
+                        </p>
+                        <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
+                            <p class="text-sm text-slate-300"><strong>2025 :</strong> > 70% des nouveaux projets tracker utilisent la bifacialité.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-cyan-400">Facteur de bifacialité par technologie</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li><strong>HJT :</strong> 90-95% (meilleur passivage arrière)</li>
+                                <li><strong>TOPCon :</strong> 85% (bon contact arrière)</li>
+                                <li><strong>PERC :</strong> 70% (baseline)</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-3">Facteur = % du rayonnement arrière capturé</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-cyan-400">Surface optimale</h4>
+                            <p class="text-slate-300 text-sm">Meilleurs rendements sur :</p>
+                            <ul class="space-y-1 text-slate-300 text-sm mt-2">
+                                <li>• Sable blanc (albédo 40-50%)</li>
+                                <li>• Neige (albédo 80%+)</li>
+                                <li>• Gravier blanc (albédo 35-45%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <h4 class="font-bold mb-3 text-amber-300">Adoption 2024-2025</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-2xl font-bold text-amber-400">> 70%</p>
+                            <p class="text-slate-400 text-sm">des projets tracker</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-amber-400">~35%</p>
+                            <p class="text-slate-400 text-sm">des installations ground-mounted fixes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+                    <p class="text-slate-300">
+                        <strong class="text-blue-400">Sources :</strong> <a href="https://www.longi.com" class="source-link">LONGi</a>, <a href="https://www.trinasolar.com" class="source-link">Trina Solar</a>, <a href="https://www.ise.fraunhofer.de" class="source-link">Fraunhofer ISE</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Solaire Flottant -->
+        <section id="floating" class="py-16 bg-slate-900 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="badge-tech">Marché : 7+ GW (fin 2025)</span>
+                    <h2 class="text-3xl font-bold mt-4 mb-2">Solaire Flottant (Floating PV)</h2>
+                    <p class="text-slate-400">Lacs, réservoirs, étangs : les nouveaux frontières du solaire</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="highlight-floating">
+                        <h3 class="text-xl font-bold mb-4 text-purple-300">7+ GW installés mondialement</h3>
+                        <p class="text-slate-300 mb-4">
+                            Le solaire flottant représente 2-3% du marché global PV, mais croît à <strong>+35%/an</strong>.
+                        </p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
+                                <p class="text-xs text-slate-400 font-semibold">Marchés leaders</p>
+                                <p class="text-sm font-bold text-purple-400 mt-1">Chine, Inde, Japon</p>
+                            </div>
+                            <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
+                                <p class="text-xs text-slate-400 font-semibold">En Europe</p>
+                                <p class="text-sm font-bold text-purple-400 mt-1">Pays-Bas, France</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-purple-400">Avantages clés</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li>✓ Pas de conflit foncier (réservoirs d'eau existants)</li>
+                                <li>✓ Refroidissement naturel : +3-5% de production</li>
+                                <li>✓ Réduit l'évaporation (~30% sur lacs fermés)</li>
+                                <li>✓ Intégration écologique possible (flore aquatique)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-purple-400">Défi principal</h4>
+                            <p class="text-slate-300 text-sm">
+                                <strong>Maintenance & durée de vie :</strong> Corrosion marine, saumure, encrassement algal. Besoin de 15-20 ans de R&D opérationnelle pour certifier la durabilité.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-8">
+                    <h3 class="text-lg font-bold mb-4 text-purple-300">Projet phare en France</h3>
+                    <p class="text-slate-300 mb-3">
+                        <strong>Piolenc (Vaucluse) - 17 MW</strong> : Première centrale flottante français d'envergure, développée en consortium. Plusieurs autres projets en développement (Auvergne-Rhône-Alpes) pour 100+ MW d'ici 2027.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div class="bg-slate-900/50 rounded-lg p-3 border border-slate-700">
+                            <p class="text-xs text-slate-500 uppercase font-semibold">LCOE flottant</p>
+                            <p class="text-lg font-bold text-purple-400">40-50 €/MWh</p>
+                            <p class="text-xs text-slate-400 mt-1">Compétitif vs sol si >5 MW</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-lg p-3 border border-slate-700">
+                            <p class="text-xs text-slate-500 uppercase font-semibold">Coût CapEx</p>
+                            <p class="text-lg font-bold text-purple-400">800-1200 €/kW</p>
+                            <p class="text-xs text-slate-400 mt-1">Flottants vs 600-900 sol</p>
+                        </div>
+                        <div class="bg-slate-900/50 rounded-lg p-3 border border-slate-700">
+                            <p class="text-xs text-slate-500 uppercase font-semibold">Croissance annuelle</p>
+                            <p class="text-lg font-bold text-purple-400">+35%/an</p>
+                            <p class="text-xs text-slate-400 mt-1">Jusqu'à 2030 (prévisions)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+                    <p class="text-slate-300">
+                        <strong class="text-blue-400">Sources :</strong> <a href="https://www.worldbank.org" class="source-link">World Bank ESMAP</a>, <a href="https://www.irena.org" class="source-link">IRENA</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Agrivoltaïsme -->
+        <section id="agrivoltaics" class="py-16 bg-slate-900 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="badge-tech">Régulation : Loi APER (France 2024)</span>
+                    <h2 class="text-3xl font-bold mt-4 mb-2">Agrivoltaïsme</h2>
+                    <p class="text-slate-400">Combiner agriculture et production solaire sur la même parcelle</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="highlight-agrivoltaics">
+                        <h3 class="text-xl font-bold mb-4 text-green-300">500+ projets en développement</h3>
+                        <p class="text-slate-300 mb-4">
+                            En France, le cadre réglementaire nouveau (loi APER) permet de combiner agriculture commerciale et production PV pour la première fois légalement.
+                        </p>
+                        <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
+                            <p class="text-sm text-slate-300"><strong>Définition :</strong> Installation PV où la production agricole persiste et génère au moins 30% du revenu de la parcelle.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-green-400">Types d'agrivoltaïsme</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li><strong>Statiques :</strong> Ombrières fixes (vignes, arboriculture)</li>
+                                <li><strong>Dynamiques :</strong> Trackers pour cultures (blé, herbe)</li>
+                                <li><strong>Élevage :</strong> Modules surélevés pour pâturage</li>
+                                <li><strong>Mixtes :</strong> Hydrogène + agriculture</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-green-400">Bénéfices agronomiques</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li>✓ Protection contre la grêle</li>
+                                <li>✓ Réduction sécheresse (moins d'évaporation)</li>
+                                <li>✓ Revenu complémentaire (30-40 k€/ha/an)</li>
+                                <li>✓ Réduction pesticides en viticulture</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h4 class="font-bold mb-3 text-green-400">Production PV réduite</h4>
+                        <p class="text-slate-300 text-sm mb-3">
+                            L'ombrage limite la captation. Variation selon système :
+                        </p>
+                        <ul class="space-y-1 text-slate-300 text-sm">
+                            <li>• Statique : -15-30%</li>
+                            <li>• Dynamique : -10-20%</li>
+                            <li>• Élevage : -5-15%</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h4 class="font-bold mb-3 text-green-400">Économie typique (France)</h4>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><strong>Investissement :</strong> 1200-1500 €/kW</li>
+                            <li><strong>Rendement agricole :</strong> +30-50% revenu</li>
+                            <li><strong>Payback :</strong> 12-18 ans (vs 8-12 monofacial)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <h4 class="font-bold mb-3 text-amber-300">Marché France 2024-2027</h4>
+                    <p class="text-slate-300">
+                        La loi APER ouvre un nouveau marché. Estimations : <strong>5-10 GW</strong> potentiels d'ici 2030 en France sur <strong>50+ GW totaux attendus</strong> en production solaire.
+                    </p>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+                    <p class="text-slate-300">
+                        <strong class="text-blue-400">Sources :</strong> <a href="https://www.inrae.fr" class="source-link">INRAE</a>, <a href="https://www.ademe.fr" class="source-link">ADEME</a>, <a href="https://www.syndicat-energies-renouvelables.fr" class="source-link">SER (Syndicat des Énergies Renouvelables)</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: BIPV -->
+        <section id="bipv" class="py-16 bg-slate-900 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="badge-tech">Croissance : +25%/an</span>
+                    <h2 class="text-3xl font-bold mt-4 mb-2">Solaire en Bâtiment (BIPV)</h2>
+                    <p class="text-slate-400">Du rêve design à la réalité économique : tuiles et façades solaires</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div class="highlight-bipv">
+                        <h3 class="text-xl font-bold mb-4 text-pink-300">Marché niche en croissance</h3>
+                        <p class="text-slate-300 mb-4">
+                            Les tuiles solaires, vitrages photovoltaïques et façades actives représentent un marché émergeant : <strong>~1-2% du marché PV</strong>, mais croissance <strong>+25%/an</strong>.
+                        </p>
+                        <div class="bg-pink-500/10 border border-pink-500/30 rounded-lg p-3">
+                            <p class="text-sm text-slate-300"><strong>Avantage clé :</strong> Intégration architecturale = acceptabilité paysagère accrue.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-pink-400">Types de BIPV</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li><strong>Tuiles solaires :</strong> Tesla Solar Roof, Sunroof, Solarwatt</li>
+                                <li><strong>Vitrages actifs :</strong> Fenêtres PV, verrières</li>
+                                <li><strong>Façades :</strong> Modules verticaux, bardage PV</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h4 class="font-bold mb-3 text-pink-400">Performance vs classique</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li><strong>Rendement :</strong> 12-18% (vs 20-23% toits PV)</li>
+                                <li><strong>Coût :</strong> 2-4x plus cher au Wc</li>
+                                <li><strong>ROI :</strong> 20-30 ans (vs 8-12 classique)</li>
+                                <li><strong>Gain :</strong> Esthétique + acceptabilité</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h4 class="font-bold mb-3 text-pink-400">Acteurs principaux</h4>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><strong>Tesla Solar Roof :</strong> Tuiles intégrées (haut de gamme)</li>
+                            <li><strong>SunRoof :</strong> Tuiles flexibles espagnoles</li>
+                            <li><strong>Solarwatt :</strong> Modules ultra-fins allemands</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h4 class="font-bold mb-3 text-pink-400">Cas d'usage idéaux</h4>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li>✓ Rénovation toitures (esthétique requise)</li>
+                            <li>✓ Centres villes (contraintes architecturales)</li>
+                            <li>✓ Bâtiments patrimoniaux</li>
+                            <li>✓ Habitat collectif de prestige</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+                    <p class="text-slate-300">
+                        <strong class="text-blue-400">Sources :</strong> <a href="https://www.ise.fraunhofer.de" class="source-link">Fraunhofer ISE</a>, <a href="https://bipv.eu" class="source-link">EU BIPV Observatory</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Tableau Comparatif -->
+        <section id="comparison" class="py-16 bg-slate-900 border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold mb-2">Synthèse Comparative</h2>
+                    <p class="text-slate-400">Maturité, rendement, coût et applications de 5 technologies majeures</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Technologie</th>
+                                <th>Maturité (TRL)</th>
+                                <th>Rendement cellule</th>
+                                <th>Coût CapEx</th>
+                                <th>Meilleur usage</th>
+                                <th>Horizon commercial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-amber-400">Pérovskites tandem</td>
+                                <td>TRL 6-7 (pilotes)</td>
+                                <td class="font-bold text-amber-300">33.9%</td>
+                                <td>0.40-0.50 €/W</td>
+                                <td>Utility-scale haute densité, BIPV</td>
+                                <td class="font-semibold">2027-2028</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-cyan-400">Bifacial (HJT/TOPCon)</td>
+                                <td class="font-bold">TRL 9 (Déployé)</td>
+                                <td>22-24%</td>
+                                <td>0.18-0.22 €/W</td>
+                                <td>Trackers, sol blanc, utility-scale</td>
+                                <td class="font-semibold">Maintenant</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-purple-400">Solaire flottant</td>
+                                <td>TRL 8-9</td>
+                                <td>20-22% (+refroidissement)</td>
+                                <td>0.80-1.20 €/W</td>
+                                <td>Lacs, réservoirs, peu de terrain</td>
+                                <td class="font-semibold">2026+</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-green-400">Agrivoltaïsme</td>
+                                <td>TRL 7-8</td>
+                                <td>18-22% (selon config)</td>
+                                <td>1.20-1.50 €/W</td>
+                                <td>Zones rurales, multi-revenu agricole</td>
+                                <td class="font-semibold">2024+ (France)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-pink-400">BIPV (tuiles/façade)</td>
+                                <td>TRL 7-9</td>
+                                <td>12-18%</td>
+                                <td>2.00-4.00 €/W</td>
+                                <td>Rénov., centres villes, prestige</td>
+                                <td class="font-semibold">2024+ (niche)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-8 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <p class="text-slate-400 text-sm">
+                        <strong>Légende TRL :</strong> TRL 6-7 = Prototype / Pilot stage | TRL 8-9 = Démonstration / Déploiement commercial | <abbr title="Rendement énergétique calculé après pertes thermiques et optiques">Rendement</abbr> = cellule en conditions STC (1000 W/m², 25°C)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sources Section -->
+        <section id="sources" class="py-16 bg-slate-950 border-t border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-8">Bibliographie & Références</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-400 mb-4">Institutions scientifiques</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><a href="https://www.nrel.gov" class="source-link">National Renewable Energy Laboratory (NREL)</a> - USA</li>
+                            <li><a href="https://www.ise.fraunhofer.de" class="source-link">Fraunhofer Institute for Solar Energy Systems (ISE)</a> - Allemagne</li>
+                            <li><a href="https://www.inrae.fr" class="source-link">INRAE (Institut National de Recherche pour l'Agriculture)</a> - France</li>
+                            <li><a href="https://www.irena.org" class="source-link">International Renewable Energy Agency (IRENA)</a></li>
+                            <li><a href="https://www.worldbank.org" class="source-link">World Bank ESMAP</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-400 mb-4">Acteurs industriels</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><a href="https://www.longi.com" class="source-link">LONGi Green Energy</a> - Silicium & recherche</li>
+                            <li><a href="https://www.trinasolar.com" class="source-link">Trina Solar</a> - Modules bifaciaux</li>
+                            <li><a href="https://www.oxford-pv.com" class="source-link">Oxford PV</a> - Pérovskites tandem</li>
+                            <li><a href="https://www.qcells.com" class="source-link">Q Cells</a> - R&D TOPCon/pérovskites</li>
+                            <li><a href="https://www.ademe.fr" class="source-link">ADEME</a> - Agrivoltaïsme France</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-400 mb-4">Revues scientifiques</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><a href="https://www.nature.com/articles/s41560" class="source-link">Nature Energy</a> - Articles pérovskites 2024</li>
+                            <li><a href="https://joule.cell.com" class="source-link">Joule (Cell Press)</a> - Recherche énergétique</li>
+                            <li><a href="https://www.solarjournal.org" class="source-link">Solar Energy Journal</a> - Données bifaciales</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-400 mb-4">Institutions françaises</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><a href="https://www.syndicat-energies-renouvelables.fr" class="source-link">SER (Syndicat des Énergies Renouvelables)</a></li>
+                            <li><a href="https://www.bipv.eu" class="source-link">EU BIPV Observatory</a> - BIPV données</li>
+                            <li>Loi APER (2024) - Agrivoltaïsme régulation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-12 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <h3 class="font-bold text-amber-400 mb-3">Note méthodologique</h3>
+                    <p class="text-slate-400 text-sm">
+                        Les données présentées proviennent de sources publiques (2024-2025), rapports d'institutions scientifiques, et publications industrielles. Les estimations de coût et timeline sont basées sur les tendances observées et les annonces des acteurs. Les rendements sont donnés en conditions de test standard (STC : 1000 W/m², 25°C). Pour les applications réelles, appliquer un dérating de 15-20% (pertes thermiques, optiques, onduleur).
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">© <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="../en/emerging-technologies.html" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+</body>
+</html>
