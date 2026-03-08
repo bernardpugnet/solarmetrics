@@ -122,6 +122,7 @@
   <url>
     <loc>https://solarmetrics.netlify.app/fr/schema-plug-and-play</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-plug-and-play"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
@@ -129,6 +130,7 @@
   <url>
     <loc>https://solarmetrics.netlify.app/fr/schema-grande-installation</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-large-installation"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
@@ -351,8 +353,8 @@
   </url>
   <!-- New EN pages (2026-03-07) -->
   <url>
-    <loc>https://solarmetrics.netlify.app/en/tools-self-consumption</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-self-consumption"/>
+    <loc>https://solarmetrics.netlify.app/en/tools-selfconsumption</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-selfconsumption"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
     <lastmod>2026-03-07</lastmod>
@@ -461,5 +463,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/centrales-virtuelles"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/en/schema-plug-and-play</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/en/schema-large-installation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-large-installation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <lastmod>2026-03-07</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
