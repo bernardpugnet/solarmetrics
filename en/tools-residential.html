@@ -113,7 +113,7 @@ abbr[title]:hover::after {
         <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
         <div>
           <div class="text-sm font-semibold text-white">Country comparison</div>
-          <div class="text-xs text-slate-400">10 European countries · LCOE</div>
+          <div class="text-xs text-slate-400">12 countries · LCOE</div>
         </div>
       </a>
     </div>
@@ -320,7 +320,7 @@ abbr[title]:hover::after {
                 <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
                     <h2 class="text-2xl font-bold text-white mb-4">Residential Solar Simulator</h2>
                     <p class="text-slate-400 mb-4">Use this tool to estimate the profitability of a photovoltaic solar installation on your home. The simulator takes into account your location, electricity consumption, local tariffs, and available subsidies.</p>
-                    <p class="text-slate-400 text-sm">Calculations use <abbr title="Photovoltaic Geographical Information System - EU tool with solar irradiation data">PVGIS</abbr> data for solar irradiation and <abbr title="Statistical Office of the European Union - harmonised energy data">Eurostat</abbr> for electricity tariffs.</p>
+                    <p class="text-slate-400 text-sm">Calculations use <abbr title="Photovoltaic Geographical Information System - EU tool with solar irradiation data">PVGIS</abbr> (Europe) or <abbr title="National Renewable Energy Laboratory - US/Canada solar irradiation data">NREL PVWatts</abbr> (North America) for solar irradiation, and <abbr title="Statistical Office of the European Union - harmonised energy data">Eurostat</abbr> / <abbr title="Energy Information Administration (US) or national sources">EIA</abbr> for electricity tariffs.</p>
                 </div>
 
                 <!-- Main Calculator -->
@@ -337,22 +337,46 @@ abbr[title]:hover::after {
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Country</label>
                                     <select id="resCountry" onchange="updateLocationData()" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                        <option value="ES">Spain</option>
-                                        <option value="IT">Italy</option>
-                                        <option value="NL">Netherlands</option>
-                                        <option value="BE">Belgium</option>
-                                        <option value="PT">Portugal</option>
-                                        <option value="PL">Poland</option>
-                                        <option value="AT">Austria</option>
-                                        <option value="GR">Greece</option>
+                                        <optgroup label="Europe">
+                                            <option value="FR">France</option>
+                                            <option value="DE">Germany</option>
+                                            <option value="ES">Spain</option>
+                                            <option value="IT">Italy</option>
+                                            <option value="NL">Netherlands</option>
+                                            <option value="BE">Belgium</option>
+                                            <option value="PT">Portugal</option>
+                                            <option value="PL">Poland</option>
+                                            <option value="AT">Austria</option>
+                                            <option value="GR">Greece</option>
+                                        </optgroup>
+                                        <optgroup label="North America">
+                                            <option value="US">United States</option>
+                                            <option value="CA">Canada</option>
+                                        </optgroup>
                                     </select>
+                                    <!-- Net metering note (US/CA) -->
+                                    <p id="netMeteringNote" class="text-xs text-amber-400/80 mt-2 hidden"></p>
                                 </div>
 
                                 <!-- Map -->
                                 <div id="map" style="height:300px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
-                                <p class="text-xs text-slate-500 mt-1">Click on the map to position your home precisely</p>
+                                <p id="mapHint" class="text-xs text-slate-500 mt-1">Click on the map to position your home precisely</p>
+                                <!-- Manual mode (fallback if API unavailable) -->
+                                <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
+                                    <label class="flex items-center gap-2 text-sm mb-2">
+                                        <input type="checkbox" id="resManualMode" onchange="toggleManualMode()" class="accent-amber-500">
+                                        <span class="text-amber-400 font-medium">Manual mode</span>
+                                        <span class="tooltip inline-block">
+                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                            <span class="tooltiptext">If the API is unavailable, manually enter the solar yield for your area. Check with your installer or local data.</span>
+                                        </span>
+                                    </label>
+                                    <div id="manualInputSection" class="hidden mt-2">
+                                        <label class="text-xs text-slate-400 mb-1 block">Year 1 yield (kWh/kWp/year)</label>
+                                        <input type="number" id="resManualProductible" value="1200" min="500" max="2500" step="10" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" placeholder="e.g. 1200">
+                                        <p class="text-xs text-slate-500 mt-1">Typical values: 900-1100 (N. Europe), 1200-1500 (S. Europe), 1400-1800 (US south), 1000-1300 (Canada)</p>
+                                    </div>
+                                </div>
 
                                 <!-- Location Inputs -->
                                 <div class="grid grid-cols-2 gap-4">
@@ -555,7 +579,7 @@ abbr[title]:hover::after {
                                                 <span class="tooltiptext">Average all-inclusive electricity tariff consumed from grid (€/kWh).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium">€<span id="resElecPriceDisplay">0.22</span>/kWh</span>
+                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resElecPriceDisplay">0.22</span>/kWh</span>
                                     </label>
                                     <input type="number" id="resElecPrice" value="0.22" min="0.05" max="0.50" step="0.01"
                                            oninput="document.getElementById('resElecPriceDisplay').textContent = parseFloat(this.value).toFixed(2)"
@@ -572,7 +596,7 @@ abbr[title]:hover::after {
                                                 <span class="tooltiptext">Tariff at which the grid buys back excess energy from you (€/kWh).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium">€<span id="resFeedinDisplay">0.15</span>/kWh</span>
+                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resFeedinDisplay">0.15</span>/kWh</span>
                                     </label>
                                     <input type="number" id="resFeedir" value="0.15" min="0.01" max="0.50" step="0.01"
                                            oninput="document.getElementById('resFeedinDisplay').textContent = parseFloat(this.value).toFixed(2)"
@@ -592,7 +616,7 @@ abbr[title]:hover::after {
                                     </label>
                                     <input type="number" id="resInstallCostOverride" placeholder="Leave empty = country average" min="0" max="100000" step="100"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-500 mt-1">Estimated average cost: <span id="resAvgCostHint">—</span> €/kWp</p>
+                                    <p class="text-xs text-slate-500 mt-1">Estimated average cost: <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWp</p>
                                 </div>
 
                                 <!-- Battery Cost Override -->
@@ -608,7 +632,7 @@ abbr[title]:hover::after {
                                     </label>
                                     <input type="number" id="resBatteryCostOverride" placeholder="Leave empty = country average" min="0" max="50000" step="100"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-500 mt-1">Estimated average cost: <span id="resAvgBatteryCostHint">—</span> €/kWh</p>
+                                    <p class="text-xs text-slate-500 mt-1">Estimated average cost: <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
                                 </div>
 
                                 <!-- Subsidies -->
@@ -621,7 +645,7 @@ abbr[title]:hover::after {
                                                 <span class="tooltiptext">Total amount of subsidies received (government grants, regional aid, etc.).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium">€<span id="resSubsidiesDisplay">3000</span></span>
+                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resSubsidiesDisplay">3000</span></span>
                                     </label>
                                     <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100"
                                            oninput="document.getElementById('resSubsidiesDisplay').textContent = this.value"
@@ -713,7 +737,7 @@ abbr[title]:hover::after {
                                 <!-- Annual Savings -->
                                 <div class="pt-6 border-t border-slate-700/50">
                                     <div class="text-xs text-slate-500 mb-1">Annual savings</div>
-                                    <div class="text-2xl font-bold text-green-500">€<span id="resAnnualSavings">0</span></div>
+                                    <div class="text-2xl font-bold text-green-500"><span class="cur">€</span><span id="resAnnualSavings">0</span></div>
                                     <div class="text-xs text-slate-600 mt-1">
                                         <span id="resPaybackYears">0</span> years to payback
                                     </div>
@@ -722,13 +746,13 @@ abbr[title]:hover::after {
                                 <!-- Lifetime Benefit -->
                                 <div class="pt-6 border-t border-slate-700/50">
                                     <div class="text-xs text-slate-500 mb-1">25-year net benefit</div>
-                                    <div class="text-2xl font-bold text-cyan-400">€<span id="resNetBenefit">0</span></div>
+                                    <div class="text-2xl font-bold text-cyan-400"><span class="cur">€</span><span id="resNetBenefit">0</span></div>
                                 </div>
 
                                 <!-- Battery Benefit -->
                                 <div id="batteryBenefitSection" style="display:none;" class="pt-6 border-t border-slate-700/50">
                                     <div class="text-xs text-slate-500 mb-1">Battery additional benefit</div>
-                                    <div class="text-lg font-bold text-cyan-400">€<span id="resBatteryBenefit">0</span></div>
+                                    <div class="text-lg font-bold text-cyan-400"><span class="cur">€</span><span id="resBatteryBenefit">0</span></div>
                                 </div>
 
                                 <!-- Calculate Button -->
@@ -832,8 +856,8 @@ abbr[title]:hover::after {
                 <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
                     <h4 class="text-lg font-semibold text-white mb-4">Sources and information</h4>
                     <div class="text-slate-400 text-sm space-y-4">
-                        <p><strong>Irradiation data:</strong> PVGIS (Photovoltaic Geographical Information System) - European Commission</p>
-                        <p><strong>Electricity tariffs:</strong> Eurostat - Average residential all-taxes-included tariffs</p>
+                        <p><strong>Irradiation data:</strong> PVGIS (European Commission) for Europe · NREL PVWatts V8 for North America</p>
+                        <p><strong>Electricity tariffs:</strong> Eurostat (EU) · EIA / national sources (US, Canada)</p>
                         <p><strong>Subsidies:</strong> Government grants, tax credits, regional programs</p>
                         <p><strong>Assumptions:</strong> System efficiency 80% (DC/AC losses), annual degradation 0.5%, panel lifespan 25 years</p>
                         <p class="text-xs text-slate-500 pt-4 border-t border-slate-700">This tool is provided for informational purposes. Results are estimates and may differ from reality depending on local conditions, installation quality, and tariff changes. Consult a professional for a personalized quote.</p>
@@ -880,43 +904,121 @@ abbr[title]:hover::after {
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-        // Initialize map
+        // ── Country coordinates from solar-data.js ──
+        const countryCoords = {};
+        if (window.SOLAR_DATA) {
+            Object.keys(SOLAR_DATA.countries).forEach(code => {
+                const c = SOLAR_DATA.countries[code];
+                countryCoords[code] = { lat: c.defaultLat, lon: c.defaultLon, zoom: c.mapZoom || 6 };
+            });
+        } else {
+            countryCoords['FR'] = { lat: 46.6, lon: 2.2, zoom: 6 };
+        }
+
+        // Bounding boxes per country (SW corner, NE corner)
+        const countryBounds = {
+            FR: [[41.3, -5.2], [51.1, 9.6]],
+            DE: [[47.3, 5.9], [55.1, 15.0]],
+            ES: [[36.0, -9.3], [43.8, 4.3]],
+            IT: [[36.6, 6.6], [47.1, 18.5]],
+            NL: [[50.8, 3.4], [53.5, 7.2]],
+            BE: [[49.5, 2.5], [51.5, 6.4]],
+            PT: [[36.9, -9.5], [42.2, -6.2]],
+            PL: [[49.0, 14.1], [54.8, 24.2]],
+            AT: [[46.4, 9.5], [49.0, 17.2]],
+            GR: [[34.8, 19.4], [41.8, 29.7]],
+            US: [[24.5, -125.0], [49.5, -66.9]],
+            CA: [[41.7, -141.0], [72.0, -52.6]]
+        };
+
+        function getCountryBounds(code) {
+            var b = countryBounds[code] || countryBounds['FR'];
+            return L.latLngBounds(b[0], b[1]);
+        }
+
+        // ── Helpers ──
+        function getCurrencySymbol(countryCode) {
+            const cd = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            return cd ? cd.currencySymbol : '€';
+        }
+
+        function updateCurrencySymbols(symbol) {
+            document.querySelectorAll('.cur').forEach(el => el.textContent = symbol);
+        }
+
+        function toggleManualMode() {
+            const isChecked = document.getElementById('resManualMode').checked;
+            document.getElementById('manualInputSection').style.display = isChecked ? 'block' : 'none';
+        }
+
+        // ── Map ──
         let map;
+        let marker;
         function initMap() {
             if (map) map.remove();
-            map = L.map('map').setView([48.8566, 2.3522], 10);
+            const startCoord = countryCoords['FR'];
+            const bounds = getCountryBounds('FR');
+            map = L.map('map', {
+                maxBounds: bounds.pad(0.15),
+                maxBoundsViscosity: 1.0,
+                minZoom: 3
+            }).setView([startCoord.lat, startCoord.lon], 6);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
 
+            marker = L.marker([startCoord.lat, startCoord.lon]).addTo(map);
+
             map.on('click', (e) => {
                 document.getElementById('resLatitude').value = e.latlng.lat.toFixed(4);
                 document.getElementById('resLongitude').value = e.latlng.lng.toFixed(4);
-                calculateResidential();
+                if (marker) map.removeLayer(marker);
+                marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
             });
         }
 
         function updateLocationData() {
-            const coords = {
-                'FR': [48.8566, 2.3522],
-                'DE': [51.1657, 10.4515],
-                'ES': [40.4637, -3.7492],
-                'IT': [41.8719, 12.5674],
-                'NL': [52.1326, 5.2913],
-                'BE': [50.5039, 4.4699],
-                'PT': [39.3999, -8.2245],
-                'PL': [51.9194, 19.1451],
-                'AT': [47.5162, 14.5501],
-                'GR': [38.9950, 21.8281]
-            };
-            const code = document.getElementById('resCountry').value;
-            const [lat, lon] = coords[code] || [48.8566, 2.3522];
-            document.getElementById('resLatitude').value = lat;
-            document.getElementById('resLongitude').value = lon;
+            const country = document.getElementById('resCountry').value;
+            const coords = countryCoords[country] || countryCoords['FR'];
+            document.getElementById('resLatitude').value = coords.lat;
+            document.getElementById('resLongitude').value = coords.lon;
             if (map) {
-                map.setView([lat, lon], 10);
+                var bounds = getCountryBounds(country);
+                map.setMaxBounds(bounds.pad(0.15));
+                map.fitBounds(bounds);
+                if (marker) map.removeLayer(marker);
+                marker = L.marker([coords.lat, coords.lon]).addTo(map);
+                var hint = document.getElementById('mapHint');
+                if (hint) { hint.textContent = 'Click on the map to position your home precisely'; hint.classList.remove('text-amber-400'); }
             }
+
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
+
+            // Update currency symbols
+            updateCurrencySymbols(getCurrencySymbol(country));
+
+            // Show/hide net metering note (US/CA)
+            const nmNote = document.getElementById('netMeteringNote');
+            if (nmNote && countryData && countryData.netMeteringNote) {
+                nmNote.textContent = '⚠️ ' + countryData.netMeteringNote.en;
+                nmNote.classList.remove('hidden');
+            } else if (nmNote) {
+                nmNote.classList.add('hidden');
+            }
+
+            // Show manual mode section
+            var manualSection = document.getElementById('manualModeSection');
+            if (manualSection) manualSection.classList.remove('hidden');
+
+            // Update prices from solar-data.js
+            if (countryData) {
+                document.getElementById('resElecPrice').value = countryData.electricityPrice;
+                document.getElementById('resElecPriceDisplay').textContent = countryData.electricityPrice.toFixed(4);
+                document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
+                document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
+            }
+
             calculateResidential();
         }
 
@@ -940,18 +1042,69 @@ abbr[title]:hover::after {
             icon.textContent = section.style.display === 'none' ? '▼' : '▲';
         }
 
-        const countryCosts = {
-            'FR': 1700, 'DE': 1800, 'ES': 1600, 'IT': 1700, 'NL': 1900,
-            'BE': 1850, 'PT': 1500, 'PL': 1400, 'AT': 1750, 'GR': 1600
-        };
+        // ── Solar data fetching (PVGIS for EU, NREL for NA, or manual) ──
+        function fetchSolarData(lat, lon, tilt, aspect, countryCode) {
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            const region = countryData ? countryData.region : 'EU';
 
-        const countryBatteryCosts = {
-            'FR': 700, 'DE': 750, 'ES': 650, 'IT': 700, 'NL': 800,
-            'BE': 780, 'PT': 600, 'PL': 550, 'AT': 720, 'GR': 650
-        };
+            // Manual mode
+            if (document.getElementById('resManualMode') && document.getElementById('resManualMode').checked) {
+                const manualVal = parseFloat(document.getElementById('resManualProductible').value);
+                if (manualVal && manualVal > 0) {
+                    return Promise.resolve({ annual_energy: manualVal, source: 'manual' });
+                }
+            }
 
+            // North America → NREL PVWatts
+            if (region === 'NA') {
+                const nrelAzimuth = ((parseFloat(aspect) || 0) + 180) % 360;
+                const url = `/.netlify/functions/nrel?lat=${lat}&lon=${lon}&system_capacity=1&losses=14&tilt=${tilt}&azimuth=${nrelAzimuth}`;
+                return fetch(url)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success && data.annual && data.annual.energyPerKwp) {
+                            return { annual_energy: data.annual.energyPerKwp, source: 'NREL' };
+                        }
+                        return null;
+                    })
+                    .catch(e => {
+                        console.warn('NREL API failed:', e);
+                        var hint = document.getElementById('mapHint');
+                        if (hint) { hint.textContent = '⚠️ NREL API unavailable. Enable manual mode below.'; hint.classList.add('text-amber-400'); }
+                        return null;
+                    });
+            }
+
+            // Europe → PVGIS
+            const url = `/.netlify/functions/pvgis?lat=${lat}&lon=${lon}&peakpower=1&loss=14&angle=${tilt}&aspect=${aspect}`;
+            return fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.annual && data.annual.energyPerKwp) {
+                        return { annual_energy: data.annual.energyPerKwp, source: 'PVGIS' };
+                    }
+                    return null;
+                })
+                .catch(e => {
+                    console.warn('PVGIS failed, trying direct...', e);
+                    return fetch(`https://re.jrc.ec.europa.eu/api/v5_3/PVcalc?lat=${lat}&lon=${lon}&peakpower=1&loss=14&angle=${tilt}&aspect=${aspect}&outputformat=json`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.outputs && data.outputs.totals && data.outputs.totals.fixed) {
+                                return { annual_energy: data.outputs.totals.fixed.E_y, source: 'PVGIS-direct' };
+                            }
+                            return null;
+                        })
+                        .catch(() => {
+                            var hint = document.getElementById('mapHint');
+                            if (hint) { hint.textContent = '⚠️ PVGIS API unavailable. Enable manual mode below.'; hint.classList.add('text-amber-400'); }
+                            return null;
+                        });
+                });
+        }
+
+        // ── Main calculation ──
         function calculateResidential() {
-            // Get all inputs
             const surface = parseFloat(document.getElementById('resSurface').value);
             const panelType = parseFloat(document.getElementById('resPanelType').value);
             const tilt = parseFloat(document.getElementById('resTilt').value);
@@ -968,64 +1121,84 @@ abbr[title]:hover::after {
             const degradation = parseFloat(document.getElementById('resDegradation').value) / 100;
             const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
             const discount = parseFloat(document.getElementById('resDiscount').value) / 100;
+            const lat = parseFloat(document.getElementById('resLatitude').value);
+            const lon = parseFloat(document.getElementById('resLongitude').value);
 
-            // Calculate installed capacity from surface
-            const kwc = surface / (1 / panelType);
+            // Calculate installed capacity
+            const kwc = surface * 0.85 * panelType;
 
-            // Estimate annual production (simplified)
-            const baseProduction = kwc * 1000 * (1 - shading);
-            const production = baseProduction * (1 - (Math.abs(tilt - 35) * 0.01)) * (1 - (Math.abs(orientation) * 0.002));
+            // Get country data from solar-data.js
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
+            const costPerKwp = countryData ? countryData.installCostPerKwc.avg : 1700;
+            const batteryCostPerKwh = countryData ? countryData.batteryCostPerKwh : 700;
 
-            // Calculate costs
-            const costPerKwp = countryCosts[country] || 1700;
-            const installCost = parseFloat(document.getElementById('resInstallCostOverride').value) || (kwc * costPerKwp);
+            // Fetch solar irradiation data
+            fetchSolarData(lat, lon, tilt, orientation, country).then(result => {
+                let production;
+                if (result && result.annual_energy) {
+                    const shadingFactor = 1 - shading;
+                    production = result.annual_energy * kwc * shadingFactor;
+                    document.getElementById('resProductionPerKwc').textContent = result.annual_energy.toFixed(0);
+                } else {
+                    // Fallback: simplified estimate
+                    production = kwc * 1100 * (1 - shading);
+                    document.getElementById('resProductionPerKwc').textContent = Math.round(production / kwc);
+                }
 
-            const batteryCostPerKwh = countryBatteryCosts[country] || 700;
-            const batteryCost = battery ? (parseFloat(document.getElementById('resBatteryCostOverride').value) || (batteryCapacity * batteryCostPerKwh)) : 0;
+                // Calculate costs
+                const installCost = parseFloat(document.getElementById('resInstallCostOverride').value) || (kwc * costPerKwp);
+                const batteryCost = battery ? (parseFloat(document.getElementById('resBatteryCostOverride').value) || (batteryCapacity * batteryCostPerKwh)) : 0;
+                const totalCost = installCost + batteryCost - subsidies;
 
-            const totalCost = installCost + batteryCost - subsidies;
+                // Annual savings
+                const selfConsumEng = production * selfConsum;
+                const feedbackEng = production * (1 - selfConsum);
+                const annualSavings = selfConsumEng * elecPrice + feedbackEng * feedin;
+                const batteryBenefit = battery ? (feedbackEng * (elecPrice - feedin) * 0.2) : 0;
 
-            // Annual savings
-            const selfConsumEng = production * selfConsum;
-            const feedbackEng = production * (1 - selfConsum);
-            const annualSavings = selfConsumEng * elecPrice + feedbackEng * feedin;
-            const batteryBenefit = battery ? (feedbackEng * (elecPrice - feedin) * 0.2) : 0; // Rough estimate of extra benefit
+                // Payback
+                const paybackYears = annualSavings > 0 ? Math.ceil(totalCost / annualSavings) : 99;
 
-            // Payback
-            const paybackYears = Math.ceil(totalCost / annualSavings);
+                // 25-year NPV
+                let netBenefit = 0;
+                for (let i = 0; i < 25; i++) {
+                    const degFactor = Math.pow(1 - degradation, i);
+                    const priceNow = elecPrice * Math.pow(1 + priceIncrease, i);
+                    const feedinNow = feedin * Math.pow(1 + priceIncrease, i);
+                    const yearProduction = production * degFactor;
+                    const yearSavings = yearProduction * selfConsum * priceNow + yearProduction * (1 - selfConsum) * feedinNow;
+                    const discountedSavings = yearSavings / Math.pow(1 + discount, i);
+                    netBenefit += discountedSavings;
+                }
+                netBenefit -= totalCost;
 
-            // 25-year benefit
-            let netBenefit = 0;
-            for (let i = 0; i < 25; i++) {
-                const degFactor = Math.pow(1 - degradation, i);
-                const priceNow = elecPrice * Math.pow(1 + priceIncrease, i);
-                const feedinNow = feedin * Math.pow(1 + priceIncrease, i);
-                const yearProduction = production * degFactor;
-                const yearSavings = yearProduction * selfConsum * priceNow + yearProduction * (1 - selfConsum) * feedinNow;
-                const discountedSavings = yearSavings / Math.pow(1 + discount, i);
-                netBenefit += discountedSavings;
-            }
-            netBenefit -= totalCost;
+                // Update results
+                document.getElementById('resProduction').textContent = Math.round(production).toLocaleString();
+                document.getElementById('resKwc').textContent = kwc.toFixed(2);
+                document.getElementById('resAnnualSavings').textContent = Math.round(annualSavings).toLocaleString();
+                document.getElementById('resPaybackYears').textContent = paybackYears < 99 ? paybackYears : '>25';
+                document.getElementById('resNetBenefit').textContent = Math.round(netBenefit).toLocaleString();
+                document.getElementById('resAvgCostHint').textContent = costPerKwp;
+                document.getElementById('resAvgBatteryCostHint').textContent = batteryCostPerKwh;
 
-            // Update results
-            document.getElementById('resProduction').textContent = Math.round(production).toLocaleString();
-            document.getElementById('resProductionPerKwc').textContent = Math.round(production / kwc);
-            document.getElementById('resKwc').textContent = kwc.toFixed(2);
-            document.getElementById('resAnnualSavings').textContent = Math.round(annualSavings).toLocaleString();
-            document.getElementById('resPaybackYears').textContent = paybackYears;
-            document.getElementById('resNetBenefit').textContent = Math.round(netBenefit).toLocaleString();
-            document.getElementById('resAvgCostHint').textContent = costPerKwp;
-            document.getElementById('resAvgBatteryCostHint').textContent = batteryCostPerKwh;
+                if (battery) {
+                    document.getElementById('batteryBenefitSection').style.display = 'block';
+                    document.getElementById('resBatteryBenefit').textContent = Math.round(batteryBenefit * 25).toLocaleString();
+                } else {
+                    document.getElementById('batteryBenefitSection').style.display = 'none';
+                }
 
-            if (battery) {
-                document.getElementById('batteryBenefitSection').style.display = 'block';
-                document.getElementById('resBatteryBenefit').textContent = Math.round(batteryBenefit * 25).toLocaleString();
-            } else {
-                document.getElementById('batteryBenefitSection').style.display = 'none';
-            }
-
-            // Update chart
-            updateMonthlyProductionChart(production);
+                // Update chart
+                updateMonthlyProductionChart(production);
+            }).catch(err => {
+                console.error('Solar API error:', err);
+                // Fallback
+                const production = kwc * 1100 * (1 - shading);
+                document.getElementById('resProduction').textContent = Math.round(production).toLocaleString();
+                document.getElementById('resProductionPerKwc').textContent = Math.round(production / kwc);
+                document.getElementById('resKwc').textContent = kwc.toFixed(2);
+                updateMonthlyProductionChart(production);
+            });
         }
 
         function updateMonthlyProductionChart(annualProduction) {
@@ -1061,7 +1234,7 @@ abbr[title]:hover::after {
 
         // Initialize
         initMap();
-        calculateResidential();
+        updateLocationData();
     </script>
 <script src="../search.js" defer></script>
 </body>
