@@ -55,50 +55,189 @@
                 </a>
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
-                    <a href="economie.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Économie</a>
-                    <a href="marches.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Marchés</a>
-                    <a href="technologies.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Technologies</a>
+                    <div class="relative group">
+  <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+    Économie
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="economie.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">💰</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Vue d'ensemble</div>
+          <div class="text-xs text-slate-400">Économie du solaire</div>
+        </div>
+      </a>
+      <a href="marches.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/15 text-blue-400 text-base">📊</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Marchés</div>
+          <div class="text-xs text-slate-400">Tendances · PPA · Spot</div>
+        </div>
+      </a>
+      <a href="prix-solaire.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">💲</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Prix solaire</div>
+          <div class="text-xs text-slate-400">Coûts · Modules · Installation</div>
+        </div>
+      </a>
+      <a href="hypotheses.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-500/15 text-slate-400 text-base">📐</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Hypothèses de calcul</div>
+          <div class="text-xs text-slate-400">Méthodologie · Sources</div>
+        </div>
+      </a>
+      <a href="risques-bankability.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-red-500/15 text-red-400 text-base">⚠️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Risques & Bankability</div>
+          <div class="text-xs text-slate-400">Matrice · DSCR · Due diligence</div>
+        </div>
+      </a>
+      <a href="comparatif-pays.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Comparatif pays</div>
+          <div class="text-xs text-slate-400">10 pays européens · LCOE</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+                    <div class="relative group">
+  <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+    Technologies
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="technologies.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">☀️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Vue d'ensemble</div>
+          <div class="text-xs text-slate-400">Panorama des technologies PV</div>
+        </div>
+      </a>
+      <a href="technologies-emergentes.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔬</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Technologies émergentes</div>
+          <div class="text-xs text-slate-400">Pérovskites · Bifacial · BIPV</div>
+        </div>
+      </a>
+      <a href="vehicle-to-grid.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">🔌</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Vehicle-to-Grid</div>
+          <div class="text-xs text-slate-400">V2G · V2H · V2L</div>
+        </div>
+      </a>
+      <a href="centrales-virtuelles.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/15 text-blue-400 text-base">🔗</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Centrales virtuelles</div>
+          <div class="text-xs text-slate-400">VPP · Agrégation · Flexibilité</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
                     <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
                     <div class="relative group">
-                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1" aria-label="Menu Outils">
-                            Outils
-                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
-                        </button>
-                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
-                                <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
-                                    <div>
-                                        <div class="text-sm font-semibold text-white">Résidentiel</div>
-                                        <div class="text-xs text-slate-400">Kits solaires · < 9 kWc</div>
-                                    </div>
-                                </a>
-                                <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
-                                    <div>
-                                        <div class="text-sm font-semibold text-white">Autoconsommation</div>
-                                        <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
-                                    </div>
-                                </a>
-                                <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
-                                    <div>
-                                        <div class="text-sm font-semibold text-white">Industriel</div>
-                                        <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
-                                    </div>
-                                </a>
-                                <a href="comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
-                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔍</span>
-                                    <div>
-                                        <div class="text-sm font-semibold text-white">Comparateur</div>
-                                        <div class="text-xs text-slate-400">Technologies · Onduleurs · Batteries</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+  <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+    Outils
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="outils-residentiel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">🏠</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Résidentiel</div>
+          <div class="text-xs text-slate-400">Kits solaires · &lt; 9 kWc</div>
+        </div>
+      </a>
+      <a href="outils-autoconsommation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Autoconsommation</div>
+          <div class="text-xs text-slate-400">Simulateur avancé · Batterie</div>
+        </div>
+      </a>
+      <a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Industriel</div>
+          <div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div>
+        </div>
+      </a>
+      <a href="comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/15 text-orange-400 text-base">⚖️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Comparateur</div>
+          <div class="text-xs text-slate-400">PERC · TOPCon · HJT</div>
+        </div>
+      </a>
+      <a href="guide-installation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/15 text-teal-400 text-base">📋</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Guide installation</div>
+          <div class="text-xs text-slate-400">7 étapes · Aides 2026</div>
+        </div>
+      </a>
+      <a href="widgets.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/15 text-indigo-400 text-base">🧩</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Widgets</div>
+          <div class="text-xs text-slate-400">Composants embarquables</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+                    <div class="relative group">
+  <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+    Ressources
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="ressources.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/15 text-indigo-400 text-base">📚</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Ressources</div>
+          <div class="text-xs text-slate-400">Liens · Données · API</div>
+        </div>
+      </a>
+      <a href="recyclage-fin-de-vie.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">♻️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Recyclage & Fin de vie</div>
+          <div class="text-xs text-slate-400">SOREN · DEEE · Économie circulaire</div>
+        </div>
+      </a>
+      <a href="veille-reglementaire.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">📜</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Veille réglementaire</div>
+          <div class="text-xs text-slate-400">Radar FR/EU · Timeline 2023-2030</div>
+        </div>
+      </a>
+      <a href="mon-solaire-60s.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-pink-500/15 text-pink-400 text-base">⏱️</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Mon solaire en 60s</div>
+          <div class="text-xs text-slate-400">Scrollytelling interactif</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
                     <a href="recrutez-moi.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
-                </div>
+                                </div>
                 <div class="flex items-center gap-3">
                     <div class="flex items-center gap-1">
                         <a href="../en/emerging-technologies.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
@@ -114,16 +253,33 @@
         <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
             <div class="px-4 py-4 space-y-2">
                 <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
-                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Économie</a>
-                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Marchés</a>
-                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Technologies</a>
-                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Analyses</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Économie</p>
+                <a href="economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💰 Vue d'ensemble</a>
+                <a href="marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📊 Marchés</a>
+                <a href="prix-solaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💲 Prix solaire</a>
+                <a href="hypotheses.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📐 Hypothèses</a>
+                <a href="risques-bankability.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚠️ Risques & Bankability</a>
+                <a href="comparatif-pays.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🌍 Comparatif pays</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Technologies</p>
+                <a href="technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">☀️ Vue d'ensemble</a>
+                <a href="technologies-emergentes.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔬 Technologies émergentes</a>
+                <a href="vehicle-to-grid.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔌 Vehicle-to-Grid</a>
+                <a href="centrales-virtuelles.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔗 Centrales virtuelles</a>
+                <a href="analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📈 Analyses</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Outils</p>
                 <a href="outils-residentiel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏠 Résidentiel</a>
                 <a href="outils-autoconsommation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Autoconsommation</a>
                 <a href="outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
-                <a href="comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔍 Comparateur</a>
+                <a href="comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚖️ Comparateur</a>
+                <a href="guide-installation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📋 Guide installation</a>
+                <a href="widgets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🧩 Widgets</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Ressources</p>
+                <a href="ressources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📚 Ressources</a>
+                <a href="recyclage-fin-de-vie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">♻️ Recyclage</a>
+                <a href="veille-reglementaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📜 Veille réglementaire</a>
+                <a href="mon-solaire-60s.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⏱️ Mon solaire en 60s</a>
                 <a href="recrutez-moi.html" class="block px-4 py-2 bg-amber-500/20 text-amber-500 font-medium rounded-lg">Collaborer</a>
-            </div>
+                        </div>
         </div>
     </nav>
 
