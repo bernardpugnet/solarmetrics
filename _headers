@@ -5,6 +5,10 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-XSS-Protection: 1; mode=block
 
+# Allow widgets to be embedded in iframes (on same site and externally)
+/widgets/*
+  X-Frame-Options: SAMEORIGIN
+
 /fr/*
   Content-Language: fr
 
