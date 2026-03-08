@@ -715,9 +715,33 @@ abbr[title]:hover::after {
             countryCoords['FR'] = { lat: 46.6, lon: 2.2, zoom: 6 };
         }
 
+        // Bounding boxes per country (SW corner, NE corner)
+        const countryBounds = {
+            FR: [[41.3, -5.2], [51.1, 9.6]],
+            DE: [[47.3, 5.9], [55.1, 15.0]],
+            ES: [[36.0, -9.3], [43.8, 4.3]],
+            IT: [[36.6, 6.6], [47.1, 18.5]],
+            NL: [[50.8, 3.4], [53.5, 7.2]],
+            BE: [[49.5, 2.5], [51.5, 6.4]],
+            PT: [[36.9, -9.5], [42.2, -6.2]],
+            PL: [[49.0, 14.1], [54.8, 24.2]],
+            AT: [[46.4, 9.5], [49.0, 17.2]],
+            GR: [[34.8, 19.4], [41.8, 29.7]]
+        };
+
+        function getCountryBounds(code) {
+            var b = countryBounds[code] || countryBounds['FR'];
+            return L.latLngBounds(b[0], b[1]);
+        }
+
         function initMap() {
             const startCoord = countryCoords['FR'];
-            map = L.map('map').setView([startCoord.lat, startCoord.lon], 6);
+            const bounds = getCountryBounds('FR');
+            map = L.map('map', {
+                maxBounds: bounds.pad(0.15),
+                maxBoundsViscosity: 1.0,
+                minZoom: 5
+            }).setView([startCoord.lat, startCoord.lon], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
                 maxZoom: 19,
@@ -730,18 +754,6 @@ abbr[title]:hover::after {
             map.on('click', function(e) {
                 const lat = e.latlng.lat;
                 const lon = e.latlng.lng;
-                // Limit clicks to ~10° around the selected country center
-                const country = document.getElementById('resCountry').value;
-                const center = countryCoords[country] || countryCoords['FR'];
-                const maxDist = 12; // degrees
-                if (Math.abs(lat - center.lat) > maxDist || Math.abs(lon - center.lon) > maxDist) {
-                    const hint = document.getElementById('mapHint');
-                    const countryName = document.getElementById('resCountry').selectedOptions[0].text;
-                    hint.textContent = '⚠️ Cliquez dans la zone ' + countryName + ' ou changez de pays.';
-                    hint.classList.add('text-amber-400');
-                    setTimeout(function() { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS (calcul d\'ensoleillement PVGIS). Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }, 3000);
-                    return;
-                }
                 document.getElementById('resLatitude').value = lat.toFixed(4);
                 document.getElementById('resLongitude').value = lon.toFixed(4);
                 if (marker) map.removeLayer(marker);
@@ -755,11 +767,14 @@ abbr[title]:hover::after {
             document.getElementById('resLatitude').value = coords.lat;
             document.getElementById('resLongitude').value = coords.lon;
             if (map) {
-                map.setView([coords.lat, coords.lon], coords.zoom || 6);
+                // Update map bounds to selected country
+                var bounds = getCountryBounds(country);
+                map.setMaxBounds(bounds.pad(0.15));
+                map.fitBounds(bounds);
                 if (marker) map.removeLayer(marker);
                 marker = L.marker([coords.lat, coords.lon]).addTo(map);
                 // Reset map hint
-                const hint = document.getElementById('mapHint');
+                var hint = document.getElementById('mapHint');
                 if (hint) { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS (calcul d\'ensoleillement PVGIS). Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }
             }
             // Update electricity price and feed-in tariff from solar-data.js
