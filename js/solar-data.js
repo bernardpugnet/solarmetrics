@@ -18,6 +18,9 @@ const SOLAR_DATA = {
     FR: {
       name: { fr: "France", en: "France" },
       code: "FR",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "FR",
       defaultLat: 46.6,
       defaultLon: 2.2,
@@ -62,6 +65,9 @@ const SOLAR_DATA = {
     DE: {
       name: { fr: "Allemagne", en: "Germany" },
       code: "DE",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "DE",
       defaultLat: 51.2,
       defaultLon: 10.4,
@@ -104,6 +110,9 @@ const SOLAR_DATA = {
     ES: {
       name: { fr: "Espagne", en: "Spain" },
       code: "ES",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "ES",
       defaultLat: 40.0,
       defaultLon: -3.7,
@@ -146,6 +155,9 @@ const SOLAR_DATA = {
     IT: {
       name: { fr: "Italie", en: "Italy" },
       code: "IT",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "IT",
       defaultLat: 42.5,
       defaultLon: 12.5,
@@ -188,6 +200,9 @@ const SOLAR_DATA = {
     NL: {
       name: { fr: "Pays-Bas", en: "Netherlands" },
       code: "NL",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "NL",
       defaultLat: 52.1,
       defaultLon: 5.3,
@@ -230,6 +245,9 @@ const SOLAR_DATA = {
     BE: {
       name: { fr: "Belgique", en: "Belgium" },
       code: "BE",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "BE",
       defaultLat: 50.8,
       defaultLon: 4.4,
@@ -272,6 +290,9 @@ const SOLAR_DATA = {
     PT: {
       name: { fr: "Portugal", en: "Portugal" },
       code: "PT",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "PT",
       defaultLat: 39.4,
       defaultLon: -8.2,
@@ -314,6 +335,9 @@ const SOLAR_DATA = {
     PL: {
       name: { fr: "Pologne", en: "Poland" },
       code: "PL",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "PL",
       defaultLat: 51.9,
       defaultLon: 19.1,
@@ -356,6 +380,9 @@ const SOLAR_DATA = {
     AT: {
       name: { fr: "Autriche", en: "Austria" },
       code: "AT",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "AT",
       defaultLat: 47.5,
       defaultLon: 14.6,
@@ -398,6 +425,9 @@ const SOLAR_DATA = {
     GR: {
       name: { fr: "Grèce", en: "Greece" },
       code: "GR",
+      region: "EU",
+      currency: "EUR",
+      currencySymbol: "€",
       eurostatCode: "EL",  // Eurostat uses EL for Greece
       defaultLat: 38.5,
       defaultLon: 23.7,
@@ -434,6 +464,110 @@ const SOLAR_DATA = {
       comparator: {
         url: "https://helapco.gr/en/",
         name: "HELAPCO"
+      }
+    },
+
+    US: {
+      name: { fr: "États-Unis", en: "United States" },
+      code: "US",
+      region: "NA",
+      currency: "USD",
+      currencySymbol: "$",
+      irradiationSource: "NREL",
+      defaultLat: 39.8,
+      defaultLon: -98.6,
+      mapZoom: 4,
+      electricityPrice: 0.18,  // $/kWh, EIA 2026 average residential
+      installCostPerKwc: { min: 2100, max: 3200, avg: 2750 },  // $/kWc (= $/W × 1000), before ITC
+      co2Factor: 380,  // gCO₂/kWh, EPA eGRID 2024 national average
+      feedInTariff: 0,  // No federal feed-in tariff — net metering varies by state
+      netMeteringNote: {
+        fr: "Le net metering varie selon votre État et votre fournisseur d'électricité. Consultez votre utility locale.",
+        en: "Net metering varies by state and utility. Check with your local electric company."
+      },
+      batteryCostPerKwh: 500,  // $/kWh installed (Tesla Powerwall range)
+      subsidies: {
+        fr: {
+          title: "Aides aux États-Unis (2026)",
+          items: [
+            "ITC fédéral (Investment Tax Credit) : expiré le 31/12/2025 — vérifier extensions éventuelles",
+            "Crédits d'État variables : California (SGIP), New York (NY-Sun), Massachusetts (SMART), etc.",
+            "Net metering : disponible dans ~40 États (conditions variables)",
+            "Programmes locaux / utility : remises et financements selon fournisseur",
+            "Property tax exemption : dans de nombreux États, les panneaux solaires n'augmentent pas la taxe foncière"
+          ],
+          officialLink: "https://www.dsireusa.org/",
+          officialLabel: "dsireusa.org (DSIRE)"
+        },
+        en: {
+          title: "Incentives in the United States (2026)",
+          items: [
+            "Federal ITC (Investment Tax Credit): expired 12/31/2025 — check for potential extensions",
+            "State-level credits vary: California (SGIP), New York (NY-Sun), Massachusetts (SMART), etc.",
+            "Net metering: available in ~40 states (conditions vary)",
+            "Local / utility programs: rebates and financing by provider",
+            "Property tax exemption: in many states, solar panels don't increase property tax"
+          ],
+          officialLink: "https://www.dsireusa.org/",
+          officialLabel: "dsireusa.org (DSIRE)"
+        }
+      },
+      comparator: {
+        url: "https://www.energysage.com/",
+        name: "EnergySage"
+      }
+    },
+
+    CA: {
+      name: { fr: "Canada", en: "Canada" },
+      code: "CA",
+      region: "NA",
+      currency: "CAD",
+      currencySymbol: "$ CA",
+      irradiationSource: "NREL",
+      defaultLat: 56.1,
+      defaultLon: -106.3,
+      mapZoom: 4,
+      electricityPrice: 0.16,  // CAD/kWh, national average 2025-2026
+      installCostPerKwc: { min: 2200, max: 3500, avg: 2900 },  // CAD/kWc residential
+      co2Factor: 120,  // gCO₂/kWh, CER 2024 (high hydro share)
+      feedInTariff: 0,  // No national feed-in tariff
+      netMeteringNote: {
+        fr: "Le net metering varie selon la province et le distributeur. Consultez votre fournisseur local.",
+        en: "Net metering varies by province and distributor. Check with your local provider."
+      },
+      batteryCostPerKwh: 550,  // CAD/kWh installed
+      subsidies: {
+        fr: {
+          title: "Aides au Canada (2026)",
+          items: [
+            "Greener Homes Grant fédéral : fermé aux nouvelles demandes (oct. 2025)",
+            "Colombie-Britannique : jusqu'à 10 000 $ pour panneaux solaires",
+            "Ontario : Home Renovation Savings Program, remise jusqu'à 5 000 $",
+            "Île-du-Prince-Édouard : 1 000 $/kW jusqu'à 10 000 $",
+            "Nouvelle-Écosse : 0,30 $/W jusqu'à 3 000 $",
+            "Alberta : programmes municipaux (Edmonton, Calgary)"
+          ],
+          officialLink: "https://natural-resources.canada.ca/energy-efficiency/homes",
+          officialLabel: "natural-resources.canada.ca"
+        },
+        en: {
+          title: "Incentives in Canada (2026)",
+          items: [
+            "Federal Greener Homes Grant: closed to new applications (Oct. 2025)",
+            "British Columbia: up to $10,000 for solar panels",
+            "Ontario: Home Renovation Savings Program, rebate up to $5,000",
+            "Prince Edward Island: $1,000/kW up to $10,000",
+            "Nova Scotia: $0.30/W up to $3,000",
+            "Alberta: municipal programs (Edmonton, Calgary)"
+          ],
+          officialLink: "https://natural-resources.canada.ca/energy-efficiency/homes",
+          officialLabel: "natural-resources.canada.ca"
+        }
+      },
+      comparator: {
+        url: "https://energyhub.org/solar-panels/",
+        name: "EnergyHub"
       }
     }
   },
@@ -494,6 +628,18 @@ const SOLAR_DATA = {
     directUrl: "https://re.jrc.ec.europa.eu/api/v5_3/PVcalc",
     defaultLoss: 14,  // system losses %
     defaultPeakPower: 1  // kWp (we scale after)
+  },
+
+  // NREL PVWatts config (US + Canada)
+  nrel: {
+    functionUrl: "/.netlify/functions/nrel",
+    apiBaseUrl: "https://developer.nrel.gov/api/pvwatts/v8.json",
+    defaultLoss: 14,
+    defaultTilt: 30,
+    defaultAzimuth: 180,  // South
+    defaultArrayType: 1,   // Fixed roof mount
+    defaultModuleType: 1,  // Standard
+    defaultPeakPower: 1    // kW (we scale after)
   }
 };
 
