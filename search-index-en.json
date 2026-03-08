@@ -1,0 +1,182 @@
+[
+{
+"url": "ai-data.html",
+"title": "AI & Data in Solar",
+"desc": "Machine learning forecasting and AI-driven analytics for solar energy projects. Predictive maintenance and algorithmic t",
+"kw": ""
+},
+{
+"url": "assumptions.html",
+"title": "Assumptions & Data — SolarMetrics",
+"desc": "All SolarMetrics calculation assumptions: CAPEX, OPEX, WACC, yield, electricity prices, CO₂. Verified sources and downlo",
+"kw": ""
+},
+{
+"url": "case-study.html",
+"title": "Case Study - 20 MWp Solar Project",
+"desc": "Complete case study: financial analysis of a 20 MWp solar PV project. PERC vs TOPCon comparison, fixed vs trackers, proj",
+"kw": ""
+},
+{
+"url": "comparator.html",
+"title": "Solar Technology Comparator — SolarMetrics",
+"desc": "Interactive solar technology comparator: PERC vs TOPCon vs HJT, inverters (String, Micro, Hybrid), LFP batteries. Real-t",
+"kw": ""
+},
+{
+"url": "contact.html",
+"title": "Contact - Bernard Pugnet",
+"desc": "Contact Bernard Pugnet: Solar Finance Expert with 20+ years in asset management and photovoltaic project financing exper",
+"kw": ""
+},
+{
+"url": "country-comparison.html",
+"title": "Solar Comparison by Country — Europe 2026",
+"desc": "Comparison of European solar markets: installed capacity, LCOE, tariffs, incentives and regulations by country. France, ",
+"kw": ""
+},
+{
+"url": "economy.html",
+"title": "Solar Economy & Financing",
+"desc": "Solar project financing: LCOE analysis, PPA pricing strategies and asset management for profitable photovoltaic investme",
+"kw": ""
+},
+{
+"url": "emerging-technologies.html",
+"title": "Emerging Solar Technologies — SolarMetrics",
+"desc": "Perovskites, tandem, bifacial, floating solar, agrivoltaics: the solar technologies that will transform the market by 20",
+"kw": ""
+},
+{
+"url": "hire-me.html",
+"title": "Hire Me - Bernard Pugnet - Solar Finance Expert",
+"desc": "Hire Bernard Pugnet: Senior Finance Manager with 30+ years in markets, transitioning to renewable energy asset managemen",
+"kw": ""
+},
+{
+"url": "index.html",
+"title": "SolarMetrics - Bernard Pugnet | Solar Finance & Energy Expert",
+"desc": "SolarMetrics - Expertise in solar project financing, PV asset management, LCOE, PPA and profitability analysis. 20 years",
+"kw": "solar, photovoltaic, PV, LCOE, PPA, asset management, project finance, renewable energy, Bernard Pugnet, SolarMetrics"
+},
+{
+"url": "installation-guide.html",
+"title": "Residential Solar Installation Guide — France 2026",
+"desc": "Complete guide to installing solar panels in France: steps, administrative procedures, financial aid, installer selectio",
+"kw": ""
+},
+{
+"url": "markets.html",
+"title": "International Solar Markets",
+"desc": "International solar markets: Europe, France, Spain, Germany. EU regulations, Swiss PV market and leading French players.",
+"kw": ""
+},
+{
+"url": "recycling-end-of-life.html",
+"title": "Recycling & End-of-Life of Solar Panels — SolarMetrics",
+"desc": "Recycling of solar panels in France and Europe: SOREN scheme, recycling rates, recovered components, WEEE regulations an",
+"kw": ""
+},
+{
+"url": "regulatory-watch.html",
+"title": "Regulatory Watch Solar — SolarMetrics",
+"desc": "Solar regulatory monitoring: PPE3, FIT tariffs, TURPE, green taxonomy, CSRD, CBAM and regulatory developments impacting ",
+"kw": ""
+},
+{
+"url": "resources.html",
+"title": "Resources & Glossary",
+"desc": "Solar energy glossary and resources: technical definitions, financial terms and reference materials for PV professionals",
+"kw": ""
+},
+{
+"url": "risks-bankability.html",
+"title": "Risks & Bankability of Solar Projects — SolarMetrics",
+"desc": "Analysis of solar project risks: technical, regulatory, financial, contractual. Bankability criteria and DSCR for financ",
+"kw": ""
+},
+{
+"url": "schema-large-installation.html",
+"title": "Diagram — Ground-Mounted Solar Farm",
+"desc": "",
+"kw": ""
+},
+{
+"url": "schema-plug-and-play.html",
+"title": "Installation Solaire Plug & Play — SolarMetrics",
+"desc": "",
+"kw": ""
+},
+{
+"url": "solar-in-60s.html",
+"title": "My Solar in 60 Seconds — SolarMetrics",
+"desc": "Discover residential solar in 60 seconds: from sunlight to profitability, an interactive visual experience.",
+"kw": ""
+},
+{
+"url": "solar-prices.html",
+"title": "Solar Prices 2025-2026 — SolarMetrics",
+"desc": "Updated solar component prices in 2025-2026: PV modules (PERC, TOPCon, HJT), inverters, LFP batteries, installation cost",
+"kw": ""
+},
+{
+"url": "technologies.html",
+"title": "Solar Technologies & Storage",
+"desc": "Photovoltaic technologies: PERC, TOPCon, HJT, pérovskites. Agrivoltaics, carports. Battery storage Li-ion, LFP, hydrogen",
+"kw": ""
+},
+{
+"url": "tools-industrial.html",
+"title": "Industrial Tools",
+"desc": "Industrial solar tools: LCOE & IRR calculators, large installation analysis, and financial modeling for utility-scale so",
+"kw": ""
+},
+{
+"url": "tools-residential.html",
+"title": "Residential Tools",
+"desc": "Interactive residential solar tools: ROI calculators, irradiance mapping, technology comparators and financial analysis ",
+"kw": ""
+},
+{
+"url": "tools-selfconsumption.html",
+"title": "Self-Consumption Simulator",
+"desc": "Advanced solar self-consumption simulator: hourly production PVGIS, LFP battery simulation, 25-year financial projection",
+"kw": ""
+},
+{
+"url": "vehicle-to-grid.html",
+"title": "Vehicle-to-Grid (V2G) — The Future of Mobile Storage",
+"desc": "Vehicle-to-Grid: how your electric car can become a home battery and participate in grid balancing.",
+"kw": ""
+},
+{
+"url": "virtual-power-plants.html",
+"title": "Virtual Power Plants (VPP) — Distributed Grid Intelligence",
+"desc": "Virtual Power Plants aggregate solar, batteries and flexibility to optimize distributed energy production.",
+"kw": ""
+},
+{
+"url": "widgets.html",
+"title": "Embeddable Solar Widgets — SolarMetrics",
+"desc": "Integrate SolarMetrics solar widgets on your website: real-time LCOE, simplified simulator, CO₂ counter, France rates.",
+"kw": ""
+},
+{
+"url": "insights/index.html",
+"title": "Solar Insights & Data",
+"desc": "In-depth studies on European photovoltaic markets, costs, and trends. Solar LCOE, PPA pricing, financing analysis and da",
+"kw": ""
+},
+{
+"url": "insights/solar-lcoe-europe.html",
+"title": "Solar LCOE in Europe — Cost Trends & Country Comparison",
+"desc": "Solar LCOE Europe: comprehensive cost analysis 2015-2026 by country with CAPEX/OPEX breakdown and profitability projecti",
+"kw": ""
+},
+{
+"url": "insights/solar-ppa-prices-europe.html",
+"title": "Solar PPA Prices in Europe — Trends and Comparison 2024-2025",
+"desc": "European solar PPA pricing analysis: price trends 2022-2025 by country, cannibalization effects and 2026 market outlook.",
+"kw": ""
+}
+]

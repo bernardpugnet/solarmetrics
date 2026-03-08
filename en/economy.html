@@ -245,6 +245,9 @@ abbr[title]:hover::after {
                     <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
                                 </div>
                 <div class="flex items-center gap-3">
+                    <button onclick="openSiteSearch()" class="p-2 text-slate-400 hover:text-white transition-colors" aria-label="Search the site" title="Ctrl+K">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+                    </button>
                     <div class="flex items-center gap-1">
                         <a href="../fr/economie.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
                         <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
@@ -1314,5 +1317,6 @@ abbr[title]:hover::after {
             if (window.innerWidth >= 1024) closeMenu();
         });
     </script>
+<script src="../search.js" defer></script>
 </body>
 </html>
