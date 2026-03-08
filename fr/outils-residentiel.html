@@ -184,7 +184,7 @@ abbr[title]:hover::after {
 
                                 <!-- Map -->
                                 <div id="map" style="height:300px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
-                                <p class="text-xs text-slate-500 mt-1">Cliquez sur la carte pour positionner votre maison précisément</p>
+                                <p id="mapHint" class="text-xs text-slate-500 mt-1">📍 Cliquez sur la carte pour affiner la position GPS (calcul d'ensoleillement PVGIS). Le pays définit les tarifs et aides.</p>
 
                                 <!-- Location Inputs -->
                                 <div class="grid grid-cols-2 gap-4">
@@ -627,7 +627,7 @@ abbr[title]:hover::after {
 
                 <!-- Subsidy Info Box -->
                 <div id="subsidyInfoBox" class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-12">
-                    <h4 class="text-lg font-semibold text-white mb-4">Aides disponibles</h4>
+                    <h4 id="subsidyTitle" class="text-lg font-semibold text-white mb-4">Aides disponibles</h4>
                     <div id="subsidyContent" class="text-slate-400 text-sm space-y-3">
                         <p>Cliquez sur "Calculer" pour voir les aides recommandées pour votre région.</p>
                     </div>
@@ -730,6 +730,18 @@ abbr[title]:hover::after {
             map.on('click', function(e) {
                 const lat = e.latlng.lat;
                 const lon = e.latlng.lng;
+                // Limit clicks to ~10° around the selected country center
+                const country = document.getElementById('resCountry').value;
+                const center = countryCoords[country] || countryCoords['FR'];
+                const maxDist = 12; // degrees
+                if (Math.abs(lat - center.lat) > maxDist || Math.abs(lon - center.lon) > maxDist) {
+                    const hint = document.getElementById('mapHint');
+                    const countryName = document.getElementById('resCountry').selectedOptions[0].text;
+                    hint.textContent = '⚠️ Cliquez dans la zone ' + countryName + ' ou changez de pays.';
+                    hint.classList.add('text-amber-400');
+                    setTimeout(function() { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS (calcul d\'ensoleillement PVGIS). Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }, 3000);
+                    return;
+                }
                 document.getElementById('resLatitude').value = lat.toFixed(4);
                 document.getElementById('resLongitude').value = lon.toFixed(4);
                 if (marker) map.removeLayer(marker);
@@ -746,6 +758,9 @@ abbr[title]:hover::after {
                 map.setView([coords.lat, coords.lon], coords.zoom || 6);
                 if (marker) map.removeLayer(marker);
                 marker = L.marker([coords.lat, coords.lon]).addTo(map);
+                // Reset map hint
+                const hint = document.getElementById('mapHint');
+                if (hint) { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS (calcul d\'ensoleillement PVGIS). Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }
             }
             // Update electricity price and feed-in tariff from solar-data.js
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
@@ -1094,22 +1109,28 @@ abbr[title]:hover::after {
 
         function updateSubsidyInfo(countryCode) {
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
-            if (!countryData || !countryData.subsidies || !countryData.subsidies.fr) {
+            // Use FR labels for France, EN for all other countries
+            const lang = (countryCode === 'FR') ? 'fr' : 'en';
+            if (!countryData || !countryData.subsidies || !countryData.subsidies[lang]) {
                 document.getElementById('subsidyContent').innerHTML = '<p>Sélectionnez un pays et cliquez sur Calculer.</p>';
                 return;
             }
-            const sub = countryData.subsidies.fr;
+            const sub = countryData.subsidies[lang];
+            const labels = (lang === 'fr')
+                ? { official: 'Site officiel', compare: 'Comparer les installateurs', disclaimer: 'Tarif spot variable ; vérifiez votre contrat actuel. Les aides varient selon la puissance, le type de contrat et parfois les revenus.', sectionTitle: 'Aides disponibles' }
+                : { official: 'Official website', compare: 'Compare installers', disclaimer: 'Spot tariff varies; check your current contract. Subsidies vary by capacity, contract type and sometimes income.', sectionTitle: 'Available subsidies' };
+            document.getElementById('subsidyTitle').textContent = labels.sectionTitle;
             let html = `<h5 class="text-white font-semibold mb-3">${sub.title}</h5><ul class="list-disc list-inside space-y-1.5">`;
             sub.items.forEach(item => {
                 html += `<li>${item}</li>`;
             });
             html += `</ul>`;
-            html += `<p class="mt-4"><a href="${sub.officialLink}" target="_blank" class="text-cyan-400 hover:underline">Site officiel : ${sub.officialLabel} →</a></p>`;
+            html += `<p class="mt-4"><a href="${sub.officialLink}" target="_blank" class="text-cyan-400 hover:underline">${labels.official} : ${sub.officialLabel} →</a></p>`;
             // Add comparator link
             if (countryData.comparator) {
-                html += `<p class="mt-2"><a href="${countryData.comparator.url}" target="_blank" class="text-amber-400 hover:underline">Comparer les installateurs : ${countryData.comparator.name} →</a></p>`;
+                html += `<p class="mt-2"><a href="${countryData.comparator.url}" target="_blank" class="text-amber-400 hover:underline">${labels.compare} : ${countryData.comparator.name} →</a></p>`;
             }
-            html += `<p class="mt-3 text-xs text-slate-500">Tarif spot variable ; vérifiez votre contrat actuel. Les aides varient selon la puissance, le type de contrat et parfois les revenus.</p>`;
+            html += `<p class="mt-3 text-xs text-slate-500">${labels.disclaimer}</p>`;
             document.getElementById('subsidyContent').innerHTML = html;
         }
 
@@ -1122,7 +1143,11 @@ abbr[title]:hover::after {
             // Eurostat API supports CORS — direct browser call
             const url = `https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?geo=${eurostatCode}&unit=KWH&currency=EUR&tax=X_TAX&nrg_cons=4141902&format=JSON`;
 
-            if (statusEl) statusEl.textContent = 'Chargement Eurostat...';
+            const eLang = (countryCode === 'FR') ? 'fr' : 'en';
+            const euroLabels = (eLang === 'fr')
+                ? { loading: 'Chargement Eurostat...', price: 'Prix Eurostat', suffix: 'TTC, bande medium', error: 'Erreur Eurostat — prix par défaut utilisé' }
+                : { loading: 'Loading Eurostat...', price: 'Eurostat price', suffix: 'incl. tax, medium band', error: 'Eurostat error — default price used' };
+            if (statusEl) statusEl.textContent = euroLabels.loading;
 
             fetch(url)
                 .then(r => r.json())
@@ -1138,13 +1163,13 @@ abbr[title]:hover::after {
                             const dims = data.dimension && data.dimension.time && data.dimension.time.category;
                             const periods = dims ? Object.keys(dims.index) : [];
                             const lastPeriod = periods[periods.length - 1] || '?';
-                            if (statusEl) statusEl.textContent = `Prix Eurostat ${eurostatCode} : ${latestPrice.toFixed(4)} €/kWh (${lastPeriod}, TTC, bande medium)`;
+                            if (statusEl) statusEl.textContent = `${euroLabels.price} ${eurostatCode} : ${latestPrice.toFixed(4)} €/kWh (${lastPeriod}, ${euroLabels.suffix})`;
                         }
                     }
                 })
                 .catch(err => {
                     console.warn('Eurostat API error:', err);
-                    if (statusEl) statusEl.textContent = 'Erreur Eurostat — prix par défaut utilisé';
+                    if (statusEl) statusEl.textContent = euroLabels.error;
                     // Use default from solar-data.js
                     if (countryData) {
                         document.getElementById('resElecPrice').value = countryData.electricityPrice;
