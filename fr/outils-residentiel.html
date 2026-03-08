@@ -113,7 +113,7 @@ abbr[title]:hover::after {
         <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
         <div>
           <div class="text-sm font-semibold text-white">Comparatif pays</div>
-          <div class="text-xs text-slate-400">10 pays européens · LCOE</div>
+          <div class="text-xs text-slate-400">12 pays · LCOE</div>
         </div>
       </a>
     </div>
@@ -319,7 +319,7 @@ abbr[title]:hover::after {
                 <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 mb-8">
                     <h2 class="text-2xl font-bold text-white mb-4">Simulateur Solar pour Résidence</h2>
                     <p class="text-slate-400 mb-4">Utilisez cet outil pour estimer la rentabilité d'une installation solaire photovoltaïque sur votre maison. Le simulateur prend en compte votre localisation, votre consommation électrique, les tarifs locaux et les aides disponibles.</p>
-                    <p class="text-slate-400 text-sm">Les calculs utilisent les données <abbr title="Système d'Information Géographique Photovoltaïque - outil EU avec données d'irradiation solaire">PVGIS</abbr> pour l'irradiation solaire et <abbr title="Office statistique de l'Union européenne - données énergétiques harmonisées">Eurostat</abbr> pour les tarifs d'électricité.</p>
+                    <p class="text-slate-400 text-sm">Les calculs utilisent <abbr title="Système d'Information Géographique Photovoltaïque - outil EU avec données d'irradiation solaire">PVGIS</abbr> (Europe) ou <abbr title="National Renewable Energy Laboratory - données d'irradiation solaire US/Canada">NREL PVWatts</abbr> (Amérique du Nord) pour l'irradiation solaire, et <abbr title="Office statistique de l'Union européenne - données énergétiques harmonisées">Eurostat</abbr> / <abbr title="Energy Information Administration (US) ou sources nationales">EIA</abbr> pour les tarifs d'électricité.</p>
                 </div>
 
                 <!-- Main Calculator -->
@@ -336,22 +336,46 @@ abbr[title]:hover::after {
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Pays</label>
                                     <select id="resCountry" onchange="updateLocationData()" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="FR">France</option>
-                                        <option value="DE">Allemagne</option>
-                                        <option value="ES">Espagne</option>
-                                        <option value="IT">Italie</option>
-                                        <option value="NL">Pays-Bas</option>
-                                        <option value="BE">Belgique</option>
-                                        <option value="PT">Portugal</option>
-                                        <option value="PL">Pologne</option>
-                                        <option value="AT">Autriche</option>
-                                        <option value="GR">Grèce</option>
+                                        <optgroup label="Europe">
+                                            <option value="FR">France</option>
+                                            <option value="DE">Allemagne</option>
+                                            <option value="ES">Espagne</option>
+                                            <option value="IT">Italie</option>
+                                            <option value="NL">Pays-Bas</option>
+                                            <option value="BE">Belgique</option>
+                                            <option value="PT">Portugal</option>
+                                            <option value="PL">Pologne</option>
+                                            <option value="AT">Autriche</option>
+                                            <option value="GR">Grèce</option>
+                                        </optgroup>
+                                        <optgroup label="Amérique du Nord">
+                                            <option value="US">États-Unis</option>
+                                            <option value="CA">Canada</option>
+                                        </optgroup>
                                     </select>
+                                    <!-- Net metering note (US/CA) -->
+                                    <p id="netMeteringNote" class="text-xs text-amber-400/80 mt-2 hidden"></p>
                                 </div>
 
                                 <!-- Map -->
                                 <div id="map" style="height:300px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
-                                <p id="mapHint" class="text-xs text-slate-500 mt-1">📍 Cliquez sur la carte pour affiner la position GPS (calcul d'ensoleillement PVGIS). Le pays définit les tarifs et aides.</p>
+                                <p id="mapHint" class="text-xs text-slate-500 mt-1">📍 Cliquez sur la carte pour affiner la position GPS. Le pays définit les tarifs et aides.</p>
+                                <!-- Mode manuel (fallback si API indisponible) -->
+                                <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
+                                    <label class="flex items-center gap-2 text-sm mb-2">
+                                        <input type="checkbox" id="resManualMode" onchange="toggleManualMode()" class="accent-amber-500">
+                                        <span class="text-amber-400 font-medium">Mode manuel</span>
+                                        <span class="tooltip inline-block">
+                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                            <span class="tooltiptext">Si l'API est indisponible, entrez manuellement le productible de votre zone. Consultez votre installateur ou les données locales.</span>
+                                        </span>
+                                    </label>
+                                    <div id="manualInputSection" class="hidden mt-2">
+                                        <label class="text-xs text-slate-400 mb-1 block">Productible année 1 (kWh/kWc/an)</label>
+                                        <input type="number" id="resManualProductible" value="1200" min="500" max="2500" step="10" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" placeholder="Ex: 1200">
+                                        <p class="text-xs text-slate-500 mt-1">Valeurs typiques : 900-1100 (nord EU), 1200-1500 (sud EU), 1400-1800 (US sud), 1000-1300 (Canada)</p>
+                                    </div>
+                                </div>
 
                                 <!-- Location Inputs -->
                                 <div class="grid grid-cols-2 gap-4">
@@ -553,7 +577,7 @@ abbr[title]:hover::after {
                                                 <span class="tooltiptext">Tarif moyen TTC de l'électricité consommée au réseau (€/kWh).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium">€<span id="resElecPriceDisplay">0.22</span>/kWh</span>
+                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resElecPriceDisplay">0.22</span>/kWh</span>
                                     </label>
                                     <input type="number" id="resElecPrice" value="0.22" min="0.05" max="0.50" step="0.01"
                                            oninput="document.getElementById('resElecPriceDisplay').textContent = parseFloat(this.value).toFixed(2)"
@@ -570,7 +594,7 @@ abbr[title]:hover::after {
                                                 <span class="tooltiptext">Tarif auquel le réseau vous rachète l'énergie excédentaire (€/kWh). Consultez votre contrat EDF OA ou votre fournisseur pour connaître votre tarif.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium">€<span id="resFeedinDisplay">0.00</span>/kWh</span>
+                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resFeedinDisplay">0.00</span>/kWh</span>
                                     </label>
                                     <input type="number" id="resFeedir" value="0" min="0" max="0.50" step="0.01"
                                            placeholder="Entrez votre tarif de rachat"
@@ -591,7 +615,7 @@ abbr[title]:hover::after {
                                     </label>
                                     <input type="number" id="resInstallCostOverride" placeholder="Laisser vide = coût moyen du pays" min="0" max="100000" step="100"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgCostHint">—</span> €/kWc</p>
+                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWc</p>
                                 </div>
 
                                 <!-- Battery Cost Override -->
@@ -607,7 +631,7 @@ abbr[title]:hover::after {
                                     </label>
                                     <input type="number" id="resBatteryCostOverride" placeholder="Laisser vide = coût moyen du pays" min="0" max="50000" step="100"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgBatteryCostHint">—</span> €/kWh</p>
+                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
                                 </div>
 
                                 <!-- Subsidies -->
@@ -620,7 +644,7 @@ abbr[title]:hover::after {
                                                 <span class="tooltiptext">Montant total des aides reçues (MaPrimeRénov, CEE, régionales, etc.).</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium">€<span id="resSubsidiesDisplay">3000</span></span>
+                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resSubsidiesDisplay">3000</span></span>
                                     </label>
                                     <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100"
                                            oninput="document.getElementById('resSubsidiesDisplay').textContent = this.value"
@@ -712,19 +736,19 @@ abbr[title]:hover::after {
                                 <!-- Annual Savings -->
                                 <div class="pt-6 border-t border-slate-700/50">
                                     <div class="text-xs text-slate-500 mb-1">Économies annuelles</div>
-                                    <div class="text-2xl font-bold text-green-400">€<span id="resAnnualSavings">0</span></div>
+                                    <div class="text-2xl font-bold text-green-400"><span class="cur">€</span><span id="resAnnualSavings">0</span></div>
                                     <div class="text-xs text-slate-600 mt-1">
-                                        Autoconso: €<span id="resSavingsAutocons">0</span><br>
-                                        Injection: €<span id="resSavingsFeedin">0</span>
+                                        Autoconso: <span class="cur">€</span><span id="resSavingsAutocons">0</span><br>
+                                        Injection: <span class="cur">€</span><span id="resSavingsFeedin">0</span>
                                     </div>
                                 </div>
 
                                 <!-- Investment Cost -->
                                 <div class="pt-6 border-t border-slate-700/50">
                                     <div class="text-xs text-slate-500 mb-1">Coût d'installation</div>
-                                    <div class="text-2xl font-bold text-white">€<span id="resInstallCost">0</span></div>
+                                    <div class="text-2xl font-bold text-white"><span class="cur">€</span><span id="resInstallCost">0</span></div>
                                     <div class="text-xs text-slate-600 mt-1">
-                                        Après aides: €<span id="resNetCost">0</span>
+                                        Après aides: <span class="cur">€</span><span id="resNetCost">0</span>
                                     </div>
                                 </div>
 
@@ -738,7 +762,7 @@ abbr[title]:hover::after {
                                 <!-- NPV -->
                                 <div class="pt-6 border-t border-slate-700/50">
                                     <div class="text-xs text-slate-500 mb-1">VAN 25 ans (4% actualisation)</div>
-                                    <div class="text-2xl font-bold text-green-500">€<span id="resNpv">0</span></div>
+                                    <div class="text-2xl font-bold text-green-500"><span class="cur">€</span><span id="resNpv">0</span></div>
                                 </div>
 
                                 <!-- TRI -->
@@ -819,7 +843,7 @@ abbr[title]:hover::after {
                 <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
                     <h4 class="text-lg font-semibold text-white mb-4">Sources et informations</h4>
                     <div class="text-slate-400 text-sm space-y-4">
-                        <p><strong>Données d'irradiation:</strong> PVGIS (Photovoltaic Geographical Information System) - Commission européenne</p>
+                        <p><strong>Données d'irradiation:</strong> PVGIS (Commission européenne) pour l'Europe · NREL PVWatts V8 pour l'Amérique du Nord</p>
                         <p><strong>Tarifs électricité:</strong> Eurostat - Tarifs TTC moyens résidentiels (nrg_pc_204)</p>
                         <p><strong>Aides:</strong> MaPrimeRénov', Certificats d'Économie d'Énergie (CEE), dispositifs régionaux</p>
                         <p><strong>Hypothèses:</strong> Rendement système 80% (pertes DC/AC), dégradation annuelle 0.5%, durée de vie panneaux 25 ans</p>
@@ -894,7 +918,9 @@ abbr[title]:hover::after {
             PT: [[36.9, -9.5], [42.2, -6.2]],
             PL: [[49.0, 14.1], [54.8, 24.2]],
             AT: [[46.4, 9.5], [49.0, 17.2]],
-            GR: [[34.8, 19.4], [41.8, 29.7]]
+            GR: [[34.8, 19.4], [41.8, 29.7]],
+            US: [[24.5, -125.0], [49.5, -66.9]],
+            CA: [[41.7, -141.0], [72.0, -52.6]]
         };
 
         function getCountryBounds(code) {
@@ -908,7 +934,7 @@ abbr[title]:hover::after {
             map = L.map('map', {
                 maxBounds: bounds.pad(0.15),
                 maxBoundsViscosity: 1.0,
-                minZoom: 5
+                minZoom: 3
             }).setView([startCoord.lat, startCoord.lon], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
@@ -929,6 +955,23 @@ abbr[title]:hover::after {
             });
         }
 
+        // Helper: get currency symbol for selected country
+        function getCurrencySymbol(countryCode) {
+            const cd = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            return cd ? cd.currencySymbol : '€';
+        }
+
+        // Update all currency symbols in the page
+        function updateCurrencySymbols(symbol) {
+            document.querySelectorAll('.cur').forEach(el => el.textContent = symbol);
+        }
+
+        // Toggle manual mode
+        function toggleManualMode() {
+            const isChecked = document.getElementById('resManualMode').checked;
+            document.getElementById('manualInputSection').style.display = isChecked ? 'block' : 'none';
+        }
+
         function updateLocationData() {
             const country = document.getElementById('resCountry').value;
             const coords = countryCoords[country] || countryCoords['FR'];
@@ -943,10 +986,28 @@ abbr[title]:hover::after {
                 marker = L.marker([coords.lat, coords.lon]).addTo(map);
                 // Reset map hint
                 var hint = document.getElementById('mapHint');
-                if (hint) { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS (calcul d\'ensoleillement PVGIS). Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }
+                if (hint) { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS. Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }
             }
             // Update electricity price and feed-in tariff from solar-data.js
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
+
+            // Update currency symbols
+            const curSymbol = getCurrencySymbol(country);
+            updateCurrencySymbols(curSymbol);
+
+            // Show/hide net metering note (US/CA)
+            const nmNote = document.getElementById('netMeteringNote');
+            if (nmNote && countryData && countryData.netMeteringNote) {
+                nmNote.textContent = '⚠️ ' + countryData.netMeteringNote.fr;
+                nmNote.classList.remove('hidden');
+            } else if (nmNote) {
+                nmNote.classList.add('hidden');
+            }
+
+            // Show manual mode section for all countries (hidden by default, useful as fallback)
+            var manualSection = document.getElementById('manualModeSection');
+            if (manualSection) manualSection.classList.remove('hidden');
+
             if (countryData) {
                 document.getElementById('resElecPrice').value = countryData.electricityPrice;
                 document.getElementById('resElecPriceDisplay').textContent = countryData.electricityPrice.toFixed(4);
@@ -1013,8 +1074,8 @@ abbr[title]:hover::after {
             const co2PerKwh = countryData ? countryData.co2Factor : 300;  // gCO₂/kWh
             const batteryCostPerKwh = countryData ? countryData.batteryCostPerKwh : 430;
 
-            // Get PVGIS data or use fallback
-            fetchPVGISData(lat, lon, tilt, orientation).then(pvgisResult => {
+            // Get solar irradiation data (PVGIS for EU, NREL for NA, or manual)
+            fetchSolarData(lat, lon, tilt, orientation, country).then(pvgisResult => {
                 let production;
                 if (pvgisResult && pvgisResult.annual_energy) {
                     // PVGIS returns kWh/kWp/year — multiply by kWc, apply shading
@@ -1114,7 +1175,7 @@ abbr[title]:hover::after {
                 updatePaybackChart(production, annualSavings, netCost, degradation, priceIncrease, discountRate, selfConsum, elecPrice, feedinTariff);
                 updateEnergyChart(production, selfConsum, consumption);
             }).catch(err => {
-                console.error('Erreur PVGIS:', err);
+                console.error('Erreur API solaire:', err);
                 // Fallback calculation
                 const prFactor = shading > 10 ? 0.75 : 0.80;
                 const production = kwc * 1100 * prFactor * (1 - shading / 100);
@@ -1152,14 +1213,47 @@ abbr[title]:hover::after {
             });
         }
 
-        function fetchPVGISData(lat, lon, tilt, aspect) {
-            // PVGIS API call via Netlify Function (avoids CORS)
+        function fetchSolarData(lat, lon, tilt, aspect, countryCode) {
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            const region = countryData ? countryData.region : 'EU';
+
+            // ── Mode manuel : l'utilisateur fournit le productible ──
+            if (document.getElementById('resManualMode') && document.getElementById('resManualMode').checked) {
+                const manualVal = parseFloat(document.getElementById('resManualProductible').value);
+                if (manualVal && manualVal > 0) {
+                    return Promise.resolve({ annual_energy: manualVal, source: 'manual' });
+                }
+            }
+
+            // ── Amérique du Nord → NREL PVWatts ──
+            if (region === 'NA') {
+                // Conversion azimut : PVGIS aspect 0=Sud → NREL azimuth 180=Sud
+                const nrelAzimuth = ((parseFloat(aspect) || 0) + 180) % 360;
+                const url = `/.netlify/functions/nrel?lat=${lat}&lon=${lon}&system_capacity=1&losses=14&tilt=${tilt}&azimuth=${nrelAzimuth}`;
+                return fetch(url)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success && data.annual && data.annual.energyPerKwp) {
+                            return { annual_energy: data.annual.energyPerKwp, source: 'NREL' };
+                        }
+                        return null;
+                    })
+                    .catch(e => {
+                        console.warn('NREL API failed:', e);
+                        // Show manual mode hint
+                        var hint = document.getElementById('mapHint');
+                        if (hint) { hint.textContent = '⚠️ API NREL indisponible. Activez le mode manuel ci-dessous.'; hint.classList.add('text-amber-400'); }
+                        return null;
+                    });
+            }
+
+            // ── Europe → PVGIS ──
             const url = `/.netlify/functions/pvgis?lat=${lat}&lon=${lon}&peakpower=1&loss=14&angle=${tilt}&aspect=${aspect}`;
             return fetch(url)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.annual && data.annual.energyPerKwp) {
-                        return { annual_energy: data.annual.energyPerKwp };
+                        return { annual_energy: data.annual.energyPerKwp, source: 'PVGIS' };
                     }
                     return null;
                 })
@@ -1170,11 +1264,15 @@ abbr[title]:hover::after {
                         .then(r => r.json())
                         .then(data => {
                             if (data.outputs && data.outputs.totals && data.outputs.totals.fixed) {
-                                return { annual_energy: data.outputs.totals.fixed.E_y };
+                                return { annual_energy: data.outputs.totals.fixed.E_y, source: 'PVGIS-direct' };
                             }
                             return null;
                         })
-                        .catch(() => null);
+                        .catch(() => {
+                            var hint = document.getElementById('mapHint');
+                            if (hint) { hint.textContent = '⚠️ API PVGIS indisponible. Activez le mode manuel ci-dessous.'; hint.classList.add('text-amber-400'); }
+                            return null;
+                        });
                 });
         }
 
@@ -1202,7 +1300,7 @@ abbr[title]:hover::after {
                 data: {
                     labels: years,
                     datasets: [{
-                        label: 'Cumul net (€)',
+                        label: 'Cumul net (' + getCurrencySymbol(document.getElementById('resCountry').value) + ')',
                         data: cumulative,
                         borderColor: cumulative[cumulative.length - 1] > 0 ? '#10b981' : '#ef4444',
                         backgroundColor: cumulative[cumulative.length - 1] > 0 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
@@ -1294,8 +1392,8 @@ abbr[title]:hover::after {
 
         function updateSubsidyInfo(countryCode) {
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
-            // Use FR labels for France, EN for all other countries
-            const lang = (countryCode === 'FR') ? 'fr' : 'en';
+            // Page FR → toujours utiliser les textes FR
+            const lang = 'fr';
             if (!countryData || !countryData.subsidies || !countryData.subsidies[lang]) {
                 document.getElementById('subsidyContent').innerHTML = '<p>Sélectionnez un pays et cliquez sur Calculer.</p>';
                 return;
@@ -1322,8 +1420,15 @@ abbr[title]:hover::after {
         function updateEurostatPrices() {
             const countryCode = document.getElementById('resCountry').value;
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
-            const eurostatCode = countryData ? countryData.eurostatCode : countryCode;
             const statusEl = document.getElementById('eurostatStatus');
+
+            // Skip Eurostat for non-EU countries (US, CA, etc.)
+            if (countryData && countryData.region !== 'EU') {
+                if (statusEl) statusEl.textContent = 'Prix par défaut utilisé (' + countryData.currencySymbol + '/kWh — source : données nationales)';
+                return;
+            }
+
+            const eurostatCode = countryData ? countryData.eurostatCode : countryCode;
 
             // Eurostat API supports CORS — direct browser call
             const url = `https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?geo=${eurostatCode}&unit=KWH&currency=EUR&tax=X_TAX&nrg_cons=4141902&format=JSON`;
