@@ -507,21 +507,22 @@ abbr[title]:hover::after {
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
-                                <!-- Self-Consumption Slider -->
+                                <!-- Self-Consumption -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
                                             <span class="text-slate-400">Taux d'autoconsommation</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">% de la production solaire consommée localement. Reste = injection réseau.</span>
+                                                <span class="tooltiptext">Pourcentage de votre production solaire que vous consommez directement chez vous au moment où elle est produite. Le reste est injecté (revendu) au réseau. Sans batterie : 20-40%. Avec batterie : 50-70%.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="resSelfConsumDisplay">50</span>%</span>
+                                        <span class="text-white font-medium"><span id="resSelfConsumDisplay">30</span>%</span>
                                     </label>
-                                    <input type="number" id="resSelfConsum" value="50" min="20" max="90" step="5"
+                                    <input type="number" id="resSelfConsum" value="30" min="10" max="90" step="5"
                                            oninput="document.getElementById('resSelfConsumDisplay').textContent = this.value; updateBatteryDefault()"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Part de votre production solaire utilisée directement chez vous (le reste est injecté dans le réseau). <strong class="text-slate-400">Sans batterie : 20-40%</strong> · <strong class="text-slate-400">Avec batterie : 50-70%</strong>. Dépend de votre présence en journée et de vos habitudes de consommation.</p>
                                 </div>
 
                                 <!-- Battery Toggle -->
@@ -1350,8 +1351,8 @@ abbr[title]:hover::after {
             document.getElementById('resPanelType').value = '0.21';
             document.getElementById('resConsumption').value = '4000';
             document.getElementById('resConsumptionDisplay').textContent = '4000';
-            document.getElementById('resSelfConsum').value = '50';
-            document.getElementById('resSelfConsumDisplay').textContent = '50';
+            document.getElementById('resSelfConsum').value = '30';
+            document.getElementById('resSelfConsumDisplay').textContent = '30';
             document.getElementById('resDegradation').value = '0.5';
             document.getElementById('resDegraDisplay').textContent = '0.5';
             document.getElementById('resPriceIncrease').value = '2.5';

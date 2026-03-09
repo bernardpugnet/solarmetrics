@@ -509,21 +509,22 @@ abbr[title]:hover::after {
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
-                                <!-- Self-Consumption Slider -->
+                                <!-- Self-Consumption -->
                                 <div class="input-group">
                                     <label class="flex justify-between items-center text-sm mb-2">
                                         <span class="flex items-center gap-2">
                                             <span class="text-slate-400">Self-consumption rate</span>
                                             <span class="tooltip inline-block">
                                                 <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">% of solar production consumed locally. Remainder = fed back to grid.</span>
+                                                <span class="tooltiptext">Percentage of your solar production that you use directly at home as it's generated. The rest is fed back (sold) to the grid. Without battery: 20-40%. With battery: 50-70%.</span>
                                             </span>
                                         </span>
-                                        <span class="text-white font-medium"><span id="resSelfConsumDisplay">50</span>%</span>
+                                        <span class="text-white font-medium"><span id="resSelfConsumDisplay">30</span>%</span>
                                     </label>
-                                    <input type="number" id="resSelfConsum" value="50" min="20" max="90" step="5"
+                                    <input type="number" id="resSelfConsum" value="30" min="10" max="90" step="5"
                                            oninput="document.getElementById('resSelfConsumDisplay').textContent = this.value; updateBatteryDefault()"
                                            class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Share of your solar production used directly at home (the rest is fed into the grid). <strong class="text-slate-400">Without battery: 20-40%</strong> · <strong class="text-slate-400">With battery: 50-70%</strong>. Depends on your daytime presence and consumption habits.</p>
                                 </div>
 
                                 <!-- Battery Toggle -->
