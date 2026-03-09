@@ -554,12 +554,12 @@
                                     <input type="number" id="resInstallCostOverride" placeholder="Empty = country average" min="0" max="200000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                     <p class="text-xs text-slate-600 mt-0.5">Avg: <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWp</p>
                                 </div>
-                                <div class="quick-only">
+                                <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Subsidies (<span class="cur">€</span>)</label>
                                     <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
-                            <div class="quick-only grid grid-cols-3 gap-4">
+                            <div class="grid grid-cols-3 gap-4">
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Degradation (%/year)</label>
                                     <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
@@ -571,16 +571,6 @@
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Discount rate (%)</label>
                                     <input type="number" id="resDiscount" value="4" min="1" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                            </div>
-                            <div class="detailed-only grid grid-cols-2 gap-4" style="display:none">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Price increase (%/year)</label>
-                                    <input type="number" id="simPriceIncrease" value="3" min="0" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">PV installation cost (<span class="cur">€</span>)</label>
-                                    <input type="number" id="simCostInstall" min="2000" max="20000" step="500" value="6000" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
                         </div>
@@ -916,8 +906,8 @@
                 document.getElementById('resFeedir').value = countryData.feedInTariff || 0.13;
                 document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
                 document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
-                // Sync detailed mode install cost field
-                document.getElementById('simCostInstall').value = Math.round(countryData.installCostPerKwc.avg * 3);
+                // Clear install cost override so country default is used
+                document.getElementById('resInstallCostOverride').placeholder = 'Avg ' + Math.round(countryData.installCostPerKwc.avg * 3) + ' € (3 kWp)';
                 // Currency symbol
                 document.querySelectorAll('.cur').forEach(el => el.textContent = countryData.currencySymbol || '€');
                 // Net metering note
@@ -1213,8 +1203,10 @@
                 const batteryCapacity = parseFloat(document.getElementById('simBattery').value) || 0;
                 const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
                 const priceRevente = parseFloat(document.getElementById('resFeedir').value);
-                const priceIncrease = parseFloat(document.getElementById('simPriceIncrease').value) / 100;
-                const installCost = parseFloat(document.getElementById('simCostInstall').value) || 6000;
+                const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
+                const ccDet = document.getElementById('resCountry').value;
+                const cDataDet = window.SOLAR_DATA && window.SOLAR_DATA.countries[ccDet];
+                const installCost = parseFloat(document.getElementById('resInstallCostOverride').value) || (cDataDet ? Math.round(cDataDet.installCostPerKwc.avg * kwc) : kwc * 2000);
 
                 // Get consumption profile
                 const addons = [];
@@ -1269,9 +1261,38 @@
                 // Get typical days
                 const typicalDays = window.AutoconsommationSimulator.getTypicalDays(simResults.hourly.production);
 
+                // CO2 avoided
+                const cc = document.getElementById('resCountry').value;
+                const cData = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
+                const co2PerKwh = cData ? cData.co2Factor : 300;
+                const co2Avoided = simResults.annual.production * co2PerKwh / 1000;
+
+                // IRR calculation
+                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
+                const totalInvestment = installCost + batteryCost;
+                const netCost = totalInvestment - subsidies;
+                let irr = null;
+                try {
+                    const cashFlows = [-netCost];
+                    for (let y = 1; y <= 25; y++) {
+                        const yProd = simResults.annual.production * Math.pow(1 - 0.005, y - 1);
+                        const autoRatio = (simResults.annual.autoDirect + simResults.annual.autoBattery) / simResults.annual.production;
+                        const yAuto = yProd * autoRatio;
+                        const yInj = yProd - yAuto;
+                        const yPrice = elecPrice * Math.pow(1 + priceIncrease, y - 1);
+                        cashFlows.push(yAuto * yPrice + yInj * priceRevente);
+                    }
+                    irr = calculateIRR(cashFlows);
+                } catch(e) { console.warn('IRR error:', e); }
+
                 // Display results
-                displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente);
+                displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente, netCost, irr, co2Avoided);
                 generateDetailedCharts(simResults, typicalDays, financials);
+
+                // Also generate financial charts for the financial tab
+                const autoTotal = simResults.annual.autoDirect + simResults.annual.autoBattery;
+                generateFinancialCharts(netCost, installCost, financials.paybackYear || 99, simResults.annual.production, autoTotal, simResults.annual.injection);
+
                 document.getElementById('results-section').style.display = 'block';
             } catch (error) {
                 console.error('Detailed calculation error:', error);
@@ -1297,7 +1318,7 @@
             document.getElementById('resCo2').textContent = Math.round(co2).toLocaleString('en-US');
         }
 
-        function displayDetailedResults(sim, fin, kwc, cost, batCost, elecPrice, revPrice) {
+        function displayDetailedResults(sim, fin, kwc, cost, batCost, elecPrice, revPrice, netCost, irr, co2) {
             const annual = sim.annual;
             document.getElementById('resProduction').textContent = annual.production.toLocaleString('en-US');
             document.getElementById('resProductionPerKwc').textContent = Math.round(annual.production / kwc);
@@ -1306,10 +1327,12 @@
             document.getElementById('resSavingsFeedin').textContent = Math.round(annual.injection * revPrice).toLocaleString('en-US');
             const totalSavings = (annual.autoDirect + annual.autoBattery) * elecPrice + annual.injection * revPrice;
             document.getElementById('resAnnualSavings').textContent = Math.round(totalSavings).toLocaleString('en-US');
-            document.getElementById('resInstallCost').textContent = Math.round(cost).toLocaleString('en-US');
-            document.getElementById('resNetCost').textContent = Math.round(cost + batCost).toLocaleString('en-US');
+            document.getElementById('resInstallCost').textContent = Math.round(cost + batCost).toLocaleString('en-US');
+            document.getElementById('resNetCost').textContent = Math.round(netCost).toLocaleString('en-US');
             document.getElementById('resPayback').textContent = fin.paybackYear || '∞';
             document.getElementById('resNpv').textContent = Math.round(fin.totalSavings25y).toLocaleString('en-US');
+            document.getElementById('resTri').textContent = irr !== null ? (irr * 100).toFixed(1) : '—';
+            document.getElementById('resCo2').textContent = Math.round(co2).toLocaleString('en-US');
 
             // Auto-consumption details
             document.getElementById('resAutoconsoRate').textContent = annual.tauxAutoconsommation.toFixed(1);
