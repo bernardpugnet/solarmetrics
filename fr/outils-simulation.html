@@ -1051,6 +1051,7 @@
 
         async function calculateDetailed() {
             document.getElementById('sim-form').style.display = 'none';
+            document.getElementById('sim-loader').classList.remove('hidden');
             document.getElementById('sim-loader').style.display = 'block';
             document.getElementById('loader-text').textContent = 'Récupération des données PVGIS...';
 
@@ -1065,7 +1066,8 @@
                 const consumption = parseFloat(document.getElementById('resConsumption').value);
                 const profile = document.getElementById('simProfile').value;
                 const shading = parseFloat(document.getElementById('resShading').value) / 100;
-                const batteryCapacity = parseFloat(document.getElementById('resBatteryCapacity').value) || 0;
+                const hasBattery = document.getElementById('resBatteryToggle').checked;
+                const batteryCapacity = hasBattery ? (parseFloat(document.getElementById('resBatteryCapacity').value) || 0) : 0;
                 const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
                 const priceRevente = parseFloat(document.getElementById('resFeedir').value);
                 const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
@@ -1159,12 +1161,22 @@
                 generateFinancialCharts(netCost, installCost, financials.paybackYear || 99, simResults.annual.production, autoTotal, simResults.annual.injection);
 
                 document.getElementById('results-section').style.display = 'block';
+                document.getElementById('sim-form').style.display = 'block';
             } catch (error) {
                 console.error('Detailed calculation error:', error);
-                document.getElementById('loader-text').textContent = 'Erreur: ' + error.message;
+                document.getElementById('sim-form').style.display = 'block';
+                // Show error to user
+                const errDiv = document.createElement('div');
+                errDiv.className = 'mt-4 p-4 bg-red-900/30 border border-red-500/50 rounded-lg text-red-300 text-sm';
+                errDiv.innerHTML = '<strong>Erreur :</strong> ' + error.message + '<br><span class="text-xs text-red-400 mt-1 block">Vérifiez votre connexion internet et que la localisation est bien définie (latitude/longitude).</span>';
+                errDiv.id = 'calcError';
+                const oldErr = document.getElementById('calcError');
+                if (oldErr) oldErr.remove();
+                document.getElementById('sim-form').prepend(errDiv);
+                setTimeout(() => { const e = document.getElementById('calcError'); if (e) e.remove(); }, 10000);
             } finally {
                 document.getElementById('sim-loader').style.display = 'none';
-                document.getElementById('sim-form').style.display = 'block';
+                document.getElementById('sim-loader').classList.add('hidden');
             }
         }
 
