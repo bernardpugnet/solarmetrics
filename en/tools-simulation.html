@@ -517,8 +517,11 @@
                             </div>
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Battery cost (<span class="cur">€</span>)</label>
-                                <input type="number" id="resBatteryCostOverride" placeholder="Empty = country average" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                <input type="number" id="resBatteryCostOverride" placeholder="Empty = auto calc" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                 <p class="text-xs text-slate-600 mt-0.5">Avg: <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
+                                <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                    <span class="text-slate-400 font-medium">Auto calc:</span> capacity (kWh) × average cost/kWh for the selected country. This average price includes the battery, hybrid inverter and installation. Enter your own amount for a custom quote.
+                                </div>
                             </div>
                         </div>
                     </div>

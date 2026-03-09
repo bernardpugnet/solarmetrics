@@ -517,8 +517,11 @@
                             </div>
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Coût batterie (<span class="cur">€</span>)</label>
-                                <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                <input type="number" id="resBatteryCostOverride" placeholder="Vide = calcul auto" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                 <p class="text-xs text-slate-600 mt-0.5">Moy. : <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
+                                <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                    <span class="text-slate-400 font-medium">Calcul auto :</span> capacité (kWh) × coût moyen/kWh du pays sélectionné. Ce prix moyen inclut la batterie, l'onduleur hybride et la pose. Entrez votre propre montant pour un devis personnalisé.
+                                </div>
                             </div>
                         </div>
                     </div>
