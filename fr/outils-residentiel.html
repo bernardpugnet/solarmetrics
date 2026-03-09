@@ -392,303 +392,140 @@ abbr[title]:hover::after {
                         </div>
 
                         <!-- System Section -->
-                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
-                            <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                        <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
                                 <span class="text-amber-500">●</span> Système Solaire
                             </h4>
-                            <div class="space-y-6">
-                                <!-- Surface -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Surface de toiture disponible</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Surface de toiture ensoleillée disponible pour l'installation. Incluez un surplomb de sécurité.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resSurfaceDisplay">30</span> m²</span></label>
-                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1"
-                                           oninput="document.getElementById('resSurfaceDisplay').textContent = this.value"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Orientation -->
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="flex items-center gap-2 text-sm mb-2">
-                                        <span class="text-slate-400">Orientation toiture</span>
-                                        <span class="tooltip inline-block">
-                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">Direction cardinale de la toiture (convention PVGIS). Sud = 0°, Ouest = 90°, Est = -90°, Nord = ±180°.</span>
-                                        </span>
-                                    </label>
-                                    <select id="resOrientation" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <label class="text-xs text-slate-400 mb-1 block">Surface toiture (m²)</label>
+                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Orientation</label>
+                                    <select id="resOrientation" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                         <option value="0">Sud (optimal)</option>
                                         <option value="-45">Sud-Est</option>
                                         <option value="45">Sud-Ouest</option>
                                         <option value="-90">Est</option>
                                         <option value="90">Ouest</option>
-                                        <option value="180">Nord (faible production)</option>
+                                        <option value="180">Nord (faible)</option>
                                     </select>
                                 </div>
-
-                                <!-- Tilt -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Inclinaison panneaux</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Angle d'inclinaison des panneaux par rapport à l'horizontale. Optimal = latitude du site.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resTiltDisplay">30</span>°</span>
-                                    </label>
-                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1"
-                                           oninput="document.getElementById('resTiltDisplay').textContent = this.value"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Shading -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Ombrage estimé</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Pourcentage d'ombrage moyen annuel dû aux arbres, immeubles, etc. 0% = plein soleil.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resShadingDisplay">0</span>%</span>
-                                    </label>
-                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1"
-                                           oninput="document.getElementById('resShadingDisplay').textContent = this.value"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Panel Type -->
                                 <div>
-                                    <label class="flex items-center gap-2 text-sm mb-2">
-                                        <span class="text-slate-400">Type de panneaux</span>
-                                        <span class="tooltip inline-block">
-                                            <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                            <span class="tooltiptext">Standard (~21% de rendement) : le plus courant, bon rapport qualité/prix (~4,76 m²/kWc). Premium (~23%) : plus performant par m², idéal si votre surface est limitée (~4,35 m²/kWc).</span>
-                                        </span>
-                                    </label>
-                                    <select id="resPanelType" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <label class="text-xs text-slate-400 mb-1 block">Inclinaison (°)</label>
+                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Ombrage (%)</label>
+                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">0% = plein soleil</p>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="text-xs text-slate-400 mb-1 block">Type de panneaux</label>
+                                    <select id="resPanelType" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                         <option value="0.21">Standard (~21% rendement, ~4,76 m²/kWc)</option>
                                         <option value="0.23">Premium (~23% rendement, ~4,35 m²/kWc)</option>
                                     </select>
-                                    <a href="https://www.irena.org/publications" target="_blank" class="text-xs text-cyan-400 hover:underline mt-1 inline-block">Rapport IRENA / SolarPower Europe →</a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Consumption Section -->
-                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
-                            <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                        <!-- Consumption & Grid Section -->
+                        <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
                                 <span class="text-amber-500">●</span> Consommation & Réseau
                             </h4>
-                            <div class="space-y-6">
-                                <!-- Annual Consumption -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Consommation annuelle</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Consommation électrique annuelle en kWh. Maison moyenne FR: 3500-4500 kWh.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resConsumptionDisplay">4000</span> kWh</span>
-                                    </label>
-                                    <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100"
-                                           oninput="document.getElementById('resConsumptionDisplay').textContent = this.value"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Self-Consumption -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Taux d'autoconsommation</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Pourcentage de votre production solaire que vous consommez directement chez vous au moment où elle est produite. Le reste est injecté (revendu) au réseau. Sans batterie : 20-40%. Avec batterie : 50-70%.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resSelfConsumDisplay">30</span>%</span>
-                                    </label>
-                                    <input type="number" id="resSelfConsum" value="30" min="10" max="90" step="5"
-                                           oninput="document.getElementById('resSelfConsumDisplay').textContent = this.value; updateBatteryDefault()"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Part de votre production solaire utilisée directement chez vous (le reste est injecté dans le réseau). <strong class="text-slate-400">Sans batterie : 20-40%</strong> · <strong class="text-slate-400">Avec batterie : 50-70%</strong>. Dépend de votre présence en journée et de vos habitudes de consommation.</p>
-                                </div>
-
-                                <!-- Battery Toggle -->
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="flex items-center gap-3 mb-4">
-                                        <input type="checkbox" id="resBatteryToggle" onchange="toggleBatteryCapacity()" class="w-4 h-4 rounded border-slate-600 text-amber-500 cursor-pointer">
-                                        <span class="text-sm text-slate-400 flex items-center gap-2">
-                                            Ajouter une batterie de stockage
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Les batteries permettent de stocker l'énergie pour une utilisation le soir/nuit.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                    <div id="batteryCapacitySection" style="display:none;">
-                                        <label class="text-sm text-slate-400 mb-2 block">Capacité batterie</label>
-                                        <select id="resBatteryCapacity" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <label class="text-xs text-slate-400 mb-1 block">Consommation annuelle (kWh)</label>
+                                    <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Autoconsommation (%)</label>
+                                    <input type="number" id="resSelfConsum" value="30" min="10" max="90" step="5"
+                                           oninput="updateBatteryDefault()"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <p class="col-span-2 text-xs text-slate-500 -mt-2 leading-relaxed">Part de votre production utilisée chez vous. <strong class="text-slate-400">Sans batterie : 20-40%</strong> · <strong class="text-slate-400">Avec batterie : 50-70%</strong></p>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Tarif électricité (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resElecPrice" value="0.22" min="0.05" max="0.50" step="0.01"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p id="eurostatStatus" class="text-xs text-slate-600 mt-0.5"></p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Tarif rachat injection (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resFeedir" value="0" min="0" max="0.50" step="0.01"
+                                           placeholder="0 si pas de contrat"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Coût installation (<span class="cur">€</span>)</label>
+                                    <input type="number" id="resInstallCostOverride" placeholder="Vide = moyenne pays" min="0" max="200000" step="100"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                    <p class="text-xs text-slate-600 mt-0.5">Si vide : moyenne <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWc <a href="https://www.irena.org/publications" target="_blank" class="text-cyan-400 hover:underline">(IRENA)</a></p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Aides & subventions (<span class="cur">€</span>)</label>
+                                    <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100"
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <!-- Battery Toggle -->
+                                <div class="col-span-2 flex items-center gap-3 pt-1">
+                                    <input type="checkbox" id="resBatteryToggle" onchange="toggleBatteryCapacity()" class="w-4 h-4 rounded border-slate-600 text-amber-500 cursor-pointer">
+                                    <span class="text-sm text-slate-400">Ajouter une batterie de stockage</span>
+                                </div>
+                                <div id="batteryCapacitySection" style="display:none;" class="col-span-2 grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-xs text-slate-400 mb-1 block">Capacité batterie</label>
+                                        <select id="resBatteryCapacity" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                             <option value="5">5 kWh (petit)</option>
                                             <option value="10" selected>10 kWh (moyen)</option>
                                             <option value="15">15 kWh (grand)</option>
                                             <option value="20">20 kWh (très grand)</option>
                                         </select>
                                     </div>
-                                </div>
-
-                                <!-- Electricity Price -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Tarif électricité</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Tarif moyen TTC de l'électricité consommée au réseau (€/kWh).</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resElecPriceDisplay">0.22</span>/kWh</span>
-                                    </label>
-                                    <input type="number" id="resElecPrice" value="0.22" min="0.05" max="0.50" step="0.01"
-                                           oninput="document.getElementById('resElecPriceDisplay').textContent = parseFloat(this.value).toFixed(2)"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Feed-in Tariff -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Tarif rachat (injection réseau)</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Tarif auquel le réseau vous rachète l'énergie excédentaire (€/kWh). Consultez votre contrat EDF OA ou votre fournisseur pour connaître votre tarif.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resFeedinDisplay">0.00</span>/kWh</span>
-                                    </label>
-                                    <input type="number" id="resFeedir" value="0" min="0" max="0.50" step="0.01"
-                                           placeholder="Entrez votre tarif de rachat"
-                                           oninput="document.getElementById('resFeedinDisplay').textContent = parseFloat(this.value || 0).toFixed(2)"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-
-                                <!-- Installation Cost Override -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Coût réel de l'installation</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Montant total devis panneaux + pose + onduleur (€). Si vide, le coût moyen du pays est utilisé.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                    <input type="number" id="resInstallCostOverride" placeholder="Laisser vide = coût moyen du pays" min="0" max="100000" step="100"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWc</p>
-                                </div>
-
-                                <!-- Battery Cost Override -->
-                                <div id="batteryCostSection" style="display:none;" class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Coût réel de la batterie</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Coût total de la batterie installée (€). Si vide, le coût moyen du pays est utilisé.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                    <input type="number" id="resBatteryCostOverride" placeholder="Laisser vide = coût moyen du pays" min="0" max="50000" step="100"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-500 mt-1">Coût moyen estimé : <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
-                                </div>
-
-                                <!-- Subsidies -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Aides & subventions</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Montant total des aides reçues (MaPrimeRénov, CEE, régionales, etc.).</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span class="cur">€</span><span id="resSubsidiesDisplay">3000</span></span>
-                                    </label>
-                                    <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100"
-                                           oninput="document.getElementById('resSubsidiesDisplay').textContent = this.value"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div id="batteryCostSection">
+                                        <label class="text-xs text-slate-400 mb-1 block">Coût batterie (<span class="cur">€</span>)</label>
+                                        <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays" min="0" max="50000" step="100"
+                                               class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                        <p class="text-xs text-slate-600 mt-0.5">Moy. : <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Advanced Parameters -->
-                        <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50">
+                        <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                             <button onclick="toggleAdvanced()" class="flex items-center justify-between w-full">
                                 <h4 class="text-lg font-semibold text-white flex items-center gap-2">
                                     <span class="text-amber-500">●</span> Paramètres avancés
                                 </h4>
                                 <span id="advancedToggleIcon" class="text-slate-400">▼</span>
                             </button>
-                            <div id="advancedSection" style="display:none;" class="mt-6 space-y-6">
-                                <!-- Degradation -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Dégradation annuelle panneaux</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Baisse du rendement par an (0.5-0.8%). Panneaux modernes: 0.5%/an.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resDegraDisplay">0.5</span>%</span>
-                                    </label>
+                            <div id="advancedSection" style="display:none;" class="mt-5 grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Dégradation (%/an)</label>
                                     <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">Standard : 0,5%</p>
                                 </div>
-
-                                <!-- Price Increase -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Augmentation tarifaire annuelle</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Hausse annuelle du tarif électricité (%). Historique FR: 2-4%/an.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resPriceIncDisplay">2.5</span>%</span>
-                                    </label>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Hausse tarif (%/an)</label>
                                     <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">Historique : 2-4%</p>
                                 </div>
-
-                                <!-- Discount Rate -->
-                                <div class="input-group">
-                                    <label class="flex justify-between items-center text-sm mb-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="text-slate-400">Taux d'actualisation</span>
-                                            <span class="tooltip inline-block">
-                                                <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
-                                                <span class="tooltiptext">Taux utilisé pour les calculs NPV/VAN. Généralement 3-5% pour résidentiel.</span>
-                                            </span>
-                                        </span>
-                                        <span class="text-white font-medium"><span id="resDiscountDisplay">4</span>%</span>
-                                    </label>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Taux actualisation (%)</label>
                                     <input type="number" id="resDiscount" value="4" min="1" max="10" step="0.5"
-                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                           class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">Résidentiel : 3-5%</p>
                                 </div>
                             </div>
                         </div>
@@ -991,7 +828,8 @@ abbr[title]:hover::after {
 
             if (countryData) {
                 document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                document.getElementById('resElecPriceDisplay').textContent = countryData.electricityPrice.toFixed(4);
+                // resElecPriceDisplay removed (compact layout)
+                    void = countryData.electricityPrice.toFixed(4);
                 // Feed-in tariff: don't auto-fill, let user enter their own rate
                 // document.getElementById('resFeedir').value = countryData.feedInTariff;
             }
@@ -1014,8 +852,7 @@ abbr[title]:hover::after {
 
         function toggleBatteryCapacity() {
             const isChecked = document.getElementById('resBatteryToggle').checked;
-            document.getElementById('batteryCapacitySection').style.display = isChecked ? 'block' : 'none';
-            document.getElementById('batteryCostSection').style.display = isChecked ? 'block' : 'none';
+            document.getElementById('batteryCapacitySection').style.display = isChecked ? 'grid' : 'none';
         }
 
         // Residential calculator
@@ -1342,32 +1179,21 @@ abbr[title]:hover::after {
         function resetResidential() {
             document.getElementById('resCountry').value = 'FR';
             document.getElementById('resSurface').value = '30';
-            document.getElementById('resSurfaceDisplay').textContent = '30';
             document.getElementById('resOrientation').value = '0';
             document.getElementById('resTilt').value = '30';
-            document.getElementById('resTiltDisplay').textContent = '30';
             document.getElementById('resShading').value = '0';
-            document.getElementById('resShadingDisplay').textContent = '0';
             document.getElementById('resPanelType').value = '0.21';
             document.getElementById('resConsumption').value = '4000';
-            document.getElementById('resConsumptionDisplay').textContent = '4000';
             document.getElementById('resSelfConsum').value = '30';
-            document.getElementById('resSelfConsumDisplay').textContent = '30';
             document.getElementById('resDegradation').value = '0.5';
-            document.getElementById('resDegraDisplay').textContent = '0.5';
             document.getElementById('resPriceIncrease').value = '2.5';
-            document.getElementById('resPriceIncDisplay').textContent = '2.5';
             document.getElementById('resDiscount').value = '4';
-            document.getElementById('resDiscountDisplay').textContent = '4';
             document.getElementById('resSubsidies').value = '3000';
-            document.getElementById('resSubsidiesDisplay').textContent = '3000';
             document.getElementById('resFeedir').value = '0';
-            document.getElementById('resFeedinDisplay').textContent = '0.00';
             document.getElementById('resInstallCostOverride').value = '';
             document.getElementById('resBatteryCostOverride').value = '';
             document.getElementById('resBatteryToggle').checked = false;
             toggleBatteryCapacity();
-            // Use solar-data.js values for prices
             updateLocationData();
         }
 
@@ -1429,7 +1255,8 @@ abbr[title]:hover::after {
                         const latestPrice = values[values.length - 1];
                         if (latestPrice && latestPrice > 0) {
                             document.getElementById('resElecPrice').value = latestPrice.toFixed(4);
-                            document.getElementById('resElecPriceDisplay').textContent = latestPrice.toFixed(4);
+                            // resElecPriceDisplay removed (compact layout)
+                    void = latestPrice.toFixed(4);
                             // Get period
                             const dims = data.dimension && data.dimension.time && data.dimension.time.category;
                             const periods = dims ? Object.keys(dims.index) : [];
@@ -1444,7 +1271,8 @@ abbr[title]:hover::after {
                     // Use default from solar-data.js
                     if (countryData) {
                         document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                        document.getElementById('resElecPriceDisplay').textContent = countryData.electricityPrice.toFixed(4);
+                        // resElecPriceDisplay removed (compact layout)
+                    void = countryData.electricityPrice.toFixed(4);
                     }
                 });
         }
