@@ -19,6 +19,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/solar-data.js"></script>
     <script src="../js/autoconsommation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>
         *{font-family:'Inter',sans-serif}
@@ -596,17 +597,29 @@
 
                 <!-- RESULTS SECTION -->
                 <div id="results-section" style="display:none" class="mt-12">
-                    <!-- Tab Navigation -->
-                    <div class="flex gap-2 border-b border-slate-700 mb-8 overflow-x-auto">
-                        <button class="tab-btn active" onclick="switchTab('financial')">
-                            Bilan financier
-                        </button>
-                        <button class="tab-btn detailed-tab-btn" onclick="switchTab('detailed')">
-                            Autoconsommation détaillée
-                        </button>
-                        <button class="tab-btn" onclick="switchTab('subsidies')">
-                            Aides & système
-                        </button>
+                    <!-- Tab Navigation + PDF button -->
+                    <div class="flex items-center justify-between border-b border-slate-700 mb-8">
+                        <div class="flex gap-2 overflow-x-auto">
+                            <button class="tab-btn active" onclick="switchTab('financial')">
+                                Bilan financier
+                            </button>
+                            <button class="tab-btn detailed-tab-btn" onclick="switchTab('detailed')">
+                                Autoconsommation détaillée
+                            </button>
+                            <button class="tab-btn" onclick="switchTab('subsidies')">
+                                Aides & système
+                            </button>
+                        </div>
+                        <div class="flex gap-2 pb-2">
+                            <button onclick="window.print()" class="px-3 py-1.5 text-xs text-slate-400 hover:text-white border border-slate-600 hover:border-slate-400 rounded-lg transition-colors flex items-center gap-1" title="Imprimer / Enregistrer en PDF">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                PDF
+                            </button>
+                            <button onclick="exportResultsPDF()" class="px-3 py-1.5 text-xs text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 rounded-lg transition-colors flex items-center gap-1" title="Télécharger le rapport PDF">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                Rapport
+                            </button>
+                        </div>
                     </div>
 
                     <!-- TAB 1: Bilan Financier -->
@@ -1104,14 +1117,15 @@
                     if (cumulPayback >= netCost && payback === 99) payback = y;
                 }
 
-                // Calculate IRR (Newton-Raphson)
-                irr = calculateIRR(cashFlows);
-
                 // CO2 avoided (using country-specific factor from Ember, in gCO₂/kWh)
                 const cc = document.getElementById('resCountry').value;
                 const cData = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
                 const co2PerKwh = cData ? cData.co2Factor : 300; // gCO₂/kWh
                 const co2Avoided = production * co2PerKwh / 1000; // kg/year
+
+                // Calculate IRR (bisection method)
+                let irr = null;
+                try { irr = calculateIRR(cashFlows); } catch(e) { console.warn('IRR error:', e); }
 
                 // Display results
                 displayFinancialResults(production, productionPerKwc, kwc, savingsAutocons, savingsFeedin, annualSavings, installCost, netCost, payback, npv, irr, co2Avoided);
@@ -1284,13 +1298,23 @@
         }
 
         function generateFinancialCharts(netCost, installCost, payback, prod, auto, inj) {
-            // Payback chart
+            // Payback chart - cumulative savings over 25 years
             const years = Array.from({length: 26}, (_, i) => i);
-            const cumulative = years.map(y => {
-                if (y === 0) return -netCost;
-                const savingsY = ((auto * 0.25 + inj * 0.13) * Math.pow(1.025, y - 1)) * y;
-                return -netCost + savingsY;
-            });
+            const elecP = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
+            const feedP = parseFloat(document.getElementById('resFeedir').value) || 0.13;
+            const degr = (parseFloat(document.getElementById('resDegradation').value) || 0.5) / 100;
+            const prInc = (parseFloat(document.getElementById('resPriceIncrease').value) || 2.5) / 100;
+            const cumulative = [];
+            let cumulSavings = 0;
+            for (let y = 0; y <= 25; y++) {
+                if (y === 0) { cumulative.push(-netCost); continue; }
+                const yProd = prod * Math.pow(1 - degr, y - 1);
+                const yAuto = Math.min(yProd * (auto / (auto + inj || 1)), parseFloat(document.getElementById('resConsumption').value) || 4000);
+                const yInj = yProd - yAuto;
+                const yPrice = elecP * Math.pow(1 + prInc, y - 1);
+                cumulSavings += yAuto * yPrice + yInj * feedP;
+                cumulative.push(-netCost + cumulSavings);
+            }
 
             if (paybackChartInstance) paybackChartInstance.destroy();
             paybackChartInstance = new Chart(document.getElementById('paybackChart'), {
@@ -1399,18 +1423,111 @@
         }
 
         function calculateIRR(cashFlows) {
-            let rate = 0.1;
-            for (let iter = 0; iter < 100; iter++) {
-                let npv = 0, dnpv = 0;
+            // Helper: NPV at a given rate
+            function npvAt(r) {
+                let sum = 0;
                 for (let i = 0; i < cashFlows.length; i++) {
-                    const pv = 1 / Math.pow(1 + rate, i);
-                    npv += cashFlows[i] * pv;
-                    dnpv -= i * cashFlows[i] * pv / (1 + rate);
+                    sum += cashFlows[i] / Math.pow(1 + r, i);
                 }
-                if (Math.abs(npv) < 1) return rate;
-                rate -= npv / dnpv;
+                return sum;
             }
-            return null;
+            // Bisection method (robust fallback)
+            let lo = -0.5, hi = 5.0;
+            if (npvAt(lo) * npvAt(hi) > 0) {
+                // Try wider range
+                hi = 10.0;
+                if (npvAt(lo) * npvAt(hi) > 0) return null;
+            }
+            for (let iter = 0; iter < 200; iter++) {
+                const mid = (lo + hi) / 2;
+                const nMid = npvAt(mid);
+                if (Math.abs(nMid) < 0.01) return mid;
+                if (npvAt(lo) * nMid < 0) {
+                    hi = mid;
+                } else {
+                    lo = mid;
+                }
+            }
+            return (lo + hi) / 2;
+        }
+
+        function exportResultsPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const w = doc.internal.pageSize.getWidth();
+            let y = 15;
+
+            // Helper functions
+            const addTitle = (text, size) => { doc.setFontSize(size || 18); doc.setTextColor(245, 158, 11); doc.text(text, 14, y); y += 10; };
+            const addLine = (label, value) => { doc.setFontSize(10); doc.setTextColor(100, 116, 139); doc.text(label, 14, y); doc.setTextColor(30, 41, 59); doc.text(String(value), 110, y); y += 6; };
+            const addSeparator = () => { doc.setDrawColor(200, 200, 200); doc.line(14, y, w - 14, y); y += 6; };
+
+            // Header
+            doc.setFontSize(22); doc.setTextColor(245, 158, 11);
+            doc.text('SolarMetrics', 14, y); y += 8;
+            doc.setFontSize(12); doc.setTextColor(100, 116, 139);
+            doc.text('Rapport de simulation solaire', 14, y); y += 4;
+            doc.setFontSize(8);
+            doc.text('Généré le ' + new Date().toLocaleDateString('fr-FR') + ' — solarmetrics.netlify.app', 14, y); y += 10;
+            addSeparator();
+
+            // Location
+            addTitle('Localisation', 14);
+            const countryName = document.getElementById('detectedCountryName').textContent;
+            const lat = document.getElementById('resLatitude').value;
+            const lon = document.getElementById('resLongitude').value;
+            addLine('Pays', countryName);
+            addLine('Coordonnées', lat + '°N, ' + lon + '°E');
+            y += 4; addSeparator();
+
+            // Installation
+            addTitle('Installation', 14);
+            addLine('Puissance installée', document.getElementById('resKwc').textContent + ' kWc');
+            addLine('Surface', (document.getElementById('resSurface').value || '—') + ' m²');
+            addLine('Inclinaison', (document.getElementById('resTilt').value || '—') + '°');
+            const orientVal = document.getElementById('resOrientation').value;
+            const orientLabels = {'0':'Sud','-45':'Sud-Est','45':'Sud-Ouest','-90':'Est','90':'Ouest'};
+            addLine('Orientation', orientLabels[orientVal] || orientVal + '°');
+            y += 4; addSeparator();
+
+            // Production
+            addTitle('Production & Économies', 14);
+            addLine('Production annuelle', document.getElementById('resProduction').textContent + ' kWh');
+            addLine('Production par kWc', document.getElementById('resProductionPerKwc').textContent + ' kWh/kWc');
+            addLine('Économies autoconsommation', document.getElementById('resSavingsAutocons').textContent + ' €/an');
+            addLine('Revenus revente', document.getElementById('resSavingsFeedin').textContent + ' €/an');
+            doc.setFontSize(11); doc.setTextColor(34, 197, 94);
+            doc.text('Économies annuelles totales : ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 8;
+            addSeparator();
+
+            // Financial
+            addTitle('Bilan financier', 14);
+            addLine('Coût installation', document.getElementById('resInstallCost').textContent + ' €');
+            addLine('Coût net après aides', document.getElementById('resNetCost').textContent + ' €');
+            addLine('Amortissement', document.getElementById('resPayback').textContent + ' ans');
+            addLine('VAN (25 ans)', document.getElementById('resNpv').textContent + ' €');
+            addLine('TRI', document.getElementById('resTri').textContent + ' %');
+            addLine('CO₂ évité', document.getElementById('resCo2').textContent + ' kg/an');
+
+            // Detailed mode extras
+            const autoRateEl = document.getElementById('resAutoconsoRate');
+            if (autoRateEl && autoRateEl.textContent !== '—') {
+                y += 4; addSeparator();
+                addTitle('Autoconsommation détaillée', 14);
+                addLine('Taux autoconsommation', autoRateEl.textContent + ' %');
+                addLine('Taux autoproduction', document.getElementById('resAutoprodRate').textContent + ' %');
+                addLine('Autoconsommation directe', document.getElementById('resAutoDirect').textContent + ' kWh');
+                addLine('Via batterie', document.getElementById('resAutoBattery').textContent + ' kWh');
+                addLine('Injection réseau', document.getElementById('resInjection').textContent + ' kWh');
+                addLine('Soutirage réseau', document.getElementById('resSoutirage').textContent + ' kWh');
+            }
+
+            // Footer
+            y += 10;
+            doc.setFontSize(7); doc.setTextColor(150, 150, 150);
+            doc.text('SolarMetrics © 2024-2026 · Bernard Pugnet · Données PVGIS/NREL · Simulation indicative, non contractuelle.', 14, y);
+
+            doc.save('solarmetrics-rapport.pdf');
         }
 
         function openSiteSearch() {
