@@ -1,2 +1,8 @@
 # Redirect HTTP to HTTPS (handled by Netlify automatically)
 # Add custom redirects here if needed
+
+# Merge residential + autoconsommation into unified simulator
+/fr/outils-residentiel        /fr/outils-simulation        301
+/fr/outils-autoconsommation   /fr/outils-simulation        301
+/en/tools-residential          /en/tools-simulation         301
+/en/tools-selfconsumption      /en/tools-simulation         301

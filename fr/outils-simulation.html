@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur Solaire Unifié - SolarMetrics</title>
+    <meta name="description" content="Simulateur solaire unifié : estimez la rentabilité et l'autoconsommation de votre installation photovoltaïque. Mode rapide et détaillé avec batterie.">
+    <meta name="author" content="Bernard Pugnet">
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/outils-simulation">
+    <link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-simulation">
+    <link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-simulation">
+    <link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-simulation">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/solar-data.js"></script>
+    <script src="../js/autoconsommation.js"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+        .tooltip{position:relative;cursor:help}
+        .tooltip .tooltiptext{visibility:hidden;width:280px;background-color:#1e293b;color:#f1f5f9;text-align:left;border-radius:0.5rem;padding:0.75rem;position:absolute;z-index:1000;bottom:120%;left:50%;margin-left:-140px;opacity:0;transition:opacity 0.3s;border:1px solid #475569;font-size:0.75rem;line-height:1.4}
+        .tooltip:hover .tooltiptext{visibility:visible;opacity:1}
+        .input-group input[type="number"]{-moz-appearance:textfield}
+        .input-group input[type="number"]::-webkit-inner-spin-button,.input-group input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+        abbr[title]{text-decoration:underline dotted rgba(6,182,212,0.5);text-underline-offset:3px;cursor:help;position:relative}
+        abbr[title]:hover::after{content:attr(title);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#0f172a;color:#e2e8f0;border:1px solid rgba(6,182,212,0.3);padding:6px 12px;border-radius:8px;font-size:13px;white-space:nowrap;z-index:50;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.4)}
+        #map{height:350px;border-radius:1rem;border:1px solid #334155;margin-bottom:1.5rem}
+        .leaflet-container{background:#1e293b}
+        .chart-container{height:350px;position:relative}
+        .spinner{border:4px solid #334155;border-top-color:#f59e0b;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .mode-toggle{display:flex;gap:0.5rem}
+        .mode-btn{flex:1;px:1rem;py:0.75rem;rounded:0.5rem;border:2px solid #475569;background:transparent;color:#cbd5e1;cursor:pointer;transition:all 0.2s;font-weight:500}
+        .mode-btn.active{border-color:#f59e0b;background:#f59e0b/20;color:#fbbf24}
+        .quick-only{display:block}
+        .detailed-only{display:none}
+        .detailed-tab-btn{display:none}
+        .mode-detailed .quick-only{display:none}
+        .mode-detailed .detailed-only{display:block}
+        .mode-detailed .detailed-tab-btn{display:block}
+        .tab-btn{padding:0.75rem 1.5rem;border-bottom:2px solid transparent;color:#94a3b8;cursor:pointer;transition:all 0.2s;font-size:0.875rem;font-weight:500}
+        .tab-btn.active{border-bottom-color:#f59e0b;color:#fbbf24}
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+        .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1.5rem;text-align:center}
+        .kpi-label{font-size:0.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+        .kpi-value{font-size:1.875rem;font-weight:700;color:#fbbf24;line-height:1}
+        .kpi-unit{font-size:0.75rem;color:#64748b;margin-top:0.25rem}
+        .kpi-highlight{background:linear-gradient(135deg,#f59e0b/20,#ea580c/20);border-color:#f59e0b/50}
+    </style>
+    <style media="print">
+        body{background:white !important;color:black !important}
+        nav,footer,#sim-form,.chart-container,button,#battery-reco-section{display:none !important}
+        #results-section{display:block !important}
+        .bg-slate-800\/50,.bg-gradient-to-r{background:#f8f8f8 !important;border:1px solid #ddd !important}
+        .text-white,.text-amber-400,.text-amber-500,.text-emerald-400,.text-emerald-500{color:black !important}
+        .text-slate-300,.text-slate-400,.text-slate-500{color:#333 !important}
+        strong{color:black !important;-webkit-text-fill-color:black !important}
+        @page{margin:2cm}
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">Économie<svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"><div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]"><a href="economie.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">💰</span><div><div class="text-sm font-semibold text-white">Vue d'ensemble</div><div class="text-xs text-slate-400">Économie du solaire</div></div></a><a href="marches.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/15 text-blue-400 text-base">📊</span><div><div class="text-sm font-semibold text-white">Marchés</div><div class="text-xs text-slate-400">Tendances · PPA · Spot</div></div></a><a href="prix-solaire.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">💲</span><div><div class="text-sm font-semibold text-white">Prix solaire</div><div class="text-xs text-slate-400">Coûts · Modules · Installation</div></div></a><a href="hypotheses.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-500/15 text-slate-400 text-base">📐</span><div><div class="text-sm font-semibold text-white">Hypothèses de calcul</div><div class="text-xs text-slate-400">Méthodologie · Sources</div></div></a></div></div>
+                    </div>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">Technologies<svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"><div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]"><a href="technologies.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">☀️</span><div><div class="text-sm font-semibold text-white">Vue d'ensemble</div><div class="text-xs text-slate-400">Panorama des technologies PV</div></div></a></div></div>
+                    </div>
+                    <a href="analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">Outils<svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"><div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]"><a href="outils-simulation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">⚡</span><div><div class="text-sm font-semibold text-white">Simulateur</div><div class="text-xs text-slate-400">Rentabilité & Autoconsommation</div></div></a><a href="outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"><span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span><div><div class="text-sm font-semibold text-white">Industriel</div><div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div></div></a></div></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="openSiteSearch()" class="p-2 text-slate-400 hover:text-white transition-colors" aria-label="Rechercher sur le site" title="Ctrl+K">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+                    </button>
+                    <div class="flex items-center gap-1">
+                        <a href="../en/tools-simulation.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <a href="outils-simulation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Simulateur</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <section class="py-20 bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <div class="w-16 h-16 mx-auto mb-6 p-4 bg-amber-500/20 rounded-2xl">
+                        <svg class="w-full h-full text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl font-bold text-white mb-4">Simulateur Solaire</h1>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Estimez la rentabilité et l'autoconsommation de votre installation photovoltaïque</p>
+                </div>
+
+                <div id="sim-form" class="space-y-6">
+                    <!-- CARD 1: Mode Selector -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Mode de calcul
+                        </h4>
+                        <div class="mode-toggle">
+                            <button class="mode-btn active" data-mode="quick" onclick="switchMode('quick')">
+                                <div class="font-semibold">Rapide</div>
+                                <div class="text-xs text-slate-400">Rentabilité financière en quelques clics</div>
+                            </button>
+                            <button class="mode-btn" data-mode="detailed" onclick="switchMode('detailed')">
+                                <div class="font-semibold">Détaillé</div>
+                                <div class="text-xs text-slate-400">Simulation horaire complète avec profils de consommation</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: Localisation -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Localisation
+                        </h4>
+                        <div class="space-y-4">
+                            <input type="hidden" id="resCountry" value="FR">
+                            <div id="detectedCountryDisplay" class="flex items-center gap-2 px-4 py-2 bg-slate-800/60 border border-slate-700/50 rounded-lg">
+                                <span class="text-lg">📍</span>
+                                <span id="detectedCountryName" class="text-white text-sm font-medium">France</span>
+                                <span id="detectedCountryFlag" class="text-sm text-slate-400">(FR)</span>
+                            </div>
+                            <p id="netMeteringNote" class="text-xs text-amber-400/80 hidden"></p>
+                            <div id="unsupportedCountryNote" class="hidden p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
+                                <p class="text-xs text-amber-400">⚠️ Pays non référencé dans notre base. Les données d'irradiation (PVGIS) sont exactes, mais les tarifs et aides sont estimés.</p>
+                            </div>
+                            <div id="map" style="height:350px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
+                            <p id="mapHint" class="text-xs text-slate-500">📍 Cliquez sur la carte pour positionner votre installation. Le pays sera détecté automatiquement.</p>
+                            <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
+                                <label class="flex items-center gap-2 text-sm mb-2">
+                                    <input type="checkbox" id="resManualMode" onchange="toggleManualMode()" class="accent-amber-500">
+                                    <span class="text-amber-400 font-medium">Mode manuel</span>
+                                    <span class="tooltip inline-block">
+                                        <span class="text-xs text-slate-500 cursor-help">ⓘ</span>
+                                        <span class="tooltiptext">Si l'API est indisponible, entrez manuellement le productible de votre zone.</span>
+                                    </span>
+                                </label>
+                                <div id="manualInputSection" class="hidden mt-2">
+                                    <label class="text-xs text-slate-400 mb-1 block">Productible année 1 (kWh/kWc/an)</label>
+                                    <input type="number" id="resManualProductible" value="1200" min="500" max="2500" step="10" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
+                                    <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-slate-400 mb-2 block">Longitude</label>
+                                    <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3: Système PV -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Système Photovoltaïque
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Orientation</label>
+                                    <select id="resOrientation" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0">Sud (optimal)</option>
+                                        <option value="-45">Sud-Est</option>
+                                        <option value="45">Sud-Ouest</option>
+                                        <option value="-90">Est</option>
+                                        <option value="90">Ouest</option>
+                                        <option value="180">Nord (faible)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Inclinaison (°)</label>
+                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Ombrage (%)</label>
+                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">0% = plein soleil</p>
+                                </div>
+                                <div class="quick-only">
+                                    <label class="text-xs text-slate-400 mb-1 block">Surface toiture (m²)</label>
+                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="quick-only">
+                                    <label class="text-xs text-slate-400 mb-1 block">Type de panneaux</label>
+                                    <select id="resPanelType" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0.21">Standard (~21% rendement)</option>
+                                        <option value="0.23">Premium (~23% rendement)</option>
+                                    </select>
+                                </div>
+                                <div class="detailed-only" style="display:none">
+                                    <label class="text-xs text-slate-400 mb-1 block">Puissance PV (kWc)</label>
+                                    <input type="number" id="simPeakpower" min="0.5" max="36" step="0.5" value="3" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="detailed-only" style="display:none">
+                                    <label class="text-xs text-slate-400 mb-1 block">Pertes système (%)</label>
+                                    <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-400 mt-1">Câbles, onduleur, poussière</p>
+                                </div>
+                                <div class="detailed-only" style="display:none">
+                                    <label class="text-xs text-slate-400 mb-1 block">Type de montage</label>
+                                    <select id="simMounting" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="free">Surimposé (toiture)</option>
+                                        <option value="building">Intégré au bâti (IAB)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 4: Consommation -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Consommation Électrique
+                        </h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-slate-400 mb-1 block">Consommation annuelle (kWh)</label>
+                                <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                            </div>
+                            <div class="quick-only">
+                                <label class="text-xs text-slate-400 mb-1 block">Autoconsommation (%)</label>
+                                <input type="number" id="resSelfConsum" value="30" min="10" max="90" step="5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-400">Sans batterie : 20-40%</strong> · <strong class="text-slate-400">Avec batterie : 50-70%</strong></p>
+                            </div>
+                            <div class="detailed-only space-y-3" style="display:none">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Profil de consommation</label>
+                                    <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="family">Famille 4 personnes</option>
+                                        <option value="retired">Couple retraités</option>
+                                        <option value="telecommute">Télétravail</option>
+                                        <option value="allElectric">Tout-électrique (PAC)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-slate-300 mb-3">Équipements supplémentaires</p>
+                                    <div class="flex flex-col gap-2">
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                            <span class="text-sm text-slate-300">🚗 Véhicule électrique (+2 500 kWh/an)</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                            <span class="text-sm text-slate-300">🌡️ Pompe à chaleur (+4 000 kWh/an)</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                            <span class="text-sm text-slate-300">💧 Chauffe-eau thermodynamique (+1 500 kWh/an)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 5: Batterie -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Batterie de Stockage
+                        </h4>
+                        <label class="flex items-center gap-3 mb-4">
+                            <input type="checkbox" id="resBatteryToggle" onchange="toggleBatteryCapacity()" class="w-4 h-4 rounded border-slate-600 text-amber-500 cursor-pointer">
+                            <span class="text-sm text-slate-400">Ajouter une batterie</span>
+                        </label>
+                        <div id="batteryCapacitySection" style="display:none; display:grid" class="grid grid-cols-2 gap-4">
+                            <div class="quick-only">
+                                <label class="text-xs text-slate-400 mb-1 block">Capacité batterie</label>
+                                <select id="resBatteryCapacity" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <option value="5">5 kWh</option>
+                                    <option value="10" selected>10 kWh</option>
+                                    <option value="15">15 kWh</option>
+                                    <option value="20">20 kWh</option>
+                                </select>
+                            </div>
+                            <div class="detailed-only" style="display:none">
+                                <label class="text-xs text-slate-400 mb-1 block">Capacité batterie (kWh)</label>
+                                <input type="number" id="simBattery" min="0" max="20" step="0.5" value="0" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 mb-1 block">Coût batterie (<span class="cur">€</span>)</label>
+                                <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                <p class="text-xs text-slate-600 mt-0.5">Moy. : <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 6: Paramètres Financiers -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Paramètres Financiers
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Tarif électricité (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resElecPrice" value="0.2516" min="0.05" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p id="eurostatStatus" class="text-xs text-slate-600 mt-0.5"></p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Tarif rachat injection (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resFeedir" value="0.13" min="0" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Coût installation (<span class="cur">€</span>)</label>
+                                    <input type="number" id="resInstallCostOverride" placeholder="Vide = moyenne pays" min="0" max="200000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                    <p class="text-xs text-slate-600 mt-0.5">Moy. : <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWc</p>
+                                </div>
+                                <div class="quick-only">
+                                    <label class="text-xs text-slate-400 mb-1 block">Aides & subventions (<span class="cur">€</span>)</label>
+                                    <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="quick-only grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Dégradation (%/an)</label>
+                                    <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Hausse prix (%/an)</label>
+                                    <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Taux actualisation (%)</label>
+                                    <input type="number" id="resDiscount" value="4" min="1" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="detailed-only grid grid-cols-2 gap-4" style="display:none">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Hausse tarif (%/an)</label>
+                                    <input type="number" id="simPriceIncrease" value="3" min="0" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Coût installation PV (<span class="cur">€</span>)</label>
+                                    <input type="number" id="simCostInstall" min="2000" max="20000" step="500" value="6000" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-4">
+                        <button onclick="calculateSystem()" class="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/></svg>
+                            Calculer
+                        </button>
+                        <button onclick="resetForm()" class="px-6 py-3 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                            Réinitialiser
+                        </button>
+                    </div>
+
+                    <!-- Loading Spinner -->
+                    <div id="sim-loader" class="hidden bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 text-center">
+                        <div class="flex justify-center mb-4">
+                            <div class="spinner"></div>
+                        </div>
+                        <p id="loader-text" class="text-slate-400">Récupération des données PVGIS...</p>
+                    </div>
+                </div>
+
+                <!-- RESULTS SECTION -->
+                <div id="results-section" style="display:none" class="mt-12">
+                    <!-- Tab Navigation -->
+                    <div class="flex gap-2 border-b border-slate-700 mb-8 overflow-x-auto">
+                        <button class="tab-btn active" onclick="switchTab('financial')">
+                            Bilan financier
+                        </button>
+                        <button class="tab-btn detailed-tab-btn" onclick="switchTab('detailed')">
+                            Autoconsommation détaillée
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('subsidies')">
+                            Aides & système
+                        </button>
+                    </div>
+
+                    <!-- TAB 1: Bilan Financier -->
+                    <div id="tab-financial" class="tab-content active">
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Production annuelle</div>
+                                <div class="kpi-value" id="resProduction">—</div>
+                                <div class="kpi-unit">kWh</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Production par kWc</div>
+                                <div class="kpi-value" id="resProductionPerKwc">—</div>
+                                <div class="kpi-unit">kWh/kWc</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Puissance installée</div>
+                                <div class="kpi-value" id="resKwc">—</div>
+                                <div class="kpi-unit">kWc</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Économies autoconsommation</div>
+                                <div class="kpi-value" id="resSavingsAutocons">—</div>
+                                <div class="kpi-unit"><span class="cur">€</span></div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Revenus revente</div>
+                                <div class="kpi-value" id="resSavingsFeedin">—</div>
+                                <div class="kpi-unit"><span class="cur">€</span></div>
+                            </div>
+                            <div class="kpi-card kpi-highlight">
+                                <div class="kpi-label">Économies annuelles</div>
+                                <div class="kpi-value" id="resAnnualSavings">—</div>
+                                <div class="kpi-unit"><span class="cur">€</span></div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Coût installation</div>
+                                <div class="kpi-value" id="resInstallCost">—</div>
+                                <div class="kpi-unit"><span class="cur">€</span></div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Coût net après aides</div>
+                                <div class="kpi-value" id="resNetCost">—</div>
+                                <div class="kpi-unit"><span class="cur">€</span></div>
+                            </div>
+                            <div class="kpi-card kpi-highlight">
+                                <div class="kpi-label">Amortissement</div>
+                                <div class="kpi-value" id="resPayback">—</div>
+                                <div class="kpi-unit">ans</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">VAN 25 ans</div>
+                                <div class="kpi-value" id="resNpv">—</div>
+                                <div class="kpi-unit"><span class="cur">€</span></div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">TRI</div>
+                                <div class="kpi-value" id="resTri">—</div>
+                                <div class="kpi-unit">%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">CO₂ évité</div>
+                                <div class="kpi-value" id="resCo2">—</div>
+                                <div class="kpi-unit">kg/an</div>
+                            </div>
+                        </div>
+                        <div class="grid lg:grid-cols-2 gap-8">
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                                <h3 class="text-lg font-semibold text-white mb-4">Amortissement (25 ans)</h3>
+                                <div class="chart-container">
+                                    <canvas id="paybackChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                                <h3 class="text-lg font-semibold text-white mb-4">Flux énergétique annuel</h3>
+                                <div class="chart-container">
+                                    <canvas id="energyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: Autoconsommation Détaillée -->
+                    <div id="tab-detailed" class="tab-content">
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Taux autoconsommation</div>
+                                <div class="kpi-value" id="resAutoconsoRate">—</div>
+                                <div class="kpi-unit">%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Taux autoproduction</div>
+                                <div class="kpi-value" id="resAutoprodRate">—</div>
+                                <div class="kpi-unit">%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Auto-directe</div>
+                                <div class="kpi-value" id="resAutoDirect">—</div>
+                                <div class="kpi-unit">kWh</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Auto-batterie</div>
+                                <div class="kpi-value" id="resAutoBattery">—</div>
+                                <div class="kpi-unit">kWh</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Injection</div>
+                                <div class="kpi-value" id="resInjection">—</div>
+                                <div class="kpi-unit">kWh</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Soutirage</div>
+                                <div class="kpi-value" id="resSoutirage">—</div>
+                                <div class="kpi-unit">kWh</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 mb-8">
+                            <h3 class="text-lg font-semibold text-white mb-4">Bilan mensuel</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b border-slate-700/50">
+                                            <th class="text-left text-slate-400 py-2 px-2">Mois</th>
+                                            <th class="text-right text-slate-400 py-2 px-2">Production (kWh)</th>
+                                            <th class="text-right text-slate-400 py-2 px-2">Consommation (kWh)</th>
+                                            <th class="text-right text-slate-400 py-2 px-2">Auto (%)</th>
+                                            <th class="text-right text-slate-400 py-2 px-2">Injection (kWh)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monthlyTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                                <h3 class="text-lg font-semibold text-white mb-4">Profil mensuel</h3>
+                                <div class="chart-container">
+                                    <canvas id="chartMonthly"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                                <h3 class="text-lg font-semibold text-white mb-4">Répartition énergétique</h3>
+                                <div class="chart-container">
+                                    <canvas id="chartDonut"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid lg:grid-cols-2 gap-8">
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                                <h3 class="text-lg font-semibold text-white mb-4">Jour type été (juin-juillet)</h3>
+                                <div class="chart-container">
+                                    <canvas id="chartDailySummer"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                                <h3 class="text-lg font-semibold text-white mb-4">Jour type hiver (déc-jan)</h3>
+                                <div class="chart-container">
+                                    <canvas id="chartDailyWinter"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="batteryComparisonSection" class="mt-8 bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h3 class="text-lg font-semibold text-white mb-4">Comparaison batterie</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm" id="batteryComparisonTable"></table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: Aides & Système -->
+                    <div id="tab-subsidies" class="tab-content">
+                        <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 mb-8">
+                            <h3 id="subsidyTitle" class="text-lg font-semibold text-white mb-4">Aides et subventions</h3>
+                            <div id="subsidyContent" class="text-slate-400 space-y-3"></div>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h3 class="text-lg font-semibold text-white mb-4">Récapitulatif système</h3>
+                            <div id="systemRecap" class="grid grid-cols-2 gap-4 text-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-sm">
+            SolarMetrics © 2024-2026 · Bernard Pugnet
+        </div>
+    </footer>
+
+    <script>
+        // ══════════════════════════════════════════════════════════════════════
+        // GLOBAL VARIABLES
+        // ══════════════════════════════════════════════════════════════════════
+        let map, marker;
+        let paybackChartInstance, energyChartInstance, monthlyChartInstance, dailySummerChartInstance;
+        let dailyWinterChartInstance, donutChartInstance, cashflowChartInstance;
+        let currentMode = 'quick';
+        let cachedPvgisData = null;
+
+        const countryCoords = {
+            FR: { lat: 48.8566, lon: 2.3522 },
+            DE: { lat: 51.1657, lon: 10.4515 },
+            ES: { lat: 40.4637, lon: -3.7492 },
+            IT: { lat: 41.8719, lon: 12.5674 },
+            PL: { lat: 51.9194, lon: 19.1451 },
+            NL: { lat: 52.1326, lon: 5.2913 },
+            BE: { lat: 50.5039, lon: 4.4699 },
+            AT: { lat: 47.5162, lon: 14.5501 },
+            GR: { lat: 39.0742, lon: 21.8243 },
+            PT: { lat: 39.3999, lon: -8.2245 },
+            US: { lat: 37.0902, lon: -95.7129 },
+            CA: { lat: 56.1304, lon: -106.3468 }
+        };
+
+        const countryNamesFR = {
+            FR: 'France', DE: 'Allemagne', ES: 'Espagne', IT: 'Italie', PL: 'Pologne',
+            NL: 'Pays-Bas', BE: 'Belgique', AT: 'Autriche', GR: 'Grèce', PT: 'Portugal',
+            US: 'États-Unis', CA: 'Canada'
+        };
+
+        // ══════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ══════════════════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            updateLocationData();
+            updateEurostatPrices();
+            document.getElementById('menuBtn').addEventListener('click', toggleMobileMenu);
+            document.getElementById('resBatteryToggle').addEventListener('change', toggleBatteryCapacity);
+        });
+
+        function initMap() {
+            map = L.map('map').setView([48.8566, 2.3522], 5);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            marker = L.marker([48.8566, 2.3522], { draggable: true }).addTo(map);
+            marker.on('dragend', function() {
+                const latlng = marker.getLatLng();
+                document.getElementById('resLatitude').value = latlng.lat.toFixed(4);
+                document.getElementById('resLongitude').value = latlng.lng.toFixed(4);
+                reverseGeocode(latlng.lat, latlng.lng);
+            });
+
+            map.on('click', function(e) {
+                const latlng = e.latlng;
+                marker.setLatLng(latlng);
+                document.getElementById('resLatitude').value = latlng.lat.toFixed(4);
+                document.getElementById('resLongitude').value = latlng.lng.toFixed(4);
+                reverseGeocode(latlng.lat, latlng.lng);
+            });
+        }
+
+        function reverseGeocode(lat, lon) {
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+            fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.address && data.address.country_code) {
+                        const cc = data.address.country_code.toUpperCase();
+                        if (countryCoords[cc]) {
+                            document.getElementById('resCountry').value = cc;
+                            updateLocationData();
+                        }
+                    }
+                })
+                .catch(e => console.log('Geocoding error:', e));
+        }
+
+        function updateLocationData() {
+            const cc = document.getElementById('resCountry').value;
+            const countryName = countryNamesFR[cc] || cc;
+            document.getElementById('detectedCountryName').textContent = countryName;
+            document.getElementById('detectedCountryFlag').textContent = `(${cc})`;
+
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
+            if (countryData) {
+                document.getElementById('resElecPrice').value = countryData.electricityPrice;
+                document.getElementById('resFeedir').value = countryData.feedInTariff || 0.13;
+                document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
+                document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
+                // Sync detailed mode install cost field
+                document.getElementById('simCostInstall').value = Math.round(countryData.installCostPerKwc.avg * 3);
+                // Currency symbol
+                document.querySelectorAll('.cur').forEach(el => el.textContent = countryData.currencySymbol || '€');
+                // Net metering note
+                var nmNote = document.getElementById('netMeteringNote');
+                if (countryData.netMeteringNote) {
+                    nmNote.textContent = '⚠️ ' + countryData.netMeteringNote.fr;
+                    nmNote.classList.remove('hidden');
+                } else {
+                    nmNote.classList.add('hidden');
+                }
+                // Unsupported note
+                document.getElementById('unsupportedCountryNote').classList.add('hidden');
+            } else {
+                // Unsupported country
+                document.getElementById('unsupportedCountryNote').classList.remove('hidden');
+                document.querySelectorAll('.cur').forEach(el => el.textContent = '€');
+            }
+            // Update subsidy info
+            updateSubsidyInfo(cc);
+        }
+
+        function updateEurostatPrices() {
+            const cc = document.getElementById('resCountry').value;
+            let priceMsg = 'Prix détecté (Eurostat 2025)';
+            document.getElementById('eurostatStatus').textContent = priceMsg;
+        }
+
+        function updateSubsidyInfo(countryCode) {
+            const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
+            const lang = 'fr';
+            var titleEl = document.getElementById('subsidyTitle');
+            var contentEl = document.getElementById('subsidyContent');
+            if (!titleEl || !contentEl) return;
+            if (!countryData || !countryData.subsidies || !countryData.subsidies[lang]) {
+                const cName = countryNamesFR[countryCode] || countryCode;
+                titleEl.textContent = 'Aides disponibles';
+                contentEl.innerHTML = '<p class="text-slate-400">Données de subventions non disponibles pour ' + cName + '.</p><p class="text-xs text-slate-500 mt-2">Les données d\'irradiation (PVGIS) restent exactes. Les coûts utilisés sont des estimations génériques.</p>';
+                return;
+            }
+            const sub = countryData.subsidies[lang];
+            titleEl.textContent = 'Aides disponibles';
+            let html = '<h5 class="text-white font-semibold mb-3">' + sub.title + '</h5><ul class="list-disc list-inside space-y-1.5">';
+            sub.items.forEach(function(item) { html += '<li>' + item + '</li>'; });
+            html += '</ul>';
+            html += '<p class="mt-4"><a href="' + sub.officialLink + '" target="_blank" class="text-cyan-400 hover:underline">Site officiel : ' + sub.officialLabel + ' →</a></p>';
+            if (countryData.comparator) {
+                html += '<p class="mt-2"><a href="' + countryData.comparator.url + '" target="_blank" class="text-amber-400 hover:underline">Comparer les installateurs : ' + countryData.comparator.name + ' →</a></p>';
+            }
+            html += '<p class="mt-3 text-xs text-slate-500">Tarif spot variable ; vérifiez votre contrat actuel. Les aides varient selon la puissance, le type de contrat et parfois les revenus.</p>';
+            contentEl.innerHTML = html;
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            const form = document.getElementById('sim-form');
+            if (mode === 'quick') {
+                form.classList.remove('mode-detailed');
+                document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-mode="quick"]').classList.add('active');
+            } else {
+                form.classList.add('mode-detailed');
+                document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-mode="detailed"]').classList.add('active');
+            }
+        }
+
+        function toggleBatteryCapacity() {
+            const toggle = document.getElementById('resBatteryToggle').checked;
+            const section = document.getElementById('batteryCapacitySection');
+            section.style.display = toggle ? 'grid' : 'none';
+        }
+
+        function toggleManualMode() {
+            const toggle = document.getElementById('resManualMode').checked;
+            document.getElementById('manualInputSection').style.display = toggle ? 'block' : 'none';
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+        }
+
+        function resetForm() {
+            document.getElementById('resOrientation').value = '0';
+            document.getElementById('resTilt').value = '30';
+            document.getElementById('resShading').value = '0';
+            document.getElementById('resSurface').value = '30';
+            document.getElementById('resPanelType').value = '0.21';
+            document.getElementById('resConsumption').value = '4000';
+            document.getElementById('resSelfConsum').value = '30';
+            document.getElementById('resElecPrice').value = '0.2516';
+            document.getElementById('resFeedir').value = '0.13';
+            document.getElementById('resSubsidies').value = '3000';
+            document.getElementById('resDegradation').value = '0.5';
+            document.getElementById('resPriceIncrease').value = '2.5';
+            document.getElementById('resDiscount').value = '4';
+            document.getElementById('resBatteryToggle').checked = false;
+            toggleBatteryCapacity();
+            currentMode = 'quick';
+            switchMode('quick');
+        }
+
+        async function calculateSystem() {
+            if (currentMode === 'quick') {
+                await calculateQuick();
+            } else {
+                await calculateDetailed();
+            }
+        }
+
+        async function calculateQuick() {
+            document.getElementById('sim-form').style.display = 'none';
+            document.getElementById('sim-loader').style.display = 'block';
+            document.getElementById('loader-text').textContent = 'Récupération des données PVGIS...';
+
+            try {
+                const lat = parseFloat(document.getElementById('resLatitude').value);
+                const lon = parseFloat(document.getElementById('resLongitude').value);
+                const tilt = parseFloat(document.getElementById('resTilt').value);
+                const aspect = parseInt(document.getElementById('resOrientation').value);
+                const shading = parseFloat(document.getElementById('resShading').value) / 100;
+                const surface = parseFloat(document.getElementById('resSurface').value);
+                const panelType = parseFloat(document.getElementById('resPanelType').value);
+                const consumption = parseFloat(document.getElementById('resConsumption').value);
+                const selfConsum = parseFloat(document.getElementById('resSelfConsum').value) / 100;
+                const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
+                const feedinPrice = parseFloat(document.getElementById('resFeedir').value);
+                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
+                const degradation = parseFloat(document.getElementById('resDegradation').value) / 100;
+                const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
+                const discount = parseFloat(document.getElementById('resDiscount').value) / 100;
+                const hasBattery = document.getElementById('resBatteryToggle').checked;
+                const batteryCapacity = hasBattery ? parseFloat(document.getElementById('resBatteryCapacity').value) : 0;
+
+                // Estimate power from surface: kWc = surface × 0.85 (coverage) × efficiency
+                const kwc = surface * 0.85 * panelType;
+
+                // Try to fetch PVGIS data
+                let production = null;
+                if (!document.getElementById('resManualMode').checked) {
+                    const pvgisData = await window.AutoconsommationSimulator.fetchPvgisHourly({
+                        lat, lon, peakpower: kwc, loss: 14, angle: tilt, aspect: aspect, mountingplace: 'free'
+                    });
+                    if (pvgisData.success) {
+                        let totalProd = 0;
+                        pvgisData.hourly.forEach(h => totalProd += h.P / 1000);
+                        production = totalProd * (1 - degradation);
+                    }
+                } else {
+                    const productible = parseFloat(document.getElementById('resManualProductible').value);
+                    production = kwc * productible;
+                }
+
+                if (!production) {
+                    production = kwc * 1200; // fallback estimate
+                }
+
+                const productionPerKwc = production / kwc;
+
+                // Financial calculations
+                const autoConsumption = Math.min(production * selfConsum, consumption);
+                const savingsAutocons = autoConsumption * elecPrice;
+                const injection = production - autoConsumption;
+                const savingsFeedin = injection * feedinPrice;
+                const annualSavings = savingsAutocons + savingsFeedin;
+
+                // Installation cost
+                let installCost = parseFloat(document.getElementById('resInstallCostOverride').value);
+                if (!installCost || isNaN(installCost)) {
+                    const avgCost = parseInt(document.getElementById('resAvgCostHint').textContent) || 1500;
+                    installCost = kwc * avgCost;
+                }
+
+                // Battery cost
+                let batteryCost = 0;
+                if (hasBattery) {
+                    let bcost = parseFloat(document.getElementById('resBatteryCostOverride').value);
+                    if (!bcost || isNaN(bcost)) {
+                        const avgBatteryCost = parseInt(document.getElementById('resAvgBatteryCostHint').textContent) || 430;
+                        bcost = batteryCapacity * avgBatteryCost;
+                    }
+                    batteryCost = bcost;
+                }
+
+                const totalInvestment = installCost + batteryCost;
+                const netCost = Math.max(0, totalInvestment - subsidies);
+
+                // Payback, NPV & IRR (25 years with degradation + price increase)
+                const years = 25;
+                let npv = -netCost;
+                const cashFlows = [-netCost];
+                let payback = 99;
+                let cumulPayback = 0;
+
+                for (let y = 1; y <= years; y++) {
+                    const yProd = production * Math.pow(1 - degradation, y - 1);
+                    const yPrice = elecPrice * Math.pow(1 + priceIncrease, y - 1);
+                    const yearSavings = yProd * selfConsum * yPrice + yProd * (1 - selfConsum) * feedinPrice;
+                    npv += yearSavings / Math.pow(1 + discount, y);
+                    cashFlows.push(yearSavings);
+                    cumulPayback += yearSavings;
+                    if (cumulPayback >= netCost && payback === 99) payback = y;
+                }
+
+                // Calculate IRR (Newton-Raphson)
+                irr = calculateIRR(cashFlows);
+
+                // CO2 avoided (using country-specific factor from Ember, in gCO₂/kWh)
+                const cc = document.getElementById('resCountry').value;
+                const cData = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
+                const co2PerKwh = cData ? cData.co2Factor : 300; // gCO₂/kWh
+                const co2Avoided = production * co2PerKwh / 1000; // kg/year
+
+                // Display results
+                displayFinancialResults(production, productionPerKwc, kwc, savingsAutocons, savingsFeedin, annualSavings, installCost, netCost, payback, npv, irr, co2Avoided);
+                generateFinancialCharts(netCost, installCost, payback, production, autoConsumption, injection);
+                document.getElementById('results-section').style.display = 'block';
+            } catch (error) {
+                console.error('Quick calculation error:', error);
+                document.getElementById('loader-text').textContent = 'Erreur: ' + error.message;
+            } finally {
+                document.getElementById('sim-loader').style.display = 'none';
+                document.getElementById('sim-form').style.display = 'block';
+            }
+        }
+
+        async function calculateDetailed() {
+            document.getElementById('sim-form').style.display = 'none';
+            document.getElementById('sim-loader').style.display = 'block';
+            document.getElementById('loader-text').textContent = 'Récupération des données PVGIS...';
+
+            try {
+                const lat = parseFloat(document.getElementById('resLatitude').value);
+                const lon = parseFloat(document.getElementById('resLongitude').value);
+                const kwc = parseFloat(document.getElementById('simPeakpower').value);
+                const tilt = parseFloat(document.getElementById('resTilt').value);
+                const aspect = parseInt(document.getElementById('resOrientation').value);
+                const loss = parseFloat(document.getElementById('simLoss').value); // 14 = 14%
+                const mounting = document.getElementById('simMounting').value;
+                const consumption = parseFloat(document.getElementById('resConsumption').value);
+                const profile = document.getElementById('simProfile').value;
+                const shading = parseFloat(document.getElementById('resShading').value) / 100;
+                const batteryCapacity = parseFloat(document.getElementById('simBattery').value) || 0;
+                const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
+                const priceRevente = parseFloat(document.getElementById('resFeedir').value);
+                const priceIncrease = parseFloat(document.getElementById('simPriceIncrease').value) / 100;
+                const installCost = parseFloat(document.getElementById('simCostInstall').value) || 6000;
+
+                // Get consumption profile
+                const addons = [];
+                if (document.getElementById('addonEV').checked) addons.push('ev');
+                if (document.getElementById('addonPAC').checked) addons.push('pac');
+                if (document.getElementById('addonECS').checked) addons.push('ecs');
+                const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, addons);
+
+                // Fetch PVGIS hourly data
+                document.getElementById('loader-text').textContent = 'Simulation de l\'autoconsommation...';
+                const pvgisData = await window.AutoconsommationSimulator.fetchPvgisHourly({
+                    lat, lon, peakpower: kwc, loss: loss, angle: tilt, aspect: aspect, mountingplace: mounting
+                });
+
+                if (!pvgisData.success || !pvgisData.hourly) {
+                    throw new Error('PVGIS data unavailable');
+                }
+
+                // Simulate autoconsommation
+                const simResults = window.AutoconsommationSimulator.simulateAutoconsommation(
+                    pvgisData.hourly,
+                    consoProfile,
+                    { capacityKwh: batteryCapacity, effCharge: 0.95, effDischarge: 0.95, dodMax: 0.90 },
+                    shading
+                );
+
+                // Calculate financials
+                let batteryCost = 0;
+                if (batteryCapacity > 0) {
+                    let bcost = parseFloat(document.getElementById('resBatteryCostOverride').value);
+                    if (!bcost || isNaN(bcost)) {
+                        const avgBatteryCost = parseInt(document.getElementById('resAvgBatteryCostHint').textContent) || 430;
+                        bcost = batteryCapacity * avgBatteryCost;
+                    }
+                    batteryCost = bcost;
+                }
+
+                const financials = window.AutoconsommationSimulator.calculateFinancials(
+                    simResults.annual,
+                    {
+                        priceElecKwh: elecPrice,
+                        priceReventeKwh: priceRevente,
+                        costPv: installCost,
+                        costBattery: batteryCost,
+                        priceIncreasePerYear: priceIncrease,
+                        degradationPv: 0.005,
+                        degradationBattery: 0.02,
+                        years: 25
+                    }
+                );
+
+                // Get typical days
+                const typicalDays = window.AutoconsommationSimulator.getTypicalDays(simResults.hourly.production);
+
+                // Display results
+                displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente);
+                generateDetailedCharts(simResults, typicalDays, financials);
+                document.getElementById('results-section').style.display = 'block';
+            } catch (error) {
+                console.error('Detailed calculation error:', error);
+                document.getElementById('loader-text').textContent = 'Erreur: ' + error.message;
+            } finally {
+                document.getElementById('sim-loader').style.display = 'none';
+                document.getElementById('sim-form').style.display = 'block';
+            }
+        }
+
+        function displayFinancialResults(prod, prodKwc, kwc, savings, feedin, annual, cost, netCost, payback, npv, irr, co2) {
+            document.getElementById('resProduction').textContent = Math.round(prod).toLocaleString('fr-FR');
+            document.getElementById('resProductionPerKwc').textContent = Math.round(prodKwc);
+            document.getElementById('resKwc').textContent = kwc.toFixed(2);
+            document.getElementById('resSavingsAutocons').textContent = Math.round(savings).toLocaleString('fr-FR');
+            document.getElementById('resSavingsFeedin').textContent = Math.round(feedin).toLocaleString('fr-FR');
+            document.getElementById('resAnnualSavings').textContent = Math.round(annual).toLocaleString('fr-FR');
+            document.getElementById('resInstallCost').textContent = Math.round(cost).toLocaleString('fr-FR');
+            document.getElementById('resNetCost').textContent = Math.round(netCost).toLocaleString('fr-FR');
+            document.getElementById('resPayback').textContent = payback < 100 ? payback.toFixed(1) : '∞';
+            document.getElementById('resNpv').textContent = Math.round(npv).toLocaleString('fr-FR');
+            document.getElementById('resTri').textContent = irr !== null ? (irr * 100).toFixed(1) : '—';
+            document.getElementById('resCo2').textContent = Math.round(co2).toLocaleString('fr-FR');
+        }
+
+        function displayDetailedResults(sim, fin, kwc, cost, batCost, elecPrice, revPrice) {
+            const annual = sim.annual;
+            document.getElementById('resProduction').textContent = annual.production.toLocaleString('fr-FR');
+            document.getElementById('resProductionPerKwc').textContent = Math.round(annual.production / kwc);
+            document.getElementById('resKwc').textContent = kwc.toFixed(2);
+            document.getElementById('resSavingsAutocons').textContent = Math.round((annual.autoDirect + annual.autoBattery) * elecPrice).toLocaleString('fr-FR');
+            document.getElementById('resSavingsFeedin').textContent = Math.round(annual.injection * revPrice).toLocaleString('fr-FR');
+            const totalSavings = (annual.autoDirect + annual.autoBattery) * elecPrice + annual.injection * revPrice;
+            document.getElementById('resAnnualSavings').textContent = Math.round(totalSavings).toLocaleString('fr-FR');
+            document.getElementById('resInstallCost').textContent = Math.round(cost).toLocaleString('fr-FR');
+            document.getElementById('resNetCost').textContent = Math.round(cost + batCost).toLocaleString('fr-FR');
+            document.getElementById('resPayback').textContent = fin.paybackYear || '∞';
+            document.getElementById('resNpv').textContent = Math.round(fin.totalSavings25y).toLocaleString('fr-FR');
+
+            // Auto-consumption details
+            document.getElementById('resAutoconsoRate').textContent = annual.tauxAutoconsommation.toFixed(1);
+            document.getElementById('resAutoprodRate').textContent = annual.tauxAutoproduction.toFixed(1);
+            document.getElementById('resAutoDirect').textContent = annual.autoDirect.toLocaleString('fr-FR');
+            document.getElementById('resAutoBattery').textContent = annual.autoBattery.toLocaleString('fr-FR');
+            document.getElementById('resInjection').textContent = annual.injection.toLocaleString('fr-FR');
+            document.getElementById('resSoutirage').textContent = annual.soutirage.toLocaleString('fr-FR');
+
+            // Monthly table
+            const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+            let tableHtml = '';
+            for (let m = 0; m < 12; m++) {
+                const prod = sim.monthly.production[m];
+                const conso = sim.monthly.consumption[m];
+                const auto = sim.monthly.autoDirect[m] + sim.monthly.autoBattery[m];
+                const autoRate = conso > 0 ? Math.round(auto / conso * 100) : 0;
+                const inj = sim.monthly.injection[m];
+                tableHtml += `<tr class="border-b border-slate-700/30"><td class="text-left py-2 px-2">${monthNames[m]}</td><td class="text-right py-2 px-2">${prod}</td><td class="text-right py-2 px-2">${conso}</td><td class="text-right py-2 px-2">${autoRate}%</td><td class="text-right py-2 px-2">${inj}</td></tr>`;
+            }
+            document.getElementById('monthlyTable').innerHTML = tableHtml;
+
+            // Subsidies info
+            document.getElementById('subsidyTitle').textContent = 'Aides et subventions';
+            const cc = document.getElementById('resCountry').value;
+            let subsidyText = '<p class="text-slate-300">Aides disponibles pour votre installation solaire.</p>';
+            if (cc === 'FR') {
+                subsidyText += '<p class="mt-2"><strong>France (2026):</strong></p><ul class="list-disc list-inside text-slate-400 space-y-1 mt-1"><li>MaPrimeRénov\' : jusqu\'à 90% du coût (plafond selon revenus)</li><li>Éco-PTZ : prêt sans intérêt jusqu\'à 50 000 €</li><li>TVA 5,5% : au lieu de 20%</li></ul>';
+            }
+            document.getElementById('subsidyContent').innerHTML = subsidyText;
+
+            // System recap
+            const systemRecap = `
+                <div><strong>Puissance :</strong> ${kwc.toFixed(2)} kWc</div>
+                <div><strong>Production :</strong> ${annual.production.toLocaleString('fr-FR')} kWh/an</div>
+                <div><strong>Consommation :</strong> ${annual.consumption.toLocaleString('fr-FR')} kWh/an</div>
+                <div><strong>Batterie :</strong> ${parseInt(sim.hourly.soc[0]) > 0 ? `${parseInt(sim.hourly.soc[sim.hourly.soc.length-1])} kWh (LFP)` : 'Aucune'}</div>
+            `;
+            document.getElementById('systemRecap').innerHTML = systemRecap;
+        }
+
+        function generateFinancialCharts(netCost, installCost, payback, prod, auto, inj) {
+            // Payback chart
+            const years = Array.from({length: 26}, (_, i) => i);
+            const cumulative = years.map(y => {
+                if (y === 0) return -netCost;
+                const savingsY = ((auto * 0.25 + inj * 0.13) * Math.pow(1.025, y - 1)) * y;
+                return -netCost + savingsY;
+            });
+
+            if (paybackChartInstance) paybackChartInstance.destroy();
+            paybackChartInstance = new Chart(document.getElementById('paybackChart'), {
+                type: 'line',
+                data: {
+                    labels: years.map(y => `${y}a`),
+                    datasets: [{
+                        label: 'Cumul net (€)',
+                        data: cumulative,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { ticks: { color: '#cbd5e1' }, grid: { color: 'rgba(71, 85, 105, 0.2)' } } }
+                }
+            });
+
+            // Energy chart
+            if (energyChartInstance) energyChartInstance.destroy();
+            energyChartInstance = new Chart(document.getElementById('energyChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Auto-consommation', 'Injection', 'Soutirage'],
+                    datasets: [{
+                        data: [auto, inj, 0],
+                        backgroundColor: ['#22c55e', '#f59e0b', '#ef4444']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#cbd5e1' } } }
+                }
+            });
+        }
+
+        function generateDetailedCharts(sim, days, fin) {
+            const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+            // Monthly chart
+            if (monthlyChartInstance) monthlyChartInstance.destroy();
+            monthlyChartInstance = new Chart(document.getElementById('chartMonthly'), {
+                type: 'bar',
+                data: {
+                    labels: monthNames,
+                    datasets: [
+                        { label: 'Production', data: sim.monthly.production, backgroundColor: '#f59e0b' },
+                        { label: 'Consommation', data: sim.monthly.consumption, backgroundColor: '#64748b' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { stacked: false, ticks: { color: '#cbd5e1' }, grid: { color: 'rgba(71, 85, 105, 0.2)' } }
+                    }
+                }
+            });
+
+            // Donut chart
+            if (donutChartInstance) donutChartInstance.destroy();
+            donutChartInstance = new Chart(document.getElementById('chartDonut'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Direct', 'Batterie', 'Injection', 'Soutirage'],
+                    datasets: [{
+                        data: [sim.annual.autoDirect, sim.annual.autoBattery, sim.annual.injection, sim.annual.soutirage],
+                        backgroundColor: ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Daily profiles
+            if (dailySummerChartInstance) dailySummerChartInstance.destroy();
+            dailySummerChartInstance = new Chart(document.getElementById('chartDailySummer'), {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 24}, (_, i) => `${i}h`),
+                    datasets: [
+                        { label: 'Production', data: days.summer, borderColor: '#f59e0b', fill: false },
+                        { label: 'Consommation', data: days.summer.map(v => v * 0.5), borderColor: '#64748b', fill: false }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            if (dailyWinterChartInstance) dailyWinterChartInstance.destroy();
+            dailyWinterChartInstance = new Chart(document.getElementById('chartDailyWinter'), {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 24}, (_, i) => `${i}h`),
+                    datasets: [
+                        { label: 'Production', data: days.winter, borderColor: '#3b82f6', fill: false },
+                        { label: 'Consommation', data: days.winter.map(v => v * 1.5), borderColor: '#64748b', fill: false }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function calculateIRR(cashFlows) {
+            let rate = 0.1;
+            for (let iter = 0; iter < 100; iter++) {
+                let npv = 0, dnpv = 0;
+                for (let i = 0; i < cashFlows.length; i++) {
+                    const pv = 1 / Math.pow(1 + rate, i);
+                    npv += cashFlows[i] * pv;
+                    dnpv -= i * cashFlows[i] * pv / (1 + rate);
+                }
+                if (Math.abs(npv) < 1) return rate;
+                rate -= npv / dnpv;
+            }
+            return null;
+        }
+
+        function openSiteSearch() {
+            alert('Recherche de site (à implémenter)');
+        }
+    </script>
+</body>
+</html>
