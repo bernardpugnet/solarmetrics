@@ -324,13 +324,16 @@
                         </h4>
                         <div class="mode-toggle">
                             <button class="mode-btn active" data-mode="quick" onclick="switchMode('quick')">
-                                <div class="font-semibold">Quick</div>
-                                <div class="text-xs text-slate-400">Financial profitability in a few clicks</div>
+                                <div class="font-semibold">⚡ Quick</div>
+                                <div class="text-xs text-slate-400">Financial estimate in a few clicks</div>
                             </button>
                             <button class="mode-btn" data-mode="detailed" onclick="switchMode('detailed')">
-                                <div class="font-semibold">Detailed</div>
-                                <div class="text-xs text-slate-400">Complete hourly simulation with consumption profiles</div>
+                                <div class="font-semibold">🔬 Detailed</div>
+                                <div class="text-xs text-slate-400">8,760-hour simulation with real profiles</div>
                             </button>
+                        </div>
+                        <div id="modeDescription" class="mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-amber-500/5 border-amber-500/20 text-slate-400">
+                            <span class="text-amber-400 font-medium">Quick Mode:</span> Enter roof area and panel type, the simulator calculates the capacity (kWp) and estimates profitability using monthly PVGIS data. Self-consumption rate is entered manually. Ideal for a first estimate.
                         </div>
                     </div>
 
@@ -958,14 +961,19 @@
         function switchMode(mode) {
             currentMode = mode;
             const form = document.getElementById('sim-form');
+            const desc = document.getElementById('modeDescription');
             if (mode === 'quick') {
                 form.classList.remove('mode-detailed');
                 document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
                 document.querySelector('[data-mode="quick"]').classList.add('active');
+                desc.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-amber-500/5 border-amber-500/20 text-slate-400';
+                desc.innerHTML = '<span class="text-amber-400 font-medium">Quick Mode:</span> Enter roof area and panel type, the simulator calculates the capacity (kWp) and estimates profitability using monthly PVGIS data. Self-consumption rate is entered manually. Ideal for a first estimate.';
             } else {
                 form.classList.add('mode-detailed');
                 document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
                 document.querySelector('[data-mode="detailed"]').classList.add('active');
+                desc.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-cyan-500/5 border-cyan-500/20 text-slate-400';
+                desc.innerHTML = '<span class="text-cyan-400 font-medium">Detailed Mode:</span> Hour-by-hour simulation (8,760h/year) via PVGIS API. You enter the capacity in kWp, a real consumption profile, and the simulator automatically calculates self-consumption, grid injection and grid draw. Results include daily summer/winter curves, monthly breakdown, and with/without battery comparison.';
             }
         }
 

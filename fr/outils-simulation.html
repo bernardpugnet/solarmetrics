@@ -324,13 +324,16 @@
                         </h4>
                         <div class="mode-toggle">
                             <button class="mode-btn active" data-mode="quick" onclick="switchMode('quick')">
-                                <div class="font-semibold">Rapide</div>
-                                <div class="text-xs text-slate-400">Rentabilité financière en quelques clics</div>
+                                <div class="font-semibold">⚡ Rapide</div>
+                                <div class="text-xs text-slate-400">Estimation financière en quelques clics</div>
                             </button>
                             <button class="mode-btn" data-mode="detailed" onclick="switchMode('detailed')">
-                                <div class="font-semibold">Détaillé</div>
-                                <div class="text-xs text-slate-400">Simulation horaire complète avec profils de consommation</div>
+                                <div class="font-semibold">🔬 Détaillé</div>
+                                <div class="text-xs text-slate-400">Simulation horaire 8 760h avec profils réels</div>
                             </button>
+                        </div>
+                        <div id="modeDescription" class="mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-amber-500/5 border-amber-500/20 text-slate-400">
+                            <span class="text-amber-400 font-medium">Mode Rapide :</span> Vous indiquez la surface et le type de panneaux, le simulateur calcule la puissance (kWc) et estime la rentabilité via les données PVGIS mensuelles. Taux d'autoconsommation saisi manuellement. Idéal pour une première estimation.
                         </div>
                     </div>
 
@@ -958,14 +961,19 @@
         function switchMode(mode) {
             currentMode = mode;
             const form = document.getElementById('sim-form');
+            const desc = document.getElementById('modeDescription');
             if (mode === 'quick') {
                 form.classList.remove('mode-detailed');
                 document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
                 document.querySelector('[data-mode="quick"]').classList.add('active');
+                desc.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-amber-500/5 border-amber-500/20 text-slate-400';
+                desc.innerHTML = '<span class="text-amber-400 font-medium">Mode Rapide :</span> Vous indiquez la surface et le type de panneaux, le simulateur calcule la puissance (kWc) et estime la rentabilité via les données PVGIS mensuelles. Taux d\'autoconsommation saisi manuellement. Idéal pour une première estimation.';
             } else {
                 form.classList.add('mode-detailed');
                 document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
                 document.querySelector('[data-mode="detailed"]').classList.add('active');
+                desc.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-cyan-500/5 border-cyan-500/20 text-slate-400';
+                desc.innerHTML = '<span class="text-cyan-400 font-medium">Mode Détaillé :</span> Simulation heure par heure (8 760h/an) via l\'API PVGIS. Vous saisissez la puissance en kWc, un profil de consommation réel, et le simulateur calcule automatiquement l\'autoconsommation, l\'injection et le soutirage. Résultats : courbes journalières été/hiver, bilan mensuel, comparaison avec/sans batterie.';
             }
         }
 
