@@ -47,6 +47,7 @@
         .kpi-value{font-size:1.875rem;font-weight:700;color:#fbbf24;line-height:1}
         .kpi-unit{font-size:0.75rem;color:#64748b;margin-top:0.25rem}
         .kpi-highlight{background:linear-gradient(135deg,#f59e0b/20,#ea580c/20);border-color:#f59e0b/50}
+        .kpi-desc{font-size:0.65rem;color:#64748b;margin-top:0.5rem;line-height:1.3;font-style:italic}
     </style>
     <style media="print">
         body{background:white !important;color:black !important}
@@ -618,61 +619,73 @@
                                 <div class="kpi-label">Annual production</div>
                                 <div class="kpi-value" id="resProduction">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Total energy produced by your panels in 1 year, calculated hour-by-hour using PVGIS irradiation data for your location.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Production per kWp</div>
                                 <div class="kpi-value" id="resProductionPerKwc">—</div>
                                 <div class="kpi-unit">kWh/kWp</div>
+                                <div class="kpi-desc">Installation yield: kWh produced per kWp installed. Allows comparing efficiency between sites (800–1,800 depending on location).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Installed capacity</div>
                                 <div class="kpi-value" id="resKwc">—</div>
                                 <div class="kpi-unit">kWp</div>
+                                <div class="kpi-desc">Peak power of your system = surface area × fill factor (85%) × panel efficiency for the selected panel type.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Self-consumption savings</div>
                                 <div class="kpi-value" id="resSavingsAutocons">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Money saved by consuming your solar production directly instead of buying from the grid (self-consumed kWh × electricity price).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Feed-in revenue</div>
                                 <div class="kpi-value" id="resSavingsFeedin">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Revenue from selling surplus electricity to the grid (excess kWh × feed-in tariff for your country).</div>
                             </div>
                             <div class="kpi-card kpi-highlight">
                                 <div class="kpi-label">Annual savings</div>
                                 <div class="kpi-value" id="resAnnualSavings">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Total yearly benefit = self-consumption savings + feed-in revenue. This is the real financial gain from your system each year.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Installation cost</div>
                                 <div class="kpi-value" id="resInstallCost">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Total gross cost: panels + inverter + installation + grid connection (+ battery if enabled). Based on country average or your custom value.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Net cost after subsidies</div>
                                 <div class="kpi-value" id="resNetCost">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Actual cost after deducting your country's subsidies and incentives (self-consumption bonus, tax credits, etc.).</div>
                             </div>
                             <div class="kpi-card kpi-highlight">
                                 <div class="kpi-label">Payback</div>
                                 <div class="kpi-value" id="resPayback">—</div>
                                 <div class="kpi-unit">years</div>
+                                <div class="kpi-desc">Years until cumulative savings cover the net cost. After this point, your system generates pure profit.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">NPV 25 years</div>
                                 <div class="kpi-value" id="resNpv">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Net Present Value: total savings over 25 years minus initial net cost, factoring in annual electricity price increases.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">IRR</div>
                                 <div class="kpi-value" id="resTri">—</div>
                                 <div class="kpi-unit">%</div>
+                                <div class="kpi-desc">Internal Rate of Return: equivalent annual return on your investment. Compare with bank savings (~3%) to assess profitability.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">CO₂ avoided</div>
                                 <div class="kpi-value" id="resCo2">—</div>
                                 <div class="kpi-unit">kg/year</div>
+                                <div class="kpi-desc">CO₂ emissions avoided thanks to your solar production, based on the emission factor of your country's electricity mix.</div>
                             </div>
                         </div>
                         <div class="grid lg:grid-cols-2 gap-8">
@@ -1407,7 +1420,9 @@
             // Helper functions
             const addTitle = (text, size) => { doc.setFontSize(size || 18); doc.setTextColor(245, 158, 11); doc.text(text, 14, y); y += 10; };
             const addLine = (label, value) => { doc.setFontSize(10); doc.setTextColor(100, 116, 139); doc.text(label, 14, y); doc.setTextColor(30, 41, 59); doc.text(String(value), 110, y); y += 6; };
+            const addExplain = (text) => { doc.setFontSize(7.5); doc.setTextColor(140, 140, 160); const lines = doc.splitTextToSize(text, w - 32); doc.text(lines, 18, y); y += lines.length * 3.5 + 2; };
             const addSeparator = () => { doc.setDrawColor(200, 200, 200); doc.line(14, y, w - 14, y); y += 6; };
+            const checkPage = () => { if (y > 270) { doc.addPage(); y = 15; } };
 
             // Header
             doc.setFontSize(22); doc.setTextColor(245, 158, 11);
@@ -1430,49 +1445,84 @@
             // Installation
             addTitle('Installation', 14);
             addLine('Installed capacity', document.getElementById('resKwc').textContent + ' kWp');
-            addLine('Surface', (document.getElementById('resSurface').value || '—') + ' m²');
-            addLine('Tilt', (document.getElementById('resTilt').value || '—') + '°');
+            addExplain('Peak power = surface area × fill factor (85%) × panel efficiency.');
+            addLine('Surface area', (document.getElementById('resSurface').value || '—') + ' m²');
+            addLine('Tilt angle', (document.getElementById('resTilt').value || '—') + '°');
             const orientVal = document.getElementById('resOrientation').value;
             const orientLabels = {'0':'South','-45':'South-East','45':'South-West','-90':'East','90':'West'};
             addLine('Orientation', orientLabels[orientVal] || orientVal + '°');
-            y += 4; addSeparator();
+            y += 4; addSeparator(); checkPage();
 
             // Production
             addTitle('Production & Savings', 14);
             addLine('Annual production', document.getElementById('resProduction').textContent + ' kWh');
+            addExplain('Total energy produced in 1 year, simulated hour-by-hour (8,760 h) using PVGIS data for your location.');
             addLine('Production per kWp', document.getElementById('resProductionPerKwc').textContent + ' kWh/kWp');
+            addExplain('Yield per kWp installed. Varies by region: 800-1,800 kWh/kWp depending on solar irradiation.');
+            checkPage();
             addLine('Self-consumption savings', document.getElementById('resSavingsAutocons').textContent + ' €/year');
+            addExplain('kWh consumed directly × electricity purchase price. You avoid buying from the grid.');
             addLine('Feed-in revenue', document.getElementById('resSavingsFeedin').textContent + ' €/year');
+            addExplain('Surplus kWh injected to grid × country feed-in tariff.');
             doc.setFontSize(11); doc.setTextColor(34, 197, 94);
-            doc.text('Total annual savings: ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 8;
-            addSeparator();
+            doc.text('Total annual savings: ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 5;
+            addExplain('Self-consumption + feed-in = total yearly financial benefit from your system.');
+            addSeparator(); checkPage();
 
             // Financial
             addTitle('Financial Summary', 14);
             addLine('Installation cost', document.getElementById('resInstallCost').textContent + ' €');
+            addExplain('Total gross cost: panels + inverter + installation + grid connection (+ battery if enabled).');
             addLine('Net cost after subsidies', document.getElementById('resNetCost').textContent + ' €');
+            addExplain('Actual cost after deducting national subsidies and incentives.');
             addLine('Payback', document.getElementById('resPayback').textContent + ' years');
+            addExplain('Years until cumulative savings cover the net investment. After this: pure profit.');
+            checkPage();
             addLine('NPV (25 years)', document.getElementById('resNpv').textContent + ' €');
+            addExplain('Net Present Value: total savings over 25 years minus net cost, including annual electricity price increases.');
             addLine('IRR', document.getElementById('resTri').textContent + ' %');
+            addExplain('Internal Rate of Return: equivalent annual yield. Compare with bank savings (~3%) to assess profitability.');
             addLine('CO₂ avoided', document.getElementById('resCo2').textContent + ' kg/year');
+            addExplain('Emissions avoided thanks to solar power, based on the CO₂ factor of your country\'s electricity mix.');
 
             // Detailed mode extras
             const autoRateEl = document.getElementById('resAutoconsoRate');
             if (autoRateEl && autoRateEl.textContent !== '—') {
-                y += 4; addSeparator();
-                addTitle('Detailed self-consumption', 14);
+                y += 4; addSeparator(); checkPage();
+                addTitle('Self-consumption Details', 14);
                 addLine('Self-consumption rate', autoRateEl.textContent + ' %');
+                addExplain('Share of your solar production consumed on-site (directly + via battery).');
                 addLine('Self-production rate', document.getElementById('resAutoprodRate').textContent + ' %');
+                addExplain('Share of your total consumption covered by solar energy.');
                 addLine('Direct self-consumption', document.getElementById('resAutoDirect').textContent + ' kWh');
                 addLine('Via battery', document.getElementById('resAutoBattery').textContent + ' kWh');
                 addLine('Grid injection', document.getElementById('resInjection').textContent + ' kWh');
-                addLine('Grid draw', document.getElementById('resSoutirage').textContent + ' kWh');
+                addLine('Grid withdrawal', document.getElementById('resSoutirage').textContent + ' kWh');
             }
 
+            // Glossary
+            checkPage();
+            y += 4; addSeparator();
+            addTitle('Glossary', 14);
+            doc.setFontSize(8); doc.setTextColor(80, 80, 100);
+            const glossary = [
+                'kWp (kilowatt-peak): maximum power output of a panel under standard test conditions (1000 W/m², 25°C).',
+                'kWh (kilowatt-hour): unit of energy. 1 kWh = running 1,000 watts for 1 hour.',
+                'NPV: sum of discounted cash flows over the system\'s lifetime.',
+                'IRR: discount rate that sets the NPV to zero. Higher IRR = more profitable investment.',
+                'PVGIS: European solar irradiation database (European Commission).',
+                'Self-consumption: share of solar production used on-site instead of being fed into the grid.'
+            ];
+            glossary.forEach(g => {
+                checkPage();
+                const lines = doc.splitTextToSize('• ' + g, w - 32);
+                doc.text(lines, 18, y); y += lines.length * 3.5 + 1.5;
+            });
+
             // Footer
-            y += 10;
+            y += 6; checkPage();
             doc.setFontSize(7); doc.setTextColor(150, 150, 150);
-            doc.text('SolarMetrics © 2024-2026 · Bernard Pugnet · Data PVGIS/NREL · Indicative simulation, not binding.', 14, y);
+            doc.text('SolarMetrics © 2024-2026 · Bernard Pugnet · Data: PVGIS/NREL · Indicative simulation, non-contractual.', 14, y);
 
             doc.save('solarmetrics-report.pdf');
         }

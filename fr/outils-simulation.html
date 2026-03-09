@@ -46,6 +46,7 @@
         .kpi-label{font-size:0.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
         .kpi-value{font-size:1.875rem;font-weight:700;color:#fbbf24;line-height:1}
         .kpi-unit{font-size:0.75rem;color:#64748b;margin-top:0.25rem}
+        .kpi-desc{font-size:0.65rem;color:#64748b;margin-top:0.5rem;line-height:1.3;font-style:italic}
         .kpi-highlight{background:linear-gradient(135deg,#f59e0b/20,#ea580c/20);border-color:#f59e0b/50}
     </style>
     <style media="print">
@@ -620,61 +621,73 @@
                                 <div class="kpi-label">Production annuelle</div>
                                 <div class="kpi-value" id="resProduction">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Énergie totale produite par vos panneaux en 1 an, calculée heure par heure via les données d'irradiation PVGIS de votre localisation.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Production par kWc</div>
                                 <div class="kpi-value" id="resProductionPerKwc">—</div>
                                 <div class="kpi-unit">kWh/kWc</div>
+                                <div class="kpi-desc">Rendement de l'installation : kWh produits par kWc installé. Permet de comparer l'efficacité entre différents sites (1 000–1 500 en France).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Puissance installée</div>
                                 <div class="kpi-value" id="resKwc">—</div>
                                 <div class="kpi-unit">kWc</div>
+                                <div class="kpi-desc">Puissance crête de l'installation = surface × coefficient de remplissage (85%) × rendement du panneau choisi.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Économies autoconsommation</div>
                                 <div class="kpi-value" id="resSavingsAutocons">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Argent économisé en consommant directement votre production solaire au lieu d'acheter au réseau (kWh autoconsommés × prix d'achat).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Revenus revente</div>
                                 <div class="kpi-value" id="resSavingsFeedin">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Revenus de la vente du surplus d'électricité injecté sur le réseau (kWh excédentaires × tarif de rachat de votre pays).</div>
                             </div>
                             <div class="kpi-card kpi-highlight">
                                 <div class="kpi-label">Économies annuelles</div>
                                 <div class="kpi-value" id="resAnnualSavings">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Total des gains annuels = économies autoconsommation + revenus revente surplus. C'est le bénéfice réel de votre installation chaque année.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Coût installation</div>
                                 <div class="kpi-value" id="resInstallCost">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Coût total brut : panneaux + onduleur + pose + raccordement (+ batterie si activée). Basé sur le prix moyen du pays ou votre valeur personnalisée.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Coût net après aides</div>
                                 <div class="kpi-value" id="resNetCost">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Coût réel après déduction des subventions et aides de votre pays (prime à l'autoconsommation, crédit d'impôt, etc.).</div>
                             </div>
                             <div class="kpi-card kpi-highlight">
                                 <div class="kpi-label">Amortissement</div>
                                 <div class="kpi-value" id="resPayback">—</div>
                                 <div class="kpi-unit">ans</div>
+                                <div class="kpi-desc">Nombre d'années pour que les économies cumulées remboursent le coût net. Après cette date, votre installation génère du profit pur.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">VAN 25 ans</div>
                                 <div class="kpi-value" id="resNpv">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
+                                <div class="kpi-desc">Valeur Actuelle Nette : total des économies sur 25 ans moins le coût net initial, ajusté avec la hausse annuelle de l'électricité.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">TRI</div>
                                 <div class="kpi-value" id="resTri">—</div>
                                 <div class="kpi-unit">%</div>
+                                <div class="kpi-desc">Taux de Rentabilité Interne : rendement annuel équivalent de votre investissement. À comparer avec un placement bancaire (~3%).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">CO₂ évité</div>
                                 <div class="kpi-value" id="resCo2">—</div>
                                 <div class="kpi-unit">kg/an</div>
+                                <div class="kpi-desc">Émissions de CO₂ évitées grâce à votre production solaire, basées sur le facteur d'émission du mix électrique de votre pays.</div>
                             </div>
                         </div>
                         <div class="grid lg:grid-cols-2 gap-8">
@@ -1414,7 +1427,9 @@
             // Helper functions
             const addTitle = (text, size) => { doc.setFontSize(size || 18); doc.setTextColor(245, 158, 11); doc.text(text, 14, y); y += 10; };
             const addLine = (label, value) => { doc.setFontSize(10); doc.setTextColor(100, 116, 139); doc.text(label, 14, y); doc.setTextColor(30, 41, 59); doc.text(String(value), 110, y); y += 6; };
+            const addExplain = (text) => { doc.setFontSize(7.5); doc.setTextColor(140, 140, 160); const lines = doc.splitTextToSize(text, w - 32); doc.text(lines, 18, y); y += lines.length * 3.5 + 2; };
             const addSeparator = () => { doc.setDrawColor(200, 200, 200); doc.line(14, y, w - 14, y); y += 6; };
+            const checkPage = () => { if (y > 270) { doc.addPage(); y = 15; } };
 
             // Header
             doc.setFontSize(22); doc.setTextColor(245, 158, 11);
@@ -1437,47 +1452,82 @@
             // Installation
             addTitle('Installation', 14);
             addLine('Puissance installée', document.getElementById('resKwc').textContent + ' kWc');
+            addExplain('Puissance crête = surface × coeff. remplissage (85%) × rendement panneau.');
             addLine('Surface', (document.getElementById('resSurface').value || '—') + ' m²');
             addLine('Inclinaison', (document.getElementById('resTilt').value || '—') + '°');
             const orientVal = document.getElementById('resOrientation').value;
             const orientLabels = {'0':'Sud','-45':'Sud-Est','45':'Sud-Ouest','-90':'Est','90':'Ouest'};
             addLine('Orientation', orientLabels[orientVal] || orientVal + '°');
-            y += 4; addSeparator();
+            y += 4; addSeparator(); checkPage();
 
             // Production
             addTitle('Production & Économies', 14);
             addLine('Production annuelle', document.getElementById('resProduction').textContent + ' kWh');
+            addExplain('Énergie totale produite en 1 an, simulée heure par heure (8 760 h) avec les données PVGIS de votre localisation.');
             addLine('Production par kWc', document.getElementById('resProductionPerKwc').textContent + ' kWh/kWc');
+            addExplain('Rendement par kWc installé. En France : 1 000 à 1 500 kWh/kWc selon la région.');
+            checkPage();
             addLine('Économies autoconsommation', document.getElementById('resSavingsAutocons').textContent + ' €/an');
+            addExplain('kWh consommés directement × prix d\'achat électricité. Vous évitez d\'acheter au réseau.');
             addLine('Revenus revente', document.getElementById('resSavingsFeedin').textContent + ' €/an');
+            addExplain('kWh excédentaires injectés × tarif de rachat du pays.');
             doc.setFontSize(11); doc.setTextColor(34, 197, 94);
-            doc.text('Économies annuelles totales : ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 8;
-            addSeparator();
+            doc.text('Économies annuelles totales : ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 5;
+            addExplain('Autoconsommation + revente = gain annuel total de votre installation.');
+            addSeparator(); checkPage();
 
             // Financial
             addTitle('Bilan financier', 14);
             addLine('Coût installation', document.getElementById('resInstallCost').textContent + ' €');
+            addExplain('Coût brut total : panneaux + onduleur + pose + raccordement (+ batterie si activée).');
             addLine('Coût net après aides', document.getElementById('resNetCost').textContent + ' €');
+            addExplain('Coût réel après déduction des subventions et aides nationales.');
             addLine('Amortissement', document.getElementById('resPayback').textContent + ' ans');
+            addExplain('Années nécessaires pour que les économies cumulées couvrent l\'investissement net. Après : profit pur.');
+            checkPage();
             addLine('VAN (25 ans)', document.getElementById('resNpv').textContent + ' €');
+            addExplain('Valeur Actuelle Nette : économies totales sur 25 ans − coût net, incluant la hausse annuelle du prix de l\'électricité.');
             addLine('TRI', document.getElementById('resTri').textContent + ' %');
+            addExplain('Taux de Rentabilité Interne : rendement annuel équivalent. À comparer à un placement bancaire (~3%).');
             addLine('CO₂ évité', document.getElementById('resCo2').textContent + ' kg/an');
+            addExplain('Émissions évitées grâce au solaire, basées sur le facteur CO₂ du mix électrique national.');
 
             // Detailed mode extras
             const autoRateEl = document.getElementById('resAutoconsoRate');
             if (autoRateEl && autoRateEl.textContent !== '—') {
-                y += 4; addSeparator();
+                y += 4; addSeparator(); checkPage();
                 addTitle('Autoconsommation détaillée', 14);
                 addLine('Taux autoconsommation', autoRateEl.textContent + ' %');
+                addExplain('Part de votre production solaire que vous consommez vous-même (directement + via batterie).');
                 addLine('Taux autoproduction', document.getElementById('resAutoprodRate').textContent + ' %');
+                addExplain('Part de votre consommation totale couverte par le solaire.');
                 addLine('Autoconsommation directe', document.getElementById('resAutoDirect').textContent + ' kWh');
                 addLine('Via batterie', document.getElementById('resAutoBattery').textContent + ' kWh');
                 addLine('Injection réseau', document.getElementById('resInjection').textContent + ' kWh');
                 addLine('Soutirage réseau', document.getElementById('resSoutirage').textContent + ' kWh');
             }
 
+            // Glossary
+            checkPage();
+            y += 4; addSeparator();
+            addTitle('Glossaire', 14);
+            doc.setFontSize(8); doc.setTextColor(80, 80, 100);
+            const glossary = [
+                'kWc (kilowatt-crête) : puissance maximale d\'un panneau en conditions standard (1000 W/m², 25°C).',
+                'kWh (kilowattheure) : unité d\'énergie. 1 kWh = 1 heure à 1 000 watts.',
+                'VAN : somme des flux financiers actualisés sur la durée de vie de l\'installation.',
+                'TRI : taux d\'actualisation qui annule la VAN. Plus il est élevé, plus l\'investissement est rentable.',
+                'PVGIS : base de données européenne d\'irradiation solaire (Commission européenne).',
+                'Autoconsommation : part de la production solaire utilisée sur place au lieu d\'être injectée.'
+            ];
+            glossary.forEach(g => {
+                checkPage();
+                const lines = doc.splitTextToSize('• ' + g, w - 32);
+                doc.text(lines, 18, y); y += lines.length * 3.5 + 1.5;
+            });
+
             // Footer
-            y += 10;
+            y += 6; checkPage();
             doc.setFontSize(7); doc.setTextColor(150, 150, 150);
             doc.text('SolarMetrics © 2024-2026 · Bernard Pugnet · Données PVGIS/NREL · Simulation indicative, non contractuelle.', 14, y);
 
