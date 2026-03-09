@@ -37,15 +37,6 @@
         .chart-container{height:350px;position:relative}
         .spinner{border:4px solid #334155;border-top-color:#f59e0b;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite}
         @keyframes spin{to{transform:rotate(360deg)}}
-        .mode-toggle{display:flex;gap:0.5rem}
-        .mode-btn{flex:1;px:1rem;py:0.75rem;rounded:0.5rem;border:2px solid #475569;background:transparent;color:#cbd5e1;cursor:pointer;transition:all 0.2s;font-weight:500}
-        .mode-btn.active{border-color:#f59e0b;background:#f59e0b/20;color:#fbbf24}
-        .quick-only{display:block}
-        .detailed-only{display:none}
-        .detailed-tab-btn{display:none}
-        .mode-detailed .quick-only{display:none}
-        .mode-detailed .detailed-only{display:block}
-        .mode-detailed .detailed-tab-btn{display:block}
         .tab-btn{padding:0.75rem 1.5rem;border-bottom:2px solid transparent;color:#94a3b8;cursor:pointer;transition:all 0.2s;font-size:0.875rem;font-weight:500}
         .tab-btn.active{border-bottom-color:#f59e0b;color:#fbbf24}
         .tab-content{display:none}
@@ -317,24 +308,12 @@
                 </div>
 
                 <div id="sim-form" class="space-y-6">
-                    <!-- CARD 1: Mode Selector -->
+                    <!-- CARD 1: Introduction -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
-                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                            <span class="text-amber-500">●</span> Calculation mode
+                        <h4 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Unified Solar Simulator
                         </h4>
-                        <div class="mode-toggle">
-                            <button class="mode-btn active" data-mode="quick" onclick="switchMode('quick')">
-                                <div class="font-semibold">⚡ Quick</div>
-                                <div class="text-xs text-slate-400">Financial estimate in a few clicks</div>
-                            </button>
-                            <button class="mode-btn" data-mode="detailed" onclick="switchMode('detailed')">
-                                <div class="font-semibold">🔬 Detailed</div>
-                                <div class="text-xs text-slate-400">8,760-hour simulation with real profiles</div>
-                            </button>
-                        </div>
-                        <div id="modeDescription" class="mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-amber-500/5 border-amber-500/20 text-slate-400">
-                            <span class="text-amber-400 font-medium">Quick Mode:</span> Enter roof area and panel type, the simulator calculates the capacity (kWp) and estimates profitability using monthly PVGIS data. Self-consumption rate is entered manually. Ideal for a first estimate.
-                        </div>
+                        <p class="text-sm text-slate-400 leading-relaxed">Complete hourly simulation (8,760h/year) via the PVGIS API. Enter your roof details, consumption and financial parameters to get a detailed profitability analysis with self-consumption curves.</p>
                     </div>
 
                     <!-- CARD 2: Location -->
@@ -411,47 +390,56 @@
                                     <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                     <p class="text-xs text-slate-600 mt-0.5">0% = full sun</p>
                                 </div>
-                                <div class="quick-only">
+                                <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Roof surface (m²)</label>
-                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="quick-only">
-                                    <label class="text-xs text-slate-400 mb-1 block">Panel type</label>
-                                    <select id="resPanelType" onchange="showPanelInfo(this.value)" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="0.17">Polycrystalline (~17%)</option>
-                                        <option value="0.20" selected>Monocrystalline PERC (~20%)</option>
-                                        <option value="0.22">Monocrystalline TOPCon (~22%)</option>
-                                        <option value="0.235">Heterojunction HJT (~23.5%)</option>
-                                        <option value="0.245">Back-contact IBC (~24.5%)</option>
-                                    </select>
-                                    <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
-                                        <strong class="text-amber-400" id="panelInfoTitle">Monocrystalline PERC</strong>
-                                        <p id="panelInfoDesc" class="mt-1 leading-relaxed">Most widely deployed technology. Rear-side treatment (Passivated Emitter Rear Cell) improves light capture. Excellent value for money.</p>
-                                        <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
-                                            <span id="panelInfoEff">⚡ Efficiency: 19–21%</span>
-                                            <span id="panelInfoPrice">💰 Price: $0.25–0.35/Wp</span>
-                                        </div>
+                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Available area for panels. A standard panel is ~1.7 m². Allow ~6 m²/kWp installed.
                                     </div>
                                 </div>
-                                <div class="detailed-only" style="display:none">
-                                    <label class="text-xs text-slate-400 mb-1 block">PV power (kWp)</label>
-                                    <input type="number" id="simPeakpower" min="0.5" max="36" step="0.5" value="3" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 mb-1 block">Panel type</label>
+                                <select id="resPanelType" onchange="showPanelInfo(this.value); updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <option value="0.17">Polycrystalline (~17%)</option>
+                                    <option value="0.20" selected>Monocrystalline PERC (~20%)</option>
+                                    <option value="0.22">Monocrystalline TOPCon (~22%)</option>
+                                    <option value="0.235">Heterojunction HJT (~23.5%)</option>
+                                    <option value="0.245">Back-contact IBC (~24.5%)</option>
+                                </select>
+                                <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
+                                    <strong class="text-amber-400" id="panelInfoTitle">Monocrystalline PERC</strong>
+                                    <p id="panelInfoDesc" class="mt-1 leading-relaxed">Most widely deployed technology. Rear-side treatment (Passivated Emitter Rear Cell) improves light capture. Excellent value for money.</p>
+                                    <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
+                                        <span id="panelInfoEff">⚡ Efficiency: 19–21%</span>
+                                        <span id="panelInfoPrice">💰 Price: $0.25–0.35/Wp</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="detailed-only" style="display:none">
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">PV power (kWp)</label>
+                                    <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Auto-calculated: area × 0.85 × efficiency. Override if you know the exact capacity from your quote.
+                                    </div>
+                                </div>
+                                <div>
                                     <label class="text-xs text-slate-400 mb-1 block">System losses (%)</label>
                                     <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-xs text-slate-400 mt-1">Cables, inverter, dust</p>
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Cabling, inverter, dust, temperature losses. 14% is a standard value.
+                                    </div>
                                 </div>
-                                <div class="detailed-only" style="display:none">
+                                <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Mounting type</label>
                                     <select id="simMounting" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="free">Free-standing (roof)</option>
-                                        <option value="building">Building integrated (BIPV)</option>
+                                        <option value="free">Roof-mounted</option>
+                                        <option value="building">Building-integrated (BIPV)</option>
                                     </select>
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Roof-mounted: natural ventilation, better yield. Building-integrated: eligible for higher feed-in tariff.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -466,38 +454,40 @@
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Annual consumption (kWh)</label>
                                 <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                            </div>
-                            <div class="quick-only">
-                                <label class="text-xs text-slate-400 mb-1 block">Self-consumption (%)</label>
-                                <input type="number" id="resSelfConsum" value="30" min="10" max="90" step="5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-400">Without battery: 20-40%</strong> · <strong class="text-slate-400">With battery: 50-70%</strong></p>
-                            </div>
-                            <div class="detailed-only space-y-3" style="display:none">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Consumption profile</label>
-                                    <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="family">Family of 4</option>
-                                        <option value="retired">Retired couple</option>
-                                        <option value="telecommute">Telecommute</option>
-                                        <option value="allElectric">All-electric (Heat pump)</option>
-                                    </select>
+                                <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                    <span class="text-slate-400 font-medium">ℹ️</span> Check your annual bill. UK average: ~3,700 kWh/year for a household.
                                 </div>
-                                <div>
-                                    <p class="text-sm font-medium text-slate-300 mb-3">Additional equipment</p>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex items-center gap-2 cursor-pointer">
-                                            <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
-                                            <span class="text-sm text-slate-300">🚗 Electric vehicle (+2,500 kWh/year)</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 cursor-pointer">
-                                            <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
-                                            <span class="text-sm text-slate-300">🌡️ Heat pump (+4,000 kWh/year)</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 cursor-pointer">
-                                            <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
-                                            <span class="text-sm text-slate-300">💧 Solar hot water (+1,500 kWh/year)</span>
-                                        </label>
-                                    </div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 mb-1 block">Consumption profile</label>
+                                <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <option value="family">Family of 4</option>
+                                    <option value="retired">Retired couple</option>
+                                    <option value="telecommute">Telecommute</option>
+                                    <option value="allElectric">All-electric (Heat pump)</option>
+                                </select>
+                                <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                    <span class="text-slate-400 font-medium">ℹ️</span> Determines the hourly distribution of your consumption (day/night, summer/winter). Direct impact on self-consumption rate.
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-300 mb-3">Additional equipment</p>
+                                <div class="flex flex-col gap-2">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                        <span class="text-sm text-slate-300">🚗 Electric vehicle (+2,500 kWh/year)</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                        <span class="text-sm text-slate-300">🌡️ Heat pump (+4,000 kWh/year)</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                        <span class="text-sm text-slate-300">💧 Solar hot water (+1,500 kWh/year)</span>
+                                    </label>
+                                </div>
+                                <div class="mt-2 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                    <span class="text-slate-400 font-medium">ℹ️</span> These increase consumption but also self-consumption (especially if scheduled during daytime). The simulation adapts the hourly profile accordingly.
                                 </div>
                             </div>
                         </div>
@@ -602,7 +592,7 @@
                             <button class="tab-btn active" onclick="switchTab('financial')">
                                 Financial summary
                             </button>
-                            <button class="tab-btn detailed-tab-btn" onclick="switchTab('detailed')">
+                            <button class="tab-btn" onclick="switchTab('detailed')">
                                 Detailed self-consumption
                             </button>
                             <button class="tab-btn" onclick="switchTab('subsidies')">
@@ -817,7 +807,6 @@
         let map, marker;
         let paybackChartInstance, energyChartInstance, monthlyChartInstance, dailySummerChartInstance;
         let dailyWinterChartInstance, donutChartInstance, cashflowChartInstance;
-        let currentMode = 'quick';
         let cachedPvgisData = null;
 
         const countryCoords = {
@@ -958,23 +947,11 @@
             contentEl.innerHTML = html;
         }
 
-        function switchMode(mode) {
-            currentMode = mode;
-            const form = document.getElementById('sim-form');
-            const desc = document.getElementById('modeDescription');
-            if (mode === 'quick') {
-                form.classList.remove('mode-detailed');
-                document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelector('[data-mode="quick"]').classList.add('active');
-                desc.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-amber-500/5 border-amber-500/20 text-slate-400';
-                desc.innerHTML = '<span class="text-amber-400 font-medium">Quick Mode:</span> Enter roof area and panel type, the simulator calculates the capacity (kWp) and estimates profitability using monthly PVGIS data. Self-consumption rate is entered manually. Ideal for a first estimate.';
-            } else {
-                form.classList.add('mode-detailed');
-                document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelector('[data-mode="detailed"]').classList.add('active');
-                desc.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed border transition-all duration-300 bg-cyan-500/5 border-cyan-500/20 text-slate-400';
-                desc.innerHTML = '<span class="text-cyan-400 font-medium">Detailed Mode:</span> Hour-by-hour simulation (8,760h/year) via PVGIS API. You enter the capacity in kWp, a real consumption profile, and the simulator automatically calculates self-consumption, grid injection and grid draw. Results include daily summer/winter curves, monthly breakdown, and with/without battery comparison.';
-            }
+        function updateKwc() {
+            const surface = parseFloat(document.getElementById('resSurface').value) || 30;
+            const panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
+            const kwc = (surface * 0.85 * panelEff).toFixed(1);
+            document.getElementById('simPeakpower').value = kwc;
         }
 
         function toggleBatteryCapacity() {
@@ -1047,9 +1024,10 @@
             document.getElementById('resShading').value = '0';
             document.getElementById('resSurface').value = '30';
             document.getElementById('resPanelType').value = '0.20';
+            updateKwc();
             showPanelInfo('0.20');
             document.getElementById('resConsumption').value = '4000';
-            document.getElementById('resSelfConsum').value = '30';
+            document.getElementById('simProfile').value = 'family';
             document.getElementById('resElecPrice').value = '0.2516';
             document.getElementById('resFeedir').value = '0.13';
             document.getElementById('resSubsidies').value = '3000';
@@ -1058,133 +1036,10 @@
             document.getElementById('resDiscount').value = '4';
             document.getElementById('resBatteryToggle').checked = false;
             toggleBatteryCapacity();
-            currentMode = 'quick';
-            switchMode('quick');
         }
 
         async function calculateSystem() {
-            if (currentMode === 'quick') {
-                await calculateQuick();
-            } else {
-                await calculateDetailed();
-            }
-        }
-
-        async function calculateQuick() {
-            document.getElementById('sim-form').style.display = 'none';
-            document.getElementById('sim-loader').style.display = 'block';
-            document.getElementById('loader-text').textContent = 'Fetching PVGIS data...';
-
-            try {
-                const lat = parseFloat(document.getElementById('resLatitude').value);
-                const lon = parseFloat(document.getElementById('resLongitude').value);
-                const tilt = parseFloat(document.getElementById('resTilt').value);
-                const aspect = parseInt(document.getElementById('resOrientation').value);
-                const shading = parseFloat(document.getElementById('resShading').value) / 100;
-                const surface = parseFloat(document.getElementById('resSurface').value);
-                const panelType = parseFloat(document.getElementById('resPanelType').value);
-                const consumption = parseFloat(document.getElementById('resConsumption').value);
-                const selfConsum = parseFloat(document.getElementById('resSelfConsum').value) / 100;
-                const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
-                const feedinPrice = parseFloat(document.getElementById('resFeedir').value);
-                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
-                const degradation = parseFloat(document.getElementById('resDegradation').value) / 100;
-                const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
-                const discount = parseFloat(document.getElementById('resDiscount').value) / 100;
-                const hasBattery = document.getElementById('resBatteryToggle').checked;
-                const batteryCapacity = hasBattery ? parseFloat(document.getElementById('resBatteryCapacity').value) : 0;
-
-                // Estimate power from surface: kWp = surface × 0.85 (coverage) × efficiency
-                const kwc = surface * 0.85 * panelType;
-
-                // Try to fetch PVGIS data
-                let production = null;
-                if (!document.getElementById('resManualMode').checked) {
-                    const pvgisData = await window.AutoconsommationSimulator.fetchPvgisHourly({
-                        lat, lon, peakpower: kwc, loss: 14, angle: tilt, aspect: aspect, mountingplace: 'free'
-                    });
-                    if (pvgisData.success) {
-                        let totalProd = 0;
-                        pvgisData.hourly.forEach(h => totalProd += h.P / 1000);
-                        production = totalProd; // degradation applied year-by-year in financial calculation
-                    }
-                } else {
-                    const productible = parseFloat(document.getElementById('resManualProductible').value);
-                    production = kwc * productible;
-                }
-
-                if (!production) {
-                    production = kwc * 1200; // fallback estimate
-                }
-
-                const productionPerKwc = production / kwc;
-
-                // Financial calculations
-                const autoConsumption = Math.min(production * selfConsum, consumption);
-                const savingsAutocons = autoConsumption * elecPrice;
-                const injection = production - autoConsumption;
-                const savingsFeedin = injection * feedinPrice;
-                const annualSavings = savingsAutocons + savingsFeedin;
-
-                // Installation cost
-                let installCost = parseFloat(document.getElementById('resInstallCostOverride').value);
-                if (!installCost || isNaN(installCost)) {
-                    const avgCost = parseInt(document.getElementById('resAvgCostHint').textContent) || 1500;
-                    installCost = kwc * avgCost;
-                }
-
-                // Battery cost
-                let batteryCost = 0;
-                if (hasBattery) {
-                    let bcost = parseFloat(document.getElementById('resBatteryCostOverride').value);
-                    if (!bcost || isNaN(bcost)) {
-                        const avgBatteryCost = parseInt(document.getElementById('resAvgBatteryCostHint').textContent) || 430;
-                        bcost = batteryCapacity * avgBatteryCost;
-                    }
-                    batteryCost = bcost;
-                }
-
-                const totalInvestment = installCost + batteryCost;
-                const netCost = Math.max(0, totalInvestment - subsidies);
-
-                // Payback, NPV & IRR (25 years with degradation + price increase)
-                const years = 25;
-                let npv = -netCost;
-                const cashFlows = [-netCost];
-                let payback = 99;
-                let cumulPayback = 0;
-
-                for (let y = 1; y <= years; y++) {
-                    const yProd = production * Math.pow(1 - degradation, y - 1);
-                    const yPrice = elecPrice * Math.pow(1 + priceIncrease, y - 1);
-                    const yearSavings = yProd * selfConsum * yPrice + yProd * (1 - selfConsum) * feedinPrice;
-                    npv += yearSavings / Math.pow(1 + discount, y);
-                    cashFlows.push(yearSavings);
-                    cumulPayback += yearSavings;
-                    if (cumulPayback >= netCost && payback === 99) payback = y;
-                }
-
-                // CO2 avoided (using country-specific factor from Ember, in gCO₂/kWh)
-                const cc = document.getElementById('resCountry').value;
-                const cData = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
-                const co2PerKwh = cData ? cData.co2Factor : 300; // gCO₂/kWh
-                const co2Avoided = production * co2PerKwh / 1000; // kg/year
-
-                // Calculate IRR (bisection method)
-                let irr = null;
-                try { irr = calculateIRR(cashFlows); } catch(e) { console.warn('IRR error:', e); }
-
-                // Display results
-                displayFinancialResults(production, productionPerKwc, kwc, savingsAutocons, savingsFeedin, annualSavings, installCost, netCost, payback, npv, irr, co2Avoided);
-                generateFinancialCharts(netCost, installCost, payback, production, autoConsumption, injection);
-                document.getElementById('results-section').style.display = 'block';
-            } catch (error) {
-                console.error('Quick calculation error:', error);
-                document.getElementById('loader-text').textContent = 'Error: ' + error.message;
-            } finally {
-                document.getElementById('sim-loader').style.display = 'none';
-                document.getElementById('sim-form').style.display = 'block';
-            }
+            await calculateDetailed();
         }
 
         async function calculateDetailed() {
