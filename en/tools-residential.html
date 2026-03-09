@@ -1114,13 +1114,13 @@ abbr[title]:hover::after {
             const consumption = parseFloat(document.getElementById('resConsumption').value);
             const selfConsum = parseFloat(document.getElementById('resSelfConsum').value) / 100;
             const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
-            const feedin = parseFloat(document.getElementById('resFeedir').value);
-            const subsidies = parseFloat(document.getElementById('resSubsidies').value);
+            const feedin = parseFloat(document.getElementById('resFeedir').value) || 0;
+            const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
             const battery = document.getElementById('resBatteryToggle').checked;
             const batteryCapacity = battery ? parseFloat(document.getElementById('resBatteryCapacity').value) : 0;
-            const degradation = parseFloat(document.getElementById('resDegradation').value) / 100;
-            const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
-            const discount = parseFloat(document.getElementById('resDiscount').value) / 100;
+            const degradation = parseFloat(document.getElementById('resDegradation').value) / 100 || 0;
+            const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100 || 0;
+            const discount = parseFloat(document.getElementById('resDiscount').value) / 100 || 0;
             const lat = parseFloat(document.getElementById('resLatitude').value);
             const lon = parseFloat(document.getElementById('resLongitude').value);
 
