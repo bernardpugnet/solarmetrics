@@ -1,112 +1,68 @@
-// nav-active.js
-// Highlights the current page in the navigation menu (desktop + mobile)
+// nav-active.js — Highlights the current page in nav (desktop + mobile)
 (function () {
-  var page = location.pathname.split('/').pop() || 'index.html';
+  var path = location.pathname;
+  var page = path.split('/').pop() || 'index.html';
+  // Handle trailing slash or no extension (Netlify pretty URLs)
+  if (page === '' || page === 'fr') page = 'index.html';
 
-  // Map each page to its parent menu category keyword
-  var menuMap = {
-    'index.html':        'accueil',
-    'economie.html':     'economie',
-    'marches.html':      'economie',
-    'prix-solaire.html': 'economie',
-    'hypotheses.html':   'economie',
-    'risques-bankability.html': 'economie',
-    'comparatif-pays.html':     'economie',
-    'technologies.html':        'technologies',
-    'technologies-emergentes.html': 'technologies',
-    'vehicle-to-grid.html':     'technologies',
-    'centrales-virtuelles.html':'technologies',
-    'physique-electricite-ferme-photovoltaique.html': 'technologies',
-    'outils-simulation.html':   'outils',
-    'outils-industriel.html':   'outils',
-    'outils.html':              'outils',
-    'comparateur.html':         'outils',
-    'guide-installation.html':  'outils',
-    'widgets.html':             'outils',
-    'ressources.html':          'ressources',
-    'recyclage-fin-de-vie.html':'ressources',
-    'veille-reglementaire.html':'ressources',
-    'mon-solaire-60s.html':     'ressources',
-    'recrutez-moi.html':        'collaborer',
-    'contact.html':             'collaborer',
-    'etude-de-cas.html':        'ressources',
-    'ia-data.html':             'ressources',
-    'schema-grande-installation.html': 'outils',
-    'schema-plug-and-play.html':       'outils'
+  // Map pages to their parent dropdown category
+  var categories = {
+    'economie': ['economie.html','marches.html','prix-solaire.html','hypotheses.html','risques-bankability.html','comparatif-pays.html'],
+    'technologies': ['technologies.html','technologies-emergentes.html','vehicle-to-grid.html','centrales-virtuelles.html','physique-electricite-ferme-photovoltaique.html'],
+    'outils': ['outils.html','outils-simulation.html','outils-industriel.html','comparateur.html','guide-installation.html','widgets.html','schema-grande-installation.html','schema-plug-and-play.html'],
+    'ressources': ['ressources.html','recyclage-fin-de-vie.html','veille-reglementaire.html','mon-solaire-60s.html','etude-de-cas.html','ia-data.html']
   };
 
-  var category = menuMap[page];
-  if (!category) return;
+  var myCategory = null;
+  for (var cat in categories) {
+    if (categories[cat].indexOf(page) !== -1) { myCategory = cat; break; }
+  }
 
-  // --- Find the desktop nav bar ---
-  var nav = document.querySelector('nav');
-  if (!nav) return;
+  // Color constants
+  var AMBER = '#fbbf24';
 
-  // All links and buttons in the nav
-  var allNavLinks = nav.querySelectorAll('a[href], button');
+  // --- DESKTOP: highlight parent dropdown button ---
+  if (myCategory) {
+    var buttons = document.querySelectorAll('nav .relative.group > button');
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      // Extract text only (skip SVG)
+      var txt = '';
+      for (var j = 0; j < btn.childNodes.length; j++) {
+        if (btn.childNodes[j].nodeType === 3) txt += btn.childNodes[j].textContent;
+      }
+      txt = txt.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      // Match category name
+      if (
+        (myCategory === 'economie' && txt.indexOf('conomie') > -1) ||
+        (myCategory === 'technologies' && txt.indexOf('echnolog') > -1) ||
+        (myCategory === 'outils' && txt.indexOf('util') > -1) ||
+        (myCategory === 'ressources' && txt.indexOf('essource') > -1)
+      ) {
+        btn.style.color = AMBER;
+      }
+    }
+  }
 
-  // --- 1) Highlight the exact page link (both in dropdown and mobile) ---
-  allNavLinks.forEach(function (el) {
-    if (el.tagName !== 'A') return;
-    var href = (el.getAttribute('href') || '').split('/').pop().split('?')[0].split('#')[0];
+  // --- DESKTOP + MOBILE: highlight exact page link ---
+  var allLinks = document.querySelectorAll('nav a[href]');
+  for (var k = 0; k < allLinks.length; k++) {
+    var a = allLinks[k];
+    var href = (a.getAttribute('href') || '').split('/').pop().split('?')[0].split('#')[0];
     if (href === page) {
-      // Is it inside the mobile menu?
-      var inMobile = el.closest('#mobileMenu');
+      var inMobile = a.closest('#mobileMenu');
       if (inMobile) {
-        el.classList.remove('text-slate-400');
-        el.classList.add('text-amber-400', 'font-semibold');
+        // Mobile: amber text + bold
+        a.style.color = AMBER;
+        a.style.fontWeight = '600';
+      } else if (a.closest('.relative.group')) {
+        // Desktop dropdown sub-link: left border
+        a.style.borderLeft = '3px solid ' + AMBER;
+        a.style.paddingLeft = '13px';
       } else {
-        // Desktop dropdown sub-link: add left border
-        el.style.borderLeft = '3px solid #f59e0b';
-        el.style.paddingLeft = '13px';
+        // Desktop top-level link (Accueil, Analyses, Collaborer)
+        a.style.color = AMBER;
       }
     }
-  });
-
-  // --- 2) Highlight the parent dropdown button (desktop) ---
-  // The dropdown buttons contain text like "Économie", "Technologies", etc.
-  // Match by normalizing text and comparing to category
-  var categoryLabels = {
-    'economie':     'conomie',   // partial match (avoids É accent issues)
-    'technologies': 'echnologies',
-    'outils':       'utils',
-    'ressources':   'essources',
-    'accueil':      'ccueil',
-    'collaborer':   'ollaborer'
-  };
-
-  var searchText = categoryLabels[category] || category;
-
-  // Find desktop dropdown buttons (they are inside .relative.group divs)
-  var dropdownGroups = nav.querySelectorAll('.relative.group');
-  dropdownGroups.forEach(function (group) {
-    var btn = group.querySelector('button');
-    if (!btn) return;
-    // Get just the text, not SVG content
-    var btnText = '';
-    btn.childNodes.forEach(function (node) {
-      if (node.nodeType === 3) btnText += node.textContent; // text nodes only
-    });
-    btnText = btnText.trim().toLowerCase();
-
-    if (btnText.indexOf(searchText) !== -1) {
-      btn.classList.remove('text-slate-400');
-      btn.classList.add('text-amber-400');
-    }
-  });
-
-  // --- 3) Highlight direct nav links (Accueil, Analyses, Collaborer) ---
-  // These are <a> tags that are direct children of the desktop flex container
-  var desktopFlex = nav.querySelector('.hidden');
-  if (desktopFlex) {
-    var directLinks = desktopFlex.querySelectorAll(':scope > a');
-    directLinks.forEach(function (a) {
-      var href = (a.getAttribute('href') || '').split('/').pop().split('?')[0].split('#')[0];
-      var linkCat = menuMap[href];
-      if (linkCat === category) {
-        a.classList.remove('text-slate-400');
-        a.classList.add('text-amber-400');
-      }
-    });
   }
 })();
