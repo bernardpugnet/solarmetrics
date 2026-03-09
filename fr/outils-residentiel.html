@@ -828,8 +828,6 @@ abbr[title]:hover::after {
 
             if (countryData) {
                 document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                // resElecPriceDisplay removed (compact layout)
-                    void = countryData.electricityPrice.toFixed(4);
                 // Feed-in tariff: don't auto-fill, let user enter their own rate
                 // document.getElementById('resFeedir').value = countryData.feedInTariff;
             }
@@ -1255,8 +1253,6 @@ abbr[title]:hover::after {
                         const latestPrice = values[values.length - 1];
                         if (latestPrice && latestPrice > 0) {
                             document.getElementById('resElecPrice').value = latestPrice.toFixed(4);
-                            // resElecPriceDisplay removed (compact layout)
-                    void = latestPrice.toFixed(4);
                             // Get period
                             const dims = data.dimension && data.dimension.time && data.dimension.time.category;
                             const periods = dims ? Object.keys(dims.index) : [];
@@ -1271,8 +1267,7 @@ abbr[title]:hover::after {
                     // Use default from solar-data.js
                     if (countryData) {
                         document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                        // resElecPriceDisplay removed (compact layout)
-                    void = countryData.electricityPrice.toFixed(4);
+                        // resElecPriceDisplay removed
                     }
                 });
         }
