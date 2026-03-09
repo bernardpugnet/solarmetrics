@@ -510,22 +510,14 @@
                             <span class="text-sm text-slate-400">Add a battery</span>
                         </label>
                         <div id="batteryCapacitySection" style="display:none" class="grid grid-cols-2 gap-4">
-                            <div class="quick-only">
-                                <label class="text-xs text-slate-400 mb-1 block">Battery capacity</label>
-                                <select id="resBatteryCapacity" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <option value="5">5 kWh</option>
-                                    <option value="10" selected>10 kWh</option>
-                                    <option value="15">15 kWh</option>
-                                    <option value="20">20 kWh</option>
-                                </select>
-                            </div>
-                            <div class="detailed-only" style="display:none">
+                            <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Battery capacity (kWh)</label>
-                                <input type="number" id="simBattery" min="0" max="20" step="0.5" value="0" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                <input type="number" id="resBatteryCapacity" min="1" max="100" step="0.5" value="10" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                <p class="text-xs text-slate-500 mt-1">Residential: 5–15 kWh · Commercial: 20–100 kWh</p>
                             </div>
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Battery cost (<span class="cur">€</span>)</label>
-                                <input type="number" id="resBatteryCostOverride" placeholder="Empty = country average" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                <input type="number" id="resBatteryCostOverride" placeholder="Empty = country average" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                 <p class="text-xs text-slate-600 mt-0.5">Avg: <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
                             </div>
                         </div>
@@ -1200,7 +1192,7 @@
                 const consumption = parseFloat(document.getElementById('resConsumption').value);
                 const profile = document.getElementById('simProfile').value;
                 const shading = parseFloat(document.getElementById('resShading').value) / 100;
-                const batteryCapacity = parseFloat(document.getElementById('simBattery').value) || 0;
+                const batteryCapacity = parseFloat(document.getElementById('resBatteryCapacity').value) || 0;
                 const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
                 const priceRevente = parseFloat(document.getElementById('resFeedir').value);
                 const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
