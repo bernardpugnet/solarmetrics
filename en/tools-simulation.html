@@ -1106,7 +1106,7 @@
                     if (pvgisData.success) {
                         let totalProd = 0;
                         pvgisData.hourly.forEach(h => totalProd += h.P / 1000);
-                        production = totalProd * (1 - degradation);
+                        production = totalProd; // degradation applied year-by-year in financial calculation
                     }
                 } else {
                     const productible = parseFloat(document.getElementById('resManualProductible').value);
