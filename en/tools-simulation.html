@@ -599,6 +599,9 @@
                             <button class="tab-btn" onclick="switchTab('subsidies')">
                                 Subsidies & system
                             </button>
+                            <button class="tab-btn" onclick="switchTab('report')">
+                                📄 Report
+                            </button>
                         </div>
                         <div class="flex gap-2 pb-2">
                             <button onclick="window.print()" class="px-3 py-1.5 text-xs text-slate-400 hover:text-white border border-slate-600 hover:border-slate-400 rounded-lg transition-colors flex items-center gap-1" title="Print / Save as PDF">
@@ -800,6 +803,22 @@
                         <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
                             <h3 class="text-lg font-semibold text-white mb-4">System summary</h3>
                             <div id="systemRecap" class="grid grid-cols-2 gap-4 text-sm"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: Written Report -->
+                    <div id="tab-report" class="tab-content">
+                        <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-white">📄 Solar Analysis Report</h3>
+                                <button onclick="exportResultsPDF()" class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-lg transition-colors flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    Download PDF
+                                </button>
+                            </div>
+                            <div id="reportContent" class="prose prose-invert prose-sm max-w-none text-slate-300 leading-relaxed space-y-4">
+                                <p class="text-slate-500 italic">Run a simulation to generate the report.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1167,6 +1186,7 @@
                 generateFinancialCharts(netCost, installCost, financials.paybackYear || 99, simResults.annual.production, autoTotal, simResults.annual.injection);
 
                 document.getElementById('results-section').style.display = 'block';
+                generateReport();
                 document.getElementById('sim-form').style.display = 'block';
             } catch (error) {
                 console.error('Detailed calculation error:', error);
@@ -1411,7 +1431,86 @@
             return (lo + hi) / 2;
         }
 
+        function generateReport() {
+            const prod = document.getElementById('resProduction').textContent;
+            const prodKwc = document.getElementById('resProductionPerKwc').textContent;
+            const kwc = document.getElementById('resKwc').textContent;
+            const savAuto = document.getElementById('resSavingsAutocons').textContent;
+            const savFeed = document.getElementById('resSavingsFeedin').textContent;
+            const savTotal = document.getElementById('resAnnualSavings').textContent;
+            const costInst = document.getElementById('resInstallCost').textContent;
+            const costNet = document.getElementById('resNetCost').textContent;
+            const payback = document.getElementById('resPayback').textContent;
+            const npv = document.getElementById('resNpv').textContent;
+            const tri = document.getElementById('resTri').textContent;
+            const co2 = document.getElementById('resCo2').textContent;
+            const country = document.getElementById('detectedCountryName').textContent;
+            const surface = document.getElementById('resSurface').value || '—';
+            const tilt = document.getElementById('resTilt').value || '—';
+            const orientVal = document.getElementById('resOrientation').value;
+            const orientLabels = {'0':'South','-45':'South-East','45':'South-West','-90':'East','90':'West'};
+            const orient = orientLabels[orientVal] || orientVal + '°';
+            const lat = document.getElementById('resLatitude').value;
+            const lon = document.getElementById('resLongitude').value;
+
+            const autoRateEl = document.getElementById('resAutoconsoRate');
+            const hasDetailed = autoRateEl && autoRateEl.textContent !== '—';
+            let detailedSection = '';
+            if (hasDetailed) {
+                const autoRate = autoRateEl.textContent;
+                const autoprod = document.getElementById('resAutoprodRate').textContent;
+                const autoDirect = document.getElementById('resAutoDirect').textContent;
+                const autoBat = document.getElementById('resAutoBattery').textContent;
+                const injection = document.getElementById('resInjection').textContent;
+                const soutirage = document.getElementById('resSoutirage').textContent;
+                detailedSection = `
+                <h4 class="text-white font-semibold mt-6 mb-2">🔋 Self-consumption</h4>
+                <p>Your <strong>self-consumption rate is ${autoRate}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>self-production rate is ${autoprod}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
+                <p>Breakdown: <strong>${autoDirect} kWh</strong> consumed directly, <strong>${autoBat} kWh</strong> via battery, <strong>${injection} kWh</strong> fed into the grid (sold), and you still draw <strong>${soutirage} kWh</strong> from the grid to cover remaining needs.</p>`;
+            }
+
+            const hasBattery = document.getElementById('resBatteryToggle').checked;
+            let batterySection = '';
+            if (hasBattery) {
+                const batCap = document.getElementById('resBatteryCapacity').value;
+                batterySection = `<p>A <strong>${batCap} kWh battery</strong> is included in this simulation. It stores excess solar energy during the day for evening use, increasing your self-consumption rate and reducing grid purchases.</p>`;
+            }
+
+            const html = `
+            <h4 class="text-white font-semibold mb-2">📍 Location & Installation</h4>
+            <p>This simulation was performed for a solar installation located in <strong>${country}</strong> (coordinates: ${lat}°N, ${lon}°E). The installation comprises <strong>${surface} m²</strong> of photovoltaic panels facing <strong>${orient}</strong> with a <strong>${tilt}° tilt</strong>, for a peak power of <strong>${kwc} kWp</strong>.</p>
+            <p><em>Peak power (kWp) is calculated as: surface × fill factor (85%) × panel efficiency. It represents the maximum power output under standard test conditions (1,000 W/m², 25°C).</em></p>
+
+            <h4 class="text-white font-semibold mt-6 mb-2">⚡ Energy Production</h4>
+            <p>Your installation will produce approximately <strong>${prod} kWh per year</strong>, or <strong>${prodKwc} kWh per kWp installed</strong>. This figure is calculated hour-by-hour (8,760 hours/year) using PVGIS solar irradiation data from the European Commission, specific to your exact location.</p>
+            <p><em>The kWh/kWp ratio (between 800 and 1,800 depending on region) allows comparing solar site efficiency regardless of installation size. The higher this number, the better the solar irradiation at your site.</em></p>
+
+            <h4 class="text-white font-semibold mt-6 mb-2">💰 Annual Savings</h4>
+            <p>Your <strong>self-consumption savings</strong> amount to <strong>${savAuto} €/year</strong>: this is solar electricity you consume directly instead of buying from the grid (self-consumed kWh × electricity purchase price).</p>
+            <p>Your <strong>feed-in revenue</strong> is <strong>${savFeed} €/year</strong>: this is the surplus you sell back to the grid at the feed-in tariff applicable in your country.</p>
+            <p>In total, your installation saves you <strong class="text-amber-400">${savTotal} €/year</strong> (self-consumption + feed-in).</p>
+            ${batterySection}
+
+            ${detailedSection}
+
+            <h4 class="text-white font-semibold mt-6 mb-2">🏦 Financial Summary</h4>
+            <p>The <strong>total installation cost</strong> is estimated at <strong>${costInst} €</strong> (panels + inverter + installation + grid connection${hasBattery ? ' + battery' : ''}). After deducting your country's subsidies and incentives, the <strong>net cost</strong> is <strong>${costNet} €</strong>.</p>
+            <p>Your installation will be <strong>paid back in ${payback} years</strong>: this is the number of years needed for cumulative savings to cover your net investment. After that point, every euro saved is pure profit.</p>
+            <p>Over 25 years (typical panel lifespan), the <strong>Net Present Value (NPV)</strong> is <strong>${npv} €</strong>. The NPV represents the total net gain over the installation's lifetime, accounting for annual electricity price increases.</p>
+            <p>The <strong>Internal Rate of Return (IRR)</strong> is <strong>${tri}%</strong>. This is the equivalent annual return on your investment. For comparison, a savings account yields around 3%/year: an IRR above 3% means solar is more profitable than a bank deposit.</p>
+
+            <h4 class="text-white font-semibold mt-6 mb-2">🌍 Environmental Impact</h4>
+            <p>Your installation avoids the emission of <strong>${co2} kg of CO₂ per year</strong>, calculated from the emission factor of your country's electricity mix. Over 25 years, this represents approximately <strong>${(parseFloat(co2.replace(/,/g,'').replace(' ','')) * 25 / 1000).toFixed(1)} tonnes of CO₂</strong> avoided.</p>
+
+            <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600/50">
+                <p class="text-xs text-slate-400"><strong>Note:</strong> This report is an indicative estimate based on PVGIS data (European Commission) and country-average parameters. Actual results may vary depending on shading, installation quality, weather conditions, and tariff changes. Report generated on ${new Date().toLocaleDateString('en-US')} by SolarMetrics.</p>
+            </div>`;
+
+            document.getElementById('reportContent').innerHTML = html;
+        }
+
         function exportResultsPDF() {
+            try {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
             const w = doc.internal.pageSize.getWidth();
@@ -1525,6 +1624,10 @@
             doc.text('SolarMetrics © 2024-2026 · Bernard Pugnet · Data: PVGIS/NREL · Indicative simulation, non-contractual.', 14, y);
 
             doc.save('solarmetrics-report.pdf');
+            } catch(e) {
+                alert('Error generating PDF: ' + e.message);
+                console.error('PDF export error:', e);
+            }
         }
 
         function openSiteSearch() {
