@@ -561,37 +561,93 @@ abbr[title]:hover::after {
                 <div class="mt-4 space-y-4 text-slate-200 leading-relaxed">
                     <p>
                         <abbr title="Battery Energy Storage System">BESS</abbr> (Battery Energy Storage System, système de stockage par batteries) :
-                        utile pour réduire l'injection à mauvais prix, lisser, ou fournir des services réseau.
+                        utile pour réduire l'injection à mauvais prix, lisser la production, ou fournir des services réseau (réserve primaire, arbitrage).
                     </p>
-                    <ul class="list-disc list-inside space-y-1">
-                        <li><span class="font-semibold">AC‑coupled</span> : batterie via <abbr title="Power Conversion System (convertisseur)">PCS</abbr> (Power Conversion System, convertisseur) raccordée côté <abbr title="Alternating Current (courant alternatif)">AC</abbr>.</li>
-                        <li><span class="font-semibold"><abbr title="Direct Current (courant continu)">DC</abbr>‑coupled</span> : batterie sur bus <abbr title="Direct Current (courant continu)">DC</abbr> (plus rare / plus intégré).</li>
-                    </ul>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <p class="font-semibold text-green-400">AC‑coupled</p>
+                            <p class="text-sm text-slate-300 mt-1">
+                                Batterie raccordée côté <abbr title="Alternating Current (courant alternatif)">AC</abbr> via un <abbr title="Power Conversion System (convertisseur)">PCS</abbr> dédié (Power Conversion System, convertisseur).
+                                Plus flexible : la batterie peut charger depuis le réseau ou le PV.
+                            </p>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <p class="font-semibold text-blue-400"><abbr title="Direct Current (courant continu)">DC</abbr>‑coupled</p>
+                            <p class="text-sm text-slate-300 mt-1">
+                                Batterie sur le bus <abbr title="Direct Current (courant continu)">DC</abbr> avant l'onduleur.
+                                Plus efficace (une seule conversion), mais moins flexible. Adapté aux installations hybrides PV+stockage.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                        <p class="font-semibold">Paramètres clés d'un <abbr title="Battery Energy Storage System">BESS</abbr></p>
+                        <div class="mt-3 grid sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-slate-300">
+                            <div><span class="text-white font-medium">Capacité (kWh / MWh)</span> — énergie stockable totale.</div>
+                            <div><span class="text-white font-medium">Puissance (kW / MW)</span> — débit de charge/décharge.</div>
+                            <div><span class="text-white font-medium">C-rate</span> — ratio puissance/capacité (ex : C1 = 1h pour charger).</div>
+                            <div><span class="text-white font-medium">Round-trip efficiency</span> — rendement aller-retour (85-95 % Li-ion).</div>
+                            <div><span class="text-white font-medium">Cycles de vie</span> — nombre de cycles avant dégradation significative.</div>
+                            <div><span class="text-white font-medium">DoD (Depth of Discharge)</span> — profondeur de décharge recommandée.</div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4">
+                        <p class="font-semibold text-amber-200">À retenir</p>
+                        <ul class="mt-2 list-disc list-inside text-slate-100/90 space-y-1">
+                            <li>Le stockage augmente le taux d'autoconsommation : l'excédent solaire de la journée est consommé le soir.</li>
+                            <li>La rentabilité dépend de l'écart entre prix d'achat et prix de revente, et du nombre de cycles effectués.</li>
+                            <li>Technologies dominantes : Li-ion NMC (énergie) et LFP (longévité, sécurité).</li>
+                        </ul>
+                    </div>
+
+                    <div class="rounded-2xl border border-cyan-400/30 bg-cyan-950/20 p-4">
+                        <p class="text-sm text-cyan-300">
+                            <span class="font-semibold">Testez l'impact d'une batterie sur votre installation</span> — notre simulateur permet d'activer une batterie et de voir son effet sur l'autoconsommation, les économies et l'amortissement.
+                        </p>
+                        <a href="outils-simulation.html" class="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 hover:text-white text-sm font-medium rounded-lg border border-cyan-500/30 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Ouvrir le simulateur avec batterie
+                        </a>
+                    </div>
                 </div>
             </section>
 
             <section id="formules" class="mb-12">
                 <h2 class="text-2xl font-semibold">8) Formules indispensables (avec unités)</h2>
+                <p class="mt-2 text-sm text-cyan-400/80">Cliquez sur une formule pour ouvrir le mini-calculateur correspondant.</p>
 
                 <div class="mt-4 grid lg:grid-cols-2 gap-6">
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
                         <p class="font-semibold">Relations de base en électricité</p>
                         <ul class="mt-3 space-y-2 text-sm text-slate-200">
-                            <li><span class="font-mono">P = U × I</span> (W = V × A) — puissance en <abbr title="Direct Current (courant continu)">DC</abbr> / monophasé.</li>
-                            <li><span class="font-mono">E = P × t</span> (kWh = kW × h) — énergie sur une durée.</li>
+                            <li class="cursor-pointer hover:text-amber-300 transition-colors" onclick="openCalc('pui')"><span class="font-mono">P = U × I</span> (W = V × A) — puissance en <abbr title="Direct Current (courant continu)">DC</abbr> / monophasé. <span class="text-cyan-400 text-xs">▶ Calculer</span></li>
+                            <li class="cursor-pointer hover:text-amber-300 transition-colors" onclick="openCalc('ept')"><span class="font-mono">E = P × t</span> (kWh = kW × h) — énergie sur une durée. <span class="text-cyan-400 text-xs">▶ Calculer</span></li>
                             <li><span class="font-mono">P ≈ √3 × U × I × cos φ</span> — puissance en triphasé (approx).</li>
-                            <li><span class="font-mono">P_pertes = I² × R</span> — pertes Joule.</li>
-                            <li><span class="font-mono">η = P_sortie / P_entrée</span> — rendement.</li>
+                            <li class="cursor-pointer hover:text-amber-300 transition-colors" onclick="openCalc('joule')"><span class="font-mono">P_pertes = I² × R</span> — pertes Joule. <span class="text-cyan-400 text-xs">▶ Calculer</span></li>
+                            <li class="cursor-pointer hover:text-amber-300 transition-colors" onclick="openCalc('eta')"><span class="font-mono">η = P_sortie / P_entrée</span> — rendement. <span class="text-cyan-400 text-xs">▶ Calculer</span></li>
                         </ul>
                     </div>
 
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
                         <p class="font-semibold">Physique PV (ordres de grandeur)</p>
                         <ul class="mt-3 space-y-2 text-sm text-slate-200">
-                            <li><span class="font-mono">P_solaire = G × S</span> — puissance lumineuse reçue (W).</li>
-                            <li><span class="font-mono">P_<abbr title="Direct Current (courant continu)">DC</abbr> ≈ G × S × η</span> — puissance électrique <abbr title="Direct Current (courant continu)">DC</abbr> (approx).</li>
+                            <li class="cursor-pointer hover:text-amber-300 transition-colors" onclick="openCalc('psolaire')"><span class="font-mono">P_solaire = G × S</span> — puissance lumineuse reçue (W). <span class="text-cyan-400 text-xs">▶ Calculer</span></li>
+                            <li class="cursor-pointer hover:text-amber-300 transition-colors" onclick="openCalc('pdc')"><span class="font-mono">P_DC ≈ G × S × η</span> — puissance électrique <abbr title="Direct Current (courant continu)">DC</abbr> (approx). <span class="text-cyan-400 text-xs">▶ Calculer</span></li>
                             <li><span class="font-mono">P(T) ≈ P_STC × [1 + γ × (T_cell − 25°C)]</span> — effet température (γ négatif).</li>
                         </ul>
+                    </div>
+                </div>
+
+                <!-- Mini-calculateurs interactifs -->
+                <div id="calcPanel" class="mt-6 hidden">
+                    <div class="rounded-2xl border border-cyan-400/30 bg-cyan-950/30 p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 id="calcTitle" class="text-lg font-semibold text-cyan-300"></h3>
+                            <button onclick="closeCalc()" class="text-slate-400 hover:text-white text-xl leading-none">&times;</button>
+                        </div>
+                        <div id="calcBody" class="space-y-3"></div>
                     </div>
                 </div>
 
@@ -747,6 +803,100 @@ abbr[title]:hover::after {
         window.addEventListener('resize', function() {
             if (window.innerWidth >= 1024) closeMenu();
         });
+    </script>
+
+    <!-- Mini-calculateurs interactifs -->
+    <script>
+    const calcDefs = {
+        pui: {
+            title: 'P = U × I — Puissance',
+            fields: [
+                { id: 'c_u', label: 'Tension U (V)', value: 41 },
+                { id: 'c_i', label: 'Courant I (A)', value: 11 }
+            ],
+            compute: (v) => `<strong class="text-amber-300 text-lg">${(v.c_u * v.c_i).toFixed(1)} W</strong> (${(v.c_u * v.c_i / 1000).toFixed(3)} kW)`
+        },
+        ept: {
+            title: 'E = P × t — Énergie',
+            fields: [
+                { id: 'c_p', label: 'Puissance P (kW)', value: 5.1 },
+                { id: 'c_t', label: 'Durée t (h)', value: 1400 }
+            ],
+            compute: (v) => `<strong class="text-amber-300 text-lg">${(v.c_p * v.c_t).toLocaleString('fr-FR')} kWh</strong> (${(v.c_p * v.c_t / 1000).toFixed(1)} MWh)`
+        },
+        joule: {
+            title: 'P_pertes = I² × R — Pertes Joule',
+            fields: [
+                { id: 'c_ij', label: 'Courant I (A)', value: 11 },
+                { id: 'c_r', label: 'Résistance R (Ω)', value: 0.5 }
+            ],
+            compute: (v) => `<strong class="text-amber-300 text-lg">${(v.c_ij * v.c_ij * v.c_r).toFixed(1)} W</strong> de pertes — si I double : ${(4 * v.c_ij * v.c_ij * v.c_r).toFixed(1)} W (×4)`
+        },
+        eta: {
+            title: 'η = P_sortie / P_entrée — Rendement',
+            fields: [
+                { id: 'c_pin', label: 'P entrée (W)', value: 1000 },
+                { id: 'c_pout', label: 'P sortie (W)', value: 200 }
+            ],
+            compute: (v) => `<strong class="text-amber-300 text-lg">${(v.c_pout / v.c_pin * 100).toFixed(1)}%</strong> de rendement`
+        },
+        psolaire: {
+            title: 'P_solaire = G × S — Puissance reçue',
+            fields: [
+                { id: 'c_g', label: 'Irradiance G (W/m²)', value: 1000 },
+                { id: 'c_s', label: 'Surface S (m²)', value: 30 }
+            ],
+            compute: (v) => `<strong class="text-amber-300 text-lg">${(v.c_g * v.c_s / 1000).toFixed(1)} kW</strong> de puissance lumineuse reçue`
+        },
+        pdc: {
+            title: 'P_DC ≈ G × S × η — Puissance DC',
+            fields: [
+                { id: 'c_gd', label: 'Irradiance G (W/m²)', value: 1000 },
+                { id: 'c_sd', label: 'Surface S (m²)', value: 30 },
+                { id: 'c_eta', label: 'Rendement η (%)', value: 20 }
+            ],
+            compute: (v) => {
+                const pdc = v.c_gd * v.c_sd * (v.c_eta / 100);
+                return `<strong class="text-amber-300 text-lg">${(pdc / 1000).toFixed(2)} kWc</strong> (${pdc.toFixed(0)} W DC)`;
+            }
+        }
+    };
+
+    function openCalc(key) {
+        const def = calcDefs[key];
+        if (!def) return;
+        const panel = document.getElementById('calcPanel');
+        document.getElementById('calcTitle').textContent = def.title;
+        let html = '<div class="grid sm:grid-cols-' + Math.min(def.fields.length, 3) + ' gap-3">';
+        def.fields.forEach(f => {
+            html += `<div>
+                <label class="text-xs text-slate-400">${f.label}</label>
+                <input type="number" id="${f.id}" value="${f.value}" step="any"
+                    class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm"
+                    oninput="updateCalc('${key}')">
+            </div>`;
+        });
+        html += '</div><div id="calcResult" class="mt-4 p-3 bg-slate-800/50 rounded-lg text-center"></div>';
+        document.getElementById('calcBody').innerHTML = html;
+        panel.classList.remove('hidden');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        updateCalc(key);
+    }
+
+    function updateCalc(key) {
+        const def = calcDefs[key];
+        const vals = {};
+        def.fields.forEach(f => { vals[f.id] = parseFloat(document.getElementById(f.id).value) || 0; });
+        document.getElementById('calcResult').innerHTML = def.compute(vals);
+    }
+
+    function closeCalc() {
+        document.getElementById('calcPanel').classList.add('hidden');
+    }
+
+    function openSiteSearch() {
+        alert('Recherche (Ctrl+K)');
+    }
     </script>
 <script src="../search.js" defer></script>
 </body>
