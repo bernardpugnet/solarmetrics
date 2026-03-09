@@ -416,10 +416,21 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="quick-only">
                                     <label class="text-xs text-slate-400 mb-1 block">Panel type</label>
-                                    <select id="resPanelType" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="0.21">Standard (~21% efficiency)</option>
-                                        <option value="0.23">Premium (~23% efficiency)</option>
+                                    <select id="resPanelType" onchange="showPanelInfo(this.value)" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0.17">Polycrystalline (~17%)</option>
+                                        <option value="0.20" selected>Monocrystalline PERC (~20%)</option>
+                                        <option value="0.22">Monocrystalline TOPCon (~22%)</option>
+                                        <option value="0.235">Heterojunction HJT (~23.5%)</option>
+                                        <option value="0.245">Back-contact IBC (~24.5%)</option>
                                     </select>
+                                    <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
+                                        <strong class="text-amber-400" id="panelInfoTitle">Monocrystalline PERC</strong>
+                                        <p id="panelInfoDesc" class="mt-1 leading-relaxed">Most widely deployed technology. Rear-side treatment (Passivated Emitter Rear Cell) improves light capture. Excellent value for money.</p>
+                                        <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
+                                            <span id="panelInfoEff">⚡ Efficiency: 19–21%</span>
+                                            <span id="panelInfoPrice">💰 Price: $0.25–0.35/Wp</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="detailed-only" style="display:none">
                                     <label class="text-xs text-slate-400 mb-1 block">PV power (kWp)</label>
@@ -995,12 +1006,55 @@
             document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
         }
 
+        const panelDataEN = {
+            '0.17': {
+                title: 'Polycrystalline',
+                desc: 'Mature and affordable technology. Cells made of multiple silicon crystals. Lower efficiency but very competitive cost, ideal when roof space is not a constraint.',
+                eff: '⚡ Efficiency: 15–18%',
+                price: '💰 Price: $0.15–0.25/Wp'
+            },
+            '0.20': {
+                title: 'Monocrystalline PERC',
+                desc: 'Most widely deployed technology. Rear-side treatment (Passivated Emitter Rear Cell) improves light capture. Excellent value for money.',
+                eff: '⚡ Efficiency: 19–21%',
+                price: '💰 Price: $0.25–0.35/Wp'
+            },
+            '0.22': {
+                title: 'Monocrystalline TOPCon',
+                desc: 'Latest monocrystalline evolution. Tunnel Oxide Passivated Contact technology. Higher efficiency than PERC, rapidly gaining market share.',
+                eff: '⚡ Efficiency: 21–23%',
+                price: '💰 Price: $0.28–0.40/Wp'
+            },
+            '0.235': {
+                title: 'Heterojunction (HJT)',
+                desc: 'Combines crystalline silicon with amorphous silicon layers. Excellent temperature coefficient, performs very well in hot climates. Very low degradation over 30 years.',
+                eff: '⚡ Efficiency: 22–24%',
+                price: '💰 Price: $0.35–0.50/Wp'
+            },
+            '0.245': {
+                title: 'Back-contact IBC',
+                desc: 'Electrical contacts placed solely on the rear side (Interdigitated Back Contact). Record efficiency, uniform black aesthetic. Premium technology by SunPower/Maxeon.',
+                eff: '⚡ Efficiency: 23–25%',
+                price: '💰 Price: $0.45–0.65/Wp'
+            }
+        };
+
+        function showPanelInfo(value) {
+            const data = panelDataEN[value];
+            if (!data) return;
+            document.getElementById('panelInfoTitle').textContent = data.title;
+            document.getElementById('panelInfoDesc').textContent = data.desc;
+            document.getElementById('panelInfoEff').textContent = data.eff;
+            document.getElementById('panelInfoPrice').textContent = data.price;
+        }
+
         function resetForm() {
             document.getElementById('resOrientation').value = '0';
             document.getElementById('resTilt').value = '30';
             document.getElementById('resShading').value = '0';
             document.getElementById('resSurface').value = '30';
-            document.getElementById('resPanelType').value = '0.21';
+            document.getElementById('resPanelType').value = '0.20';
+            showPanelInfo('0.20');
             document.getElementById('resConsumption').value = '4000';
             document.getElementById('resSelfConsum').value = '30';
             document.getElementById('resElecPrice').value = '0.2516';

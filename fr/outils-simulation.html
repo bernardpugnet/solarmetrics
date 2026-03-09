@@ -416,10 +416,21 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="quick-only">
                                     <label class="text-xs text-slate-400 mb-1 block">Type de panneaux</label>
-                                    <select id="resPanelType" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="0.21">Standard (~21% rendement)</option>
-                                        <option value="0.23">Premium (~23% rendement)</option>
+                                    <select id="resPanelType" onchange="showPanelInfo(this.value)" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0.17">Polycristallin (~17%)</option>
+                                        <option value="0.20" selected>Monocristallin PERC (~20%)</option>
+                                        <option value="0.22">Monocristallin TOPCon (~22%)</option>
+                                        <option value="0.235">Hétérojonction HJT (~23.5%)</option>
+                                        <option value="0.245">Back-contact IBC (~24.5%)</option>
                                     </select>
+                                    <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
+                                        <strong class="text-amber-400" id="panelInfoTitle">Monocristallin PERC</strong>
+                                        <p id="panelInfoDesc" class="mt-1 leading-relaxed">Technologie la plus répandue. Traitement en face arrière (Passivated Emitter Rear Cell) qui améliore la captation lumineuse. Excellent rapport qualité/prix.</p>
+                                        <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
+                                            <span id="panelInfoEff">⚡ Rendement : 19–21%</span>
+                                            <span id="panelInfoPrice">💰 Prix : 0.25–0.35 €/Wc</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="detailed-only" style="display:none">
                                     <label class="text-xs text-slate-400 mb-1 block">Puissance PV (kWc)</label>
@@ -995,12 +1006,55 @@
             document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
         }
 
+        const panelDataFR = {
+            '0.17': {
+                title: 'Polycristallin',
+                desc: 'Technologie mature et économique. Cellules composées de multiples cristaux de silicium. Rendement plus faible mais coût très compétitif, idéal pour les grandes surfaces disponibles.',
+                eff: '⚡ Rendement : 15–18%',
+                price: '💰 Prix : 0.15–0.25 €/Wc'
+            },
+            '0.20': {
+                title: 'Monocristallin PERC',
+                desc: 'Technologie la plus répandue. Traitement en face arrière (Passivated Emitter Rear Cell) qui améliore la captation lumineuse. Excellent rapport qualité/prix.',
+                eff: '⚡ Rendement : 19–21%',
+                price: '💰 Prix : 0.25–0.35 €/Wc'
+            },
+            '0.22': {
+                title: 'Monocristallin TOPCon',
+                desc: 'Dernière évolution du monocristallin. Contact passivé par oxyde tunnel (Tunnel Oxide Passivated Contact). Meilleur rendement que le PERC, en forte croissance sur le marché.',
+                eff: '⚡ Rendement : 21–23%',
+                price: '💰 Prix : 0.28–0.40 €/Wc'
+            },
+            '0.235': {
+                title: 'Hétérojonction (HJT)',
+                desc: 'Combine silicium cristallin et couches de silicium amorphe. Excellent coefficient de température, très performant par temps chaud. Dégradation très faible sur 30 ans.',
+                eff: '⚡ Rendement : 22–24%',
+                price: '💰 Prix : 0.35–0.50 €/Wc'
+            },
+            '0.245': {
+                title: 'Back-contact IBC',
+                desc: 'Contacts électriques placés uniquement en face arrière (Interdigitated Back Contact). Rendement record, esthétique uniforme noire. Technologie premium de SunPower/Maxeon.',
+                eff: '⚡ Rendement : 23–25%',
+                price: '💰 Prix : 0.45–0.65 €/Wc'
+            }
+        };
+
+        function showPanelInfo(value) {
+            const data = panelDataFR[value];
+            if (!data) return;
+            document.getElementById('panelInfoTitle').textContent = data.title;
+            document.getElementById('panelInfoDesc').textContent = data.desc;
+            document.getElementById('panelInfoEff').textContent = data.eff;
+            document.getElementById('panelInfoPrice').textContent = data.price;
+        }
+
         function resetForm() {
             document.getElementById('resOrientation').value = '0';
             document.getElementById('resTilt').value = '30';
             document.getElementById('resShading').value = '0';
             document.getElementById('resSurface').value = '30';
-            document.getElementById('resPanelType').value = '0.21';
+            document.getElementById('resPanelType').value = '0.20';
+            showPanelInfo('0.20');
             document.getElementById('resConsumption').value = '4000';
             document.getElementById('resSelfConsum').value = '30';
             document.getElementById('resElecPrice').value = '0.2516';
