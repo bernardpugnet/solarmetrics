@@ -334,32 +334,23 @@ abbr[title]:hover::after {
                             <div class="space-y-6">
                                 <!-- Country Selection -->
                                 <div>
-                                    <label class="text-sm text-slate-400 mb-2 block">Pays</label>
-                                    <select id="resCountry" onchange="updateLocationData()" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <optgroup label="Europe">
-                                            <option value="FR">France</option>
-                                            <option value="DE">Allemagne</option>
-                                            <option value="ES">Espagne</option>
-                                            <option value="IT">Italie</option>
-                                            <option value="NL">Pays-Bas</option>
-                                            <option value="BE">Belgique</option>
-                                            <option value="PT">Portugal</option>
-                                            <option value="PL">Pologne</option>
-                                            <option value="AT">Autriche</option>
-                                            <option value="GR">Grèce</option>
-                                        </optgroup>
-                                        <optgroup label="Amérique du Nord">
-                                            <option value="US">États-Unis</option>
-                                            <option value="CA">Canada</option>
-                                        </optgroup>
-                                    </select>
+                                    <input type="hidden" id="resCountry" value="FR">
+                                    <div id="detectedCountryDisplay" class="flex items-center gap-2 px-4 py-2 bg-slate-800/60 border border-slate-700/50 rounded-lg">
+                                        <span class="text-lg">📍</span>
+                                        <span id="detectedCountryName" class="text-white text-sm font-medium">France</span>
+                                        <span id="detectedCountryFlag" class="text-sm text-slate-400">(FR)</span>
+                                    </div>
                                     <!-- Net metering note (US/CA) -->
                                     <p id="netMeteringNote" class="text-xs text-amber-400/80 mt-2 hidden"></p>
+                                    <!-- Unsupported country warning -->
+                                    <div id="unsupportedCountryNote" class="hidden mt-2 p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
+                                        <p class="text-xs text-amber-400">⚠️ Pays non référencé dans notre base. Les données d'irradiation (PVGIS) sont exactes, mais les tarifs et aides sont estimés. Consultez vos données locales.</p>
+                                    </div>
                                 </div>
 
                                 <!-- Map -->
                                 <div id="map" style="height:300px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
-                                <p id="mapHint" class="text-xs text-slate-500 mt-1">📍 Cliquez sur la carte pour affiner la position GPS. Le pays définit les tarifs et aides.</p>
+                                <p id="mapHint" class="text-xs text-slate-500 mt-1">📍 Cliquez sur la carte pour positionner votre installation. Le pays sera détecté automatiquement.</p>
                                 <!-- Mode manuel (fallback si API indisponible) -->
                                 <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
                                     <label class="flex items-center gap-2 text-sm mb-2">
@@ -770,6 +761,72 @@ abbr[title]:hover::after {
                 document.getElementById('resLongitude').value = lon.toFixed(4);
                 if (marker) map.removeLayer(marker);
                 marker = L.marker([lat, lon]).addTo(map);
+                reverseGeocode(lat, lon);
+            });
+        }
+
+        // Country names in French for display
+        const countryNamesFR = {
+            'FR': 'France', 'DE': 'Allemagne', 'ES': 'Espagne', 'IT': 'Italie',
+            'NL': 'Pays-Bas', 'BE': 'Belgique', 'PT': 'Portugal', 'PL': 'Pologne',
+            'AT': 'Autriche', 'GR': 'Grèce', 'US': 'États-Unis', 'CA': 'Canada',
+            'GB': 'Royaume-Uni', 'CH': 'Suisse', 'IE': 'Irlande', 'DK': 'Danemark',
+            'SE': 'Suède', 'NO': 'Norvège', 'FI': 'Finlande', 'CZ': 'Tchéquie',
+            'HU': 'Hongrie', 'RO': 'Roumanie', 'BG': 'Bulgarie', 'HR': 'Croatie',
+            'SK': 'Slovaquie', 'SI': 'Slovénie', 'LT': 'Lituanie', 'LV': 'Lettonie',
+            'EE': 'Estonie', 'LU': 'Luxembourg', 'MT': 'Malte', 'CY': 'Chypre',
+            'MA': 'Maroc', 'TN': 'Tunisie', 'DZ': 'Algérie', 'TR': 'Turquie',
+            'MX': 'Mexique', 'BR': 'Brésil', 'JP': 'Japon', 'KR': 'Corée du Sud',
+            'AU': 'Australie', 'IN': 'Inde', 'ZA': 'Afrique du Sud', 'EG': 'Égypte',
+            'SA': 'Arabie Saoudite', 'AE': 'Émirats arabes unis', 'SN': 'Sénégal',
+            'CI': 'Côte d\'Ivoire', 'CM': 'Cameroun', 'NG': 'Nigéria'
+        };
+
+        // Reverse geocode: detect country from lat/lon using Nominatim
+        function reverseGeocode(lat, lon) {
+            var hint = document.getElementById('mapHint');
+            if (hint) { hint.textContent = '🔄 Détection du pays...'; hint.classList.add('text-amber-400'); }
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=3&accept-language=fr`, {
+                headers: { 'User-Agent': 'SolarMetrics/1.0' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.address && data.address.country_code) {
+                    const cc = data.address.country_code.toUpperCase();
+                    const countryName = countryNamesFR[cc] || data.address.country || cc;
+                    const isSupported = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
+
+                    // Update hidden input and display
+                    document.getElementById('resCountry').value = cc;
+                    document.getElementById('detectedCountryName').textContent = countryName;
+                    document.getElementById('detectedCountryFlag').textContent = '(' + cc + ')';
+
+                    // Show/hide unsupported warning
+                    var unsupNote = document.getElementById('unsupportedCountryNote');
+                    if (unsupNote) {
+                        if (isSupported) {
+                            unsupNote.classList.add('hidden');
+                        } else {
+                            unsupNote.classList.remove('hidden');
+                        }
+                    }
+
+                    // Update hint
+                    if (hint) {
+                        hint.textContent = '📍 ' + countryName + (isSupported ? '' : ' (données estimées)');
+                        hint.classList.remove('text-amber-400');
+                    }
+
+                    // Update location data (tariffs, subsidies, etc.)
+                    updateLocationData();
+                } else {
+                    if (hint) { hint.textContent = '⚠️ Pays non détecté. Essayez un autre point.'; hint.classList.add('text-amber-400'); }
+                }
+            })
+            .catch(err => {
+                console.warn('Reverse geocoding error:', err);
+                if (hint) { hint.textContent = '⚠️ Erreur de géolocalisation. Réessayez.'; hint.classList.add('text-amber-400'); }
             });
         }
 
@@ -792,25 +849,10 @@ abbr[title]:hover::after {
 
         function updateLocationData() {
             const country = document.getElementById('resCountry').value;
-            const coords = countryCoords[country] || countryCoords['FR'];
-            document.getElementById('resLatitude').value = coords.lat;
-            document.getElementById('resLongitude').value = coords.lon;
-            if (map) {
-                // Update map bounds to selected country
-                var bounds = getCountryBounds(country);
-                map.setMaxBounds(bounds.pad(0.15));
-                map.fitBounds(bounds);
-                if (marker) map.removeLayer(marker);
-                marker = L.marker([coords.lat, coords.lon]).addTo(map);
-                // Reset map hint
-                var hint = document.getElementById('mapHint');
-                if (hint) { hint.textContent = '📍 Cliquez sur la carte pour affiner la position GPS. Le pays définit les tarifs et aides.'; hint.classList.remove('text-amber-400'); }
-            }
-            // Update electricity price and feed-in tariff from solar-data.js
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
 
-            // Update currency symbols
-            const curSymbol = getCurrencySymbol(country);
+            // Update currency symbols (default to € for unsupported countries)
+            const curSymbol = countryData ? getCurrencySymbol(country) : '€';
             updateCurrencySymbols(curSymbol);
 
             // Show/hide net metering note (US/CA)
@@ -822,17 +864,13 @@ abbr[title]:hover::after {
                 nmNote.classList.add('hidden');
             }
 
-            // Show manual mode section for all countries (hidden by default, useful as fallback)
+            // Show manual mode section for all countries
             var manualSection = document.getElementById('manualModeSection');
             if (manualSection) manualSection.classList.remove('hidden');
 
             if (countryData) {
                 document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                // Feed-in tariff: don't auto-fill, let user enter their own rate
-                // document.getElementById('resFeedir').value = countryData.feedInTariff;
-            }
-            // Update cost hints
-            if (countryData) {
+                // Update cost hints
                 document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
                 document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
             }
@@ -1176,6 +1214,10 @@ abbr[title]:hover::after {
 
         function resetResidential() {
             document.getElementById('resCountry').value = 'FR';
+            document.getElementById('detectedCountryName').textContent = 'France';
+            document.getElementById('detectedCountryFlag').textContent = '(FR)';
+            var unsupNote = document.getElementById('unsupportedCountryNote');
+            if (unsupNote) unsupNote.classList.add('hidden');
             document.getElementById('resSurface').value = '30';
             document.getElementById('resOrientation').value = '0';
             document.getElementById('resTilt').value = '30';
@@ -1192,6 +1234,15 @@ abbr[title]:hover::after {
             document.getElementById('resBatteryCostOverride').value = '';
             document.getElementById('resBatteryToggle').checked = false;
             toggleBatteryCapacity();
+            // Reset map to France
+            if (map) {
+                var coords = countryCoords['FR'];
+                document.getElementById('resLatitude').value = coords.lat;
+                document.getElementById('resLongitude').value = coords.lon;
+                if (marker) map.removeLayer(marker);
+                marker = L.marker([coords.lat, coords.lon]).addTo(map);
+                map.setView([coords.lat, coords.lon], 6);
+            }
             updateLocationData();
         }
 
@@ -1200,7 +1251,9 @@ abbr[title]:hover::after {
             // Page FR → toujours utiliser les textes FR
             const lang = 'fr';
             if (!countryData || !countryData.subsidies || !countryData.subsidies[lang]) {
-                document.getElementById('subsidyContent').innerHTML = '<p>Sélectionnez un pays et cliquez sur Calculer.</p>';
+                const countryName = countryNamesFR[countryCode] || countryCode;
+                document.getElementById('subsidyTitle').textContent = 'Aides disponibles';
+                document.getElementById('subsidyContent').innerHTML = '<p class="text-slate-400">Données de subventions non disponibles pour ' + countryName + '.</p><p class="text-xs text-slate-500 mt-2">Les données d\'irradiation (PVGIS) restent exactes. Les coûts d\'installation et tarifs utilisés sont des estimations génériques. Consultez vos sources locales pour des données précises.</p>';
                 return;
             }
             const sub = countryData.subsidies[lang];

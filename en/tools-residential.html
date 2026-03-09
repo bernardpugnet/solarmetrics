@@ -335,32 +335,23 @@ abbr[title]:hover::after {
                             <div class="space-y-6">
                                 <!-- Country Selection -->
                                 <div>
-                                    <label class="text-sm text-slate-400 mb-2 block">Country</label>
-                                    <select id="resCountry" onchange="updateLocationData()" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <optgroup label="Europe">
-                                            <option value="FR">France</option>
-                                            <option value="DE">Germany</option>
-                                            <option value="ES">Spain</option>
-                                            <option value="IT">Italy</option>
-                                            <option value="NL">Netherlands</option>
-                                            <option value="BE">Belgium</option>
-                                            <option value="PT">Portugal</option>
-                                            <option value="PL">Poland</option>
-                                            <option value="AT">Austria</option>
-                                            <option value="GR">Greece</option>
-                                        </optgroup>
-                                        <optgroup label="North America">
-                                            <option value="US">United States</option>
-                                            <option value="CA">Canada</option>
-                                        </optgroup>
-                                    </select>
+                                    <input type="hidden" id="resCountry" value="FR">
+                                    <div id="detectedCountryDisplay" class="flex items-center gap-2 px-4 py-2 bg-slate-800/60 border border-slate-700/50 rounded-lg">
+                                        <span class="text-lg">📍</span>
+                                        <span id="detectedCountryName" class="text-white text-sm font-medium">France</span>
+                                        <span id="detectedCountryFlag" class="text-sm text-slate-400">(FR)</span>
+                                    </div>
                                     <!-- Net metering note (US/CA) -->
                                     <p id="netMeteringNote" class="text-xs text-amber-400/80 mt-2 hidden"></p>
+                                    <!-- Unsupported country warning -->
+                                    <div id="unsupportedCountryNote" class="hidden mt-2 p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
+                                        <p class="text-xs text-amber-400">⚠️ Country not in our database. Irradiation data (PVGIS) is accurate, but tariffs and subsidies are estimated. Please check your local data.</p>
+                                    </div>
                                 </div>
 
                                 <!-- Map -->
                                 <div id="map" style="height:300px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
-                                <p id="mapHint" class="text-xs text-slate-500 mt-1">Click on the map to position your home precisely</p>
+                                <p id="mapHint" class="text-xs text-slate-500 mt-1">📍 Click on the map to position your installation. Country will be detected automatically.</p>
                                 <!-- Manual mode (fallback if API unavailable) -->
                                 <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
                                     <label class="flex items-center gap-2 text-sm mb-2">
@@ -794,32 +785,88 @@ abbr[title]:hover::after {
             marker = L.marker([startCoord.lat, startCoord.lon]).addTo(map);
 
             map.on('click', (e) => {
-                document.getElementById('resLatitude').value = e.latlng.lat.toFixed(4);
-                document.getElementById('resLongitude').value = e.latlng.lng.toFixed(4);
+                const lat = e.latlng.lat;
+                const lon = e.latlng.lng;
+                document.getElementById('resLatitude').value = lat.toFixed(4);
+                document.getElementById('resLongitude').value = lon.toFixed(4);
                 if (marker) map.removeLayer(marker);
-                marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+                marker = L.marker([lat, lon]).addTo(map);
+                reverseGeocode(lat, lon);
+            });
+        }
+
+        // Country names in English for display
+        const countryNamesEN = {
+            'FR': 'France', 'DE': 'Germany', 'ES': 'Spain', 'IT': 'Italy',
+            'NL': 'Netherlands', 'BE': 'Belgium', 'PT': 'Portugal', 'PL': 'Poland',
+            'AT': 'Austria', 'GR': 'Greece', 'US': 'United States', 'CA': 'Canada',
+            'GB': 'United Kingdom', 'CH': 'Switzerland', 'IE': 'Ireland', 'DK': 'Denmark',
+            'SE': 'Sweden', 'NO': 'Norway', 'FI': 'Finland', 'CZ': 'Czech Republic',
+            'HU': 'Hungary', 'RO': 'Romania', 'BG': 'Bulgaria', 'HR': 'Croatia',
+            'SK': 'Slovakia', 'SI': 'Slovenia', 'LT': 'Lithuania', 'LV': 'Latvia',
+            'EE': 'Estonia', 'LU': 'Luxembourg', 'MT': 'Malta', 'CY': 'Cyprus',
+            'MA': 'Morocco', 'TN': 'Tunisia', 'DZ': 'Algeria', 'TR': 'Turkey',
+            'MX': 'Mexico', 'BR': 'Brazil', 'JP': 'Japan', 'KR': 'South Korea',
+            'AU': 'Australia', 'IN': 'India', 'ZA': 'South Africa', 'EG': 'Egypt',
+            'SA': 'Saudi Arabia', 'AE': 'United Arab Emirates', 'SN': 'Senegal',
+            'CI': 'Ivory Coast', 'CM': 'Cameroon', 'NG': 'Nigeria'
+        };
+
+        // Reverse geocode: detect country from lat/lon using Nominatim
+        function reverseGeocode(lat, lon) {
+            var hint = document.getElementById('mapHint');
+            if (hint) { hint.textContent = '🔄 Detecting country...'; hint.classList.add('text-amber-400'); }
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=3&accept-language=en`, {
+                headers: { 'User-Agent': 'SolarMetrics/1.0' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.address && data.address.country_code) {
+                    const cc = data.address.country_code.toUpperCase();
+                    const countryName = countryNamesEN[cc] || data.address.country || cc;
+                    const isSupported = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
+
+                    // Update hidden input and display
+                    document.getElementById('resCountry').value = cc;
+                    document.getElementById('detectedCountryName').textContent = countryName;
+                    document.getElementById('detectedCountryFlag').textContent = '(' + cc + ')';
+
+                    // Show/hide unsupported warning
+                    var unsupNote = document.getElementById('unsupportedCountryNote');
+                    if (unsupNote) {
+                        if (isSupported) {
+                            unsupNote.classList.add('hidden');
+                        } else {
+                            unsupNote.classList.remove('hidden');
+                        }
+                    }
+
+                    // Update hint
+                    if (hint) {
+                        hint.textContent = '📍 ' + countryName + (isSupported ? '' : ' (estimated data)');
+                        hint.classList.remove('text-amber-400');
+                    }
+
+                    // Update location data (tariffs, subsidies, etc.)
+                    updateLocationData();
+                } else {
+                    if (hint) { hint.textContent = '⚠️ Country not detected. Try another location.'; hint.classList.add('text-amber-400'); }
+                }
+            })
+            .catch(err => {
+                console.warn('Reverse geocoding error:', err);
+                if (hint) { hint.textContent = '⚠️ Geolocation error. Please try again.'; hint.classList.add('text-amber-400'); }
             });
         }
 
         function updateLocationData() {
             const country = document.getElementById('resCountry').value;
-            const coords = countryCoords[country] || countryCoords['FR'];
-            document.getElementById('resLatitude').value = coords.lat;
-            document.getElementById('resLongitude').value = coords.lon;
-            if (map) {
-                var bounds = getCountryBounds(country);
-                map.setMaxBounds(bounds.pad(0.15));
-                map.fitBounds(bounds);
-                if (marker) map.removeLayer(marker);
-                marker = L.marker([coords.lat, coords.lon]).addTo(map);
-                var hint = document.getElementById('mapHint');
-                if (hint) { hint.textContent = 'Click on the map to position your home precisely'; hint.classList.remove('text-amber-400'); }
-            }
-
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[country];
 
-            // Update currency symbols
-            updateCurrencySymbols(getCurrencySymbol(country));
+            // Update currency symbols (default to € for unsupported countries)
+            const curSymbol = countryData ? getCurrencySymbol(country) : '€';
+            updateCurrencySymbols(curSymbol);
 
             // Show/hide net metering note (US/CA)
             const nmNote = document.getElementById('netMeteringNote');
@@ -837,7 +884,6 @@ abbr[title]:hover::after {
             // Update prices from solar-data.js
             if (countryData) {
                 document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                // resElecPriceDisplay removed (compact layout)
                 document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
                 document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
             }
@@ -1028,7 +1074,9 @@ abbr[title]:hover::after {
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[countryCode];
             const lang = 'en';
             if (!countryData || !countryData.subsidies || !countryData.subsidies[lang]) {
-                document.getElementById('subsidyContent').innerHTML = '<p>Select a country and click Calculate.</p>';
+                const countryName = countryNamesEN[countryCode] || countryCode;
+                document.getElementById('subsidyTitle').textContent = 'Available subsidies';
+                document.getElementById('subsidyContent').innerHTML = '<p class="text-slate-400">Subsidy data not available for ' + countryName + '.</p><p class="text-xs text-slate-500 mt-2">Irradiation data (PVGIS) remains accurate. Installation costs and tariffs used are generic estimates. Please check your local sources for precise data.</p>';
                 return;
             }
             const sub = countryData.subsidies[lang];
