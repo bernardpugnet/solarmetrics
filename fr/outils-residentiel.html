@@ -408,13 +408,9 @@ abbr[title]:hover::after {
                                             </span>
                                         </span>
                                         <span class="text-white font-medium"><span id="resSurfaceDisplay">30</span> m²</span></label>
-                                    <div class="flex gap-3">
-                                        <input type="range" id="resSurface" min="5" max="100" value="30" step="1"
-                                               oninput="document.getElementById('resSurfaceDisplay').textContent = this.value"
-                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                                        <input type="number" id="resSurfaceNum" value="30" min="5" max="100" step="1"
-                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    </div>
+                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1"
+                                           oninput="document.getElementById('resSurfaceDisplay').textContent = this.value"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
                                 <!-- Orientation -->
@@ -448,13 +444,9 @@ abbr[title]:hover::after {
                                         </span>
                                         <span class="text-white font-medium"><span id="resTiltDisplay">30</span>°</span>
                                     </label>
-                                    <div class="flex gap-3">
-                                        <input type="range" id="resTilt" min="0" max="60" value="30" step="1"
-                                               oninput="document.getElementById('resTiltDisplay').textContent = this.value"
-                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                                        <input type="number" id="resTiltNum" value="30" min="0" max="60" step="1"
-                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    </div>
+                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1"
+                                           oninput="document.getElementById('resTiltDisplay').textContent = this.value"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
                                 <!-- Shading -->
@@ -469,13 +461,9 @@ abbr[title]:hover::after {
                                         </span>
                                         <span class="text-white font-medium"><span id="resShadingDisplay">0</span>%</span>
                                     </label>
-                                    <div class="flex gap-3">
-                                        <input type="range" id="resShading" min="0" max="40" value="0" step="1"
-                                               oninput="document.getElementById('resShadingDisplay').textContent = this.value"
-                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                                        <input type="number" id="resShadingNum" value="0" min="0" max="40" step="1"
-                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    </div>
+                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1"
+                                           oninput="document.getElementById('resShadingDisplay').textContent = this.value"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
                                 <!-- Panel Type -->
@@ -514,13 +502,9 @@ abbr[title]:hover::after {
                                         </span>
                                         <span class="text-white font-medium"><span id="resConsumptionDisplay">4000</span> kWh</span>
                                     </label>
-                                    <div class="flex gap-3">
-                                        <input type="range" id="resConsumption" min="1000" max="100000" value="4000" step="100"
-                                               oninput="document.getElementById('resConsumptionDisplay').textContent = this.value"
-                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                                        <input type="number" id="resConsumptionNum" value="4000" min="1000" max="100000" step="100"
-                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    </div>
+                                    <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100"
+                                           oninput="document.getElementById('resConsumptionDisplay').textContent = this.value"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
                                 <!-- Self-Consumption Slider -->
@@ -535,13 +519,9 @@ abbr[title]:hover::after {
                                         </span>
                                         <span class="text-white font-medium"><span id="resSelfConsumDisplay">50</span>%</span>
                                     </label>
-                                    <div class="flex gap-3">
-                                        <input type="range" id="resSelfConsum" min="20" max="90" value="50" step="5"
-                                               oninput="document.getElementById('resSelfConsumDisplay').textContent = this.value; updateBatteryDefault()"
-                                               class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                                        <input type="number" id="resSelfConsumNum" value="50" min="20" max="90" step="5"
-                                               class="w-20 px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    </div>
+                                    <input type="number" id="resSelfConsum" value="50" min="20" max="90" step="5"
+                                           oninput="document.getElementById('resSelfConsumDisplay').textContent = this.value; updateBatteryDefault()"
+                                           class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
 
                                 <!-- Battery Toggle -->
@@ -1475,15 +1455,6 @@ abbr[title]:hover::after {
             resetResidential();
             document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-            // Sync sliders with number inputs
-            ['resSurface', 'resTilt', 'resShading', 'resConsumption', 'resSelfConsum', 'resDegradation', 'resPriceIncrease', 'resDiscount', 'resElecPrice', 'resFeedir', 'resSubsidies'].forEach(id => {
-                const slider = document.getElementById(id);
-                const input = document.getElementById(id + 'Num');
-                if (slider && input) {
-                    slider.addEventListener('input', () => input.value = slider.value);
-                    input.addEventListener('change', () => slider.value = input.value);
-                }
-            });
         });
 
         // Mobile menu toggle
