@@ -194,6 +194,30 @@ abbr[title]:hover::after {
 </div>
                     <a href="insights/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Insights</a>
                     <div class="relative group">
+  <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1">
+    Data
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+      <a href="/en/data-benchmarks.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">📊</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Benchmarks Europe</div>
+          <div class="text-xs text-slate-400">CAPEX · OPEX · WACC · PR</div>
+        </div>
+      </a>
+      <a href="/en/data-market-power.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-violet-500/15 text-violet-400 text-base">⚡</span>
+        <div>
+          <div class="text-sm font-semibold text-white">Market &amp; Power</div>
+          <div class="text-xs text-slate-400">Negative prices · PPA · Curtailment</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+                    <div class="relative group">
   <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
     Tools
     <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
@@ -309,6 +333,9 @@ abbr[title]:hover::after {
                 <a href="vehicle-to-grid.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔌 Vehicle-to-Grid</a>
                 <a href="virtual-power-plants.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔗 Virtual power plants</a>
                 <a href="insights/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📈 Insights</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Data</p>
+                <a href="/en/data-benchmarks.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📊 Benchmarks Europe</a>
+                <a href="/en/data-market-power.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Market &amp; Power</a>
                 <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Tools</p>
                 <a href="tools-simulation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Simulator</a>
                 <a href="tools-industrial.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industrial</a>
@@ -957,30 +984,38 @@ abbr[title]:hover::after {
     <section class="py-16 bg-slate-800/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-2xl font-bold text-white text-center mb-8">Explore the site</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <a href="index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="/en/index.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-slate-500 transition-all text-center group">
                     <span class="text-2xl">🏠</span>
                     <p class="text-white font-medium mt-2 text-sm group-hover:text-slate-300 transition-colors">Home</p>
                 </a>
-                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                <a href="/en/economy.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
+                    <span class="text-2xl">💰</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Economy</p>
+                </a>
+                <a href="/en/technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
                     <span class="text-2xl">☀️</span>
                     <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
                 </a>
-                <a href="markets.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
-                    <span class="text-2xl">🌍</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Markets</p>
+                <a href="/en/insights/" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-orange-500/50 transition-all text-center group">
+                    <span class="text-2xl">📈</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-orange-500 transition-colors">Insights</p>
                 </a>
-                <a href="ai-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
-                    <span class="text-2xl">🤖</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">AI & Data</p>
+                <a href="/en/data-benchmarks.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-emerald-500/50 transition-all text-center group">
+                    <span class="text-2xl">📊</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-emerald-500 transition-colors">Data</p>
                 </a>
-                <a href="tools.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
+                <a href="/en/tools-simulation.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
                     <span class="text-2xl">🧮</span>
                     <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Tools</p>
                 </a>
-                <a href="resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
+                <a href="/en/resources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
                     <span class="text-2xl">📚</span>
                     <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Resources</p>
+                </a>
+                <a href="/en/hire-me.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
+                    <span class="text-2xl">🤝</span>
+                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Hire Me</p>
                 </a>
             </div>
         </div>
