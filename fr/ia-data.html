@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IA & Data dans le Solaire - SolarMetrics</title>
     <meta name="description" content="IA et data dans le solaire: forecasting prédictif, maintenance préventive intelligente et trading algorithmique pour projets PV.">
+    <meta name="keywords" content="IA solaire, machine learning PV, forecasting production, maintenance prédictive, trading algorithmique">
     <meta name="author" content="Bernard Pugnet">
     <!-- Canonical & hreflang -->
     <link rel="canonical" href="https://solarmetrics.netlify.app/fr/ia-data">
@@ -663,6 +664,100 @@ abbr[title]:hover::after {
                             <p class="text-slate-400 text-sm mt-1">Temps inspection</p>
                             <p class="text-slate-500 text-xs">(drone + IA vs manuel)</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cas concrets -->
+            <div class="mb-20" id="ia-cas-concrets">
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 text-lg font-bold">★</span>
+                    Cas concrets : l'IA en production
+                </h3>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Cas 1 -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-green-500/30 transition-all">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 bg-green-500/20 text-green-500 rounded-full text-xs font-medium">Forecasting</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-400 rounded-full text-xs">Espagne</span>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">Statkraft — Portfolio 2 GW</h4>
+                        <p class="text-slate-400 text-sm mb-4">
+                            Le producteur norvégien utilise le ML pour ses prévisions day-ahead sur son portefeuille solaire ibérique.
+                            Les modèles LSTM combinant données satellite (Copernicus) et NWP réduisent le nMAE à 4-5%.
+                        </p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Gain vs persistence</span>
+                                <span class="text-green-500 font-medium">+28%</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Réduction pénalités écart</span>
+                                <span class="text-green-500 font-medium">-40%</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Outil</span>
+                                <span class="text-white font-medium">Python / TensorFlow</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-xs mt-3">Source : Statkraft Annual Report 2024</p>
+                    </div>
+
+                    <!-- Cas 2 -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-blue-500/30 transition-all">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-500 rounded-full text-xs font-medium">Maintenance</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-400 rounded-full text-xs">France</span>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">EDF Renouvelables — Drones IA</h4>
+                        <p class="text-slate-400 text-sm mb-4">
+                            EDF R déploie des inspections par drone + IA thermographique sur ses 500+ centrales en France.
+                            L'algorithme de computer vision détecte les hotspots et cellules défaillantes en temps réel lors du survol.
+                        </p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Temps d'inspection</span>
+                                <span class="text-blue-500 font-medium">-60% vs manuel</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Taux détection défauts</span>
+                                <span class="text-blue-500 font-medium">>97%</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Outil</span>
+                                <span class="text-white font-medium">PyTorch / OpenCV</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-xs mt-3">Source : EDF R communication 2024, PV Magazine</p>
+                    </div>
+
+                    <!-- Cas 3 -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-all">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-500 rounded-full text-xs font-medium">Trading</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-400 rounded-full text-xs">Allemagne</span>
+                        </div>
+                        <h4 class="text-white font-semibold mb-2">Next Kraftwerke — VPP 15 GW</h4>
+                        <p class="text-slate-400 text-sm mb-4">
+                            L'agrégateur allemand (Shell) gère une centrale virtuelle de 15 GW incluant du solaire. Son algorithme de trading
+                            optimise le dispatch et l'arbitrage entre day-ahead, intraday et balancing en temps réel.
+                        </p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Gain revenu vs PPA fixe</span>
+                                <span class="text-amber-500 font-medium">+10-15%</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Fréquence optimisation</span>
+                                <span class="text-amber-500 font-medium">15 min</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-800/50 rounded-lg">
+                                <span class="text-slate-500">Outil</span>
+                                <span class="text-white font-medium">Algo propriétaire / API EPEX</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-xs mt-3">Source : Next Kraftwerke, Clean Energy Wire 2024</p>
                     </div>
                 </div>
             </div>
