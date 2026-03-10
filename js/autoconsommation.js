@@ -521,7 +521,7 @@ function getTypicalDays(hourlyData) {
 function calculateFinancials(annual, financialParams) {
   const {
     priceElecKwh = 0.2516,        // €/kWh default (France S2 2025, Eurostat)
-    priceReventeKwh = 0.13,       // €/kWh surplus resale (OA France, indicative)
+    priceReventeKwh = 0.04,       // €/kWh surplus resale (OA France ≤9 kWc, T1 2026)
     costPv = 0,                    // Total PV installation cost (€)
     costBattery = 0,               // Total battery cost (€)
     priceIncreasePerYear = 0.03,   // 3% annual electricity price increase

@@ -1198,7 +1198,7 @@
             document.getElementById('simLoss').value = '14';
             document.getElementById('simProfile').value = 'family';
             document.getElementById('resElecPrice').value = '0.2516';
-            document.getElementById('resFeedir').value = '0.13';
+            document.getElementById('resFeedir').value = '0.04';
             document.getElementById('resSubsidies').value = '3000';
             document.getElementById('resDegradation').value = '0.5';
             document.getElementById('resPriceIncrease').value = '2.5';
@@ -1422,7 +1422,7 @@
             // Payback chart - cumulative savings over 25 years
             const years = Array.from({length: 26}, (_, i) => i);
             const elecP = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
-            const feedP = parseFloat(document.getElementById('resFeedir').value) || 0.13;
+            const feedP = parseFloat(document.getElementById('resFeedir').value) || 0.04;
             const degr = (parseFloat(document.getElementById('resDegradation').value) || 0.5) / 100;
             const prInc = (parseFloat(document.getElementById('resPriceIncrease').value) || 2.5) / 100;
             const cumulative = [];

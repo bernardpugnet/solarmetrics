@@ -6,3 +6,8 @@
 /fr/outils-autoconsommation   /fr/outils-simulation        301
 /en/tools-residential          /en/tools-simulation         301
 /en/tools-selfconsumption      /en/tools-simulation         301
+
+# Legacy URLs and typos
+/fr/outils                     /fr/outils-simulation        301
+/fr/mon-solaire-en-60s         /fr/mon-solaire-60s          301
+/en/solar-60s                  /en/solar-in-60s             301
