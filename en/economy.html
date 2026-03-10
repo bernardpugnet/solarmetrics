@@ -331,7 +331,7 @@ abbr[title]:hover::after {
             <!-- Image Hero -->
             <div class="relative rounded-3xl overflow-hidden mb-16 h-64 md:h-80">
                 <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1600&q=80" 
-                     alt="Graphiques financiers" 
+                     alt="Financial charts" 
                      class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-8">
@@ -372,12 +372,12 @@ abbr[title]:hover::after {
                             <p class="text-amber-500 font-mono text-center text-lg mb-2">
                                 LCOE = Σ(<abbr title="Capital Expenditure - upfront investment needed for equipment and installation">CAPEX</abbr> + <abbr title="Operating Expenditure - ongoing annual costs like maintenance and insurance">OPEX</abbr>) / Σ(Production)
                             </p>
-                            <p class="text-slate-500 text-xs text-center">Tous les flux actualisés au taux d'actualisation choisi</p>
+                            <p class="text-slate-500 text-xs text-center">All flows discounted at the chosen discount rate</p>
                         </div>
                         <div class="space-y-2 text-sm">
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-                                <span class="text-slate-400"><strong class="text-white">CAPEX</strong> : Coût d'investissement initial (modules, onduleurs, structure, installation)</span>
+                                <span class="text-slate-400"><strong class="text-white">CAPEX</strong> : Initial investment cost (modules, inverters, structure, installation)</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -390,9 +390,9 @@ abbr[title]:hover::after {
                         </div>
                     </div>
                     
-                    <!-- Formule détaillée -->
+                    <!-- Detailed formula -->
                     <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50">
-                        <h4 class="text-xl font-semibold text-white mb-4">Formule détaillée</h4>
+                        <h4 class="text-xl font-semibold text-white mb-4">Detailed formula</h4>
                         <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/50 mb-4 overflow-x-auto">
                             <p class="text-amber-500 font-mono text-center whitespace-nowrap">
                                 LCOE = [I₀ + Σ(Oₜ/(1+r)ᵗ)] / [Σ(Eₜ/(1+r)ᵗ)]
@@ -405,15 +405,15 @@ abbr[title]:hover::after {
                             </div>
                             <div class="flex justify-between border-b border-slate-700/50 pb-2">
                                 <span class="text-slate-400">Oₜ</span>
-                                <span class="text-white">OPEX année t (€)</span>
+                                <span class="text-white">OPEX year t (€)</span>
                             </div>
                             <div class="flex justify-between border-b border-slate-700/50 pb-2">
                                 <span class="text-slate-400">Eₜ</span>
-                                <span class="text-white">Énergie produite année t (MWh)</span>
+                                <span class="text-white">Energy produced year t (MWh)</span>
                             </div>
                             <div class="flex justify-between border-b border-slate-700/50 pb-2">
                                 <span class="text-slate-400">r</span>
-                                <span class="text-white">Taux d'actualisation (<abbr title="Weighted Average Cost of Capital - discount rate used for financial analysis, typically 4-7%">WACC</abbr>)</span>
+                                <span class="text-white">Discount rate (<abbr title="Weighted Average Cost of Capital - discount rate used for financial analysis, typically 4-7%">WACC</abbr>)</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-400">t</span>
@@ -506,14 +506,14 @@ abbr[title]:hover::after {
             <div class="mb-20">
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                     <span class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-500 text-lg font-bold">2</span>
-                    Montages financiers
+                    Financial structures
                 </h3>
 
                 <!-- Introduction pédagogique -->
                 <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-8 border border-blue-500/20 mb-8">
                     <h4 class="text-xl font-semibold text-white mb-4">🎯 La question centrale</h4>
                     <p class="text-slate-300 text-lg mb-4">
-                        Un projet solaire coûte cher à construire mais génère des revenus pendant 25-30 ans.
+                        A solar project is expensive to build but generates revenue for 25-30 years.
                     </p>
                     <p class="text-slate-400">
                         La question est : <strong class="text-white">Qui paie ? Qui possède ? Qui vend l'électricité ?</strong>
@@ -619,7 +619,7 @@ abbr[title]:hover::after {
                     <div class="grid md:grid-cols-3 gap-4">
                         <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-green-500">
                             <h6 class="text-green-500 font-semibold mb-2">PPA On-site</h6>
-                            <p class="text-slate-400 text-sm mb-3">Panneaux installés chez le client (toiture, parking). Il consomme directement.</p>
+                            <p class="text-slate-400 text-sm mb-3">Panels installed at the client's location (rooftop, parking). Direct self-consumption.</p>
                             <p class="text-slate-500 text-xs"><strong class="text-white">Exemple :</strong> Usine avec 500 <abbr title="Kilowatt-peak - rated power capacity under standard test conditions, 500 kWp = 500,000W">kWc</abbr> sur son toit</p>
                         </div>
                         <div class="bg-slate-900/50 rounded-xl p-5 border-l-4 border-blue-500">
@@ -694,7 +694,7 @@ abbr[title]:hover::after {
                             </div>
                         </div>
                         <div class="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-                            <p class="text-green-500 text-sm font-medium">💰 Résultat : Le supermarché économise ~30% sur sa facture, l'investisseur a un rendement de 8-10%</p>
+                            <p class="text-green-500 text-sm font-medium">💰 Result: The supermarket saves ~30% on its bill, the investor earns an 8-10% return</p>
                         </div>
                     </div>
 
@@ -993,7 +993,7 @@ abbr[title]:hover::after {
                                 </span>
                                 <div>
                                     <p class="text-white font-medium">Conformité réglementaire</p>
-                                    <p class="text-slate-400 text-xs">Permis, ICPE, normes électriques, environnement</p>
+                                    <p class="text-slate-400 text-xs">Permits, ICPE, electrical standards, environment</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
@@ -1011,27 +1011,27 @@ abbr[title]:hover::after {
 
                 <!-- Valorisation -->
                 <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-8 border border-blue-500/20">
-                    <h4 class="text-xl font-semibold text-white mb-6">Valorisation d'un parc solaire</h4>
+                    <h4 class="text-xl font-semibold text-white mb-6">Solar park valuation</h4>
                     <div class="grid md:grid-cols-3 gap-6 mb-6">
                         <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
-                            <p class="text-slate-400 text-sm mb-2">Méthode DCF</p>
+                            <p class="text-slate-400 text-sm mb-2">DCF Method</p>
                             <p class="text-white font-semibold mb-2">Discounted Cash Flows</p>
-                            <p class="text-slate-400 text-xs">Actualisation des flux de trésorerie futurs au WACC. Standard pour les actifs de rendement.</p>
+                            <p class="text-slate-400 text-xs">Discounting future cash flows at WACC. Standard for yield-producing assets.</p>
                         </div>
                         <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
                             <p class="text-slate-400 text-sm mb-2">Multiple €/MWc</p>
                             <p class="text-2xl font-bold text-blue-500 mb-2">0.8-1.2 M€/MWc</p>
-                            <p class="text-slate-400 text-xs">Valorisation par la capacité installée. Varie selon âge, localisation, contrat.</p>
+                            <p class="text-slate-400 text-xs">Valuation by installed capacity. Varies by age, location, contract.</p>
                         </div>
                         <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-600/30 text-center">
                             <p class="text-slate-400 text-sm mb-2">Yield attendu</p>
                             <p class="text-2xl font-bold text-green-500 mb-2">5-8%</p>
-                            <p class="text-slate-400 text-xs"><abbr title="Internal Rate of Return - investment return rate comparable to other financial products">IRR</abbr> equity attendu par les investisseurs institutionnels sur actifs solaires.</p>
+                            <p class="text-slate-400 text-xs"><abbr title="Internal Rate of Return - investment return rate comparable to other financial products">IRR</abbr> equity expected by institutional investors on solar assets.</p>
                         </div>
                     </div>
                     <p class="text-slate-500 text-sm">
-                        <strong class="text-white">Facteurs de prime/décote :</strong> Durée PPA résiduelle, qualité de l'offtaker (investment grade), 
-                        localisation (irradiation, risque pays), état technique, taille du portefeuille.
+                        <strong class="text-white">Premium/discount factors:</strong> Residual PPA term, offtaker quality (investment grade),
+                        location (irradiation, country risk), technical condition, portfolio size.
                     </p>
                 </div>
             </div>
@@ -1214,7 +1214,7 @@ abbr[title]:hover::after {
                                 <span class="w-3 h-3 bg-orange-500 rounded-full"></span>
                                 <h5 class="text-white font-medium">Risque contrepartie</h5>
                             </div>
-                            <p class="text-slate-400 text-xs">Solvabilité de l'offtaker (PPA). Importance du rating crédit.</p>
+                            <p class="text-slate-400 text-xs">Offtaker solvency (PPA). Importance of credit rating.</p>
                         </div>
                         <div class="bg-slate-900/50 rounded-xl p-4 border border-slate-600/30">
                             <div class="flex items-center gap-2 mb-2">
