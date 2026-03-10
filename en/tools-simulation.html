@@ -380,6 +380,19 @@
                             </div>
                             <div id="map" style="height:350px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
                             <p id="mapHint" class="text-xs text-slate-500">📍 Click on the map to position your installation. The country will be detected automatically.</p>
+                            <div id="irradianceEstimate" class="hidden mt-2 p-3 bg-gradient-to-r from-amber-900/20 to-orange-900/20 border border-amber-700/30 rounded-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-xs text-slate-400">☀️ Estimated yield at this latitude:</span>
+                                        <span id="irradianceValue" class="text-sm font-bold text-amber-400 ml-1">—</span>
+                                        <span class="text-xs text-slate-400">kWh/kWp/year</span>
+                                    </div>
+                                    <div id="irradianceBar" class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                        <div id="irradianceBarFill" class="h-full bg-gradient-to-r from-blue-400 via-amber-400 to-red-500 rounded-full" style="width:0%"></div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-1">Estimate based on latitude. The exact value will be calculated by PVGIS during simulation (orientation, tilt, shading included).</p>
+                            </div>
                             <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
                                 <label class="flex items-center gap-2 text-sm mb-2">
                                     <input type="checkbox" id="resManualMode" onchange="toggleManualMode()" class="accent-amber-500">
@@ -468,6 +481,9 @@
                                     <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
                                     <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
                                         <span class="text-slate-400 font-medium">ℹ️</span> Auto-calculated: area × 0.85 × efficiency. Override if you know the exact capacity from your quote.
+                                    </div>
+                                    <div class="mt-1 p-2 bg-amber-900/15 border border-amber-700/30 rounded-lg text-xs text-amber-400/80 leading-relaxed">
+                                        <span class="font-medium">⚠️ Location-independent</span> — peak power (kWp) is a fixed property of your panels. What changes with location is the <strong>yield</strong> (kWh/kWp/year), shown in results after simulation.
                                     </div>
                                 </div>
                                 <div>
@@ -935,6 +951,7 @@
                 document.getElementById('resLatitude').value = latlng.lat.toFixed(4);
                 document.getElementById('resLongitude').value = latlng.lng.toFixed(4);
                 reverseGeocode(latlng.lat, latlng.lng);
+                updateIrradianceEstimate(latlng.lat);
             });
 
             map.on('click', function(e) {
@@ -943,7 +960,30 @@
                 document.getElementById('resLatitude').value = latlng.lat.toFixed(4);
                 document.getElementById('resLongitude').value = latlng.lng.toFixed(4);
                 reverseGeocode(latlng.lat, latlng.lng);
+                updateIrradianceEstimate(latlng.lat);
             });
+
+            // Show initial estimate for default location
+            updateIrradianceEstimate(48.8566);
+        }
+
+        // Estimate annual yield (kWh/kWp) based on latitude
+        function estimateYieldByLatitude(lat) {
+            const absLat = Math.abs(lat);
+            if (absLat <= 25) return 1700 + (25 - absLat) * 4;
+            if (absLat <= 35) return 1500 + (35 - absLat) * 20;
+            if (absLat <= 45) return 1200 + (45 - absLat) * 30;
+            if (absLat <= 55) return 950 + (55 - absLat) * 25;
+            if (absLat <= 65) return 700 + (65 - absLat) * 25;
+            return Math.max(500, 700 - (absLat - 65) * 20);
+        }
+
+        function updateIrradianceEstimate(lat) {
+            const estimate = Math.round(estimateYieldByLatitude(lat));
+            document.getElementById('irradianceValue').textContent = estimate;
+            const pct = Math.min(100, Math.max(0, (estimate - 500) / (1800 - 500) * 100));
+            document.getElementById('irradianceBarFill').style.width = pct + '%';
+            document.getElementById('irradianceEstimate').classList.remove('hidden');
         }
 
         function reverseGeocode(lat, lon) {
