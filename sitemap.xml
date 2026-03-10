@@ -325,6 +325,35 @@
     <lastmod>2026-03-05</lastmod>
     <priority>0.9</priority>
   </url>
+  <!-- Data pages (FR only, no EN counterpart yet) -->
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/data-benchmarks</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-benchmarks"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-benchmarks"/>
+    <lastmod>2026-03-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/data-market-power</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-market-power"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-market-power"/>
+    <lastmod>2026-03-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/data-capex-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-capex-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-capex-europe"/>
+    <lastmod>2026-03-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/data-degradation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-degradation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-degradation"/>
+    <lastmod>2026-03-10</lastmod>
+    <priority>0.8</priority>
+  </url>
   <!-- Analysis articles -->
   <url>
     <loc>https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe</loc>
