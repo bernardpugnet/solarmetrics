@@ -43,14 +43,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/outils-residentiel</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-residential"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://solarmetrics.netlify.app/fr/outils-industriel</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-industrial"/>
@@ -97,13 +89,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://solarmetrics.netlify.app/fr/outils-autoconsommation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://solarmetrics.netlify.app/fr/prix-solaire</loc>
@@ -255,9 +240,6 @@
   </url>
   <url>
     <loc>https://solarmetrics.netlify.app/en/tools-residential</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-residential"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-residentiel"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
@@ -299,6 +281,31 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/contact"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/contact"/>
     <lastmod>2026-03-05</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <!-- Simulateur -->
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/outils-simulation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-simulation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
+    <lastmod>2026-03-10</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/en/tools-simulation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-simulation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
+    <lastmod>2026-03-10</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <!-- Physique PV (FR only) -->
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/physique-electricite-ferme-photovoltaique</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/physique-electricite-ferme-photovoltaique"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/physique-electricite-ferme-photovoltaique"/>
+    <lastmod>2026-03-10</lastmod>
     <priority>0.7</priority>
   </url>
   <!-- Hub pages: Analyses (FR) / Insights (EN) -->
@@ -355,8 +362,6 @@
   <url>
     <loc>https://solarmetrics.netlify.app/en/tools-selfconsumption</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-selfconsumption"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-autoconsommation"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.9</priority>
   </url>
