@@ -379,34 +379,6 @@ abbr[title]:hover::after {
                     </a>
                 </div>
 
-                <!-- Geo-personalized widget -->
-                <div id="geoWidget" class="mt-10 max-w-xl mx-auto opacity-0 transition-opacity duration-700" style="display:none;">
-                    <div class="bg-slate-800/70 backdrop-blur border border-slate-700/60 rounded-2xl px-5 py-4">
-                        <div class="flex flex-col sm:flex-row items-center gap-3 text-sm">
-                            <span id="geoFlag" class="text-2xl">☀️</span>
-                            <div class="text-center sm:text-left flex-1">
-                                <p class="text-slate-300">
-                                    <span id="geoLabel">Dans votre région</span> :
-                                    <span id="geoYield" class="text-amber-400 font-semibold"></span> kWh/kWc/an
-                                </p>
-                                <p class="text-slate-500 text-xs mt-0.5">
-                                    Prix élec. <span id="geoPrice" class="text-slate-400"></span> ·
-                                    <span id="geoExtra" class="text-slate-400"></span>
-                                </p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <select id="geoZoneSelect" class="bg-slate-700 text-slate-300 text-xs rounded-lg border border-slate-600 px-2 py-1.5 focus:border-amber-500 focus:outline-none" style="display:none;">
-                                    <option value="france_nord">Nord (Paris, Lille)</option>
-                                    <option value="france_centre">Centre (Lyon, Bordeaux)</option>
-                                    <option value="france_sud" selected>Sud (Marseille, Nice)</option>
-                                </select>
-                                <a href="outils-simulation.html" class="whitespace-nowrap px-3 py-1.5 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 rounded-lg text-xs font-medium transition-colors">
-                                    Simuler →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -475,7 +447,7 @@ abbr[title]:hover::after {
                             <div class="w-2.5 h-2.5 bg-amber-500 rounded-full"></div>
                         </div>
                         <div class="mb-4">
-                            <p class="text-3xl font-bold text-amber-400 counter" data-target="48.5">0</p>
+                            <p class="text-3xl font-bold text-amber-400">48.5</p>
                             <p class="text-xs text-slate-400 mt-1">€/MWh</p>
                         </div>
                         <div class="flex items-center gap-2 mb-3">
@@ -509,7 +481,7 @@ abbr[title]:hover::after {
                             <div class="w-2.5 h-2.5 bg-green-500 rounded-full"></div>
                         </div>
                         <div class="mb-4">
-                            <p class="text-3xl font-bold text-green-400 counter" data-target="31">0</p>
+                            <p class="text-3xl font-bold text-green-400">31</p>
                             <p class="text-xs text-slate-400 mt-1">GW</p>
                         </div>
                         <div class="flex items-center gap-2 mb-3">
@@ -560,7 +532,7 @@ abbr[title]:hover::after {
                             <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></div>
                         </div>
                         <div class="mb-4">
-                            <p class="text-3xl font-bold text-emerald-400 counter" data-target="80">0</p>
+                            <p class="text-3xl font-bold text-emerald-400">80</p>
                             <p class="text-xs text-slate-400 mt-1">€/kWc</p>
                         </div>
                         <div class="flex items-center gap-2 mb-3">
@@ -702,39 +674,6 @@ abbr[title]:hover::after {
         </section>
     </main>
 
-    <!-- Navigation Footer -->
-    <section class="py-16 bg-slate-800/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl font-bold text-white text-center mb-8">Explorer le site</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <a href="technologies.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-amber-500/50 transition-all text-center group">
-                    <span class="text-2xl">☀️</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-amber-500 transition-colors">Technologies</p>
-                </a>
-                <a href="economie.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-green-500/50 transition-all text-center group">
-                    <span class="text-2xl">💰</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-green-500 transition-colors">Économie</p>
-                </a>
-                <a href="marches.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-blue-500/50 transition-all text-center group">
-                    <span class="text-2xl">🌍</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-blue-500 transition-colors">Marchés</p>
-                </a>
-                <a href="ia-data.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all text-center group">
-                    <span class="text-2xl">🤖</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-purple-500 transition-colors">IA & Data</p>
-                </a>
-                <a href="outils.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-cyan-500/50 transition-all text-center group">
-                    <span class="text-2xl">🧮</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-cyan-500 transition-colors">Outils</p>
-                </a>
-                <a href="ressources.html" class="bg-slate-800/50 rounded-xl p-4 border border-slate-700 hover:border-indigo-500/50 transition-all text-center group">
-                    <span class="text-2xl">📚</span>
-                    <p class="text-white font-medium mt-2 text-sm group-hover:text-indigo-500 transition-colors">Ressources</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="py-8 bg-slate-950 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -794,126 +733,6 @@ abbr[title]:hover::after {
             if (window.innerWidth >= 1024) closeMenu();
         });
 
-        /* ── Géolocalisation par fuseau horaire (aucun tracking, aucun cookie) ── */
-        (function() {
-            var GEO_DATA = {
-                france_nord:   { flag:'🇫🇷', label:'Nord de la France', yield:'900 – 1 100', price:'0,2516 €/kWh TTC', extra:'Prime autoconso 80 €/kWc' },
-                france_centre: { flag:'🇫🇷', label:'Centre de la France', yield:'1 100 – 1 300', price:'0,2516 €/kWh TTC', extra:'Prime autoconso 80 €/kWc' },
-                france_sud:    { flag:'🇫🇷', label:'Sud de la France', yield:'1 300 – 1 550', price:'0,2516 €/kWh TTC', extra:'Prime autoconso 80 €/kWc' },
-                espagne:       { flag:'🇪🇸', label:'Espagne', yield:'1 500 – 1 900', price:'0,18 €/kWh', extra:'LCOE ~25-35 €/MWh' },
-                allemagne:     { flag:'🇩🇪', label:'Allemagne', yield:'800 – 1 100', price:'0,35 €/kWh', extra:'Forte rentabilité résidentielle' },
-                italie:        { flag:'🇮🇹', label:'Italie', yield:'1 200 – 1 700', price:'0,25 €/kWh', extra:'Superbonus en baisse' },
-                portugal:      { flag:'🇵🇹', label:'Portugal', yield:'1 400 – 1 800', price:'0,16 €/kWh', extra:'Forte croissance autoconsommation' },
-                belgique:      { flag:'🇧🇪', label:'Belgique', yield:'850 – 1 050', price:'0,30 €/kWh', extra:'Tarif prosumer en vigueur' },
-                suisse:        { flag:'🇨🇭', label:'Suisse', yield:'900 – 1 300', price:'0,27 CHF/kWh', extra:'Rétribution unique (PRU)' },
-                uk:            { flag:'🇬🇧', label:'Royaume-Uni', yield:'800 – 1 100', price:'£0.24/kWh', extra:'Smart Export Guarantee' },
-                paysbas:       { flag:'🇳🇱', label:'Pays-Bas', yield:'850 – 1 050', price:'0,28 €/kWh', extra:'Net metering → phase-out' },
-                europe:        { flag:'🌍', label:'Europe', yield:'800 – 1 900', price:'Variable', extra:'LCOE moyen ~40-60 €/MWh' }
-            };
-
-            var TZ_MAP = {
-                'Europe/Paris': 'france_centre',
-                'Europe/Madrid': 'espagne',
-                'Europe/Berlin': 'allemagne',
-                'Europe/Rome': 'italie',
-                'Europe/Lisbon': 'portugal',
-                'Europe/Brussels': 'belgique',
-                'Europe/Zurich': 'suisse',
-                'Europe/London': 'uk',
-                'Europe/Amsterdam': 'paysbas',
-                'Atlantic/Canary': 'espagne'
-            };
-
-            try {
-                var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                var detectedZone = TZ_MAP[tz] || null;
-                var isFrance = detectedZone && detectedZone.startsWith('france');
-
-                // Si pas en Europe, ne rien afficher
-                if (!detectedZone && tz && !tz.startsWith('Europe/')) return;
-                if (!detectedZone) detectedZone = 'europe';
-
-                // Charger depuis localStorage si sauvegardé
-                var saved = null;
-                try { saved = localStorage.getItem('solarmetrics_geozone'); } catch(e) {}
-                if (saved && GEO_DATA[saved]) {
-                    detectedZone = saved;
-                    isFrance = detectedZone.startsWith('france');
-                }
-
-                var widget = document.getElementById('geoWidget');
-                var select = document.getElementById('geoZoneSelect');
-
-                function updateWidget(zone) {
-                    var d = GEO_DATA[zone];
-                    if (!d) return;
-                    document.getElementById('geoFlag').textContent = d.flag;
-                    document.getElementById('geoLabel').textContent = d.label;
-                    document.getElementById('geoYield').textContent = d.yield;
-                    document.getElementById('geoPrice').textContent = d.price;
-                    document.getElementById('geoExtra').textContent = d.extra;
-                }
-
-                // Afficher le sélecteur de zone pour la France
-                if (isFrance || detectedZone === 'france_centre' || detectedZone === 'france_nord' || detectedZone === 'france_sud') {
-                    select.style.display = '';
-                    select.value = detectedZone;
-                    select.addEventListener('change', function() {
-                        updateWidget(this.value);
-                        try { localStorage.setItem('solarmetrics_geozone', this.value); } catch(e) {}
-                    });
-                }
-
-                updateWidget(detectedZone);
-                widget.style.display = '';
-                // Fade in
-                requestAnimationFrame(function() {
-                    requestAnimationFrame(function() {
-                        widget.style.opacity = '1';
-                    });
-                });
-            } catch(e) {
-                // Si Intl non supporté, on n'affiche rien
-            }
-        })();
-
-        /* ── Dashboard Counter Animation with IntersectionObserver ── */
-        (function() {
-            var counters = document.querySelectorAll('.counter');
-            if (!counters.length) return;
-
-            function animateCounter(el) {
-                var target = parseFloat(el.getAttribute('data-target'));
-                var current = 0;
-                var increment = target / 30; // 30 frames for smooth animation
-                var isRunning = false;
-
-                var interval = setInterval(function() {
-                    if (current < target && !isRunning) {
-                        current += increment;
-                        if (current > target) current = target;
-                        el.textContent = current.toFixed(1);
-                    } else if (current >= target) {
-                        el.textContent = target;
-                        clearInterval(interval);
-                    }
-                }, 30);
-            }
-
-            // IntersectionObserver for lazy animation on scroll
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        animateCounter(entry.target);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            counters.forEach(function(el) {
-                observer.observe(el);
-            });
-        })();
 
         // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
