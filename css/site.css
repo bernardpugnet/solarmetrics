@@ -1,5 +1,6 @@
 /* /css/site.css */
 /* Mode compact SolarMetrics — s'active via <body class="... sm-compact"> */
+/* TOUTES les règles agressives scopées à <main> pour ne jamais toucher nav/footer */
 
 /* ── Base ── */
 body.sm-compact {
@@ -7,140 +8,102 @@ body.sm-compact {
   line-height: 1.5;
 }
 
-/* ── Hero : supprimer le plein écran, juste le contenu ── */
-body.sm-compact section[class*="min-h-screen"] {
+/* ══════════════════════════════════════════════════ */
+/* ── Tout ce qui suit est scopé à main uniquement ── */
+/* ══════════════════════════════════════════════════ */
+
+/* ── Hero : supprimer le plein écran ── */
+body.sm-compact main section[class*="min-h-screen"] {
   min-height: auto !important;
   padding-top: 6rem !important;
   padding-bottom: 3rem !important;
 }
 
 /* ── Typo ── */
-body.sm-compact h1 {
+body.sm-compact main h1 {
   font-size: clamp(1.6rem, 2.8vw, 2.2rem) !important;
   line-height: 1.15 !important;
   letter-spacing: -0.02em;
 }
-body.sm-compact h2 {
+body.sm-compact main h2 {
   font-size: clamp(1.15rem, 1.8vw, 1.4rem) !important;
   line-height: 1.2 !important;
 }
-body.sm-compact h3 {
+body.sm-compact main h3 {
   font-size: 0.95rem !important;
   line-height: 1.25 !important;
 }
 
 /* ── Sections ── */
-body.sm-compact section {
+body.sm-compact main section {
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
 }
 
-/* ── Marges internes : écraser les gros espacements ── */
-body.sm-compact [class*="mb-4"] { margin-bottom: 0.35rem !important; }
-body.sm-compact [class*="mb-6"] { margin-bottom: 0.5rem !important; }
-body.sm-compact [class*="mb-8"] { margin-bottom: 0.6rem !important; }
-body.sm-compact [class*="mb-10"] { margin-bottom: 0.75rem !important; }
-body.sm-compact [class*="mb-12"] { margin-bottom: 0.75rem !important; }
-body.sm-compact [class*="mt-8"],
-body.sm-compact [class*="mt-10"] { margin-top: 0.75rem !important; }
+/* ── Marges internes ── */
+body.sm-compact main [class*="mb-4"] { margin-bottom: 0.35rem !important; }
+body.sm-compact main [class*="mb-6"] { margin-bottom: 0.5rem !important; }
+body.sm-compact main [class*="mb-8"] { margin-bottom: 0.6rem !important; }
+body.sm-compact main [class*="mb-10"] { margin-bottom: 0.75rem !important; }
+body.sm-compact main [class*="mb-12"] { margin-bottom: 0.75rem !important; }
+body.sm-compact main [class*="mt-8"],
+body.sm-compact main [class*="mt-10"] { margin-top: 0.75rem !important; }
 
 /* ── Paddings internes (cartes, boutons) ── */
-body.sm-compact [class*="p-6"] { padding: 0.65rem !important; }
-body.sm-compact [class*="p-5"] { padding: 0.55rem !important; }
-body.sm-compact [class*="p-4"] { padding: 0.45rem !important; }
-body.sm-compact [class*="px-8"] { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
-body.sm-compact [class*="py-4"] { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
-body.sm-compact [class*="py-3"] { padding-top: 0.4rem !important; padding-bottom: 0.4rem !important; }
+body.sm-compact main [class*="p-6"] { padding: 0.65rem !important; }
+body.sm-compact main [class*="p-5"] { padding: 0.55rem !important; }
+body.sm-compact main [class*="p-4"] { padding: 0.45rem !important; }
+body.sm-compact main [class*="px-8"] { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+body.sm-compact main [class*="py-4"] { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+body.sm-compact main [class*="py-3"] { padding-top: 0.4rem !important; padding-bottom: 0.4rem !important; }
 
 /* ── Polices des chiffres / valeurs ── */
-body.sm-compact [class*="text-4xl"] { font-size: 1.3rem !important; }
-body.sm-compact [class*="text-3xl"] { font-size: 1.1rem !important; }
-body.sm-compact [class*="text-2xl"] { font-size: 1rem !important; }
-body.sm-compact [class*="text-xl"] { font-size: 0.9rem !important; }
+body.sm-compact main [class*="text-4xl"] { font-size: 1.3rem !important; }
+body.sm-compact main [class*="text-3xl"] { font-size: 1.1rem !important; }
+body.sm-compact main [class*="text-2xl"] { font-size: 1rem !important; }
+body.sm-compact main [class*="text-xl"] { font-size: 0.9rem !important; }
 
 /* ── Grilles : resserrer les gaps ── */
-body.sm-compact [class*="gap-6"] { gap: 0.6rem !important; }
-body.sm-compact [class*="gap-8"] { gap: 0.75rem !important; }
-body.sm-compact [class*="gap-4"] { gap: 0.4rem !important; }
-body.sm-compact [class*="gap-3"] { gap: 0.3rem !important; }
+body.sm-compact main [class*="gap-6"] { gap: 0.6rem !important; }
+body.sm-compact main [class*="gap-8"] { gap: 0.75rem !important; }
+body.sm-compact main [class*="gap-4"] { gap: 0.4rem !important; }
+body.sm-compact main [class*="gap-3"] { gap: 0.3rem !important; }
 
 /* ── Icônes dans les cartes ── */
-body.sm-compact [class*="w-12"][class*="h-12"] {
+body.sm-compact main [class*="w-12"][class*="h-12"] {
   width: 2rem !important;
   height: 2rem !important;
 }
-body.sm-compact [class*="w-24"][class*="h-24"] {
+body.sm-compact main [class*="w-24"][class*="h-24"] {
   width: 3.5rem !important;
   height: 3.5rem !important;
 }
 
-/* ── Texte du body / paragraphes ── */
+/* ── Paragraphes ── */
 body.sm-compact main p {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-/* ── Border radius un poil réduit ── */
-body.sm-compact [class*="rounded-2xl"] { border-radius: 0.75rem !important; }
-body.sm-compact [class*="rounded-xl"] { border-radius: 0.5rem !important; }
+/* ── Border radius ── */
+body.sm-compact main [class*="rounded-2xl"] { border-radius: 0.75rem !important; }
+body.sm-compact main [class*="rounded-xl"] { border-radius: 0.5rem !important; }
 
 /* ── Tables ── */
-body.sm-compact table {
+body.sm-compact main table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
 }
-body.sm-compact th,
-body.sm-compact td {
+body.sm-compact main th,
+body.sm-compact main td {
   padding: 0.35rem 0.5rem;
 }
 
-/* ══════════════════════════════════════════ */
-/* ── Protections : ne pas casser la nav ── */
-/* ══════════════════════════════════════════ */
-body.sm-compact nav {
-  padding-top: unset !important;
-  padding-bottom: unset !important;
-}
-body.sm-compact nav [class*="p-6"],
-body.sm-compact nav [class*="p-5"],
-body.sm-compact nav [class*="p-4"],
-body.sm-compact nav [class*="p-2"] {
-  padding: unset !important;
-}
-body.sm-compact nav [class*="mb-4"],
-body.sm-compact nav [class*="mb-6"],
-body.sm-compact nav [class*="mb-8"] {
-  margin-bottom: unset !important;
-}
-body.sm-compact nav [class*="gap-3"],
-body.sm-compact nav [class*="gap-4"],
-body.sm-compact nav [class*="gap-6"] {
-  gap: unset !important;
-}
-body.sm-compact nav [class*="text-xl"],
-body.sm-compact nav [class*="text-2xl"] {
-  font-size: unset !important;
-}
-body.sm-compact nav [class*="py-3"],
-body.sm-compact nav [class*="py-4"],
-body.sm-compact nav [class*="px-8"] {
-  padding: unset !important;
-}
-body.sm-compact nav [class*="rounded-xl"],
-body.sm-compact nav [class*="rounded-2xl"] {
-  border-radius: unset !important;
-}
-
-/* ── Footer ── */
+/* ══════════════════════════════════ */
+/* ── Footer : juste un peu réduit ── */
+/* ══════════════════════════════════ */
 body.sm-compact footer {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
-}
-body.sm-compact footer [class*="p-2"] {
-  padding: unset !important;
-}
-body.sm-compact footer [class*="gap-3"],
-body.sm-compact footer [class*="gap-4"] {
-  gap: unset !important;
 }
