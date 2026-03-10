@@ -28,14 +28,20 @@ const SOLAR_DATA = {
       electricityPrice: 0.2664,  // €/kWh, Eurostat S2 2025, all taxes, medium household
       installCostPerKwc: { min: 1300, max: 2000, avg: 1600 },  // €/kWc residential
       co2Factor: 56,  // gCO₂/kWh, Ember 2025 (low due to nuclear)
-      feedInTariff: 0.1269,  // €/kWh, EDF OA Q1 2026, ≤9 kWc
+      feedInTariff: 0.04,  // €/kWh, tarif rachat surplus autoconso EDF OA T1 2026, ≤9 kWc
+      feedInNote: {
+        fr: "Tarif EDF OA surplus autoconsommation (≤9 kWc, T1 2026). Garanti 20 ans, révisé chaque trimestre.",
+        en: "EDF OA surplus self-consumption rate (≤9 kWp, Q1 2026). Guaranteed 20 years, revised quarterly.",
+        link: "https://www.edf-oa.fr/",
+        linkLabel: "edf-oa.fr"
+      },
       batteryCostPerKwh: 450,  // €/kWh installed
       subsidies: {
         fr: {
           title: "Aides en France (2026)",
           items: [
             "Prime à l'autoconsommation : 220-500 €/kWc selon puissance (≤100 kWc)",
-            "Obligation d'achat (OA) : tarif garanti sur 20 ans (~0,13 €/kWh pour ≤9 kWc)",
+            "Obligation d'achat (OA) : tarif surplus garanti 20 ans (0,04 €/kWh pour ≤9 kWc, T1 2026)",
             "TVA réduite à 10% pour installations ≤3 kWc",
             "MaPrimeRénov' : sous conditions de revenus (rénovation globale)",
             "Exonération d'impôt sur le revenu pour ≤3 kWc"
@@ -47,7 +53,7 @@ const SOLAR_DATA = {
           title: "Subsidies in France (2026)",
           items: [
             "Self-consumption bonus: €220-500/kWp depending on capacity (≤100 kWp)",
-            "Feed-in tariff (OA): guaranteed rate for 20 years (~€0.13/kWh for ≤9 kWp)",
+            "Feed-in tariff (OA): guaranteed surplus rate for 20 years (€0.04/kWh for ≤9 kWp, Q1 2026)",
             "Reduced VAT at 10% for installations ≤3 kWp",
             "MaPrimeRénov': income-based (whole-house renovation)",
             "Income tax exemption for ≤3 kWp"
@@ -75,14 +81,20 @@ const SOLAR_DATA = {
       electricityPrice: 0.3835,
       installCostPerKwc: { min: 1200, max: 1800, avg: 1500 },
       co2Factor: 350,
-      feedInTariff: 0.081,  // €/kWh, EEG 2025, ≤10 kWp
+      feedInTariff: 0.079,  // €/kWh, EEG 2025-2026, ≤10 kWp partial feed-in (decreasing 1%/6mo)
+      feedInNote: {
+        fr: "Tarif EEG garanti 20 ans pour injection partielle (≤10 kWc). En baisse de ~1% tous les 6 mois. TVA 0% sur les installations.",
+        en: "EEG guaranteed 20-year rate for partial feed-in (≤10 kWp). Decreasing ~1% every 6 months. 0% VAT on installations.",
+        link: "https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/ErneuerbareEnergien/EEG_Foerderung/start.html",
+        linkLabel: "bundesnetzagentur.de"
+      },
       batteryCostPerKwh: 400,
       subsidies: {
         fr: {
           title: "Aides en Allemagne (2026)",
           items: [
             "TVA à 0% sur les installations PV résidentielles (depuis 2023)",
-            "Tarif de rachat garanti (EEG) : ~0,08 €/kWh pour ≤10 kWc, 20 ans",
+            "Tarif de rachat garanti (EEG) : ~0,079 €/kWh pour ≤10 kWc, 20 ans (en baisse progressive)",
             "Prêts KfW à taux bonifiés (programme 270)",
             "Primes régionales variables (Länder)"
           ],
@@ -93,7 +105,7 @@ const SOLAR_DATA = {
           title: "Subsidies in Germany (2026)",
           items: [
             "0% VAT on residential PV systems (since 2023)",
-            "Feed-in tariff (EEG): ~€0.08/kWh for ≤10 kWp, 20 years",
+            "Feed-in tariff (EEG): ~€0.079/kWh for ≤10 kWp, 20 years (gradually decreasing)",
             "KfW subsidized loans (program 270)",
             "Variable regional premiums (Länder)"
           ],
@@ -121,6 +133,12 @@ const SOLAR_DATA = {
       installCostPerKwc: { min: 1000, max: 1400, avg: 1200 },
       co2Factor: 200,
       feedInTariff: 0.075,  // €/kWh, simplified compensation
+      feedInNote: {
+        fr: "Compensación simplificada : le surplus est compensé au prix du marché, limité à 50% de la facture mensuelle (2026). Pas de tarif fixe garanti.",
+        en: "Compensación simplificada: surplus is offset at market price, limited to 50% of monthly bill (2026). No guaranteed fixed rate.",
+        link: "https://www.idae.es/ayudas-y-financiacion/para-energias-renovables",
+        linkLabel: "idae.es"
+      },
       batteryCostPerKwh: 420,
       subsidies: {
         fr: {
@@ -165,14 +183,20 @@ const SOLAR_DATA = {
       electricityPrice: 0.3291,
       installCostPerKwc: { min: 1100, max: 1500, avg: 1300 },
       co2Factor: 250,
-      feedInTariff: 0.10,
+      feedInTariff: 0.06,  // €/kWh, Ritiro Dedicato (SSP fermé aux nouvelles demandes sept 2025)
+      feedInNote: {
+        fr: "Ritiro Dedicato (rachat dédié) : remplace le Scambio sul Posto fermé aux nouvelles demandes (sept. 2025). Tarif variable selon le marché (~0,05-0,08 €/kWh).",
+        en: "Ritiro Dedicato (dedicated buy-back): replaces Scambio sul Posto, closed to new applications (Sept. 2025). Variable market rate (~€0.05-0.08/kWh).",
+        link: "https://www.gse.it/servizi-per-te/fotovoltaico/ritiro-dedicato",
+        linkLabel: "gse.it"
+      },
       batteryCostPerKwh: 430,
       subsidies: {
         fr: {
           title: "Aides en Italie (2026)",
           items: [
             "Bonus ristrutturazione : déduction fiscale 50% sur 10 ans (résidence principale)",
-            "Scambio sul Posto (net metering simplifié) : compensation surplus",
+            "Ritiro Dedicato : rachat surplus ~0,05-0,08 €/kWh (remplace le Scambio sul Posto, fermé sept. 2025)",
             "Superbonus résiduel : vérifier conditions en vigueur",
             "TVA réduite à 10% sur installations résidentielles"
           ],
@@ -183,7 +207,7 @@ const SOLAR_DATA = {
           title: "Subsidies in Italy (2026)",
           items: [
             "Ristrutturazione bonus: 50% tax deduction over 10 years (primary residence)",
-            "Scambio sul Posto (simplified net metering): surplus compensation",
+            "Ritiro Dedicato: surplus buy-back ~€0.05-0.08/kWh (replaces Scambio sul Posto, closed Sept. 2025)",
             "Residual Superbonus: check current eligibility",
             "Reduced VAT at 10% on residential installations"
           ],
@@ -210,7 +234,13 @@ const SOLAR_DATA = {
       electricityPrice: 0.35,
       installCostPerKwc: { min: 1100, max: 1500, avg: 1300 },
       co2Factor: 300,
-      feedInTariff: 0.07,  // saldering (net metering being phased out)
+      feedInTariff: 0.12,  // €/kWh, estimate — saldering (1:1 net metering) until 2027, then min 50% retail
+      feedInNote: {
+        fr: "Saldering (compensation nette 1:1) en vigueur jusqu'en 2027. Après 2027 : compensation minimale de 50% du tarif retail. La valeur affichée est une estimation conservatrice sur la durée de vie.",
+        en: "Saldering (1:1 net metering) in effect until 2027. After 2027: minimum 50% of retail rate. The displayed value is a conservative lifetime estimate.",
+        link: "https://business.gov.nl/amendments/netting-scheme-solar-panels-ends/",
+        linkLabel: "business.gov.nl"
+      },
       batteryCostPerKwh: 420,
       subsidies: {
         fr: {
@@ -255,7 +285,13 @@ const SOLAR_DATA = {
       electricityPrice: 0.3571,
       installCostPerKwc: { min: 1200, max: 1800, avg: 1500 },
       co2Factor: 150,
-      feedInTariff: 0.08,
+      feedInTariff: 0.05,  // €/kWh, Flanders wholesale credits 0.04-0.06 (net metering ended 2025)
+      feedInNote: {
+        fr: "Flandre : injection nette au prix wholesale (0,04-0,06 €/kWh). Wallonie/Bruxelles : systèmes différents (certificats verts, compteur qui tourne à l'envers selon période).",
+        en: "Flanders: net injection at wholesale price (€0.04-0.06/kWh). Wallonia/Brussels: different systems (green certificates, meter roll-back depending on period).",
+        link: "https://www.vreg.be/nl/veelgestelde-vragen-over-zonnepanelen",
+        linkLabel: "vreg.be"
+      },
       batteryCostPerKwh: 450,
       subsidies: {
         fr: {
@@ -301,6 +337,12 @@ const SOLAR_DATA = {
       installCostPerKwc: { min: 1000, max: 1400, avg: 1200 },
       co2Factor: 200,
       feedInTariff: 0.06,
+      feedInNote: {
+        fr: "UPAC (autoconsommation) : le surplus est racheté à ~90% du prix du marché OMIE. Varie entre 0,04 et 0,08 €/kWh selon les cours.",
+        en: "UPAC (self-consumption): surplus bought back at ~90% of OMIE market price. Varies between €0.04 and €0.08/kWh depending on market.",
+        link: "https://www.dgeg.gov.pt/",
+        linkLabel: "dgeg.gov.pt"
+      },
       batteryCostPerKwh: 440,
       subsidies: {
         fr: {
@@ -345,7 +387,13 @@ const SOLAR_DATA = {
       electricityPrice: 0.22,
       installCostPerKwc: { min: 1000, max: 1400, avg: 1200 },
       co2Factor: 650,  // high: coal-heavy grid
-      feedInTariff: 0.05,  // net-billing system
+      feedInTariff: 0.06,  // €/kWh, net-billing system (80% market price credit ≤10kW)
+      feedInNote: {
+        fr: "Net-billing : le surplus est crédité à 80% du prix du marché pour les installations ≤10 kW (depuis 2022). Programme Mój Prąd pour les aides à l'investissement.",
+        en: "Net-billing: surplus credited at 80% of market price for installations ≤10 kW (since 2022). Mój Prąd program for investment subsidies.",
+        link: "https://mojprad.gov.pl/",
+        linkLabel: "mojprad.gov.pl"
+      },
       batteryCostPerKwh: 400,
       subsidies: {
         fr: {
@@ -390,7 +438,13 @@ const SOLAR_DATA = {
       electricityPrice: 0.30,
       installCostPerKwc: { min: 1200, max: 1600, avg: 1400 },
       co2Factor: 100,  // high hydro share
-      feedInTariff: 0.083,
+      feedInTariff: 0.076,  // €/kWh, EAG 2023 partial feed-in (Überschusseinspeisung) ≤10kWp
+      feedInNote: {
+        fr: "Tarif OeMAG garanti (Überschusseinspeisung) pour injection partielle (≤10 kWc). Contrat 20 ans. TVA 0% sur installations ≤35 kWc depuis 2024.",
+        en: "OeMAG guaranteed rate (Überschusseinspeisung) for partial feed-in (≤10 kWp). 20-year contract. 0% VAT on installations ≤35 kWp since 2024.",
+        link: "https://www.oem-ag.at/de/foerderung/",
+        linkLabel: "oem-ag.at"
+      },
       batteryCostPerKwh: 430,
       subsidies: {
         fr: {
@@ -432,17 +486,23 @@ const SOLAR_DATA = {
       defaultLat: 38.5,
       defaultLon: 23.7,
       mapZoom: 6,
-      electricityPrice: 0.25,
+      electricityPrice: 0.24,  // €/kWh, Eurostat/GlobalPetrolPrices June 2025
       installCostPerKwc: { min: 1000, max: 1400, avg: 1200 },
       co2Factor: 400,
-      feedInTariff: 0.07,
+      feedInTariff: 0.07,  // €/kWh, net billing at wholesale market price
+      feedInNote: {
+        fr: "Net billing (depuis 2024) : le surplus est compensé au prix du marché de gros. Remplace l'ancien net metering virtuel. Tarif variable (~0,05-0,08 €/kWh).",
+        en: "Net billing (since 2024): surplus compensated at wholesale market price. Replaces former virtual net metering. Variable rate (~€0.05-0.08/kWh).",
+        link: "https://ypen.gov.gr/energeia/",
+        linkLabel: "ypen.gov.gr"
+      },
       batteryCostPerKwh: 440,
       subsidies: {
         fr: {
           title: "Aides en Grèce (2026)",
           items: [
             "Programme Fotovoltaïka sto Stegi : subvention résidentielle",
-            "Net metering virtuel : compensation surplus",
+            "Net billing (depuis 2024) : compensation surplus au prix du marché",
             "Communautés énergétiques : cadre réglementaire favorable",
             "Exonérations fiscales pour investissements verts"
           ],
@@ -453,7 +513,7 @@ const SOLAR_DATA = {
           title: "Subsidies in Greece (2026)",
           items: [
             "Fotovoltaïka sto Stegi program: residential subsidy",
-            "Virtual net metering: surplus compensation",
+            "Net billing (since 2024): surplus compensation at market price",
             "Energy communities: favorable regulatory framework",
             "Tax exemptions for green investments"
           ],
@@ -481,6 +541,12 @@ const SOLAR_DATA = {
       installCostPerKwc: { min: 2100, max: 3200, avg: 2750 },  // $/kWc (= $/W × 1000), before ITC
       co2Factor: 380,  // gCO₂/kWh, EPA eGRID 2024 national average
       feedInTariff: 0,  // No federal feed-in tariff — net metering varies by state
+      feedInNote: {
+        fr: "Pas de tarif fédéral de rachat. Le net metering varie par État (crédit au tarif retail ou au tarif avoided cost). Valeur à 0 par défaut — renseignez le tarif de votre utility.",
+        en: "No federal feed-in tariff. Net metering varies by state (credit at retail or avoided cost rate). Default 0 — enter your utility's rate.",
+        link: "https://www.dsireusa.org/",
+        linkLabel: "dsireusa.org"
+      },
       netMeteringNote: {
         fr: "Le net metering varie selon votre État et votre fournisseur d'électricité. Consultez votre utility locale.",
         en: "Net metering varies by state and utility. Check with your local electric company."
@@ -532,6 +598,12 @@ const SOLAR_DATA = {
       installCostPerKwc: { min: 2200, max: 3500, avg: 2900 },  // CAD/kWc residential
       co2Factor: 120,  // gCO₂/kWh, CER 2024 (high hydro share)
       feedInTariff: 0,  // No national feed-in tariff
+      feedInNote: {
+        fr: "Pas de tarif national de rachat. Le net metering varie par province (microFIT Ontario fermé). Valeur à 0 par défaut — renseignez le tarif de votre distributeur.",
+        en: "No national feed-in tariff. Net metering varies by province (Ontario microFIT closed). Default 0 — enter your distributor's rate.",
+        link: "https://natural-resources.canada.ca/energy-efficiency/homes",
+        linkLabel: "natural-resources.canada.ca"
+      },
       netMeteringNote: {
         fr: "Le net metering varie selon la province et le distributeur. Consultez votre fournisseur local.",
         en: "Net metering varies by province and distributor. Check with your local provider."

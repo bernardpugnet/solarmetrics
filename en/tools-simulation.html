@@ -575,11 +575,14 @@
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Electricity price (<span class="cur">€</span>/kWh)</label>
                                     <input type="number" id="resElecPrice" value="0.2516" min="0.05" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p id="eurostatStatus" class="text-xs text-slate-600 mt-0.5"></p>
+                                    <p class="text-xs text-amber-400/70 mt-1">⚡ Pre-filled: average retail price incl. taxes (source: Eurostat 2025)</p>
+                                    <p class="text-xs text-slate-500 mt-0.5"><strong class="text-amber-400/60">Indicative value</strong> — check your electricity bill or provider's website.</p>
                                 </div>
                                 <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Feed-in tariff (<span class="cur">€</span>/kWh)</label>
-                                    <input type="number" id="resFeedir" value="0.13" min="0" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <label class="text-xs text-slate-400 mb-1 block">Surplus feed-in tariff (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resFeedir" value="0.04" min="0" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p id="feedInNoteText" class="text-xs text-amber-400/70 mt-1">⚡ EDF OA surplus self-consumption rate (≤9 kWp, Q1 2026). Guaranteed 20 years, revised quarterly.</p>
+                                    <p id="feedInNoteLink" class="text-xs text-slate-500 mt-0.5"><strong class="text-amber-400/60">Indicative value</strong> — check on <a id="feedInNoteLinkA" href="https://www.edf-oa.fr/" target="_blank" class="text-amber-400 hover:underline">edf-oa.fr</a></p>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -971,7 +974,7 @@
             const countryData = window.SOLAR_DATA && window.SOLAR_DATA.countries[cc];
             if (countryData) {
                 document.getElementById('resElecPrice').value = countryData.electricityPrice;
-                document.getElementById('resFeedir').value = countryData.feedInTariff || 0.13;
+                document.getElementById('resFeedir').value = countryData.feedInTariff || 0;
                 document.getElementById('resAvgCostHint').textContent = countryData.installCostPerKwc.avg;
                 document.getElementById('resAvgBatteryCostHint').textContent = countryData.batteryCostPerKwh;
                 // Clear install cost override so country default is used
@@ -985,6 +988,24 @@
                     nmNote.classList.remove('hidden');
                 } else {
                     nmNote.classList.add('hidden');
+                }
+                // Feed-in note per country
+                var finText = document.getElementById('feedInNoteText');
+                var finLinkP = document.getElementById('feedInNoteLink');
+                var finLinkA = document.getElementById('feedInNoteLinkA');
+                if (countryData.feedInNote) {
+                    finText.textContent = '⚡ ' + countryData.feedInNote.en;
+                    finText.classList.remove('hidden');
+                    if (countryData.feedInNote.link) {
+                        finLinkA.href = countryData.feedInNote.link;
+                        finLinkA.textContent = countryData.feedInNote.linkLabel || 'source';
+                        finLinkP.classList.remove('hidden');
+                    } else {
+                        finLinkP.classList.add('hidden');
+                    }
+                } else {
+                    finText.textContent = '⚡ Surplus feed-in rate — indicative value.';
+                    finLinkP.classList.add('hidden');
                 }
                 // Status notes
                 document.getElementById('unsupportedCountryNote').classList.add('hidden');
@@ -1001,6 +1022,9 @@
                 document.getElementById('resAvgBatteryCostHint').textContent = '—';
                 document.getElementById('resInstallCostOverride').placeholder = 'Please enter';
                 document.getElementById('netMeteringNote').classList.add('hidden');
+                document.getElementById('feedInNoteText').textContent = '';
+                document.getElementById('feedInNoteText').classList.add('hidden');
+                document.getElementById('feedInNoteLink').classList.add('hidden');
                 document.querySelectorAll('.cur').forEach(el => el.textContent = '€');
             }
             // Update subsidy info
