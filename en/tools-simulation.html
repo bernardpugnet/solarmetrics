@@ -373,7 +373,10 @@
                             </div>
                             <p id="netMeteringNote" class="text-xs text-amber-400/80 hidden"></p>
                             <div id="unsupportedCountryNote" class="hidden p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
-                                <p class="text-xs text-amber-400">⚠️ Unsupported country. Irradiation data (PVGIS) is accurate, but rates and subsidies are estimated.</p>
+                                <p class="text-xs text-amber-400">⚠️ Unsupported country. Irradiation data (PVGIS) is accurate, but financial parameters must be entered manually.</p>
+                            </div>
+                            <div id="supportedCountryNote" class="hidden p-3 bg-slate-700/30 border border-slate-600/40 rounded-lg">
+                                <p class="text-xs text-slate-400">ℹ️ Financial parameters have been pre-filled from our database. These values are indicative and may have changed — please verify them before running the simulation.</p>
                             </div>
                             <div id="map" style="height:350px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
                             <p id="mapHint" class="text-xs text-slate-500">📍 Click on the map to position your installation. The country will be detected automatically.</p>
@@ -553,10 +556,10 @@
                             </div>
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Battery cost (<span class="cur">€</span>)</label>
-                                <input type="number" id="resBatteryCostOverride" placeholder="Empty = auto calc" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                <p class="text-xs text-slate-600 mt-0.5">Avg: <span id="resAvgBatteryCostHint">—</span> <span class="cur">€</span>/kWh</p>
-                                <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                    <span class="text-slate-400 font-medium">Auto calc:</span> capacity (kWh) × average cost/kWh for the selected country. This average price includes the battery, hybrid inverter and installation. Enter your own amount for a custom quote.
+                                <input type="number" id="resBatteryCostOverride" placeholder="Empty = country average (see below)" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                <p class="text-xs text-amber-400/70 mt-1">⚡ Country average: <span id="resAvgBatteryCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWh (battery + inverter + installation)</p>
+                                <div class="mt-1.5 p-2 bg-amber-900/10 border border-amber-700/30 rounded-lg text-xs text-slate-400 leading-relaxed">
+                                    If empty, cost is calculated automatically: capacity (kWh) × country average above. <strong class="text-amber-400/80">This average is indicative</strong> — enter your own amount for a custom quote.
                                 </div>
                             </div>
                         </div>
@@ -582,8 +585,9 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Installation cost (<span class="cur">€</span>)</label>
-                                    <input type="number" id="resInstallCostOverride" placeholder="Empty = country average" min="0" max="200000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-slate-600 mt-0.5">Avg: <span id="resAvgCostHint">—</span> <span class="cur">€</span>/kWp</p>
+                                    <input type="number" id="resInstallCostOverride" placeholder="Empty = country average (see below)" min="0" max="200000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                    <p class="text-xs text-amber-400/70 mt-1">⚡ Country average: <span id="resAvgCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWp (panels + inverter + installation)</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">If empty, this country average is used. <strong class="text-amber-400/60">Indicative value</strong> — enter your actual quote if available.</p>
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Subsidies (<span class="cur">€</span>)</label>
@@ -940,16 +944,19 @@
         }
 
         function reverseGeocode(lat, lon) {
-            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=en`;
             fetch(url)
                 .then(r => r.json())
                 .then(data => {
                     if (data.address && data.address.country_code) {
                         const cc = data.address.country_code.toUpperCase();
-                        if (countryCoords[cc]) {
-                            document.getElementById('resCountry').value = cc;
-                            updateLocationData();
+                        // Always update detected country, even if not in supported list
+                        document.getElementById('resCountry').value = cc;
+                        // If country not in our name list, add it dynamically
+                        if (!countryNamesEN[cc] && data.address.country) {
+                            countryNamesEN[cc] = data.address.country;
                         }
+                        updateLocationData();
                     }
                 })
                 .catch(e => console.log('Geocoding error:', e));
@@ -979,11 +986,21 @@
                 } else {
                     nmNote.classList.add('hidden');
                 }
-                // Unsupported note
+                // Status notes
                 document.getElementById('unsupportedCountryNote').classList.add('hidden');
+                document.getElementById('supportedCountryNote').classList.remove('hidden');
             } else {
-                // Unsupported country
+                // Unsupported country — clear financial fields
                 document.getElementById('unsupportedCountryNote').classList.remove('hidden');
+                document.getElementById('supportedCountryNote').classList.add('hidden');
+                document.getElementById('resElecPrice').value = '';
+                document.getElementById('resElecPrice').placeholder = 'Please enter';
+                document.getElementById('resFeedir').value = '';
+                document.getElementById('resFeedir').placeholder = 'Please enter';
+                document.getElementById('resAvgCostHint').textContent = '—';
+                document.getElementById('resAvgBatteryCostHint').textContent = '—';
+                document.getElementById('resInstallCostOverride').placeholder = 'Please enter';
+                document.getElementById('netMeteringNote').classList.add('hidden');
                 document.querySelectorAll('.cur').forEach(el => el.textContent = '€');
             }
             // Update subsidy info
