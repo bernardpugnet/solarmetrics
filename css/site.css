@@ -8,79 +8,125 @@ body.sm-compact {
   line-height: 1.6;
 }
 
-/* ── Hero : réduire de 100vh à 70vh ── */
-body.sm-compact :where(section).sm-hero,
-body.sm-compact :where(section[class*="min-h-screen"]) {
-  min-height: 70vh !important;
+/* ── Hero : réduire de 100vh à 65vh ── */
+body.sm-compact section[class*="min-h-screen"] {
+  min-height: 65vh !important;
 }
 
 /* ── Typo : titres plus compacts ── */
-body.sm-compact :where(h1) {
-  font-size: clamp(2rem, 3.4vw, 3rem) !important;
+body.sm-compact h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem) !important;
   line-height: 1.15 !important;
   letter-spacing: -0.02em;
 }
 
-body.sm-compact :where(h2) {
-  font-size: clamp(1.35rem, 2.2vw, 1.85rem) !important;
+body.sm-compact h2 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem) !important;
   line-height: 1.2 !important;
 }
 
-body.sm-compact :where(h3) {
-  font-size: 1.1rem !important;
+body.sm-compact h3 {
+  font-size: 1rem !important;
   line-height: 1.3 !important;
 }
 
 /* ── Sections : resserrer les paddings verticaux ── */
-/* py-20 (5rem/80px) et py-16 (4rem/64px) → ~2.5rem (40px) */
-body.sm-compact :where(section) {
-  padding-top: 2.5rem !important;
-  padding-bottom: 2.5rem !important;
+body.sm-compact section {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
 }
 
 /* ── Espacement entre éléments internes ── */
-body.sm-compact :where(p) {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+body.sm-compact main p {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
 }
 
-/* Réduire les gros mb-8/mb-10/mb-12 dans les headers de section */
-body.sm-compact :where([class*="mb-10"]),
-body.sm-compact :where([class*="mb-12"]) {
-  margin-bottom: 1.5rem !important;
+/* Réduire les gros mb-8/mb-10/mb-12 */
+body.sm-compact [class*="mb-8"],
+body.sm-compact [class*="mb-10"],
+body.sm-compact [class*="mb-12"] {
+  margin-bottom: 1rem !important;
 }
 
-/* ── Chiffres clés / dashboard : réduire text-4xl/text-3xl ── */
-body.sm-compact :where([class*="text-4xl"]) {
-  font-size: 1.75rem !important;
-}
-
-body.sm-compact :where([class*="text-3xl"]) {
+/* ── Chiffres clés / dashboard : réduire les grosses polices ── */
+body.sm-compact [class*="text-4xl"] {
   font-size: 1.5rem !important;
 }
 
-/* ── Cartes : padding interne plus compact ── */
-body.sm-compact .sm-card,
-body.sm-compact :where([class*="rounded-xl"][class*="p-6"]),
-body.sm-compact :where([class*="rounded-2xl"][class*="p-6"]) {
-  padding: 1.25rem !important;
+body.sm-compact [class*="text-3xl"] {
+  font-size: 1.25rem !important;
+}
+
+body.sm-compact [class*="text-2xl"] {
+  font-size: 1.1rem !important;
+}
+
+/* ── Cartes : padding interne réduit ── */
+/* Cibler toutes les cartes avec p-6 (24px → 12px) */
+body.sm-compact [class*="p-6"] {
+  padding: 0.75rem !important;
+}
+
+/* Cartes avec p-5 */
+body.sm-compact [class*="p-5"] {
+  padding: 0.65rem !important;
+}
+
+/* ── Grilles : resserrer les gaps ── */
+body.sm-compact [class*="gap-6"] {
+  gap: 0.75rem !important;
+}
+body.sm-compact [class*="gap-8"] {
+  gap: 1rem !important;
+}
+body.sm-compact [class*="gap-4"] {
+  gap: 0.5rem !important;
+}
+
+/* ── Icônes/emojis dans les cartes : réduire ── */
+body.sm-compact [class*="w-12"][class*="h-12"] {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+}
+body.sm-compact [class*="mb-4"] {
+  margin-bottom: 0.5rem !important;
+}
+body.sm-compact [class*="mb-6"] {
+  margin-bottom: 0.75rem !important;
 }
 
 /* ── Tables ── */
-body.sm-compact :where(table) {
+body.sm-compact table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
-body.sm-compact :where(th, td) {
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+body.sm-compact th,
+body.sm-compact td {
+  padding: 0.5rem 0.6rem;
 }
 
-/* ── Grilles : resserrer gap ── */
-body.sm-compact :where([class*="gap-6"]) {
-  gap: 1rem !important;
+/* ── Navigation : ne pas toucher la nav fixe ── */
+body.sm-compact nav {
+  padding-top: unset !important;
+  padding-bottom: unset !important;
 }
-body.sm-compact :where([class*="gap-8"]) {
-  gap: 1.25rem !important;
+body.sm-compact nav [class*="p-6"],
+body.sm-compact nav [class*="p-5"] {
+  padding: unset !important;
+}
+body.sm-compact nav [class*="mb-4"],
+body.sm-compact nav [class*="mb-6"] {
+  margin-bottom: unset !important;
+}
+body.sm-compact nav [class*="gap-4"],
+body.sm-compact nav [class*="gap-6"] {
+  gap: unset !important;
+}
+
+/* ── Footer : ne pas trop écraser ── */
+body.sm-compact footer {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
 }
