@@ -11,7 +11,7 @@
  * - Subsidies: National government sources (2025-2026)
  */
 
-const SOLAR_DATA = {
+window.SOLAR_DATA = {
   lastUpdated: "2026-03",
 
   countries: {
