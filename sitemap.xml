@@ -354,6 +354,20 @@
     <lastmod>2026-03-10</lastmod>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/data-opex-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-opex-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-opex-europe"/>
+    <lastmod>2026-03-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://solarmetrics.netlify.app/fr/data-pr-loss-stack</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-pr-loss-stack"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-pr-loss-stack"/>
+    <lastmod>2026-03-11</lastmod>
+    <priority>0.8</priority>
+  </url>
   <!-- Analysis articles -->
   <url>
     <loc>https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe</loc>

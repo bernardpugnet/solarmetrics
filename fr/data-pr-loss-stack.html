@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Ratio & Loss Stack — PR solaire utility-scale | SolarMetrics</title>
+    <meta name="description" content="Performance Ratio (PR) et loss stack du photovoltaïque : disponibilité, dégradation, pertes système. Sources NREL, PVWatts. Données fleet US + modèle Europe.">
+    <meta name="keywords" content="Performance Ratio solaire, PR photovoltaïque, loss stack PV, dégradation solaire, disponibilité PV, NREL, PVWatts, pertes système">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/data-pr-loss-stack">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/data-pr-loss-stack">
+    <meta property="og:site_name" content="SolarMetrics">
+    <meta property="og:title" content="Performance Ratio & Loss Stack — SolarMetrics">
+    <meta property="og:description" content="Performance Ratio et loss stack du photovoltaïque. Sources NREL, PVWatts. Données vérifiées.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="fr_FR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PR & Loss Stack — SolarMetrics">
+    <meta name="twitter:description" content="Performance Ratio et pertes système du photovoltaïque. Sources NREL, PVWatts.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "Performance Ratio & Loss Stack — SolarMetrics",
+      "url": "https://solarmetrics.netlify.app/fr/data-pr-loss-stack",
+      "description": "Performance Ratio (PR) et loss stack du photovoltaïque : disponibilité, dégradation, pertes système utility-scale.",
+      "creator": {
+        "@type": "Person",
+        "name": "Bernard Pugnet",
+        "jobTitle": "Expert Finance & Énergie Solaire",
+        "url": "https://www.linkedin.com/in/bernard-pugnet/"
+      },
+      "temporalCoverage": "2023/2024",
+      "spatialCoverage": "US / Europe",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "SolarMetrics",
+        "url": "https://solarmetrics.netlify.app/fr/"
+      },
+      "inLanguage": "fr"
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+    </style>
+    <style>
+        abbr[title] {
+          text-decoration: underline dotted rgba(6,182,212,0.5);
+          text-underline-offset: 3px;
+          cursor: help;
+          position: relative;
+        }
+        abbr[title]:hover::after {
+          content: attr(title);
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #0f172a;
+          color: #e2e8f0;
+          border: 1px solid rgba(6,182,212,0.3);
+          padding: 6px 12px;
+          border-radius: 8px;
+          font-size: 13px;
+          white-space: nowrap;
+          z-index: 50;
+          pointer-events: none;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .data-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 2px 10px;
+          border-radius: 9999px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+        }
+        .tag-observed {
+          background: rgba(16,185,129,0.12);
+          color: #34d399;
+          border: 1px solid rgba(16,185,129,0.25);
+        }
+        .tag-assumption {
+          background: rgba(251,191,36,0.12);
+          color: #fbbf24;
+          border: 1px solid rgba(251,191,36,0.25);
+        }
+        .tag-default {
+          background: rgba(168,85,247,0.12);
+          color: #c084fc;
+          border: 1px solid rgba(168,85,247,0.25);
+        }
+    </style>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body class="bg-slate-900 text-white sm-compact">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/fr/index.html" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="/fr/index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Accueil</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+                            Économie
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="/fr/economie.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">💰</span>
+                                    <div><div class="text-sm font-semibold text-white">Vue d'ensemble</div><div class="text-xs text-slate-400">Économie du solaire</div></div>
+                                </a>
+                                <a href="/fr/marches.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/15 text-blue-400 text-base">📊</span>
+                                    <div><div class="text-sm font-semibold text-white">Marchés</div><div class="text-xs text-slate-400">Tendances · PPA · Spot</div></div>
+                                </a>
+                                <a href="/fr/prix-solaire.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">💲</span>
+                                    <div><div class="text-sm font-semibold text-white">Prix solaire</div><div class="text-xs text-slate-400">Coûts · Modules · Installation</div></div>
+                                </a>
+                                <a href="/fr/hypotheses.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-500/15 text-slate-400 text-base">📐</span>
+                                    <div><div class="text-sm font-semibold text-white">Hypothèses de calcul</div><div class="text-xs text-slate-400">Méthodologie · Sources</div></div>
+                                </a>
+                                <a href="/fr/risques-bankability.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-red-500/15 text-red-400 text-base">⚠️</span>
+                                    <div><div class="text-sm font-semibold text-white">Risques & Bankability</div><div class="text-xs text-slate-400">Matrice · DSCR · Due diligence</div></div>
+                                </a>
+                                <a href="/fr/comparatif-pays.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
+                                    <div><div class="text-sm font-semibold text-white">Comparatif pays</div><div class="text-xs text-slate-400">10 pays européens · LCOE</div></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+                            Technologies
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="/fr/technologies.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">☀️</span>
+                                    <div><div class="text-sm font-semibold text-white">Vue d'ensemble</div><div class="text-xs text-slate-400">Panorama des technologies PV</div></div>
+                                </a>
+                                <a href="/fr/technologies-emergentes.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 text-base">🔬</span>
+                                    <div><div class="text-sm font-semibold text-white">Technologies émergentes</div><div class="text-xs text-slate-400">Pérovskites · Bifacial · BIPV</div></div>
+                                </a>
+                                <a href="/fr/vehicle-to-grid.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">🔌</span>
+                                    <div><div class="text-sm font-semibold text-white">Vehicle-to-Grid</div><div class="text-xs text-slate-400">V2G · V2H · V2L</div></div>
+                                </a>
+                                <a href="/fr/centrales-virtuelles.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/15 text-blue-400 text-base">🔗</span>
+                                    <div><div class="text-sm font-semibold text-white">Centrales virtuelles</div><div class="text-xs text-slate-400">VPP · Agrégation · Flexibilité</div></div>
+                                </a>
+                                <a href="/fr/physique-electricite-ferme-photovoltaique.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">⚡</span>
+                                    <div><div class="text-sm font-semibold text-white">Physique & Électricité</div><div class="text-xs text-slate-400">DC/AC · Pertes · PR · Formules</div></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/fr/analyses/" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Analyses</a>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-amber-500 font-medium rounded-lg text-sm flex items-center gap-1">
+                            Data
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="/fr/data-benchmarks.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">📊</span>
+                                    <div><div class="text-sm font-semibold text-white">Benchmarks Europe</div><div class="text-xs text-slate-400">CAPEX · OPEX · WACC · PR</div></div>
+                                </a>
+                                <a href="/fr/data-market-power.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-violet-500/15 text-violet-400 text-base">⚡</span>
+                                    <div><div class="text-sm font-semibold text-white">Market & Power</div><div class="text-xs text-slate-400">Prix négatifs · PPA · Curtailment</div></div>
+                                </a>
+                                <a href="/fr/hypotheses.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-500/15 text-slate-400 text-base">📐</span>
+                                    <div><div class="text-sm font-semibold text-white">Hypothèses & Données</div><div class="text-xs text-slate-400">Méthodologie · Sources</div></div>
+                                </a>
+                                <a href="/fr/prix-solaire.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">💲</span>
+                                    <div><div class="text-sm font-semibold text-white">Prix du solaire</div><div class="text-xs text-slate-400">Coûts · Modules · Installation</div></div>
+                                </a>
+                                <a href="/fr/comparatif-pays.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
+                                    <div><div class="text-sm font-semibold text-white">Comparatif pays</div><div class="text-xs text-slate-400">10 pays européens · LCOE</div></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+                            Outils
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="/fr/outils-simulation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">⚡</span>
+                                    <div><div class="text-sm font-semibold text-white">Simulateur</div><div class="text-xs text-slate-400">Rentabilité & Autoconsommation</div></div>
+                                </a>
+                                <a href="/fr/outils-industriel.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 text-base">🏗️</span>
+                                    <div><div class="text-sm font-semibold text-white">Industriel</div><div class="text-xs text-slate-400">Centrales · 100 kWc — 10+ MWc</div></div>
+                                </a>
+                                <a href="/fr/comparateur.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/15 text-orange-400 text-base">⚖️</span>
+                                    <div><div class="text-sm font-semibold text-white">Comparateur</div><div class="text-xs text-slate-400">PERC · TOPCon · HJT</div></div>
+                                </a>
+                                <a href="/fr/guide-installation.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/15 text-teal-400 text-base">📋</span>
+                                    <div><div class="text-sm font-semibold text-white">Guide installation</div><div class="text-xs text-slate-400">7 étapes · Aides 2026</div></div>
+                                </a>
+                                <a href="/fr/widgets.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/15 text-indigo-400 text-base">🧩</span>
+                                    <div><div class="text-sm font-semibold text-white">Widgets</div><div class="text-xs text-slate-400">Composants embarquables</div></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors flex items-center gap-1">
+                            Ressources
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl shadow-black/40 overflow-hidden min-w-[220px]">
+                                <a href="/fr/ressources.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/15 text-indigo-400 text-base">📚</span>
+                                    <div><div class="text-sm font-semibold text-white">Ressources</div><div class="text-xs text-slate-400">Liens · Données · API</div></div>
+                                </a>
+                                <a href="/fr/recyclage-fin-de-vie.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/15 text-green-400 text-base">♻️</span>
+                                    <div><div class="text-sm font-semibold text-white">Recyclage & Fin de vie</div><div class="text-xs text-slate-400">SOREN · DEEE · Économie circulaire</div></div>
+                                </a>
+                                <a href="/fr/veille-reglementaire.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 text-base">📜</span>
+                                    <div><div class="text-sm font-semibold text-white">Veille réglementaire</div><div class="text-xs text-slate-400">Radar FR/EU · Timeline 2023-2030</div></div>
+                                </a>
+                                <a href="/fr/mon-solaire-60s.html" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-700/50 transition-colors">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-pink-500/15 text-pink-400 text-base">⏱️</span>
+                                    <div><div class="text-sm font-semibold text-white">Mon solaire en 60s</div><div class="text-xs text-slate-400">Scrollytelling interactif</div></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/fr/recrutez-moi.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm font-medium transition-colors">Collaborer</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="openSiteSearch()" class="p-2 text-slate-400 hover:text-white transition-colors" aria-label="Rechercher sur le site" title="Ctrl+K">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+                    </button>
+                    <div class="flex items-center gap-1">
+                        <a href="/en/" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">EN</a>
+                        <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">FR</span>
+                    </div>
+                    <button id="menuBtn" class="lg:hidden p-2 text-slate-400 hover:text-white" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+            <div class="px-4 py-4 space-y-2">
+                <a href="/fr/index.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">Accueil</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Économie</p>
+                <a href="/fr/economie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💰 Vue d'ensemble</a>
+                <a href="/fr/marches.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📊 Marchés</a>
+                <a href="/fr/prix-solaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💲 Prix solaire</a>
+                <a href="/fr/hypotheses.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📐 Hypothèses</a>
+                <a href="/fr/risques-bankability.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚠️ Risques & Bankability</a>
+                <a href="/fr/comparatif-pays.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🌍 Comparatif pays</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Technologies</p>
+                <a href="/fr/technologies.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">☀️ Vue d'ensemble</a>
+                <a href="/fr/technologies-emergentes.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔬 Technologies émergentes</a>
+                <a href="/fr/vehicle-to-grid.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔌 Vehicle-to-Grid</a>
+                <a href="/fr/centrales-virtuelles.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🔗 Centrales virtuelles</a>
+                <a href="/fr/physique-electricite-ferme-photovoltaique.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Physique & Électricité PV</a>
+                <a href="/fr/analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📈 Analyses</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Data</p>
+                <a href="/fr/data-benchmarks.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📊 Benchmarks Europe</a>
+                <a href="/fr/data-market-power.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Market & Power</a>
+                <a href="/fr/hypotheses.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📐 Hypothèses & Données</a>
+                <a href="/fr/prix-solaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💲 Prix du solaire</a>
+                <a href="/fr/comparatif-pays.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🌍 Comparatif pays</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Outils</p>
+                <a href="/fr/outils-simulation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Simulateur</a>
+                <a href="/fr/outils-industriel.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🏗️ Industriel</a>
+                <a href="/fr/comparateur.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚖️ Comparateur</a>
+                <a href="/fr/guide-installation.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📋 Guide installation</a>
+                <a href="/fr/widgets.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🧩 Widgets</a>
+                <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Ressources</p>
+                <a href="/fr/ressources.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📚 Ressources</a>
+                <a href="/fr/recyclage-fin-de-vie.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">♻️ Recyclage</a>
+                <a href="/fr/veille-reglementaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📜 Veille réglementaire</a>
+                <a href="/fr/mon-solaire-60s.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⏱️ Mon solaire en 60s</a>
+                <a href="/fr/recrutez-moi.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg font-medium">Collaborer</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Breadcrumb -->
+        <div class="pt-20 pb-2">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="text-xs text-slate-500" aria-label="Fil d'Ariane">
+                    <a href="/fr/data-benchmarks.html" class="hover:text-slate-300 transition-colors">Data</a>
+                    <span class="mx-1.5">/</span>
+                    <a href="/fr/data-benchmarks.html" class="hover:text-slate-300 transition-colors">Benchmarks Europe</a>
+                    <span class="mx-1.5">/</span>
+                    <span class="text-slate-400">PR & Loss Stack</span>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <section class="relative pt-8 pb-12 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+            </div>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-4">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium">
+                        ⚙️ Data · Benchmarks
+                    </span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-6">
+                    <span class="gradient-text"><abbr title="Performance Ratio — ratio énergie réelle / énergie théorique (IEC 61724)">Performance Ratio</abbr> & Loss Stack</span>
+                </h1>
+                <p class="text-lg text-slate-300 text-center max-w-3xl mx-auto leading-relaxed">
+                    Indicateurs de performance et stack de pertes du photovoltaïque : disponibilité, dégradation, pertes système.
+                    Sources : <abbr title="National Renewable Energy Laboratory — Laboratoire national des énergies renouvelables (US)">NREL</abbr>,
+                    <abbr title="PVWatts — Outil de simulation PV du NREL">PVWatts</abbr>.
+                </p>
+                <p class="text-center text-xs text-slate-500 mt-4">Dernière mise à jour : mars 2026 · Snapshot données : 2023-2024</p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE A : Fleet observed — NREL            -->
+        <!-- ========================================== -->
+        <section class="py-10" id="fleet-observed">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">1. Fleet observed — indicateurs de performance (<abbr title="National Renewable Energy Laboratory — Laboratoire national des énergies renouvelables (US)">NREL</abbr>)</h2>
+                    <span class="data-tag tag-observed">Observed data</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-4 max-w-3xl">
+                    Données mesurées sur un fleet de ~8,5 <abbr title="Gigawatt — milliard de watts">GW</abbr> aux États-Unis.
+                    <strong class="text-amber-400">Données US uniquement</strong> — pas de dataset européen open équivalent.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Indicateur</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Valeur</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Unité</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Périmètre</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Taille du fleet analysé</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">~8,5</td>
+                                <td class="px-4 py-3 text-slate-400">GW</td>
+                                <td class="px-4 py-3 text-slate-400">US</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Canaux onduleur analysés</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">24 000</td>
+                                <td class="px-4 py-3 text-slate-400">—</td>
+                                <td class="px-4 py-3 text-slate-400">US</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Disponibilité (availability) P50</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">0,99</td>
+                                <td class="px-4 py-3 text-slate-400">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">US (hors 6 premiers mois)</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5-6</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Disponibilité (availability) P90</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">0,95</td>
+                                <td class="px-4 py-3 text-slate-400">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">US (hors 6 premiers mois)</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5-6</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Performance Index (PI) médian</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">0,95</td>
+                                <td class="px-4 py-3 text-slate-400">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">US (sur durée de vie)</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5-6</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Taux de dégradation médian</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">−0,75</td>
+                                <td class="px-4 py-3 text-slate-400">%/an</td>
+                                <td class="px-4 py-3 text-slate-400">US</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5-6</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Taux de dégradation (hors soiling)</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">−0,5</td>
+                                <td class="px-4 py-3 text-slate-400">%/an</td>
+                                <td class="px-4 py-3 text-slate-400">US</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">NREL 88769, p. 5-6</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE B : Model defaults — PVWatts         -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="model-defaults">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">2. Model defaults — pertes par défaut (PVWatts)</h2>
+                    <span class="data-tag tag-default">Model default</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-4 max-w-3xl">
+                    Valeurs par défaut du modèle <abbr title="PVWatts — Outil de simulation PV du NREL">PVWatts</abbr> (<abbr title="National Renewable Energy Laboratory — Laboratoire national des énergies renouvelables (US)">NREL</abbr>).
+                    <strong class="text-amber-400">Ce sont des hypothèses de calcul, pas des mesures terrain.</strong>
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Facteur de perte</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Valeur par défaut</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Unité</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Soiling (salissure)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">2</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Shading (ombrage)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">3</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Snow (neige)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">0</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Mismatch (désappariement)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">2</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Wiring (câblage <abbr title="Direct Current — Courant continu">DC</abbr>)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">2</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Connections (connecteurs)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">0,5</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium"><abbr title="Light-Induced Degradation — Dégradation induite par la lumière (premières heures d'exposition)">LID</abbr></td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">1,5</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Nameplate rating</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">1</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Age (vieillissement)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">0</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Availability (disponibilité)</td>
+                                <td class="px-4 py-3 text-purple-400 font-semibold text-right">3</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                            <tr class="bg-slate-800/60 font-bold">
+                                <td class="px-4 py-3 text-white">Total system losses</td>
+                                <td class="px-4 py-3 text-purple-300 text-right">14</td>
+                                <td class="px-4 py-3 text-slate-400">%</td>
+                                <td class="px-4 py-3"><a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">PVWatts Manual 62641, Table 6, p. 12</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE C : SolarMetrics assumptions — loss stack -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="assumptions-loss-stack">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">3. SolarMetrics assumptions — loss stack typique (utility-scale)</h2>
+                    <span class="data-tag tag-assumption">SolarMetrics assumption</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-4 max-w-3xl">
+                    Stack de pertes <abbr title="Global Horizontal Irradiance — Irradiation horizontale globale">GHI</abbr> → énergie nette injectée, pour une centrale utility-scale en <abbr title="Union Européenne">UE</abbr> (structure fixe).
+                    Toutes les valeurs sont des <strong class="text-slate-300">estimations SolarMetrics</strong> basées sur la littérature, sauf mention contraire.
+                </p>
+                <p class="text-xs text-slate-500 mb-6">Snapshot : mars 2026</p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Étape</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Perte typique</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Plage</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Tag</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Transposition <abbr title="Global Horizontal Irradiance — Irradiation horizontale globale">GHI</abbr> → <abbr title="Plane of Array — Plan du module (irradiation reçue)">POA</abbr></td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−2 à −5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Selon inclinaison/orientation</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Ombrage (horizon + inter-rangées)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−1 à −3 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Selon design</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Soiling (salissure)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−2 à −5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Sec: −5 %, humide: −2 %</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Réflexion (<abbr title="Incidence Angle Modifier — Facteur de correction d'angle d'incidence">IAM</abbr>)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−2 à −4 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Selon angle d'incidence</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Température</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−3 à −10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Méditerranée: −8-10 %, Nord: −3-5 %</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium"><abbr title="Light-Induced Degradation — Dégradation induite par la lumière (premières heures d'exposition)">LID</abbr> (1<sup>ère</sup> année)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−1,5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Mono-PERC ; HJT/TOPCon ≈ −0,5 %</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Mismatch modules</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−1 à −2 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Dépend du tri et du stringing</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Câblage <abbr title="Direct Current — Courant continu">DC</abbr></td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−1 à −2 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Longueur des strings</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Onduleur (rendement)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−2 à −4 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Euroefficiency 96-98 %</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Câblage <abbr title="Alternating Current — Courant alternatif">AC</abbr> + transfo</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−1 à −2 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">HT/BT</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Disponibilité (downtime)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−1 à −5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">P50=1 %, P90=5 %</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Curtailment</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0 à −5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Selon pays/contrat</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Dégradation annuelle</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−0,5 à −0,88 %/an</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Tempéré → chaud</td>
+                                <td class="px-4 py-3"><span class="data-tag tag-assumption" style="font-size:10px">Assumption</span></td>
+                            </tr>
+                            <tr class="bg-slate-800/60 font-bold">
+                                <td class="px-4 py-3 text-white"><abbr title="Performance Ratio — ratio énergie réelle / énergie théorique (IEC 61724)">PR</abbr> typique résultant</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">75 – 85 %</td>
+                                <td class="px-4 py-3 text-slate-400"></td>
+                                <td class="px-4 py-3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- Définitions                                -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="definitions">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Définitions</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-4 text-sm text-slate-300 leading-relaxed">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Termes clés</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li><strong class="text-slate-300"><abbr title="Performance Ratio — ratio énergie réelle / énergie théorique (IEC 61724)">PR</abbr> (Performance Ratio) :</strong> Énergie produite réelle / énergie théorique (<abbr title="Standard Test Conditions — Conditions d'essai normalisées : 1000 W/m², 25°C, AM 1.5">STC</abbr>). Ratio sans unité, typiquement 0,75–0,85. Défini par la norme <abbr title="International Electrotechnical Commission">IEC</abbr> 61724.</li>
+                            <li><strong class="text-slate-300">Availability :</strong> Temps de fonctionnement / temps total (hors maintenance programmée selon convention).</li>
+                            <li><strong class="text-slate-300"><abbr title="Performance Loss Rate — Taux de perte de performance annuel mesuré">PLR</abbr> (Performance Loss Rate) :</strong> Taux de dégradation annuel mesuré sur le fleet (≠ garantie fabricant).</li>
+                            <li><strong class="text-slate-300">R<sub>d</sub> :</strong> Taux de dégradation (notation <abbr title="International Electrotechnical Commission">IEC</abbr> 61724-3).</li>
+                            <li><strong class="text-slate-300"><abbr title="Light-Induced Degradation — Dégradation induite par la lumière (premières heures d'exposition)">LID</abbr> :</strong> Light-Induced Degradation — perte irréversible dans les premières heures d'exposition.</li>
+                            <li><strong class="text-slate-300"><abbr title="Global Horizontal Irradiance — Irradiation horizontale globale">GHI</abbr> :</strong> Global Horizontal Irradiance — irradiation solaire sur plan horizontal.</li>
+                            <li><strong class="text-slate-300"><abbr title="Plane of Array — Plan du module (irradiation reçue)">POA</abbr> :</strong> Plane of Array — irradiation dans le plan du module.</li>
+                            <li><strong class="text-slate-300"><abbr title="Incidence Angle Modifier — Facteur de correction d'angle d'incidence">IAM</abbr> :</strong> Incidence Angle Modifier — facteur de correction angulaire.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Tags</h3>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                            <li><span class="data-tag tag-observed" style="display:inline;font-size:10px">Observed data</span> = mesuré sur un fleet réel (source + page identifiable).</li>
+                            <li><span class="data-tag tag-default" style="display:inline;font-size:10px">Model default</span> = valeur par défaut d'un modèle de simulation (pas une mesure).</li>
+                            <li><span class="data-tag tag-assumption" style="display:inline;font-size:10px">SolarMetrics assumption</span> = estimation SolarMetrics basée sur la littérature, versionnée et datée.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Sources utilisées</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li><strong class="text-slate-300">NREL/TP-5K00-88769 (2024)</strong> — Rapport sur 8,5 GW US : availability, soiling, dégradation, Performance Index. <a href="https://docs.nrel.gov/docs/fy24osti/88769.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">docs.nrel.gov</a></li>
+                            <li><strong class="text-slate-300">PVWatts Manual (NREL/TP-6A20-62641)</strong> — Manuel technique PVWatts v5, Table 6 p. 12 : pertes par défaut. <a href="https://docs.nrel.gov/docs/fy14osti/62641.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">docs.nrel.gov</a></li>
+                            <li><strong class="text-slate-300">NREL/TP-5K00-85463 (2023)</strong> — Performance Loss Rate in Photovoltaic Systems. <a href="https://docs.nrel.gov/docs/fy23osti/85463.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">docs.nrel.gov</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Limites connues</h3>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                            <li>Les données NREL portent sur un fleet US. Il n'existe pas de dataset européen open équivalent.</li>
+                            <li>Le loss stack Table 3 est une estimation SolarMetrics — les valeurs réelles dépendent du site, du design et de la technologie.</li>
+                            <li>Le PR varie de 70 % (climat chaud, soiling élevé) à 90 % (climat tempéré, tracker, bifacial).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related -->
+        <section class="py-10 border-t border-slate-800">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Pages liées</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/fr/data-benchmarks.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
+                        <span class="text-xl">📊</span>
+                        <div><div class="text-sm font-semibold text-white">Benchmarks Europe</div><div class="text-xs text-slate-400">Hub données</div></div>
+                    </a>
+                    <a href="/fr/data-capex-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-green-500/30 transition-colors">
+                        <span class="text-xl">💰</span>
+                        <div><div class="text-sm font-semibold text-white">CAPEX Europe</div><div class="text-xs text-slate-400">Coûts d'investissement</div></div>
+                    </a>
+                    <a href="/fr/data-opex-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-orange-500/30 transition-colors">
+                        <span class="text-xl">🔧</span>
+                        <div><div class="text-sm font-semibold text-white">OPEX Europe</div><div class="text-xs text-slate-400">Coûts d'exploitation</div></div>
+                    </a>
+                    <a href="/fr/data-degradation.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-red-500/30 transition-colors">
+                        <span class="text-xl">📉</span>
+                        <div><div class="text-sm font-semibold text-white">Dégradation</div><div class="text-xs text-slate-400">Taux annuels</div></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">SolarMetrics</span>
+                </div>
+                <p class="text-slate-500 text-sm">&copy; <span id="currentYear"></span> SolarMetrics - Bernard Pugnet</p>
+                <div class="flex items-center gap-4">
+                    <a href="/en/" class="text-slate-400 hover:text-white text-sm">English</a>
+                    <a href="https://www.linkedin.com/in/bernard-pugnet/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800">
+                <details class="text-center">
+                    <summary class="text-slate-500 text-xs cursor-pointer hover:text-slate-400 transition-colors">Mentions légales</summary>
+                    <div class="mt-4 text-left max-w-3xl mx-auto text-slate-500 text-xs space-y-3">
+                        <p><strong class="text-slate-400">Éditeur :</strong> Bernard Pugnet - Site personnel à vocation informative - Contact : <a href="mailto:bernard.pugnet13400@gmail.com">bernard.pugnet13400@gmail.com</a></p>
+                        <p><strong class="text-slate-400">Hébergeur :</strong> Netlify, Inc. - 512 2nd Street, Suite 200, San Francisco, CA 94107, USA - www.netlify.com</p>
+                        <p><strong class="text-slate-400">Propriété intellectuelle :</strong> L'ensemble du contenu de ce site (textes, images, graphismes) est la propriété de Bernard Pugnet ou de ses sources citées. Toute reproduction est interdite sans autorisation.</p>
+                        <p><strong class="text-slate-400">Données personnelles :</strong> Ce site ne collecte aucune donnée personnelle. Aucun cookie de tracking n'est utilisé.</p>
+                        <p><strong class="text-slate-400">Responsabilité :</strong> Les informations présentes sur ce site sont fournies à titre indicatif et ne constituent pas un conseil en investissement.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        }
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', closeMenu);
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) closeMenu();
+        });
+    </script>
+    <script src="../search.js" defer></script>
+    <script src="/js/nav-active.js" defer></script>
+</body>
+</html>

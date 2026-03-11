@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benchmarks solaires Europe — CAPEX, OPEX, WACC, PR | SolarMetrics</title>
-    <meta name="description" content="Données de référence pour modéliser un projet solaire en Europe : CAPEX, OPEX, WACC, Performance Ratio, dégradation. Sources publiques, mises à jour trimestrielles.">
-    <meta name="keywords" content="CAPEX solaire Europe, OPEX photovoltaïque, WACC énergie renouvelable, Performance Ratio PV, dégradation panneaux solaires, benchmarks solaires">
+    <title>OPEX solaire Europe — Coûts d'exploitation O&M par segment | SolarMetrics</title>
+    <meta name="description" content="Dépenses d'exploitation (OPEX) du photovoltaïque en Europe : O&M utility-scale, C&I, résidentiel. Sources publiques JRC CETO 2024, IRENA. Données 2022-2023.">
+    <meta name="keywords" content="OPEX solaire Europe, O&M photovoltaïque, EUR/kWp/an, utility-scale O&M, maintenance solaire, JRC CETO, IRENA">
     <meta name="author" content="Bernard Pugnet">
-    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/data-benchmarks">
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/data-opex-europe">
+    <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/data-benchmarks">
+    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/data-opex-europe">
     <meta property="og:site_name" content="SolarMetrics">
-    <meta property="og:title" content="Benchmarks solaires Europe — CAPEX, OPEX, WACC, PR | SolarMetrics">
-    <meta property="og:description" content="Données de référence pour modéliser un projet solaire en Europe : CAPEX, OPEX, WACC, Performance Ratio, dégradation.">
+    <meta property="og:title" content="OPEX solaire Europe — Coûts d'exploitation O&M | SolarMetrics">
+    <meta property="og:description" content="Dépenses d'exploitation (OPEX) du photovoltaïque en Europe par segment. Sources publiques, données vérifiées.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="fr_FR">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Benchmarks solaires Europe — SolarMetrics">
-    <meta name="twitter:description" content="Données de référence pour modéliser un projet solaire en Europe : CAPEX, OPEX, WACC, Performance Ratio, dégradation.">
+    <meta name="twitter:title" content="OPEX solaire Europe — SolarMetrics">
+    <meta name="twitter:description" content="Dépenses d'exploitation du photovoltaïque en Europe par segment. Sources publiques.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Benchmarks solaires Europe — SolarMetrics",
-      "url": "https://solarmetrics.netlify.app/fr/data-benchmarks",
-      "description": "Données de référence pour modéliser un projet solaire en Europe : CAPEX, OPEX, WACC, Performance Ratio, dégradation.",
-      "author": {
+      "@type": "Dataset",
+      "name": "OPEX solaire Europe — SolarMetrics",
+      "url": "https://solarmetrics.netlify.app/fr/data-opex-europe",
+      "description": "Dépenses d'exploitation (OPEX) du photovoltaïque en Europe par segment : utility-scale, C&I, résidentiel. O&M, assurance, monitoring, provisions.",
+      "creator": {
         "@type": "Person",
         "name": "Bernard Pugnet",
         "jobTitle": "Expert Finance & Énergie Solaire",
         "url": "https://www.linkedin.com/in/bernard-pugnet/"
       },
+      "temporalCoverage": "2022/2023",
+      "spatialCoverage": "Europe",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
       "isPartOf": {
         "@type": "WebSite",
         "name": "SolarMetrics",
@@ -77,12 +81,37 @@
           pointer-events: none;
           box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
+        .data-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 2px 10px;
+          border-radius: 9999px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+        }
+        .tag-observed {
+          background: rgba(16,185,129,0.12);
+          color: #34d399;
+          border: 1px solid rgba(16,185,129,0.25);
+        }
+        .tag-assumption {
+          background: rgba(251,191,36,0.12);
+          color: #fbbf24;
+          border: 1px solid rgba(251,191,36,0.25);
+        }
+        .tag-context {
+          background: rgba(96,165,250,0.12);
+          color: #60a5fa;
+          border: 1px solid rgba(96,165,250,0.25);
+        }
     </style>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/css/site.css">
 </head>
 <body class="bg-slate-900 text-white sm-compact">
-    <!-- Navigation (identique aux autres pages FR — sera mise à jour avec le menu Data dans Commit B) -->
+    <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -280,7 +309,7 @@
                 <a href="/fr/physique-electricite-ferme-photovoltaique.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Physique & Électricité PV</a>
                 <a href="/fr/analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📈 Analyses</a>
                 <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Data</p>
-                <a href="/fr/data-benchmarks.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">📊 Benchmarks Europe</a>
+                <a href="/fr/data-benchmarks.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📊 Benchmarks Europe</a>
                 <a href="/fr/data-market-power.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Market & Power</a>
                 <a href="/fr/hypotheses.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📐 Hypothèses & Données</a>
                 <a href="/fr/prix-solaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💲 Prix du solaire</a>
@@ -308,13 +337,15 @@
                 <nav class="text-xs text-slate-500" aria-label="Fil d'Ariane">
                     <a href="/fr/data-benchmarks.html" class="hover:text-slate-300 transition-colors">Data</a>
                     <span class="mx-1.5">/</span>
-                    <span class="text-slate-400">Benchmarks Europe</span>
+                    <a href="/fr/data-benchmarks.html" class="hover:text-slate-300 transition-colors">Benchmarks Europe</a>
+                    <span class="mx-1.5">/</span>
+                    <span class="text-slate-400">OPEX</span>
                 </nav>
             </div>
         </div>
 
         <!-- Hero -->
-        <section class="relative pt-8 pb-16 overflow-hidden">
+        <section class="relative pt-8 pb-12 overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
                 <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
@@ -322,123 +353,292 @@
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-4">
                     <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium">
-                        📊 Data Hub
+                        🔧 Data · Benchmarks
                     </span>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-6">
-                    <span class="gradient-text">Benchmarks solaires</span> — Europe
+                <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-6">
+                    <span class="gradient-text"><abbr title="Operating Expenditure — Dépenses d'exploitation récurrentes">OPEX</abbr> solaire</span> — Europe
                 </h1>
                 <p class="text-lg text-slate-300 text-center max-w-3xl mx-auto leading-relaxed">
-                    Pour modéliser un projet solaire de manière réaliste, il faut s'appuyer sur des données de référence vérifiées.
-                    Cette page centralise les benchmarks clés du photovoltaïque européen : coûts d'investissement (<abbr title="Capital Expenditure — coût d'investissement initial">CAPEX</abbr>),
-                    coûts d'exploitation (<abbr title="Operational Expenditure — coûts d'exploitation annuels">OPEX</abbr>),
-                    coût du capital (<abbr title="Weighted Average Cost of Capital — coût moyen pondéré du capital">WACC</abbr>),
-                    ratio de performance (<abbr title="Performance Ratio — ratio entre production réelle et production théorique">PR</abbr>)
-                    et taux de dégradation des modules.
-                    Chaque jeu de données est sourcé, daté et téléchargeable pour alimenter vos modèles financiers.
+                    Dépenses d'exploitation du photovoltaïque en Europe : <abbr title="Operations & Maintenance — Exploitation et maintenance">O&M</abbr> utility-scale, <abbr title="Commercial & Industrial — Segments commercial et industriel">C&I</abbr>, résidentiel.
+                    Sources publiques : <abbr title="Joint Research Centre — Centre Commun de Recherche de la Commission Européenne">JRC</abbr>/<abbr title="Clean Energy Technology Observatory — Observatoire des technologies énergétiques propres">CETO</abbr> 2024,
+                    <abbr title="International Renewable Energy Agency">IRENA</abbr>.
+                </p>
+                <p class="text-center text-xs text-slate-500 mt-4">Dernière mise à jour : mars 2026 · Snapshot données : 2022-2023</p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE A : Observed data — O&M utility-scale -->
+        <!-- ========================================== -->
+        <section class="py-10" id="observed-om">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">1. Observed data — O&M utility-scale (<abbr title="Union Européenne">UE</abbr>)</h2>
+                    <span class="data-tag tag-observed">Observed data</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-4 max-w-3xl">
+                    Coûts d'exploitation et maintenance (<abbr title="Operations & Maintenance — Exploitation et maintenance">O&M</abbr>) du PV utility-scale en Europe, issus du rapport JRC/CETO 2024.
+                    Les valeurs sont exprimées en <strong class="text-slate-300">EUR/<abbr title="kilowatt-crête — puissance nominale DC dans les conditions standard (STC)">kW<sub>p</sub></abbr>/an</strong>.
+                </p>
+                <p class="text-xs text-slate-500 mb-6 max-w-3xl">
+                    Note : <strong class="text-slate-400">low = structure fixe</strong>, <strong class="text-slate-400">high = tracking 2 axes</strong>.
+                    O&M en % de l'investissement initial I<sub>0</sub> : fixe = 1 %, 2 axes = 1,5 % (JRC/CETO 2024, p. 26).
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Périmètre</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Low (fixe)</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">High (2 axes)</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Unité</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Année</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">UE (moyenne)</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">6,8</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">14,8</td>
+                                <td class="px-4 py-3 text-slate-400">EUR/kW<sub>p</sub>/an</td>
+                                <td class="px-4 py-3 text-slate-400">2022</td>
+                                <td class="px-4 py-3"><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">JRC CETO 2024, p. 26</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Bulgarie</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">5,2</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">11,2</td>
+                                <td class="px-4 py-3 text-slate-400">EUR/kW<sub>p</sub>/an</td>
+                                <td class="px-4 py-3 text-slate-400">2022</td>
+                                <td class="px-4 py-3"><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">JRC CETO 2024, p. 26</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Allemagne</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">8,7</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">18,9</td>
+                                <td class="px-4 py-3 text-slate-400">EUR/kW<sub>p</sub>/an</td>
+                                <td class="px-4 py-3 text-slate-400">2022</td>
+                                <td class="px-4 py-3"><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">JRC CETO 2024, p. 26</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE B : Context — repères globaux        -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="context-global">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">2. Context — repères globaux / régionaux</h2>
+                    <span class="data-tag tag-context">Context (IRENA via JRC)</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-6 max-w-3xl">
+                    Repères O&M issus d'<abbr title="International Renewable Energy Agency">IRENA</abbr>, cités via le rapport JRC/CETO 2024. Ces valeurs sont en <strong class="text-slate-300">USD/kW/an</strong> (pas de conversion EUR).
+                    Elles contextualisent les données européennes par rapport au reste du monde.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Périmètre</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Valeur</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Unité</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Année</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Europe (moyenne)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">7,9</td>
+                                <td class="px-4 py-3 text-slate-400">USD/kW/an</td>
+                                <td class="px-4 py-3 text-slate-400">2023</td>
+                                <td class="px-4 py-3"><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA via JRC CETO 2024, p. 26</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chine (low)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">3,6</td>
+                                <td class="px-4 py-3 text-slate-400">USD/kW/an</td>
+                                <td class="px-4 py-3 text-slate-400">2023</td>
+                                <td class="px-4 py-3"><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA via JRC CETO 2024, p. 26</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Japon (high)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">13,9</td>
+                                <td class="px-4 py-3 text-slate-400">USD/kW/an</td>
+                                <td class="px-4 py-3 text-slate-400">2023</td>
+                                <td class="px-4 py-3"><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA via JRC CETO 2024, p. 26</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE C : SolarMetrics assumptions — OPEX  -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="assumptions-opex">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">3. SolarMetrics assumptions — modèle OPEX par segment</h2>
+                    <span class="data-tag tag-assumption">SolarMetrics assumption</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-4 max-w-3xl">
+                    Ventilation <abbr title="Operating Expenditure — Dépenses d'exploitation récurrentes">OPEX</abbr> par poste et par segment, estimée par SolarMetrics à partir de la littérature institutionnelle.
+                    Tous les montants sont en <strong class="text-slate-300">EUR/<abbr title="kilowatt-crête — puissance nominale DC dans les conditions standard (STC)">kW<sub>p</sub></abbr>/an</strong>.
+                </p>
+                <p class="text-xs text-slate-500 mb-6">Snapshot : mars 2026</p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Poste</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Utility-scale</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">C&I</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Résidentiel</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Maintenance préventive</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">3,0 – 4,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">4,0 – 6,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">5,0 – 8,0</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Inspections, nettoyage, thermographie</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Maintenance corrective</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">1,0 – 2,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">1,5 – 3,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">2,0 – 4,0</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Réparations non planifiées</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Assurance</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">1,0 – 1,5</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">1,0 – 2,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">1,0 – 2,0</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Tous risques chantier + RC</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Monitoring / <abbr title="Supervisory Control And Data Acquisition — Système de supervision et acquisition de données">SCADA</abbr></td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,3 – 0,5</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Supervision en temps réel</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Loyer terrain</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 2,0</td>
+                                <td class="px-4 py-3 text-slate-500 text-right">—</td>
+                                <td class="px-4 py-3 text-slate-500 text-right">—</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Utility-scale uniquement</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Provision onduleur</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,5</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,5</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,0</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Provision annualisée sur 10–15 ans</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Frais de gestion / admin</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,5 – 1,0</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0,2 – 0,5</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Reporting, comptabilité, fiscalité</td>
+                            </tr>
+                            <tr class="bg-slate-800/60 font-bold">
+                                <td class="px-4 py-3 text-white">TOTAL</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">7 – 13</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">8 – 15</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">9 – 16</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">EUR/kW<sub>p</sub>/an</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-slate-500 mt-3 italic">
+                    Total illustratif — exemple de budget à calibrer selon le contexte projet (localisation, taille, contrat O&M, technologie).
                 </p>
             </div>
         </section>
 
-        <!-- Data Cards -->
-        <section class="py-12">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                    <!-- Card 1: CAPEX -->
-                    <a href="/fr/data-capex-europe.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-emerald-500/30 transition-colors block">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Disponible</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 text-2xl mb-4">💰</div>
-                        <h2 class="text-lg font-bold text-white mb-2">CAPEX Europe</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Coûts d'investissement par segment (résidentiel, C&I, utility-scale). Sources JRC, IRENA, Fraunhofer ISE. Données 2022-2024.</p>
-                        <p class="text-xs text-cyan-400 mt-4">→ Consulter les données</p>
-                    </a>
-
-                    <!-- Card 2: OPEX -->
-                    <a href="/fr/data-opex-europe.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 hover:border-blue-500/30 transition-colors relative overflow-hidden block">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Disponible</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 text-2xl mb-4">🔧</div>
-                        <h2 class="text-lg font-bold text-white mb-2">OPEX Europe</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Coûts d'exploitation annuels : O&M, assurance, loyer terrain, remplacement onduleur. En €/kWc/an par segment.</p>
-                        <p class="text-xs text-cyan-400 mt-4">→ Consulter les données</p>
-                    </a>
-
-                    <!-- Card 3: WACC -->
-                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">À venir</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-violet-500/15 text-violet-400 text-2xl mb-4">📈</div>
-                        <h2 class="text-lg font-bold text-white mb-2">WACC Europe</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Coût moyen pondéré du capital par pays et par structure de financement (project finance, corporate PPA, merchant). Impact sur le LCOE.</p>
-                        <p class="text-xs text-slate-500 mt-4">Prévu : prochainement</p>
+        <!-- ========================================== -->
+        <!-- Définitions & périmètre                    -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="definitions">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Définitions & périmètre</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-4 text-sm text-slate-300 leading-relaxed">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Termes clés</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li><strong class="text-slate-300"><abbr title="Operating Expenditure — Dépenses d'exploitation récurrentes">OPEX</abbr> :</strong> Dépenses d'exploitation annuelles récurrentes, hors remboursement dette.</li>
+                            <li><strong class="text-slate-300"><abbr title="Operations & Maintenance — Exploitation et maintenance">O&M</abbr> :</strong> Operations & Maintenance — sous-ensemble de l'OPEX couvrant la maintenance préventive et corrective.</li>
+                            <li><strong class="text-slate-300">Périmètre OPEX inclut :</strong> O&M + assurance + terrain + monitoring + provisions remplacement.</li>
+                            <li><strong class="text-slate-300">Périmètre OPEX exclut :</strong> dette, impôts, dépréciation comptable.</li>
+                            <li><strong class="text-slate-300"><abbr title="kilowatt-crête — puissance nominale DC dans les conditions standard (STC)">kW<sub>p</sub></abbr> :</strong> Puissance crête DC (conditions <abbr title="Standard Test Conditions — Conditions d'essai normalisées : 1000 W/m², 25°C, AM 1.5">STC</abbr>).</li>
+                            <li><strong class="text-slate-300"><abbr title="Supervisory Control And Data Acquisition — Système de supervision et acquisition de données">SCADA</abbr> :</strong> Supervisory Control And Data Acquisition — système de monitoring temps réel.</li>
+                        </ul>
                     </div>
-
-                    <!-- Card 4: PR & Loss Stack -->
-                    <a href="/fr/data-pr-loss-stack.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors relative overflow-hidden block">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Disponible</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/15 text-amber-400 text-2xl mb-4">⚙️</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Performance Ratio & Loss Stack</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Décomposition des pertes (température, ombrage, clipping, soiling, câblage) et PR typiques par technologie et climat.</p>
-                        <p class="text-xs text-cyan-400 mt-4">→ Consulter les données</p>
-                    </a>
-
-                    <!-- Card 5: Dégradation -->
-                    <a href="/fr/data-degradation.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-red-500/30 transition-colors block">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Disponible</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-red-500/15 text-red-400 text-2xl mb-4">📉</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Dégradation panneaux</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Taux de dégradation par technologie et zone climatique. Module degradation vs system loss. Sources NREL (2012-2024).</p>
-                        <p class="text-xs text-cyan-400 mt-4">→ Consulter les données</p>
-                    </a>
-
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Tags</h3>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                            <li><span class="data-tag tag-observed" style="display:inline;font-size:10px">Observed data</span> = donnée publiée par une source institutionnelle avec page/table identifiable.</li>
+                            <li><span class="data-tag tag-context" style="display:inline;font-size:10px">Context</span> = donnée de cadrage issue d'une source tierce, citée via un rapport principal.</li>
+                            <li><span class="data-tag tag-assumption" style="display:inline;font-size:10px">SolarMetrics assumption</span> = estimation dérivée par SolarMetrics, versionnée et datée.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Sources utilisées</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li><strong class="text-slate-300">JRC CETO 2024</strong> — Clean Energy Technology Observatory: Photovoltaics in the European Union – 2024 Status Report. JRC139297. <a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC139297" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">publications.jrc.ec.europa.eu</a></li>
+                            <li><strong class="text-slate-300">IRENA RPGC 2024</strong> — Renewable Power Generation Costs in 2024. Cité via JRC CETO 2024 pour les repères globaux O&M. <a href="https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">irena.org</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Limites connues</h3>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                            <li>Pas de ventilation OPEX officielle par composante en open access — la Table 3 est une estimation SolarMetrics.</li>
+                            <li>Les données JRC portent sur le utility-scale uniquement. Les segments C&I et résidentiel sont extrapolés.</li>
+                            <li>Les coûts réels varient de ±30 % selon le contexte : localisation, taille, contrat O&M, technologie.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Methodology -->
-        <section class="py-12 border-t border-slate-800">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold text-white mb-6">Méthodologie</h2>
-                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-3 text-sm text-slate-300 leading-relaxed">
-                    <p><strong class="text-slate-200">Unités :</strong> CAPEX en €/kWc (hors taxe, hors terrain), OPEX en €/kWc/an ou €/MWh, WACC en % nominal avant impôt, PR en % (ratio énergie injectée / énergie théorique STC), dégradation en %/an (médiane, P10, P90).</p>
-                    <p><strong class="text-slate-200">Sources principales :</strong> IRENA Renewable Cost Database, BloombergNEF (BNEF), Fraunhofer ISE Photovoltaics Report, IEA PVPS, JRC PVGIS, rapports nationaux (CRE, BNetzA, GSE).</p>
-                    <p><strong class="text-slate-200">Périmètre :</strong> 10 pays européens couverts (FR, DE, ES, IT, NL, BE, PT, PL, AT, GR). Segments : résidentiel (&lt;9 kWc), commercial & industriel (C&I, 100-500 kWc), utility-scale (&gt;1 MWc).</p>
-                    <p><strong class="text-slate-200">Limites :</strong> Les données CAPEX varient fortement selon le contexte local (main d'œuvre, permitting, terrain). Les valeurs présentées sont des médianes nationales. Pour un projet spécifique, utilisez le <a href="/fr/outils-simulation.html" class="text-cyan-400 hover:underline">simulateur</a> avec vos propres paramètres.</p>
-                    <p><strong class="text-slate-200">Mise à jour :</strong> Données révisées trimestriellement (T1, T2, T3, T4). Dernière mise à jour indiquée sur chaque page data.</p>
-                </div>
-                <p class="text-xs text-slate-500 mt-4">Last updated : 2026-03</p>
             </div>
         </section>
 
         <!-- Related -->
-        <section class="py-12 border-t border-slate-800">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="py-10 border-t border-slate-800">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold text-white mb-6">Pages liées</h2>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/fr/data-benchmarks.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
+                        <span class="text-xl">📊</span>
+                        <div><div class="text-sm font-semibold text-white">Benchmarks Europe</div><div class="text-xs text-slate-400">Hub données</div></div>
+                    </a>
+                    <a href="/fr/data-capex-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-green-500/30 transition-colors">
+                        <span class="text-xl">💰</span>
+                        <div><div class="text-sm font-semibold text-white">CAPEX Europe</div><div class="text-xs text-slate-400">Coûts d'investissement</div></div>
+                    </a>
+                    <a href="/fr/data-degradation.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-red-500/30 transition-colors">
+                        <span class="text-xl">📉</span>
+                        <div><div class="text-sm font-semibold text-white">Dégradation</div><div class="text-xs text-slate-400">Taux annuels</div></div>
+                    </a>
                     <a href="/fr/hypotheses.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
                         <span class="text-xl">📐</span>
                         <div><div class="text-sm font-semibold text-white">Hypothèses</div><div class="text-xs text-slate-400">Méthodologie</div></div>
-                    </a>
-                    <a href="/fr/prix-solaire.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-amber-500/30 transition-colors">
-                        <span class="text-xl">💲</span>
-                        <div><div class="text-sm font-semibold text-white">Prix solaire</div><div class="text-xs text-slate-400">Coûts & modules</div></div>
-                    </a>
-                    <a href="/fr/comparatif-pays.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
-                        <span class="text-xl">🌍</span>
-                        <div><div class="text-sm font-semibold text-white">Comparatif pays</div><div class="text-xs text-slate-400">10 pays · LCOE</div></div>
-                    </a>
-                    <a href="/fr/outils-simulation.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-orange-500/30 transition-colors">
-                        <span class="text-xl">⚡</span>
-                        <div><div class="text-sm font-semibold text-white">Simulateur</div><div class="text-xs text-slate-400">Rentabilité</div></div>
                     </a>
                 </div>
             </div>
