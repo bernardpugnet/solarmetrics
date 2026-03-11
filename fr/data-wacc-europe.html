@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Données marché & réseau solaire Europe — Prix négatifs, PPA, Curtailment | SolarMetrics</title>
-    <meta name="description" content="Données marché et réseau pour évaluer les risques solaires en Europe : prix négatifs, capture price, curtailment, PPA, délais de raccordement.">
-    <meta name="keywords" content="prix négatifs solaire, capture price photovoltaïque, curtailment Europe, PPA solaire prix, raccordement réseau délai, cannibalisation solaire">
+    <title>WACC solaire Europe — Coût du capital photovoltaïque par pays | SolarMetrics</title>
+    <meta name="description" content="Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe par pays et par segment. Sources IRENA, IEA, études académiques.">
+    <meta name="keywords" content="WACC solaire Europe, coût du capital photovoltaïque, financement PV, LCOE WACC, taux actualisation solaire, IRENA, IEA">
     <meta name="author" content="Bernard Pugnet">
-    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/data-market-power">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/data-wacc-europe">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/data-market-power">
+    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/data-wacc-europe">
     <meta property="og:site_name" content="SolarMetrics">
-    <meta property="og:title" content="Données marché & réseau solaire Europe | SolarMetrics">
-    <meta property="og:description" content="Données marché et réseau pour évaluer les risques solaires en Europe : prix négatifs, capture price, curtailment, PPA, délais de raccordement.">
+    <meta property="og:title" content="WACC solaire Europe — Coût du capital PV | SolarMetrics">
+    <meta property="og:description" content="Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe. Sources publiques, données vérifiées.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="fr_FR">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Données marché & réseau solaire Europe | SolarMetrics">
-    <meta name="twitter:description" content="Données marché et réseau pour évaluer les risques solaires en Europe : prix négatifs, capture price, curtailment, PPA, délais de raccordement.">
+    <meta name="twitter:title" content="WACC solaire Europe — SolarMetrics">
+    <meta name="twitter:description" content="Coût du capital du photovoltaïque en Europe. Sources publiques.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Données marché & réseau solaire Europe — SolarMetrics",
-      "url": "https://solarmetrics.netlify.app/fr/data-market-power",
-      "description": "Données marché et réseau pour évaluer les risques solaires en Europe : prix négatifs, capture price, curtailment, PPA, délais de raccordement.",
-      "author": {
+      "@type": "Dataset",
+      "name": "WACC solaire Europe — SolarMetrics",
+      "url": "https://solarmetrics.netlify.app/fr/data-wacc-europe",
+      "description": "Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe par pays et par segment de financement.",
+      "creator": {
         "@type": "Person",
         "name": "Bernard Pugnet",
         "jobTitle": "Expert Finance & Énergie Solaire",
         "url": "https://www.linkedin.com/in/bernard-pugnet/"
       },
+      "temporalCoverage": "2020/2024",
+      "spatialCoverage": "Europe",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
       "isPartOf": {
         "@type": "WebSite",
         "name": "SolarMetrics",
@@ -77,12 +81,42 @@
           pointer-events: none;
           box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
+        .data-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 2px 10px;
+          border-radius: 9999px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+        }
+        .tag-observed {
+          background: rgba(16,185,129,0.12);
+          color: #34d399;
+          border: 1px solid rgba(16,185,129,0.25);
+        }
+        .tag-assumption {
+          background: rgba(251,191,36,0.12);
+          color: #fbbf24;
+          border: 1px solid rgba(251,191,36,0.25);
+        }
+        .tag-context {
+          background: rgba(96,165,250,0.12);
+          color: #60a5fa;
+          border: 1px solid rgba(96,165,250,0.25);
+        }
+        .tag-draft {
+          background: rgba(239,68,68,0.12);
+          color: #f87171;
+          border: 1px solid rgba(239,68,68,0.25);
+        }
     </style>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/css/site.css">
 </head>
 <body class="bg-slate-900 text-white sm-compact">
-    <!-- Navigation (identique à data-benchmarks.html) -->
+    <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800" aria-label="Navigation principale">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -281,7 +315,7 @@
                 <a href="/fr/analyses/" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📈 Analyses</a>
                 <p class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider">Data</p>
                 <a href="/fr/data-benchmarks.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📊 Benchmarks Europe</a>
-                <a href="/fr/data-market-power.html" class="block px-4 py-2 text-amber-500 font-medium rounded-lg">⚡ Market & Power</a>
+                <a href="/fr/data-market-power.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">⚡ Market & Power</a>
                 <a href="/fr/hypotheses.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">📐 Hypothèses & Données</a>
                 <a href="/fr/prix-solaire.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">💲 Prix du solaire</a>
                 <a href="/fr/comparatif-pays.html" class="block px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">🌍 Comparatif pays</a>
@@ -302,143 +336,300 @@
     </nav>
 
     <main id="main-content">
+        <!-- Draft Banner -->
+        <div class="bg-red-500/10 border-b border-red-500/20">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-center">
+                <span class="data-tag tag-draft">DRAFT — page non publiée</span>
+                <span class="text-xs text-red-400 ml-2">En attente de données sourcées. Page non liée depuis le hub, non indexée (noindex).</span>
+            </div>
+        </div>
+
         <!-- Breadcrumb -->
         <div class="pt-20 pb-2">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <nav class="text-xs text-slate-500" aria-label="Fil d'Ariane">
-                    <a href="/fr/data-market-power.html" class="hover:text-slate-300 transition-colors">Data</a>
+                    <a href="/fr/data-benchmarks.html" class="hover:text-slate-300 transition-colors">Data</a>
                     <span class="mx-1.5">/</span>
-                    <span class="text-slate-400">Marché &amp; Réseau Europe</span>
+                    <a href="/fr/data-benchmarks.html" class="hover:text-slate-300 transition-colors">Benchmarks Europe</a>
+                    <span class="mx-1.5">/</span>
+                    <span class="text-slate-400">WACC</span>
                 </nav>
             </div>
         </div>
 
         <!-- Hero -->
-        <section class="relative pt-8 pb-16 overflow-hidden">
+        <section class="relative pt-8 pb-12 overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
             </div>
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-4">
                     <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-violet-500/10 border border-violet-500/20 rounded-full text-violet-400 text-sm font-medium">
-                        ⚡ Data Hub
+                        📈 Data · Benchmarks
                     </span>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-6">
-                    <span class="gradient-text">Données marché & réseau</span> — Europe
+                <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-6">
+                    <span class="gradient-text"><abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> solaire</span> — Europe
                 </h1>
                 <p class="text-lg text-slate-300 text-center max-w-3xl mx-auto leading-relaxed">
-                    La rentabilité d'un projet solaire ne dépend pas seulement de l'ensoleillement et des coûts.
-                    Les risques marché — cannibalisation des prix, heures à prix négatif, écrêtement (curtailment) —
-                    et les contraintes réseau — délais de raccordement, congestion — pèsent de plus en plus
-                    sur les revenus des producteurs. Cette page centralise les données clés pour évaluer
-                    ces risques à l'échelle européenne : <abbr title="Capture Price — prix moyen reçu par le solaire pendant ses heures de production">capture price</abbr>,
-                    prix négatifs, curtailment, prix <abbr title="Power Purchase Agreement — contrat d'achat d'électricité de gré à gré">PPA</abbr>
-                    et délais de raccordement.
+                    Coût moyen pondéré du capital pour le photovoltaïque en Europe : taux d'actualisation, structure de financement, prime de risque pays.
+                    Sources : <abbr title="International Renewable Energy Agency">IRENA</abbr>,
+                    <abbr title="International Energy Agency — Agence internationale de l'énergie">IEA</abbr>,
+                    études académiques.
+                </p>
+                <p class="text-center text-xs text-slate-500 mt-4">Dernière mise à jour : mars 2026 · Snapshot données : 2020-2024</p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TABLE A : Observed / survey-based Europe   -->
+        <!-- ========================================== -->
+        <section class="py-10" id="observed-wacc">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">1. Observed / survey-based — <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> utility-scale Europe</h2>
+                    <span class="data-tag tag-observed">Observed data</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-6 max-w-3xl">
+                    <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> nominal après impôt pour le PV utility-scale en Europe.
+                    Valeurs issues de rapports institutionnels ou d'enquêtes auprès d'investisseurs.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Périmètre</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Valeur</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Type</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Année</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Europe (moyenne)</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,8 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal, after-tax</td>
+                                <td class="px-4 py-3 text-slate-400">2023</td>
+                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA RPGC 2024 — page/table à confirmer</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Europe / Am. du Nord</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">4,7 – 6,4 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal, utility-scale</td>
+                                <td class="px-4 py-3 text-slate-400">2022-2024</td>
+                                <td class="px-4 py-3 text-slate-500 text-xs italic">Multiples sources — à tracer</td>
+                            </tr>
+                            <!-- TODO: Ajouter données par pays EU (FR, DE, ES, IT, PT, GR, PL) quand source open disponible -->
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-red-400 mt-3 italic">
+                    ⚠ Sources incomplètes : les liens cliquables et pages/tables précises doivent être ajoutés avant publication.
                 </p>
             </div>
         </section>
 
-        <!-- Data Cards -->
-        <section class="py-12">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                    <!-- Card 1: Prix négatifs -->
-                    <a href="/fr/data-negative-prices.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-red-500/30 transition-colors block">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Disponible</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-red-500/15 text-red-400 text-2xl mb-4">📉</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Prix négatifs</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Nombre d'heures à prix négatif par pays et par année (day-ahead). Impact sur les revenus merchant et le capture price. Données 2022-2024.</p>
-                        <p class="text-xs text-cyan-400 mt-4">→ Consulter les données</p>
-                    </a>
-
-                    <!-- Card 2: Capture price -->
-                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">À venir</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/15 text-amber-400 text-2xl mb-4">🎯</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Capture price</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Prix moyen reçu par le solaire vs prix baseload. Ratio de capture par pays. Cannibalisation et corrélation avec la pénétration PV.</p>
-                        <p class="text-xs text-slate-500 mt-4">Prévu : prochainement</p>
-                    </div>
-
-                    <!-- Card 3: Curtailment -->
-                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">À venir</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-orange-500/15 text-orange-400 text-2xl mb-4">✂️</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Curtailment (écrêtement)</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Volumes d'écrêtement solaire par pays (GWh perdus). Causes : congestion réseau, surplus, ordres de dispatching. Règles de compensation.</p>
-                        <p class="text-xs text-slate-500 mt-4">Prévu : prochainement</p>
-                    </div>
-
-                    <!-- Card 4: Prix PPA -->
-                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">À venir</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 text-2xl mb-4">📄</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Prix PPA solaire</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Prix PPA corporate et utility par pays et par durée de contrat. Benchmark LevelTen, Pexapark. Évolution et tendances 2023-2026.</p>
-                        <p class="text-xs text-slate-500 mt-4">Prévu : prochainement</p>
-                    </div>
-
-                    <!-- Card 5: Raccordement réseau -->
-                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">À venir</span>
-                        </div>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 text-2xl mb-4">🔌</div>
-                        <h2 class="text-lg font-bold text-white mb-2">Délais raccordement réseau</h2>
-                        <p class="text-sm text-slate-400 leading-relaxed">Délais moyens de raccordement par pays et par puissance. Files d'attente (grid queue). Réformes réseau en cours (EU Grid Action Plan).</p>
-                        <p class="text-xs text-slate-500 mt-4">Prévu : prochainement</p>
-                    </div>
-
+        <!-- ========================================== -->
+        <!-- TABLE B : Context — repères régionaux      -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="context-regional">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">2. Context — repères globaux / régionaux</h2>
+                    <span class="data-tag tag-context">Context</span>
                 </div>
+                <p class="text-sm text-slate-400 mb-6 max-w-3xl">
+                    Repères <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> globaux pour contextualiser les données européennes.
+                    Le WACC varie fortement selon le risque pays, la devise et la maturité du marché EnR.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Région</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">WACC indicatif</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Notes</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Europe (moyenne)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">3 – 6 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Marchés matures (DE, FR, ES, NL)</td>
+                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA / IEA — à tracer</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Europe du Sud-Est</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">6 – 10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Marchés émergents (GR, RO, BG)</td>
+                                <td class="px-4 py-3 text-slate-500 text-xs italic">IEA CoC Observatory — à tracer</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Afrique</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">~12 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Risque pays + devise</td>
+                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA RPGC 2024 — page à confirmer</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chine</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">~5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">State-backed financing</td>
+                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA RPGC 2024 — page à confirmer</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-red-400 mt-3 italic">
+                    ⚠ Sources incomplètes : les liens cliquables et pages/tables précises doivent être ajoutés avant publication.
+                </p>
             </div>
         </section>
 
-        <!-- Methodology -->
-        <section class="py-12 border-t border-slate-800">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold text-white mb-6">Méthodologie</h2>
-                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-3 text-sm text-slate-300 leading-relaxed">
-                    <p><strong class="text-slate-200">Unités :</strong> Capture price en €/MWh, prix négatifs en nombre d'heures/an et % du temps, curtailment en GWh/an et % de production solaire, PPA en €/MWh (fixe ou indexé), délais raccordement en mois.</p>
-                    <p><strong class="text-slate-200">Sources principales :</strong> ENTSO-E Transparency Platform, ACER Market Monitoring Report, Ember Climate, LevelTen Energy PPA Index, Pexapark PPA Tracker, SolarPower Europe Grid Report, rapports nationaux (RTE, BNetzA, REE, Terna, TenneT).</p>
-                    <p><strong class="text-slate-200">Périmètre :</strong> 10 pays européens (FR, DE, ES, IT, NL, BE, PT, PL, AT, GR). Données horaires (day-ahead) pour les prix, données annuelles pour curtailment et raccordement.</p>
-                    <p><strong class="text-slate-200">Limites :</strong> Les données de curtailment sont souvent incomplètes ou autodéclarées par les TSO. Les prix PPA sont des indices agrégés (pas de prix contractuels individuels). Les délais de raccordement varient fortement selon la puissance, la tension et la région.</p>
-                    <p><strong class="text-slate-200">Mise à jour :</strong> Données révisées trimestriellement (T1, T2, T3, T4). Dernière mise à jour indiquée sur chaque page data.</p>
+        <!-- ========================================== -->
+        <!-- TABLE C : SolarMetrics assumptions         -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="assumptions-wacc">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <h2 class="text-2xl font-bold text-white">3. SolarMetrics assumptions — WACC par segment</h2>
+                    <span class="data-tag tag-assumption">SolarMetrics assumption</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-4">Last updated : 2026-03</p>
+                <p class="text-sm text-slate-400 mb-4 max-w-3xl">
+                    Hypothèses <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> utilisées par SolarMetrics dans le simulateur,
+                    avec décomposition en composantes (coût dette, coût equity, ratio D/E).
+                </p>
+                <p class="text-xs text-slate-500 mb-6">Snapshot : mars 2026</p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-left">
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Composante</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Utility-scale</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">C&I</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Résidentiel</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Ratio dette / equity (D/E)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">70/30 – 80/20</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">60/40 – 70/30</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0/100 – 50/50</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Project finance vs corporate</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Coût de la dette (<abbr title="kilowatt-crête — puissance nominale DC">K<sub>d</sub></abbr>)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">3 – 5 %</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">3,5 – 5,5 %</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">4 – 7 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Spread + taux de base</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Coût de l'equity (K<sub>e</sub>)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">7 – 12 %</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">8 – 14 %</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">6 – 10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">TRI attendu investisseur</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Taux d'imposition</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">25 %</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">25 %</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">—</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Moyenne UE (IS)</td>
+                            </tr>
+                            <tr class="bg-slate-800/60 font-bold">
+                                <td class="px-4 py-3 text-white">WACC nominal after-tax</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">4 – 7 %</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">5 – 8 %</td>
+                                <td class="px-4 py-3 text-amber-300 text-right">6 – 10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Fourchette indicative</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-slate-500 mt-3 italic">
+                    Total illustratif — les composantes varient selon le pays, la structure du projet et les conditions de marché (taux directeurs BCE, spread bancaire, prime de risque pays).
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- Définitions & méthodologie                 -->
+        <!-- ========================================== -->
+        <section class="py-10 border-t border-slate-800" id="definitions">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Définitions & méthodologie</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-4 text-sm text-slate-300 leading-relaxed">
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Termes clés</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li><strong class="text-slate-300"><abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> :</strong> Coût moyen pondéré du capital — taux d'actualisation des flux de trésorerie futurs d'un projet. Formule : WACC = (E/V) × K<sub>e</sub> + (D/V) × K<sub>d</sub> × (1 − t).</li>
+                            <li><strong class="text-slate-300">K<sub>d</sub> (coût de la dette) :</strong> Taux d'intérêt moyen pondéré de la dette du projet, incluant le spread bancaire.</li>
+                            <li><strong class="text-slate-300">K<sub>e</sub> (coût de l'equity) :</strong> Rendement attendu par l'investisseur en fonds propres (<abbr title="Taux de Rendement Interne — Internal Rate of Return">TRI</abbr> cible).</li>
+                            <li><strong class="text-slate-300">D/E (ratio dette/equity) :</strong> Structure de financement. Utility-scale : typiquement 70-80 % dette, 20-30 % equity.</li>
+                            <li><strong class="text-slate-300">Nominal vs réel :</strong> Le WACC nominal inclut l'inflation anticipée. Le WACC réel = nominal − inflation. Les deux conventions coexistent dans la littérature.</li>
+                            <li><strong class="text-slate-300">After-tax :</strong> Après déductibilité fiscale des intérêts (bouclier fiscal). Convention standard pour le LCOE.</li>
+                            <li><strong class="text-slate-300">Impact sur le <abbr title="Levelized Cost of Energy — Coût actualisé de l'énergie">LCOE</abbr> :</strong> Une variation de ±1 point de WACC peut modifier le LCOE de ±8 à 12 % pour un projet PV utility-scale.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Tags</h3>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                            <li><span class="data-tag tag-observed" style="display:inline;font-size:10px">Observed data</span> = donnée issue d'enquêtes investisseurs ou de rapports institutionnels (source + page identifiable).</li>
+                            <li><span class="data-tag tag-context" style="display:inline;font-size:10px">Context</span> = repère de cadrage (fourchette régionale, comparaison).</li>
+                            <li><span class="data-tag tag-assumption" style="display:inline;font-size:10px">SolarMetrics assumption</span> = hypothèse de modélisation SolarMetrics, versionnée et datée.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Sources identifiées (à compléter)</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li><strong class="text-slate-300">IRENA RPGC 2024</strong> — Renewable Power Generation Costs in 2024. WACC assumptions Europe. <a href="https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">irena.org</a></li>
+                            <li><strong class="text-slate-300">IEA Cost of Capital Observatory</strong> — Data explorer interactif WACC par pays (focus pays émergents). <a href="https://www.iea.org/data-and-statistics/data-tools/cost-of-capital-observatory-data-explorer" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">iea.org</a></li>
+                            <li><strong class="text-slate-300">Nature Scientific Data (2025)</strong> — Dataset global coût du capital EnR par pays. <a href="https://www.nature.com/articles/s41597-025-05912-x" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">nature.com</a></li>
+                            <li><strong class="text-slate-300">OECD/IEA Working Paper</strong> — "Bridging the clean energy investment gap: Cost of capital". <a href="https://one.oecd.org/document/ENV/WKP(2024)15/REV1/en/pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">oecd.org</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white mb-2">Limites connues</h3>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                            <li>Pas de dataset open-access avec WACC par pays européen individualisé (FR, DE, ES, IT) et composantes.</li>
+                            <li>Les données IRENA donnent une moyenne Europe sans ventilation par pays.</li>
+                            <li>L'IEA CoC Observatory couvre surtout les pays émergents, peu l'Europe occidentale.</li>
+                            <li>Le WACC varie fortement dans le temps (taux directeurs BCE) — un snapshot est par nature périmable.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Related -->
-        <section class="py-12 border-t border-slate-800">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="py-10 border-t border-slate-800">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold text-white mb-6">Pages liées</h2>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/fr/data-benchmarks.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
+                        <span class="text-xl">📊</span>
+                        <div><div class="text-sm font-semibold text-white">Benchmarks Europe</div><div class="text-xs text-slate-400">Hub données</div></div>
+                    </a>
+                    <a href="/fr/data-capex-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-green-500/30 transition-colors">
+                        <span class="text-xl">💰</span>
+                        <div><div class="text-sm font-semibold text-white">CAPEX Europe</div><div class="text-xs text-slate-400">Coûts d'investissement</div></div>
+                    </a>
+                    <a href="/fr/data-opex-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-orange-500/30 transition-colors">
+                        <span class="text-xl">🔧</span>
+                        <div><div class="text-sm font-semibold text-white">OPEX Europe</div><div class="text-xs text-slate-400">Coûts d'exploitation</div></div>
+                    </a>
                     <a href="/fr/hypotheses.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
                         <span class="text-xl">📐</span>
                         <div><div class="text-sm font-semibold text-white">Hypothèses</div><div class="text-xs text-slate-400">Méthodologie</div></div>
-                    </a>
-                    <a href="/fr/prix-solaire.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-amber-500/30 transition-colors">
-                        <span class="text-xl">💲</span>
-                        <div><div class="text-sm font-semibold text-white">Prix solaire</div><div class="text-xs text-slate-400">Coûts & modules</div></div>
-                    </a>
-                    <a href="/fr/comparatif-pays.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
-                        <span class="text-xl">🌍</span>
-                        <div><div class="text-sm font-semibold text-white">Comparatif pays</div><div class="text-xs text-slate-400">10 pays · LCOE</div></div>
-                    </a>
-                    <a href="/fr/outils-simulation.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-orange-500/30 transition-colors">
-                        <span class="text-xl">⚡</span>
-                        <div><div class="text-sm font-semibold text-white">Simulateur</div><div class="text-xs text-slate-400">Rentabilité</div></div>
                     </a>
                 </div>
             </div>
