@@ -329,7 +329,7 @@
         <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
         <div>
           <div class="text-sm font-semibold text-white">Comparatif pays</div>
-          <div class="text-xs text-slate-400">10 pays européens · LCOE</div>
+          <div class="text-xs text-slate-400">10 pays européens (incl. Suisse) · LCOE</div>
         </div>
       </a>
     </div>
@@ -420,7 +420,7 @@
         <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 text-base">🌍</span>
         <div>
           <div class="text-sm font-semibold text-white">Comparatif pays</div>
-          <div class="text-xs text-slate-400">10 pays européens · LCOE</div>
+          <div class="text-xs text-slate-400">10 pays européens (incl. Suisse) · LCOE</div>
         </div>
       </a>
     </div>
@@ -602,7 +602,8 @@
                             <th data-column="additions">Ajouts 2025 (GW) <span class="sort-indicator">▲</span></th>
                             <th data-column="target">Objectif 2030 (GW) <span class="sort-indicator">▲</span></th>
                             <th data-column="lcoe">LCOE utility (€/MWh) <span class="sort-indicator">▲</span></th>
-                            <th data-column="residential">Prix résidentiel (€/kWh) <span class="sort-indicator">▲</span></th>
+                            <th data-column="residential">Prix résidentiel (devise/kWh) <span class="sort-indicator">▲</span></th>
+                            <th data-column="currency">Devise <span class="sort-indicator">▲</span></th>
                             <th data-column="productivity">Productible (kWh/kWc/an) <span class="sort-indicator">▲</span></th>
                             <th data-column="support">Mécanisme soutien <span class="sort-indicator">▲</span></th>
                             <th data-column="attractivity">Attractivité <span class="sort-indicator">▲</span></th>
@@ -616,6 +617,7 @@
                             <td>54–59</td>
                             <td>45–55</td>
                             <td>0.2516</td>
+                            <td>EUR</td>
                             <td>900–1550</td>
                             <td>OA + Prime autoconso</td>
                             <td><span class="stars">★★★★☆</span></td>
@@ -627,6 +629,7 @@
                             <td>215</td>
                             <td>50–65</td>
                             <td>0.35</td>
+                            <td>EUR</td>
                             <td>800–1100</td>
                             <td>EEG Feed-in</td>
                             <td><span class="stars">★★★★☆</span></td>
@@ -638,6 +641,7 @@
                             <td>76</td>
                             <td>25–35</td>
                             <td>0.18</td>
+                            <td>EUR</td>
                             <td>1500–1900</td>
                             <td>Net billing</td>
                             <td><span class="stars">★★★★★</span></td>
@@ -649,6 +653,7 @@
                             <td>80</td>
                             <td>35–45</td>
                             <td>0.25</td>
+                            <td>EUR</td>
                             <td>1200–1700</td>
                             <td>Superbonus (réduit)</td>
                             <td><span class="stars">★★★★☆</span></td>
@@ -660,6 +665,7 @@
                             <td>38</td>
                             <td>50–60</td>
                             <td>0.28</td>
+                            <td>EUR</td>
                             <td>850–1050</td>
                             <td>Net metering → saldering</td>
                             <td><span class="stars">★★★☆☆</span></td>
@@ -671,6 +677,7 @@
                             <td>29</td>
                             <td>45–55</td>
                             <td>0.18</td>
+                            <td>EUR</td>
                             <td>900–1100</td>
                             <td>Net billing</td>
                             <td><span class="stars">★★★☆☆</span></td>
@@ -682,6 +689,7 @@
                             <td>18</td>
                             <td>55–65</td>
                             <td>0.30</td>
+                            <td>EUR</td>
                             <td>850–1050</td>
                             <td>Tarif prosumer</td>
                             <td><span class="stars">★★★☆☆</span></td>
@@ -693,6 +701,7 @@
                             <td>20</td>
                             <td>25–35</td>
                             <td>0.16</td>
+                            <td>EUR</td>
                             <td>1400–1800</td>
                             <td>Autoconsommation collective</td>
                             <td><span class="stars">★★★★★</span></td>
@@ -703,7 +712,8 @@
                             <td>1.9</td>
                             <td>35</td>
                             <td>55–70</td>
-                            <td>0.27 CHF</td>
+                            <td>0.27</td>
+                            <td>CHF</td>
                             <td>900–1300</td>
                             <td>PRU (prime unique)</td>
                             <td><span class="stars">★★★☆☆</span></td>
@@ -715,6 +725,7 @@
                             <td>21</td>
                             <td>50–60</td>
                             <td>0.25</td>
+                            <td>EUR</td>
                             <td>900–1200</td>
                             <td>Primes + OeMAG</td>
                             <td><span class="stars">★★★☆☆</span></td>
@@ -1065,7 +1076,7 @@
                 let bValue = bCell.textContent.trim();
 
                 // Parse numeric values
-                if (columnKey !== 'country' && columnKey !== 'support' && columnKey !== 'attractivity') {
+                if (columnKey !== 'country' && columnKey !== 'support' && columnKey !== 'attractivity' && columnKey !== 'currency') {
                     aValue = parseFloat(aValue.split('–')[0]) || parseFloat(aValue.split('–')[0].replace('€', '').replace('CHF', '')) || 0;
                     bValue = parseFloat(bValue.split('–')[0]) || parseFloat(bValue.split('–')[0].replace('€', '').replace('CHF', '')) || 0;
 
@@ -1087,9 +1098,10 @@
                 'target': 3,
                 'lcoe': 4,
                 'residential': 5,
-                'productivity': 6,
-                'support': 7,
-                'attractivity': 8
+                'currency': 6,
+                'productivity': 7,
+                'support': 8,
+                'attractivity': 9
             };
             return columnMap[columnKey];
         }
