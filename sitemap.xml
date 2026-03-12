@@ -3,535 +3,531 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!-- FR Pages -->
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/"/>
+    <loc>https://www.solardataatlas.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/"/>
     <lastmod>2026-03-05</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/technologies</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/technologies"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/technologies"/>
+    <loc>https://www.solardataatlas.com/fr/technologies</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/economie</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/economie"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/economy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/economie"/>
+    <loc>https://www.solardataatlas.com/fr/economie</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/economie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/economy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/economie"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/marches</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/marches"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/markets"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/marches"/>
+    <loc>https://www.solardataatlas.com/fr/marches</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/marches"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/markets"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/marches"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/ia-data</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/ia-data"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/ai-data"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/ia-data"/>
+    <loc>https://www.solardataatlas.com/fr/ia-data</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ia-data"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/ai-data"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ia-data"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/outils-industriel</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-industrial"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
+    <loc>https://www.solardataatlas.com/fr/outils-industriel</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-industriel"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-industrial"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-industriel"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/etude-de-cas</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/etude-de-cas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/case-study"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/etude-de-cas"/>
+    <loc>https://www.solardataatlas.com/fr/etude-de-cas</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/case-study"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/ressources</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/ressources"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/resources"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/ressources"/>
+    <loc>https://www.solardataatlas.com/fr/ressources</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ressources"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/resources"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ressources"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/recrutez-moi</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/recrutez-moi"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/hire-me"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/recrutez-moi"/>
+    <loc>https://www.solardataatlas.com/fr/recrutez-moi</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/hire-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/contact</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/contact"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/contact"/>
+    <loc>https://www.solardataatlas.com/fr/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/contact"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/outils</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils"/>
+    <loc>https://www.solardataatlas.com/fr/prix-solaire</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/prix-solaire"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/prix-solaire"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/prix-solaire</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/prix-solaire"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/prix-solaire"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://solarmetrics.netlify.app/fr/hypotheses</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/hypotheses"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/hypotheses"/>
+    <loc>https://www.solardataatlas.com/fr/hypotheses</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/hypotheses"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/hypotheses"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/schema-plug-and-play</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-plug-and-play"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <loc>https://www.solardataatlas.com/fr/schema-plug-and-play</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/schema-grande-installation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-large-installation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <loc>https://www.solardataatlas.com/fr/schema-grande-installation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-large-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/guide-installation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/guide-installation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/guide-installation"/>
+    <loc>https://www.solardataatlas.com/fr/guide-installation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/guide-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/guide-installation"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/comparateur</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparateur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparateur"/>
+    <loc>https://www.solardataatlas.com/fr/comparateur</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparateur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparateur"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/technologies-emergentes</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies-emergentes"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/technologies-emergentes"/>
+    <loc>https://www.solardataatlas.com/fr/technologies-emergentes</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/risques-bankability</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/risques-bankability"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/risques-bankability"/>
+    <loc>https://www.solardataatlas.com/fr/risques-bankability</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/risques-bankability"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/risques-bankability"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/comparatif-pays</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparatif-pays"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparatif-pays"/>
+    <loc>https://www.solardataatlas.com/fr/comparatif-pays</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/recyclage-fin-de-vie</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/recyclage-fin-de-vie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/recyclage-fin-de-vie"/>
+    <loc>https://www.solardataatlas.com/fr/recyclage-fin-de-vie</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/veille-reglementaire</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/veille-reglementaire"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/veille-reglementaire"/>
+    <loc>https://www.solardataatlas.com/fr/veille-reglementaire</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/widgets</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/widgets"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/widgets"/>
+    <loc>https://www.solardataatlas.com/fr/widgets</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/widgets"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/widgets"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/vehicle-to-grid</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid"/>
+    <loc>https://www.solardataatlas.com/fr/vehicle-to-grid</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/centrales-virtuelles</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/centrales-virtuelles"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/centrales-virtuelles"/>
+    <loc>https://www.solardataatlas.com/fr/centrales-virtuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/mon-solaire-60s</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/mon-solaire-60s"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/mon-solaire-60s"/>
+    <loc>https://www.solardataatlas.com/fr/mon-solaire-60s</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <!-- EN Pages -->
   <url>
-    <loc>https://solarmetrics.netlify.app/en/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/"/>
+    <loc>https://www.solardataatlas.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/"/>
     <lastmod>2026-03-05</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/technologies</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/technologies"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/technologies"/>
+    <loc>https://www.solardataatlas.com/en/technologies</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/economy</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/economy"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/economie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/economie"/>
+    <loc>https://www.solardataatlas.com/en/economy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/economy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/economie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/economie"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/markets</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/markets"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/marches"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/marches"/>
+    <loc>https://www.solardataatlas.com/en/markets</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/markets"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/marches"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/marches"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/ai-data</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/ai-data"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/ia-data"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/ia-data"/>
+    <loc>https://www.solardataatlas.com/en/ai-data</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/ai-data"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ia-data"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ia-data"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/tools-residential</loc>
+    <loc>https://www.solardataatlas.com/en/tools-industrial</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-industrial"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-industriel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-industriel"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/tools-industrial</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-industrial"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-industriel"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://solarmetrics.netlify.app/en/case-study</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/case-study"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/etude-de-cas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/etude-de-cas"/>
+    <loc>https://www.solardataatlas.com/en/case-study</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/case-study"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/resources</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/resources"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/ressources"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/ressources"/>
+    <loc>https://www.solardataatlas.com/en/resources</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/resources"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ressources"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ressources"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/hire-me</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/hire-me"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/recrutez-moi"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/recrutez-moi"/>
+    <loc>https://www.solardataatlas.com/en/hire-me</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/hire-me"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/contact</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/contact"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/contact"/>
+    <loc>https://www.solardataatlas.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/contact"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.7</priority>
   </url>
   <!-- Simulateur -->
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/outils-simulation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-simulation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
+    <loc>https://www.solardataatlas.com/fr/outils-simulation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation"/>
     <lastmod>2026-03-10</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/tools-simulation</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-simulation"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/outils-simulation"/>
+    <loc>https://www.solardataatlas.com/en/tools-simulation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation"/>
     <lastmod>2026-03-10</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <!-- Simulateur flux 24h (FR only for now) -->
+  <url>
+    <loc>https://www.solardataatlas.com/fr/simulateur-flux-24h</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/simulateur-flux-24h"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/simulateur-flux-24h"/>
+    <lastmod>2026-03-12</lastmod>
     <priority>0.9</priority>
   </url>
   <!-- Physique PV (FR only) -->
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/physique-electricite-ferme-photovoltaique</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/physique-electricite-ferme-photovoltaique"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/physique-electricite-ferme-photovoltaique"/>
+    <loc>https://www.solardataatlas.com/fr/physique-electricite-ferme-photovoltaique</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/physique-electricite-ferme-photovoltaique"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/physique-electricite-ferme-photovoltaique"/>
     <lastmod>2026-03-10</lastmod>
     <priority>0.7</priority>
   </url>
   <!-- Hub pages: Analyses (FR) / Insights (EN) -->
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/analyses/</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/analyses/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/insights/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/analyses/"/>
+    <loc>https://www.solardataatlas.com/fr/analyses/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/insights/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/insights/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/analyses/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/analyses/"/>
+    <loc>https://www.solardataatlas.com/en/insights/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.9</priority>
   </url>
   <!-- Data pages (FR only, no EN counterpart yet) -->
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-benchmarks</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-benchmarks"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-benchmarks"/>
+    <loc>https://www.solardataatlas.com/fr/data-benchmarks</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
     <lastmod>2026-03-10</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-market-power</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-market-power"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-market-power"/>
+    <loc>https://www.solardataatlas.com/fr/data-market-power</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-market-power"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-market-power"/>
     <lastmod>2026-03-10</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-capex-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-capex-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-capex-europe"/>
+    <loc>https://www.solardataatlas.com/fr/data-capex-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-capex-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-capex-europe"/>
     <lastmod>2026-03-10</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-degradation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-degradation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-degradation"/>
+    <loc>https://www.solardataatlas.com/fr/data-degradation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-degradation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-degradation"/>
     <lastmod>2026-03-10</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-opex-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-opex-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-opex-europe"/>
+    <loc>https://www.solardataatlas.com/fr/data-opex-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-opex-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-opex-europe"/>
     <lastmod>2026-03-11</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-pr-loss-stack</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-pr-loss-stack"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-pr-loss-stack"/>
+    <loc>https://www.solardataatlas.com/fr/data-pr-loss-stack</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-pr-loss-stack"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-pr-loss-stack"/>
     <lastmod>2026-03-11</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/data-negative-prices</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/data-negative-prices"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/data-negative-prices"/>
+    <loc>https://www.solardataatlas.com/fr/data-wacc-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-wacc-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-wacc-europe"/>
+    <lastmod>2026-03-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-negative-prices</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-negative-prices"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-negative-prices"/>
     <lastmod>2026-03-11</lastmod>
     <priority>0.8</priority>
   </url>
   <!-- Analysis articles -->
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/insights/solar-lcoe-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe"/>
+    <loc>https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-lcoe-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/insights/solar-lcoe-europe</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/insights/solar-lcoe-europe"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/analyses/lcoe-solaire-europe"/>
+    <loc>https://www.solardataatlas.com/en/insights/solar-lcoe-europe</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-lcoe-europe"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/fr/analyses/prix-ppa-solaire-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/analyses/prix-ppa-solaire-europe"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/insights/solar-ppa-prices-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/analyses/prix-ppa-solaire-europe"/>
+    <loc>https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/insights/solar-ppa-prices-europe</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/insights/solar-ppa-prices-europe"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/analyses/prix-ppa-solaire-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/analyses/prix-ppa-solaire-europe"/>
+    <loc>https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
     <lastmod>2026-03-05</lastmod>
     <priority>0.8</priority>
   </url>
   <!-- New EN pages (2026-03-07) -->
   <url>
-    <loc>https://solarmetrics.netlify.app/en/tools-selfconsumption</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/tools-selfconsumption"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://solarmetrics.netlify.app/en/comparator</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/comparator"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparateur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparateur"/>
+    <loc>https://www.solardataatlas.com/en/comparator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/comparator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparateur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparateur"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/installation-guide</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/installation-guide"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/guide-installation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/guide-installation"/>
+    <loc>https://www.solardataatlas.com/en/installation-guide</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/installation-guide"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/guide-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/guide-installation"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/solar-prices</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/solar-prices"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/prix-solaire"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/prix-solaire"/>
+    <loc>https://www.solardataatlas.com/en/solar-prices</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-prices"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/prix-solaire"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/prix-solaire"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/assumptions</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/assumptions"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/hypotheses"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/hypotheses"/>
+    <loc>https://www.solardataatlas.com/en/assumptions</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/assumptions"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/hypotheses"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/hypotheses"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/emerging-technologies</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/emerging-technologies"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/technologies-emergentes"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/technologies-emergentes"/>
+    <loc>https://www.solardataatlas.com/en/emerging-technologies</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/emerging-technologies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/risks-bankability</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/risks-bankability"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/risques-bankability"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/risques-bankability"/>
+    <loc>https://www.solardataatlas.com/en/risks-bankability</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/risks-bankability"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/risques-bankability"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/risques-bankability"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/country-comparison</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/country-comparison"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/comparatif-pays"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/comparatif-pays"/>
+    <loc>https://www.solardataatlas.com/en/country-comparison</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/country-comparison"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/recycling-end-of-life</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/recycling-end-of-life"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/recyclage-fin-de-vie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/recyclage-fin-de-vie"/>
+    <loc>https://www.solardataatlas.com/en/recycling-end-of-life</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/recycling-end-of-life"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/regulatory-watch</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/regulatory-watch"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/veille-reglementaire"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/veille-reglementaire"/>
+    <loc>https://www.solardataatlas.com/en/regulatory-watch</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/regulatory-watch"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/solar-in-60s</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/solar-in-60s"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/mon-solaire-60s"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/mon-solaire-60s"/>
+    <loc>https://www.solardataatlas.com/en/solar-in-60s</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-in-60s"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/widgets</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/widgets"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/widgets"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/widgets"/>
+    <loc>https://www.solardataatlas.com/en/widgets</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/widgets"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/widgets"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/widgets"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/vehicle-to-grid</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/vehicle-to-grid"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/vehicle-to-grid"/>
+    <loc>https://www.solardataatlas.com/en/vehicle-to-grid</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/vehicle-to-grid"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/virtual-power-plants</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/virtual-power-plants"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/centrales-virtuelles"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/centrales-virtuelles"/>
+    <loc>https://www.solardataatlas.com/en/virtual-power-plants</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/virtual-power-plants"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/schema-plug-and-play</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-plug-and-play"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-plug-and-play"/>
+    <loc>https://www.solardataatlas.com/en/schema-plug-and-play</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://solarmetrics.netlify.app/en/schema-large-installation</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://solarmetrics.netlify.app/en/schema-large-installation"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://solarmetrics.netlify.app/fr/schema-grande-installation"/>
+    <loc>https://www.solardataatlas.com/en/schema-large-installation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-large-installation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
     <lastmod>2026-03-07</lastmod>
     <priority>0.6</priority>
   </url>

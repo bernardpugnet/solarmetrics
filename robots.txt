@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /mockup-*
+Disallow: /icons/generate.html
+Disallow: /offline.html
 
-Sitemap: https://solarmetrics.netlify.app/sitemap.xml
+Sitemap: https://www.solardataatlas.com/sitemap.xml

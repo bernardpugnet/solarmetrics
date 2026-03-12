@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WACC solaire Europe — Coût du capital photovoltaïque par pays | SolarMetrics</title>
-    <meta name="description" content="Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe par pays et par segment. Sources IRENA, IEA, études académiques.">
+    <meta name="description" content="Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe par pays : 12 pays, données AURES II (2020) et IRENA RPGC 2023. CoD, CoE, D/E, LCOE impact.">
     <meta name="keywords" content="WACC solaire Europe, coût du capital photovoltaïque, financement PV, LCOE WACC, taux actualisation solaire, IRENA, IEA">
     <meta name="author" content="Bernard Pugnet">
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="canonical" href="https://solarmetrics.netlify.app/fr/data-wacc-europe">
+
+    <link rel="canonical" href="https://www.solardataatlas.com/fr/data-wacc-europe">
+    <link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-wacc-europe">
+    <link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-wacc-europe">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://solarmetrics.netlify.app/fr/data-wacc-europe">
+    <meta property="og:url" content="https://www.solardataatlas.com/fr/data-wacc-europe">
     <meta property="og:site_name" content="SolarMetrics">
     <meta property="og:title" content="WACC solaire Europe — Coût du capital PV | SolarMetrics">
     <meta property="og:description" content="Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe. Sources publiques, données vérifiées.">
@@ -27,7 +29,7 @@
       "@context": "https://schema.org",
       "@type": "Dataset",
       "name": "WACC solaire Europe — SolarMetrics",
-      "url": "https://solarmetrics.netlify.app/fr/data-wacc-europe",
+      "url": "https://www.solardataatlas.com/fr/data-wacc-europe",
       "description": "Coût moyen pondéré du capital (WACC) du photovoltaïque en Europe par pays et par segment de financement.",
       "creator": {
         "@type": "Person",
@@ -35,13 +37,13 @@
         "jobTitle": "Expert Finance & Énergie Solaire",
         "url": "https://www.linkedin.com/in/bernard-pugnet/"
       },
-      "temporalCoverage": "2020/2024",
+      "temporalCoverage": "2018/2021",
       "spatialCoverage": "Europe",
       "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
       "isPartOf": {
         "@type": "WebSite",
         "name": "SolarMetrics",
-        "url": "https://solarmetrics.netlify.app/fr/"
+        "url": "https://www.solardataatlas.com/fr/"
       },
       "inLanguage": "fr"
     }
@@ -336,14 +338,6 @@
     </nav>
 
     <main id="main-content">
-        <!-- Draft Banner -->
-        <div class="bg-red-500/10 border-b border-red-500/20">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-center">
-                <span class="data-tag tag-draft">DRAFT — page non publiée</span>
-                <span class="text-xs text-red-400 ml-2">En attente de données sourcées. Page non liée depuis le hub, non indexée (noindex).</span>
-            </div>
-        </div>
-
         <!-- Breadcrumb -->
         <div class="pt-20 pb-2">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -374,11 +368,10 @@
                 </h1>
                 <p class="text-lg text-slate-300 text-center max-w-3xl mx-auto leading-relaxed">
                     Coût moyen pondéré du capital pour le photovoltaïque en Europe : taux d'actualisation, structure de financement, prime de risque pays.
-                    Sources : <abbr title="International Renewable Energy Agency">IRENA</abbr>,
-                    <abbr title="International Energy Agency — Agence internationale de l'énergie">IEA</abbr>,
-                    études académiques.
+                    Sources : <a href="https://aures2project.eu/wp-content/uploads/2020/02/AURES_II_D2_1_final.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">AURES II</a> (eclareon / DTU, 2020),
+                    <abbr title="International Renewable Energy Agency">IRENA</abbr> RPGC 2023.
                 </p>
-                <p class="text-center text-xs text-slate-500 mt-4">Dernière mise à jour : mars 2026 · Snapshot données : 2020-2024</p>
+                <p class="text-center text-xs text-slate-500 mt-4">Dernière mise à jour : mars 2026 · Snapshot données : 2018-2019 (AURES II) / 2019-2021 (IRENA)</p>
             </div>
         </section>
 
@@ -388,104 +381,630 @@
         <section class="py-10" id="observed-wacc">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-wrap items-center gap-3 mb-4">
-                    <h2 class="text-2xl font-bold text-white">1. Observed / survey-based — <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> utility-scale Europe</h2>
+                    <h2 class="text-2xl font-bold text-white">1. Observed data — financement Solar PV Europe</h2>
                     <span class="data-tag tag-observed">Observed data</span>
                 </div>
                 <p class="text-sm text-slate-400 mb-6 max-w-3xl">
-                    <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> nominal après impôt pour le PV utility-scale en Europe.
-                    Valeurs issues de rapports institutionnels ou d'enquêtes auprès d'investisseurs.
+                    Données issues d'enquêtes auprès d'investisseurs et développeurs dans 12 pays européens.
+                    Source : AURES II (eclareon / DTU, 2020), enquête 2018-2019.
+                    Toutes les valeurs sont <strong class="text-slate-300">nominales</strong>, pour le <strong class="text-slate-300">Solar PV</strong> uniquement.
                 </p>
+                <p class="text-xs text-amber-400/80 mb-4">⚠ Les fourchettes (range) reflètent la diversité des répondants et structures de projet, pas une marge d'erreur statistique.</p>
 
                 <div class="overflow-x-auto rounded-xl border border-slate-700/50">
                     <table class="w-full text-sm">
                         <thead>
                             <tr class="bg-slate-800/80 text-left">
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Périmètre</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Valeur</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Type</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Année</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Country</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Metric</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Value</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Unit</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Basis</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Figure</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Notes</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-700/50">
+                            <!-- ── WACC (Figure 7, p.16) ── -->
+                            <tr class="bg-slate-800/30"><td colspan="7" class="px-4 py-2 text-xs font-semibold text-violet-400 uppercase tracking-wider">WACC — Figure 7, p.16</td></tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Europe (moyenne)</td>
-                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,8 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal, after-tax</td>
-                                <td class="px-4 py-3 text-slate-400">2023</td>
-                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA RPGC 2024 — page/table à confirmer</td>
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">2,3 – 4,3 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Europe / Am. du Nord</td>
-                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">4,7 – 6,4 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal, utility-scale</td>
-                                <td class="px-4 py-3 text-slate-400">2022-2024</td>
-                                <td class="px-4 py-3 text-slate-500 text-xs italic">Multiples sources — à tracer</td>
+                                <td class="px-4 py-3 text-white font-medium">Espagne</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,0 – 9,0 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
                             </tr>
-                            <!-- TODO: Ajouter données par pays EU (FR, DE, ES, IT, PT, GR, PL) quand source open disponible -->
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Portugal</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,0 – 9,0 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Grèce</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">5,5 – 6,5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Roumanie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">7,5 – 8,0 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chypre</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">4,8 – 5,2 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Bulgarie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,8 – 6,7 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Hongrie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">4,4 – 6,1 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Tchéquie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">5,0 – 7,0 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Slovaquie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">5,5 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">point</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Estonie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">5,5 – 10,0 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Lettonie</td>
+                                <td class="px-4 py-3 text-slate-300">WACC</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">12,1 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 7, p.16</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">point</td>
+                            </tr>
+
+                            <!-- ── Cost of Debt (Figure 10, p.21) ── -->
+                            <tr class="bg-slate-800/30"><td colspan="7" class="px-4 py-2 text-xs font-semibold text-violet-400 uppercase tracking-wider">Cost of Debt (K<sub>d</sub>) — Figure 10, p.21</td></tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,72 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Espagne</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,83 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Portugal</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,83 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Grèce</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,25 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Roumanie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">5,50 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chypre</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,38 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Bulgarie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,08 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Hongrie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">4,46 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Tchéquie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,17 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Slovaquie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,70 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Estonie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">3,56 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Lettonie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Debt</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">4,79 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 10, p.21</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+
+                            <!-- ── Cost of Equity (Figure 16, p.30) ── -->
+                            <tr class="bg-slate-800/30"><td colspan="7" class="px-4 py-2 text-xs font-semibold text-violet-400 uppercase tracking-wider">Cost of Equity (K<sub>e</sub>) — Figure 16, p.30</td></tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">6 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Espagne</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">8 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Portugal</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">8 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Grèce</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Roumanie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chypre</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">11 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Bulgarie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">12 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Hongrie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">7 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Tchéquie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">6 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Slovaquie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Estonie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">12 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Lettonie</td>
+                                <td class="px-4 py-3 text-slate-300">Cost of Equity</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">20 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 16, p.30</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">average</td>
+                            </tr>
+
+                            <!-- ── D/E Ratio (Figure 38, p.91) ── -->
+                            <tr class="bg-slate-800/30"><td colspan="7" class="px-4 py-2 text-xs font-semibold text-violet-400 uppercase tracking-wider">Debt/Equity ratio — Figure 38, p.91</td></tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-slate-300">D/E Ratio</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">80/20 – 90/10</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Debt/Equity</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 38, p.91</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Espagne</td>
+                                <td class="px-4 py-3 text-slate-300">D/E Ratio</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">0/100 – 75/25</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Debt/Equity</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 38, p.91</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range — inclut corporate 100% equity</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Portugal</td>
+                                <td class="px-4 py-3 text-slate-300">D/E Ratio</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">0/100 – 75/25</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Debt/Equity</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 38, p.91</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range — inclut corporate 100% equity</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Grèce</td>
+                                <td class="px-4 py-3 text-slate-300">D/E Ratio</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">70/30 – 80/20</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Debt/Equity</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 38, p.91</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Roumanie</td>
+                                <td class="px-4 py-3 text-slate-300">D/E Ratio</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">50/50 – 60/40</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Debt/Equity</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 38, p.91</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chypre</td>
+                                <td class="px-4 py-3 text-slate-300">D/E Ratio</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">70/30 – 75/25</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Debt/Equity</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 38, p.91</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+
+                            <!-- ── Loan Tenor (Figure 40, p.93) ── -->
+                            <tr class="bg-slate-800/30"><td colspan="7" class="px-4 py-2 text-xs font-semibold text-violet-400 uppercase tracking-wider">Loan Tenor — Figure 40, p.93</td></tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-slate-300">Loan Tenor</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">20</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">years</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 40, p.93</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">point</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Espagne</td>
+                                <td class="px-4 py-3 text-slate-300">Loan Tenor</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 – 18</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">years</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 40, p.93</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Portugal</td>
+                                <td class="px-4 py-3 text-slate-300">Loan Tenor</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 – 18</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">years</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 40, p.93</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Grèce</td>
+                                <td class="px-4 py-3 text-slate-300">Loan Tenor</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 – 15</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">years</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 40, p.93</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Roumanie</td>
+                                <td class="px-4 py-3 text-slate-300">Loan Tenor</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">years</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 40, p.93</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">point</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chypre</td>
+                                <td class="px-4 py-3 text-slate-300">Loan Tenor</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">10 – 14</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">years</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 40, p.93</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+
+                            <!-- ── DSCR (Figure 42, p.95) ── -->
+                            <tr class="bg-slate-800/30"><td colspan="7" class="px-4 py-2 text-xs font-semibold text-violet-400 uppercase tracking-wider">DSCR — Figure 42, p.95</td></tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-slate-300"><abbr title="Debt Service Coverage Ratio">DSCR</abbr></td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,10 – 1,20</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 42, p.95</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Espagne</td>
+                                <td class="px-4 py-3 text-slate-300">DSCR</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,05 – 1,30</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 42, p.95</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Portugal</td>
+                                <td class="px-4 py-3 text-slate-300">DSCR</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,05 – 1,30</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 42, p.95</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Grèce</td>
+                                <td class="px-4 py-3 text-slate-300">DSCR</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,20 – 1,25</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 42, p.95</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Roumanie</td>
+                                <td class="px-4 py-3 text-slate-300">DSCR</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,25</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 42, p.95</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">point</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Chypre</td>
+                                <td class="px-4 py-3 text-slate-300">DSCR</td>
+                                <td class="px-4 py-3 text-emerald-400 font-semibold text-right">1,30 – 1,60</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">ratio</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Survey 2019</td>
+                                <td class="px-4 py-3"><a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">Fig. 42, p.95</a></td>
+                                <td class="px-4 py-3 text-slate-500 text-xs">range</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-red-400 mt-3 italic">
-                    ⚠ Sources incomplètes : les liens cliquables et pages/tables précises doivent être ajoutés avant publication.
+                <p class="text-xs text-slate-500 mt-3 italic">
+                    Source unique : AURES II — "Renewable energy financing conditions in Europe: survey and impact analysis" (eclareon / DTU, 2020). Enquête auprès d'investisseurs et développeurs, données 2018-2019.
+                    <a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">PDF complet</a>
                 </p>
             </div>
         </section>
 
         <!-- ========================================== -->
-        <!-- TABLE B : Context — repères régionaux      -->
+        <!-- TABLE B : Context — repères IRENA          -->
         <!-- ========================================== -->
         <section class="py-10 border-t border-slate-800" id="context-regional">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-wrap items-center gap-3 mb-4">
-                    <h2 class="text-2xl font-bold text-white">2. Context — repères globaux / régionaux</h2>
+                    <h2 class="text-2xl font-bold text-white">2. Context — repères régionaux et pays (IRENA 2023)</h2>
                     <span class="data-tag tag-context">Context</span>
                 </div>
                 <p class="text-sm text-slate-400 mb-6 max-w-3xl">
-                    Repères <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> globaux pour contextualiser les données européennes.
-                    Le WACC varie fortement selon le risque pays, la devise et la maturité du marché EnR.
+                    Repères <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> issus d'IRENA pour contextualiser les données AURES II.
+                    Attention : les bases diffèrent (nominal CoC vs real after-tax WACC) — ne pas comparer directement avec la Table 1.
                 </p>
+                <p class="text-xs text-blue-400/80 mb-4">ℹ Scope : données de cadrage IRENA. Bases hétérogènes — voir colonne "Notes" pour chaque ligne.</p>
 
                 <div class="overflow-x-auto rounded-xl border border-slate-700/50">
                     <table class="w-full text-sm">
                         <thead>
                             <tr class="bg-slate-800/80 text-left">
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Région</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">WACC indicatif</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Région / Pays</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Value</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Unit</th>
                                 <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Notes</th>
                                 <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Source</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-700/50">
+                            <!-- IRENA main report -->
+                            <tr class="bg-slate-800/30"><td colspan="5" class="px-4 py-2 text-xs font-semibold text-blue-400 uppercase tracking-wider">IRENA Main Report — regional averages</td></tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Europe (moyenne)</td>
-                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">3 – 6 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Marchés matures (DE, FR, ES, NL)</td>
-                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA / IEA — à tracer</td>
+                                <td class="px-4 py-3 text-white font-medium">Western Europe (utility-scale)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">4,0 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal CoC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Simple average, regional CoC, 2019-2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_The_cost_of_financing_renewable_power_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA 2023</a></td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Europe du Sud-Est</td>
-                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">6 – 10 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Marchés émergents (GR, RO, BG)</td>
-                                <td class="px-4 py-3 text-slate-500 text-xs italic">IEA CoC Observatory — à tracer</td>
+                                <td class="px-4 py-3 text-white font-medium">Eastern Europe (utility-scale)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">7,7 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal CoC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Simple average, regional CoC, 2019-2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_The_cost_of_financing_renewable_power_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA 2023</a></td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Afrique</td>
-                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">~12 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Risque pays + devise</td>
-                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA RPGC 2024 — page à confirmer</td>
+                                <td class="px-4 py-3 text-white font-medium">Germany (solar PV)</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">1,4 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% nominal CoC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal CoC, survey, 2019-2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_The_cost_of_financing_renewable_power_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA 2023</a></td>
+                            </tr>
+                            <!-- IRENA Appendix — Figure A1 -->
+                            <tr class="bg-slate-800/30"><td colspan="5" class="px-4 py-2 text-xs font-semibold text-blue-400 uppercase tracking-wider">IRENA Appendix 2023 — Figure A1, country WACC assumptions</td></tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">France</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">1,8 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% real after-tax WACC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Real after-tax WACC assumption, 2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_Cost_of_financing_renewable_power_Appendix_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA Appendix, Fig. A1</a></td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Chine</td>
-                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">~5 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">State-backed financing</td>
-                                <td class="px-4 py-3 text-slate-500 text-xs italic">IRENA RPGC 2024 — page à confirmer</td>
+                                <td class="px-4 py-3 text-white font-medium">Germany</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">1,3 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% real after-tax WACC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Real after-tax WACC assumption, 2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_Cost_of_financing_renewable_power_Appendix_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA Appendix, Fig. A1</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Greece</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">4,1 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% real after-tax WACC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Real after-tax WACC assumption, 2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_Cost_of_financing_renewable_power_Appendix_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA Appendix, Fig. A1</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Italy</td>
+                                <td class="px-4 py-3 text-blue-400 font-semibold text-right">3,1 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">% real after-tax WACC</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Real after-tax WACC assumption, 2021</td>
+                                <td class="px-4 py-3"><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2023/May/IRENA_Cost_of_financing_renewable_power_Appendix_2023.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline text-xs">IRENA Appendix, Fig. A1</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-red-400 mt-3 italic">
-                    ⚠ Sources incomplètes : les liens cliquables et pages/tables précises doivent être ajoutés avant publication.
+                <p class="text-xs text-slate-500 mt-3 italic">
+                    Sources : IRENA, "The cost of financing for renewable power" (2023) — rapport principal + appendice.
+                    Note : les données IRENA Appendix Figure A1 sont en <strong>real after-tax WACC</strong> (base différente de la Table 1 qui est en nominal).
+                    Pour convertir : WACC nominal ≈ WACC réel + inflation anticipée (~2 % zone euro).
                 </p>
             </div>
         </section>
@@ -496,77 +1015,71 @@
         <section class="py-10 border-t border-slate-800" id="assumptions-wacc">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-wrap items-center gap-3 mb-4">
-                    <h2 class="text-2xl font-bold text-white">3. SolarMetrics assumptions — WACC par segment</h2>
+                    <h2 class="text-2xl font-bold text-white">3. SolarMetrics assumptions — notes de normalisation</h2>
                     <span class="data-tag tag-assumption">SolarMetrics assumption</span>
                 </div>
                 <p class="text-sm text-slate-400 mb-4 max-w-3xl">
-                    Hypothèses <abbr title="Weighted Average Cost of Capital — Coût moyen pondéré du capital">WACC</abbr> utilisées par SolarMetrics dans le simulateur,
-                    avec décomposition en composantes (coût dette, coût equity, ratio D/E).
+                    Hypothèses internes de normalisation pour la modélisation SolarMetrics. Ces valeurs ne proviennent pas directement d'une source publiée
+                    mais sont dérivées des Tables 1 et 2 avec des ajustements documentés ci-dessous.
                 </p>
-                <p class="text-xs text-slate-500 mb-6">Snapshot : mars 2026</p>
+                <p class="text-xs text-slate-500 mb-6">Snapshot : mars 2026 · Version 1.0 · Données AURES II 2018-2019, IRENA 2019-2021</p>
 
                 <div class="overflow-x-auto rounded-xl border border-slate-700/50">
                     <table class="w-full text-sm">
                         <thead>
                             <tr class="bg-slate-800/80 text-left">
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Composante</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Utility-scale</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">C&I</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Résidentiel</th>
-                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Notes</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Hypothèse</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap text-right">Valeur retenue</th>
+                                <th class="px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">Justification</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-700/50">
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Ratio dette / equity (D/E)</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">70/30 – 80/20</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">60/40 – 70/30</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">0/100 – 50/50</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Project finance vs corporate</td>
+                                <td class="px-4 py-3 text-white font-medium">Conversion nominal → réel</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">−2 pp</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Inflation anticipée zone euro ~2 % (cible BCE). WACC réel ≈ nominal − 2 pp.</td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Coût de la dette (<abbr title="kilowatt-crête — puissance nominale DC">K<sub>d</sub></abbr>)</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">3 – 5 %</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">3,5 – 5,5 %</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">4 – 7 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Spread + taux de base</td>
+                                <td class="px-4 py-3 text-white font-medium">Convention de base</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">Nominal, after-tax</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Convention standard pour le calcul LCOE (cohérent avec AURES II Table 1).</td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Coût de l'equity (K<sub>e</sub>)</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">7 – 12 %</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">8 – 14 %</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">6 – 10 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">TRI attendu investisseur</td>
+                                <td class="px-4 py-3 text-white font-medium">D/E cible utility-scale (Europe occidentale)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">75/25 – 80/20</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Convergence FR 80/20–90/10 et GR/CY 70/30–80/20 (AURES II Fig. 38). Prudence : les marchés ibériques incluent du 100% equity corporate.</td>
                             </tr>
                             <tr class="hover:bg-slate-800/40 transition-colors">
-                                <td class="px-4 py-3 text-white font-medium">Taux d'imposition</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">25 %</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">25 %</td>
-                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">—</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Moyenne UE (IS)</td>
+                                <td class="px-4 py-3 text-white font-medium">Plage WACC simulateur (Europe occidentale)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">3 – 6 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal after-tax. Cohérent avec FR 2,3-4,3 % et ES/PT 3,0-9,0 % (extrêmes exclus). IRENA Western Europe = 4,0 % CoC nominal.</td>
                             </tr>
-                            <tr class="bg-slate-800/60 font-bold">
-                                <td class="px-4 py-3 text-white">WACC nominal after-tax</td>
-                                <td class="px-4 py-3 text-amber-300 text-right">4 – 7 %</td>
-                                <td class="px-4 py-3 text-amber-300 text-right">5 – 8 %</td>
-                                <td class="px-4 py-3 text-amber-300 text-right">6 – 10 %</td>
-                                <td class="px-4 py-3 text-slate-400 text-xs">Fourchette indicative</td>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">Plage WACC simulateur (Europe orientale/sud-est)</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">5 – 9 %</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Nominal after-tax. Dérivé de GR 5,5-6,5 %, RO 7,5-8,0 %, BG 3,8-6,7 %. IRENA Eastern Europe = 7,7 % CoC nominal.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                <td class="px-4 py-3 text-white font-medium">DSCR minimum prêteur</td>
+                                <td class="px-4 py-3 text-amber-400 font-semibold text-right">1,15 – 1,25</td>
+                                <td class="px-4 py-3 text-slate-400 text-xs">Fourchette FR-GR (AURES II Fig. 42). Les marchés baltes et SE Europe peuvent exiger ≥ 1,30.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-xs text-slate-500 mt-3 italic">
-                    Total illustratif — les composantes varient selon le pays, la structure du projet et les conditions de marché (taux directeurs BCE, spread bancaire, prime de risque pays).
+                    Ces hypothèses sont indicatives et doivent être ajustées au cas par cas (pays, structure de financement, conditions de taux).
+                    Les composantes détaillées par pays (K<sub>d</sub>, K<sub>e</sub>, D/E, Tenor, DSCR) sont disponibles dans la Table 1.
                 </p>
             </div>
         </section>
 
         <!-- ========================================== -->
-        <!-- Définitions & méthodologie                 -->
+        <!-- Sources & méthodologie                       -->
         <!-- ========================================== -->
-        <section class="py-10 border-t border-slate-800" id="definitions">
+        <section class="py-10 border-t border-slate-800" id="sources">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold text-white mb-6">Définitions & méthodologie</h2>
+                <h2 class="text-2xl font-bold text-white mb-6">Sources & méthodologie</h2>
                 <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-4 text-sm text-slate-300 leading-relaxed">
                     <div>
                         <h3 class="text-base font-semibold text-white mb-2">Termes clés</h3>
@@ -589,21 +1102,19 @@
                         </ul>
                     </div>
                     <div>
-                        <h3 class="text-base font-semibold text-white mb-2">Sources identifiées (à compléter)</h3>
+                        <h3 class="text-base font-semibold text-white mb-2">Sources utilisées</h3>
                         <ul class="space-y-2 text-xs text-slate-400">
-                            <li><strong class="text-slate-300">IRENA RPGC 2024</strong> — Renewable Power Generation Costs in 2024. WACC assumptions Europe. <a href="https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">irena.org</a></li>
-                            <li><strong class="text-slate-300">IEA Cost of Capital Observatory</strong> — Data explorer interactif WACC par pays (focus pays émergents). <a href="https://www.iea.org/data-and-statistics/data-tools/cost-of-capital-observatory-data-explorer" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">iea.org</a></li>
-                            <li><strong class="text-slate-300">Nature Scientific Data (2025)</strong> — Dataset global coût du capital EnR par pays. <a href="https://www.nature.com/articles/s41597-025-05912-x" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">nature.com</a></li>
-                            <li><strong class="text-slate-300">OECD/IEA Working Paper</strong> — "Bridging the clean energy investment gap: Cost of capital". <a href="https://one.oecd.org/document/ENV/WKP(2024)15/REV1/en/pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">oecd.org</a></li>
+                            <li><strong class="text-slate-300">AURES II — Deliverable 2.1</strong> (eclareon / DTU, 2020) — <em>"Mapping the cost of capital for wind and solar energy in the EU"</em>. Données d'enquêtes auprès d'investisseurs et développeurs dans 12 pays UE, période 2018-2019. Table A : Figures 7 (WACC, p.16), 10 (CoD, p.21), 16 (CoE, p.29-30), 38 (D/E, p.91), 40 (Tenor, p.93), 42 (DSCR, p.95). <a href="https://aures2project.eu/wp-content/uploads/2020/02/AURES_II_D2_1_final.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">aures2project.eu [PDF]</a></li>
+                            <li><strong class="text-slate-300">IRENA — Renewable Power Generation Costs in 2023</strong> — Rapport principal : WACC nominal Europe de l'Ouest (4,0 %) et Europe de l'Est (7,7 %), Allemagne (1,4 %). Appendix Figure A1 : WACC réel après impôt 2021 pour FR (1,8 %), DE (1,3 %), GR (4,1 %), IT (3,1 %). <a href="https://www.irena.org/Publications/2024/Sep/Renewable-Power-Generation-Costs-in-2023" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">irena.org</a></li>
                         </ul>
                     </div>
                     <div>
                         <h3 class="text-base font-semibold text-white mb-2">Limites connues</h3>
                         <ul class="space-y-1 text-xs text-slate-400">
-                            <li>Pas de dataset open-access avec WACC par pays européen individualisé (FR, DE, ES, IT) et composantes.</li>
-                            <li>Les données IRENA donnent une moyenne Europe sans ventilation par pays.</li>
-                            <li>L'IEA CoC Observatory couvre surtout les pays émergents, peu l'Europe occidentale.</li>
+                            <li>Les données AURES II datent de 2018-2019 (avant la hausse des taux BCE 2022-2023). Le WACC actuel est probablement supérieur de 1 à 3 points.</li>
+                            <li>Les données IRENA Appendix (2021) reflètent un environnement taux bas pré-inflation.</li>
                             <li>Le WACC varie fortement dans le temps (taux directeurs BCE) — un snapshot est par nature périmable.</li>
+                            <li>La couverture géographique reste partielle : pas de données granulaires pour tous les pays européens.</li>
                         </ul>
                     </div>
                 </div>

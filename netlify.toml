@@ -10,5 +10,12 @@
   status = 301
   force = true
 
+# Redirect old Netlify subdomain to custom domain (SEO migration)
+[[redirects]]
+  from = "https://solarmetrics.netlify.app/*"
+  to = "https://www.solardataatlas.com/:splat"
+  status = 301
+  force = true
+
 # Custom 404 page (instead of catch-all 200 that breaks SEO)
 # Netlify will show its default 404 for unknown paths

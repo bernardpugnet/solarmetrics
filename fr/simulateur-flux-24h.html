@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulateur solaire plug & play — Flux d'énergie 24h | SolarMetrics</title>
+<meta name="description" content="Simulez les flux d'énergie d'une installation solaire plug & play sur 24 h. Visualisez production, autoconsommation, batterie, recharge EV et économies.">
+<meta name="keywords" content="simulateur solaire, autoconsommation, plug and play, flux énergie 24h, batterie, recharge véhicule électrique, photovoltaïque résidentiel">
+<meta name="author" content="Bernard Pugnet">
+<!-- Canonical & hreflang -->
+<link rel="canonical" href="https://www.solardataatlas.com/fr/simulateur-flux-24h">
+<link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/simulateur-flux-24h">
+<link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/simulateur-flux-24h">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.solardataatlas.com/fr/simulateur-flux-24h">
+<meta property="og:site_name" content="SolarMetrics">
+<meta property="og:title" content="Simulateur solaire plug & play — Flux d'énergie 24h">
+<meta property="og:description" content="Simulez les flux d'énergie d'une installation solaire plug & play sur 24h. Production, autoconsommation, batterie, recharge EV.">
+<meta property="og:locale" content="fr_FR">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Simulateur solaire plug & play — Flux d'énergie 24h">
+<meta name="twitter:description" content="Simulez les flux d'énergie d'une installation solaire plug & play sur 24h. Production, autoconsommation, batterie, recharge EV.">
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulateur solaire plug & play — Flux d'énergie 24h",
+  "url": "https://www.solardataatlas.com/fr/simulateur-flux-24h",
+  "description": "Simulez les flux d'énergie d'une installation solaire plug & play sur 24h : production, autoconsommation, batterie, recharge EV et économies.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": {
+    "@type": "Person",
+    "name": "Bernard Pugnet",
+    "url": "https://www.linkedin.com/in/bernard-pugnet/"
+  },
+  "inLanguage": "fr"
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<style>
+*{font-family:'Inter',sans-serif;box-sizing:border-box}
+body{margin:0;background:#0f172a;color:#fff}
+@keyframes flowPulse{0%,100%{opacity:.9}50%{opacity:.4}}
+.flow-dot{animation:flowPulse 1.2s ease-in-out infinite}
+input[type=range]{-webkit-appearance:none;background:transparent;width:100%}
+input[type=range]::-webkit-slider-runnable-track{height:6px;background:#334155;border-radius:3px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#f59e0b;margin-top:-7px;cursor:pointer;border:2px solid #0f172a}
+input[type=range]::-moz-range-track{height:6px;background:#334155;border-radius:3px}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#f59e0b;cursor:pointer;border:2px solid #0f172a}
+.btn-group button{transition:all .15s ease}
+.btn-active-violet{background:#8b5cf6 !important;color:#fff !important;font-weight:600}
+.card{background:rgba(30,41,59,.6);border:1px solid rgba(51,65,85,.5);border-radius:12px;padding:16px}
+select{background:#334155;border:1px solid #475569;color:#e2e8f0;border-radius:8px;padding:8px 12px;font-size:14px;width:100%}
+select:focus{outline:none;border-color:#f59e0b}
+input[type=number]{background:#334155;border:1px solid #475569;color:#e2e8f0;border-radius:8px;padding:8px 12px;font-size:14px;width:100%;-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]:focus{outline:none;border-color:#f59e0b}
+.svg-label{font-family:'Inter',sans-serif}
+.bar-seg{transition:width .4s ease}
+.collapse-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.collapse-body.open{max-height:800px}
+/* Tooltip CSS-only */
+.tip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:rgba(100,116,139,.35);color:#94a3b8;font-size:9px;cursor:help;margin-left:5px;flex-shrink:0;line-height:1}
+.tip:hover::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);background:#1e293b;border:1px solid #475569;color:#e2e8f0;font-size:11px;line-height:1.4;padding:6px 10px;border-radius:6px;white-space:normal;width:220px;z-index:50;pointer-events:none;font-weight:400;text-align:left}
+.reco-card{background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(59,130,246,.1));border:1px solid rgba(16,185,129,.3);border-radius:12px;padding:16px}
+</style>
+</head>
+<body>
+<div class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+
+<!-- HEADER -->
+<div class="text-center mb-8">
+  <h1 class="text-2xl md:text-3xl font-extrabold mb-2">
+    Simulateur Solaire Plug &amp; Play — <span style="background:linear-gradient(135deg,#F59E0B,#EA580C);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Flux d'énergie sur 24 h</span>
+  </h1>
+  <p class="text-slate-400 text-sm max-w-2xl mx-auto">Visualisez comment l'électricité circule entre vos panneaux, votre foyer, la batterie et le réseau au fil de la journée.</p>
+</div>
+
+<!-- INPUTS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+
+  <div class="card">
+    <label class="flex items-center text-xs text-slate-400 mb-2 font-medium">📍 Localisation <span class="tip" data-tip="La ville détermine l'ensoleillement moyen (heures de soleil plein par jour). Plus on descend au sud, plus la production augmente.">?</span></label>
+    <select id="sel-location">
+      <option value="5.2">Marseille — 5,2 h/j</option>
+      <option value="4.5">Bordeaux — 4,5 h/j</option>
+      <option value="4.2">Lyon — 4,2 h/j</option>
+      <option value="3.6">Strasbourg — 3,6 h/j</option>
+      <option value="3.5">Paris — 3,5 h/j</option>
+      <option value="3.0">Lille — 3,0 h/j</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <label class="flex items-center text-xs text-slate-400 mb-2 font-medium">🗓️ Saison <span class="tip" data-tip="La saison modifie la durée du jour, la hauteur du soleil et donc la forme et l'amplitude de la courbe de production.">?</span></label>
+    <select id="sel-season">
+      <option value="summer">Été (juin - août)</option>
+      <option value="spring">Printemps (mars - mai)</option>
+      <option value="autumn">Automne (sept - nov)</option>
+      <option value="winter">Hiver (déc - fév)</option>
+    </select>
+    <p class="text-xs text-slate-500 mt-1" id="lbl-season-info">Lever ~6 h · coucher ~21 h · pic 13 h 30</p>
+  </div>
+
+  <div class="card">
+    <label class="flex items-center text-xs text-slate-400 mb-2 font-medium">⚡ Puissance panneaux (Wc) <span class="tip" data-tip="Puissance crête totale de vos panneaux. Exemple : 2 panneaux de 400 Wc = 800 Wc. Plus la valeur est élevée, plus vous produisez.">?</span></label>
+    <input type="number" id="input-watts" value="800" min="100" max="20000" step="100">
+    <p class="text-xs text-slate-500 mt-1" id="lbl-panels">≈ 2 panneaux de 400 Wc</p>
+  </div>
+
+  <div class="card">
+    <label class="flex items-center text-xs text-slate-400 mb-2 font-medium">🏠 Consommation foyer (kWh/jour) <span class="tip" data-tip="Consommation électrique totale de votre foyer sur une journée, hors chauffage gaz. Moyenne France ≈ 8 kWh/j. Avec chauffage électrique : 15-25 kWh/j.">?</span></label>
+    <input type="number" id="input-conso" value="8" min="1" max="50" step="0.5">
+    <p class="text-xs text-slate-500 mt-1">Moyenne France : ~8 kWh/j hors chauffage électrique</p>
+  </div>
+
+  <div class="card">
+    <label class="flex items-center text-xs text-slate-400 mb-2 font-medium">🔋 Batterie (kWh) <span class="tip" data-tip="Capacité de stockage. La batterie conserve le surplus solaire pour le restituer quand le soleil est couché. 0 = pas de batterie. Plug & play : 1-5 kWh.">?</span></label>
+    <input type="number" id="input-battery" value="0" min="0" max="50" step="0.5">
+    <p class="text-xs text-slate-500 mt-1">0 = sans batterie · Plug & play : 1-5 kWh · Résidentiel : 5-15 kWh</p>
+  </div>
+
+  <div class="card">
+    <label class="flex items-center text-xs text-slate-400 mb-2 font-medium">🚗 Véhicule électrique <span class="tip" data-tip="Si vous rechargez un véhicule électrique à domicile, activez cette option. La recharge s'ajoute à la consommation du foyer.">?</span></label>
+    <div class="btn-group flex gap-2 mb-2" id="grp-ev">
+      <button data-val="0" class="px-3 py-1.5 rounded-lg text-sm bg-slate-700 text-slate-300 btn-active-violet">Non</button>
+      <button data-val="1" class="px-3 py-1.5 rounded-lg text-sm bg-slate-700 text-slate-300">Oui</button>
+    </div>
+    <div id="ev-options" class="hidden space-y-2 mt-2">
+      <div>
+        <span class="flex items-center text-xs text-slate-500">Puissance borne <span class="tip" data-tip="Puissance de charge de votre borne ou prise. Prise classique : 2,3 kW. Borne standard : 7,4 kW.">?</span></span>
+        <div class="btn-group flex flex-wrap gap-1 mt-1" id="grp-ev-power">
+          <button data-val="2.3" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300 btn-active-violet">2,3 kW</button>
+          <button data-val="3.7" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">3,7 kW</button>
+          <button data-val="7.4" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">7,4 kW</button>
+        </div>
+      </div>
+      <div>
+        <span class="flex items-center text-xs text-slate-500">Heure de branchement <span class="tip" data-tip="Heure à laquelle vous branchez le véhicule. Brancher en journée maximise la part solaire.">?</span></span>
+        <div class="btn-group flex flex-wrap gap-1 mt-1" id="grp-ev-hour">
+          <button data-val="8" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">08 h</button>
+          <button data-val="12" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">12 h</button>
+          <button data-val="18" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300 btn-active-violet">18 h</button>
+          <button data-val="22" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">22 h</button>
+        </div>
+      </div>
+      <div>
+        <span class="flex items-center text-xs text-slate-500">Énergie à recharger <span class="tip" data-tip="Quantité d'énergie à injecter dans la batterie du véhicule. 10 kWh ≈ 60 km d'autonomie.">?</span></span>
+        <div class="btn-group flex flex-wrap gap-1 mt-1" id="grp-ev-kwh">
+          <button data-val="5" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">5 kWh</button>
+          <button data-val="10" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300 btn-active-violet">10 kWh</button>
+          <button data-val="15" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">15 kWh</button>
+          <button data-val="20" class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-300">20 kWh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIME SLIDER -->
+<div class="card mb-6">
+  <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+    <span class="text-sm font-semibold text-slate-200" id="lbl-time">🕐 12:00 — Midi</span>
+    <div class="flex gap-2">
+      <button id="btn-reset" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-slate-300 hover:bg-slate-600">↺ Reset</button>
+      <button id="btn-play" class="px-4 py-1.5 rounded-lg text-xs font-medium bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30">▶ Simuler 24 h</button>
+    </div>
+  </div>
+  <input type="range" id="slider-time" min="0" max="95" step="1" value="48">
+  <div class="flex justify-between text-xs text-slate-500 mt-1"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:45</span></div>
+</div>
+
+<!-- SVG SCHEMA -->
+<div class="card mb-6 overflow-x-auto">
+  <svg id="svg-schema" viewBox="0 0 960 500" class="w-full" style="min-width:600px;max-height:500px">
+    <rect id="sky" x="0" y="0" width="960" height="500" rx="12" fill="#1e293b"/>
+    <g id="g-sun"><circle id="sun-glow" cx="85" cy="55" r="32" fill="#FBBF24" opacity="0.2"/><circle id="sun-core" cx="85" cy="55" r="22" fill="#F59E0B"/></g>
+    <g id="g-moon" style="display:none"><circle cx="85" cy="55" r="18" fill="#94A3B8" opacity="0.4"/><circle cx="78" cy="48" r="14" fill="#1e293b"/></g>
+    <defs>
+      <path id="fp-panel-inv" d="M175,155 L295,155"/>
+      <path id="fp-inv-plug" d="M405,155 L480,155"/>
+      <path id="fp-plug-house" d="M540,155 L600,155"/>
+      <path id="fp-house-linky" d="M730,200 L730,370 L800,370"/>
+      <path id="fp-grid-house" d="M800,370 L730,370 L730,200"/>
+      <path id="fp-inv-bat" d="M350,190 L350,330"/>
+      <path id="fp-bat-house" d="M410,350 L550,350 L640,200"/>
+      <path id="fp-house-ev" d="M660,200 L660,340"/>
+    </defs>
+    <line id="line-dc" x1="175" y1="155" x2="295" y2="155" stroke="#334155" stroke-width="2" stroke-dasharray="6 4"/>
+    <line id="line-ac1" x1="405" y1="155" x2="480" y2="155" stroke="#334155" stroke-width="2" stroke-dasharray="6 4"/>
+    <line id="line-ac2" x1="540" y1="155" x2="600" y2="155" stroke="#334155" stroke-width="2" stroke-dasharray="6 4"/>
+    <polyline id="line-grid" points="730,200 730,370 895,370" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6 4"/>
+    <line id="line-bat" x1="350" y1="190" x2="350" y2="330" stroke="#334155" stroke-width="2" stroke-dasharray="6 4" style="display:none"/>
+    <line id="line-ev" x1="660" y1="200" x2="660" y2="330" stroke="#334155" stroke-width="2" stroke-dasharray="6 4" style="display:none"/>
+    <g id="b-panel">
+      <rect x="75" y="120" width="100" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <line x1="108" y1="120" x2="108" y2="190" stroke="#334155" stroke-width="1"/>
+      <line x1="142" y1="120" x2="142" y2="190" stroke="#334155" stroke-width="1"/>
+      <line x1="75" y1="143" x2="175" y2="143" stroke="#334155" stroke-width="1"/>
+      <line x1="75" y1="167" x2="175" y2="167" stroke="#334155" stroke-width="1"/>
+      <rect id="panel-shine" x="75" y="120" width="100" height="70" rx="6" fill="transparent"/>
+      <circle cx="125" cy="112" r="11" fill="#F59E0B"/><text x="125" y="116" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700" class="svg-label">1</text>
+      <text x="125" y="208" text-anchor="middle" fill="#94a3b8" font-size="11" class="svg-label">Panneau solaire</text>
+      <text id="lbl-panel-w" x="125" y="222" text-anchor="middle" fill="#64748b" font-size="9" class="svg-label">800 Wc</text>
+    </g>
+    <g><rect x="200" y="138" width="75" height="20" rx="4" fill="rgba(251,191,36,0.12)"/><text id="txt-dc" x="237" y="152" text-anchor="middle" fill="#FBBF24" font-size="10" font-weight="600" class="svg-label">DC 0 W</text></g>
+    <g>
+      <rect x="295" y="125" width="110" height="60" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <text x="350" y="150" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="600" class="svg-label">Micro-onduleur</text>
+      <text x="350" y="168" text-anchor="middle" fill="#64748b" font-size="9" class="svg-label">DC → AC 230 V</text>
+      <circle cx="350" cy="117" r="11" fill="#F59E0B"/><text x="350" y="121" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700" class="svg-label">2</text>
+    </g>
+    <g><rect x="420" y="138" width="55" height="20" rx="4" fill="rgba(96,165,250,0.12)"/><text x="447" y="152" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="600" class="svg-label">AC 230 V</text></g>
+    <g>
+      <rect x="480" y="130" width="60" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <circle cx="500" cy="155" r="5" fill="#475569"/><circle cx="520" cy="155" r="5" fill="#475569"/>
+      <circle cx="510" cy="117" r="11" fill="#F59E0B"/><text x="510" y="121" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700" class="svg-label">3</text>
+      <text x="510" y="198" text-anchor="middle" fill="#94a3b8" font-size="10" class="svg-label">Prise murale</text>
+    </g>
+    <g>
+      <polygon points="665,80 600,120 730,120" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <rect x="605" y="120" width="120" height="80" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <rect x="620" y="134" width="22" height="20" rx="2" fill="#334155" stroke="#475569" stroke-width=".5"/>
+      <rect x="655" y="134" width="22" height="20" rx="2" fill="#334155" stroke="#475569" stroke-width=".5"/>
+      <rect x="690" y="134" width="22" height="20" rx="2" fill="#334155" stroke="#475569" stroke-width=".5"/>
+      <rect x="650" y="168" width="22" height="32" rx="2" fill="#334155" stroke="#475569" stroke-width=".5"/>
+      <circle cx="665" cy="72" r="11" fill="#F59E0B"/><text x="665" y="76" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700" class="svg-label">4</text>
+      <text x="665" y="218" text-anchor="middle" fill="#94a3b8" font-size="11" class="svg-label">Maison</text>
+    </g>
+    <text id="lbl-conso" x="665" y="235" text-anchor="middle" fill="#f87171" font-size="10" font-weight="600" class="svg-label">0 W</text>
+    <g>
+      <rect x="800" y="340" width="95" height="60" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <text x="847" y="365" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="600" class="svg-label">Linky</text>
+      <text id="lbl-linky" x="847" y="382" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600" class="svg-label">— 0 W</text>
+      <circle cx="847" cy="332" r="11" fill="#10B981"/><text x="847" y="336" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700" class="svg-label">5</text>
+    </g>
+    <g><text x="847" y="420" text-anchor="middle" fill="#64748b" font-size="10" class="svg-label">Réseau EDF</text></g>
+    <g id="b-battery" style="display:none">
+      <rect id="bat-outer" x="300" y="330" width="100" height="55" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <rect id="bat-fill" x="305" y="335" width="0" height="45" rx="5" fill="rgba(16,185,129,0.15)"/>
+      <text x="350" y="353" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" class="svg-label">Batterie</text>
+      <text id="lbl-bat-soc" x="350" y="370" text-anchor="middle" fill="#34d399" font-size="10" font-weight="700" class="svg-label">0 %</text>
+    </g>
+    <g id="b-ev" style="display:none">
+      <rect x="610" y="330" width="100" height="55" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5" opacity=".7"/>
+      <text x="660" y="353" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" class="svg-label">Voiture EV</text>
+      <text id="lbl-ev-state" x="660" y="370" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" class="svg-label">Inactive</text>
+      <circle cx="660" cy="322" r="11" fill="#8B5CF6"/><text x="660" y="326" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" class="svg-label">6</text>
+    </g>
+    <g id="g-flows"></g>
+    <g transform="translate(20,460)">
+      <rect x="0" y="0" width="450" height="30" rx="6" fill="rgba(15,23,42,0.8)"/>
+      <circle cx="18" cy="15" r="5" fill="#FBBF24"/><text x="30" y="19" fill="#94a3b8" font-size="9" class="svg-label">DC solaire</text>
+      <circle cx="105" cy="15" r="5" fill="#60A5FA"/><text x="117" y="19" fill="#94a3b8" font-size="9" class="svg-label">AC maison</text>
+      <circle cx="190" cy="15" r="5" fill="#34D399"/><text x="202" y="19" fill="#94a3b8" font-size="9" class="svg-label">Surplus</text>
+      <circle cx="260" cy="15" r="5" fill="#F87171"/><text x="272" y="19" fill="#94a3b8" font-size="9" class="svg-label">Réseau</text>
+      <circle cx="325" cy="15" r="5" fill="#10B981"/><text x="337" y="19" fill="#94a3b8" font-size="9" class="svg-label">Batterie</text>
+      <circle cx="400" cy="15" r="5" fill="#8B5CF6"/><text x="412" y="19" fill="#94a3b8" font-size="9" class="svg-label">EV</text>
+    </g>
+  </svg>
+</div>
+
+<!-- REAL-TIME VALUES -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+  <div class="card text-center"><div class="text-xs text-slate-500 mb-1">Production</div><div id="rt-prod" class="text-lg font-bold text-amber-400">0 W</div></div>
+  <div class="card text-center"><div class="text-xs text-slate-500 mb-1">Conso foyer</div><div id="rt-conso" class="text-lg font-bold text-red-400">0 W</div></div>
+  <div class="card text-center"><div class="text-xs text-slate-500 mb-1">Charge EV</div><div id="rt-ev" class="text-lg font-bold text-violet-400">—</div></div>
+  <div class="card text-center"><div class="text-xs text-slate-500 mb-1">Batterie</div><div id="rt-bat" class="text-lg font-bold text-emerald-400">—</div></div>
+  <div class="card text-center"><div class="text-xs text-slate-500 mb-1">Injection réseau</div><div id="rt-inject" class="text-lg font-bold text-green-400">0 W</div></div>
+  <div class="card text-center"><div class="text-xs text-slate-500 mb-1">Soutirage réseau</div><div id="rt-draw" class="text-lg font-bold text-red-400">0 W</div></div>
+</div>
+
+<!-- ══ LEVEL 1 : RECOMMENDATION (top of results) ══ -->
+<div id="section-reco" class="reco-card mb-6" style="display:none">
+  <h3 class="text-sm font-semibold text-emerald-400 mb-2">💡 Synthèse du scénario</h3>
+  <p id="reco-text" class="text-sm text-slate-300 leading-relaxed"></p>
+</div>
+
+<!-- ══ LEVEL 2 : CHART + DAILY RESULTS ══ -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+
+  <!-- Chart -->
+  <div class="card">
+    <h3 class="text-sm font-semibold text-slate-300 mb-1">Production vs Demande — 24 h</h3>
+    <p class="text-xs text-slate-500 mb-3">Demande = foyer + EV si activé</p>
+    <svg id="svg-chart" viewBox="0 0 500 180" class="w-full">
+      <rect x="0" y="0" width="500" height="180" rx="8" fill="transparent"/>
+      <line x1="45" y1="15" x2="475" y2="15" stroke="#1e293b" stroke-width=".5"/>
+      <line x1="45" y1="50" x2="475" y2="50" stroke="#1e293b" stroke-width=".5"/>
+      <line x1="45" y1="85" x2="475" y2="85" stroke="#1e293b" stroke-width=".5"/>
+      <line x1="45" y1="120" x2="475" y2="120" stroke="#1e293b" stroke-width=".5"/>
+      <line x1="45" y1="155" x2="475" y2="155" stroke="#334155" stroke-width="1"/>
+      <path id="chart-prod" d="" fill="rgba(251,191,36,0.12)" stroke="#FBBF24" stroke-width="1.5"/>
+      <path id="chart-conso" d="" fill="rgba(248,113,113,0.06)" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path id="chart-ev" d="" fill="rgba(139,92,246,0.10)" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="2 2" style="display:none"/>
+      <path id="chart-demand" d="" fill="none" stroke="#F87171" stroke-width="2"/>
+      <line id="chart-marker" x1="260" y1="10" x2="260" y2="155" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="45" y="172" fill="#64748b" font-size="9" class="svg-label">0 h</text>
+      <text x="134" y="172" fill="#64748b" font-size="9" class="svg-label">6 h</text>
+      <text x="260" y="172" fill="#64748b" font-size="9" class="svg-label">12 h</text>
+      <text x="350" y="172" fill="#64748b" font-size="9" class="svg-label">18 h</text>
+      <text x="460" y="172" fill="#64748b" font-size="9" class="svg-label">24 h</text>
+      <text id="chart-y-max" x="40" y="18" text-anchor="end" fill="#64748b" font-size="8" class="svg-label"></text>
+      <text id="chart-y-mid" x="40" y="88" text-anchor="end" fill="#64748b" font-size="8" class="svg-label"></text>
+      <rect x="280" y="3" width="8" height="8" rx="2" fill="#FBBF24" opacity=".7"/><text x="292" y="10" fill="#94a3b8" font-size="8" class="svg-label">Production</text>
+      <rect x="350" y="3" width="8" height="8" rx="2" fill="#F87171" opacity=".7"/><text x="362" y="10" fill="#94a3b8" font-size="8" class="svg-label">Foyer</text>
+      <rect x="400" y="3" width="8" height="8" rx="2" fill="#8B5CF6" opacity=".7"/><text x="412" y="10" fill="#94a3b8" font-size="8" class="svg-label">+EV</text>
+    </svg>
+  </div>
+
+  <!-- Daily results -->
+  <div class="card">
+    <h3 class="text-sm font-semibold text-slate-300 mb-3">Bilan journalier estimé</h3>
+    <div class="space-y-2 text-sm">
+
+      <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Énergie du jour</p>
+      <div class="flex justify-between"><span class="text-slate-400 text-xs">Production solaire totale</span><span id="r-prod" class="font-semibold text-amber-400">—</span></div>
+      <div class="flex justify-between"><span class="text-slate-400 text-xs">Consommée par le foyer (solaire)</span><span id="r-self" class="font-semibold text-emerald-400">—</span></div>
+      <div class="flex justify-between" id="row-ev-energy" style="display:none"><span class="text-slate-400 text-xs">Recharge EV totale</span><span id="r-ev" class="font-semibold text-violet-400">—</span></div>
+      <div class="flex justify-between"><span class="text-slate-400 text-xs">Surplus injecté sur le réseau</span><span id="r-surplus" class="font-semibold text-green-400">—</span></div>
+      <div class="flex justify-between"><span class="text-slate-400 text-xs">Soutiré depuis le réseau</span><span id="r-grid" class="font-semibold text-red-400">—</span></div>
+      <div class="flex justify-between" id="row-ev-solar" style="display:none"><span class="text-slate-400 text-xs">↳ dont recharge EV d'origine solaire</span><span id="r-ev-solar" class="font-semibold text-violet-400">—</span></div>
+      <div class="flex justify-between" id="row-ev-grid" style="display:none"><span class="text-slate-400 text-xs">↳ dont recharge EV depuis réseau</span><span id="r-ev-grid" class="font-semibold text-red-400">—</span></div>
+
+      <div class="border-t border-slate-700 my-2"></div>
+      <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Indicateurs</p>
+      <div class="flex justify-between items-center">
+        <span class="flex items-center text-slate-400 text-xs">Taux d'autoconsommation <span class="tip" data-tip="Part de votre production solaire utilisée sur place (= production − surplus injecté, divisé par la production). Plus c'est élevé, moins vous gaspillez.">?</span></span>
+        <span id="r-rate" class="font-semibold text-cyan-400">—</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="flex items-center text-slate-400 text-xs">Taux d'autonomie <span class="tip" data-tip="Part de votre consommation totale couverte sans le réseau (= consommation − soutirage, divisé par la consommation). 100 % = zéro soutirage.">?</span></span>
+        <span id="r-autonomy" class="font-semibold text-blue-400">—</span>
+      </div>
+
+      <div class="border-t border-slate-700 my-2"></div>
+      <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Économies estimées</p>
+      <div class="flex justify-between"><span class="text-slate-400 text-xs">Autoconsommation foyer × 0,2516 €/kWh</span><span id="r-eco" class="font-semibold text-emerald-400">—</span></div>
+      <div class="flex justify-between"><span class="text-slate-400 text-xs">Surplus valorisé × 0,04 €/kWh (OA)</span><span id="r-rev" class="font-semibold text-blue-400">—</span></div>
+      <div class="flex justify-between" id="row-ev-saving" style="display:none"><span class="text-slate-400 text-xs">Recharge EV évitée réseau</span><span id="r-ev-saving" class="font-semibold text-violet-400">—</span></div>
+
+      <div class="border-t border-slate-700 my-2"></div>
+      <div class="flex justify-between"><span class="text-white font-medium">Gain total estimé / jour</span><span id="r-total" class="text-lg font-bold text-emerald-400">—</span></div>
+
+      <div class="bg-slate-700/30 rounded-lg p-3 mt-2">
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Résultat pour un <strong id="lbl-season-txt">jour type d'été</strong>.
+          Non extrapolable à l'année entière.
+          Production réelle variable selon météo, orientation, ombrage.
+          Tarifs indicatifs 2026 (tarif bleu base + OA ≤ 3 kWc).
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LEVEL 3 : ENERGY BALANCE ══ -->
+<div class="card mb-6" id="section-balance">
+  <h3 class="text-sm font-semibold text-slate-300 mb-4">Répartition de l'énergie du jour</h3>
+  <div class="space-y-4">
+    <div>
+      <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Production solaire →</span><span id="bal-prod-total" class="font-semibold text-amber-400">—</span></div>
+      <div class="flex h-5 rounded-full overflow-hidden bg-slate-800">
+        <div id="bal-prod-self" class="bar-seg bg-emerald-500" style="width:0%"></div>
+        <div id="bal-prod-ev" class="bar-seg bg-violet-500" style="width:0%"></div>
+        <div id="bal-prod-bat" class="bar-seg bg-teal-500" style="width:0%"></div>
+        <div id="bal-prod-inj" class="bar-seg bg-green-400" style="width:0%"></div>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+        <span class="text-xs text-slate-500"><span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1"></span>Foyer <span id="bal-prod-self-v" class="text-emerald-400"></span></span>
+        <span class="text-xs text-slate-500" id="bal-prod-ev-lbl" style="display:none"><span class="inline-block w-2 h-2 rounded-full bg-violet-500 mr-1"></span>EV <span id="bal-prod-ev-v" class="text-violet-400"></span></span>
+        <span class="text-xs text-slate-500" id="bal-prod-bat-lbl" style="display:none"><span class="inline-block w-2 h-2 rounded-full bg-teal-500 mr-1"></span>Batterie <span id="bal-prod-bat-v" class="text-teal-400"></span></span>
+        <span class="text-xs text-slate-500"><span class="inline-block w-2 h-2 rounded-full bg-green-400 mr-1"></span>Surplus réseau <span id="bal-prod-inj-v" class="text-green-400"></span></span>
+      </div>
+    </div>
+    <div>
+      <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Consommation totale ←</span><span id="bal-conso-total" class="font-semibold text-red-400">—</span></div>
+      <div class="flex h-5 rounded-full overflow-hidden bg-slate-800">
+        <div id="bal-conso-solar" class="bar-seg bg-amber-500" style="width:0%"></div>
+        <div id="bal-conso-bat" class="bar-seg bg-teal-500" style="width:0%"></div>
+        <div id="bal-conso-grid" class="bar-seg bg-red-500" style="width:0%"></div>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+        <span class="text-xs text-slate-500"><span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1"></span>Solaire direct <span id="bal-conso-solar-v" class="text-amber-400"></span></span>
+        <span class="text-xs text-slate-500" id="bal-conso-bat-lbl" style="display:none"><span class="inline-block w-2 h-2 rounded-full bg-teal-500 mr-1"></span>Via batterie <span id="bal-conso-bat-v" class="text-teal-400"></span></span>
+        <span class="text-xs text-slate-500"><span class="inline-block w-2 h-2 rounded-full bg-red-500 mr-1"></span>Réseau <span id="bal-conso-grid-v" class="text-red-400"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LEVEL 3 : METHODOLOGY ══ -->
+<div class="card mb-6">
+  <button id="btn-method" class="flex items-center justify-between w-full text-left" onclick="document.getElementById('method-content').classList.toggle('open');this.querySelector('span:last-child').textContent=document.getElementById('method-content').classList.contains('open')?'▲':'▼'">
+    <h3 class="text-sm font-semibold text-slate-300">Méthodologie et hypothèses</h3>
+    <span class="text-slate-500 text-xs">▼</span>
+  </button>
+  <div id="method-content" class="collapse-body">
+    <div class="mt-3 space-y-3 text-xs text-slate-400 leading-relaxed">
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Production solaire</p>
+        <p>Courbe gaussienne calibrée par saison. L'énergie journalière correspond à : Wc × PSH × facteur saisonnier × 0,85 (pertes système).
+        Le facteur 0,85 agrège les pertes câbles, onduleur, température et salissure.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Profils saisonniers</p>
+        <p>Été : lever 6 h, coucher 21 h, pic 13 h 30, σ = 3,5 h, facteur ×1,0.<br>
+        Printemps : lever 7 h, coucher 20 h, pic 13 h, σ = 3,2 h, facteur ×0,75.<br>
+        Automne : lever 7 h 30, coucher 19 h, pic 13 h, σ = 3,0 h, facteur ×0,70.<br>
+        Hiver : lever 8 h 30, coucher 17 h, pic 12 h 30, σ = 2,5 h, facteur ×0,40.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Consommation</p>
+        <p>Profil résidentiel type : charge de base + 3 pics (matin, midi, soirée).
+        Mis à l'échelle selon la valeur saisie par l'utilisateur.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Batterie</p>
+        <p>Rendement aller-retour 92 % (√0,92 ≈ 95,9 % par sens).
+        SOC initial : 0 % — seule l'énergie solaire du jour est comptabilisée.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Priorité de dispatch</p>
+        <p>Production → foyer → EV → batterie → injection réseau.
+        Déficits couverts par batterie puis réseau.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Formules des indicateurs</p>
+        <p><strong>Autoconsommation</strong> = (production − surplus injecté) ÷ production.<br>
+        <strong>Autonomie</strong> = (consommation totale − soutirage réseau) ÷ consommation totale.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-300 mb-1">Tarifs utilisés</p>
+        <p>Soutirage réseau : 0,2516 €/kWh (tarif réglementé bleu 2026, base).<br>
+        Injection surplus OA : 0,04 €/kWh (autoconsommation ≤ 3 kWc).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="text-center text-xs text-slate-600 py-4">
+  Simulation indicative — production réelle variable selon météo, orientation et profil de consommation. Consultez un installateur qualifié.<br>
+  <span class="text-slate-700">SolarMetrics © 2026</span>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ── SEASONAL PROFILES ── */
+var PROFILES = {
+  summer: {sunrise:6, sunset:21, peak:13.5, sigma:3.5, factor:1.00, label:"jour type d'été", info:"Lever ~6 h · coucher ~21 h · pic 13 h 30"},
+  spring: {sunrise:7, sunset:20, peak:13.0, sigma:3.2, factor:0.75, label:"jour type de printemps", info:"Lever ~7 h · coucher ~20 h · pic 13 h"},
+  autumn: {sunrise:7.5, sunset:19, peak:13.0, sigma:3.0, factor:0.70, label:"jour type d'automne", info:"Lever ~7 h 30 · coucher ~19 h · pic 13 h"},
+  winter: {sunrise:8.5, sunset:17, peak:12.5, sigma:2.5, factor:0.40, label:"jour type d'hiver", info:"Lever ~8 h 30 · coucher ~17 h · pic 12 h 30"}
+};
+(function(){for(var k in PROFILES){var p=PROFILES[k],s=0;for(var h=p.sunrise;h<=p.sunset;h+=0.01)s+=Math.exp(-0.5*Math.pow((h-p.peak)/p.sigma,2))*0.01;p.integral=s;}})();
+
+/* ── STATE ── */
+var S={psh:5.2,season:'summer',watts:800,batCap:0,consoDaily:8,evOn:false,evPower:2.3,evHour:18,evKwh:10,step:48,playing:false,timer:null};
+
+var GRID_PRICE = 0.2516;
+var OA_PRICE   = 0.04;
+var LOSS       = 0.85;
+var BAT_CE = Math.sqrt(0.92);
+var BAT_DE = Math.sqrt(0.92);
+var CONSO_REF  = 11.36;
+
+/* ── HELPERS ── */
+function stepToH(s){return s*0.25;}
+function fmtH(h){var hh=Math.floor(h),mm=Math.round((h-hh)*60);return(hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;}
+function fmtP(w){return Math.abs(w)>=1000?(w/1000).toFixed(1)+' kW':Math.round(w)+' W';}
+function period(h){if(h<6||h>=22)return'Nuit';if(h<10)return'Matin';if(h<14)return'Midi';if(h<18)return'Après-midi';return'Soirée';}
+function prof(){return PROFILES[S.season]||PROFILES.summer;}
+
+/* ── SOLAR MODEL ── */
+function solarW(h){
+  var p=prof();
+  if(h<p.sunrise||h>p.sunset)return 0;
+  return S.watts*Math.exp(-0.5*Math.pow((h-p.peak)/p.sigma,2))*(S.psh*p.factor*LOSS)/p.integral;
+}
+
+/* ── CONSUMPTION MODEL ── */
+function consoW(h){
+  var r=200+600*Math.exp(-0.5*Math.pow((h-8)/1.2,2))+400*Math.exp(-0.5*Math.pow((h-12.5)/1,2))+1000*Math.exp(-0.5*Math.pow((h-19.5)/1.5,2));
+  return r*(S.consoDaily/CONSO_REF);
+}
+
+/* ── FULL DAY SIMULATION ── */
+function simDay(){
+  var dt=0.25, bs=0; // SOC initial = 0 kWh (no bias)
+  var tp=0,tsh=0,tes=0,teg=0,ti=0,td=0,tbc=0,tbd=0,ec=0;
+  var snaps=[];
+  for(var i=0;i<96;i++){
+    var h=i*0.25;
+    var pr=solarW(h)/1000, co=consoW(h)/1000;
+    var ed=0;
+    if(S.evOn&&h>=S.evHour&&ec<S.evKwh) ed=Math.min(S.evPower,(S.evKwh-ec)/dt);
+    var av=pr, hn=co;
+    var hs=Math.min(av,hn); av-=hs; hn-=hs;
+    var evs=Math.min(av,ed); av-=evs; var esn=ed-evs;
+    var bch=0;
+    if(S.batCap>0&&av>0){bch=Math.max(0,Math.min(av,(S.batCap-bs)/(BAT_CE*dt),S.batCap));av-=bch;}
+    var inj=av;
+    var hb=0;
+    if(S.batCap>0&&hn>0){hb=Math.max(0,Math.min(hn,bs*BAT_DE/dt,S.batCap));hn-=hb;}
+    var evb=0;
+    if(S.batCap>0&&esn>0){var ba=bs-(hb/BAT_DE)*dt;evb=Math.max(0,Math.min(esn,ba*BAT_DE/dt,S.batCap));esn-=evb;}
+    var hg=hn, eg=esn;
+    bs+=bch*BAT_CE*dt-((hb+evb)/BAT_DE)*dt;
+    bs=Math.max(0,Math.min(S.batCap,bs));
+    var ae=evs+evb+eg; ec+=ae*dt;
+    tp+=pr*dt; tsh+=(hs+hb)*dt; tes+=(evs+evb)*dt; teg+=eg*dt;
+    ti+=inj*dt; td+=(hg+eg)*dt; tbc+=bch*dt; tbd+=(hb+evb)*dt;
+    snaps.push({h:h,prod:pr*1000,conso:co*1000,evP:ae*1000,totalDemand:(co+ae)*1000,batSoc:bs,inject:inj*1000,draw:(hg+eg)*1000});
+  }
+  var tev=tes+teg, tc=S.consoDaily+tev;
+  var sr=tp>0?((tp-ti)/tp*100):0;
+  var ar=tc>0?((tc-td)/tc*100):0;
+  return{
+    totProd:tp, totSelfHome:tsh, totEvSolar:tes, totEvGrid:teg, totalEvEnergy:tev,
+    totInject:ti, totDraw:td, totBatCharged:tbc, totBatDischarged:tbd,
+    selfRate:sr, autonomyRate:ar, totalConsoAll:tc,
+    evSolarPct:tev>0?(tes/tev*100):0, evGridPct:tev>0?(teg/tev*100):0,
+    ecoAuto:tsh*GRID_PRICE, revSurplus:ti*OA_PRICE, evSaving:tes*GRID_PRICE,
+    totalGain:tsh*GRID_PRICE+ti*OA_PRICE+tes*GRID_PRICE,
+    snaps:snaps
+  };
+}
+
+/* ── RENDER ── */
+var D=null;
+
+function render(){
+  var h=stepToH(S.step), sn=D?D.snaps[S.step]:null, p=prof();
+  document.getElementById('lbl-time').textContent='🕐 '+fmtH(h)+' — '+period(h);
+
+  // Sky
+  var sky=document.getElementById('sky');
+  if(h<p.sunrise-1||h>p.sunset+1) sky.setAttribute('fill','#0f172a');
+  else if(h<p.sunrise||h>p.sunset) sky.setAttribute('fill','#1e293b');
+  else if(h<p.sunrise+1||h>p.sunset-1) sky.setAttribute('fill','#283548');
+  else sky.setAttribute('fill','#334155');
+
+  var isDay=h>=p.sunrise&&h<=p.sunset;
+  var mid=(p.sunrise+p.sunset)/2, span=(p.sunset-p.sunrise)/2;
+  var sunO=isDay?Math.min(1,(1-Math.abs(h-mid)/span)*1.5):0;
+  document.getElementById('g-sun').style.display=isDay?'':'none';
+  document.getElementById('g-moon').style.display=isDay?'none':'';
+  document.getElementById('sun-glow').setAttribute('opacity',sunO*.3);
+  document.getElementById('sun-core').setAttribute('opacity',sunO);
+  document.getElementById('panel-shine').setAttribute('fill',sunO>.3?'rgba(251,191,36,0.08)':'transparent');
+  document.getElementById('lbl-panel-w').textContent=S.watts+' Wc';
+
+  var prod=sn?sn.prod:solarW(h), conso=sn?sn.conso:consoW(h);
+  var evP=sn?sn.evP:0, dem=sn?sn.totalDemand:conso;
+  var inj=sn?sn.inject:Math.max(0,prod-conso);
+  var drw=sn?sn.draw:Math.max(0,conso-prod);
+  var bs=sn?sn.batSoc:0;
+
+  document.getElementById('txt-dc').textContent='DC '+fmtP(prod);
+  document.getElementById('lbl-conso').textContent=fmtP(conso);
+
+  var lk=document.getElementById('lbl-linky');
+  if(inj>10){lk.textContent='↑ '+fmtP(inj);lk.setAttribute('fill','#34d399');}
+  else if(drw>10){lk.textContent='↓ '+fmtP(drw);lk.setAttribute('fill','#f87171');}
+  else{lk.textContent='— 0 W';lk.setAttribute('fill','#64748b');}
+
+  // Battery
+  var bG=document.getElementById('b-battery'),lB=document.getElementById('line-bat');
+  if(S.batCap>0){
+    bG.style.display='';lB.style.display='';
+    var pct=bs/S.batCap;
+    document.getElementById('bat-fill').setAttribute('width',Math.round(90*pct));
+    document.getElementById('lbl-bat-soc').textContent=Math.round(pct*100)+'% ('+bs.toFixed(1)+' kWh)';
+    document.getElementById('bat-outer').setAttribute('stroke',prod>dem?'#10b981':drw>10&&bs>.01?'#fbbf24':'#475569');
+  } else {bG.style.display='none';lB.style.display='none';}
+
+  // EV
+  var eG=document.getElementById('b-ev'),lE=document.getElementById('line-ev');
+  if(S.evOn){
+    eG.style.display='';lE.style.display='';
+    var el=document.getElementById('lbl-ev-state');
+    if(evP>10){el.textContent=fmtP(evP);el.setAttribute('fill','#a78bfa');}
+    else if(h>=S.evHour&&evP<=0){el.textContent='Terminée ✓';el.setAttribute('fill','#34d399');}
+    else{el.textContent='Inactive';el.setAttribute('fill','#64748b');}
+  } else {eG.style.display='none';lE.style.display='none';}
+
+  // Lines
+  var dc=prod>10;
+  document.getElementById('line-dc').setAttribute('stroke',dc?'rgba(251,191,36,.3)':'#334155');
+  document.getElementById('line-ac1').setAttribute('stroke',dc?'rgba(96,165,250,.3)':'#334155');
+  document.getElementById('line-ac2').setAttribute('stroke',dc?'rgba(96,165,250,.3)':'#334155');
+  document.getElementById('line-grid').setAttribute('stroke',inj>10?'rgba(52,211,153,.3)':drw>10?'rgba(248,113,113,.3)':'#334155');
+  if(S.batCap>0)document.getElementById('line-bat').setAttribute('stroke','rgba(16,185,129,.3)');
+  if(S.evOn)document.getElementById('line-ev').setAttribute('stroke',evP>10?'rgba(139,92,246,.3)':'#334155');
+
+  renderFlows(prod,conso,inj,drw,evP,bs,dem);
+
+  // KPIs
+  document.getElementById('rt-prod').textContent=fmtP(prod);
+  document.getElementById('rt-conso').textContent=fmtP(conso);
+  document.getElementById('rt-ev').textContent=S.evOn?fmtP(evP):'—';
+  document.getElementById('rt-bat').textContent=S.batCap>0?Math.round(bs/S.batCap*100)+'%':'—';
+  document.getElementById('rt-inject').textContent=fmtP(inj);
+  document.getElementById('rt-draw').textContent=fmtP(drw);
+
+  // Chart marker
+  var cx=45+(h/24)*430;
+  document.getElementById('chart-marker').setAttribute('x1',cx);
+  document.getElementById('chart-marker').setAttribute('x2',cx);
+
+  if(!D)return;
+  var d=D;
+
+  // Results panel
+  document.getElementById('r-prod').textContent=d.totProd.toFixed(2)+' kWh';
+  document.getElementById('r-self').textContent=d.totSelfHome.toFixed(2)+' kWh';
+  document.getElementById('r-rate').textContent=d.selfRate.toFixed(0)+' %';
+  document.getElementById('r-autonomy').textContent=d.autonomyRate.toFixed(0)+' %';
+  document.getElementById('r-surplus').textContent=d.totInject.toFixed(2)+' kWh';
+  document.getElementById('r-grid').textContent=d.totDraw.toFixed(2)+' kWh';
+  document.getElementById('r-eco').textContent=d.ecoAuto.toFixed(2)+' €';
+  document.getElementById('r-rev').textContent=d.revSurplus.toFixed(2)+' €';
+  document.getElementById('r-total').textContent=d.totalGain.toFixed(2)+' €';
+
+  var showEv=S.evOn;
+  ['row-ev-energy','row-ev-solar','row-ev-grid','row-ev-saving'].forEach(function(id){document.getElementById(id).style.display=showEv?'flex':'none';});
+  if(showEv){
+    document.getElementById('r-ev').textContent=d.totalEvEnergy.toFixed(2)+' kWh';
+    document.getElementById('r-ev-solar').textContent=d.evSolarPct.toFixed(0)+' %';
+    document.getElementById('r-ev-grid').textContent=d.evGridPct.toFixed(0)+' %';
+    document.getElementById('r-ev-saving').textContent=d.evSaving.toFixed(2)+' €';
+  }
+
+  document.getElementById('lbl-season-txt').textContent=p.label;
+  renderBalance(d);
+  renderReco(d);
+}
+
+/* ── ENERGY BALANCE ── */
+function renderBalance(d){
+  var tp=d.totProd;
+  document.getElementById('bal-prod-total').textContent=tp.toFixed(2)+' kWh';
+
+  // Production side: direct solar use + battery charge + injection = ~production
+  var directUse=Math.max(0,(d.totSelfHome+d.totEvSolar)-d.totBatDischarged);
+  var batCh=d.totBatCharged, injV=d.totInject;
+  var sum=directUse+batCh+injV;
+
+  if(sum>0){
+    // Split direct use into home and EV
+    var selfAll=d.totSelfHome+d.totEvSolar;
+    var dHome=selfAll>0?directUse*(d.totSelfHome/selfAll):directUse;
+    var dEv=directUse-dHome;
+    document.getElementById('bal-prod-self').style.width=(dHome/sum*100).toFixed(1)+'%';
+    document.getElementById('bal-prod-ev').style.width=(dEv/sum*100).toFixed(1)+'%';
+    document.getElementById('bal-prod-bat').style.width=(batCh/sum*100).toFixed(1)+'%';
+    document.getElementById('bal-prod-inj').style.width=(injV/sum*100).toFixed(1)+'%';
+    document.getElementById('bal-prod-self-v').textContent=dHome.toFixed(2)+' kWh';
+    document.getElementById('bal-prod-ev-v').textContent=dEv.toFixed(2)+' kWh';
+    document.getElementById('bal-prod-bat-v').textContent=batCh.toFixed(2)+' kWh';
+    document.getElementById('bal-prod-inj-v').textContent=injV.toFixed(2)+' kWh';
+  } else {
+    ['bal-prod-self','bal-prod-ev','bal-prod-bat','bal-prod-inj'].forEach(function(id){document.getElementById(id).style.width='0%';});
+  }
+  document.getElementById('bal-prod-ev-lbl').style.display=S.evOn?'':'none';
+  document.getElementById('bal-prod-bat-lbl').style.display=S.batCap>0?'':'none';
+  document.getElementById('bal-conso-bat-lbl').style.display=S.batCap>0?'':'none';
+
+  // Consumption side
+  var tc=d.totalConsoAll;
+  document.getElementById('bal-conso-total').textContent=tc.toFixed(2)+' kWh';
+  var fSolar=Math.max(0,directUse), fBat=d.totBatDischarged, fGrid=d.totDraw;
+  var sc=fSolar+fBat+fGrid;
+  if(sc>0){
+    document.getElementById('bal-conso-solar').style.width=(fSolar/sc*100).toFixed(1)+'%';
+    document.getElementById('bal-conso-bat').style.width=(fBat/sc*100).toFixed(1)+'%';
+    document.getElementById('bal-conso-grid').style.width=(fGrid/sc*100).toFixed(1)+'%';
+  } else {
+    ['bal-conso-solar','bal-conso-bat','bal-conso-grid'].forEach(function(id){document.getElementById(id).style.width='0%';});
+  }
+  document.getElementById('bal-conso-solar-v').textContent=fSolar.toFixed(2)+' kWh';
+  document.getElementById('bal-conso-bat-v').textContent=fBat.toFixed(2)+' kWh';
+  document.getElementById('bal-conso-grid-v').textContent=fGrid.toFixed(2)+' kWh';
+}
+
+/* ── RECOMMENDATION ── */
+function renderReco(d){
+  var t=[], p=prof();
+  if(d.totInject>d.totProd*.4&&S.batCap===0)
+    t.push('Vous injectez '+(d.totInject/d.totProd*100).toFixed(0)+' % de votre production sur le réseau à 0,04 €/kWh. Une batterie de 1 à 3 kWh permettrait de stocker ce surplus et de l\'utiliser le soir à 0,25 €/kWh — un gain net plus élevé.');
+  if(S.batCap>0&&d.totInject>d.totProd*.3)
+    t.push('Malgré la batterie de '+S.batCap+' kWh, '+(d.totInject/d.totProd*100).toFixed(0)+' % de la production est encore injectée. Décaler des usages en journée (lave-linge, chauffe-eau) réduirait ce surplus.');
+  if(d.autonomyRate<30&&S.watts<1600)
+    t.push('Taux d\'autonomie de '+d.autonomyRate.toFixed(0)+' % : augmenter la puissance (ex. '+(S.watts*2)+' Wc) améliorerait nettement la couverture solaire.');
+  if(d.selfRate>95&&d.totProd<S.consoDaily*.8)
+    t.push('Toute la production est absorbée (autoconso '+d.selfRate.toFixed(0)+' %), mais elle ne couvre que '+d.autonomyRate.toFixed(0)+' % de vos besoins — l\'installation est sous-dimensionnée.');
+  if(S.evOn&&d.evSolarPct<20)
+    t.push('Seulement '+d.evSolarPct.toFixed(0)+' % de la recharge EV vient du solaire. Brancher en journée (10 h-14 h) maximiserait la part solaire.');
+  if(S.season==='winter'&&d.totProd<1)
+    t.push('En hiver, la production est très faible ('+d.totProd.toFixed(2)+' kWh). C\'est attendu pour du plug & play — les gains se concentrent de mars à octobre.');
+  if(t.length===0){
+    if(d.autonomyRate>50) t.push('Bon dimensionnement : '+d.autonomyRate.toFixed(0)+' % d\'autonomie et '+d.selfRate.toFixed(0)+' % d\'autoconsommation. L\'installation est bien calibrée pour ce profil.');
+    else t.push('Production du jour : '+d.totProd.toFixed(2)+' kWh. Autonomie : '+d.autonomyRate.toFixed(0)+' %. Gain estimé : '+d.totalGain.toFixed(2)+' €.');
+  }
+  document.getElementById('section-reco').style.display='';
+  document.getElementById('reco-text').innerHTML=t.join('<br><br>');
+}
+
+/* ── ANIMATED FLOWS ── */
+var _fSvg='';
+function renderFlows(prod,conso,inj,drw,evP,bs,dem){
+  var g=document.getElementById('g-flows'),html='';
+  function dots(id,c,on,sp){if(!on)return'';var s='';for(var i=0;i<3;i++)s+='<circle r="4" fill="'+c+'" opacity=".85" class="flow-dot"><animateMotion dur="'+sp+'s" repeatCount="indefinite" begin="'+(i*sp/3).toFixed(1)+'s"><mpath href="#'+id+'"/></animateMotion></circle>';return s;}
+  function dotsR(id,c,on,sp){if(!on)return'';var s='';for(var i=0;i<3;i++)s+='<circle r="4" fill="'+c+'" opacity=".85" class="flow-dot"><animateMotion dur="'+sp+'s" repeatCount="indefinite" begin="'+(i*sp/3).toFixed(1)+'s" keyPoints="1;0" keyTimes="0;1"><mpath href="#'+id+'"/></animateMotion></circle>';return s;}
+  html+=dots('fp-panel-inv','#FBBF24',prod>10,1.2);
+  html+=dots('fp-inv-plug','#60A5FA',prod>10,1.2);
+  html+=dots('fp-plug-house','#60A5FA',prod>10,1);
+  html+=dots('fp-house-linky','#34D399',inj>10,1.8);
+  html+=dotsR('fp-grid-house','#F87171',drw>10,1.8);
+  if(S.batCap>0){html+=dots('fp-inv-bat','#10B981',prod>dem&&bs<S.batCap-.01,1.5);html+=dots('fp-bat-house','#FBBF24',drw>10&&bs>.01,1.5);}
+  if(S.evOn) html+=dots('fp-house-ev','#8B5CF6',evP>10,1.5);
+  if(html!==_fSvg){_fSvg=html;g.innerHTML=html;}
+}
+
+/* ── CHART ── */
+function renderChart(){
+  if(!D)return;
+  var sn=D.snaps, mx=Math.max(S.watts*1.1,1500);
+  for(var k=0;k<96;k++){if(sn[k].totalDemand>mx)mx=sn[k].totalDemand*1.1;if(sn[k].prod>mx)mx=sn[k].prod*1.1;}
+  function X(h){return 45+(h/24)*430;}
+  function Y(w){return 155-(w/mx)*135;}
+  document.getElementById('chart-y-max').textContent=fmtP(mx);
+  document.getElementById('chart-y-mid').textContent=fmtP(mx/2);
+
+  var pp='M 45 155';for(var i=0;i<96;i++)pp+=' L '+X(sn[i].h).toFixed(1)+' '+Y(sn[i].prod).toFixed(1);pp+=' L 475 155 Z';
+  document.getElementById('chart-prod').setAttribute('d',pp);
+
+  var cp='M 45 155';for(var i=0;i<96;i++)cp+=' L '+X(sn[i].h).toFixed(1)+' '+Y(sn[i].conso).toFixed(1);cp+=' L 475 155 Z';
+  document.getElementById('chart-conso').setAttribute('d',cp);
+
+  var dp='M '+X(0).toFixed(1)+' '+Y(sn[0].totalDemand).toFixed(1);
+  for(var i=1;i<96;i++)dp+=' L '+X(sn[i].h).toFixed(1)+' '+Y(sn[i].totalDemand).toFixed(1);
+  document.getElementById('chart-demand').setAttribute('d',S.evOn?dp:'');
+
+  if(S.evOn){
+    var ep='M '+X(sn[0].h).toFixed(1)+' '+Y(sn[0].conso).toFixed(1);
+    for(var i=1;i<96;i++)ep+=' L '+X(sn[i].h).toFixed(1)+' '+Y(sn[i].conso).toFixed(1);
+    for(var i=95;i>=0;i--)ep+=' L '+X(sn[i].h).toFixed(1)+' '+Y(sn[i].totalDemand).toFixed(1);
+    ep+=' Z';
+    var ce=document.getElementById('chart-ev');ce.setAttribute('d',ep);ce.style.display='';
+  } else document.getElementById('chart-ev').style.display='none';
+}
+
+/* ── RECALC ── */
+function recalc(){D=simDay();renderChart();render();}
+
+/* ── BUTTON GROUPS ── */
+function setupGrp(id,cls,cb){
+  var g=document.getElementById(id);
+  g.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;g.querySelectorAll('button').forEach(function(x){x.classList.remove(cls);x.classList.add('bg-slate-700','text-slate-300');});b.classList.add(cls);b.classList.remove('bg-slate-700','text-slate-300');cb(b.dataset.val);});
+}
+
+/* ── INIT ── */
+function init(){
+  document.getElementById('sel-location').addEventListener('change',function(){S.psh=parseFloat(this.value);recalc();});
+  document.getElementById('sel-season').addEventListener('change',function(){S.season=this.value;document.getElementById('lbl-season-info').textContent=prof().info;recalc();});
+
+  var wI=document.getElementById('input-watts');
+  function updW(){var v=parseInt(wI.value);if(isNaN(v)||v<100)v=100;if(v>20000)v=20000;wI.value=v;S.watts=v;document.getElementById('lbl-panels').textContent='≈ '+Math.ceil(v/400)+' panneaux de 400 Wc';recalc();}
+  wI.addEventListener('change',updW);
+  wI.addEventListener('input',function(){var v=parseInt(this.value);if(!isNaN(v)&&v>=100&&v<=20000){S.watts=v;document.getElementById('lbl-panels').textContent='≈ '+Math.ceil(v/400)+' panneaux de 400 Wc';recalc();}});
+
+  var bI=document.getElementById('input-battery');
+  function updB(){var v=parseFloat(bI.value);if(isNaN(v)||v<0)v=0;if(v>50)v=50;S.batCap=v;recalc();}
+  bI.addEventListener('change',function(){this.value=Math.max(0,Math.min(50,parseFloat(this.value)||0));updB();});
+  bI.addEventListener('input',updB);
+
+  var cI=document.getElementById('input-conso');
+  function updC(){var v=parseFloat(cI.value);if(isNaN(v)||v<1)v=1;if(v>50)v=50;S.consoDaily=v;recalc();}
+  cI.addEventListener('change',function(){this.value=Math.max(1,Math.min(50,parseFloat(this.value)||8));updC();});
+  cI.addEventListener('input',updC);
+
+  setupGrp('grp-ev','btn-active-violet',function(v){S.evOn=v==='1';document.getElementById('ev-options').classList.toggle('hidden',!S.evOn);recalc();});
+  setupGrp('grp-ev-power','btn-active-violet',function(v){S.evPower=parseFloat(v);recalc();});
+  setupGrp('grp-ev-hour','btn-active-violet',function(v){S.evHour=parseInt(v);recalc();});
+  setupGrp('grp-ev-kwh','btn-active-violet',function(v){S.evKwh=parseInt(v);recalc();});
+
+  var sl=document.getElementById('slider-time');
+  sl.addEventListener('input',function(){S.step=parseInt(this.value);if(S.playing){S.playing=false;clearInterval(S.timer);updPlay();}render();});
+
+  document.getElementById('btn-play').addEventListener('click',function(){
+    if(S.playing){S.playing=false;clearInterval(S.timer);}
+    else{S.playing=true;if(S.step>=95)S.step=0;S.timer=setInterval(function(){S.step++;if(S.step>95){S.step=95;S.playing=false;clearInterval(S.timer);updPlay();return;}sl.value=S.step;render();},120);}
+    updPlay();
+  });
+  document.getElementById('btn-reset').addEventListener('click',function(){S.step=0;S.playing=false;clearInterval(S.timer);sl.value=0;updPlay();render();});
+
+  recalc();
+}
+
+function updPlay(){
+  var b=document.getElementById('btn-play');
+  if(S.playing){b.textContent='⏸ Pause';b.className='px-4 py-1.5 rounded-lg text-xs font-medium bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30';}
+  else{b.textContent='▶ Simuler 24 h';b.className='px-4 py-1.5 rounded-lg text-xs font-medium bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30';}
+}
+
+document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+</body>
+</html>
