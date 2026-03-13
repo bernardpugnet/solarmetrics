@@ -50,9 +50,11 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Quel est le coût d'une installation solaire en Allemagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Le CAPEX varie de 700-1800 €/kWp selon le segment (utility-scale, commercial, résidentiel). Les coûts sont influencés par la taille du projet, les réglementations locales et les conditions de raccordement." } },
-        { "@type": "Question", "name": "Quelle est la taille du marché solaire en Allemagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Allemagne dispose de 82 GW de capacité photovoltaïque installée, ce qui en fait l'un des principaux marchés européens." } },
-        { "@type": "Question", "name": "Comment évolue le marché solaire en Allemagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Le marché est en forte croissance avec +14 GW en 2025. Les politiques de soutien, la compétitivité croissante du solaire et les objectifs climatiques européens stimulent les investissements." } }
+        { "@type": "Question", "name": "Comment fonctionne le système EEG pour le solaire en Allemagne ?", "acceptedAnswer": { "@type": "Answer", "text": "L'EEG attribue un soutien via enchères pour les projets >750 kWp, avec une Marktprämie sur 20 ans. Les installations plus petites bénéficient d'un tarif d'achat fixe (Einspeisevergütung). Le Solarpaket I de 2024 a simplifié les démarches." } },
+        { "@type": "Question", "name": "Pourquoi y a-t-il autant d'heures à prix négatif en Allemagne ?", "acceptedAnswer": { "@type": "Answer", "text": "La combinaison de 96 GW de PV et ~70 GW d'éolien crée des surplus massifs. Le réseau congestionné empêche l'export vers les zones déficitaires, générant 400+ heures à prix négatif en 2024." } },
+        { "@type": "Question", "name": "Qu'est-ce qu'un Balkonkraftwerk et est-ce rentable ?", "acceptedAnswer": { "@type": "Answer", "text": "Un kit solaire enfichable de 600-800 W, installable sans autorisation depuis le Solarpaket I. Coût : 300-800 €. Retour sur investissement en 3-5 ans avec un prix de l'électricité résidentiel de ~0,30 €/kWh." } },
+        { "@type": "Question", "name": "La cannibalisation menace-t-elle la rentabilité du solaire allemand ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, le capture price ratio solaire est passé de ~90 % en 2020 à 60-70 % en 2024. La rentabilité dépend de plus en plus du stockage ou de PPA avec floor price." } },
+        { "@type": "Question", "name": "Quelle différence entre le WACC allemand et français pour le solaire ?", "acceptedAnswer": { "@type": "Answer", "text": "Le WACC allemand (3,5-5,0 %) est légèrement supérieur au français (3,0-4,5 %) pour le utility-scale, en raison d'un risque prix plus élevé lié aux prix négatifs et à la cannibalisation." } }
       ]
     }
     </script>
@@ -407,86 +409,210 @@ abbr[title]:hover::after {
             <span class="text-slate-300">Marché Allemagne</span>
         </nav>
 
-        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Marché Solaire Allemagne | Données & Benchmarks 2026</h1>
-        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">Allemagne est l'un des marchés solaires majeurs en Europe avec 82 GW de capacité photovoltaïque installée. La croissance récente (+14 GW en 2025) confirme la dynamique du marché. Cette page rassemble les principaux indicateurs économiques du solaire en Allemagne.</p>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Marché Solaire Allemagne 2026 — <abbr title="Erneuerbare-Energien-Gesetz, loi sur les énergies renouvelables">EEG</abbr>, prix négatifs et Energiewende</h1>
+        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">L'Allemagne est le plus grand marché solaire d'Europe avec environ 96 GW installés fin 2024 (source : Bundesnetzagentur, Marktstammdatenregister). Le pays a raccordé 16,2 GW en 2024, un record historique, porté par le boom du résidentiel et des Balkonkraftwerke. Le Solarpaket I (mai 2024) et l'objectif officiel de 215 GW PV d'ici 2040 confirment l'ambition. Mais cette croissance massive génère des tensions croissantes : plus de 400 heures à prix négatif en 2024, un capture price solaire en chute, et une congestion réseau Nord-Sud structurelle.</p>
 
-        <!-- Key Metrics -->
+        <!-- Key Figures Bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">~96 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Capacité installée fin 2024</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">16,2 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Raccordés en 2024 (record)</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">400+ h</div>
+                <div class="text-xs text-slate-400 mt-1">Heures à prix négatif en 2024</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">215 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Objectif 2040</div>
+            </div>
+        </div>
+
+        <!-- Economic Benchmarks -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Indicateurs clés</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Benchmarks économiques du solaire en Allemagne</h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-800">
                             <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Indicateur</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Valeur</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial / Toiture</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Résidentiel</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">CAPEX (fourchette)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">700-1800 €/kWp</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-capex-europe.html" class="hover:text-amber-400">CAPEX</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">650-850 €/kWp</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">800-1 200 €/kWp</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">1 200-1 800 €/kWp</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">LCOE (fourchette)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35-130 €/MWh</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-lcoe-europe.html" class="hover:text-amber-400">LCOE</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">45-65 €/MWh</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60-95 €/MWh</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">85-130 €/MWh</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Capacité installée</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">82 GW</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-wacc-europe.html" class="hover:text-amber-400">WACC</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">3,5-5,0 %</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">4,5-6,0 %</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">N/A (fonds propres)</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Croissance récente</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">+14 GW en 2025</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-ppa-prices-europe.html" class="hover:text-amber-400">PPA corporate</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800" colspan="3">55-80 €/MWh (7-12 ans, pay-as-produced dominant)</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Prix PPA (utility)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55-85 €/MWh</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Tarif EEG (enchères sol)</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800" colspan="3">52-65 €/MWh (Marktprämie 20 ans, enchères Bundesnetzagentur)</td>
+                        </tr>
+                        <tr class="bg-slate-900/50">
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-opex-europe.html" class="hover:text-amber-400">OPEX</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">8-11 €/kWp/an</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">11-16 €/kWp/an</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">12-20 €/kWp/an</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : Mars 2026.</p>
+            <p class="text-xs text-slate-500 mt-3">Sources : Bundesnetzagentur, Fraunhofer ISE, IRENA WETO 2024, BloombergNEF. Données indicatives, mars 2026.</p>
+        </section>
+
+        <!-- Regulatory Framework -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Cadre réglementaire allemand</h2>
+            <div class="space-y-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">EEG et Marktprämie — le modèle historique</h3>
+                    <p class="text-slate-400 leading-relaxed">L'Erneuerbare-Energien-Gesetz (EEG) est le cadre juridique central du solaire allemand depuis 2000. Depuis 2017, le soutien aux projets >750 kWp passe par des enchères compétitives (Ausschreibungen) gérées par la Bundesnetzagentur. Les lauréats reçoivent une prime de marché (Marktprämie) sur 20 ans : le producteur vend sur le marché spot et reçoit un complément jusqu'au prix garanti. Le LCOE moyen des enchères 2024 se situe autour de 52-65 €/MWh. Depuis le Solarpaket I (mai 2024), les projets résidentiels ≤ 30 kWp bénéficient d'un processus simplifié et les Balkonkraftwerke (≤ 800 W) sont autorisés sans formalités complexes.</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Solarpaket I et objectif 215 GW</h3>
+                    <p class="text-slate-400 leading-relaxed">Adopté en mai 2024, le Solarpaket I vise à accélérer les déploiements en simplifiant les procédures : raccordement facilité pour les petites installations, assouplissement du Direktvermarktung pour les ≤ 100 kWp, et introduction du « Gemeinschaftliche Gebäudeversorgung » (autoconsommation collective en immeuble). L'objectif officiel est de 215 GW PV d'ici 2040, ce qui implique un rythme d'installation de 15-22 GW/an sur les 15 prochaines années. Le rythme actuel (~16 GW/an) est dans le bas de cette fourchette.</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Balkonkraftwerke — le phénomène résidentiel</h3>
+                    <p class="text-slate-400 leading-relaxed">L'Allemagne est le marché leader en Europe pour les kits solaires enfichables (Balkonkraftwerke). En 2024, plus de 700 000 nouveaux systèmes ont été enregistrés au Marktstammdatenregister, portant le parc total à environ 1,5 million d'unités. La puissance autorisée est passée à 800 W onduleur (2 kWp modules) avec le Solarpaket I. Ce segment ne contribue que marginalement en GW (~1 GW cumulé), mais il transforme le rapport des ménages à l'énergie et crée un effet d'entraînement sur l'autoconsommation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Negative Prices & Cannibalization -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Prix négatifs et cannibalisation — le défi central</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">L'Allemagne est le pays européen le plus exposé au phénomène des <a href="/fr/data-negative-prices.html" class="text-amber-400 hover:text-amber-300">prix négatifs</a>. En 2024, le day-ahead EPEX Spot a enregistré plus de 400 heures à prix négatifs (contre ~300 en 2023 et ~70 en 2021). La cause : la combinaison de forte production solaire + éolienne, de surcapacité de génération conventionnelle, et d'un réseau de transport congestionné entre le nord éolien et le sud consommateur.</p>
+                <p class="text-slate-400 leading-relaxed mb-4">Conséquence directe : le <a href="/fr/data-market-power.html" class="text-amber-400 hover:text-amber-300">capture price ratio</a> solaire s'effondre. En 2024, le solaire allemand ne capte en moyenne que 60-70 % du prix baseload annuel. Cette érosion affecte les revenus des projets merchant et met sous pression les PPA : les offtakers intègrent de plus en plus le risque de cannibalisation dans les prix proposés.</p>
+                <p class="text-slate-400 leading-relaxed">Point réglementaire clé : depuis début 2024, les installations sous EEG ne reçoivent plus de Marktprämie pendant les heures où les prix sont négatifs pendant 4 heures consécutives ou plus (règle du § 51 EEG). Plus les heures négatives augmentent, plus l'impact financier est significatif pour les producteurs.</p>
+            </div>
+        </section>
+
+        <!-- Strengths & Weaknesses -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Forces et faiblesses du marché allemand</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-green-400 mb-3">Forces</h3>
+                    <ul class="text-slate-400 space-y-2">
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Plus grand marché PV d'Europe — effet d'échelle sur toute la chaîne de valeur (installateurs, financeurs, EPC)</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>CAPEX utility-scale parmi les plus compétitifs d'Europe (650-850 €/kWp) grâce à la concurrence et aux volumes</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Cadre EEG mature et prévisible — marché très bancable pour le financement de projet</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Marché PPA corporate dynamique — les industriels allemands sont parmi les plus actifs en Europe</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Innovation : leader européen du stockage résidentiel (>1 million de systèmes), Balkonkraftwerke, agri-PV</span></li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-red-400 mb-3">Faiblesses et risques</h3>
+                    <ul class="text-slate-400 space-y-2">
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Cannibalisation avancée : 400+ heures à prix négatif, capture price ratio solaire en baisse continue (60-70 %)</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Congestion réseau Nord-Sud structurelle — les SuedLink et SuedOstLink (HVDC) ne seront opérationnels qu'en 2028-2030</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Irradiation limitée : 900-1 150 kWh/kWp, un des niveaux les plus bas d'Europe, LCOE structurellement supérieur à l'Espagne ou l'Italie du Sud</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Sortie du nucléaire (avril 2023) = plus de flexibilité de base, augmentation de la dépendance au gaz pour le backup</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>§ 51 EEG : perte de revenus croissante pendant les épisodes de prix négatifs prolongés</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Context -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Réseau et congestion Nord-Sud</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">Le réseau allemand souffre d'un déséquilibre structurel : la production éolienne est concentrée au nord (mer du Nord, Schleswig-Holstein, Niedersachsen) tandis que la consommation industrielle est au sud (Bavière, Bade-Wurtemberg). Les lignes HVDC prévues pour résoudre ce goulet — SuedLink (4 GW) et SuedOstLink (2 GW) — ne seront opérationnelles qu'en 2028-2030 après des retards répétés.</p>
+                <p class="text-slate-400 leading-relaxed mb-4">En attendant, les coûts de Redispatch (réacheminement de l'électricité pour éviter les surcharges) atteignent 3-4 Md€/an, financés par les gestionnaires de réseau (TenneT, 50Hertz, Amprion, TransnetBW) et répercutés sur les consommateurs via les Netzentgelte.</p>
+                <p class="text-slate-400 leading-relaxed">Pour le solaire spécifiquement, la situation est paradoxale : le PV est réparti plus uniformément que l'éolien (forte croissance en Bavière et en NRW), mais la production simultanée à midi crée des pics de surplus dans toutes les zones, alimentant les prix négatifs. Le développement du stockage (résidentiel + grid-scale) et du Vehicle-to-Grid est considéré comme un levier clé pour absorber ces surplus.</p>
+            </div>
         </section>
 
         <!-- FAQ -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">FAQ</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">FAQ — Marché solaire Allemagne</h2>
             <div class="space-y-4">
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel est le coût d'une installation solaire en Allemagne ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le CAPEX varie de 700-1800 €/kWp selon le segment (utility-scale, commercial, résidentiel). Les coûts sont influencés par la taille du projet, les réglementations locales et les conditions de raccordement.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment fonctionne le système EEG pour le solaire en Allemagne ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">L'EEG attribue un soutien via enchères (Ausschreibungen) pour les projets >750 kWp. Les lauréats reçoivent une Marktprämie (prime de marché) sur 20 ans : ils vendent l'électricité sur le spot EPEX et reçoivent un complément jusqu'au prix d'enchère garanti. Pour les installations ≤ 750 kWp, le tarif d'achat est fixé administrativement (Einspeisevergütung). Le Solarpaket I de 2024 a simplifié les démarches pour les petites installations.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle est la taille du marché solaire en Allemagne ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Allemagne dispose de 82 GW de capacité photovoltaïque installée, ce qui en fait l'un des principaux marchés européens.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Pourquoi y a-t-il autant d'heures à prix négatif en Allemagne ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">La combinaison de 96 GW de PV et ~70 GW d'éolien crée des surplus massifs lors des journées ensoleillées et ventées. Le parc conventionnel (charbon, gaz) manque de flexibilité pour réduire rapidement, et le réseau congestionné empêche d'exporter ces surplus vers les zones déficitaires. Résultat : les prix EPEX Spot passent en territoire négatif (400+ heures en 2024), signalant une surabondance structurelle à certaines heures.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment évolue le marché solaire en Allemagne ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le marché est en forte croissance avec +14 GW en 2025. Les politiques de soutien, la compétitivité croissante du solaire et les objectifs climatiques européens stimulent les investissements.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Qu'est-ce qu'un Balkonkraftwerk et est-ce rentable ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Un Balkonkraftwerk est un kit solaire enfichable (1-2 panneaux, micro-onduleur, prise) installable sans autorisation depuis le Solarpaket I. Coût : 300-800 € pour 600-800 W. Avec un prix de l'électricité résidentiel autour de 0,30 €/kWh en Allemagne, le retour sur investissement est de 3-5 ans. En 2024, plus de 700 000 systèmes ont été enregistrés, portant le total à environ 1,5 million. L'impact en GW reste marginal (~1 GW), mais l'effet démocratisant sur l'énergie est significatif.</div>
                 </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">La cannibalisation menace-t-elle la rentabilité du solaire allemand ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Oui, c'est le principal risque financier. Le <a href="/fr/data-market-power.html" class="text-amber-400 hover:text-amber-300">capture price ratio</a> solaire est passé de ~90 % en 2020 à 60-70 % en 2024. Cela signifie que le solaire ne capte qu'une fraction décroissante du prix baseload. Pour les projets merchant, la rentabilité dépend de plus en plus du stockage (batteries, V2G) ou de PPA avec floor price. Le §51 EEG aggrave le problème en supprimant la prime pendant les heures à prix négatifs prolongés.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle différence entre le WACC allemand et français pour le solaire ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le <a href="/fr/data-wacc-europe.html" class="text-amber-400 hover:text-amber-300">WACC allemand</a> (3,5-5,0 %) est légèrement supérieur au français (3,0-4,5 %) pour le utility-scale. La différence s'explique par un risque prix plus élevé en Allemagne (prix négatifs, cannibalisation), malgré un cadre bancaire tout aussi mature. Les projets EEG sous enchères bénéficient d'un profil de risque proche du CfD français, mais le risque de volume (§51 EEG) crée un écart marginal.</div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Sources -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Sources et méthodologie</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">Les données de cette page proviennent de sources publiques institutionnelles :</p>
+                <ul class="text-slate-400 space-y-2">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>Bundesnetzagentur — Marktstammdatenregister, résultats d'enchères EEG</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>Fraunhofer ISE — Studie Stromgestehungskosten, Energy Charts</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>EPEX Spot / ENTSO-E Transparency — données de marché day-ahead, heures négatives</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>IRENA — World Energy Transitions Outlook, Renewable Cost Database</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>BMWi (Bundesministerium für Wirtschaft) — Solarpaket I, EEG Novelle</span></li>
+                </ul>
+                <p class="text-xs text-slate-500 mt-4">Dernière mise à jour : Mars 2026. Les fourchettes reflètent la diversité des segments et localisations. Consultez nos <a href="/fr/data-benchmarks.html" class="text-amber-400 hover:text-amber-300">pages benchmark détaillées</a> pour des données plus granulaires.</p>
             </div>
         </section>
 
         <!-- Pillar links -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Données solaires Europe</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Explorer les données solaires Europe</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <a href="/fr/data-capex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
-                <a href="/fr/data-opex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">OPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'installation par pays →</p>
+                </a>
                 <a href="/fr/data-lcoe-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût complet de l'énergie →</p>
+                </a>
                 <a href="/fr/data-ppa-prices-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">Prix PPA Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">Prix PPA Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Contrats d'achat corporate →</p>
+                </a>
+                <a href="/fr/data-negative-prices.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
+                    <span class="text-amber-400 font-semibold">Prix Négatifs Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Impact sur les revenus solaires →</p>
+                </a>
             </div>
         </section>
 
@@ -494,9 +620,9 @@ abbr[title]:hover::after {
         <section class="mb-16">
             <h2 class="text-2xl font-bold text-white mb-6">Autres marchés européens</h2>
             <div class="flex flex-wrap gap-4">
-                <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300 transition">France</a>
-                <a href="/fr/solar-market-spain.html" class="text-amber-400 hover:text-amber-300 transition">Espagne</a>
-                <a href="/fr/solar-market-italy.html" class="text-amber-400 hover:text-amber-300 transition">Italie</a>
+                <a href="/fr/solar-market-france.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">France — CRE, PPE3, grid nucléaire</a>
+                <a href="/fr/solar-market-spain.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">Espagne — LCOE le plus bas, PPAs merchant</a>
+                <a href="/fr/solar-market-italy.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">Italie — FER 2, clivage Nord-Sud</a>
             </div>
         </section>
     </main>
