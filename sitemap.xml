@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <!-- FR Pages -->
+  <!-- ROOT redirect page -->
+  <url>
+    <loc>https://www.solardataatlas.com/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ═══════════════ FR Pages ═══════════════ -->
   <url>
     <loc>https://www.solardataatlas.com/fr/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
@@ -15,7 +27,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/technologies"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -23,7 +36,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/economie"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/economy"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/economie"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -31,7 +45,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/marches"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/markets"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/marches"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -39,7 +54,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ia-data"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/ai-data"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ia-data"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -47,15 +63,43 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-industriel"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-industrial"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-industriel"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/outils</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/outils-simulation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/simulateur-flux-24h</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/simulateur-flux-24h"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/simulateur-flux-24h"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/etude-de-cas</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/case-study"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -63,7 +107,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ressources"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/resources"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ressources"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -71,7 +116,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/hire-me"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
@@ -79,21 +125,89 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/contact"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/contact"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/contact"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/prix-solaire</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/prix-solaire"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-prices"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/prix-solaire"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/hypotheses</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/hypotheses"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/assumptions"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/hypotheses"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/guide-installation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/guide-installation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/installation-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/guide-installation"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/comparateur</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparateur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/comparator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparateur"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/comparatif-pays</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/country-comparison"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/technologies-emergentes</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/emerging-technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/risques-bankability</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/risques-bankability"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/risks-bankability"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/risques-bankability"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/recyclage-fin-de-vie</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/recycling-end-of-life"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/veille-reglementaire</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/regulatory-watch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -101,7 +215,8 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-plug-and-play"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
@@ -109,306 +224,72 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-large-installation"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/guide-installation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/guide-installation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/guide-installation"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/comparateur</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparateur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparateur"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/technologies-emergentes</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/risques-bankability</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/risques-bankability"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/risques-bankability"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/comparatif-pays</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/recyclage-fin-de-vie</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/veille-reglementaire</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/widgets</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/widgets"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/widgets"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/widgets"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/vehicle-to-grid</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/vehicle-to-grid"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/centrales-virtuelles</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/virtual-power-plants"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/fr/mon-solaire-60s</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-in-60s"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- EN Pages -->
-  <url>
-    <loc>https://www.solardataatlas.com/en/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/technologies</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/technologies"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/economy</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/economy"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/economie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/economie"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/markets</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/markets"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/marches"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/marches"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/ai-data</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/ai-data"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ia-data"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ia-data"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/tools-industrial</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-industrial"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-industriel"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-industriel"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/case-study</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/case-study"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/resources</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/resources"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ressources"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ressources"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/hire-me</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/hire-me"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/contact</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/contact"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/contact"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <!-- Simulateur -->
-  <url>
-    <loc>https://www.solardataatlas.com/fr/outils-simulation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation"/>
-    <lastmod>2026-03-10</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/tools-simulation</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation"/>
-    <lastmod>2026-03-10</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <!-- Simulateur flux 24h (FR only for now) -->
-  <url>
-    <loc>https://www.solardataatlas.com/fr/simulateur-flux-24h</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/simulateur-flux-24h"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/simulateur-flux-24h"/>
-    <lastmod>2026-03-12</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <!-- Physique PV (FR only) -->
   <url>
     <loc>https://www.solardataatlas.com/fr/physique-electricite-ferme-photovoltaique</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/physique-electricite-ferme-photovoltaique"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/physique-electricite-ferme-photovoltaique"/>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Hub pages: Analyses (FR) / Insights (EN) -->
+
+  <!-- FR Analyses hub + articles -->
   <url>
     <loc>https://www.solardataatlas.com/fr/analyses/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/insights/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <!-- Data pages (FR only, no EN counterpart yet) -->
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-benchmarks</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
-    <lastmod>2026-03-10</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-market-power</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-market-power"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-market-power"/>
-    <lastmod>2026-03-10</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-capex-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-capex-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-capex-europe"/>
-    <lastmod>2026-03-10</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-degradation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-degradation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-degradation"/>
-    <lastmod>2026-03-10</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-opex-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-opex-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-opex-europe"/>
-    <lastmod>2026-03-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-pr-loss-stack</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-pr-loss-stack"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-pr-loss-stack"/>
-    <lastmod>2026-03-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-wacc-europe</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-wacc-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-wacc-europe"/>
-    <lastmod>2026-03-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/fr/data-negative-prices</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-negative-prices"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-negative-prices"/>
-    <lastmod>2026-03-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <!-- EN Data pages -->
-  <url>
-    <loc>https://www.solardataatlas.com/en/data-benchmarks</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-benchmarks"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
-    <lastmod>2026-03-12</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/data-market-power</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-market-power"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-market-power"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-market-power"/>
-    <lastmod>2026-03-12</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <!-- Analysis articles -->
   <url>
     <loc>https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-lcoe-europe"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/insights/solar-lcoe-europe</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-lcoe-europe"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -416,40 +297,195 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
-    <lastmod>2026-03-05</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- FR Data pages -->
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-benchmarks</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-benchmarks"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-market-power</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-market-power"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-market-power"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-market-power"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-capex-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-capex-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-capex-europe"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-opex-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-opex-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-opex-europe"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-wacc-europe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-wacc-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-wacc-europe"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/fr/data-degradation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-degradation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-degradation"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
-    <lastmod>2026-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <!-- New EN pages (2026-03-07) -->
-  <url>
-    <loc>https://www.solardataatlas.com/en/comparator</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/comparator"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparateur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparateur"/>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://www.solardataatlas.com/fr/data-pr-loss-stack</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-pr-loss-stack"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-pr-loss-stack"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.solardataatlas.com/en/installation-guide</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/installation-guide"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/guide-installation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/guide-installation"/>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://www.solardataatlas.com/fr/data-negative-prices</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-negative-prices"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-negative-prices"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ═══════════════ EN Pages ═══════════════ -->
+  <url>
+    <loc>https://www.solardataatlas.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/technologies</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/economy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/economy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/economie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/economie"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/markets</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/markets"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/marches"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/marches"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/ai-data</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/ai-data"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ia-data"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ia-data"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/tools-industrial</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-industrial"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-industriel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-industriel"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/tools</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/tools-simulation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/case-study</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/case-study"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/etude-de-cas"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/resources</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/resources"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/ressources"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/ressources"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/hire-me</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/hire-me"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recrutez-moi"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/contact"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/en/solar-prices</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-prices"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/prix-solaire"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/prix-solaire"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -457,15 +493,44 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/assumptions"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/hypotheses"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/hypotheses"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/installation-guide</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/installation-guide"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/guide-installation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/guide-installation"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/comparator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/comparator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparateur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparateur"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/country-comparison</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/country-comparison"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/en/emerging-technologies</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/emerging-technologies"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/technologies-emergentes"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -473,23 +538,17 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/risks-bankability"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/risques-bankability"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/risques-bankability"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/country-comparison</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/country-comparison"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/comparatif-pays"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.solardataatlas.com/en/recycling-end-of-life</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/recycling-end-of-life"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/recyclage-fin-de-vie"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -497,39 +556,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/regulatory-watch"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/veille-reglementaire"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/solar-in-60s</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-in-60s"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/widgets</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/widgets"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/widgets"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/widgets"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/vehicle-to-grid</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/vehicle-to-grid"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
-    <lastmod>2026-03-07</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.solardataatlas.com/en/virtual-power-plants</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/virtual-power-plants"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -537,7 +565,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-plug-and-play"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-plug-and-play"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
@@ -545,7 +574,93 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/schema-large-installation"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/schema-grande-installation"/>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/widgets</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/widgets"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/widgets"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/widgets"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/vehicle-to-grid</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/vehicle-to-grid"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/vehicle-to-grid"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/virtual-power-plants</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/virtual-power-plants"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/centrales-virtuelles"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/solar-in-60s</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/solar-in-60s"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/mon-solaire-60s"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- EN Insights hub + articles -->
+  <url>
+    <loc>https://www.solardataatlas.com/en/insights/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/insights/solar-lcoe-europe</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-lcoe-europe"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/lcoe-solaire-europe"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/insights/solar-ppa-prices-europe"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/analyses/prix-ppa-solaire-europe"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- EN Data pages -->
+  <url>
+    <loc>https://www.solardataatlas.com/en/data-benchmarks</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-benchmarks"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-benchmarks"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.solardataatlas.com/en/data-market-power</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-market-power"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-market-power"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/data-market-power"/>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar Simulator - SolarMetrics</title>
+    <title>Solar Simulator - Solar Data Atlas</title>
     <meta name="description" content="Unified solar simulator: estimate the profitability and self-consumption of your photovoltaic installation. Quick and detailed mode with battery.">
     <meta name="keywords" content="solar simulator, LCOE calculator, self-consumption simulation, PVGIS, PV profitability">
     <meta name="author" content="Bernard Pugnet">
@@ -14,8 +14,8 @@
     <link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/fr/outils-simulation">    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.solardataatlas.com/en/tools-simulation">
-    <meta property="og:site_name" content="SolarMetrics">
-    <meta property="og:title" content="Solar Simulator - SolarMetrics">
+    <meta property="og:site_name" content="Solar Data Atlas">
+    <meta property="og:title" content="Solar Simulator - Solar Data Atlas">
     <meta property="og:description" content="Unified solar simulator: estimate the profitability and self-consumption of your photovoltaic installation. Quick and detailed mode with battery.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
     <meta property="og:locale:alternate" content="fr_FR">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Solar Simulator - SolarMetrics">
+    <meta name="twitter:title" content="Solar Simulator - Solar Data Atlas">
     <meta name="twitter:description" content="Unified solar simulator: estimate the profitability and self-consumption of your photovoltaic installation. Quick and detailed mode with battery.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <!-- Structured Data (JSON-LD) -->
@@ -32,7 +32,7 @@
       {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Solar Simulator - SolarMetrics",
+      "name": "Solar Simulator - Solar Data Atlas",
       "url": "https://www.solardataatlas.com/en/tools-simulation",
       "description": "Unified solar simulator: estimate the profitability and self-consumption of your photovoltaic installation. Quick and detailed mode with battery.",
       "author": {
@@ -43,7 +43,7 @@
       },
       "isPartOf": {
             "@type": "WebSite",
-            "name": "SolarMetrics",
+            "name": "Solar Data Atlas",
             "url": "https://www.solardataatlas.com/en/"
       },
       "inLanguage": "en"
@@ -110,7 +110,7 @@
                     <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     </div>
-                    <span class="text-xl font-bold text-white">SolarMetrics</span>
+                    <span class="text-xl font-bold text-white">Solar Data Atlas</span>
                 </a>
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-sm transition-colors">Home</a>
@@ -920,7 +920,7 @@
 
     <footer class="bg-slate-900 border-t border-slate-800 py-8 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-sm">
-            SolarMetrics © 2024-2026 · Bernard Pugnet
+            Solar Data Atlas © 2024-2026 · Bernard Pugnet
         </div>
     </footer>
 
@@ -1653,7 +1653,7 @@
             <p>Your installation avoids the emission of <strong>${co2} kg of CO₂ per year</strong>, calculated from the emission factor of your country's electricity mix. Over 25 years, this represents approximately <strong>${(parseFloat(co2.replace(/,/g,'').replace(' ','')) * 25 / 1000).toFixed(1)} tonnes of CO₂</strong> avoided.</p>
 
             <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600/50">
-                <p class="text-xs text-slate-400"><strong>Note:</strong> This report is an indicative estimate based on PVGIS data (European Commission) and country-average parameters. Actual results may vary depending on shading, installation quality, weather conditions, and tariff changes. Report generated on ${new Date().toLocaleDateString('en-US')} by SolarMetrics.</p>
+                <p class="text-xs text-slate-400"><strong>Note:</strong> This report is an indicative estimate based on PVGIS data (European Commission) and country-average parameters. Actual results may vary depending on shading, installation quality, weather conditions, and tariff changes. Report generated on ${new Date().toLocaleDateString('en-US')} by Solar Data Atlas.</p>
             </div>`;
 
             document.getElementById('reportContent').innerHTML = html;
@@ -1675,7 +1675,7 @@
 
             // Header
             doc.setFontSize(22); doc.setTextColor(245, 158, 11);
-            doc.text('SolarMetrics', 14, y); y += 8;
+            doc.text('Solar Data Atlas', 14, y); y += 8;
             doc.setFontSize(12); doc.setTextColor(100, 116, 139);
             doc.text('Solar Simulation Report', 14, y); y += 4;
             doc.setFontSize(8);
@@ -1771,7 +1771,7 @@
             // Footer
             y += 6; checkPage();
             doc.setFontSize(7); doc.setTextColor(150, 150, 150);
-            doc.text('SolarMetrics © 2024-2026 · Bernard Pugnet · Data: PVGIS/NREL · Indicative simulation, non-contractual.', 14, y);
+            doc.text('Solar Data Atlas © 2024-2026 · Bernard Pugnet · Data: PVGIS/NREL · Indicative simulation, non-contractual.', 14, y);
 
             doc.save('solarmetrics-report.pdf');
             } catch(e) {
