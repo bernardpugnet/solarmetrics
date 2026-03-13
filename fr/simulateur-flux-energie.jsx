@@ -646,7 +646,7 @@ export default function SolarFlowSimulator() {
 
         {/* Footer */}
         <div className="text-center text-xs text-slate-600">
-          SolarMetrics © 2026 — Schéma informatif, consultez un professionnel pour votre installation
+          Solar Data Atlas © 2026 — Schéma informatif, consultez un professionnel pour votre installation
         </div>
       </div>
     </div>
