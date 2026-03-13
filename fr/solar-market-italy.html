@@ -50,9 +50,11 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Quel est le coût d'une installation solaire en Italie ?", "acceptedAnswer": { "@type": "Answer", "text": "Le CAPEX varie de 650-1500 €/kWp selon le segment (utility-scale, commercial, résidentiel). Les coûts sont influencés par la taille du projet, les réglementations locales et les conditions de raccordement." } },
-        { "@type": "Question", "name": "Quelle est la taille du marché solaire en Italie ?", "acceptedAnswer": { "@type": "Answer", "text": "Italie dispose de 33 GW de capacité photovoltaïque installée, ce qui en fait l'un des principaux marchés européens." } },
-        { "@type": "Question", "name": "Comment évolue le marché solaire en Italie ?", "acceptedAnswer": { "@type": "Answer", "text": "Le marché est en forte croissance avec +5.6 GW en 2025. Les politiques de soutien, la compétitivité croissante du solaire et les objectifs climatiques européens stimulent les investissements." } }
+        { "@type": "Question", "name": "Pourquoi le WACC solaire est-il si élevé en Italie ?", "acceptedAnswer": { "@type": "Answer", "text": "Le WACC italien (5-7 %) est le plus élevé d'Europe occidentale, en raison du risque souverain (rating BBB), de la complexité administrative et d'un historique de changements réglementaires rétroactifs." } },
+        { "@type": "Question", "name": "Qu'est-ce que le décret FER 2 et en quoi change-t-il le marché ?", "acceptedAnswer": { "@type": "Answer", "text": "Le FER 2 (2024) est le nouveau cadre d'enchères pour le utility-scale italien, avec un tarif incitatif sur 20 ans. Les premiers prix résultants (65-80 €/MWh) sont plus élevés que chez les voisins." } },
+        { "@type": "Question", "name": "Quel impact a eu le Superbonus 110 % sur le marché solaire italien ?", "acceptedAnswer": { "@type": "Answer", "text": "Le Superbonus a provoqué un boom du résidentiel avec 3+ GW/an, mais aussi une inflation du CAPEX et des fraudes. Le marché est en phase de normalisation depuis le retrait progressif." } },
+        { "@type": "Question", "name": "Pourquoi y a-t-il un tel écart de LCOE entre le nord et le sud de l'Italie ?", "acceptedAnswer": { "@type": "Answer", "text": "L'irradiation varie de 1 100-1 300 kWh/kWp au nord à 1 500-1 900 kWh/kWp au sud. Un projet en Sicile produit 40-60 % d'énergie de plus qu'en Lombardie." } },
+        { "@type": "Question", "name": "L'Italie peut-elle atteindre 80 GW solaires d'ici 2030 ?", "acceptedAnswer": { "@type": "Answer", "text": "Depuis ~33 GW fin 2024, atteindre 80 GW exige ~8 GW/an, un rythme supérieur au record 2024. Le permitting (VIA, Soprintendenze) et la file Terna (300+ GW) sont les principaux obstacles." } }
       ]
     }
     </script>
@@ -407,86 +409,199 @@ abbr[title]:hover::after {
             <span class="text-slate-300">Marché Italie</span>
         </nav>
 
-        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Marché Solaire Italie | Données & Benchmarks 2026</h1>
-        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">Italie est l'un des marchés solaires majeurs en Europe avec 33 GW de capacité photovoltaïque installée. La croissance récente (+5.6 GW en 2025) confirme la dynamique du marché. Cette page rassemble les principaux indicateurs économiques du solaire en Italie.</p>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Marché Solaire Italie 2026 — FER 2, clivage Nord-Sud et héritage Superbonus</h1>
+        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">L'Italie cumule environ 33 GW de capacité PV installée fin 2024 (source : Terna, GSE), avec un rythme de raccordement en forte accélération (5,5 GW en 2024 vs 2,5 GW en 2022). Le marché italien se distingue par un clivage géographique marqué entre le nord industriel et le sud ensoleillé, un WACC parmi les plus élevés d'Europe occidentale (5-7 %), et un cadre réglementaire en transition (décret FER 2). L'héritage du Superbonus 110 % a dopé le résidentiel mais créé des distorsions que le marché absorbe encore.</p>
 
-        <!-- Key Metrics -->
+        <!-- Key Figures Bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">~33 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Capacité installée fin 2024</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">5,5 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Raccordés en 2024</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">5-7 %</div>
+                <div class="text-xs text-slate-400 mt-1">WACC utility-scale typique</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">~80 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Objectif PNIEC révisé 2030</div>
+            </div>
+        </div>
+
+        <!-- Economic Benchmarks -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Indicateurs clés</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Benchmarks économiques du solaire en Italie</h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-800">
                             <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Indicateur</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Valeur</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial / Toiture</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Résidentiel</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">CAPEX (fourchette)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">650-1500 €/kWp</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-capex-europe.html" class="hover:text-amber-400">CAPEX</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">650-900 €/kWp</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">850-1 300 €/kWp</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">1 300-1 800 €/kWp</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">LCOE (fourchette)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">30-115 €/MWh</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-lcoe-europe.html" class="hover:text-amber-400">LCOE</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">30-55 €/MWh (sud) / 45-75 €/MWh (nord)</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50-90 €/MWh</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">75-115 €/MWh</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Capacité installée</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">33 GW</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-wacc-europe.html" class="hover:text-amber-400">WACC</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">5,0-7,0 %</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">6,0-8,0 %</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">N/A (fonds propres)</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Croissance récente</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">+5.6 GW en 2025</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-ppa-prices-europe.html" class="hover:text-amber-400">PPA corporate</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800" colspan="3">48-75 €/MWh (7-10 ans, marché moins mature que l'Espagne, croissance rapide)</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Prix PPA (utility)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48-78 €/MWh</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">FER 2 (enchères)</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800" colspan="3">65-80 €/MWh (tarif incentivante 20 ans, premières enchères 2024-2025)</td>
+                        </tr>
+                        <tr class="bg-slate-900/50">
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-opex-europe.html" class="hover:text-amber-400">OPEX</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">9-13 €/kWp/an</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">12-18 €/kWp/an</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">14-22 €/kWp/an</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : Mars 2026.</p>
+            <p class="text-xs text-slate-500 mt-3">Sources : GSE, Terna, ARERA, IRENA, BloombergNEF. Données indicatives, mars 2026.</p>
+        </section>
+
+        <!-- Regulatory Framework -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Cadre réglementaire italien</h2>
+            <div class="space-y-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Décret FER 2 — le nouveau cadre de soutien</h3>
+                    <p class="text-slate-400 leading-relaxed">Le décret FER 2 (Fonti Energetiche Rinnovabili), adopté en 2024, remplace le cadre FER 1 pour les projets utility-scale. Il prévoit des enchères gérées par le GSE (Gestore dei Servizi Energetici) avec un tarif incitatif (tariffa incentivante) sur 20 ans. Les premiers résultats portent sur des prix de 65-80 €/MWh, significativement plus élevés que les enchères espagnoles (25-35 €/MWh) ou françaises (55-70 €/MWh). Cet écart reflète le WACC italien plus élevé et les coûts de permitting supérieurs, mais aussi la volonté de stimuler des installations dans des zones moins favorables (nord).</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Héritage Superbonus 110 %</h3>
+                    <p class="text-slate-400 leading-relaxed">Le Superbonus 110 % (2020-2023, progressivement réduit depuis) a été le moteur principal de la croissance PV résidentielle italienne. Ce dispositif permettait une déduction fiscale de 110 % du coût d'installation, effectivement rendant les installations gratuites (voire profitables grâce à la cession du crédit d'impôt). Résultat : une explosion du résidentiel (+3 GW/an sur 2022-2023), mais aussi des effets pervers — inflation des prix CAPEX, fraudes documentées par la Guardia di Finanza, et saturation du marché résidentiel. Depuis la réduction du bonus à 70 % puis sa fin programmée, le marché résidentiel se normalise mais à un rythme nettement inférieur.</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Agrivoltaico et aree idonee</h3>
+                    <p class="text-slate-400 leading-relaxed">L'Italie a identifié des « aree idonee » (zones adaptées) pour le développement solaire, avec des procédures d'autorisation simplifiées. Le dispositif agrivoltaico offre des incitations spécifiques pour les installations surélevées sur terres agricoles (conditions : maintien de l'activité agricole sur 70 % minimum de la surface, hauteur minimale de 2,1 m). Ce cadre est particulièrement pertinent dans le sud (Sicile, Pouilles, Sardaigne) où le foncier agricole est abondant et l'irradiation excellente (1 500-1 900 kWh/kWp).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- North-South Divide -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Le clivage Nord-Sud — deux marchés en un</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">L'Italie est le seul grand marché solaire européen où le LCOE varie d'un facteur presque 2× entre le nord et le sud du même pays. En Lombardie ou Vénétie (nord), l'irradiation se limite à 1 100-1 300 kWh/kWp — comparable à l'Allemagne. En Sicile, Pouilles ou Sardaigne, elle atteint 1 500-1 900 kWh/kWp — proche de l'Espagne. Cette différence se traduit directement dans le LCOE : 45-75 €/MWh au nord contre 30-55 €/MWh au sud.</p>
+                <p class="text-slate-400 leading-relaxed mb-4">Paradoxalement, la consommation électrique est concentrée au nord (plaine du Pô, triangle industriel Milan-Turin-Gênes), tandis que le potentiel solaire optimal est au sud. Le réseau Terna doit donc transporter l'énergie du sud vers le nord, créant des contraintes de congestion similaires au problème nord-sud allemand (mais inversé).</p>
+                <p class="text-slate-400 leading-relaxed">Le marché des prix zonaux (PUN remplacé par des prix nodaux en discussion) refléterait mieux cette réalité. Actuellement, le PUN (Prezzo Unico Nazionale) est un prix moyen qui masque les différences entre zones et réduit les signaux d'investissement locaux.</p>
+            </div>
+        </section>
+
+        <!-- Strengths & Weaknesses -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Forces et faiblesses du marché italien</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-green-400 mb-3">Forces</h3>
+                    <ul class="text-slate-400 space-y-2">
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Excellent gisement solaire dans le sud (1 500-1 900 kWh/kWp), comparable à l'Espagne dans les meilleures zones</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Prix de l'électricité résidentiel élevé (0,25-0,30 €/kWh) — autoconsommation très rentable sans subvention</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Cadre FER 2 + agrivoltaico offrant des incitations claires pour le utility-scale</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Marché PPA en développement rapide — les industriels italiens commencent à signer des contrats long terme</span></li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-red-400 mb-3">Faiblesses et risques</h3>
+                    <ul class="text-slate-400 space-y-2">
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span><a href="/fr/data-wacc-europe.html" class="text-amber-400 hover:text-amber-300">WACC le plus élevé</a> d'Europe occidentale (5-7 %) — rating souverain BBB, complexité administrative, risque politique perçu</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Permitting lent et complexe : procédures VIA (Valutazione Impatto Ambientale), Soprintendenze (patrimoine paysager), 18-36 mois pour le utility-scale</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>File d'attente Terna massive : plus de 300 GW de demandes de raccordement en attente (pour ~80 GW objectif), dont une majorité ne sera jamais réalisée</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Distorsions post-Superbonus : CAPEX résidentiel artificiellement gonflé, marché installateurs en contraction</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Congestion réseau sud→nord et interconnexions limitées avec le reste de l'Europe (sauf Autriche/Suisse)</span></li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <!-- FAQ -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">FAQ</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">FAQ — Marché solaire Italie</h2>
             <div class="space-y-4">
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel est le coût d'une installation solaire en Italie ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le CAPEX varie de 650-1500 €/kWp selon le segment (utility-scale, commercial, résidentiel). Les coûts sont influencés par la taille du projet, les réglementations locales et les conditions de raccordement.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Pourquoi le WACC solaire est-il si élevé en Italie ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le <a href="/fr/data-wacc-europe.html" class="text-amber-400 hover:text-amber-300">WACC italien</a> (5-7 %) est le plus élevé d'Europe occidentale pour le solaire. Trois facteurs l'expliquent : le risque souverain (rating BBB, spread de 100-150 bp vs Bund), la complexité administrative (permitting long et incertain), et un historique de changements réglementaires rétroactifs (coupes sur les tarifs Conto Energia en 2014). Les investisseurs exigent une prime de risque supérieure pour compenser cette incertitude.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle est la taille du marché solaire en Italie ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Italie dispose de 33 GW de capacité photovoltaïque installée, ce qui en fait l'un des principaux marchés européens.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Qu'est-ce que le décret FER 2 et en quoi change-t-il le marché ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le FER 2 (2024) est le nouveau cadre d'enchères pour les projets utility-scale. Il attribue un tarif incitatif (tariffa incentivante) sur 20 ans via des enchères gérées par le GSE. Les premiers prix résultants (65-80 €/MWh) sont plus élevés que dans les pays voisins, reflétant les coûts et risques spécifiques au marché italien. Le FER 2 cible un déploiement de 5-7 GW/an supplémentaires pour atteindre l'objectif PNIEC de ~80 GW d'ici 2030.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment évolue le marché solaire en Italie ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le marché est en forte croissance avec +5.6 GW en 2025. Les politiques de soutien, la compétitivité croissante du solaire et les objectifs climatiques européens stimulent les investissements.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel impact a eu le Superbonus 110 % sur le marché solaire italien ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le Superbonus (2020-2023) a provoqué un boom du résidentiel avec 3+ GW/an d'installations. Mais il a aussi engendré une inflation du CAPEX résidentiel (installateurs en position de force), des fraudes estimées à plusieurs milliards d'euros, et un effet « falaise » lors de son retrait progressif (2024). Le marché résidentiel est en phase de normalisation, avec des volumes en baisse mais des prix plus sains.</div>
                 </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Pourquoi y a-t-il un tel écart de LCOE entre le nord et le sud de l'Italie ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">L'irradiation varie de 1 100-1 300 kWh/kWp en Lombardie/Vénétie à 1 500-1 900 kWh/kWp en Sicile/Pouilles. À CAPEX égal, un projet en Sicile produit 40-60 % d'énergie de plus qu'un projet en Lombardie, ce qui se traduit par un <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE</a> de 30-55 €/MWh au sud contre 45-75 €/MWh au nord. Ce clivage fait de l'Italie deux marchés solaires distincts en termes de compétitivité.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">L'Italie peut-elle atteindre 80 GW solaires d'ici 2030 ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Depuis ~33 GW fin 2024, atteindre 80 GW en 2030 exige ~8 GW/an, soit un rythme supérieur au record de 2024 (5,5 GW). Le défi principal est le permitting : les procédures VIA et les interventions des Soprintendenze rallongent les délais à 18-36 mois. La file d'attente Terna (300+ GW de demandes) crée un engorgement supplémentaire. L'objectif est ambitieux et peu probable d'être atteint dans les délais sans réforme significative du processus d'autorisation.</div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Sources -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Sources et méthodologie</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">Les données de cette page proviennent de sources publiques institutionnelles :</p>
+                <ul class="text-slate-400 space-y-2">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>GSE (Gestore dei Servizi Energetici) — Rapporto Statistico, résultats enchères FER</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>Terna — Dati statistici sull'energia elettrica, file d'attente raccordement</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>ARERA — Prix de l'électricité, tarifs réseau</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>MASE (Ministero dell'Ambiente) — PNIEC révisé, décret FER 2</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>IRENA — Renewable Cost Database, LCOE benchmarks</span></li>
+                </ul>
+                <p class="text-xs text-slate-500 mt-4">Dernière mise à jour : Mars 2026. Consultez nos <a href="/fr/data-benchmarks.html" class="text-amber-400 hover:text-amber-300">pages benchmark détaillées</a> pour des données plus granulaires.</p>
             </div>
         </section>
 
         <!-- Pillar links -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Données solaires Europe</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Explorer les données solaires Europe</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <a href="/fr/data-capex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
-                <a href="/fr/data-opex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">OPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'installation par pays →</p>
+                </a>
                 <a href="/fr/data-lcoe-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût complet de l'énergie →</p>
+                </a>
+                <a href="/fr/data-wacc-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
+                    <span class="text-amber-400 font-semibold">WACC Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût du capital par pays →</p>
+                </a>
                 <a href="/fr/data-ppa-prices-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">Prix PPA Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">Prix PPA Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Contrats d'achat corporate →</p>
+                </a>
             </div>
         </section>
 
@@ -494,9 +609,9 @@ abbr[title]:hover::after {
         <section class="mb-16">
             <h2 class="text-2xl font-bold text-white mb-6">Autres marchés européens</h2>
             <div class="flex flex-wrap gap-4">
-                <a href="/fr/solar-market-germany.html" class="text-amber-400 hover:text-amber-300 transition">Allemagne</a>
-                <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300 transition">France</a>
-                <a href="/fr/solar-market-spain.html" class="text-amber-400 hover:text-amber-300 transition">Espagne</a>
+                <a href="/fr/solar-market-france.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">France — CRE, PPE3, grid nucléaire</a>
+                <a href="/fr/solar-market-germany.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">Allemagne — EEG, prix négatifs, 96 GW</a>
+                <a href="/fr/solar-market-spain.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">Espagne — LCOE le plus bas, PPAs merchant</a>
             </div>
         </section>
     </main>
