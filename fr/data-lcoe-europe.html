@@ -50,11 +50,13 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Qu'est-ce que le LCOE solaire ?", "acceptedAnswer": { "@type": "Answer", "text": "Le LCOE (Levelized Cost of Energy) est le coût actualisé de l'énergie produite sur la durée de vie d'une installation solaire. Il intègre le CAPEX, l'OPEX, le rendement et le taux d'actualisation." } },
-        { "@type": "Question", "name": "Quels pays ont le LCOE le plus bas en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "L'Espagne et le Portugal affichent les valeurs les plus basses d'Europe grâce à un fort ensoleillement, des coûts de main-d'œuvre compétitifs et un marché mature." } },
-        { "@type": "Question", "name": "Comment évolue le LCOE solaire en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "La tendance est globalement à la baisse grâce aux économies d'échelle, à l'amélioration technologique et à la concurrence accrue. La baisse est plus marquée sur le segment utility-scale." } },
-        { "@type": "Question", "name": "Quelle est la source des données ?", "acceptedAnswer": { "@type": "Answer", "text": "Les données proviennent de Lazard LCOE Analysis v17, IRENA Power Generation Costs 2025, Fraunhofer ISE LCOE Study 2025, JRC Science for Policy Report. Toutes les sources sont publiques et vérifiables." } },
-        { "@type": "Question", "name": "À quelle fréquence les données sont-elles mises à jour ?", "acceptedAnswer": { "@type": "Answer", "text": "Les données sont mises à jour annuellement (T1) à partir des publications des sources institutionnelles." } }
+        { "@type": "Question", "name": "Qu'est-ce que le LCOE solaire ?", "acceptedAnswer": { "@type": "Answer", "text": "Le LCOE (Levelized Cost of Energy) est le coût actualisé de l'énergie produite sur la durée de vie d'une installation solaire. Il intègre le CAPEX (investissement initial), l'OPEX (maintenance, assurance), le rendement du site et le taux d'actualisation (WACC). C'est l'indicateur standard utilisé par les investisseurs et les institutions pour comparer les technologies de production d'électricité." } },
+        { "@type": "Question", "name": "Quels pays ont le LCOE le plus bas en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "Le Portugal (22-36 €/MWh) et l'Espagne (24-38 €/MWh) affichent les LCOE utility-scale les plus bas d'Europe grâce à une irradiation solaire élevée (1 700+ kWh/m²/an), des coûts de main-d'œuvre compétitifs et des marchés matures avec des volumes importants." } },
+        { "@type": "Question", "name": "Pourquoi le LCOE résidentiel est-il 2 à 3 fois plus élevé que l'utility-scale ?", "acceptedAnswer": { "@type": "Answer", "text": "Trois facteurs : le CAPEX par kWc est plus élevé sur les petites installations (1 200-1 800 €/kWc vs 650-900 €/kWc), l'OPEX relatif est plus important, et le Performance Ratio est inférieur en raison des ombrages et orientations non optimales sur les toitures." } },
+        { "@type": "Question", "name": "Quel est l'impact du WACC sur le LCOE ?", "acceptedAnswer": { "@type": "Answer", "text": "Selon Fraunhofer ISE, une augmentation de 1 point de WACC entraîne une hausse de 5 à 8 % du LCOE. En Europe, le WACC varie de 3,5 % en Allemagne à 8 % en Grèce ou en Pologne." } },
+        { "@type": "Question", "name": "Comment évolue le LCOE solaire en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "La tendance est à la baisse depuis 2010 (-89 % selon IRENA). Le rythme ralentit : environ -5 %/an sur 2023-2025, contre -15 %/an sur 2015-2020. Les gains futurs viendront de l'amélioration des rendements modules (TOPCon/HJT) et de la baisse des coûts BOS." } },
+        { "@type": "Question", "name": "D'où viennent les données de cette page ?", "acceptedAnswer": { "@type": "Answer", "text": "Les données sont croisées à partir de quatre sources institutionnelles publiques : Lazard LCOE Analysis v17, IRENA Renewable Power Generation Costs 2025, Fraunhofer ISE LCOE Study 2025 et JRC Science for Policy Report. Mise à jour annuelle au T1." } },
+        { "@type": "Question", "name": "Le LCOE inclut-il les subventions ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Le LCOE présenté est un coût brut, avant toute aide publique (crédit d'impôt, tarif de rachat, prime à l'autoconsommation). Ce choix méthodologique permet une comparaison objective entre pays." } }
       ]
     }
     </script>
@@ -413,149 +415,316 @@ abbr[title]:hover::after {
         <!-- H1 -->
         <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">LCOE Solaire Europe | Coût de l'Énergie Photovoltaïque 2026</h1>
 
-        <!-- Intro -->
-        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">Cette page présente les données de LCOE solaire Europe pour les principaux marchés européens. Les valeurs sont exprimées en €/MWh et couvrent trois segments : utility-scale (>1 MW), commercial (100 kW-1 MW) et résidentiel (<100 kW). Les données sont compilées à partir de sources publiques (Lazard LCOE Analysis v17, IRENA Power Generation Costs 2025) et mises à jour annuellement.</p>
+        <!-- Intro enrichie -->
+        <div class="max-w-4xl mb-12">
+            <p class="text-lg text-slate-300 leading-relaxed mb-4">Le <abbr title="Levelized Cost of Energy — coût actualisé de l'énergie sur la durée de vie d'une installation">LCOE</abbr> est l'indicateur central pour comparer la compétitivité du solaire photovoltaïque entre pays et entre technologies. Il exprime le coût total de production d'un MWh sur la durée de vie de l'installation, en intégrant l'investissement initial (<a href="/fr/data-capex-europe.html" class="text-amber-400 hover:text-amber-300">CAPEX</a>), les coûts d'exploitation (<a href="/fr/data-opex-europe.html" class="text-amber-400 hover:text-amber-300">OPEX</a>), le rendement du site et le coût du capital (<a href="/fr/data-wacc.html" class="text-amber-400 hover:text-amber-300">WACC</a>).</p>
+            <p class="text-base text-slate-400 leading-relaxed mb-4">En 2025, le LCOE utility-scale en Europe varie de 22 €/MWh au Portugal à 62 €/MWh en Belgique selon <a href="https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">IRENA (2025)</a>. Cet écart de 1 à 3 s'explique principalement par trois facteurs : l'irradiation solaire (de 900 kWh/m²/an au nord à 1 800+ au sud), le coût du capital (WACC de 3,5 % en Allemagne contre 7-9 % en Grèce ou Pologne) et les économies d'échelle propres à chaque marché.</p>
+            <p class="text-base text-slate-400 leading-relaxed">Cette page couvre 10 marchés européens sur trois segments : utility-scale (&gt;1 MW), commercial (100 kW–1 MW) et résidentiel (&lt;100 kW). Les données sont compilées annuellement à partir de quatre sources institutionnelles vérifiables (voir <a href="#methodology" class="text-amber-400 hover:text-amber-300">méthodologie</a>).</p>
+        </div>
+
+        <!-- Key figures cards -->
+        <section class="mb-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-amber-400">22–62</p>
+                    <p class="text-sm text-slate-400 mt-1">€/MWh utility-scale</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Fourchette Europe 2025</p>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-green-400">-89 %</p>
+                    <p class="text-sm text-slate-400 mt-1">Baisse depuis 2010</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Source : IRENA 2025</p>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-cyan-400">10</p>
+                    <p class="text-sm text-slate-400 mt-1">Marchés couverts</p>
+                    <p class="text-xs text-slate-500 mt-0.5">3 segments par pays</p>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-orange-400">4</p>
+                    <p class="text-sm text-slate-400 mt-1">Sources institutionnelles</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Lazard · IRENA · ISE · JRC</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Data Table -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Comparatif par pays (€/MWh)</h2>
+        <section class="mb-16" id="data-table">
+            <h2 class="text-2xl font-bold text-white mb-2">Comparatif LCOE par pays et par segment (€/MWh)</h2>
+            <p class="text-sm text-slate-400 mb-6">Fourchettes basses et hautes reflétant les conditions locales (irradiation, WACC, coûts de main-d'œuvre). Tri par LCOE utility-scale croissant.</p>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-800">
                             <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Pays</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Résidentiel</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale<br><span class="text-xs font-normal text-slate-500">&gt;1 MW</span></th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial<br><span class="text-xs font-normal text-slate-500">100 kW–1 MW</span></th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Résidentiel<br><span class="text-xs font-normal text-slate-500">&lt;100 kW</span></th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Facteur clé</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Allemagne</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35-55</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50-75</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">80-130</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-portugal.html" class="hover:text-amber-400 transition">Portugal</a></td>
+                            <td class="px-4 py-3 text-green-400 font-medium border-b border-slate-800">22–36</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">33–52</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55–95</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Irradiation 1 700+ kWh/m²</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">France</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">38-58</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55-80</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">85-140</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-spain.html" class="hover:text-amber-400 transition">Espagne</a></td>
+                            <td class="px-4 py-3 text-green-400 font-medium border-b border-slate-800">24–38</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35–55</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60–100</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Marché mature, main-d'œuvre compétitive</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Espagne</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">24-38</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35-55</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60-100</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Grèce</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">25–40</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">36–56</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60–100</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Fort ensoleillement, WACC élevé</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Italie</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">30-48</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">42-65</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">70-115</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-italy.html" class="hover:text-amber-400 transition">Italie</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">30–48</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">42–65</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">70–115</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Nord/Sud très contrasté</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Pays-Bas</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">40-60</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55-80</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">85-135</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-germany.html" class="hover:text-amber-400 transition">Allemagne</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35–55</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50–75</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">80–130</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">WACC bas (3,5 %), irradiation modérée</td>
                         </tr>
                         <tr class="bg-slate-900/50">
                             <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Pologne</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35-52</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48-70</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">75-120</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">35–52</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48–70</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">75–120</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Croissance rapide, coûts en baisse</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Portugal</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">22-36</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">33-52</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55-95</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-france.html" class="hover:text-amber-400 transition">France</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">38–58</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55–80</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">85–140</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">31 GW installés, WACC modéré</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Grèce</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">25-40</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">36-56</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60-100</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Autriche</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">38–56</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">52–76</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">82–130</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Irradiation alpine variable</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Autriche</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">38-56</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">52-76</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">82-130</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Pays-Bas</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">40–60</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55–80</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">85–135</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Irradiation faible, WACC bas</td>
                         </tr>
                         <tr class="bg-slate-900/50">
                             <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Belgique</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">42-62</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58-82</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">88-140</td>
+                            <td class="px-4 py-3 text-orange-400 font-medium border-b border-slate-800">42–62</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58–82</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">88–140</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Faible irradiation, marché petit</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : Mars 2026. Valeurs indicatives, fourchettes par segment.</p>
+            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : mars 2026. Valeurs indicatives en €/MWh, fourchettes par segment. Sources : Lazard v17, IRENA 2025, Fraunhofer ISE 2025. Voir <a href="#methodology" class="text-cyan-500 hover:text-cyan-400">méthodologie</a> ci-dessous.</p>
         </section>
 
-        <!-- Methodology -->
-        <section class="mb-16 bg-slate-900 rounded-xl p-8 border border-slate-800">
-            <h2 class="text-2xl font-bold text-white mb-4">Méthodologie & Sources</h2>
-            <p class="text-slate-400 leading-relaxed">Les données présentées sont issues de sources publiques et institutionnelles. Les fourchettes reflètent la variabilité par pays, par taille de projet et par conditions locales. Les valeurs ne constituent pas des recommandations d'investissement. Sources principales : Lazard LCOE Analysis v17, IRENA Power Generation Costs 2025, Fraunhofer ISE LCOE Study 2025, JRC Science for Policy Report.</p>
-        </section>
-
-        <!-- FAQ -->
+        <!-- Analysis section (NEW) -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">FAQ</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Analyse : pourquoi le LCOE varie autant en Europe</h2>
+            <div class="space-y-8 max-w-4xl">
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">L'irradiation solaire : le facteur dominant</h3>
+                    <p class="text-slate-400 leading-relaxed">Le facteur de capacité d'une installation solaire dépend directement de l'irradiation globale horizontale (GHI). En Europe, cette valeur varie de ~900 kWh/m²/an en Scandinavie à plus de 1 800 kWh/m²/an dans le sud de l'Espagne ou en Crète. Selon le <a href="https://re.jrc.ec.europa.eu/pvg_tools/en/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">JRC PVGIS</a>, une installation identique (même CAPEX, même WACC) produit environ 70 % d'énergie en plus à Séville qu'à Amsterdam. Ce différentiel se traduit mécaniquement par un LCOE 40 à 50 % plus bas pour les pays méditerranéens.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Le coût du capital (WACC) : le facteur sous-estimé</h3>
+                    <p class="text-slate-400 leading-relaxed">Le <a href="/fr/data-wacc.html" class="text-amber-400 hover:text-amber-300">WACC (Weighted Average Cost of Capital)</a> pèse lourdement sur le LCOE : selon <a href="https://www.ise.fraunhofer.de/en/publications/studies/cost-of-electricity.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">Fraunhofer ISE (2025)</a>, une augmentation de 1 point de WACC entraîne une hausse de 5 à 8 % du LCOE. En Allemagne, où le risque souverain est faible, le WACC solaire se situe autour de 3,5 %. En Grèce ou en Pologne, il dépasse souvent 7 %, ce qui annule en partie l'avantage d'ensoleillement de la Grèce. C'est pourquoi l'Italie du Nord (bon WACC, ensoleillement moyen) peut afficher un LCOE proche de la Grèce (WACC élevé, excellent ensoleillement).</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">L'effet segment : du simple au triple</h3>
+                    <p class="text-slate-400 leading-relaxed">Le LCOE résidentiel est en moyenne 2 à 3 fois supérieur au LCOE utility-scale dans un même pays. Ce différentiel tient à trois facteurs : le <a href="/fr/data-capex-europe.html" class="text-amber-400 hover:text-amber-300">CAPEX</a> par kWc est plus élevé sur les petites installations (650–900 €/kWc en utility-scale vs 1 200–1 800 €/kWc en résidentiel d'après <a href="https://www.lazard.com/research-insights/lcoe-levelized-cost-of-energy/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">Lazard v17</a>), l'<a href="/fr/data-opex-europe.html" class="text-amber-400 hover:text-amber-300">OPEX</a> relatif est plus élevé, et le Performance Ratio est généralement inférieur (ombrages, orientation non optimale). Ces données sont détaillées sur notre page <a href="/fr/data-benchmarks.html" class="text-amber-400 hover:text-amber-300">benchmarks projets solaires</a>.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Tendance 2020–2026 : une baisse continue mais qui ralentit</h3>
+                    <p class="text-slate-400 leading-relaxed">Selon IRENA, le LCOE moyen du solaire PV utility-scale a baissé de 89 % entre 2010 et 2024 au niveau mondial. En Europe, la baisse se poursuit mais ralentit : environ -5 % par an sur 2023-2025, contre -15 % par an sur 2015-2020. Ce ralentissement s'explique par la hausse temporaire des coûts des matériaux (polysilicium, acier, fret) en 2021-2022 et par le fait que les gains technologiques marginaux sont plus difficiles à obtenir. Le prix des modules est toutefois reparti à la baisse depuis mi-2023, avec des modules mono-PERC autour de 0,10–0,13 €/Wc en 2025.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LCOE Formula (NEW) -->
+        <section class="mb-16 bg-slate-800/40 border border-slate-700 rounded-xl p-8">
+            <h2 class="text-2xl font-bold text-white mb-4">Formule du LCOE</h2>
+            <div class="bg-slate-900 rounded-lg p-6 mb-6 font-mono text-center text-lg text-amber-400">
+                LCOE = &Sigma;<sub>t</sub> (CAPEX<sub>t</sub> + OPEX<sub>t</sub>) / (1+r)<sup>t</sup> &divide; &Sigma;<sub>t</sub> E<sub>t</sub> / (1+r)<sup>t</sup>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 text-sm text-slate-400">
+                <div>
+                    <p class="mb-2"><span class="text-white font-medium">CAPEX<sub>t</sub></span> — Dépenses d'investissement à l'année t (€). Inclut modules, onduleurs, structure, BOS, raccordement, développement. Voir <a href="/fr/data-capex-europe.html" class="text-amber-400 hover:text-amber-300">CAPEX par pays</a>.</p>
+                    <p class="mb-2"><span class="text-white font-medium">OPEX<sub>t</sub></span> — Coûts d'exploitation à l'année t (€/an). Maintenance, assurance, loyer foncier, monitoring. Voir <a href="/fr/data-opex-europe.html" class="text-amber-400 hover:text-amber-300">OPEX par pays</a>.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><span class="text-white font-medium">E<sub>t</sub></span> — Énergie produite à l'année t (MWh). Dépend de l'irradiation, du Performance Ratio et de la dégradation annuelle (0,4–0,7 %/an).</p>
+                    <p class="mb-2"><span class="text-white font-medium">r</span> — Taux d'actualisation (WACC). Voir <a href="/fr/data-wacc.html" class="text-amber-400 hover:text-amber-300">notre page WACC</a> pour les valeurs par pays et par segment.</p>
+                    <p><span class="text-white font-medium">t</span> — Année du projet (typiquement 25–30 ans pour le solaire PV).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology (EXPANDED) -->
+        <section class="mb-16 bg-slate-900 rounded-xl p-8 border border-slate-800" id="methodology">
+            <h2 class="text-2xl font-bold text-white mb-6">Méthodologie & Sources</h2>
+
+            <div class="space-y-6 text-slate-400 leading-relaxed">
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Pipeline de données</h3>
+                    <p>Les fourchettes LCOE présentées sont construites par croisement de quatre sources publiques institutionnelles, mises à jour annuellement (T1). Pour chaque couple pays × segment, nous retenons la fourchette basse et haute issue du consensus des sources disponibles. Les valeurs extrêmes (outliers) sont exclues. Les données en USD (Lazard) sont converties en EUR au taux moyen de l'année de publication.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Sources principales</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mt-3">
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">Lazard — LCOE Analysis v17</p>
+                            <p class="text-sm">Référence mondiale sur le coût de l'énergie. Couvre utility-scale et distributed generation. Données globales avec ajustements régionaux.</p>
+                            <a href="https://www.lazard.com/research-insights/lcoe-levelized-cost-of-energy/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 text-xs mt-2 inline-block">lazard.com →</a>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">IRENA — Renewable Power Generation Costs 2025</p>
+                            <p class="text-sm">Base de données la plus large sur les coûts renouvelables. Couverture mondiale, ventilation par pays et par technologie.</p>
+                            <a href="https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 text-xs mt-2 inline-block">irena.org →</a>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">Fraunhofer ISE — LCOE of Renewable Energy Technologies 2025</p>
+                            <p class="text-sm">Focus Europe, données très granulaires par segment. Intègre les coûts de financement locaux et les conditions d'irradiation régionales.</p>
+                            <a href="https://www.ise.fraunhofer.de/en/publications/studies/cost-of-electricity.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 text-xs mt-2 inline-block">ise.fraunhofer.de →</a>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">JRC — Science for Policy Report</p>
+                            <p class="text-sm">Commission européenne. Données utilisées pour la planification énergétique UE. Intègre PVGIS pour les rendements par localisation.</p>
+                            <a href="https://re.jrc.ec.europa.eu/pvg_tools/en/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 text-xs mt-2 inline-block">jrc.ec.europa.eu →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Hypothèses clés</h3>
+                    <p>Durée de vie : 25–30 ans. Dégradation annuelle : 0,4–0,7 %. Performance Ratio : 75–85 % selon le segment. Remplacement onduleurs : inclus à mi-vie (année 12–15). Coût de démantèlement : non inclus (généralement couvert par la valeur résiduelle du terrain). Subventions et crédits d'impôt : non inclus dans le LCOE (le LCOE reflète le coût brut avant aides publiques).</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Limites</h3>
+                    <p>Les fourchettes sont indicatives et ne remplacent pas un business plan détaillé. Les valeurs locales peuvent varier significativement en fonction du site exact, du montage financier et des conditions de raccordement. Les données ne constituent en aucun cas des recommandations d'investissement.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ (ENRICHED) -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Questions fréquentes</h2>
             <div class="space-y-4">
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
                     <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Qu'est-ce que le LCOE solaire ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le LCOE (Levelized Cost of Energy) est le coût actualisé de l'énergie produite sur la durée de vie d'une installation solaire. Il intègre le CAPEX, l'OPEX, le rendement et le taux d'actualisation.</div>
+                    <div class="px-6 pb-4 text-slate-400">Le LCOE (Levelized Cost of Energy) est le coût actualisé de l'énergie produite sur la durée de vie d'une installation solaire. Il intègre le <a href="/fr/data-capex-europe.html" class="text-amber-400 hover:text-amber-300">CAPEX</a> (investissement initial), l'<a href="/fr/data-opex-europe.html" class="text-amber-400 hover:text-amber-300">OPEX</a> (maintenance, assurance), le rendement du site et le taux d'actualisation (<a href="/fr/data-wacc.html" class="text-amber-400 hover:text-amber-300">WACC</a>). C'est l'indicateur standard utilisé par les investisseurs et les institutions pour comparer les technologies de production d'électricité.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
                     <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quels pays ont le LCOE le plus bas en Europe ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">L'Espagne et le Portugal affichent les valeurs les plus basses d'Europe grâce à un fort ensoleillement, des coûts de main-d'œuvre compétitifs et un marché mature.</div>
+                    <div class="px-6 pb-4 text-slate-400">Le Portugal (22–36 €/MWh) et l'Espagne (24–38 €/MWh) affichent les LCOE utility-scale les plus bas d'Europe. Ce résultat s'explique par une irradiation solaire élevée (1 700+ kWh/m²/an), des coûts de main-d'œuvre compétitifs et des marchés matures avec des volumes importants qui permettent des économies d'échelle. La Grèce et l'Italie du Sud suivent avec des valeurs proches.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Pourquoi le LCOE résidentiel est-il 2 à 3 fois plus élevé que l'utility-scale ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Trois facteurs principaux : le CAPEX par kWc est nettement plus élevé sur les petites installations (1 200–1 800 €/kWc en résidentiel vs 650–900 €/kWc en utility-scale), l'OPEX relatif est plus important (pas d'économies d'échelle sur la maintenance), et le Performance Ratio est généralement inférieur en raison des ombrages et orientations non optimales sur les toitures.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel est l'impact du WACC sur le LCOE ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le WACC a un impact très significatif : selon Fraunhofer ISE, une augmentation de 1 point de WACC entraîne une hausse de 5 à 8 % du LCOE. En Europe, le WACC varie de ~3,5 % en Allemagne à ~8 % en Grèce ou en Pologne. C'est ce qui explique que la Grèce, malgré un excellent ensoleillement, n'ait pas le LCOE le plus bas du continent. Consultez notre <a href="/fr/data-wacc.html" class="text-amber-400 hover:text-amber-300">page WACC dédiée</a> pour les détails par pays.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
                     <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment évolue le LCOE solaire en Europe ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">La tendance est globalement à la baisse grâce aux économies d'échelle, à l'amélioration technologique et à la concurrence accrue. La baisse est plus marquée sur le segment utility-scale.</div>
+                    <div class="px-6 pb-4 text-slate-400">La tendance est à la baisse depuis 2010 (-89 % selon IRENA). Le rythme ralentit cependant : environ -5 %/an sur 2023-2025, contre -15 %/an sur 2015-2020. Les gains futurs viendront principalement de l'amélioration des rendements modules (passage au TOPCon/HJT), de la baisse des coûts BOS et de l'optimisation des procédures de permitting qui réduisent les coûts de développement.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle est la source des données ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Les données proviennent de Lazard LCOE Analysis v17, IRENA Power Generation Costs 2025, Fraunhofer ISE LCOE Study 2025, JRC Science for Policy Report. Toutes les sources sont publiques et vérifiables.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">D'où viennent les données de cette page ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Les données sont croisées à partir de quatre sources institutionnelles publiques : Lazard LCOE Analysis v17, IRENA Renewable Power Generation Costs 2025, Fraunhofer ISE LCOE Study 2025 et JRC Science for Policy Report. Les liens vers chaque source sont disponibles dans la section <a href="#methodology" class="text-amber-400 hover:text-amber-300">Méthodologie</a> ci-dessus. Les données sont mises à jour annuellement au T1.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">À quelle fréquence les données sont-elles mises à jour ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Les données sont mises à jour annuellement (T1) à partir des publications des sources institutionnelles.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Le LCOE inclut-il les subventions ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Non. Le LCOE présenté ici est un coût brut, avant toute aide publique (crédit d'impôt, tarif de rachat, prime à l'autoconsommation). Ce choix méthodologique permet une comparaison objective entre pays. Pour les aides par pays, consultez nos pages marché : <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300">France</a>, <a href="/fr/solar-market-germany.html" class="text-amber-400 hover:text-amber-300">Allemagne</a>, <a href="/fr/solar-market-spain.html" class="text-amber-400 hover:text-amber-300">Espagne</a>, <a href="/fr/solar-market-italy.html" class="text-amber-400 hover:text-amber-300">Italie</a>.</div>
                 </details>
             </div>
         </section>
 
-        <!-- Explore by country -->
+        <!-- Explore by country (EXPANDED) -->
         <section class="mb-16">
             <h2 class="text-2xl font-bold text-white mb-6">Explorer par pays</h2>
-            <div class="flex flex-wrap gap-4">
-                <a href="/fr/solar-market-germany.html" class="text-amber-400 hover:text-amber-300 transition">Allemagne</a>
-                <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300 transition">France</a>
-                <a href="/fr/solar-market-spain.html" class="text-amber-400 hover:text-amber-300 transition">Espagne</a>
-                <a href="/fr/solar-market-italy.html" class="text-amber-400 hover:text-amber-300 transition">Italie</a>
+            <p class="text-slate-400 mb-4 text-sm">Pages dédiées avec capacité installée, cadre réglementaire, aides, perspectives de marché.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                <a href="/fr/solar-market-germany.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇩🇪</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Allemagne</p>
+                </a>
+                <a href="/fr/solar-market-france.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇫🇷</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">France</p>
+                </a>
+                <a href="/fr/solar-market-spain.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇪🇸</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Espagne</p>
+                </a>
+                <a href="/fr/solar-market-italy.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇮🇹</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Italie</p>
+                </a>
+                <a href="/fr/comparatif-pays-solaire.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇪🇺</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Comparatif</p>
+                </a>
             </div>
         </section>
 
-        <!-- Other metrics -->
+        <!-- Internal links (EXPANDED) -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Autres données solaires Europe</h2>
-            <div class="grid md:grid-cols-3 gap-4">
-                <a href="/fr/data-capex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Voir les données →</p>
-                    </a>
-                <a href="/fr/data-opex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">OPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Voir les données →</p>
-                    </a>
-                <a href="/fr/data-ppa-prices-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">Prix PPA Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Voir les données →</p>
-                    </a>
+            <h2 class="text-2xl font-bold text-white mb-6">Données complémentaires</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/fr/data-capex-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">CAPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'investissement par pays et segment — composante majeure du LCOE</p>
+                </a>
+                <a href="/fr/data-opex-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">OPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'exploitation et maintenance — second déterminant du LCOE</p>
+                </a>
+                <a href="/fr/data-wacc.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">WACC par pays</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût du capital par marché — impact de 5 à 8 % sur le LCOE par point</p>
+                </a>
+                <a href="/fr/data-ppa-prices-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">Prix PPA Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Contrats d'achat d'électricité — le LCOE se compare au PPA pour évaluer la rentabilité</p>
+                </a>
+                <a href="/fr/data-benchmarks.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">Benchmarks projets solaires</span>
+                    <p class="text-slate-400 text-sm mt-1">Vue synthétique CAPEX, OPEX, WACC, Performance Ratio, dégradation</p>
+                </a>
+                <a href="/fr/comparatif-pays-solaire.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">Comparatif pays</span>
+                    <p class="text-slate-400 text-sm mt-1">Classement multicritère des marchés solaires européens</p>
+                </a>
             </div>
         </section>
     </main>
