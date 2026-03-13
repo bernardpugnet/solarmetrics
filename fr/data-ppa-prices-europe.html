@@ -50,11 +50,13 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Qu'est-ce que le PPA solaire ?", "acceptedAnswer": { "@type": "Answer", "text": "Un PPA (Power Purchase Agreement) est un contrat d'achat d'énergie à long terme entre un producteur solaire et un acheteur (entreprise, collectivité). Le prix est fixé pour 10-25 ans." } },
-        { "@type": "Question", "name": "Quels pays ont le PPA le plus bas en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "L'Espagne et le Portugal affichent les valeurs les plus basses d'Europe grâce à un fort ensoleillement, des coûts de main-d'œuvre compétitifs et un marché mature." } },
-        { "@type": "Question", "name": "Comment évolue le PPA solaire en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "La tendance est globalement à la baisse grâce aux économies d'échelle, à l'amélioration technologique et à la concurrence accrue. La baisse est plus marquée sur le segment utility-scale." } },
-        { "@type": "Question", "name": "Quelle est la source des données ?", "acceptedAnswer": { "@type": "Answer", "text": "Les données proviennent de LevelTen Energy PPA Price Index Q4 2025, Pexapark PPA Tracker 2025, AFRY (ex-Pöyry) Market Reports, BloombergNEF (public summaries). Toutes les sources sont publiques et vérifiables." } },
-        { "@type": "Question", "name": "À quelle fréquence les données sont-elles mises à jour ?", "acceptedAnswer": { "@type": "Answer", "text": "Les données sont mises à jour annuellement (T1) à partir des publications des sources institutionnelles." } }
+        { "@type": "Question", "name": "Qu'est-ce qu'un PPA solaire ?", "acceptedAnswer": { "@type": "Answer", "text": "Un PPA (Power Purchase Agreement) est un contrat d'achat d'électricité à long terme (10-25 ans) entre un producteur solaire et un acheteur corporate. Le producteur s'engage à livrer de l'électricité à un prix fixe ou partiellement indexé, l'acheteur s'engage à l'acheter." } },
+        { "@type": "Question", "name": "Quels pays ont les PPA les moins chers en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "Le Portugal (30-45 €/MWh) et l'Espagne (32-48 €/MWh) affichent les PPA utility-scale les plus bas d'Europe, grâce à une irradiation élevée, des coûts compétitifs et une surcapacité sur le marché ibérique." } },
+        { "@type": "Question", "name": "Quelle est la différence entre PPA physique et PPA virtuel ?", "acceptedAnswer": { "@type": "Answer", "text": "Le PPA physique implique une livraison réelle d'électricité. Le PPA virtuel est un contrat pour différence sans livraison physique, basé sur l'écart entre le prix PPA et le prix de marché." } },
+        { "@type": "Question", "name": "Quel est le lien entre LCOE et prix PPA ?", "acceptedAnswer": { "@type": "Answer", "text": "Le prix PPA doit couvrir le LCOE du producteur pour que le projet soit viable. En pratique, le PPA se situe 3-10 €/MWh au-dessus du LCOE." } },
+        { "@type": "Question", "name": "Comment évolue le marché PPA en Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "Le volume de PPA signés en Europe a augmenté de +44 % en 2024 vs 2023. Les prix se normalisent après le pic de 2022-2023. Les durées raccourcissent vers 10-12 ans et les structures hybrides se développent." } },
+        { "@type": "Question", "name": "Pourquoi pas de PPA résidentiel ?", "acceptedAnswer": { "@type": "Answer", "text": "Le PPA est un instrument contractuel adapté aux grands volumes (>1 MW). Pour le résidentiel, l'équivalent est l'autoconsommation avec revente au tarif réglementé." } },
+        { "@type": "Question", "name": "D'où viennent les données ?", "acceptedAnswer": { "@type": "Answer", "text": "Les données sont croisées à partir de quatre sources : LevelTen Energy PPA Price Index Q4 2025, Pexapark PPA Tracker 2025, AFRY Market Reports et BloombergNEF. Mise à jour annuelle." } }
       ]
     }
     </script>
@@ -413,149 +415,314 @@ abbr[title]:hover::after {
         <!-- H1 -->
         <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Prix PPA Solaire Europe | Contrats d'Achat d'Énergie 2026</h1>
 
-        <!-- Intro -->
-        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">Cette page présente les données de PPA solaire Europe prix pour les principaux marchés européens. Les valeurs sont exprimées en €/MWh et couvrent trois segments : utility-scale (>1 MW), commercial (100 kW-1 MW) et résidentiel (<100 kW). Les données sont compilées à partir de sources publiques (LevelTen Energy PPA Price Index Q4 2025, Pexapark PPA Tracker 2025) et mises à jour annuellement.</p>
+        <!-- Intro enrichie -->
+        <div class="max-w-4xl mb-12">
+            <p class="text-lg text-slate-300 leading-relaxed mb-4">Le <abbr title="Power Purchase Agreement — contrat d'achat d'électricité à long terme entre un producteur et un acheteur">PPA</abbr> solaire est le mécanisme contractuel dominant pour les grandes centrales photovoltaïques en Europe. Il fixe un prix d'achat de l'électricité sur 10 à 25 ans entre un producteur et un acheteur corporate (entreprise, collectivité, industriel). Le prix PPA reflète directement la compétitivité du solaire sur un marché donné : il doit couvrir le <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE</a> du producteur tout en restant attractif par rapport aux prix de marché spot.</p>
+            <p class="text-base text-slate-400 leading-relaxed mb-4">En 2025, les prix PPA solaire utility-scale en Europe s'échelonnent de 30 €/MWh au Portugal à 75 €/MWh aux Pays-Bas selon <a href="https://www.leveltenenergy.com/ppa" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">LevelTen Energy (Q4 2025)</a>. L'écart entre les marchés ibériques et nord-européens s'est creusé en 2024-2025, en raison de l'augmentation des volumes contractés en Espagne/Portugal et de la surcapacité sur ces marchés qui tire les prix vers le bas.</p>
+            <p class="text-base text-slate-400 leading-relaxed">Cette page couvre 10 marchés européens sur deux segments : utility-scale (&gt;1 MW) et commercial (100 kW–1 MW). Les PPA résidentiels n'existent pas sous cette forme contractuelle — le segment résidentiel est couvert par l'autoconsommation et les tarifs de rachat réglementés. Données mises à jour annuellement à partir de quatre sources spécialisées (voir <a href="#methodology" class="text-amber-400 hover:text-amber-300">méthodologie</a>).</p>
+        </div>
+
+        <!-- Key figures cards -->
+        <section class="mb-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-amber-400">30–75</p>
+                    <p class="text-sm text-slate-400 mt-1">€/MWh utility-scale</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Fourchette Europe 2025</p>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-green-400">10–25</p>
+                    <p class="text-sm text-slate-400 mt-1">ans de durée</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Durée type des contrats</p>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-cyan-400">+44 %</p>
+                    <p class="text-sm text-slate-400 mt-1">Volume PPA 2024</p>
+                    <p class="text-xs text-slate-500 mt-0.5">vs 2023 en Europe (RE-Source)</p>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 text-center">
+                    <p class="text-3xl font-bold text-orange-400">4</p>
+                    <p class="text-sm text-slate-400 mt-1">Sources spécialisées</p>
+                    <p class="text-xs text-slate-500 mt-0.5">LevelTen · Pexapark · AFRY · BNEF</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Data Table -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Comparatif par pays (€/MWh)</h2>
+        <section class="mb-16" id="data-table">
+            <h2 class="text-2xl font-bold text-white mb-2">Prix PPA par pays et par segment (€/MWh)</h2>
+            <p class="text-sm text-slate-400 mb-6">Prix indicatifs pour des contrats 10-15 ans, projets en développement ou construction. Tri par prix utility-scale croissant. La colonne « Résidentiel » ne s'applique pas aux PPA (voir note ci-dessous).</p>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-800">
                             <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Pays</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">—</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale<br><span class="text-xs font-normal text-slate-500">&gt;1 MW</span></th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial<br><span class="text-xs font-normal text-slate-500">100 kW–1 MW</span></th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Tendance</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Contexte marché</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Allemagne</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55-72</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">65-85</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Portugal</td>
+                            <td class="px-4 py-3 text-green-400 font-medium border-b border-slate-800">30–45</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">40–58</td>
+                            <td class="px-4 py-3 text-red-400 text-sm border-b border-slate-800">↓ en baisse</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Surcapacité, volumes records</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">France</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50-68</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60-80</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-spain.html" class="hover:text-amber-400 transition">Espagne</a></td>
+                            <td class="px-4 py-3 text-green-400 font-medium border-b border-slate-800">32–48</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">42–60</td>
+                            <td class="px-4 py-3 text-red-400 text-sm border-b border-slate-800">↓ en baisse</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Plus gros volume PPA en Europe</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Espagne</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">32-48</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">42-60</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Grèce</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">38–52</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48–65</td>
+                            <td class="px-4 py-3 text-yellow-400 text-sm border-b border-slate-800">→ stable</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Marché naissant, risque élevé</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Italie</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48-65</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58-78</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-italy.html" class="hover:text-amber-400 transition">Italie</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48–65</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58–78</td>
+                            <td class="px-4 py-3 text-yellow-400 text-sm border-b border-slate-800">→ stable</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Prix soutenus par demande corp.</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Pays-Bas</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58-75</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">68-88</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-france.html" class="hover:text-amber-400 transition">France</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50–68</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60–80</td>
+                            <td class="px-4 py-3 text-red-400 text-sm border-b border-slate-800">↓ légère baisse</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Concurrence appels d'offres CRE</td>
                         </tr>
                         <tr class="bg-slate-900/50">
                             <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Pologne</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50-65</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60-78</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">50–65</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">60–78</td>
+                            <td class="px-4 py-3 text-red-400 text-sm border-b border-slate-800">↓ en baisse</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Croissance rapide, sortie charbon</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Portugal</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">30-45</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">40-58</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/solar-market-germany.html" class="hover:text-amber-400 transition">Allemagne</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55–72</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">65–85</td>
+                            <td class="px-4 py-3 text-yellow-400 text-sm border-b border-slate-800">→ stable</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Forte demande corporate</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Grèce</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">38-52</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">48-65</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Autriche</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55–70</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">65–82</td>
+                            <td class="px-4 py-3 text-yellow-400 text-sm border-b border-slate-800">→ stable</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Petit marché, liquidité faible</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Autriche</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">55-70</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">65-82</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Pays-Bas</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58–75</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">68–88</td>
+                            <td class="px-4 py-3 text-yellow-400 text-sm border-b border-slate-800">→ stable</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Congestion réseau, prix élevés</td>
                         </tr>
                         <tr class="bg-slate-900/50">
                             <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Belgique</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">58-74</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">68-86</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">—</td>
+                            <td class="px-4 py-3 text-orange-400 font-medium border-b border-slate-800">58–74</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">68–86</td>
+                            <td class="px-4 py-3 text-yellow-400 text-sm border-b border-slate-800">→ stable</td>
+                            <td class="px-4 py-3 text-slate-500 text-sm border-b border-slate-800">Marché petit, peu de PPA</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : Mars 2026. Valeurs indicatives, fourchettes par segment.</p>
+            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : mars 2026. Prix indicatifs en €/MWh pour contrats 10-15 ans. Sources : LevelTen Q4 2025, Pexapark 2025, AFRY. Voir <a href="#methodology" class="text-cyan-500 hover:text-cyan-400">méthodologie</a>.</p>
         </section>
 
-        <!-- Methodology -->
-        <section class="mb-16 bg-slate-900 rounded-xl p-8 border border-slate-800">
-            <h2 class="text-2xl font-bold text-white mb-4">Méthodologie & Sources</h2>
-            <p class="text-slate-400 leading-relaxed">Les données présentées sont issues de sources publiques et institutionnelles. Les fourchettes reflètent la variabilité par pays, par taille de projet et par conditions locales. Les valeurs ne constituent pas des recommandations d'investissement. Sources principales : LevelTen Energy PPA Price Index Q4 2025, Pexapark PPA Tracker 2025, AFRY (ex-Pöyry) Market Reports, BloombergNEF (public summaries).</p>
-        </section>
-
-        <!-- FAQ -->
+        <!-- Analysis section (NEW) -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">FAQ</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Analyse : comprendre le marché PPA solaire européen</h2>
+            <div class="space-y-8 max-w-4xl">
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">PPA vs LCOE : le spread de rentabilité</h3>
+                    <p class="text-slate-400 leading-relaxed">Le prix PPA doit se situer au-dessus du <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE</a> du producteur pour que le projet soit rentable. En pratique, le PPA intègre une marge de 3 à 10 €/MWh au-dessus du LCOE, plus une prime de risque liée à la durée du contrat et au profil de crédit de l'acheteur. En Espagne, où la concurrence est féroce, le spread PPA-LCOE se comprime autour de 5 €/MWh, contre 10-15 €/MWh dans les marchés moins liquides comme la Grèce ou l'Autriche.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">L'effet cannibalisation sur les prix PPA</h3>
+                    <p class="text-slate-400 leading-relaxed">La forte pénétration du solaire en Espagne et au Portugal crée un phénomène de cannibalisation : plus il y a de solaire installé, plus le prix spot aux heures solaires baisse, ce qui réduit la valeur du MWh solaire (le « capture price »). Selon <a href="https://pexapark.com/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">Pexapark (2025)</a>, le capture price solaire en Espagne est tombé à 70-75 % du prix baseload moyen en 2024. Ce phénomène se traduit par des prix PPA plus bas en Ibérie, mais aussi par un risque accru pour les investisseurs, ce qui pousse vers des structures contractuelles plus complexes (floor/cap, indexation partielle).</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Structures contractuelles dominantes</h3>
+                    <p class="text-slate-400 leading-relaxed">Le marché PPA européen propose plusieurs structures. Le PPA physique (livraison d'électricité au point de raccordement) reste dominant en Europe du Sud. Le PPA virtuel (ou financier, basé sur un contrat pour différence sans livraison physique) est plus courant en Europe du Nord, où il permet de contourner les contraintes de raccordement. Les durées se raccourcissent : de 15-20 ans il y a cinq ans, le standard évolue vers 10-12 ans, avec des contrats de 7 ans en Espagne. Les indexations partielles (lien avec l'inflation ou un indice de prix de marché) se développent pour partager le risque de prix entre producteur et acheteur.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Tendance 2023–2026 : normalisation post-crise énergétique</h3>
+                    <p class="text-slate-400 leading-relaxed">Les prix PPA solaires européens ont connu un pic en 2022-2023 dans le sillage de la crise énergétique, dépassant 80 €/MWh même en Espagne. Depuis mi-2023, les prix se normalisent progressivement avec la baisse des prix spot et la surcapacité solaire. Le volume total de PPA signés en Europe a cependant bondi de +44 % en 2024 vs 2023 selon RE-Source Platform, confirmant que la demande corporate pour l'électricité verte n'a pas faibli. L'Espagne concentre à elle seule plus de 30 % des volumes européens.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PPA vs other mechanisms (NEW) -->
+        <section class="mb-16 bg-slate-800/40 border border-slate-700 rounded-xl p-8">
+            <h2 class="text-2xl font-bold text-white mb-4">PPA vs autres mécanismes de commercialisation</h2>
+            <div class="grid md:grid-cols-3 gap-6 text-sm">
+                <div>
+                    <h3 class="text-white font-semibold mb-2">PPA corporate</h3>
+                    <p class="text-slate-400">Contrat bilatéral producteur-acheteur. Prix fixe ou partiellement indexé sur 10-25 ans. Le producteur a une visibilité de revenus, l'acheteur sécurise un coût d'énergie prévisible. Risque : solvabilité de l'acheteur.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-2">Tarif de rachat (FiT)</h3>
+                    <p class="text-slate-400">Prix garanti par l'État sur 15-20 ans. Sécurité maximale pour le producteur, mais disponibilité variable selon les pays. En France, les appels d'offres CRE proposent un « complément de rémunération » ajusté trimestriellement.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-2">Vente sur le marché spot</h3>
+                    <p class="text-slate-400">Vente directe sur le marché de gros. Aucune visibilité de prix à long terme. Convient aux marchés à prix élevé (Allemagne, Italie) mais risqué en raison de la cannibalisation et de la volatilité. Adapté aux projets amortis.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology (EXPANDED) -->
+        <section class="mb-16 bg-slate-900 rounded-xl p-8 border border-slate-800" id="methodology">
+            <h2 class="text-2xl font-bold text-white mb-6">Méthodologie & Sources</h2>
+
+            <div class="space-y-6 text-slate-400 leading-relaxed">
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Pipeline de données</h3>
+                    <p>Les prix PPA présentés sont des fourchettes indicatives construites par croisement de quatre sources spécialisées. Ils reflètent les prix de contrats signés ou en cours de négociation pour des projets en développement ou construction. Les prix sont exprimés en €/MWh, net de tout mécanisme de soutien public. Les données en devises étrangères sont converties au taux moyen de la période.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Sources principales</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mt-3">
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">LevelTen Energy — PPA Price Index Q4 2025</p>
+                            <p class="text-sm">Indice de référence basé sur les offres réelles de plus de 4 000 projets. Couverture Europe et Amérique du Nord. Ventilation par pays et par technologie.</p>
+                            <a href="https://www.leveltenenergy.com/ppa" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 text-xs mt-2 inline-block">leveltenenergy.com →</a>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">Pexapark — PPA Tracker 2025</p>
+                            <p class="text-sm">Base de données des PPA signés en Europe. Couverture exhaustive des marchés principaux. Données de contrats réels, anonymisés.</p>
+                            <a href="https://pexapark.com/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 text-xs mt-2 inline-block">pexapark.com →</a>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">AFRY (ex-Pöyry) — Market Reports</p>
+                            <p class="text-sm">Analyses de marché et projections de prix de l'électricité. Modélisation des scénarios de capture price par pays.</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                            <p class="text-white font-medium mb-1">BloombergNEF — Public Summaries</p>
+                            <p class="text-sm">Données agrégées et tendances globales sur les PPA renouvelables. Résumés publics et rapports semestriels.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Hypothèses clés</h3>
+                    <p>Durée type des contrats : 10-15 ans. Projets en développement ou construction (pas de repowering). Prix hors subventions et mécanismes de soutien public. Segment commercial basé sur les offres agrégées (aggregate PPA) et les contrats directs. Les PPA résidentiels ne sont pas inclus car ce segment fonctionne via l'autoconsommation et les tarifs réglementés.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Limites</h3>
+                    <p>Les prix PPA sont par nature confidentiels. Les fourchettes publiées ici sont des estimations basées sur les indices de marché et les données agrégées disponibles. Les prix réels d'un contrat spécifique dépendent de nombreux facteurs non capturés ici : profil de crédit de l'acheteur, structure du contrat (physique/virtuel, floor/cap), volume, localisation exacte, date de COD. Ces données ne constituent en aucun cas des recommandations d'investissement.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ (ENRICHED) -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Questions fréquentes</h2>
             <div class="space-y-4">
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Qu'est-ce que le PPA solaire ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Un PPA (Power Purchase Agreement) est un contrat d'achat d'énergie à long terme entre un producteur solaire et un acheteur (entreprise, collectivité). Le prix est fixé pour 10-25 ans.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Qu'est-ce qu'un PPA solaire ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Un PPA (Power Purchase Agreement) est un contrat d'achat d'électricité à long terme (10-25 ans) entre un producteur solaire et un acheteur corporate (entreprise, collectivité, industriel). Le producteur s'engage à livrer de l'électricité à un prix fixe ou partiellement indexé, et l'acheteur s'engage à l'acheter. Le PPA permet au producteur de sécuriser ses revenus et au consommateur de verrouiller un coût d'énergie prévisible et compétitif.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quels pays ont le PPA le plus bas en Europe ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">L'Espagne et le Portugal affichent les valeurs les plus basses d'Europe grâce à un fort ensoleillement, des coûts de main-d'œuvre compétitifs et un marché mature.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quels pays ont les PPA les moins chers en Europe ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le Portugal (30-45 €/MWh) et l'Espagne (32-48 €/MWh) affichent les PPA utility-scale les plus bas d'Europe. Ces prix bas résultent d'une irradiation élevée (qui réduit le <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE</a>), de coûts compétitifs et d'une surcapacité sur le marché ibérique qui renforce la concurrence entre producteurs.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment évolue le PPA solaire en Europe ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">La tendance est globalement à la baisse grâce aux économies d'échelle, à l'amélioration technologique et à la concurrence accrue. La baisse est plus marquée sur le segment utility-scale.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle est la différence entre PPA physique et PPA virtuel ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le PPA physique implique une livraison réelle d'électricité au point de raccordement. Le PPA virtuel (ou financier) est un contrat pour différence : pas de livraison physique, mais un règlement financier basé sur l'écart entre le prix PPA et le prix de marché. Le PPA virtuel est plus flexible géographiquement, mais expose l'acheteur au risque de base (écart entre les zones de marché).</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle est la source des données ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Les données proviennent de LevelTen Energy PPA Price Index Q4 2025, Pexapark PPA Tracker 2025, AFRY (ex-Pöyry) Market Reports, BloombergNEF (public summaries). Toutes les sources sont publiques et vérifiables.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel est le lien entre LCOE et prix PPA ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le prix PPA doit couvrir le <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE</a> du producteur pour que le projet soit viable. En pratique, le PPA se situe 3-10 €/MWh au-dessus du LCOE, ce qui représente la marge du producteur et la prime de risque. Si le PPA est inférieur au LCOE, le projet n'est pas financeable — c'est pourquoi les PPA les plus bas se trouvent dans les pays où le LCOE est le plus bas (Espagne, Portugal).</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">À quelle fréquence les données sont-elles mises à jour ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Les données sont mises à jour annuellement (T1) à partir des publications des sources institutionnelles.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment évolue le marché PPA en Europe ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le volume total de PPA signés en Europe a augmenté de +44 % en 2024 vs 2023 (RE-Source Platform). Les prix se normalisent après le pic de 2022-2023 lié à la crise énergétique. Les tendances principales : raccourcissement des durées (10-12 ans vs 15-20 ans), développement des structures hybrides (indexation partielle), et montée du PPA virtuel en Europe du Nord.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Pourquoi pas de PPA résidentiel dans le tableau ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le PPA est un instrument contractuel adapté aux grands volumes (&gt;1 MW typiquement). Pour le segment résidentiel, l'équivalent est l'autoconsommation avec revente du surplus au tarif réglementé, ou les contrats de fourniture « verts » avec un fournisseur. Consultez nos pages marché par pays pour les tarifs de rachat résidentiels : <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300">France</a>, <a href="/fr/solar-market-germany.html" class="text-amber-400 hover:text-amber-300">Allemagne</a>.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">D'où viennent les données ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Les données sont croisées à partir de quatre sources spécialisées : LevelTen Energy PPA Price Index Q4 2025, Pexapark PPA Tracker 2025, AFRY Market Reports et BloombergNEF (résumés publics). Les liens sont dans la section <a href="#methodology" class="text-amber-400 hover:text-amber-300">Méthodologie</a>. Mise à jour annuelle.</div>
                 </details>
             </div>
         </section>
 
-        <!-- Explore by country -->
+        <!-- Explore by country (EXPANDED) -->
         <section class="mb-16">
             <h2 class="text-2xl font-bold text-white mb-6">Explorer par pays</h2>
-            <div class="flex flex-wrap gap-4">
-                <a href="/fr/solar-market-germany.html" class="text-amber-400 hover:text-amber-300 transition">Allemagne</a>
-                <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300 transition">France</a>
-                <a href="/fr/solar-market-spain.html" class="text-amber-400 hover:text-amber-300 transition">Espagne</a>
-                <a href="/fr/solar-market-italy.html" class="text-amber-400 hover:text-amber-300 transition">Italie</a>
+            <p class="text-slate-400 mb-4 text-sm">Pages marché avec tarifs de rachat, aides, cadre réglementaire.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                <a href="/fr/solar-market-germany.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇩🇪</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Allemagne</p>
+                </a>
+                <a href="/fr/solar-market-france.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇫🇷</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">France</p>
+                </a>
+                <a href="/fr/solar-market-spain.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇪🇸</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Espagne</p>
+                </a>
+                <a href="/fr/solar-market-italy.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇮🇹</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Italie</p>
+                </a>
+                <a href="/fr/comparatif-pays.html" class="block p-3 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700/50 text-center">
+                    <span class="text-lg">🇪🇺</span>
+                    <p class="text-amber-400 font-medium text-sm mt-1">Comparatif</p>
+                </a>
             </div>
         </section>
 
-        <!-- Other metrics -->
+        <!-- Internal links (EXPANDED) -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Autres données solaires Europe</h2>
-            <div class="grid md:grid-cols-3 gap-4">
-                <a href="/fr/data-capex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Voir les données →</p>
-                    </a>
-                <a href="/fr/data-opex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">OPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Voir les données →</p>
-                    </a>
-                <a href="/fr/data-lcoe-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Voir les données →</p>
-                    </a>
+            <h2 class="text-2xl font-bold text-white mb-6">Données complémentaires</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/fr/data-lcoe-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">LCOE Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût actualisé de l'énergie — la base de comparaison avec les prix PPA</p>
+                </a>
+                <a href="/fr/data-capex-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">CAPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'investissement — déterminant principal du LCOE et donc du PPA</p>
+                </a>
+                <a href="/fr/data-wacc-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">WACC par pays</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût du capital — impacte le prix plancher acceptable pour un PPA</p>
+                </a>
+                <a href="/fr/data-opex-europe.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">OPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'exploitation — composante récurrente intégrée au LCOE</p>
+                </a>
+                <a href="/fr/data-benchmarks.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">Benchmarks projets solaires</span>
+                    <p class="text-slate-400 text-sm mt-1">Vue synthétique CAPEX, OPEX, WACC, Performance Ratio, dégradation</p>
+                </a>
+                <a href="/fr/comparatif-pays.html" class="block p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700 group">
+                    <span class="text-amber-400 font-semibold group-hover:text-amber-300">Comparatif pays</span>
+                    <p class="text-slate-400 text-sm mt-1">Classement multicritère des marchés solaires européens</p>
+                </a>
             </div>
         </section>
     </main>

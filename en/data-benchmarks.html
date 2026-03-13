@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solar project benchmarks — Europe | Solar Data Atlas</title>
-    <meta name="description" content="Reference benchmarks for solar project modeling in Europe (CAPEX, OPEX, WACC, PR, degradation). English version coming soon.">
+    <meta name="description" content="Reference benchmarks for European solar PV projects: CAPEX 650–900 €/kWp, OPEX 8–15 €/kWp/yr, WACC 3.5–8%, Performance Ratio 75–85%, degradation 0.4–0.7%/yr. Sources: IRENA, Fraunhofer ISE, JRC.">
     <meta name="keywords" content="solar benchmarks Europe, CAPEX PV, OPEX solar, WACC renewable, performance ratio, degradation rate">
     <meta name="author" content="Bernard Pugnet">
     <meta name="robots" content="index, follow">
@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://www.solardataatlas.com/en/data-benchmarks">
     <meta property="og:site_name" content="Solar Data Atlas">
     <meta property="og:title" content="Solar project benchmarks — Europe | Solar Data Atlas">
-    <meta property="og:description" content="Reference benchmarks for solar project modeling in Europe. English version coming soon.">
+    <meta property="og:description" content="Reference benchmarks for European solar PV projects: CAPEX, OPEX, WACC, Performance Ratio, degradation. 10 markets, institutional sources.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -323,56 +323,215 @@
         </div>
     </nav>
 
-    <main id="main-content" class="min-h-[calc(100vh-256px)] pt-16">
-        <section class="py-20 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-5xl sm:text-6xl font-bold gradient-text mb-6">Solar project benchmarks — Europe</h1>
+    <main id="main-content" class="pt-16">
+        <!-- Breadcrumb -->
+        <div class="pt-20 pb-2">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="text-xs text-slate-500" aria-label="Breadcrumb">
+                    <a href="/en/" class="hover:text-slate-300 transition-colors">Home</a>
+                    <span class="mx-1.5">/</span>
+                    <span class="text-slate-400">Data Benchmarks</span>
+                </nav>
+            </div>
+        </div>
 
-                <p class="text-xl text-slate-300 mb-8">
-                    The English version is being prepared. In the meantime, the French version is available with all comprehensive data on CAPEX, OPEX, WACC, performance ratios, and degradation rates.
+        <!-- Hero -->
+        <section class="relative pt-8 pb-16 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+            </div>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-4">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium">
+                        📊 Data Hub
+                    </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-6">
+                    <span class="gradient-text">Solar project benchmarks</span> — Europe
+                </h1>
+                <p class="text-lg text-slate-300 text-center max-w-3xl mx-auto leading-relaxed mb-4">
+                    Realistic solar project modeling requires verified reference data.
+                    This page centralises the key benchmarks for European photovoltaic projects: investment costs (<abbr title="Capital Expenditure — upfront investment cost">CAPEX</abbr>),
+                    operating costs (<abbr title="Operational Expenditure — annual operating costs">OPEX</abbr>),
+                    cost of capital (<abbr title="Weighted Average Cost of Capital">WACC</abbr>),
+                    performance ratio (<abbr title="Performance Ratio — ratio of actual to theoretical STC output">PR</abbr>)
+                    and module degradation rates.
                 </p>
+                <p class="text-base text-slate-400 text-center max-w-3xl mx-auto leading-relaxed">
+                    Each dataset is sourced from public institutional publications (IRENA, Fraunhofer ISE, JRC, NREL), dated and downloadable.
+                    Coverage: 10 European markets, 3 segments (residential, commercial &amp; industrial, utility-scale).
+                </p>
+            </div>
+        </section>
 
-                <div class="mb-12">
-                    <a href="/fr/data-benchmarks.html" class="inline-block px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-amber-500/25 transition-all hover:scale-105">
-                        View French version →
+        <!-- Key figures summary -->
+        <section class="pb-12">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold text-emerald-400">650–900</p>
+                        <p class="text-xs text-slate-400 mt-1">€/kWp CAPEX</p>
+                        <p class="text-[10px] text-slate-500">Utility-scale</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold text-blue-400">8–15</p>
+                        <p class="text-xs text-slate-400 mt-1">€/kWp/yr OPEX</p>
+                        <p class="text-[10px] text-slate-500">Utility-scale</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold text-violet-400">3.5–8 %</p>
+                        <p class="text-xs text-slate-400 mt-1">WACC range</p>
+                        <p class="text-[10px] text-slate-500">DE low, GR/PL high</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold text-amber-400">75–85 %</p>
+                        <p class="text-xs text-slate-400 mt-1">Performance Ratio</p>
+                        <p class="text-[10px] text-slate-500">Typical range</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold text-red-400">0.4–0.7 %</p>
+                        <p class="text-xs text-slate-400 mt-1">Degradation/yr</p>
+                        <p class="text-[10px] text-slate-500">Median, mono-Si</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Cards -->
+        <section class="py-12">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-8 text-center">Benchmark datasets</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Card 1: CAPEX -->
+                    <a href="/en/data-solar-capex-europe.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-emerald-500/30 transition-colors block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Available</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 text-2xl mb-4">💰</div>
+                        <h3 class="text-lg font-bold text-white mb-2">CAPEX Europe</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-2">Investment costs by segment (residential, C&I, utility-scale). From modules and inverters to BOS and grid connection.</p>
+                        <p class="text-xs text-slate-500 mb-3">Range: 650–1,800 €/kWp depending on segment and country</p>
+                        <p class="text-xs text-cyan-400">→ View data</p>
+                    </a>
+
+                    <!-- Card 2: OPEX -->
+                    <a href="/en/data-solar-opex-europe.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 hover:border-blue-500/30 transition-colors relative overflow-hidden block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Available</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 text-2xl mb-4">🔧</div>
+                        <h3 class="text-lg font-bold text-white mb-2">OPEX Europe</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-2">Annual operating costs: O&M, insurance, land lease, inverter replacement. In €/kWp/yr by segment.</p>
+                        <p class="text-xs text-slate-500 mb-3">Range: 8–25 €/kWp/yr depending on segment</p>
+                        <p class="text-xs text-cyan-400">→ View data</p>
+                    </a>
+
+                    <!-- Card 3: WACC -->
+                    <a href="/fr/data-wacc-europe.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 hover:border-violet-500/30 transition-all relative overflow-hidden group block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Available</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-violet-500/15 text-violet-400 text-2xl mb-4">📈</div>
+                        <h3 class="text-lg font-bold text-white mb-2">WACC Europe</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-2">Weighted Average Cost of Capital (WACC, CoD, CoE, D/E) for 12 EU countries. A +1% WACC increase raises LCOE by 5–8%.</p>
+                        <p class="text-xs text-slate-500 mb-3">Range: 3.5% (DE) to 8%+ (GR, PL)</p>
+                        <p class="text-xs text-cyan-400">→ View data</p>
+                    </a>
+
+                    <!-- Card 4: PR & Loss Stack -->
+                    <a href="/fr/data-pr-loss-stack.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 hover:border-amber-500/30 transition-colors relative overflow-hidden block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Available</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/15 text-amber-400 text-2xl mb-4">⚙️</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Performance Ratio &amp; Loss Stack</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-2">Loss breakdown (temperature, shading, clipping, soiling, cabling) and typical PR values by technology and climate zone.</p>
+                        <p class="text-xs text-slate-500 mb-3">Typical PR: 75–85% (utility-scale, temperate climate)</p>
+                        <p class="text-xs text-cyan-400">→ View data</p>
+                    </a>
+
+                    <!-- Card 5: Degradation -->
+                    <a href="/fr/data-degradation.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-red-500/30 transition-colors block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Available</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-red-500/15 text-red-400 text-2xl mb-4">📉</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Module degradation</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-2">Degradation rates by technology (mono-Si, poly-Si, thin film) and climate zone. Module vs system degradation.</p>
+                        <p class="text-xs text-slate-500 mb-3">Median: 0.5%/yr (mono-PERC), source: NREL 2024</p>
+                        <p class="text-xs text-cyan-400">→ View data</p>
+                    </a>
+
+                    <!-- Card 6: LCOE (cross-link) -->
+                    <a href="/en/data-solar-lcoe-europe.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-cyan-500/30 transition-colors block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-cyan-500/15 text-cyan-400 text-xs font-semibold rounded-full border border-cyan-500/25">Synthesis</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-cyan-500/15 text-cyan-400 text-2xl mb-4">⚡</div>
+                        <h3 class="text-lg font-bold text-white mb-2">LCOE Europe</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-2">The LCOE combines CAPEX, OPEX, WACC and yield into a single cost metric. See how benchmarks translate to levelized costs.</p>
+                        <p class="text-xs text-slate-500 mb-3">Range: 22–140 €/MWh depending on country and segment</p>
+                        <p class="text-xs text-cyan-400">→ View LCOE data</p>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- How benchmarks connect -->
+        <section class="py-12 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">How these benchmarks connect</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-4 text-sm text-slate-300 leading-relaxed">
+                    <p>These five benchmark categories are the building blocks of any solar financial model. They combine into the <a href="/en/data-solar-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE (Levelized Cost of Energy)</a>, which is the single most important metric for comparing solar competitiveness across countries and technologies.</p>
+                    <p><span class="text-white font-medium">CAPEX</span> drives the upfront investment and financing requirements. <span class="text-white font-medium">OPEX</span> determines the recurring cost base over the project lifetime. <span class="text-white font-medium">WACC</span> sets the discount rate that bridges present investment and future cash flows — a +1% WACC increase raises the LCOE by 5–8% (Fraunhofer ISE, 2025). <span class="text-white font-medium">Performance Ratio</span> determines how much energy the system actually delivers relative to its theoretical maximum. <span class="text-white font-medium">Degradation</span> compounds annually, reducing output by 10–18% over a 25-year lifetime.</p>
+                    <p>For project-specific modelling with your own parameters, use our <a href="/en/tools-simulation.html" class="text-amber-400 hover:text-amber-300">financial simulator</a>. For <a href="/en/data-solar-ppa-prices-europe.html" class="text-amber-400 hover:text-amber-300">PPA pricing</a>, the benchmark LCOE is the floor below which no contract is viable.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology -->
+        <section class="py-12 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Methodology</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-3 text-sm text-slate-300 leading-relaxed">
+                    <p><span class="text-slate-200 font-medium">Units:</span> CAPEX in €/kWp (excl. tax, excl. land), OPEX in €/kWp/yr or €/MWh, WACC in % nominal pre-tax, PR in % (injected energy / theoretical STC energy), degradation in %/yr (median, P10, P90).</p>
+                    <p><span class="text-slate-200 font-medium">Primary sources:</span> <a href="https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">IRENA Renewable Cost Database</a>, <a href="https://www.ise.fraunhofer.de/en/publications/studies/cost-of-electricity.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">Fraunhofer ISE Photovoltaics Report</a>, <a href="https://re.jrc.ec.europa.eu/pvg_tools/en/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">JRC PVGIS</a>, IEA PVPS, <a href="https://www.nrel.gov/solar/market-research-analysis/solar-installed-system-cost.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">NREL</a>, national regulators (CRE, BNetzA, GSE).</p>
+                    <p><span class="text-slate-200 font-medium">Coverage:</span> 10 European countries (FR, DE, ES, IT, NL, BE, PT, PL, AT, GR). Segments: residential (&lt;9 kWp), commercial &amp; industrial (C&I, 100–500 kWp), utility-scale (&gt;1 MWp).</p>
+                    <p><span class="text-slate-200 font-medium">Limitations:</span> CAPEX data varies significantly by local context (labour, permitting, land). Values shown are national medians. For project-specific analysis, use the <a href="/en/tools-simulation.html" class="text-amber-400 hover:text-amber-300">simulator</a> with your own parameters.</p>
+                    <p><span class="text-slate-200 font-medium">Updates:</span> Data revised quarterly (Q1–Q4). Last update indicated on each data page.</p>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">Last updated: March 2026</p>
+            </div>
+        </section>
+
+        <!-- Related pages -->
+        <section class="py-12 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Related pages</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/en/data-solar-lcoe-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                        <span class="text-xl">⚡</span>
+                        <div><div class="text-sm font-semibold text-white">LCOE Europe</div><div class="text-xs text-slate-400">Cost of energy</div></div>
+                    </a>
+                    <a href="/en/data-solar-ppa-prices-europe.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-amber-500/30 transition-colors">
+                        <span class="text-xl">📋</span>
+                        <div><div class="text-sm font-semibold text-white">PPA prices</div><div class="text-xs text-slate-400">Contract pricing</div></div>
+                    </a>
+                    <a href="/en/data-market-power.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
+                        <span class="text-xl">📊</span>
+                        <div><div class="text-sm font-semibold text-white">Market &amp; Power</div><div class="text-xs text-slate-400">Market dynamics</div></div>
+                    </a>
+                    <a href="/en/tools-simulation.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-orange-500/30 transition-colors">
+                        <span class="text-xl">🔧</span>
+                        <div><div class="text-sm font-semibold text-white">Simulator</div><div class="text-xs text-slate-400">Financial model</div></div>
                     </a>
                 </div>
-
-                <div class="text-sm text-slate-400 mb-12">
-                    <p>Coming soon in English: Full benchmarks and reference data</p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-                    <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-slate-600 transition-colors">
-                        <div class="text-3xl mb-3">💰</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">CAPEX</h3>
-                        <span class="inline-block px-3 py-1 bg-slate-700/50 text-slate-300 text-xs font-medium rounded-full">Coming soon</span>
-                    </div>
-
-                    <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-slate-600 transition-colors">
-                        <div class="text-3xl mb-3">📊</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">OPEX</h3>
-                        <span class="inline-block px-3 py-1 bg-slate-700/50 text-slate-300 text-xs font-medium rounded-full">Coming soon</span>
-                    </div>
-
-                    <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-slate-600 transition-colors">
-                        <div class="text-3xl mb-3">💵</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">WACC</h3>
-                        <span class="inline-block px-3 py-1 bg-slate-700/50 text-slate-300 text-xs font-medium rounded-full">Coming soon</span>
-                    </div>
-
-                    <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-slate-600 transition-colors">
-                        <div class="text-3xl mb-3">⚡</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">PR / Loss Stack</h3>
-                        <span class="inline-block px-3 py-1 bg-slate-700/50 text-slate-300 text-xs font-medium rounded-full">Coming soon</span>
-                    </div>
-
-                    <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-slate-600 transition-colors lg:col-span-1 sm:col-span-2 lg:col-span-1">
-                        <div class="text-3xl mb-3">📉</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Degradation</h3>
-                        <span class="inline-block px-3 py-1 bg-slate-700/50 text-slate-300 text-xs font-medium rounded-full">Coming soon</span>
-                    </div>
-                </div>
+                <p class="text-center mt-6">
+                    <a href="/fr/data-benchmarks.html" class="text-slate-400 hover:text-amber-400 text-sm transition-colors">🇫🇷 Voir la version française →</a>
+                </p>
             </div>
         </section>
     </main>

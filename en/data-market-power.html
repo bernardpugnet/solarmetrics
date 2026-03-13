@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solar market &amp; power data — Europe | Solar Data Atlas</title>
-    <meta name="description" content="Solar market data for Europe: negative prices, capture prices, curtailment, PPA prices, grid connection. English version coming soon.">
+    <meta name="description" content="European solar market &amp; power data: negative prices, capture price ratio, curtailment volumes, PPA pricing, grid connection lead times. 10 countries, institutional sources.">
     <meta name="keywords" content="solar market data Europe, negative electricity prices, capture price solar, PPA prices, curtailment, grid connection">
     <meta name="author" content="Bernard Pugnet">
     <meta name="robots" content="index, follow">
@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://www.solardataatlas.com/en/data-market-power">
     <meta property="og:site_name" content="Solar Data Atlas">
     <meta property="og:title" content="Solar market &amp; power data — Europe | Solar Data Atlas">
-    <meta property="og:description" content="Solar market data for Europe. English version coming soon.">
+    <meta property="og:description" content="European solar market &amp; power data: negative prices, capture price ratio, curtailment volumes, PPA pricing, grid connection lead times. 10 countries, institutional sources.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -31,7 +31,7 @@
         "@type": "WebPage",
         "name": "Solar market & power data — Europe | Solar Data Atlas",
         "url": "https://www.solardataatlas.com/en/data-market-power",
-        "description": "Solar market data for Europe: negative prices, capture prices, curtailment, PPA prices, grid connection.",
+        "description": "European solar market & power data: negative prices, capture price ratio, curtailment volumes, PPA pricing, grid connection lead times. 10 countries, institutional sources.",
         "author": {
             "@type": "Person",
             "name": "Bernard Pugnet",
@@ -44,6 +44,65 @@
             "url": "https://www.solardataatlas.com/en/"
         },
         "inLanguage": "en"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is the solar capture price?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The capture price is the average wholesale electricity price received by a solar generator during its production hours. Because solar produces mainly at midday, the capture price is typically 15–40% lower than the baseload average. This gap is the cannibalization effect and widens as solar penetration increases."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why are negative electricity prices increasing in Europe?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Negative prices occur when electricity supply exceeds demand and inflexible generators continue producing. As solar and wind capacity grow, midday surpluses become more frequent. Germany recorded 300+ negative-price hours in 2024. Without sufficient storage or demand response, this trend will intensify."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does curtailment affect solar project economics?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Curtailment means lost production due to grid congestion or surplus. Even at 2–3% curtailment, the revenue impact compounds over a 20-year project life. Compensation rules vary by country. Curtailment risk is now a key factor in bankability analysis and due diligence."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is a solar PPA and how is it priced?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A PPA (Power Purchase Agreement) is a long-term bilateral contract (10–25 years) between a solar producer and an electricity buyer. In 2024, European solar PPA prices ranged from 30 to 75 €/MWh, depending on country, contract duration, volume, and risk allocation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How long does grid connection take in Europe?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Grid connection timelines range from 12 months (Netherlands, small-scale) to 48+ months (Italy, Spain, large-scale). The EU Grid Action Plan (2025) aims to halve connection times by 2030, but implementation varies across member states."
+                }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.solardataatlas.com/en/"},
+            {"@type": "ListItem", "position": 2, "name": "Data", "item": "https://www.solardataatlas.com/en/data-benchmarks"},
+            {"@type": "ListItem", "position": 3, "name": "Market & Power"}
+        ]
     }
     </script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
@@ -324,48 +383,212 @@
     </nav>
 
     <main id="main-content" class="pt-24 pb-16 pt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl sm:text-5xl font-bold mb-4">Solar market & power data — Europe</h1>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-8">Track European solar market dynamics: electricity prices, PPA trends, curtailment and grid access.</p>
-                <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 max-w-2xl mx-auto mb-8">
-                    <p class="text-slate-300 mb-4">English version is being prepared. In the meantime, the French version is available with all data.</p>
-                    <a href="/fr/data-market-power.html" class="inline-block px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors">View French version</a>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4 mt-12">
-                <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-slate-700 transition-colors cursor-not-allowed opacity-75">
-                    <div class="text-3xl mb-3">📉</div>
-                    <h3 class="font-semibold text-white mb-2">Negative prices</h3>
-                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">Coming soon</span>
-                </div>
-
-                <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-slate-700 transition-colors cursor-not-allowed opacity-75">
-                    <div class="text-3xl mb-3">🎯</div>
-                    <h3 class="font-semibold text-white mb-2">Capture price</h3>
-                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">Coming soon</span>
-                </div>
-
-                <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-slate-700 transition-colors cursor-not-allowed opacity-75">
-                    <div class="text-3xl mb-3">✂️</div>
-                    <h3 class="font-semibold text-white mb-2">Curtailment</h3>
-                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">Coming soon</span>
-                </div>
-
-                <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-slate-700 transition-colors cursor-not-allowed opacity-75">
-                    <div class="text-3xl mb-3">📋</div>
-                    <h3 class="font-semibold text-white mb-2">PPA prices</h3>
-                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">Coming soon</span>
-                </div>
-
-                <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-slate-700 transition-colors cursor-not-allowed opacity-75">
-                    <div class="text-3xl mb-3">🔌</div>
-                    <h3 class="font-semibold text-white mb-2">Grid connection lead times</h3>
-                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">Coming soon</span>
-                </div>
-            </div>
+        <!-- Breadcrumb -->
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+            <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+                <ol class="flex items-center gap-2">
+                    <li><a href="/en/index.html" class="hover:text-white transition-colors">Home</a></li>
+                    <li class="text-slate-600">/</li>
+                    <li><a href="/en/data-benchmarks.html" class="hover:text-white transition-colors">Data</a></li>
+                    <li class="text-slate-600">/</li>
+                    <li class="text-slate-300">Market &amp; Power</li>
+                </ol>
+            </nav>
         </div>
+
+        <!-- Hero -->
+        <section class="pb-10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+                    <span class="gradient-text">Market &amp; power data</span> — Europe
+                </h1>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                    Solar project profitability depends on more than irradiation and <a href="/en/solar-prices.html" class="text-cyan-400 hover:underline">installation costs</a>.
+                    Market risks — price cannibalization, negative-price hours, curtailment — and grid constraints — connection lead times, congestion —
+                    increasingly weigh on producer revenues. This page centralizes the key data to assess these risks across Europe:
+                    <abbr title="Capture Price — average price received by solar during its production hours">capture price</abbr>,
+                    negative prices, curtailment, <abbr title="Power Purchase Agreement — bilateral electricity purchase contract">PPA</abbr> pricing
+                    and grid connection timelines.
+                </p>
+            </div>
+        </section>
+
+        <!-- Key figures bar -->
+        <section class="pb-10">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/40 text-center">
+                        <div class="text-2xl font-bold text-red-400">300–2,000+</div>
+                        <div class="text-xs text-slate-400 mt-1">Negative-price hours/yr (DE 2024)</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/40 text-center">
+                        <div class="text-2xl font-bold text-amber-400">60–85 %</div>
+                        <div class="text-xs text-slate-400 mt-1">Capture price ratio (solar vs baseload)</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/40 text-center">
+                        <div class="text-2xl font-bold text-orange-400">2–6 %</div>
+                        <div class="text-xs text-slate-400 mt-1">Curtailed solar output (high-pen. markets)</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/40 text-center">
+                        <div class="text-2xl font-bold text-emerald-400">12–48</div>
+                        <div class="text-xs text-slate-400 mt-1">Grid connection lead time (months)</div>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 text-center mt-3">Sources: ENTSO-E, ACER, Ember Climate, SolarPower Europe — Data 2023-2025</p>
+            </div>
+        </section>
+
+        <!-- Why it matters -->
+        <section class="pb-10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-4">Why market data matters for solar investors</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 text-sm text-slate-300 leading-relaxed space-y-3">
+                    <p>
+                        As solar capacity grows, the "cannibalization effect" becomes structural: the more solar feeds the grid at midday, the lower electricity prices fall during peak production hours. In Germany, solar capture prices have dropped to 60–70 % of the baseload average during high-irradiation months. In Spain, negative midday prices now occur regularly from April to September.
+                    </p>
+                    <p>
+                        This dynamic directly impacts project <a href="/en/data-benchmarks.html" class="text-cyan-400 hover:underline">revenue assumptions</a>: a project with an <a href="/en/economy.html" class="text-cyan-400 hover:underline">LCOE</a> of 35 €/MWh may appear profitable against a 55 €/MWh baseload price — but if the actual capture price received is only 38 €/MWh, the margin is razor-thin. Understanding market dynamics is now essential for bankability analysis and <a href="/en/risks-bankability.html" class="text-cyan-400 hover:underline">risk assessment</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data topic cards -->
+        <section class="py-10">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Data topics</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Card 1: Negative prices — Available -->
+                    <a href="/fr/data-negative-prices.html" class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden hover:border-red-500/30 transition-colors block">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/25">Available</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-red-500/15 text-red-400 text-2xl mb-4">📉</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Negative prices</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Hours of negative day-ahead prices per country and year. Germany recorded over 400 negative-price hours in 2024 — a record driven by midday solar surpluses. Impact on merchant revenues and capture price.</p>
+                        <p class="text-xs text-cyan-400 mt-4">→ View data (FR)</p>
+                    </a>
+
+                    <!-- Card 2: Capture price -->
+                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">Coming soon</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/15 text-amber-400 text-2xl mb-4">🎯</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Capture price ratio</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Average price received by solar vs baseload. Capture ratios range from 60 % (Germany, high solar pen.) to 85 % (France, lower saturation). Correlation with PV penetration rate and storage deployment.</p>
+                        <p class="text-xs text-slate-500 mt-4">Planned: next update</p>
+                    </div>
+
+                    <!-- Card 3: Curtailment -->
+                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">Coming soon</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-orange-500/15 text-orange-400 text-2xl mb-4">✂️</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Curtailment</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Solar curtailment volumes (GWh lost) by country. Causes include grid congestion, surplus generation, and dispatch orders. In 2024, curtailment reached 2–6 % of solar output in high-penetration markets. Compensation rules vary by country.</p>
+                        <p class="text-xs text-slate-500 mt-4">Planned: next update</p>
+                    </div>
+
+                    <!-- Card 4: PPA prices -->
+                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">Coming soon</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 text-2xl mb-4">📄</div>
+                        <h3 class="text-lg font-bold text-white mb-2">PPA solar prices</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Corporate and utility PPA prices by country and contract duration. Benchmark data from LevelTen and Pexapark. European solar PPAs ranged from 30 to 75 €/MWh in 2024, with contract volumes up 44 % year-on-year.</p>
+                        <p class="text-xs text-slate-500 mt-4">Planned: next update</p>
+                    </div>
+
+                    <!-- Card 5: Grid connection -->
+                    <div class="bg-slate-800/60 backdrop-blur rounded-2xl p-6 border border-slate-700/50 relative overflow-hidden">
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 bg-amber-500/15 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/25">Coming soon</span>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 text-2xl mb-4">🔌</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Grid connection lead times</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Average connection timelines by country and capacity range. Grid queues in Italy and Spain exceed 200 GW of pending requests. Ongoing reforms: EU Grid Action Plan (2025), national permitting acceleration measures.</p>
+                        <p class="text-xs text-slate-500 mt-4">Planned: next update</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology -->
+        <section class="py-10 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Methodology</h2>
+                <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 space-y-3 text-sm text-slate-300 leading-relaxed">
+                    <p><strong class="text-slate-200">Units:</strong> Capture price in €/MWh, negative prices in hours/year and % of time, curtailment in GWh/year and % of solar output, PPA in €/MWh (fixed or indexed), grid connection lead time in months.</p>
+                    <p><strong class="text-slate-200">Primary sources:</strong> <a href="https://transparency.entsoe.eu/" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">ENTSO-E Transparency Platform</a>, <a href="https://www.acer.europa.eu/" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">ACER Market Monitoring Report</a>, <a href="https://ember-climate.org/" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">Ember Climate</a>, <a href="https://www.leveltenenergy.com/" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">LevelTen Energy PPA Index</a>, <a href="https://pexapark.com/" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">Pexapark PPA Tracker</a>, SolarPower Europe Grid Report, national TSO reports (RTE, BNetzA, REE, Terna, TenneT).</p>
+                    <p><strong class="text-slate-200">Coverage:</strong> 10 European countries (FR, DE, ES, IT, NL, BE, PT, PL, AT, GR). Hourly data (day-ahead) for prices, annual data for curtailment and grid connection.</p>
+                    <p><strong class="text-slate-200">Limitations:</strong> Curtailment data is often incomplete or self-reported by TSOs. PPA prices are aggregated indices (not individual contract prices). Grid connection timelines vary significantly by capacity, voltage level, and region.</p>
+                    <p><strong class="text-slate-200">Update schedule:</strong> Data revised quarterly (Q1, Q2, Q3, Q4). Last update date indicated on each data page.</p>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">Last updated: 2026-03</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-10 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Frequently asked questions</h2>
+                <div class="space-y-4">
+                    <details class="bg-slate-800/40 rounded-xl border border-slate-700/50 overflow-hidden">
+                        <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:bg-slate-700/20 transition-colors">What is the solar capture price?</summary>
+                        <div class="px-6 pb-4 text-sm text-slate-300 leading-relaxed">The capture price is the average wholesale electricity price received by a solar generator during its production hours. Because solar produces mainly at midday — when supply is highest — the capture price is typically 15–40 % lower than the baseload average. This gap is the "cannibalization effect" and widens as solar penetration increases.</div>
+                    </details>
+                    <details class="bg-slate-800/40 rounded-xl border border-slate-700/50 overflow-hidden">
+                        <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:bg-slate-700/20 transition-colors">Why are negative electricity prices increasing in Europe?</summary>
+                        <div class="px-6 pb-4 text-sm text-slate-300 leading-relaxed">Negative prices occur when electricity supply exceeds demand and inflexible generators (nuclear, wind, solar with priority dispatch) continue producing. As solar and wind capacity grow, midday surpluses become more frequent. Germany, with over 80 GW of PV, recorded 300+ negative-price hours in 2024. Without sufficient storage or demand response, this trend will intensify.</div>
+                    </details>
+                    <details class="bg-slate-800/40 rounded-xl border border-slate-700/50 overflow-hidden">
+                        <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:bg-slate-700/20 transition-colors">How does curtailment affect solar project economics?</summary>
+                        <div class="px-6 pb-4 text-sm text-slate-300 leading-relaxed">Curtailment means lost production — energy that could have been generated but was not, due to grid congestion or surplus. Even at 2–3 % curtailment, the revenue impact compounds over a 20-year project life. Compensation rules vary: some countries offer partial compensation (e.g., Germany's EEG rules), while others offer none. Curtailment risk is now a key factor in bankability analysis and <a href="/en/risks-bankability.html" class="text-cyan-400 hover:underline">due diligence</a>.</div>
+                    </details>
+                    <details class="bg-slate-800/40 rounded-xl border border-slate-700/50 overflow-hidden">
+                        <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:bg-slate-700/20 transition-colors">What is a solar PPA and how is it priced?</summary>
+                        <div class="px-6 pb-4 text-sm text-slate-300 leading-relaxed">A <abbr title="Power Purchase Agreement">PPA</abbr> is a long-term bilateral contract (10–25 years) between a solar producer and an electricity buyer (corporate or utility). Pricing depends on country, contract duration, volume, and risk allocation. In 2024, European solar PPA prices ranged from 30 to 75 €/MWh. More detail on PPA structures is available on our <a href="/en/economy.html" class="text-cyan-400 hover:underline">economy overview</a>.</div>
+                    </details>
+                    <details class="bg-slate-800/40 rounded-xl border border-slate-700/50 overflow-hidden">
+                        <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:bg-slate-700/20 transition-colors">How long does grid connection take in Europe?</summary>
+                        <div class="px-6 pb-4 text-sm text-slate-300 leading-relaxed">Grid connection timelines range from 12 months (Netherlands, small-scale) to 48+ months (Italy, Spain, large-scale). Bottlenecks include TSO capacity studies, permitting, and physical grid reinforcement. The EU Grid Action Plan (2025) aims to halve connection times by 2030, but implementation varies significantly across member states.</div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related pages -->
+        <section class="py-10 border-t border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Related pages</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/en/data-benchmarks.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-colors">
+                        <span class="text-xl">📊</span>
+                        <div><div class="text-sm font-semibold text-white">Benchmarks</div><div class="text-xs text-slate-400">CAPEX · OPEX · WACC · PR</div></div>
+                    </a>
+                    <a href="/en/assumptions.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                        <span class="text-xl">📐</span>
+                        <div><div class="text-sm font-semibold text-white">Assumptions</div><div class="text-xs text-slate-400">Methodology</div></div>
+                    </a>
+                    <a href="/en/country-comparison.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-amber-500/30 transition-colors">
+                        <span class="text-xl">🌍</span>
+                        <div><div class="text-sm font-semibold text-white">Country comparison</div><div class="text-xs text-slate-400">10 countries · LCOE</div></div>
+                    </a>
+                    <a href="/en/risks-bankability.html" class="flex items-center gap-3 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-red-500/30 transition-colors">
+                        <span class="text-xl">⚠️</span>
+                        <div><div class="text-sm font-semibold text-white">Risks &amp; bankability</div><div class="text-xs text-slate-400">Due diligence · DSCR</div></div>
+                    </a>
+                </div>
+                <div class="mt-6 text-center">
+                    <a href="/fr/data-market-power.html" class="text-sm text-slate-400 hover:text-white transition-colors">→ Voir cette page en français</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="py-8 bg-slate-950 border-t border-slate-800">
