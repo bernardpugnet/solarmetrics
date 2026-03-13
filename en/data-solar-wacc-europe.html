@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar WACC Europe 2025-2026 — Cost of Capital by Country | Solar Data Atlas</title>
+    <meta name="description" content="Weighted Average Cost of Capital (WACC) for solar PV in Europe: country comparison, cost of debt, cost of equity, D/E ratios, LCOE impact. Sources: AURES II, IRENA RPGC 2023.">
+    <meta name="keywords" content="WACC solar Europe, cost of capital PV, solar financing, discount rate solar, LCOE WACC impact, IRENA, AURES II, project finance solar">
+    <meta name="author" content="Bernard Pugnet">
+    <link rel="canonical" href="https://www.solardataatlas.com/en/data-solar-wacc-europe">
+    <link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/data-solar-wacc-europe">
+    <link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/data-wacc-europe">
+    <link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/en/data-solar-wacc-europe">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.solardataatlas.com/en/data-solar-wacc-europe">
+    <meta property="og:site_name" content="Solar Data Atlas">
+    <meta property="og:title" content="Solar WACC Europe 2025-2026 — Cost of Capital | Solar Data Atlas">
+    <meta property="og:description" content="WACC for solar PV projects in Europe: country comparison, financing structure, LCOE impact analysis.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Solar WACC Europe 2025-2026 | Solar Data Atlas">
+    <meta name="twitter:description" content="Cost of capital for solar PV in Europe by country. AURES II and IRENA data.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "Solar WACC Europe — Solar Data Atlas",
+      "url": "https://www.solardataatlas.com/en/data-solar-wacc-europe",
+      "description": "Weighted Average Cost of Capital (WACC) for solar PV projects in Europe by country. Sources: AURES II, IRENA Renewable Power Generation Costs 2023.",
+      "creator": { "@type": "Person", "name": "Bernard Pugnet", "jobTitle": "Solar Finance & Energy Expert", "url": "https://www.linkedin.com/in/bernard-pugnet/" },
+      "temporalCoverage": "2018/2026",
+      "spatialCoverage": "Europe",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "isPartOf": { "@type": "WebSite", "name": "Solar Data Atlas", "url": "https://www.solardataatlas.com/" },
+      "inLanguage": "en"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.solardataatlas.com/en/" },
+        { "@type": "ListItem", "position": 2, "name": "Data", "item": "https://www.solardataatlas.com/en/data-benchmarks" },
+        { "@type": "ListItem", "position": 3, "name": "Solar WACC Europe" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is WACC and why does it matter for solar projects?", "acceptedAnswer": { "@type": "Answer", "text": "WACC (Weighted Average Cost of Capital) represents the blended return expected by all capital providers (debt and equity) in a solar project. It is the discount rate used to calculate LCOE and project NPV. A 1 percentage point increase in WACC typically raises LCOE by 5-8%, making it one of the most important variables in solar project economics." } },
+        { "@type": "Question", "name": "Why does solar WACC vary across European countries?", "acceptedAnswer": { "@type": "Answer", "text": "WACC varies due to sovereign risk premiums (reflected in government bond spreads), banking sector appetite for renewables, regulatory stability and predictability of revenue streams (feed-in tariffs vs merchant exposure), currency risk for non-eurozone countries, and the maturity of local solar project finance markets." } },
+        { "@type": "Question", "name": "Which European countries have the lowest solar WACC?", "acceptedAnswer": { "@type": "Answer", "text": "France and Germany consistently show the lowest WACC in Europe (2.5-4.5% nominal for utility-scale), thanks to strong regulatory frameworks (CRE tenders, EEG), deep project finance markets, low sovereign risk, and revenue visibility through contract-for-difference or feed-in premium mechanisms." } },
+        { "@type": "Question", "name": "How does WACC affect LCOE?", "acceptedAnswer": { "@type": "Answer", "text": "WACC directly affects LCOE because solar projects are capital-intensive with near-zero marginal costs. At a WACC of 4%, a project with 600 €/kWp CAPEX might achieve an LCOE of 35 €/MWh. At 7% WACC, the same project's LCOE rises to approximately 45-50 €/MWh. This makes financing costs as important as hardware costs in determining project competitiveness." } },
+        { "@type": "Question", "name": "What are the data sources for European solar WACC?", "acceptedAnswer": { "@type": "Answer", "text": "Primary sources are: AURES II (eclareon/DTU, 2020) which surveyed investors and developers across 12 EU countries, and IRENA Renewable Power Generation Costs 2023 which provides regional benchmarks. These are supplemented by ECB and national central bank interest rate data, and Bloomberg/Refinitiv transaction data where available." } }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <style>
+        *{font-family:'Inter',sans-serif}
+        .gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#EA580C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        html{scroll-behavior:smooth}
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased">
+    <nav class="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="/en/" class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">Solar Data Atlas</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/en/data-benchmarks.html" class="text-slate-300 hover:text-amber-400 transition text-sm">Data</a>
+                    <a href="/en/tools.html" class="text-slate-300 hover:text-amber-400 transition text-sm">Tools</a>
+                    <a href="/en/economy.html" class="text-slate-300 hover:text-amber-400 transition text-sm">Economy</a>
+                    <a href="/fr/data-wacc-europe.html" class="text-xs px-2 py-1 border border-slate-600 rounded text-slate-400 hover:text-white transition">FR</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <nav class="text-sm text-slate-500 mb-8" aria-label="Breadcrumb">
+            <a href="/en/" class="hover:text-amber-400">Home</a> /
+            <a href="/en/data-benchmarks.html" class="hover:text-amber-400">Data</a> /
+            <span class="text-slate-300">Solar WACC Europe</span>
+        </nav>
+
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Solar WACC Europe 2025-2026 — Cost of Capital by Country</h1>
+        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">The Weighted Average Cost of Capital (WACC) is arguably the single most impactful variable in solar project economics. A 1 percentage point shift in WACC can move LCOE by 5-8%. This page presents observed WACC data for solar PV across European markets, based on AURES II investor surveys and IRENA benchmarks, and explains the structural drivers behind country-level differences.</p>
+
+        <!-- Key figures -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+            <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-purple-400">2.5-8%</div>
+                <div class="text-xs text-slate-400 mt-1">WACC range across EU</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-green-400">5-8%</div>
+                <div class="text-xs text-slate-400 mt-1">LCOE impact per 1pp WACC</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-cyan-400">12</div>
+                <div class="text-xs text-slate-400 mt-1">countries surveyed (AURES II)</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">70-85%</div>
+                <div class="text-xs text-slate-400 mt-1">typical debt share (utility)</div>
+            </div>
+        </div>
+
+        <!-- 1. WACC by country table -->
+        <section class="mb-16" id="wacc-benchmark">
+            <h2 class="text-2xl font-bold text-white mb-6">1. Solar WACC by Country — Observed Data</h2>
+            <p class="text-sm text-slate-400 mb-4 max-w-3xl">Data from AURES II (eclareon/DTU, 2020): survey of investors and developers in 12 EU countries. All values are nominal, for solar PV utility-scale projects. Ranges reflect diversity of respondents and project structures.</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-800">
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Country</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">WACC (nominal)</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Cost of Debt</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Cost of Equity</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Typical D/E</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">France</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">2.3 – 4.3%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">1.5 – 3.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">6 – 10%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">80/20 – 85/15</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Germany</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">2.5 – 4.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">1.5 – 2.5%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">6 – 9%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">80/20 – 85/15</td></tr>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Spain</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">3.0 – 9.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">2.0 – 4.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">8 – 14%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">70/30 – 80/20</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Italy</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">5.0 – 7.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">2.5 – 4.5%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">8 – 12%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">70/30 – 80/20</td></tr>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Portugal</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">3.0 – 9.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">2.0 – 4.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">8 – 14%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">70/30 – 80/20</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Greece</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">5.5 – 6.5%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">3.5 – 5.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">9 – 13%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">65/35 – 75/25</td></tr>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Romania</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">7.5 – 8.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">4.0 – 6.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">10 – 15%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">60/40 – 70/30</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Hungary</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">4.4 – 6.1%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">3.0 – 5.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">8 – 12%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">65/35 – 75/25</td></tr>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Bulgaria</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">3.8 – 6.7%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">3.0 – 5.0%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">8 – 12%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">65/35 – 75/25</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 font-medium text-white border-b border-slate-800">Cyprus</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">4.8 – 5.2%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">3.0 – 4.5%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">8 – 11%</td><td class="px-4 py-3 text-slate-300 border-b border-slate-800">65/35 – 75/25</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-slate-500 mt-3">Source: AURES II D5.2, eclareon/DTU (2020), survey data 2018-2019. Nominal values. Spain's wide range reflects merchant vs contracted project mix.</p>
+        </section>
+
+        <!-- 2. WACC drivers -->
+        <section class="mb-16 border-t border-slate-800 pt-10" id="wacc-drivers">
+            <h2 class="text-2xl font-bold text-white mb-6">2. What Drives WACC Differences Across Europe</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-green-400 mb-3">Lower-WACC markets (France, Germany)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-3">France and Germany achieve the lowest solar WACC in Europe thanks to several structural advantages. Strong regulatory frameworks provide revenue visibility: CRE contract-for-difference tenders in France and EEG Marktprämie in Germany guarantee a predictable cash flow for 20 years, dramatically reducing equity return requirements.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Deep banking markets with experienced renewable energy desks allow high leverage (80-85% debt). ECB monetary policy historically kept base rates low, though the 2022-2023 tightening cycle has added 100-150 bps to cost of debt across the eurozone.</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-red-400 mb-3">Higher-WACC markets (Italy, Romania, Greece)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-3">Italy's elevated WACC (5-7%) reflects sovereign risk premium, complex permitting (adding development risk), and a less mature project finance market compared to France or Germany. The transition from Conto Energia to the new FER 2 auction system creates regulatory uncertainty.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Romania's high WACC (7.5-8%) stems from non-eurozone currency risk (RON), a smaller banking market with limited renewable energy expertise, and a less predictable regulatory environment. These factors force developers to accept lower leverage (60-70% debt) and higher equity return hurdles.</p>
+                </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mt-6">
+                <h3 class="text-lg font-semibold text-amber-400 mb-3">The merchant risk premium — Spain's wide range explained</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Spain shows the widest WACC range in the dataset (3-9%), which reflects its unique market structure. Projects with 10-year corporate PPAs achieve WACC close to French levels (3-5%), because the contracted revenue stream allows high leverage. Fully merchant projects — exposed to wholesale price volatility — see equity investors demanding 12-15% returns and banks limiting debt to 60-70% of CAPEX, pushing blended WACC above 7%. The growing share of merchant projects in Spain's pipeline is a key factor in the country's financing dynamics.</p>
+            </div>
+        </section>
+
+        <!-- 3. WACC impact on LCOE -->
+        <section class="mb-16 border-t border-slate-800 pt-10" id="lcoe-impact">
+            <h2 class="text-2xl font-bold text-white mb-6">3. WACC Impact on LCOE — A Practical Example</h2>
+            <p class="text-slate-400 text-sm mb-6 max-w-3xl leading-relaxed">Solar projects are capital-intensive with near-zero marginal costs. This means financing costs (captured through WACC) are as important as hardware costs in determining project competitiveness. The table below illustrates the LCOE impact of different WACC levels for a reference utility-scale project.</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse max-w-3xl">
+                    <thead>
+                        <tr class="bg-slate-800">
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">WACC (nominal)</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Indicative LCOE</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Typical market</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 text-white border-b border-slate-800">3%</td><td class="px-4 py-3 text-emerald-400 font-semibold border-b border-slate-800">30-38 €/MWh</td><td class="px-4 py-3 text-slate-400 text-sm border-b border-slate-800">France, Germany (contracted)</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 text-white border-b border-slate-800">5%</td><td class="px-4 py-3 text-cyan-400 font-semibold border-b border-slate-800">38-48 €/MWh</td><td class="px-4 py-3 text-slate-400 text-sm border-b border-slate-800">Spain (PPA), Netherlands</td></tr>
+                        <tr class="bg-slate-900"><td class="px-4 py-3 text-white border-b border-slate-800">7%</td><td class="px-4 py-3 text-amber-400 font-semibold border-b border-slate-800">46-58 €/MWh</td><td class="px-4 py-3 text-slate-400 text-sm border-b border-slate-800">Italy, Spain (merchant), Greece</td></tr>
+                        <tr class="bg-slate-900/50"><td class="px-4 py-3 text-white border-b border-slate-800">9%</td><td class="px-4 py-3 text-red-400 font-semibold border-b border-slate-800">55-70 €/MWh</td><td class="px-4 py-3 text-slate-400 text-sm border-b border-slate-800">Romania, emerging EU markets</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-slate-500 mt-3">Reference project: 700 €/kWp CAPEX, 1,200 kWh/kWp yield, 25-year lifetime, 10 €/kWp/yr OPEX, 0.5%/yr degradation. Illustrative only.</p>
+        </section>
+
+        <!-- 4. Sources -->
+        <section class="mb-16 border-t border-slate-800 pt-10" id="sources">
+            <h2 class="text-2xl font-bold text-white mb-6">Sources & Methodology</h2>
+            <div class="bg-slate-900 rounded-xl p-6 border border-slate-800">
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li class="flex gap-2"><span class="text-amber-400">→</span> <a href="https://backend.orbit.dtu.dk/ws/files/251879749/AURES_II_D5_2_financing_conditions.pdf" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">AURES II D5.2</a> — eclareon/DTU (2020), investor survey 2018-2019, 12 EU countries</li>
+                    <li class="flex gap-2"><span class="text-amber-400">→</span> IRENA Renewable Power Generation Costs 2023 — regional WACC benchmarks</li>
+                    <li class="flex gap-2"><span class="text-amber-400">→</span> ECB Statistical Data Warehouse — eurozone interest rates, government bond yields</li>
+                    <li class="flex gap-2"><span class="text-amber-400">→</span> National sources: CRE (France), Bundesnetzagentur (Germany), GSE/ARERA (Italy)</li>
+                </ul>
+                <p class="text-xs text-slate-500 mt-4 border-t border-slate-700 pt-3">AURES II data dates from 2018-2019 surveys. Post-2022 ECB rate hikes have added ~100-150 bps to cost of debt across the eurozone. Current 2025-2026 WACC estimates should be adjusted accordingly. Values are indicative and do not constitute investment advice. Last updated: Q1 2026.</p>
+            </div>
+        </section>
+
+        <!-- 5. FAQ -->
+        <section class="mb-16 border-t border-slate-800 pt-10">
+            <h2 class="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">What is WACC and why does it matter for solar projects?</summary>
+                    <div class="px-6 pb-4 text-slate-400 text-sm">WACC (Weighted Average Cost of Capital) represents the blended return expected by all capital providers (debt and equity). For a project with 80% debt at 3% and 20% equity at 10%, WACC = 0.8 × 3% + 0.2 × 10% = 4.4%. It is the discount rate used to calculate LCOE and project NPV. A 1 percentage point increase in WACC typically raises LCOE by 5-8%, making it one of the most sensitive variables in solar project economics.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Why does solar WACC vary across European countries?</summary>
+                    <div class="px-6 pb-4 text-slate-400 text-sm">Key drivers include sovereign risk premiums (reflected in government bond spreads), banking sector appetite for renewables, regulatory stability and revenue predictability (feed-in tariffs vs merchant), currency risk for non-eurozone countries, and local project finance market maturity. France and Germany benefit from all factors, while Italy and Romania face headwinds on most.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Which European countries have the lowest solar WACC?</summary>
+                    <div class="px-6 pb-4 text-slate-400 text-sm">France and Germany consistently show the lowest WACC (2.5-4.5% nominal for utility-scale), thanks to strong regulatory frameworks (CRE tenders, EEG), deep project finance markets, low sovereign risk, and long-term revenue visibility through contract-for-difference or feed-in premium mechanisms.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">How does WACC affect LCOE?</summary>
+                    <div class="px-6 pb-4 text-slate-400 text-sm">Solar projects are capital-intensive with near-zero marginal costs. At 4% WACC, a 700 €/kWp project in southern France might achieve 32-38 €/MWh. At 7% WACC, the same project rises to 46-55 €/MWh — a 40-50% increase. This makes financing costs as important as hardware costs in determining competitiveness.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">What are the data sources for European solar WACC?</summary>
+                    <div class="px-6 pb-4 text-slate-400 text-sm">Primary sources are AURES II (eclareon/DTU, 2020) which surveyed investors and developers across 12 EU countries, and IRENA Renewable Power Generation Costs 2023 for regional benchmarks. These are supplemented by ECB interest rate data and national regulatory databases (CRE, Bundesnetzagentur, GSE).</div>
+                </details>
+            </div>
+        </section>
+
+        <!-- 6. Related pages -->
+        <section class="mb-16 border-t border-slate-800 pt-10">
+            <h2 class="text-2xl font-bold text-white mb-6">Related Data</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="/en/data-solar-capex-europe.html" class="block p-4 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700">
+                    <span class="text-amber-400 font-semibold text-sm">CAPEX Europe</span>
+                    <p class="text-slate-400 text-xs mt-1">PV investment costs by country</p>
+                </a>
+                <a href="/en/data-solar-lcoe-europe.html" class="block p-4 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700">
+                    <span class="text-cyan-400 font-semibold text-sm">LCOE Europe</span>
+                    <p class="text-slate-400 text-xs mt-1">Levelized cost of energy</p>
+                </a>
+                <a href="/en/data-solar-ppa-prices-europe.html" class="block p-4 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700">
+                    <span class="text-green-400 font-semibold text-sm">PPA Prices Europe</span>
+                    <p class="text-slate-400 text-xs mt-1">Corporate power purchase agreements</p>
+                </a>
+                <a href="/en/data-benchmarks.html" class="block p-4 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition border border-slate-700">
+                    <span class="text-amber-400 font-semibold text-sm">All Benchmarks</span>
+                    <p class="text-slate-400 text-xs mt-1">Full European solar data</p>
+                </a>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-sm font-semibold text-slate-400 mb-3">Explore by country</h3>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/en/solar-market-france.html" class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-slate-300 hover:text-amber-400 transition border border-slate-700">France</a>
+                    <a href="/en/solar-market-germany.html" class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-slate-300 hover:text-amber-400 transition border border-slate-700">Germany</a>
+                    <a href="/en/solar-market-spain.html" class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-slate-300 hover:text-amber-400 transition border border-slate-700">Spain</a>
+                    <a href="/en/solar-market-italy.html" class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-slate-300 hover:text-amber-400 transition border border-slate-700">Italy</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lead Capture CTA -->
+        <section class="py-12 mt-8">
+            <div class="max-w-2xl mx-auto px-4 text-center">
+                <h2 class="text-xl font-semibold text-white mb-2">Solar Data Quarterly</h2>
+                <p class="text-slate-400 text-sm mb-6">Receive a quarterly update on European solar market data: CAPEX, LCOE, PPA and WACC trends. Sourced data, no spam.</p>
+                <form name="solar-data-quarterly" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="hidden" name="form-name" value="solar-data-quarterly">
+                    <p class="hidden"><label>Do not fill: <input name="bot-field"></label></p>
+                    <input type="email" name="email" required placeholder="your@email.com" class="flex-1 px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-500 transition">
+                    <button type="submit" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold text-sm rounded-lg transition whitespace-nowrap">Subscribe</button>
+                </form>
+                <p class="text-xs text-slate-500 mt-3">Quarterly only. One-click unsubscribe.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <span class="text-white font-semibold">Solar Data Atlas</span>
+                </div>
+                <p class="text-slate-500 text-sm">© 2026 Solar Data Atlas — Bernard Pugnet | Indicative data</p>
+                <div class="flex items-center gap-4">
+                    <a href="/fr/data-wacc-europe.html" class="text-slate-400 hover:text-white text-sm transition">Français</a>
+                    <a href="/en/data-benchmarks.html" class="text-slate-400 hover:text-white text-sm transition">All Data</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
