@@ -50,9 +50,11 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Quel est le coût d'une installation solaire en Espagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Le CAPEX varie de 600-1400 €/kWp selon le segment (utility-scale, commercial, résidentiel). Les coûts sont influencés par la taille du projet, les réglementations locales et les conditions de raccordement." } },
-        { "@type": "Question", "name": "Quelle est la taille du marché solaire en Espagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Espagne dispose de 37 GW de capacité photovoltaïque installée, ce qui en fait l'un des principaux marchés européens." } },
-        { "@type": "Question", "name": "Comment évolue le marché solaire en Espagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Le marché est en forte croissance avec +8.2 GW en 2025. Les politiques de soutien, la compétitivité croissante du solaire et les objectifs climatiques européens stimulent les investissements." } }
+        { "@type": "Question", "name": "Pourquoi l'Espagne a-t-elle le LCOE solaire le plus bas d'Europe ?", "acceptedAnswer": { "@type": "Answer", "text": "L'irradiation exceptionnelle (1 600-2 100 kWh/kWp) combinée à un CAPEX compétitif (550-750 €/kWp) produit un LCOE de 24-45 €/MWh, le plus bas d'Europe continentale." } },
+        { "@type": "Question", "name": "Le modèle merchant espagnol est-il soutenable à long terme ?", "acceptedAnswer": { "@type": "Answer", "text": "Le modèle merchant a permis une croissance rapide sans coût public, mais expose les producteurs à la volatilité et la cannibalisation. Le stockage est vu comme le complément nécessaire." } },
+        { "@type": "Question", "name": "Qu'est-ce que le curtailment et pourquoi augmente-t-il en Espagne ?", "acceptedAnswer": { "@type": "Answer", "text": "Le curtailment signifie que REE ordonne aux producteurs de réduire leur production pour préserver la stabilité réseau. Il augmente car la capacité solaire dépasse les capacités d'évacuation dans certaines zones." } },
+        { "@type": "Question", "name": "L'Espagne peut-elle atteindre 76 GW solaires d'ici 2030 ?", "acceptedAnswer": { "@type": "Answer", "text": "Depuis ~37 GW fin 2024, atteindre 76 GW exige ~6,5 GW/an. Le rythme actuel (~8-9 GW) est suffisant, le défi est l'infrastructure réseau et la gestion du curtailment." } },
+        { "@type": "Question", "name": "Quel est le risque de l'impuesto al sol pour les investisseurs ?", "acceptedAnswer": { "@type": "Answer", "text": "Abrogé en 2018, l'impuesto al sol a laissé une trace dans la perception du risque réglementaire espagnol, contribuant à un WACC plus élevé que la France. Le cadre actuel est stable." } }
       ]
     }
     </script>
@@ -407,86 +409,199 @@ abbr[title]:hover::after {
             <span class="text-slate-300">Marché Espagne</span>
         </nav>
 
-        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Marché Solaire Espagne | Données & Benchmarks 2026</h1>
-        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">Espagne est l'un des marchés solaires majeurs en Europe avec 37 GW de capacité photovoltaïque installée. La croissance récente (+8.2 GW en 2025) confirme la dynamique du marché. Cette page rassemble les principaux indicateurs économiques du solaire en Espagne.</p>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">Marché Solaire Espagne 2026 — <abbr title="Levelized Cost of Energy, coût complet actualisé">LCOE</abbr> le plus bas d'Europe, PPAs merchant et risque de curtailment</h1>
+        <p class="text-lg text-slate-400 max-w-4xl mb-10 leading-relaxed">L'Espagne est le champion européen de l'irradiation solaire (1 600-2 100 kWh/kWp selon la latitude) et affiche le <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE le plus bas du continent</a> pour le utility-scale (24-45 €/MWh). Avec environ 37 GW installés fin 2024 (source : REE, Red Eléctrica), le pays a raccordé 8-9 GW en 2024 et vise 76 GW d'ici 2030 selon le <abbr title="Plan Nacional Integrado de Energía y Clima">PNIEC</abbr> révisé. Mais ce succès génère ses propres défis : un pipeline de projets autorisés dépassant 200 GW pour 76 GW d'objectif, une cannibalisation croissante des prix spot, et un réseau de transport en tension.</p>
 
-        <!-- Key Metrics -->
+        <!-- Key Figures Bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">~37 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Capacité installée fin 2024</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">24-45 €</div>
+                <div class="text-xs text-slate-400 mt-1">LCOE utility-scale (€/MWh)</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">200+ GW</div>
+                <div class="text-xs text-slate-400 mt-1">Pipeline autorisé / en attente</div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-center">
+                <div class="text-2xl font-bold text-amber-400">76 GW</div>
+                <div class="text-xs text-slate-400 mt-1">Objectif PNIEC 2030</div>
+            </div>
+        </div>
+
+        <!-- Economic Benchmarks -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Indicateurs clés</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Benchmarks économiques du solaire en Espagne</h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-800">
                             <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Indicateur</th>
-                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Valeur</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Utility-scale</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Commercial / Toiture</th>
+                            <th class="px-4 py-3 text-amber-400 font-semibold text-sm border-b border-slate-700">Résidentiel</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">CAPEX (fourchette)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">600-1400 €/kWp</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-capex-europe.html" class="hover:text-amber-400">CAPEX</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">550-750 €/kWp</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">700-1 100 €/kWp</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">1 100-1 600 €/kWp</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">LCOE (fourchette)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">24-100 €/MWh</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-lcoe-europe.html" class="hover:text-amber-400">LCOE</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">24-45 €/MWh</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">40-75 €/MWh</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">65-100 €/MWh</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Capacité installée</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">37 GW</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-wacc-europe.html" class="hover:text-amber-400">WACC</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">4,5-6,5 %</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">5,5-7,5 %</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">N/A (fonds propres)</td>
                         </tr>
                         <tr class="bg-slate-900/50">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Croissance récente</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">+8.2 GW en 2025</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-ppa-prices-europe.html" class="hover:text-amber-400">PPA corporate</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800" colspan="3">30-55 €/MWh (7-12 ans, souvent pay-as-produced, prix parmi les plus bas d'Europe)</td>
                         </tr>
                         <tr class="bg-slate-900">
-                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Prix PPA (utility)</td>
-                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">32-60 €/MWh</td>
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800">Enchères REER</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800" colspan="3">25-35 €/MWh (résultats 2021-2023, contrats 12 ans, mais volumes limités)</td>
+                        </tr>
+                        <tr class="bg-slate-900/50">
+                            <td class="px-4 py-3 font-medium text-white border-b border-slate-800"><a href="/fr/data-opex-europe.html" class="hover:text-amber-400">OPEX</a></td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">6-10 €/kWp/an</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">9-14 €/kWp/an</td>
+                            <td class="px-4 py-3 text-slate-300 border-b border-slate-800">10-18 €/kWp/an</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Dernière mise à jour : Mars 2026.</p>
+            <p class="text-xs text-slate-500 mt-3">Sources : REE, MITECO (PNIEC), IRENA, BloombergNEF, LevelTen Energy. Données indicatives, mars 2026.</p>
+        </section>
+
+        <!-- Market Model -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Un marché dominé par le merchant et les PPAs</h2>
+            <div class="space-y-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">Le modèle merchant espagnol</h3>
+                    <p class="text-slate-400 leading-relaxed">Contrairement à la France (CRE) ou l'Allemagne (EEG), l'Espagne a développé son marché solaire majoritairement sur un modèle merchant : les producteurs vendent directement sur le marché spot OMIE ou via des PPA bilatéraux, sans tarif garanti par l'État. Les enchères REER (Régimen Económico de Energías Renovables) de 2021-2023 ont attribué des volumes limités (~8 GW) à des prix record (25-35 €/MWh), mais la majorité des projets se développe sans soutien public. Ce modèle rend le <a href="/fr/data-wacc-europe.html" class="text-amber-400 hover:text-amber-300">WACC espagnol</a> structurellement plus élevé (4,5-6,5 %) que celui de la France ou de l'Allemagne.</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">L'Espagne, leader européen des PPAs solaires</h3>
+                    <p class="text-slate-400 leading-relaxed">L'Espagne est le premier marché européen de <a href="/fr/data-ppa-prices-europe.html" class="text-amber-400 hover:text-amber-300">PPA solaires corporate</a> en volume signé. Les prix PPA espagnols (30-55 €/MWh) sont les plus bas d'Europe grâce à l'irradiation exceptionnelle et au CAPEX compétitif. Les offtakers sont variés : industriels, utilities, data centers, et de plus en plus de PME via des agrégateurs. Le format dominant est le pay-as-produced sur 7-12 ans, avec une tendance croissante vers des structures avec floor/cap pour réduire la volatilité. La profondeur du marché PPA est un avantage concurrentiel majeur face à l'Italie ou le Portugal.</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-amber-400 mb-3">PNIEC et hybridation solaire + stockage</h3>
+                    <p class="text-slate-400 leading-relaxed">Le PNIEC révisé (2023) fixe un objectif de 76 GW PV d'ici 2030, contre ~37 GW fin 2024. Le plan pousse l'hybridation (solaire + éolien + stockage sur un même point de raccordement) pour optimiser l'utilisation du réseau et réduire le curtailment. Le Real Decreto de hybridación autorise l'ajout de stockage ou de solaire sur un point de connexion éolien existant sans nouvelle autorisation réseau complète. C'est un levier clé pour débloquer de la capacité rapidement sur un réseau déjà saturé.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strengths & Weaknesses -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Forces et faiblesses du marché espagnol</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-green-400 mb-3">Forces</h3>
+                    <ul class="text-slate-400 space-y-2">
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Meilleure irradiation d'Europe continentale (1 600-2 100 kWh/kWp) — avantage structurel permanent sur le LCOE</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>CAPEX utility-scale le plus bas d'Europe (550-750 €/kWp) grâce aux volumes, au foncier disponible et à la concurrence EPC</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Marché PPA corporate le plus profond et liquide d'Europe — référence pour le pricing continental</span></li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">→</span><span>Foncier abondant (Castille, Estrémadure, Andalousie) — moins de conflits d'usage qu'en France ou Allemagne</span></li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-lg font-semibold text-red-400 mb-3">Faiblesses et risques</h3>
+                    <ul class="text-slate-400 space-y-2">
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Pipeline massif (200+ GW autorisés) vs capacité réseau (~76 GW objectif 2030) — file d'attente REE de 24-48 mois, bulle de permis</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Risque merchant élevé : pas de tarif garanti, cannibalisation croissante des prix spot aux heures solaires</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Curtailment en hausse : REE a déjà procédé à des réductions de production solaire en 2024 dans les zones saturées (Estrémadure, Andalousie)</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>WACC élevé (4,5-6,5 %) en raison de l'exposition merchant — partiellement compensé par le LCOE bas</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">→</span><span>Risque réglementaire résiduel : mémoire du « impuesto al sol » (2015, abrogé 2018), instabilité perçue par les investisseurs internationaux</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid & Curtailment -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Réseau, curtailment et file d'attente</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">Le réseau espagnol (géré par REE, Red Eléctrica de España) fait face à un paradoxe : le pays dispose d'un excellent ensoleillement et de coûts bas, mais le réseau de transport n'a pas été dimensionné pour absorber la vague de projets. Le pipeline de projets avec accès au réseau autorisé ou en attente dépasse 200 GW — pour un objectif PNIEC de 76 GW et une pointe de consommation d'environ 40 GW.</p>
+                <p class="text-slate-400 leading-relaxed mb-4">Résultat : une file d'attente de raccordement de 24-48 mois dans les zones les plus sollicitées (Estrémadure, Castille-La Manche, Andalousie), et un curtailment croissant. REE a déjà été contrainte de réduire la production renouvelable à plusieurs reprises en 2024 pour maintenir la stabilité du réseau, notamment dans les nœuds sud-ouest.</p>
+                <p class="text-slate-400 leading-relaxed">Le gouvernement mise sur deux leviers : l'hybridation (stockage sur les points de raccordement existants) et le renforcement des interconnexions avec la France (Biscaye-Landes, projet prévu post-2028) pour exporter les surplus. La construction du « corridor Pyrénéen » est considérée comme critique pour le marché espagnol à moyen terme.</p>
+            </div>
         </section>
 
         <!-- FAQ -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">FAQ</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">FAQ — Marché solaire Espagne</h2>
             <div class="space-y-4">
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel est le coût d'une installation solaire en Espagne ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le CAPEX varie de 600-1400 €/kWp selon le segment (utility-scale, commercial, résidentiel). Les coûts sont influencés par la taille du projet, les réglementations locales et les conditions de raccordement.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Pourquoi l'Espagne a-t-elle le LCOE solaire le plus bas d'Europe ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">La combinaison d'une irradiation exceptionnelle (1 600-2 100 kWh/kWp, la meilleure d'Europe continentale) et d'un CAPEX utility-scale très compétitif (550-750 €/kWp) produit un <a href="/fr/data-lcoe-europe.html" class="text-amber-400 hover:text-amber-300">LCOE de 24-45 €/MWh</a>. Même avec un WACC plus élevé qu'en France (4,5-6,5 % vs 3,0-4,5 %), le volume de production par kWp installé compense largement. L'Espagne est le benchmark européen pour le coût de l'énergie solaire.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quelle est la taille du marché solaire en Espagne ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Espagne dispose de 37 GW de capacité photovoltaïque installée, ce qui en fait l'un des principaux marchés européens.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Le modèle merchant espagnol est-il soutenable à long terme ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">C'est le débat central du marché. Le modèle merchant a permis une croissance rapide sans coût pour les finances publiques, mais il expose les producteurs à la volatilité des prix spot et à la cannibalisation. Les PPAs corporate apportent une sécurité partielle, mais les prix PPA intègrent de plus en plus le risque de cannibalisation. Le stockage (batteries 4h) est vu comme le complément nécessaire pour sécuriser les revenus, mais son coût reste un frein pour la plupart des projets.</div>
                 </details>
                 <details class="bg-slate-900 rounded-lg border border-slate-800 group">
-                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Comment évolue le marché solaire en Espagne ?</summary>
-                    <div class="px-6 pb-4 text-slate-400">Le marché est en forte croissance avec +8.2 GW en 2025. Les politiques de soutien, la compétitivité croissante du solaire et les objectifs climatiques européens stimulent les investissements.</div>
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Qu'est-ce que le curtailment et pourquoi augmente-t-il en Espagne ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Le curtailment (écrêtement) signifie que REE ordonne à des producteurs de réduire ou couper leur production pour préserver la stabilité du réseau. En Espagne, il augmente car la capacité solaire installée dépasse les capacités d'évacuation du réseau dans certaines zones. C'est un signal d'alerte pour les investisseurs : un projet peut avoir un excellent LCOE théorique mais perdre 5-10 % de production annuelle en curtailment dans une zone saturée.</div>
                 </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">L'Espagne peut-elle atteindre 76 GW solaires d'ici 2030 ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">Depuis ~37 GW fin 2024, atteindre 76 GW en 2030 exige un rythme moyen de ~6,5 GW/an. Le rythme actuel (~8-9 GW/an) est déjà supérieur, donc le défi n'est pas la demande mais l'infrastructure : raccordement REE, renforcement du réseau de transport, et gestion du curtailment. Le pipeline de projets autorisés (200+ GW) contient une part importante de projets spéculatifs qui n'aboutiront jamais, mais le stock de projets viables est suffisant pour atteindre l'objectif.</div>
+                </details>
+                <details class="bg-slate-900 rounded-lg border border-slate-800 group">
+                    <summary class="px-6 py-4 cursor-pointer text-white font-medium hover:text-amber-400 transition">Quel est le risque de l'« impuesto al sol » pour les investisseurs ?</summary>
+                    <div class="px-6 pb-4 text-slate-400">L'impuesto al sol (2015-2018) était une taxe sur l'autoconsommation qui avait gelé le marché résidentiel. Bien qu'abrogé en 2018, il a laissé une trace dans la perception du risque réglementaire espagnol. Les investisseurs internationaux intègrent un risque-pays légèrement supérieur à la France ou l'Allemagne, ce qui contribue au WACC plus élevé. En pratique, le cadre actuel (PNIEC, hybridation) est stable et orienté croissance, mais la mémoire institutionnelle persiste.</div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Sources -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">Sources et méthodologie</h2>
+            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                <p class="text-slate-400 leading-relaxed mb-4">Les données de cette page sont compilées à partir de sources publiques :</p>
+                <ul class="text-slate-400 space-y-2">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>REE (Red Eléctrica de España) — Bilan électrique, données de raccordement</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>MITECO — PNIEC révisé 2023, résultats enchères REER</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>OMIE — Données de marché spot, heures à prix négatif</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>LevelTen Energy — PPA Price Index, données de marché PPA</span></li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">→</span><span>IRENA — Renewable Cost Database, LCOE benchmarks</span></li>
+                </ul>
+                <p class="text-xs text-slate-500 mt-4">Dernière mise à jour : Mars 2026. Consultez nos <a href="/fr/data-benchmarks.html" class="text-amber-400 hover:text-amber-300">pages benchmark détaillées</a> pour des données plus granulaires.</p>
             </div>
         </section>
 
         <!-- Pillar links -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-white mb-6">Données solaires Europe</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Explorer les données solaires Europe</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <a href="/fr/data-capex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
-                <a href="/fr/data-opex-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">OPEX Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">CAPEX Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coûts d'installation par pays →</p>
+                </a>
                 <a href="/fr/data-lcoe-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">LCOE Solaire Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Coût complet de l'énergie →</p>
+                </a>
                 <a href="/fr/data-ppa-prices-europe.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
-                        <span class="text-amber-400 font-semibold">Prix PPA Solaire Europe</span>
-                        <p class="text-slate-400 text-sm mt-1">Comparatif Europe →</p>
-                    </a>
+                    <span class="text-amber-400 font-semibold">Prix PPA Europe</span>
+                    <p class="text-slate-400 text-sm mt-1">Contrats d'achat corporate →</p>
+                </a>
+                <a href="/fr/data-market-power.html" class="block p-4 bg-slate-800 rounded-lg hover:bg-slate-700 transition border border-slate-700">
+                    <span class="text-amber-400 font-semibold">Market Power & Curtailment</span>
+                    <p class="text-slate-400 text-sm mt-1">Cannibalisation et écrêtement →</p>
+                </a>
             </div>
         </section>
 
@@ -494,9 +609,9 @@ abbr[title]:hover::after {
         <section class="mb-16">
             <h2 class="text-2xl font-bold text-white mb-6">Autres marchés européens</h2>
             <div class="flex flex-wrap gap-4">
-                <a href="/fr/solar-market-germany.html" class="text-amber-400 hover:text-amber-300 transition">Allemagne</a>
-                <a href="/fr/solar-market-france.html" class="text-amber-400 hover:text-amber-300 transition">France</a>
-                <a href="/fr/solar-market-italy.html" class="text-amber-400 hover:text-amber-300 transition">Italie</a>
+                <a href="/fr/solar-market-france.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">France — CRE, PPE3, grid nucléaire</a>
+                <a href="/fr/solar-market-germany.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">Allemagne — EEG, prix négatifs, 96 GW</a>
+                <a href="/fr/solar-market-italy.html" class="px-4 py-2 bg-slate-800 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-slate-700 transition border border-slate-700">Italie — FER 2, clivage Nord-Sud</a>
             </div>
         </section>
     </main>
