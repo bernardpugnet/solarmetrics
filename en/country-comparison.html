@@ -196,49 +196,77 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Chart styling */
+        /* LCOE Horizontal Bar Chart */
         .lcoe-chart {
             display: flex;
-            align-items: flex-end;
-            gap: 0.75rem;
-            height: 300px;
-            padding: 2rem 1rem 1rem 1rem;
-            background: rgba(15, 23, 42, 0.3);
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.4);
             border-radius: 0.75rem;
             border: 1px solid rgba(71, 85, 105, 0.3);
         }
-        .lcoe-bar {
-            display: flex;
-            flex-direction: column;
+        .lcoe-row {
+            display: grid;
+            grid-template-columns: 120px 1fr 70px;
             align-items: center;
-            flex: 1;
-            min-width: 40px;
+            gap: 0.75rem;
         }
-        .lcoe-bar-fill {
-            width: 100%;
-            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
-            border-radius: 4px 4px 0 0;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .lcoe-country {
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            font-weight: 500;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .lcoe-bar-track {
+            height: 28px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 6px;
+            overflow: hidden;
             position: relative;
         }
-        .lcoe-bar-fill:hover {
-            opacity: 0.8;
-            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4));
+        .lcoe-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
         }
-        .lcoe-bar-label {
-            font-size: 0.7rem;
-            color: #cbd5e1;
-            margin-top: 0.75rem;
-            text-align: center;
-            font-weight: 500;
+        .lcoe-bar-fill.low {
+            background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
         }
-        .lcoe-bar-value {
-            font-size: 0.75rem;
-            color: #fbbf24;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            white-space: nowrap;
+        .lcoe-bar-fill.medium {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+        .lcoe-bar-fill.high {
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+        }
+        .lcoe-bar-track:hover .lcoe-bar-fill {
+            filter: brightness(1.15);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+        }
+        .lcoe-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            text-align: left;
+        }
+        .lcoe-value.low { color: #4ade80; }
+        .lcoe-value.medium { color: #fbbf24; }
+        .lcoe-value.high { color: #f87171; }
+        .lcoe-scale {
+            display: grid;
+            grid-template-columns: 120px 1fr 70px;
+            gap: 0.75rem;
+            margin-top: 0.25rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(71, 85, 105, 0.3);
+        }
+        .lcoe-scale-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: #64748b;
         }
 
         /* Attractivity badges */
@@ -969,22 +997,44 @@
             'Poland': 50
         };
 
-        // Generate LCOE chart
+        // Generate LCOE horizontal bar chart (sorted by LCOE ascending)
         function generateLcoeChart() {
             const chart = document.getElementById('lcoeChart');
+            const sorted = Object.entries(lcoeData).sort((a, b) => a[1] - b[1]);
             const maxLcoe = Math.max(...Object.values(lcoeData));
 
-            Object.entries(lcoeData).forEach(([country, lcoe]) => {
-                const barHeight = (lcoe / maxLcoe) * 250;
-                const bar = document.createElement('div');
-                bar.className = 'lcoe-bar';
-                bar.innerHTML = `
-                    <div class="lcoe-bar-value">${lcoe} €</div>
-                    <div class="lcoe-bar-fill" style="height: ${barHeight}px;"></div>
-                    <div class="lcoe-bar-label">${country}</div>
+            const emojis = { Spain: '🇪🇸', Portugal: '🇵🇹', Italy: '🇮🇹', France: '🇫🇷', Poland: '🇵🇱', Austria: '🇦🇹', Netherlands: '🇳🇱', Germany: '🇩🇪', Belgium: '🇧🇪', Switzerland: '🇨🇭' };
+
+            function getCat(lcoe) {
+                if (lcoe <= 35) return 'low';
+                if (lcoe <= 52) return 'medium';
+                return 'high';
+            }
+
+            sorted.forEach(([country, lcoe], i) => {
+                const pct = (lcoe / (maxLcoe * 1.15)) * 100;
+                const cat = getCat(lcoe);
+                const row = document.createElement('div');
+                row.className = 'lcoe-row';
+                row.innerHTML = `
+                    <div class="lcoe-country">${emojis[country] || ''} ${country}</div>
+                    <div class="lcoe-bar-track">
+                        <div class="lcoe-bar-fill ${cat}" style="width: 0%;" title="${country}: ${lcoe} €/MWh"></div>
+                    </div>
+                    <div class="lcoe-value ${cat}">${lcoe} €/MWh</div>
                 `;
-                chart.appendChild(bar);
+                chart.appendChild(row);
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        row.querySelector('.lcoe-bar-fill').style.width = pct + '%';
+                    }, i * 60);
+                });
             });
+
+            const scale = document.createElement('div');
+            scale.className = 'lcoe-scale';
+            scale.innerHTML = '<div></div><div class="lcoe-scale-bar"><span>0</span><span>20</span><span>40</span><span>60 €/MWh</span></div><div></div>';
+            chart.appendChild(scale);
         }
 
         generateLcoeChart();

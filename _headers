@@ -11,9 +11,20 @@
 
 /fr/*
   Content-Language: fr
+  Cache-Control: public, max-age=0, must-revalidate
 
 /en/*
   Content-Language: en
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/manifest.json
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
 
 # Cache static assets
 /sitemap.xml

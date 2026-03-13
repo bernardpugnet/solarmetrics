@@ -1,7 +1,7 @@
 {
-  "name": "Solar Data Atlas - Finance & Énergie Solaire",
+  "name": "Solar Data Atlas - Données & Benchmarks Solaires Europe",
   "short_name": "Solar Data Atlas",
-  "description": "Expertise en financement de projets solaires, simulateurs et analyses de marché.",
+  "description": "Données solaires Europe en accès libre : CAPEX, OPEX, LCOE, PPA, WACC par pays. Benchmarks, analyses et outils interactifs.",
   "start_url": "/fr/",
   "display": "standalone",
   "background_color": "#0f172a",
