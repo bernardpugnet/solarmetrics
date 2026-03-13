@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'solarmetrics-v2026-03';
+const CACHE_VERSION = 'solardataatlas-v2026-03';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const ASSETS_CACHE = `${CACHE_VERSION}-assets`;
 const OFFLINE_PAGE = '/offline.html';
@@ -52,7 +52,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           // Delete old versions of our caches
-          if (cacheName.startsWith('solarmetrics-') && cacheName !== SHELL_CACHE && cacheName !== ASSETS_CACHE) {
+          if (cacheName.startsWith('solardataatlas-') && cacheName !== SHELL_CACHE && cacheName !== ASSETS_CACHE) {
             console.log('[SW] Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }

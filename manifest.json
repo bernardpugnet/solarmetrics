@@ -1,6 +1,6 @@
 {
-  "name": "SolarMetrics - Finance & Énergie Solaire",
-  "short_name": "SolarMetrics",
+  "name": "Solar Data Atlas - Finance & Énergie Solaire",
+  "short_name": "Solar Data Atlas",
   "description": "Expertise en financement de projets solaires, simulateurs et analyses de marché.",
   "start_url": "/fr/",
   "display": "standalone",

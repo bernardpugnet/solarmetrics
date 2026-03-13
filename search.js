@@ -1,5 +1,5 @@
 /**
- * SolarMetrics Site Search
+ * Solar Data Atlas Site Search
  * Lightweight client-side search using a JSON index.
  */
 (function () {

@@ -1,5 +1,5 @@
 /**
- * SolarMetrics — Home Orbit Menu V7 (Three.js r128)
+ * Solar Data Atlas — Home Orbit Menu V7 (Three.js r128)
  * Style: "warm dramatic solar system" — inspired by CGI renders
  *
  * Key upgrades:

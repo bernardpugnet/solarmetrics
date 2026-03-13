@@ -1,5 +1,5 @@
 /**
- * SolarMetrics - Residential Solar Simulator Data
+ * Solar Data Atlas - Residential Solar Simulator Data
  * Last updated: March 2026
  *
  * Sources:

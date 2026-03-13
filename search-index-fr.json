@@ -7,7 +7,7 @@
 },
 {
 "url": "comparateur.html",
-"title": "Comparateur Technologies Solaires — SolarMetrics",
+"title": "Comparateur Technologies Solaires — Solar Data Atlas",
 "desc": "Comparateur interactif des technologies solaires : PERC vs TOPCon vs HJT, onduleurs (String, Micro, Hybride), batteries ",
 "kw": ""
 },
@@ -43,8 +43,8 @@
 },
 {
 "url": "hypotheses.html",
-"title": "Hypothèses & Données — SolarMetrics",
-"desc": "Toutes les hypothèses de calcul de SolarMetrics : CAPEX, OPEX, WACC, productible, prix électricité, CO₂. Sources vérifié",
+"title": "Hypothèses & Données — Solar Data Atlas",
+"desc": "Toutes les hypothèses de calcul de Solar Data Atlas : CAPEX, OPEX, WACC, productible, prix électricité, CO₂. Sources vérifié",
 "kw": ""
 },
 {
@@ -55,9 +55,9 @@
 },
 {
 "url": "index.html",
-"title": "SolarMetrics - Bernard Pugnet | Expert Finance & Énergie Solaire",
-"desc": "SolarMetrics: expertise en financement de projets solaires, asset management PV, LCOE, PPA et analyse de rentabilité éne",
-"kw": "solaire, photovoltaïque, PV, LCOE, PPA, asset management, financement projet, énergie renouvelable, Bernard Pugnet, SolarMetrics"
+"title": "Solar Data Atlas - Bernard Pugnet | Expert Finance & Énergie Solaire",
+"desc": "Solar Data Atlas: expertise en financement de projets solaires, asset management PV, LCOE, PPA et analyse de rentabilité éne",
+"kw": "solaire, photovoltaïque, PV, LCOE, PPA, asset management, financement projet, énergie renouvelable, Bernard Pugnet, Solar Data Atlas"
 },
 {
 "url": "marches.html",
@@ -67,7 +67,7 @@
 },
 {
 "url": "mon-solaire-60s.html",
-"title": "Mon Solaire en 60 Secondes — SolarMetrics",
+"title": "Mon Solaire en 60 Secondes — Solar Data Atlas",
 "desc": "Découvrez le solaire résidentiel en 60 secondes : de l'ensoleillement à la rentabilité, une expérience visuelle interact",
 "kw": ""
 },
@@ -91,7 +91,7 @@
 },
 {
 "url": "prix-solaire.html",
-"title": "Prix du Solaire 2025-2026 — SolarMetrics",
+"title": "Prix du Solaire 2025-2026 — Solar Data Atlas",
 "desc": "Prix actualisés des composants solaires en 2025-2026 : modules PV (PERC, TOPCon, HJT), onduleurs, batteries LFP, coûts d",
 "kw": ""
 },
@@ -103,7 +103,7 @@
 },
 {
 "url": "recyclage-fin-de-vie.html",
-"title": "Recyclage & Fin de Vie des Panneaux Solaires — SolarMetrics",
+"title": "Recyclage & Fin de Vie des Panneaux Solaires — Solar Data Atlas",
 "desc": "Recyclage des panneaux solaires en France et en Europe : filière SOREN, taux de recyclage, composants récupérés, régleme",
 "kw": ""
 },
@@ -115,7 +115,7 @@
 },
 {
 "url": "risques-bankability.html",
-"title": "Risques & Bankability des Projets Solaires — SolarMetrics",
+"title": "Risques & Bankability des Projets Solaires — Solar Data Atlas",
 "desc": "Analyse des risques d'un projet solaire : technique, réglementaire, financier, contractuel. Critères de bankability et D",
 "kw": ""
 },
@@ -127,13 +127,13 @@
 },
 {
 "url": "schema-plug-and-play.html",
-"title": "Installation Solaire Plug & Play — SolarMetrics",
+"title": "Installation Solaire Plug & Play — Solar Data Atlas",
 "desc": "Schéma interactif d'une installation solaire plug & play : panneaux, micro-onduleur, raccordement simplifié. Visualisez ",
 "kw": ""
 },
 {
 "url": "technologies-emergentes.html",
-"title": "Technologies Solaires Émergentes — SolarMetrics",
+"title": "Technologies Solaires Émergentes — Solar Data Atlas",
 "desc": "Pérovskites, tandem, bifacial, solaire flottant, agrivoltaïsme : les technologies solaires qui transformeront le marché ",
 "kw": ""
 },
@@ -151,14 +151,14 @@
 },
 {
 "url": "veille-reglementaire.html",
-"title": "Veille Réglementaire Solaire — SolarMetrics",
+"title": "Veille Réglementaire Solaire — Solar Data Atlas",
 "desc": "Veille réglementaire solaire : PPE3, tarifs OA, TURPE, taxonomie verte, CSRD, CBAM et évolutions réglementaires impactan",
 "kw": ""
 },
 {
 "url": "widgets.html",
-"title": "Widgets Solaires Embarquables — SolarMetrics",
-"desc": "Intégrez des widgets solaires SolarMetrics sur votre site : LCOE en temps réel, simulateur simplifié, compteur CO₂, tari",
+"title": "Widgets Solaires Embarquables — Solar Data Atlas",
+"desc": "Intégrez des widgets solaires Solar Data Atlas sur votre site : LCOE en temps réel, simulateur simplifié, compteur CO₂, tari",
 "kw": ""
 },
 {

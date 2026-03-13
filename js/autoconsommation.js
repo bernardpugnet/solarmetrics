@@ -1,5 +1,5 @@
 /**
- * autoconsommation.js — SolarMetrics Advanced Self-Consumption Simulator
+ * autoconsommation.js — Solar Data Atlas Advanced Self-Consumption Simulator
  *
  * This module contains:
  *   1. Consumption profiles (4 realistic residential profiles, normalized)
