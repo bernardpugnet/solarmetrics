@@ -506,7 +506,7 @@
   </g>
 
   <!-- ============ FOOTER ============ -->
-  <text x="600" y="812" text-anchor="middle" fill="#475569" font-size="9">SolarMetrics © 2026 — Schéma informatif, consultez un professionnel pour votre installation</text>
+  <text x="600" y="812" text-anchor="middle" fill="#475569" font-size="9">Solar Data Atlas © 2026 — Schéma informatif, consultez un professionnel pour votre installation</text>
 
   <!-- ============ INTERACTIVE COUNTRY SWITCHING ============ -->
   <script type="text/javascript"><![CDATA[
