@@ -1,6 +1,7 @@
 # PROJECT CONTEXT — Solar Data Atlas
 
 > **Priorité immédiate : pousser et merger le commit `4fe244b` dans `main`, sinon le nettoyage de marque n'est pas complètement acté.**
+> *(Mise à jour : `4fe244b` mergé via PR #18. Priorité levée.)*
 
 ---
 
@@ -89,6 +90,19 @@
 - **Cause** : site trop récent (première indexation 12 mars 2026), absence quasi totale de backlinks externes
 - **Aucun blocage technique** : robots.txt, sitemap, HTTPS, meta tags tous conformes
 
+### Pages prioritaires à faire indexer
+
+| # | URL | Raison |
+|---|-----|--------|
+| 1 | `/fr/` | Home FR — seule page actuellement indexée, à maintenir |
+| 2 | `/en/` | Home EN — parité linguistique, audience internationale |
+| 3 | `/fr/data-benchmarks.html` | Page pivot du Data Hub, porte d'entrée données |
+| 4 | `/fr/economie.html` | Vue d'ensemble économie solaire — positionnement finance |
+| 5 | `/fr/risques-bankability.html` | Différenciant : risk / bankability / due diligence |
+| 6 | `/fr/comparatif-pays.html` | Requêtes géo-ciblées, fort potentiel SEO |
+| 7 | `/fr/recrutez-moi.html` | Page de conversion — lien direct job search |
+| 8 | `/en/data-benchmarks.html` | Miroir EN du Data Hub pour audience internationale |
+
 ---
 
 ## 6. Ce qu'il reste à faire
@@ -100,7 +114,7 @@
 ### Court terme
 
 - [ ] Attendre le recrawl progressif de Google (pas d'action technique possible)
-- [ ] Obtenir des backlinks : profil LinkedIn, posts LinkedIn, mentions sur des sites du secteur solaire
+- [ ] Utiliser LinkedIn pour générer visibilité, trafic qualifié, crédibilité, conversations et signaux d'intérêt autour du site
 
 ### Optionnel / plus tard
 
@@ -112,11 +126,11 @@
 ## 7. Prochaine étape projet
 
 1. **Corriger la promesse de la home** avec un minimum de changements (alignement du message principal)
-2. **Travailler les posts LinkedIn** pour générer du trafic qualifié et des backlinks naturels
+2. **Travailler les posts LinkedIn** pour générer visibilité, trafic qualifié et conversations autour du site
 3. **Suivre l'indexation** dans Google Search Console (objectif : passer de 1 à 10+ pages indexées)
 
 ---
 
 ## Résumé exécutif
 
-Le site www.solardataatlas.com est fonctionnel, bien structuré techniquement et cohérent côté SEO. La parité de contenu FR/EN a été rétablie (sections Actualités et Chiffres Clés ajoutées en FR). L'ancien branding "SolarMetrics" a été éliminé de tous les fichiers publics. Le principal frein actuel est l'indexation Google : sur 88 pages connues, seule `/fr/` est indexée, les 86 autres sont en file d'attente de crawl. Il n'y a pas de blocage technique — c'est un problème de notoriété et de fraîcheur du site. Les prochaines actions prioritaires sont : merger le dernier commit de nettoyage, puis concentrer les efforts sur la génération de backlinks via LinkedIn.
+Le site www.solardataatlas.com est fonctionnel, bien structuré techniquement et cohérent côté SEO. La parité de contenu FR/EN a été rétablie (sections Actualités et Chiffres Clés ajoutées en FR). L'ancien branding "SolarMetrics" a été éliminé de tous les fichiers publics. Le principal frein actuel est l'indexation Google : sur 88 pages connues, seule `/fr/` est indexée, les 86 autres sont en file d'attente de crawl. Il n'y a pas de blocage technique — c'est un problème de notoriété et de fraîcheur du site. Les prochaines actions prioritaires sont : utiliser LinkedIn pour générer visibilité et trafic qualifié, et suivre l'indexation progressive des 8 pages prioritaires identifiées.
