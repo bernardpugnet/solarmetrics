@@ -435,12 +435,9 @@
                 </div>
 
                 <div id="sim-form" class="space-y-6">
-                    <!-- CARD 1: Introduction -->
-                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
-                        <h4 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                            <span class="text-amber-500">●</span> Simulateur Solaire Unifié
-                        </h4>
-                        <p class="text-sm text-slate-400 leading-relaxed">Simulation horaire complète (8 760h/an) via l'API PVGIS. Renseignez votre toiture, votre consommation et vos paramètres financiers pour obtenir une analyse détaillée de rentabilité avec courbes d'autoconsommation.</p>
+                    <!-- Introduction -->
+                    <div class="bg-slate-900/50 rounded-2xl p-4 border border-slate-700/50">
+                        <p class="text-sm text-slate-400 leading-relaxed">Vérifiez si le solaire est pertinent chez vous. Simulation basée sur les données d'irradiation réelles de votre localisation (PVGIS, 8 760 h/an).</p>
                     </div>
 
                     <!-- CARD 2: Localisation -->
@@ -504,94 +501,7 @@
                         </div>
                     </div>
 
-                    <!-- CARD 3: Système PV -->
-                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
-                        <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-                            <span class="text-amber-500">●</span> Système Photovoltaïque
-                        </h4>
-                        <div class="space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Orientation</label>
-                                    <select id="resOrientation" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="0">Sud (optimal)</option>
-                                        <option value="-45">Sud-Est</option>
-                                        <option value="45">Sud-Ouest</option>
-                                        <option value="-90">Est</option>
-                                        <option value="90">Ouest</option>
-                                        <option value="180">Nord (faible)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Inclinaison (°)</label>
-                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Ombrage (%)</label>
-                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-xs text-slate-600 mt-0.5">0% = plein soleil</p>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Surface toiture (m²)</label>
-                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Surface disponible pour les panneaux. Un panneau standard fait ~1.7 m². Comptez ~6 m²/kWc installé.
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-xs text-slate-400 mb-1 block">Type de panneaux</label>
-                                <select id="resPanelType" onchange="showPanelInfo(this.value); updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <option value="0.17">Polycristallin (~17%)</option>
-                                    <option value="0.20" selected>Monocristallin PERC (~20%)</option>
-                                    <option value="0.22">Monocristallin TOPCon (~22%)</option>
-                                    <option value="0.235">Hétérojonction HJT (~23.5%)</option>
-                                    <option value="0.245">Back-contact IBC (~24.5%)</option>
-                                </select>
-                                <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
-                                    <strong class="text-amber-400" id="panelInfoTitle">Monocristallin PERC</strong>
-                                    <p id="panelInfoDesc" class="mt-1 leading-relaxed">Technologie la plus répandue. Traitement en face arrière (Passivated Emitter Rear Cell) qui améliore la captation lumineuse. Excellent rapport qualité/prix.</p>
-                                    <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
-                                        <span id="panelInfoEff">⚡ Rendement : 19–21%</span>
-                                        <span id="panelInfoPrice">💰 Prix : 0.25–0.35 €/Wc</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Puissance PV (kWc)</label>
-                                    <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Calculé auto : surface × 0.85 × rendement. Modifiez si vous connaissez la puissance exacte de votre devis.
-                                    </div>
-                                    <div class="mt-1 p-2 bg-amber-900/15 border border-amber-700/30 rounded-lg text-xs text-amber-400/80 leading-relaxed">
-                                        <span class="font-medium">⚠️ Ne dépend pas du lieu</span> — la puissance crête (kWc) est une caractéristique fixe de vos panneaux. Ce qui change avec la localisation, c'est le <strong>productible</strong> (kWh/kWc/an), visible dans les résultats après simulation.
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Pertes système (%)</label>
-                                    <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Pertes câblage, onduleur, poussière, température. 14% est une valeur standard.
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Type de montage</label>
-                                    <select id="simMounting" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="free">Surimposé (toiture)</option>
-                                        <option value="building">Intégré au bâti (IAB)</option>
-                                    </select>
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Surimposé : ventilation naturelle, meilleur rendement. IAB : intégré à la couverture, éligible à un tarif d'achat plus élevé.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CARD 4: Consommation -->
+                    <!-- Consommation Électrique -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
                             <span class="text-amber-500">●</span> Consommation Électrique
@@ -641,7 +551,21 @@
                         </div>
                     </div>
 
-                    <!-- CARD 5: Batterie -->
+                    <!-- Puissance PV -->
+                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                        <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
+                            <span class="text-amber-500">●</span> Puissance de l'installation
+                        </h4>
+                        <div>
+                            <label class="text-xs text-slate-400 mb-1 block">Puissance PV (kWc)</label>
+                            <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
+                            <div class="mt-2 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                <span class="text-slate-400 font-medium">ℹ️</span> Indiquez la puissance de votre devis. Si vous ne la connaissez pas, dépliez « Paramètres toiture » ci-dessous pour l'estimer à partir de la surface disponible.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Batterie -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                             <span class="text-amber-500">●</span> Batterie de Stockage
@@ -667,12 +591,97 @@
                         </div>
                     </div>
 
-                    <!-- CARD 6: Paramètres Financiers -->
-                    <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
-                        <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-                            <span class="text-amber-500">●</span> Paramètres Financiers
-                        </h4>
-                        <div class="space-y-4">
+                    <!-- Paramètres toiture (replié) -->
+                    <details class="bg-slate-900/50 rounded-2xl border border-slate-700/50 group">
+                        <summary class="p-6 cursor-pointer list-none flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+                                <span class="text-slate-500">●</span> Paramètres toiture
+                            </h4>
+                            <span class="text-slate-500 text-xs group-open:hidden">Orientation sud · Inclinaison 30° · Ombrage 0%</span>
+                            <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Orientation</label>
+                                    <select id="resOrientation" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0">Sud (optimal)</option>
+                                        <option value="-45">Sud-Est</option>
+                                        <option value="45">Sud-Ouest</option>
+                                        <option value="-90">Est</option>
+                                        <option value="90">Ouest</option>
+                                        <option value="180">Nord (faible)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Inclinaison (°)</label>
+                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Ombrage (%)</label>
+                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">0% = plein soleil</p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Surface toiture (m²)</label>
+                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Surface disponible pour les panneaux. Un panneau standard fait ~1.7 m². Comptez ~6 m²/kWc installé.
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 mb-1 block">Type de panneaux</label>
+                                <select id="resPanelType" onchange="showPanelInfo(this.value); updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <option value="0.17">Polycristallin (~17%)</option>
+                                    <option value="0.20" selected>Monocristallin PERC (~20%)</option>
+                                    <option value="0.22">Monocristallin TOPCon (~22%)</option>
+                                    <option value="0.235">Hétérojonction HJT (~23.5%)</option>
+                                    <option value="0.245">Back-contact IBC (~24.5%)</option>
+                                </select>
+                                <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
+                                    <strong class="text-amber-400" id="panelInfoTitle">Monocristallin PERC</strong>
+                                    <p id="panelInfoDesc" class="mt-1 leading-relaxed">Technologie la plus répandue. Traitement en face arrière (Passivated Emitter Rear Cell) qui améliore la captation lumineuse. Excellent rapport qualité/prix.</p>
+                                    <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
+                                        <span id="panelInfoEff">⚡ Rendement : 19–21%</span>
+                                        <span id="panelInfoPrice">💰 Prix : 0.25–0.35 €/Wc</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Pertes système (%)</label>
+                                    <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Pertes câblage, onduleur, poussière, température. 14% est une valeur standard.
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Type de montage</label>
+                                    <select id="simMounting" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="free">Surimposé (toiture)</option>
+                                        <option value="building">Intégré au bâti (IAB)</option>
+                                    </select>
+                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
+                                        <span class="text-slate-400 font-medium">ℹ️</span> Surimposé : ventilation naturelle, meilleur rendement. IAB : intégré à la couverture, éligible à un tarif d'achat plus élevé.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Paramètres financiers (replié) -->
+                    <details class="bg-slate-900/50 rounded-2xl border border-slate-700/50 group">
+                        <summary class="p-6 cursor-pointer list-none flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+                                <span class="text-slate-500">●</span> Paramètres financiers & hypothèses
+                            </h4>
+                            <span class="text-slate-500 text-xs group-open:hidden">Tarifs et coûts pré-remplis selon votre pays</span>
+                            <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 space-y-4">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Tarif électricité (<span class="cur">€</span>/kWh)</label>
@@ -714,7 +723,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </details>
 
                     <!-- Buttons -->
                     <div class="flex gap-4">
@@ -738,6 +747,66 @@
 
                 <!-- RESULTS SECTION -->
                 <div id="results-section" style="display:none" class="mt-12">
+
+                    <!-- BLOC VERDICT -->
+                    <div id="verdict-section" class="mb-10">
+                        <div id="verdict-box" class="rounded-2xl p-6 border-2 mb-6">
+                            <!-- Verdict header : filled by JS -->
+                            <div class="flex items-start gap-4 mb-5">
+                                <div id="verdict-icon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"></div>
+                                <div>
+                                    <h2 id="verdict-title" class="text-xl font-bold text-white mb-1"></h2>
+                                    <p id="verdict-subtitle" class="text-sm text-slate-400"></p>
+                                </div>
+                            </div>
+                            <!-- KPI synthèse -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
+                                <div class="text-center">
+                                    <div class="text-xs text-slate-400 mb-1">Économies annuelles</div>
+                                    <div id="verdict-savings" class="text-xl font-bold text-white"></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-slate-400 mb-1">Temps de retour</div>
+                                    <div id="verdict-payback" class="text-xl font-bold text-white"></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-slate-400 mb-1">Autoconsommation</div>
+                                    <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-slate-400 mb-1">Production / conso</div>
+                                    <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
+                                </div>
+                            </div>
+                            <!-- Recommandations -->
+                            <div id="verdict-recommendations" class="space-y-2 text-sm text-slate-300 border-t border-slate-700/50 pt-4"></div>
+                        </div>
+
+                        <!-- Comparaison batterie (remontée ici) -->
+                        <div id="verdict-battery-comparison" class="hidden bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h3 class="text-lg font-semibold text-white mb-4">Impact de la batterie</h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700/30">
+                                    <div class="text-xs text-slate-400 mb-2">Sans batterie</div>
+                                    <div class="space-y-2">
+                                        <div><span class="text-slate-400 text-xs">Autoconsommation :</span> <span id="vbc-no-bat-auto" class="text-white font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Économies/an :</span> <span id="vbc-no-bat-savings" class="text-white font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Temps de retour :</span> <span id="vbc-no-bat-payback" class="text-white font-semibold"></span></div>
+                                    </div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-amber-500/30">
+                                    <div class="text-xs text-amber-400 mb-2">Avec batterie</div>
+                                    <div class="space-y-2">
+                                        <div><span class="text-slate-400 text-xs">Autoconsommation :</span> <span id="vbc-bat-auto" class="text-amber-300 font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Économies/an :</span> <span id="vbc-bat-savings" class="text-amber-300 font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Temps de retour :</span> <span id="vbc-bat-payback" class="text-amber-300 font-semibold"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="vbc-conclusion" class="text-xs text-slate-400 mt-4 text-center italic"></p>
+                        </div>
+                    </div>
+
                     <!-- Tab Navigation + PDF button -->
                     <div class="flex items-center justify-between border-b border-slate-700 mb-8">
                         <div class="flex gap-2 overflow-x-auto">
@@ -1333,6 +1402,7 @@
                 if (!pvgisData.success || !pvgisData.hourly) {
                     throw new Error('PVGIS data unavailable');
                 }
+                cachedPvgisData = pvgisData; // Cache for battery comparison in verdict
 
                 // Simulate autoconsommation
                 const simResults = window.AutoconsommationSimulator.simulateAutoconsommation(
@@ -1394,6 +1464,9 @@
                     irr = calculateIRR(cashFlows);
                 } catch(e) { console.warn('IRR error:', e); }
 
+                // Display verdict (patch 1)
+                generateVerdict(simResults, financials, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost);
+
                 // Display results
                 displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente, netCost, irr, co2Avoided);
                 generateDetailedCharts(simResults, typicalDays, financials);
@@ -1421,6 +1494,178 @@
                 document.getElementById('sim-loader').style.display = 'none';
                 document.getElementById('sim-loader').classList.add('hidden');
             }
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        // VERDICT LOGIC (Patch 1)
+        // ══════════════════════════════════════════════════════════════════════
+        const VERDICT_THRESHOLDS = {
+            GOOD_PAYBACK: 12,
+            MEDIUM_PAYBACK: 18,
+            GOOD_IRR: 0.04,
+            MEDIUM_IRR: 0.02
+        };
+
+        function generateVerdict(sim, fin, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost) {
+            const annual = sim.annual;
+            const totalSavings = (annual.autoDirect + annual.autoBattery) * elecPrice + annual.injection * priceRevente;
+            const payback = fin.paybackYear || 99;
+            const irrPct = irr !== null ? irr * 100 : 0;
+            const autoRate = annual.tauxAutoconsommation;
+            const prodRatio = annual.consumption > 0 ? Math.round(annual.production / annual.consumption * 100) : 0;
+
+            // --- Determine verdict level ---
+            let level = 'medium'; // default
+            if (payback <= VERDICT_THRESHOLDS.GOOD_PAYBACK && (irr === null || irr >= VERDICT_THRESHOLDS.GOOD_IRR)) {
+                level = 'good';
+            } else if (payback > VERDICT_THRESHOLDS.MEDIUM_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.MEDIUM_IRR)) {
+                level = 'poor';
+            }
+
+            // --- Verdict box styling ---
+            const box = document.getElementById('verdict-box');
+            const icon = document.getElementById('verdict-icon');
+            const title = document.getElementById('verdict-title');
+            const subtitle = document.getElementById('verdict-subtitle');
+
+            if (level === 'good') {
+                box.className = 'rounded-2xl p-6 border-2 mb-6 border-emerald-500/40 bg-emerald-900/10';
+                icon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 bg-emerald-500/20';
+                icon.textContent = '✓';
+                title.textContent = 'Projet pertinent';
+                title.className = 'text-xl font-bold text-emerald-400 mb-1';
+                subtitle.textContent = 'Les conditions sont favorables pour cette installation.';
+            } else if (level === 'medium') {
+                box.className = 'rounded-2xl p-6 border-2 mb-6 border-amber-500/40 bg-amber-900/10';
+                icon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 bg-amber-500/20';
+                icon.textContent = '~';
+                title.textContent = 'Projet à étudier';
+                title.className = 'text-xl font-bold text-amber-400 mb-1';
+                subtitle.textContent = 'La rentabilité existe mais dépend de plusieurs hypothèses.';
+            } else {
+                box.className = 'rounded-2xl p-6 border-2 mb-6 border-red-500/40 bg-red-900/10';
+                icon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 bg-red-500/20';
+                icon.textContent = '✗';
+                title.textContent = 'Projet peu pertinent';
+                title.className = 'text-xl font-bold text-red-400 mb-1';
+                subtitle.textContent = 'En l\'état, la rentabilité est faible ou incertaine.';
+            }
+
+            // --- KPI synthèse ---
+            document.getElementById('verdict-savings').textContent = Math.round(totalSavings).toLocaleString('fr-FR') + ' €/an';
+            document.getElementById('verdict-payback').textContent = payback < 50 ? payback + ' ans' : '> 25 ans';
+            document.getElementById('verdict-autoconso').textContent = autoRate.toFixed(0) + ' %';
+            document.getElementById('verdict-ratio').textContent = prodRatio + ' %';
+
+            // --- Recommendations ---
+            const recs = [];
+
+            // Payback interpretation
+            if (payback <= 10) {
+                recs.push('Amortissement rapide : l\'installation se rembourse en moins de 10 ans.');
+            } else if (payback <= 15) {
+                recs.push('Amortissement correct, dans la moyenne des projets résidentiels.');
+            } else if (payback < 50) {
+                recs.push('Amortissement long (' + payback + ' ans). Vérifiez le coût d\'installation et les hypothèses financières.');
+            }
+
+            // Autoconsommation interpretation
+            if (autoRate < 25) {
+                recs.push('Taux d\'autoconsommation faible (' + autoRate.toFixed(0) + '%). L\'installation est probablement surdimensionnée par rapport à votre consommation.');
+            } else if (autoRate > 70) {
+                recs.push('Excellent taux d\'autoconsommation (' + autoRate.toFixed(0) + '%). La production est bien calibrée avec votre consommation.');
+            }
+
+            // Oversizing check
+            if (prodRatio > 200) {
+                recs.push('La production représente ' + prodRatio + '% de votre consommation. Une installation plus petite serait peut-être mieux calibrée.');
+            } else if (prodRatio < 50) {
+                recs.push('La production ne couvre que ' + prodRatio + '% de votre consommation. Vous pourriez envisager une puissance plus élevée si la toiture le permet.');
+            }
+
+            // Battery recommendation
+            if (batteryCapacity > 0) {
+                const batSavingsRatio = batteryCost > 0 ? (annual.autoBattery * elecPrice) / batteryCost : 0;
+                if (batSavingsRatio < 0.05) {
+                    recs.push('La batterie améliore l\'autonomie mais sa rentabilité est faible au prix actuel. Sans batterie, le projet serait probablement plus rentable.');
+                } else if (batSavingsRatio > 0.10) {
+                    recs.push('La batterie contribue significativement aux économies et améliore l\'autoconsommation.');
+                }
+            }
+
+            // Sensitivity hint
+            if (installCost > 0 && totalSavings > 0) {
+                const sensInstall = (installCost / totalSavings).toFixed(0);
+                if (payback > 12) {
+                    recs.push('Sensibilité principale : le coût d\'installation. Un devis moins cher ou de meilleures aides changeraient significativement le résultat.');
+                }
+            }
+
+            const recsDiv = document.getElementById('verdict-recommendations');
+            recsDiv.innerHTML = recs.map(r => '<p class="flex items-start gap-2"><span class="text-slate-500 mt-0.5">—</span> ' + r + '</p>').join('');
+
+            // --- Battery comparison (run without battery for comparison) ---
+            if (batteryCapacity > 0) {
+                try {
+                    const consumption = parseFloat(document.getElementById('resConsumption').value);
+                    const profile = document.getElementById('simProfile').value;
+                    const addons = [];
+                    if (document.getElementById('addonEV').checked) addons.push('ev');
+                    if (document.getElementById('addonPAC').checked) addons.push('pac');
+                    if (document.getElementById('addonECS').checked) addons.push('ecs');
+                    const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, addons);
+                    const shading = parseFloat(document.getElementById('resShading').value) / 100;
+
+                    // Re-simulate without battery using same PVGIS data (already cached)
+                    const noBatSim = window.AutoconsommationSimulator.simulateAutoconsommation(
+                        cachedPvgisData.hourly, consoProfile,
+                        { capacityKwh: 0, effCharge: 0.95, effDischarge: 0.95, dodMax: 0.90 },
+                        shading
+                    );
+                    const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
+                    const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
+                    const noBatFin = window.AutoconsommationSimulator.calculateFinancials(
+                        noBatSim.annual,
+                        { priceElecKwh: elecPrice, priceReventeKwh: priceRevente, costPv: installCost, costBattery: 0, priceIncreasePerYear: priceIncrease, degradationPv: 0.005, degradationBattery: 0.02, years: 25 }
+                    );
+                    const noBatNetCost = installCost - subsidies;
+                    const noBatSavings = (noBatSim.annual.autoDirect) * elecPrice + noBatSim.annual.injection * priceRevente;
+                    const noBatPayback = noBatFin.paybackYear || 99;
+
+                    // With battery values (current simulation)
+                    const batPayback = payback;
+
+                    document.getElementById('vbc-no-bat-auto').textContent = noBatSim.annual.tauxAutoconsommation.toFixed(0) + ' %';
+                    document.getElementById('vbc-no-bat-savings').textContent = Math.round(noBatSavings).toLocaleString('fr-FR') + ' €';
+                    document.getElementById('vbc-no-bat-payback').textContent = noBatPayback < 50 ? noBatPayback + ' ans' : '> 25 ans';
+
+                    document.getElementById('vbc-bat-auto').textContent = autoRate.toFixed(0) + ' %';
+                    document.getElementById('vbc-bat-savings').textContent = Math.round(totalSavings).toLocaleString('fr-FR') + ' €';
+                    document.getElementById('vbc-bat-payback').textContent = batPayback < 50 ? batPayback + ' ans' : '> 25 ans';
+
+                    // Conclusion
+                    const paybackDiff = batPayback - noBatPayback;
+                    const autoDiff = autoRate - noBatSim.annual.tauxAutoconsommation;
+                    let conclusion = '';
+                    if (paybackDiff > 3) {
+                        conclusion = 'La batterie augmente l\'autoconsommation de +' + autoDiff.toFixed(0) + ' points mais allonge le retour sur investissement de ' + paybackDiff + ' ans.';
+                    } else if (paybackDiff <= 1) {
+                        conclusion = 'La batterie améliore l\'autoconsommation de +' + autoDiff.toFixed(0) + ' points sans dégrader significativement la rentabilité.';
+                    } else {
+                        conclusion = 'La batterie apporte +' + autoDiff.toFixed(0) + ' points d\'autoconsommation pour ' + paybackDiff + ' an(s) de retour supplémentaire.';
+                    }
+                    document.getElementById('vbc-conclusion').textContent = conclusion;
+
+                    document.getElementById('verdict-battery-comparison').classList.remove('hidden');
+                } catch(e) {
+                    console.warn('Battery comparison error:', e);
+                }
+            } else {
+                document.getElementById('verdict-battery-comparison').classList.add('hidden');
+            }
+
+            // Scroll to verdict
+            document.getElementById('verdict-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function displayFinancialResults(prod, prodKwc, kwc, savings, feedin, annual, cost, netCost, payback, npv, irr, co2) {
