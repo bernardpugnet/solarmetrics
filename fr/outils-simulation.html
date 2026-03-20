@@ -111,10 +111,10 @@
         .tab-content.active{display:block}
         .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
         .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1.5rem;text-align:center}
-        .kpi-label{font-size:0.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+        .kpi-label{font-size:0.8125rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
         .kpi-value{font-size:1.875rem;font-weight:700;color:#fbbf24;line-height:1}
-        .kpi-unit{font-size:0.75rem;color:#64748b;margin-top:0.25rem}
-        .kpi-desc{font-size:0.65rem;color:#64748b;margin-top:0.5rem;line-height:1.3;font-style:italic}
+        .kpi-unit{font-size:0.8125rem;color:#94a3b8;margin-top:0.25rem}
+        .kpi-desc{font-size:0.75rem;color:#94a3b8;margin-top:0.5rem;line-height:1.4;font-style:italic}
         .kpi-highlight{background:linear-gradient(135deg,#f59e0b/20,#ea580c/20);border-color:#f59e0b/50}
         /* Étape 3 — transitions mode résultats */
         .fade-slide-in{animation:fadeSlideIn 0.4s ease-out both}
@@ -447,7 +447,8 @@
                 <div id="sim-form" class="space-y-6">
                     <!-- Introduction -->
                     <div class="bg-slate-900/50 rounded-2xl p-4 border border-slate-700/50">
-                        <p class="text-sm text-slate-400 leading-relaxed">Vérifiez si le solaire est pertinent chez vous. Simulation basée sur les données d'irradiation réelles de votre localisation (PVGIS, 8 760 h/an).</p>
+                        <p class="text-sm text-slate-300 leading-relaxed">Vérifiez si le solaire est pertinent chez vous.</p>
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">La simulation utilise les données d'ensoleillement réelles de votre localisation (<a href="https://re.jrc.ec.europa.eu/pvg_tools/" target="_blank" class="text-amber-400/70 hover:text-amber-400 underline">PVGIS</a>, base européenne de référence) et modélise votre installation heure par heure sur une année complète.</p>
                     </div>
 
                     <!-- CARD 2: Localisation -->
@@ -519,23 +520,21 @@
                         <div class="space-y-4">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Consommation annuelle (kWh)</label>
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Consommation annuelle (kWh)</label>
                                     <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Consultez votre facture annuelle. Moyenne France : ~4 700 kWh/an pour un foyer de 4 personnes.
+                                    <div class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
+                                        Ce chiffre figure sur votre facture annuelle d'électricité. <span class="text-slate-300 font-medium">Repère : un foyer de 4 personnes consomme environ 4 700 kWh/an.</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Profil de consommation</label>
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Profil de consommation</label>
                                     <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                         <option value="family">Famille 4 personnes</option>
                                         <option value="retired">Couple retraités</option>
                                         <option value="telecommute">Télétravail</option>
                                         <option value="allElectric">Tout-électrique (PAC)</option>
                                     </select>
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Détermine la répartition horaire de votre consommation (jour/nuit, été/hiver). Impact direct sur le taux d'autoconsommation.
-                                    </div>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Ce choix influence directement votre taux d'autoconsommation.</p>
                                 </div>
                             </div>
                             <div>
@@ -554,9 +553,7 @@
                                         <span class="text-sm text-slate-300">💧 Chauffe-eau thermodynamique (+1 500 kWh/an)</span>
                                     </label>
                                 </div>
-                                <div class="mt-2 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                    <span class="text-slate-400 font-medium">ℹ️</span> Ces équipements augmentent la consommation mais aussi l'autoconsommation (surtout si programmés en journée). La simulation adapte le profil horaire en conséquence.
-                                </div>
+                                <p class="mt-2 text-[13px] text-slate-500 leading-snug">Ces équipements augmentent la consommation et l'autoconsommation, surtout s'ils fonctionnent en journée.</p>
                             </div>
                         </div>
                     </div>
@@ -567,11 +564,9 @@
                             <span class="text-amber-500">●</span> Puissance de l'installation
                         </h4>
                         <div>
-                            <label class="text-xs text-slate-400 mb-1 block">Puissance PV (kWc)</label>
+                            <label class="text-[13px] text-slate-300 mb-1 block font-medium">Puissance PV (kWc)</label>
                             <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
-                            <div class="mt-2 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                <span class="text-slate-400 font-medium">ℹ️</span> Indiquez la puissance de votre devis. Si vous ne la connaissez pas, dépliez « Paramètres toiture » ci-dessous pour l'estimer à partir de la surface disponible.
-                            </div>
+                            <p class="mt-1.5 text-[13px] text-slate-500 leading-snug">Indiquez la puissance de votre devis. Sinon, dépliez « Paramètres toiture » pour l'estimer à partir de la surface.</p>
                         </div>
                     </div>
 
@@ -588,15 +583,13 @@
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Capacité batterie (kWh)</label>
                                 <input type="number" id="resBatteryCapacity" min="1" max="100" step="0.5" value="10" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                <p class="text-xs text-slate-500 mt-1">Résidentiel : 5–15 kWh · Industriel : 20–100 kWh</p>
+                                <p class="text-[13px] text-slate-500 mt-1">Usage résidentiel courant : 5 à 15 kWh.</p>
                             </div>
                             <div>
                                 <label class="text-xs text-slate-400 mb-1 block">Coût batterie (<span class="cur">€</span>)</label>
                                 <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays (voir ci-dessous)" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                 <p class="text-xs text-amber-400/70 mt-1">⚡ Moyenne pays : <span id="resAvgBatteryCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWh (batterie + onduleur + pose)</p>
-                                <div class="mt-1.5 p-2 bg-amber-900/10 border border-amber-700/30 rounded-lg text-xs text-slate-400 leading-relaxed">
-                                    Si vide, le coût est calculé automatiquement : capacité (kWh) × moyenne pays ci-dessus. <strong class="text-amber-400/80">Cette moyenne est indicative</strong> — entrez votre propre montant pour un devis personnalisé.
-                                </div>
+                                <p class="mt-1 text-[13px] text-slate-500 leading-snug">Si vide, le coût est estimé à partir de la moyenne pays. Entrez votre devis réel pour plus de précision.</p>
                             </div>
                         </div>
                     </div>
@@ -632,14 +625,12 @@
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Ombrage (%)</label>
                                     <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-xs text-slate-600 mt-0.5">0% = plein soleil</p>
+                                    <p class="text-[13px] text-slate-500 mt-0.5">0 % = plein soleil</p>
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Surface toiture (m²)</label>
                                     <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Surface disponible pour les panneaux. Un panneau standard fait ~1.7 m². Comptez ~6 m²/kWc installé.
-                                    </div>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Comptez environ 6 m² par kWc installé.</p>
                                 </div>
                             </div>
                             <div>
@@ -664,9 +655,7 @@
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Pertes système (%)</label>
                                     <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Pertes câblage, onduleur, poussière, température. 14% est une valeur standard.
-                                    </div>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">14 % est la valeur standard (câblage, onduleur, poussière, température).</p>
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Type de montage</label>
@@ -674,9 +663,7 @@
                                         <option value="free">Surimposé (toiture)</option>
                                         <option value="building">Intégré au bâti (IAB)</option>
                                     </select>
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Surimposé : ventilation naturelle, meilleur rendement. IAB : intégré à la couverture, éligible à un tarif d'achat plus élevé.
-                                    </div>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Surimposé = meilleur rendement. IAB = intégré à la toiture, tarif d'achat plus élevé.</p>
                                 </div>
                             </div>
                         </div>
@@ -696,14 +683,13 @@
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Tarif électricité (<span class="cur">€</span>/kWh)</label>
                                     <input type="number" id="resElecPrice" value="0.2516" min="0.05" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-xs text-amber-400/70 mt-1">⚡ Pré-rempli : prix moyen TTC du pays (source Eurostat 2025)</p>
-                                    <p class="text-xs text-slate-500 mt-0.5"><strong class="text-amber-400/60">Valeur indicative</strong> — vérifiez sur votre facture ou le site de votre fournisseur.</p>
+                                    <p class="text-[13px] text-slate-500 mt-1">Pré-rempli selon votre pays (Eurostat 2025). Vérifiez sur votre facture pour plus de précision.</p>
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Tarif rachat surplus (<span class="cur">€</span>/kWh)</label>
                                     <input type="number" id="resFeedir" value="0.04" min="0" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p id="feedInNoteText" class="text-xs text-amber-400/70 mt-1">⚡ Tarif EDF OA surplus autoconsommation (≤9 kWc, T1 2026). Garanti 20 ans, révisé chaque trimestre.</p>
-                                    <p id="feedInNoteLink" class="text-xs text-slate-500 mt-0.5"><strong class="text-amber-400/60">Valeur indicative</strong> — vérifiez sur <a id="feedInNoteLinkA" href="https://www.edf-oa.fr/" target="_blank" class="text-amber-400 hover:underline">edf-oa.fr</a></p>
+                                    <p id="feedInNoteText" class="text-[13px] text-slate-500 mt-1">Tarif EDF OA (≤9 kWc, T1 2026), garanti 20 ans. Vérifiez sur <a id="feedInNoteLinkA" href="https://www.edf-oa.fr/" target="_blank" class="text-amber-400/70 hover:text-amber-400 underline">edf-oa.fr</a></p>
+                                    <p id="feedInNoteLink" class="hidden"></p>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -711,7 +697,7 @@
                                     <label class="text-xs text-slate-400 mb-1 block">Coût installation (<span class="cur">€</span>)</label>
                                     <input type="number" id="resInstallCostOverride" placeholder="Vide = moyenne pays (voir ci-dessous)" min="0" max="200000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                     <p class="text-xs text-amber-400/70 mt-1">⚡ Moyenne pays : <span id="resAvgCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWc (panneaux + onduleur + pose)</p>
-                                    <p class="text-xs text-slate-500 mt-0.5">Si vide, ce coût moyen est utilisé. <strong class="text-amber-400/60">Valeur indicative</strong> — entrez votre devis réel si disponible.</p>
+                                    <p class="text-[13px] text-slate-500 mt-0.5">Si vide, la moyenne pays est utilisée. Entrez votre devis réel si disponible.</p>
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Aides & subventions (<span class="cur">€</span>)</label>
@@ -810,24 +796,25 @@
                                 <div>
                                     <h2 id="verdict-title" class="text-xl font-bold text-white mb-1"></h2>
                                     <p id="verdict-subtitle" class="text-sm text-slate-400"></p>
+                                    <p id="verdict-narrative" class="text-[13px] text-slate-400 mt-2 leading-relaxed"></p>
                                 </div>
                             </div>
                             <!-- KPI synthèse -->
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
                                 <div class="text-center">
-                                    <div class="text-xs text-slate-400 mb-1">Économies annuelles</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Économies annuelles</div>
                                     <div id="verdict-savings" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-xs text-slate-400 mb-1">Temps de retour</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Temps de retour</div>
                                     <div id="verdict-payback" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-xs text-slate-400 mb-1">Autoconsommation</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Autoconsommation</div>
                                     <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-xs text-slate-400 mb-1">Production / conso</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Production / conso</div>
                                     <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
                                 </div>
                             </div>
@@ -1665,6 +1652,34 @@
                 title.className = 'text-xl font-bold text-red-400 mb-1';
                 subtitle.textContent = 'En l\'état, la rentabilité est faible ou incertaine.';
             }
+
+            // --- Verdict narratif (Micro-patch lisibilité) ---
+            const narrative = document.getElementById('verdict-narrative');
+            let narrativeText = '';
+            if (level === 'good') {
+                narrativeText = 'Votre projet paraît pertinent : temps de retour de ' + payback + ' ans et ' + autoRate.toFixed(0) + ' % d\'autoconsommation.';
+                if (batteryCapacity > 0) {
+                    narrativeText += ' La batterie améliore votre autonomie.';
+                }
+            } else if (level === 'medium') {
+                narrativeText = 'La rentabilité existe mais reste sensible aux hypothèses, notamment le coût d\'installation';
+                if (autoRate < 40) {
+                    narrativeText += ' et le niveau d\'autoconsommation (' + autoRate.toFixed(0) + ' %)';
+                }
+                narrativeText += '.';
+                if (batteryCapacity > 0) {
+                    const batGainRatio = batteryCost > 0 ? (annual.autoBattery * elecPrice) / batteryCost : 0;
+                    if (batGainRatio < 0.05) {
+                        narrativeText += ' La batterie améliore l\'autonomie mais pèse sur la rentabilité.';
+                    }
+                }
+            } else {
+                narrativeText = 'En l\'état, le projet est difficilement rentable (retour sur investissement > ' + Math.min(payback, 25) + ' ans).';
+                if (prodRatio > 200) {
+                    narrativeText += ' L\'installation semble surdimensionnée par rapport à votre consommation.';
+                }
+            }
+            narrative.textContent = narrativeText;
 
             // --- KPI synthèse ---
             document.getElementById('verdict-savings').textContent = Math.round(totalSavings).toLocaleString('fr-FR') + ' €/an';
