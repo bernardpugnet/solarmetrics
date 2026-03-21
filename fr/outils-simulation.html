@@ -2087,7 +2087,8 @@
                 };
 
                 // --- Nettoyeur Unicode ---
-                const clean = (s) => String(s).replace(/[\u00A0\u202F]/g, ' ');
+                // Supprime espaces insécables + emojis (non rendus par Helvetica → caractères corrompus)
+                const clean = (s) => String(s).replace(/[\u00A0\u202F]/g, ' ').replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu, '').replace(/[☀️⚡🔋💰⚙️📍🏠💶🔄🌍📄✓✗~]/g, '');
                 const getText = (id) => clean(document.getElementById(id)?.textContent || '—');
                 const getVal = (id) => clean(document.getElementById(id)?.value || '—');
 
