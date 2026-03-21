@@ -2071,9 +2071,12 @@
                 let y = 15;
 
                 // Helper functions
-                const addTitle = (text, size) => { doc.setFontSize(size || 18); doc.setTextColor(245, 158, 11); doc.text(text, 14, y); y += 10; };
-                const addLine = (label, value) => { doc.setFontSize(10); doc.setTextColor(100, 116, 139); doc.text(label, 14, y); doc.setTextColor(30, 41, 59); doc.text(String(value), 110, y); y += 6; };
-                const addExplain = (text) => { doc.setFontSize(7.5); doc.setTextColor(140, 140, 160); const lines = doc.splitTextToSize(text, w - 32); doc.text(lines, 18, y); y += lines.length * 3.5 + 2; };
+                // Nettoie les espaces insécables (U+00A0, U+202F) que toLocaleString('fr-FR') insère
+                // et que jsPDF ne sait pas rendre (affiche "/" ou caractère fantôme)
+                const clean = (s) => String(s).replace(/[\u00A0\u202F]/g, ' ');
+                const addTitle = (text, size) => { doc.setFontSize(size || 18); doc.setTextColor(245, 158, 11); doc.text(clean(text), 14, y); y += 10; };
+                const addLine = (label, value) => { doc.setFontSize(10); doc.setTextColor(100, 116, 139); doc.text(clean(label), 14, y); doc.setTextColor(30, 41, 59); doc.text(clean(value), 110, y); y += 6; };
+                const addExplain = (text) => { doc.setFontSize(7.5); doc.setTextColor(140, 140, 160); const lines = doc.splitTextToSize(clean(text), w - 32); doc.text(lines, 18, y); y += lines.length * 3.5 + 2; };
                 const addSeparator = () => { doc.setDrawColor(200, 200, 200); doc.line(14, y, w - 14, y); y += 6; };
                 const checkPage = () => { if (y > 270) { doc.addPage(); y = 15; } };
 
@@ -2118,7 +2121,7 @@
                 addLine('Revenus revente', document.getElementById('resSavingsFeedin').textContent + ' €/an');
                 addExplain('kWh excédentaires injectés × tarif de rachat du pays.');
                 doc.setFontSize(11); doc.setTextColor(34, 197, 94);
-                doc.text('Économies annuelles totales : ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 5;
+                doc.text(clean('Économies annuelles totales : ' + document.getElementById('resAnnualSavings').textContent + ' €'), 14, y); y += 5;
                 addExplain('Autoconsommation + revente = gain annuel total de votre installation.');
                 addSeparator(); checkPage();
 
