@@ -1615,14 +1615,14 @@
             const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1) + ' %, ce projet présente un profil financier favorable (VAN 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
+                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1).replace('.', ',') + ' %, ce projet présente un profil financier favorable (VAN 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
                 if (batteryCapacity > 0) {
                     narrativeText += ' La batterie (' + batteryCapacity + ' kWh) renforce votre autonomie sans dégrader significativement la rentabilité.';
                 } else {
                     narrativeText += ' L\'ajout d\'une batterie pourrait augmenter l\'autoconsommation, à évaluer selon le surcoût.';
                 }
             } else if (level === 'medium') {
-                narrativeText = 'Le projet est rentable (retour en ' + payback + ' ans, TRI ' + irrPct.toFixed(1) + ' %) pour un investissement net de ' + Math.round(netCost).toLocaleString('fr-FR') + ' €. La marge reste sensible aux hypothèses de coût et de tarif.';
+                narrativeText = 'Le projet est rentable (retour en ' + payback + ' ans, TRI ' + irrPct.toFixed(1).replace('.', ',') + ' %) pour un investissement net de ' + Math.round(netCost).toLocaleString('fr-FR') + ' €. La marge reste sensible aux hypoth\u00e8ses de co\u00fbt et de tarif.';
                 if (autoRate < 40) {
                     narrativeText += ' Le taux d\'autoconsommation de ' + autoRate.toFixed(0) + ' % limite les économies directes.';
                 } else {
@@ -1635,7 +1635,7 @@
                     }
                 }
             } else {
-                narrativeText = 'En l\'état, le projet est difficilement rentable : temps de retour estimé à ' + (payback < 50 ? payback + ' ans' : 'plus de 25 ans') + ' et TRI de ' + irrPct.toFixed(1) + ' %, inférieur à un placement classique.';
+                narrativeText = 'En l\'\u00e9tat, le projet est difficilement rentable : temps de retour estim\u00e9 \u00e0 ' + (payback < 50 ? payback + ' ans' : 'plus de 25 ans') + ' et TRI de ' + irrPct.toFixed(1).replace('.', ',') + ' %, inf\u00e9rieur \u00e0 un placement classique.';
                 if (prodRatio > 200) {
                     narrativeText += ' L\'installation semble surdimensionnée par rapport à votre consommation (' + prodRatio + ' % du besoin).';
                 } else if (autoRate < 30) {
@@ -2077,7 +2077,7 @@
                 const W = doc.internal.pageSize.getWidth();   // 210
                 const H = doc.internal.pageSize.getHeight();  // 297
                 const M = 16; // margin (was 14, slightly larger for breathing)
-                const BW = 120; // block width for label-value rows (compact, centered)
+                const BW = 110; // block width for label-value rows (tight, centered)
                 const BX = (W - BW) / 2; // centered block X
                 let y = 0;
 
@@ -2111,6 +2111,8 @@
                 };
                 const getText = function(id) { return clean(document.getElementById(id)?.textContent || '\u2014'); };
                 const getVal = function(id) { return clean(document.getElementById(id)?.value || '\u2014'); };
+                // Virgule d\u00e9cimale fran\u00e7aise pour les nombres
+                const frNum = function(n, dec) { return Number(n).toFixed(dec !== undefined ? dec : 1).replace('.', ','); };
 
                 // --- Helpers ---
 
@@ -2296,7 +2298,8 @@
                 var savedY = y;
                 drawKpiCard(M, cardW, '\u00c9conomies annuelles', getText('resAnnualSavings'), '\u20ac/an', C.green);
                 drawKpiCard(M + cardW + 3, cardW, 'Temps de retour', getText('resPayback'), 'ans', C.amber);
-                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoconsoRate') !== '\u2014' ? getText('resAutoconsoRate') : '\u2014', '%', C.amber);
+                // NB: le moteur inverse les labels — resAutoprodRate = auto/prod = vrai taux autoconso
+                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoprodRate') !== '\u2014' ? getText('resAutoprodRate') : '\u2014', '%', C.amber);
                 drawKpiCard(M + 3 * (cardW + 3), cardW, 'TRI', getText('resTri'), '%', C.green);
                 y = savedY + 28;
 
@@ -2314,16 +2317,31 @@
                     ? getVal('resBatteryCapacity') + ' kWh'
                     : 'Non';
 
-                drawLabelValueRows([
+                // Compute effective consumption from simulation results for coherence
+                var consoInput = getVal('resConsumption');
+                var autoD = getText('resAutoDirect').replace(/\s/g, '').replace(',', '.');
+                var autoB = getText('resAutoBattery').replace(/\s/g, '').replace(',', '.');
+                var sout = getText('resSoutirage').replace(/\s/g, '').replace(',', '.');
+                var consoEffective = '';
+                if (!isNaN(parseFloat(autoD)) && !isNaN(parseFloat(sout))) {
+                    var ce = Math.round(parseFloat(autoD) + parseFloat(autoB) + parseFloat(sout));
+                    consoEffective = ce.toLocaleString('fr-FR');
+                }
+
+                var configRows = [
                     ['Localisation', countryName + ' (' + lat + '\u00b0N, ' + lon + '\u00b0E)'],
                     ['Puissance install\u00e9e', getText('resKwc') + ' kWc'],
                     ['Surface', getVal('resSurface') + ' m\u00b2'],
                     ['Inclinaison / Orientation', getVal('resTilt') + '\u00b0 / ' + orientLabel],
                     ['Batterie', batteryText],
-                    ['Consommation annuelle', getVal('resConsumption') + ' kWh'],
-                    ['Prix \u00e9lectricit\u00e9', getVal('resElecPrice') + ' \u20ac/kWh'],
-                    ['Tarif revente', getVal('resFeedir') + ' \u20ac/kWh'],
-                ]);
+                    ['Consommation saisie', consoInput + ' kWh'],
+                ];
+                if (consoEffective && consoEffective !== consoInput) {
+                    configRows.push(['Consommation simul\u00e9e', consoEffective + ' kWh']);
+                }
+                configRows.push(['Prix \u00e9lectricit\u00e9', getVal('resElecPrice') + ' \u20ac/kWh']);
+                configRows.push(['Tarif revente', getVal('resFeedir') + ' \u20ac/kWh']);
+                drawLabelValueRows(configRows);
 
                 // Lecture rapide
                 y += 4;
@@ -2342,7 +2360,7 @@
                 doc.text(qrLines, M + 4, y + 9);
                 y += 20;
 
-                drawFooter(1, 3);
+                // (footer drawn at end with dynamic page count)
 
                 // =========================================================
                 //  PAGE 2 \u2014 Analyse technique et financi\u00e8re
@@ -2361,12 +2379,14 @@
                 y += 4;
 
                 // Autoconsommation
-                var autoRate = getText('resAutoconsoRate');
-                if (autoRate !== '\u2014') {
+                // NB: le moteur inverse autoconso/autoprod — on corrige ici les labels
+                var autoRateDisplay = getText('resAutoprodRate');  // auto/prod = vrai autoconso
+                var autoprodDisplay = getText('resAutoconsoRate'); // auto/conso = vrai autoprod
+                if (autoRateDisplay !== '\u2014') {
                     drawSectionTitle('Autoconsommation d\u00e9taill\u00e9e');
                     drawLabelValueRows([
-                        ['Taux autoconsommation', autoRate + ' %'],
-                        ['Taux autoproduction', getText('resAutoprodRate') + ' %'],
+                        ['Taux autoconsommation', autoRateDisplay + ' %'],
+                        ['Taux autoproduction', autoprodDisplay + ' %'],
                         ['Autoconsommation directe', getText('resAutoDirect') + ' kWh'],
                         ['Via batterie', getText('resAutoBattery') + ' kWh'],
                         ['Injection r\u00e9seau', getText('resInjection') + ' kWh'],
@@ -2434,7 +2454,7 @@
                     y += 4;
                 }
 
-                drawFooter(2, 3);
+                // (footer drawn at end with dynamic page count)
 
                 // =========================================================
                 //  PAGE 3 \u2014 Analyse narrative + Glossaire
@@ -2455,7 +2475,12 @@
                 var discLines = doc.splitTextToSize(disclaimer, W - 2 * M - 8);
                 doc.text(discLines, M + 4, y + 3);
 
-                drawFooter(3, 3);
+                // Draw footers on all pages (dynamic count)
+                var totalPages = doc.getNumberOfPages();
+                for (var p = 1; p <= totalPages; p++) {
+                    doc.setPage(p);
+                    drawFooter(p, totalPages);
+                }
 
                 doc.save('solardataatlas-rapport.pdf');
             } catch(e) {
