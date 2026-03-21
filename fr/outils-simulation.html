@@ -581,12 +581,12 @@
                         </label>
                         <div id="batteryCapacitySection" style="display:none" class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="text-xs text-slate-400 mb-1 block">Capacité batterie (kWh)</label>
+                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Capacité batterie (kWh)</label>
                                 <input type="number" id="resBatteryCapacity" min="1" max="100" step="0.5" value="10" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 <p class="text-[13px] text-slate-500 mt-1">Usage résidentiel courant : 5 à 15 kWh.</p>
                             </div>
                             <div>
-                                <label class="text-xs text-slate-400 mb-1 block">Coût batterie (<span class="cur">€</span>)</label>
+                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Coût batterie (<span class="cur">€</span>)</label>
                                 <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays (voir ci-dessous)" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
                                 <p class="text-xs text-amber-400/70 mt-1">⚡ Moyenne pays : <span id="resAvgBatteryCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWh (batterie + onduleur + pose)</p>
                                 <p class="mt-1 text-[13px] text-slate-500 leading-snug">Si vide, le coût est estimé à partir de la moyenne pays. Entrez votre devis réel pour plus de précision.</p>
@@ -741,21 +741,23 @@
                     </div>
                 </div>
 
-                <!-- Barre résumé + retour formulaire (visible en mode résultats) -->
-                <div id="form-resume-bar" style="display:none" class="bg-slate-800/80 border border-slate-700/50 rounded-2xl p-4 mb-6">
-                    <div class="flex items-center justify-between flex-wrap gap-3">
-                        <div class="flex items-center gap-4 text-sm text-slate-400 flex-wrap">
-                            <span id="resume-location" class="flex items-center gap-1">📍 <span class="text-slate-300"></span></span>
-                            <span id="resume-conso" class="flex items-center gap-1">⚡ <span class="text-slate-300"></span></span>
-                            <span id="resume-kwc" class="flex items-center gap-1">☀️ <span class="text-slate-300"></span></span>
-                            <span id="resume-battery" class="flex items-center gap-1">🔋 <span class="text-slate-300"></span></span>
+                <!-- Barre hypothèses fusionnée (visible après calcul, au-dessus de results-section) -->
+                <div id="hypotheses-summary" style="display:none" class="bg-slate-800/60 border border-slate-700/40 rounded-xl px-4 py-3 mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div class="flex items-center gap-3 flex-wrap text-[13px] text-slate-400">
+                            <span>📍 <span id="hyp-location" class="text-slate-300"></span></span>
+                            <span>⚡ <span id="hyp-conso" class="text-slate-300"></span></span>
+                            <span>☀️ <span id="hyp-kwc" class="text-slate-300"></span></span>
+                            <span>🔋 <span id="hyp-battery" class="text-slate-300"></span></span>
+                            <span>💰 <span id="hyp-cost" class="text-slate-300"></span></span>
+                            <span>⚙️ <span id="hyp-tarif" class="text-slate-300"></span></span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="showFormAgain()" class="px-4 py-2 text-sm text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 rounded-lg transition-colors flex items-center gap-2">
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="showFormAgain()" class="px-3 py-1.5 text-sm text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 rounded-lg transition-colors flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                 Ajuster mes paramètres
                             </button>
-                            <button onclick="exportResultsPDF()" class="px-3 py-2 text-xs text-slate-400 hover:text-white border border-slate-600 hover:border-slate-400 rounded-lg transition-colors flex items-center gap-1" title="Télécharger le rapport PDF">
+                            <button onclick="exportResultsPDF()" class="px-3 py-1.5 text-xs text-slate-400 hover:text-white border border-slate-600 hover:border-slate-400 rounded-lg transition-colors flex items-center gap-1" title="Télécharger le rapport PDF">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 PDF
                             </button>
@@ -765,27 +767,6 @@
 
                 <!-- RESULTS SECTION -->
                 <div id="results-section" style="display:none" class="mt-12">
-
-                    <!-- RÉSUMÉ COMPACT DES HYPOTHÈSES (Étape 3) -->
-                    <div id="hypotheses-summary" class="bg-slate-800/60 border border-slate-700/40 rounded-xl px-4 py-3 mb-6 flex items-center justify-between flex-wrap gap-2 text-xs text-slate-400">
-                        <div class="flex items-center gap-3 flex-wrap">
-                            <span>📍 <span id="hyp-location" class="text-slate-300"></span></span>
-                            <span class="text-slate-600">|</span>
-                            <span>⚡ <span id="hyp-conso" class="text-slate-300"></span></span>
-                            <span class="text-slate-600">|</span>
-                            <span>☀️ <span id="hyp-kwc" class="text-slate-300"></span></span>
-                            <span class="text-slate-600">|</span>
-                            <span>🔋 <span id="hyp-battery" class="text-slate-300"></span></span>
-                            <span class="text-slate-600">|</span>
-                            <span>💰 <span id="hyp-cost" class="text-slate-300"></span></span>
-                            <span class="text-slate-600">|</span>
-                            <span>⚙️ <span id="hyp-tarif" class="text-slate-300"></span></span>
-                        </div>
-                        <button onclick="showFormAgain()" class="text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1 shrink-0">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                            Modifier
-                        </button>
-                    </div>
 
                     <!-- BLOC VERDICT -->
                     <div id="verdict-section" class="mb-10">
@@ -861,16 +842,6 @@
                             </button>
                             <button class="tab-btn" onclick="switchTab('report')">
                                 📄 Rapport
-                            </button>
-                        </div>
-                        <div class="flex gap-2 pb-2">
-                            <button onclick="window.print()" class="px-3 py-1.5 text-xs text-slate-400 hover:text-white border border-slate-600 hover:border-slate-400 rounded-lg transition-colors flex items-center gap-1" title="Imprimer / Enregistrer en PDF">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                                PDF
-                            </button>
-                            <button onclick="exportResultsPDF()" class="px-3 py-1.5 text-xs text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 rounded-lg transition-colors flex items-center gap-1" title="Télécharger le rapport PDF">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                Rapport
                             </button>
                         </div>
                     </div>
@@ -1519,15 +1490,14 @@
                 document.getElementById('results-section').style.display = 'block';
                 generateReport();
 
-                // Mode résultats : garder le formulaire masqué, afficher la barre résumé
+                // Mode résultats : garder le formulaire masqué, afficher la barre hypothèses
                 document.getElementById('sim-form').style.display = 'none';
-                updateResumeBar();
                 updateHypothesesSummary();
-                const resumeBar = document.getElementById('form-resume-bar');
-                resumeBar.style.display = 'block';
-                resumeBar.classList.remove('fade-slide-in');
-                void resumeBar.offsetWidth; // force reflow
-                resumeBar.classList.add('fade-slide-in');
+                const hypBar = document.getElementById('hypotheses-summary');
+                hypBar.style.display = 'block';
+                hypBar.classList.remove('fade-slide-in');
+                void hypBar.offsetWidth; // force reflow
+                hypBar.classList.add('fade-slide-in');
 
                 // Toast "Résultats mis à jour" lors d'un recalcul
                 if (isRecalc) {
@@ -1554,21 +1524,8 @@
         }
 
         // ══════════════════════════════════════════════════════════════════════
-        // MODE RÉSULTATS — repli formulaire + barre résumé
+        // MODE RÉSULTATS — repli formulaire + barre hypothèses
         // ══════════════════════════════════════════════════════════════════════
-
-        function updateResumeBar() {
-            const country = document.getElementById('detectedCountryName').textContent || 'France';
-            const conso = document.getElementById('resConsumption').value;
-            const kwc = document.getElementById('simPeakpower').value;
-            const hasBat = document.getElementById('resBatteryToggle').checked;
-            const batCap = hasBat ? document.getElementById('resBatteryCapacity').value : null;
-
-            document.querySelector('#resume-location .text-slate-300').textContent = country;
-            document.querySelector('#resume-conso .text-slate-300').textContent = parseInt(conso).toLocaleString('fr-FR') + ' kWh/an';
-            document.querySelector('#resume-kwc .text-slate-300').textContent = parseFloat(kwc).toFixed(1) + ' kWc';
-            document.querySelector('#resume-battery .text-slate-300').textContent = hasBat ? batCap + ' kWh' : 'Sans batterie';
-        }
 
         function updateHypothesesSummary() {
             const country = document.getElementById('detectedCountryName').textContent || 'France';
@@ -1590,7 +1547,7 @@
 
         function showFormAgain() {
             const form = document.getElementById('sim-form');
-            document.getElementById('form-resume-bar').style.display = 'none';
+            document.getElementById('hypotheses-summary').style.display = 'none';
             form.style.display = 'block';
             form.classList.remove('fade-slide-in');
             void form.offsetWidth;
