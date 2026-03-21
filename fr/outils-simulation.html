@@ -1612,29 +1612,36 @@
 
             // --- Verdict narratif (Micro-patch lisibilité) ---
             const narrative = document.getElementById('verdict-narrative');
+            const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'Votre projet paraît pertinent : temps de retour de ' + payback + ' ans et ' + autoRate.toFixed(0) + ' % d\'autoconsommation.';
+                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1) + ' %, ce projet présente un profil financier favorable. Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
                 if (batteryCapacity > 0) {
-                    narrativeText += ' La batterie améliore votre autonomie.';
+                    narrativeText += ' La batterie (' + batteryCapacity + ' kWh) renforce votre autonomie sans dégrader significativement la rentabilité.';
+                } else {
+                    narrativeText += ' L\'ajout d\'une batterie pourrait augmenter l\'autoconsommation, à évaluer selon le surcoût.';
                 }
             } else if (level === 'medium') {
-                narrativeText = 'La rentabilité existe mais reste sensible aux hypothèses, notamment le coût d\'installation';
+                narrativeText = 'Le projet est rentable (retour en ' + payback + ' ans, TRI ' + irrPct.toFixed(1) + ' %), mais la marge reste sensible aux hypothèses de coût et de tarif.';
                 if (autoRate < 40) {
-                    narrativeText += ' et le niveau d\'autoconsommation (' + autoRate.toFixed(0) + ' %)';
+                    narrativeText += ' Le taux d\'autoconsommation de ' + autoRate.toFixed(0) + ' % limite les économies directes.';
+                } else {
+                    narrativeText += ' L\'autoconsommation de ' + autoRate.toFixed(0) + ' % est correcte.';
                 }
-                narrativeText += '.';
                 if (batteryCapacity > 0) {
                     const batGainRatio = batteryCost > 0 ? (annual.autoBattery * elecPrice) / batteryCost : 0;
                     if (batGainRatio < 0.05) {
-                        narrativeText += ' La batterie améliore l\'autonomie mais pèse sur la rentabilité.';
+                        narrativeText += ' La batterie améliore l\'autonomie mais pèse sur la rentabilité — son intérêt est surtout en confort.';
                     }
                 }
             } else {
-                narrativeText = 'En l\'état, le projet est difficilement rentable (retour sur investissement > ' + Math.min(payback, 25) + ' ans).';
+                narrativeText = 'En l\'état, le projet est difficilement rentable : temps de retour estimé à ' + (payback < 50 ? payback + ' ans' : 'plus de 25 ans') + ' et TRI de ' + irrPct.toFixed(1) + ' %, inférieur à un placement classique.';
                 if (prodRatio > 200) {
-                    narrativeText += ' L\'installation semble surdimensionnée par rapport à votre consommation.';
+                    narrativeText += ' L\'installation semble surdimensionnée par rapport à votre consommation (' + prodRatio + ' % du besoin).';
+                } else if (autoRate < 30) {
+                    narrativeText += ' Le faible taux d\'autoconsommation (' + autoRate.toFixed(0) + ' %) réduit l\'intérêt économique.';
                 }
+                narrativeText += ' Vérifiez le coût d\'installation et les hypothèses tarifaires.';
             }
             narrative.textContent = narrativeText;
 
@@ -2062,49 +2069,58 @@
         function exportResultsPDF() {
             try {
                 if (!window.jspdf && !window.jsPDF) {
-                    alert('La bibliothèque PDF n\'est pas encore chargée. Réessayez dans quelques secondes.');
+                    alert('La biblioth\u00e8que PDF n\'est pas encore charg\u00e9e. R\u00e9essayez dans quelques secondes.');
                     return;
                 }
                 const jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
                 const doc = new jsPDF('p', 'mm', 'a4');
                 const W = doc.internal.pageSize.getWidth();   // 210
                 const H = doc.internal.pageSize.getHeight();  // 297
-                const M = 14; // margin
+                const M = 16; // margin (was 14, slightly larger for breathing)
+                const BW = 140; // block width for label-value rows (narrower than full width)
+                const BX = (W - BW) / 2; // centered block X
                 let y = 0;
 
                 // --- Palette ---
                 const C = {
-                    dark:    [15, 23, 42],     // #0f172a
-                    slate:   [71, 85, 105],    // #475569
-                    light:   [203, 213, 225],  // #cbd5e1
-                    amber:   [245, 158, 11],   // #f59e0b
-                    green:   [34, 197, 94],     // #22c55e
-                    red:     [239, 68, 68],     // #ef4444
+                    dark:    [15, 23, 42],
+                    slate:   [71, 85, 105],
+                    light:   [203, 213, 225],
+                    amber:   [245, 158, 11],
+                    green:   [34, 197, 94],
+                    red:     [239, 68, 68],
                     white:   [255, 255, 255],
-                    muted:   [148, 163, 184],  // #94a3b8
-                    bg:      [241, 245, 249],  // #f1f5f9 — light section bg
-                    bgCard:  [248, 250, 252],  // #f8fafc
+                    muted:   [148, 163, 184],
+                    bg:      [241, 245, 249],
+                    bgCard:  [248, 250, 252],
                 };
 
                 // --- Nettoyeur Unicode ---
-                // Supprime espaces insécables + emojis (non rendus par Helvetica → caractères corrompus)
-                const clean = (s) => String(s).replace(/[\u00A0\u202F]/g, ' ').replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu, '').replace(/[☀️⚡🔋💰⚙️📍🏠💶🔄🌍📄✓✗~]/g, '');
-                const getText = (id) => clean(document.getElementById(id)?.textContent || '—');
-                const getVal = (id) => clean(document.getElementById(id)?.value || '—');
+                // 1. Espaces ins\u00e9cables -> espace normal
+                // 2. Emojis (plages Unicode) -> supprim\u00e9s
+                // 3. Symboles restants connus -> supprim\u00e9s
+                // 4. Subscript chars (CO\u2082) -> remplac\u00e9s
+                const clean = function(s) {
+                    return String(s)
+                        .replace(/[\u00A0\u202F]/g, ' ')
+                        .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu, '')
+                        .replace(/[\u2080-\u209F]/g, function(c) { return String.fromCharCode(c.charCodeAt(0) - 0x2050); })
+                        .replace(/[☀⚡🔋💰⚙📍🏠💶🔄🌍📄✓✗]/g, '')
+                        .replace(/\s{2,}/g, ' ')
+                        .trim();
+                };
+                const getText = function(id) { return clean(document.getElementById(id)?.textContent || '\u2014'); };
+                const getVal = function(id) { return clean(document.getElementById(id)?.value || '\u2014'); };
 
                 // --- Helpers ---
 
                 function drawHeader() {
-                    // Fond bandeau top
                     doc.setFillColor(...C.dark);
                     doc.rect(0, 0, W, 32, 'F');
-                    // Titre
                     doc.setFontSize(18); doc.setTextColor(...C.amber);
                     doc.text('Solar Data Atlas', M, 14);
-                    // Sous-titre
                     doc.setFontSize(10); doc.setTextColor(...C.light);
                     doc.text('Rapport de simulation solaire', M, 21);
-                    // Date + URL
                     doc.setFontSize(7.5); doc.setTextColor(...C.muted);
                     doc.text('www.solardataatlas.com', W - M, 14, { align: 'right' });
                     doc.text(new Date().toLocaleDateString('fr-FR'), W - M, 20, { align: 'right' });
@@ -2113,286 +2129,292 @@
 
                 function drawFooter(pageNum, totalPages) {
                     doc.setFontSize(6.5); doc.setTextColor(...C.muted);
-                    doc.text('Solar Data Atlas (c) 2024-2026 Bernard Pugnet | Donnees PVGIS | Simulation indicative, non contractuelle.', M, H - 8);
+                    doc.text('Solar Data Atlas \u00a9 2024\u20132026 Bernard Pugnet \u00b7 Donn\u00e9es PVGIS \u00b7 Simulation indicative, non contractuelle.', M, H - 8);
                     doc.text(pageNum + ' / ' + totalPages, W - M, H - 8, { align: 'right' });
                 }
 
                 function drawSectionTitle(text) {
-                    doc.setFontSize(12); doc.setTextColor(...C.dark);
+                    doc.setFontSize(11); doc.setTextColor(...C.dark);
+                    doc.setFont('helvetica', 'bold');
                     doc.text(clean(text), M, y);
                     y += 2;
                     doc.setDrawColor(...C.amber); doc.setLineWidth(0.6);
-                    doc.line(M, y, M + 40, y);
+                    doc.line(M, y, M + 36, y);
+                    doc.setFont('helvetica', 'normal');
                     y += 6;
                 }
 
                 function drawVerdictBox() {
-                    const verdictTitle = getText('verdict-title');
-                    const verdictNarrative = getText('verdict-narrative');
-                    // Detect level from title
-                    let borderColor = C.amber;
-                    let bgColor = [255, 251, 235]; // amber bg
-                    let iconText = '~';
+                    var verdictTitle = getText('verdict-title');
+                    var verdictNarrative = getText('verdict-narrative');
+                    var borderColor = C.amber;
+                    var bgColor = [255, 251, 235];
+                    var iconText = '?';
                     if (verdictTitle.toLowerCase().includes('pertinent') && !verdictTitle.toLowerCase().includes('peu')) {
                         borderColor = C.green; bgColor = [240, 253, 244]; iconText = 'OK';
                     } else if (verdictTitle.toLowerCase().includes('peu')) {
                         borderColor = C.red; bgColor = [254, 242, 242]; iconText = '!';
                     }
+                    // Compute dynamic height based on narrative length
+                    doc.setFontSize(8);
+                    var narLines = doc.splitTextToSize(clean(verdictNarrative), W - 2 * M - 22);
+                    var boxH = Math.max(24, 14 + narLines.length * 3.5 + 4);
                     // Box
                     doc.setFillColor(...bgColor);
                     doc.setDrawColor(...borderColor); doc.setLineWidth(0.5);
-                    const boxH = 22;
                     doc.roundedRect(M, y, W - 2 * M, boxH, 3, 3, 'FD');
                     // Icon circle
                     doc.setFillColor(...borderColor);
-                    doc.circle(M + 8, y + boxH / 2, 4, 'F');
-                    doc.setFontSize(9); doc.setTextColor(...C.white);
-                    doc.text(iconText, M + 8, y + boxH / 2 + 1.5, { align: 'center' });
+                    doc.circle(M + 8, y + 12, 4, 'F');
+                    doc.setFontSize(8); doc.setTextColor(...C.white);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(iconText, M + 8, y + 13.5, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
                     // Title
-                    doc.setFontSize(12); doc.setTextColor(...C.dark);
+                    doc.setFontSize(11); doc.setTextColor(...C.dark);
+                    doc.setFont('helvetica', 'bold');
                     doc.text(clean(verdictTitle), M + 16, y + 9);
+                    doc.setFont('helvetica', 'normal');
                     // Narrative
                     doc.setFontSize(8); doc.setTextColor(...C.slate);
-                    const narLines = doc.splitTextToSize(clean(verdictNarrative), W - 2 * M - 18);
                     doc.text(narLines, M + 16, y + 15);
                     y += boxH + 6;
                 }
 
                 function drawKpiCard(x, cardW, label, value, unit, accent) {
-                    const cardH = 22;
+                    var cardH = 22;
                     doc.setFillColor(...C.bgCard);
                     doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
                     doc.roundedRect(x, y, cardW, cardH, 2, 2, 'FD');
-                    // Top accent line
                     doc.setDrawColor(...(accent || C.amber)); doc.setLineWidth(1);
                     doc.line(x + 2, y, x + cardW - 2, y);
-                    // Label
                     doc.setFontSize(7); doc.setTextColor(...C.slate);
                     doc.text(clean(label), x + cardW / 2, y + 7, { align: 'center' });
-                    // Value
                     doc.setFontSize(14); doc.setTextColor(...C.dark);
+                    doc.setFont('helvetica', 'bold');
                     doc.text(clean(value), x + cardW / 2, y + 15, { align: 'center' });
-                    // Unit
+                    doc.setFont('helvetica', 'normal');
                     if (unit) {
                         doc.setFontSize(7); doc.setTextColor(...C.muted);
                         doc.text(clean(unit), x + cardW / 2, y + 20, { align: 'center' });
                     }
                 }
 
+                // Draws rows within a centered block of width BW
                 function drawLabelValueRows(rows) {
                     rows.forEach(function(row) {
                         doc.setFontSize(9); doc.setTextColor(...C.slate);
-                        doc.text(clean(row[0]), M + 2, y);
+                        doc.text(clean(row[0]), BX, y);
                         doc.setTextColor(...C.dark);
-                        doc.text(clean(row[1]), W - M - 2, y, { align: 'right' });
-                        y += 5.5;
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(clean(row[1]), BX + BW, y, { align: 'right' });
+                        doc.setFont('helvetica', 'normal');
+                        // Thin separator line
+                        y += 1.5;
+                        doc.setDrawColor(230, 230, 235); doc.setLineWidth(0.15);
+                        doc.line(BX, y, BX + BW, y);
+                        y += 4;
                     });
-                }
-
-                function drawLabelValueBlock(title, rows, explain) {
-                    // Light bg block
-                    const blockH = rows.length * 5.5 + (explain ? 8 : 4) + 8;
-                    doc.setFillColor(...C.bg);
-                    doc.roundedRect(M, y - 2, W - 2 * M, blockH, 2, 2, 'F');
-                    // Section sub-title
-                    doc.setFontSize(10); doc.setTextColor(...C.dark);
-                    doc.text(clean(title), M + 4, y + 4);
-                    y += 10;
-                    // Rows
-                    rows.forEach(function(row) {
-                        doc.setFontSize(8.5); doc.setTextColor(...C.slate);
-                        doc.text(clean(row[0]), M + 4, y);
-                        doc.setTextColor(...C.dark);
-                        doc.text(clean(row[1]), W - M - 4, y, { align: 'right' });
-                        y += 5;
-                    });
-                    if (explain) {
-                        doc.setFontSize(7); doc.setTextColor(...C.muted);
-                        const lines = doc.splitTextToSize(clean(explain), W - 2 * M - 10);
-                        doc.text(lines, M + 4, y + 2);
-                        y += lines.length * 3 + 4;
-                    }
-                    y += 4;
                 }
 
                 function drawNarrativeBlock() {
-                    const reportEl = document.getElementById('reportContent');
+                    var reportEl = document.getElementById('reportContent');
                     if (!reportEl || reportEl.textContent.trim().length < 50) return;
                     drawSectionTitle('Analyse narrative');
-                    const reportText = clean(reportEl.textContent.trim().replace(/\n{3,}/g, '\n\n'));
-                    const paragraphs = reportText.split(/\n\n+/).filter(function(p) { return p.trim().length > 0; });
-                    doc.setFontSize(8); doc.setTextColor(...C.slate);
+                    var reportText = clean(reportEl.textContent.trim().replace(/\n{3,}/g, '\n\n'));
+                    // Split into sections by detecting headings (lines ending with known section names)
+                    var paragraphs = reportText.split(/\n\n+/).filter(function(p) { return p.trim().length > 0; });
                     paragraphs.forEach(function(para) {
-                        if (y > 265) { doc.addPage(); y = 20; }
-                        const lines = doc.splitTextToSize(para.trim(), W - 2 * M - 4);
-                        doc.text(lines, M + 2, y);
-                        y += lines.length * 3.5 + 3;
+                        if (y > 258) { doc.addPage(); y = 20; }
+                        var trimmed = para.trim();
+                        // Detect if this paragraph is a heading (short, no period at end)
+                        var isHeading = trimmed.length < 60 && !trimmed.endsWith('.') && !trimmed.endsWith(',');
+                        if (isHeading) {
+                            y += 3; // extra space before heading
+                            doc.setFontSize(9); doc.setTextColor(...C.dark);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text(trimmed, M + 2, y);
+                            doc.setFont('helvetica', 'normal');
+                            y += 5;
+                        } else {
+                            doc.setFontSize(8); doc.setTextColor(...C.slate);
+                            var lines = doc.splitTextToSize(trimmed, W - 2 * M - 4);
+                            doc.text(lines, M + 2, y);
+                            y += lines.length * 3.5 + 4;
+                        }
                     });
-                    y += 4;
+                    y += 6;
                 }
 
                 function drawGlossary() {
+                    if (y > 240) { doc.addPage(); y = 20; }
                     drawSectionTitle('Glossaire');
                     doc.setFontSize(7.5); doc.setTextColor(...C.slate);
-                    const items = [
-                        'kWc (kilowatt-crete) : puissance maximale d\'un panneau en conditions standard (1000 W/m2, 25 C).',
-                        'kWh (kilowattheure) : unite d\'energie. 1 kWh = 1 heure a 1 000 watts.',
-                        'VAN : somme des flux financiers actualises sur 25 ans. Mesure le profit total.',
-                        'TRI : taux d\'actualisation qui annule la VAN. A comparer a un placement bancaire (~3%).',
-                        'PVGIS : base de donnees europeenne d\'irradiation solaire (Commission europeenne).',
-                        'Autoconsommation : part de la production solaire utilisee sur place plutot qu\'injectee.'
+                    var items = [
+                        ['kWc', 'Kilowatt-cr\u00eate : puissance maximale d\'un panneau en conditions standard (1 000 W/m\u00b2, 25\u00b0C).'],
+                        ['kWh', 'Kilowattheure : unit\u00e9 d\'\u00e9nergie. 1 kWh = 1 000 watts pendant 1 heure.'],
+                        ['VAN', 'Valeur Actuelle Nette : somme des flux financiers actualis\u00e9s sur 25 ans.'],
+                        ['TRI', 'Taux de Rentabilit\u00e9 Interne : rendement annuel \u00e9quivalent. \u00c0 comparer \u00e0 un placement bancaire (~3 %).'],
+                        ['PVGIS', 'Base de donn\u00e9es europ\u00e9enne d\'irradiation solaire (Commission europ\u00e9enne).'],
+                        ['Autoconso.', 'Part de la production solaire utilis\u00e9e sur place plut\u00f4t qu\'inject\u00e9e au r\u00e9seau.']
                     ];
-                    items.forEach(function(g) {
+                    items.forEach(function(item) {
                         if (y > 275) { doc.addPage(); y = 20; }
-                        const lines = doc.splitTextToSize('- ' + g, W - 2 * M - 6);
-                        doc.text(lines, M + 2, y);
-                        y += lines.length * 3.2 + 1.5;
+                        doc.setFont('helvetica', 'bold');
+                        doc.setFontSize(7.5); doc.setTextColor(...C.dark);
+                        doc.text(item[0], M + 2, y);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(...C.slate);
+                        var defLines = doc.splitTextToSize(item[1], W - 2 * M - 22);
+                        doc.text(defLines, M + 20, y);
+                        y += Math.max(defLines.length * 3.2, 3.5) + 2.5;
                     });
                 }
 
                 // =========================================================
-                //  PAGE 1 — Synthèse décisionnelle
+                //  PAGE 1 \u2014 Synth\u00e8se d\u00e9cisionnelle
                 // =========================================================
                 drawHeader();
-
-                // Verdict cartouche
                 drawVerdictBox();
 
                 // 4 KPI cards
-                const cardW = (W - 2 * M - 9) / 4; // 4 cards with 3px gap
-                const savedY = y;
-                drawKpiCard(M, cardW, 'Economies annuelles', getText('resAnnualSavings'), 'EUR/an', C.green);
+                var cardW = (W - 2 * M - 9) / 4;
+                var savedY = y;
+                drawKpiCard(M, cardW, '\u00c9conomies annuelles', getText('resAnnualSavings'), '\u20ac/an', C.green);
                 drawKpiCard(M + cardW + 3, cardW, 'Temps de retour', getText('resPayback'), 'ans', C.amber);
-                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoconsoRate') !== '—' ? getText('resAutoconsoRate') : '—', '%', C.amber);
+                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoconsoRate') !== '\u2014' ? getText('resAutoconsoRate') : '\u2014', '%', C.amber);
                 drawKpiCard(M + 3 * (cardW + 3), cardW, 'TRI', getText('resTri'), '%', C.green);
                 y = savedY + 28;
 
-                // Configuration de l'installation
+                // Configuration
                 y += 4;
                 drawSectionTitle('Configuration');
 
-                const countryName = getText('detectedCountryName');
-                const lat = getVal('resLatitude');
-                const lon = getVal('resLongitude');
-                const orientVal = getVal('resOrientation');
-                const orientLabels = {'0':'Sud','-45':'Sud-Est','45':'Sud-Ouest','-90':'Est','90':'Ouest'};
-                const orientLabel = orientLabels[orientVal] || orientVal + ' deg';
-                const batteryText = document.getElementById('resBatteryToggle')?.checked
+                var countryName = getText('detectedCountryName');
+                var lat = getVal('resLatitude');
+                var lon = getVal('resLongitude');
+                var orientVal = getVal('resOrientation');
+                var orientLabels = {'0':'Sud','-45':'Sud-Est','45':'Sud-Ouest','-90':'Est','90':'Ouest'};
+                var orientLabel = orientLabels[orientVal] || orientVal + '\u00b0';
+                var batteryText = document.getElementById('resBatteryToggle')?.checked
                     ? getVal('resBatteryCapacity') + ' kWh'
                     : 'Non';
 
                 drawLabelValueRows([
-                    ['Localisation', countryName + ' (' + lat + ' N, ' + lon + ' E)'],
-                    ['Puissance installee', getText('resKwc') + ' kWc'],
-                    ['Surface', getVal('resSurface') + ' m2'],
-                    ['Inclinaison / Orientation', getVal('resTilt') + ' deg / ' + orientLabel],
+                    ['Localisation', countryName + ' (' + lat + '\u00b0N, ' + lon + '\u00b0E)'],
+                    ['Puissance install\u00e9e', getText('resKwc') + ' kWc'],
+                    ['Surface', getVal('resSurface') + ' m\u00b2'],
+                    ['Inclinaison / Orientation', getVal('resTilt') + '\u00b0 / ' + orientLabel],
                     ['Batterie', batteryText],
                     ['Consommation annuelle', getVal('resConsumption') + ' kWh'],
-                    ['Prix electricite', getVal('resElecPrice') + ' EUR/kWh'],
-                    ['Tarif revente', getVal('resFeedir') + ' EUR/kWh'],
+                    ['Prix \u00e9lectricit\u00e9', getVal('resElecPrice') + ' \u20ac/kWh'],
+                    ['Tarif revente', getVal('resFeedir') + ' \u20ac/kWh'],
                 ]);
 
                 // Lecture rapide
-                y += 6;
+                y += 4;
                 doc.setFillColor(...C.bg);
                 doc.roundedRect(M, y - 2, W - 2 * M, 16, 2, 2, 'F');
                 doc.setFontSize(8); doc.setTextColor(...C.dark);
-                doc.text('A RETENIR', M + 4, y + 4);
+                doc.setFont('helvetica', 'bold');
+                doc.text('\u00c0 RETENIR', M + 4, y + 4);
+                doc.setFont('helvetica', 'normal');
                 doc.setFontSize(7.5); doc.setTextColor(...C.slate);
-                const quickRead = 'Production : ' + getText('resProduction') + ' kWh/an | '
-                    + 'Economies : ' + getText('resAnnualSavings') + ' EUR/an | '
-                    + 'Amortissement : ' + getText('resPayback') + ' ans | '
-                    + 'VAN 25 ans : ' + getText('resNpv') + ' EUR';
-                const qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
+                var quickRead = 'Production : ' + getText('resProduction') + ' kWh/an  |  '
+                    + '\u00c9conomies : ' + getText('resAnnualSavings') + ' \u20ac/an  |  '
+                    + 'Amortissement : ' + getText('resPayback') + ' ans  |  '
+                    + 'VAN 25 ans : ' + getText('resNpv') + ' \u20ac';
+                var qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
                 doc.text(qrLines, M + 4, y + 9);
                 y += 20;
 
                 drawFooter(1, 3);
 
                 // =========================================================
-                //  PAGE 2 — Analyse technique et financière
+                //  PAGE 2 \u2014 Analyse technique et financi\u00e8re
                 // =========================================================
                 doc.addPage();
                 y = 16;
 
-                // Production solaire
                 drawSectionTitle('Production solaire');
                 drawLabelValueRows([
                     ['Production annuelle', getText('resProduction') + ' kWh'],
                     ['Productible par kWc', getText('resProductionPerKwc') + ' kWh/kWc'],
-                    ['Economies autoconsommation', getText('resSavingsAutocons') + ' EUR/an'],
-                    ['Revenus revente surplus', getText('resSavingsFeedin') + ' EUR/an'],
-                    ['Economies annuelles totales', getText('resAnnualSavings') + ' EUR/an'],
+                    ['\u00c9conomies autoconsommation', getText('resSavingsAutocons') + ' \u20ac/an'],
+                    ['Revenus revente surplus', getText('resSavingsFeedin') + ' \u20ac/an'],
+                    ['\u00c9conomies annuelles totales', getText('resAnnualSavings') + ' \u20ac/an'],
                 ]);
-                y += 6;
+                y += 4;
 
-                // Autoconsommation détaillée
-                const autoRate = getText('resAutoconsoRate');
-                if (autoRate !== '—') {
-                    drawSectionTitle('Autoconsommation detaillee');
+                // Autoconsommation
+                var autoRate = getText('resAutoconsoRate');
+                if (autoRate !== '\u2014') {
+                    drawSectionTitle('Autoconsommation d\u00e9taill\u00e9e');
                     drawLabelValueRows([
                         ['Taux autoconsommation', autoRate + ' %'],
                         ['Taux autoproduction', getText('resAutoprodRate') + ' %'],
                         ['Autoconsommation directe', getText('resAutoDirect') + ' kWh'],
                         ['Via batterie', getText('resAutoBattery') + ' kWh'],
-                        ['Injection reseau', getText('resInjection') + ' kWh'],
-                        ['Soutirage reseau', getText('resSoutirage') + ' kWh'],
+                        ['Injection r\u00e9seau', getText('resInjection') + ' kWh'],
+                        ['Soutirage r\u00e9seau', getText('resSoutirage') + ' kWh'],
                     ]);
-                    y += 6;
+                    y += 4;
                 }
 
-                // Bilan financier
                 drawSectionTitle('Bilan financier');
                 drawLabelValueRows([
-                    ['Cout installation brut', getText('resInstallCost') + ' EUR'],
-                    ['Cout net apres aides', getText('resNetCost') + ' EUR'],
+                    ['Co\u00fbt installation brut', getText('resInstallCost') + ' \u20ac'],
+                    ['Co\u00fbt net apr\u00e8s aides', getText('resNetCost') + ' \u20ac'],
                     ['Temps de retour', getText('resPayback') + ' ans'],
-                    ['VAN (25 ans)', getText('resNpv') + ' EUR'],
+                    ['VAN (25 ans)', getText('resNpv') + ' \u20ac'],
                     ['TRI', getText('resTri') + ' %'],
-                    ['CO2 evite', getText('resCo2') + ' kg/an'],
+                    ['CO2 \u00e9vit\u00e9', getText('resCo2') + ' kg/an'],
                 ]);
-                y += 6;
+                y += 4;
 
-                // Battery comparison (if visible)
-                const batCompEl = document.getElementById('verdict-battery-comparison');
+                // Battery comparison
+                var batCompEl = document.getElementById('verdict-battery-comparison');
                 if (batCompEl && !batCompEl.classList.contains('hidden')) {
                     drawSectionTitle('Impact de la batterie');
-                    const noBatAuto = getText('vbc-no-bat-auto');
-                    const noBatSav = getText('vbc-no-bat-savings');
-                    const noBatPay = getText('vbc-no-bat-payback');
-                    const batAuto = getText('vbc-bat-auto');
-                    const batSav = getText('vbc-bat-savings');
-                    const batPay = getText('vbc-bat-payback');
-                    const batConc = getText('vbc-conclusion');
+                    var noBatAuto = getText('vbc-no-bat-auto');
+                    var noBatSav = getText('vbc-no-bat-savings');
+                    var noBatPay = getText('vbc-no-bat-payback');
+                    var batAuto = getText('vbc-bat-auto');
+                    var batSav = getText('vbc-bat-savings');
+                    var batPay = getText('vbc-bat-payback');
+                    var batConc = getText('vbc-conclusion');
 
-                    // Two-column comparison
-                    const colW = (W - 2 * M - 6) / 2;
+                    var colW = (BW - 6) / 2;
+                    var colX1 = BX;
+                    var colX2 = BX + colW + 6;
                     // Sans batterie
                     doc.setFillColor(...C.bg);
-                    doc.roundedRect(M, y - 2, colW, 24, 2, 2, 'F');
+                    doc.roundedRect(colX1, y - 2, colW, 24, 2, 2, 'F');
                     doc.setFontSize(8); doc.setTextColor(...C.slate);
-                    doc.text('Sans batterie', M + colW / 2, y + 3, { align: 'center' });
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Sans batterie', colX1 + colW / 2, y + 3, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
                     doc.setFontSize(7.5); doc.setTextColor(...C.dark);
-                    doc.text('Autoconso: ' + noBatAuto, M + 4, y + 9);
-                    doc.text('Economies: ' + noBatSav, M + 4, y + 14);
-                    doc.text('Retour: ' + noBatPay, M + 4, y + 19);
+                    doc.text('Autoconso : ' + noBatAuto, colX1 + 4, y + 9);
+                    doc.text('\u00c9conomies : ' + noBatSav, colX1 + 4, y + 14);
+                    doc.text('Retour : ' + noBatPay, colX1 + 4, y + 19);
                     // Avec batterie
-                    const x2 = M + colW + 6;
                     doc.setFillColor(255, 251, 235);
                     doc.setDrawColor(...C.amber); doc.setLineWidth(0.4);
-                    doc.roundedRect(x2, y - 2, colW, 24, 2, 2, 'FD');
+                    doc.roundedRect(colX2, y - 2, colW, 24, 2, 2, 'FD');
                     doc.setFontSize(8); doc.setTextColor(...C.amber);
-                    doc.text('Avec batterie', x2 + colW / 2, y + 3, { align: 'center' });
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Avec batterie', colX2 + colW / 2, y + 3, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
                     doc.setFontSize(7.5); doc.setTextColor(...C.dark);
-                    doc.text('Autoconso: ' + batAuto, x2 + 4, y + 9);
-                    doc.text('Economies: ' + batSav, x2 + 4, y + 14);
-                    doc.text('Retour: ' + batPay, x2 + 4, y + 19);
+                    doc.text('Autoconso : ' + batAuto, colX2 + 4, y + 9);
+                    doc.text('\u00c9conomies : ' + batSav, colX2 + 4, y + 14);
+                    doc.text('Retour : ' + batPay, colX2 + 4, y + 19);
                     y += 26;
-                    // Conclusion
-                    if (batConc && batConc !== '—') {
+                    if (batConc && batConc !== '\u2014') {
                         doc.setFontSize(7); doc.setTextColor(...C.muted);
-                        const concLines = doc.splitTextToSize(clean(batConc), W - 2 * M - 4);
-                        doc.text(concLines, M + 2, y);
+                        var concLines = doc.splitTextToSize(clean(batConc), BW);
+                        doc.text(concLines, BX, y);
                         y += concLines.length * 3 + 4;
                     }
                     y += 4;
@@ -2401,7 +2423,7 @@
                 drawFooter(2, 3);
 
                 // =========================================================
-                //  PAGE 3 — Analyse narrative + Glossaire
+                //  PAGE 3 \u2014 Analyse narrative + Glossaire
                 // =========================================================
                 doc.addPage();
                 y = 16;
@@ -2411,19 +2433,19 @@
 
                 // Disclaimer
                 y += 8;
-                if (y > 270) { doc.addPage(); y = 20; }
+                if (y > 265) { doc.addPage(); y = 20; }
                 doc.setFillColor(...C.bg);
-                doc.roundedRect(M, y - 2, W - 2 * M, 14, 2, 2, 'F');
+                doc.roundedRect(M, y - 2, W - 2 * M, 16, 2, 2, 'F');
                 doc.setFontSize(6.5); doc.setTextColor(...C.muted);
-                const disclaimer = 'Ce rapport est une estimation indicative basee sur les donnees PVGIS (Commission europeenne) et les parametres moyens du pays. Les resultats reels peuvent varier selon l\'ombrage, la qualite de l\'installation, la meteo et l\'evolution des tarifs.';
-                const discLines = doc.splitTextToSize(disclaimer, W - 2 * M - 8);
+                var disclaimer = 'Ce rapport est une estimation indicative bas\u00e9e sur les donn\u00e9es PVGIS (Commission europ\u00e9enne) et les param\u00e8tres moyens du pays. Les r\u00e9sultats r\u00e9els peuvent varier selon l\'ombrage, la qualit\u00e9 de l\'installation, la m\u00e9t\u00e9o et l\'\u00e9volution des tarifs.';
+                var discLines = doc.splitTextToSize(disclaimer, W - 2 * M - 8);
                 doc.text(discLines, M + 4, y + 3);
 
                 drawFooter(3, 3);
 
                 doc.save('solardataatlas-rapport.pdf');
             } catch(e) {
-                alert('Erreur lors de la generation du PDF : ' + e.message);
+                alert('Erreur lors de la g\u00e9n\u00e9ration du PDF : ' + e.message);
                 console.error('PDF export error:', e);
             }
         }
