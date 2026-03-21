@@ -1615,14 +1615,14 @@
             const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1) + ' %, ce projet présente un profil financier favorable. Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
+                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1) + ' %, ce projet présente un profil financier favorable (VAN 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
                 if (batteryCapacity > 0) {
                     narrativeText += ' La batterie (' + batteryCapacity + ' kWh) renforce votre autonomie sans dégrader significativement la rentabilité.';
                 } else {
                     narrativeText += ' L\'ajout d\'une batterie pourrait augmenter l\'autoconsommation, à évaluer selon le surcoût.';
                 }
             } else if (level === 'medium') {
-                narrativeText = 'Le projet est rentable (retour en ' + payback + ' ans, TRI ' + irrPct.toFixed(1) + ' %), mais la marge reste sensible aux hypothèses de coût et de tarif.';
+                narrativeText = 'Le projet est rentable (retour en ' + payback + ' ans, TRI ' + irrPct.toFixed(1) + ' %) pour un investissement net de ' + Math.round(netCost).toLocaleString('fr-FR') + ' €. La marge reste sensible aux hypothèses de coût et de tarif.';
                 if (autoRate < 40) {
                     narrativeText += ' Le taux d\'autoconsommation de ' + autoRate.toFixed(0) + ' % limite les économies directes.';
                 } else {
@@ -2077,7 +2077,7 @@
                 const W = doc.internal.pageSize.getWidth();   // 210
                 const H = doc.internal.pageSize.getHeight();  // 297
                 const M = 16; // margin (was 14, slightly larger for breathing)
-                const BW = 140; // block width for label-value rows (narrower than full width)
+                const BW = 120; // block width for label-value rows (compact, centered)
                 const BX = (W - BW) / 2; // centered block X
                 let y = 0;
 
@@ -2230,24 +2230,32 @@
                         // Detect if this paragraph is a heading (short, no period at end)
                         var isHeading = trimmed.length < 60 && !trimmed.endsWith('.') && !trimmed.endsWith(',');
                         if (isHeading) {
-                            y += 3; // extra space before heading
-                            doc.setFontSize(9); doc.setTextColor(...C.dark);
+                            y += 5; // extra space before heading
+                            doc.setFontSize(9.5); doc.setTextColor(...C.dark);
                             doc.setFont('helvetica', 'bold');
                             doc.text(trimmed, M + 2, y);
                             doc.setFont('helvetica', 'normal');
-                            y += 5;
+                            // Small underline accent
+                            y += 1.5;
+                            doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
+                            doc.line(M + 2, y, M + 50, y);
+                            y += 4;
                         } else {
                             doc.setFontSize(8); doc.setTextColor(...C.slate);
                             var lines = doc.splitTextToSize(trimmed, W - 2 * M - 4);
                             doc.text(lines, M + 2, y);
-                            y += lines.length * 3.5 + 4;
+                            y += lines.length * 3.5 + 5;
                         }
                     });
-                    y += 6;
+                    y += 8;
                 }
 
                 function drawGlossary() {
-                    if (y > 240) { doc.addPage(); y = 20; }
+                    if (y > 235) { doc.addPage(); y = 20; }
+                    // Light separator before glossary
+                    doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
+                    doc.line(M, y, W - M, y);
+                    y += 8;
                     drawSectionTitle('Glossaire');
                     doc.setFontSize(7.5); doc.setTextColor(...C.slate);
                     var items = [
@@ -2267,7 +2275,7 @@
                         doc.setTextColor(...C.slate);
                         var defLines = doc.splitTextToSize(item[1], W - 2 * M - 22);
                         doc.text(defLines, M + 20, y);
-                        y += Math.max(defLines.length * 3.2, 3.5) + 2.5;
+                        y += Math.max(defLines.length * 3.2, 3.5) + 3.5;
                     });
                 }
 
