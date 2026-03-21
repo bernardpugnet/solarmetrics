@@ -2221,33 +2221,39 @@
                     var reportEl = document.getElementById('reportContent');
                     if (!reportEl || reportEl.textContent.trim().length < 50) return;
                     drawSectionTitle('Analyse narrative');
-                    var reportText = clean(reportEl.textContent.trim().replace(/\n{3,}/g, '\n\n'));
-                    // Split into sections by detecting headings (lines ending with known section names)
-                    var paragraphs = reportText.split(/\n\n+/).filter(function(p) { return p.trim().length > 0; });
-                    paragraphs.forEach(function(para) {
-                        if (y > 258) { doc.addPage(); y = 20; }
-                        var trimmed = para.trim();
-                        // Detect if this paragraph is a heading (short, no period at end)
-                        var isHeading = trimmed.length < 60 && !trimmed.endsWith('.') && !trimmed.endsWith(',');
-                        if (isHeading) {
-                            y += 5; // extra space before heading
+                    // Walk DOM children (h4, p, em, div) for proper structure
+                    var children = reportEl.querySelectorAll('h4, p, div');
+                    children.forEach(function(el) {
+                        if (y > 252) { doc.addPage(); y = 20; }
+                        var text = clean(el.textContent.trim());
+                        if (!text || text.length < 3) return;
+                        // Skip the disclaimer div (already in footer)
+                        if (el.tagName === 'DIV') return;
+                        if (el.tagName === 'H4') {
+                            // Section heading
+                            y += 6;
                             doc.setFontSize(9.5); doc.setTextColor(...C.dark);
                             doc.setFont('helvetica', 'bold');
-                            doc.text(trimmed, M + 2, y);
+                            doc.text(text, M + 2, y);
                             doc.setFont('helvetica', 'normal');
-                            // Small underline accent
                             y += 1.5;
                             doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
                             doc.line(M + 2, y, M + 50, y);
-                            y += 4;
+                            y += 5;
                         } else {
-                            doc.setFontSize(8); doc.setTextColor(...C.slate);
-                            var lines = doc.splitTextToSize(trimmed, W - 2 * M - 4);
-                            doc.text(lines, M + 2, y);
-                            y += lines.length * 3.5 + 5;
+                            // Paragraph — detect italic (em wrapping)
+                            var isNote = el.querySelector('em') && el.childNodes.length === 1;
+                            if (isNote) {
+                                doc.setFontSize(7.5); doc.setTextColor(...C.muted);
+                            } else {
+                                doc.setFontSize(8); doc.setTextColor(...C.slate);
+                            }
+                            var lines = doc.splitTextToSize(text, W - 2 * M - 6);
+                            doc.text(lines, M + 4, y);
+                            y += lines.length * 3.5 + 3;
                         }
                     });
-                    y += 8;
+                    y += 10;
                 }
 
                 function drawGlossary() {
