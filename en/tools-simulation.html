@@ -1492,7 +1492,7 @@
             document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('en-US') + ' kWh/yr';
             document.getElementById('hyp-kwc').textContent = parseFloat(kwc).toFixed(1) + ' kWp';
             document.getElementById('hyp-battery').textContent = hasBat ? batCap + ' kWh' : 'None';
-            document.getElementById('hyp-cost').textContent = '€' + parseInt(installCost).toLocaleString('en-US');
+            document.getElementById('hyp-cost').textContent = '€' + (parseInt(installCost) || 0).toLocaleString('en-US');
             document.getElementById('hyp-tarif').textContent = (parseFloat(elecPrice) * 100).toFixed(1) + ' c€ / feed-in ' + (parseFloat(feedin) * 100).toFixed(1) + ' c€';
         }
 
