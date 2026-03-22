@@ -364,6 +364,9 @@
         </div>
     </nav>
 
+    <!-- Toast "Results updated" -->
+    <div id="results-updated-toast" class="bg-emerald-500/90 text-white text-sm font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur">✓ Results updated</div>
+
     <main class="pt-16">
         <section class="py-20 bg-slate-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -677,8 +680,90 @@
                     </div>
                 </div>
 
+
+                <!-- Hypotheses summary bar (visible after calculation) -->
+                <div id="hypotheses-summary" style="display:none" class="bg-slate-800/60 border border-slate-700/40 rounded-xl px-4 py-3 mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div class="flex items-center gap-3 flex-wrap text-[13px] text-slate-400">
+                            <span>📍 <span id="hyp-location" class="text-slate-300"></span></span>
+                            <span>⚡ <span id="hyp-conso" class="text-slate-300"></span></span>
+                            <span>☀️ <span id="hyp-kwc" class="text-slate-300"></span></span>
+                            <span>🔋 <span id="hyp-battery" class="text-slate-300"></span></span>
+                            <span>💰 <span id="hyp-cost" class="text-slate-300"></span></span>
+                            <span>⚙️ <span id="hyp-tarif" class="text-slate-300"></span></span>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="showFormAgain()" class="px-3 py-1.5 text-sm text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 rounded-lg transition-colors flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                Adjust parameters
+                            </button>
+                            <button onclick="exportResultsPDF()" class="px-3 py-1.5 text-xs text-slate-400 hover:text-white border border-slate-600 hover:border-slate-400 rounded-lg transition-colors flex items-center gap-1" title="Download PDF report">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- RESULTS SECTION -->
                 <div id="results-section" style="display:none" class="mt-12">
+
+                    <!-- VERDICT SECTION -->
+                    <div id="verdict-section" class="mb-10">
+                        <div id="verdict-box" class="rounded-2xl p-6 border-2 mb-6">
+                            <div class="flex items-start gap-4 mb-5">
+                                <div id="verdict-icon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"></div>
+                                <div>
+                                    <h2 id="verdict-title" class="text-xl font-bold text-white mb-1"></h2>
+                                    <p id="verdict-subtitle" class="text-sm text-slate-400"></p>
+                                    <p id="verdict-narrative" class="text-[13px] text-slate-400 mt-2 leading-relaxed"></p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
+                                <div class="text-center">
+                                    <div class="text-[13px] text-slate-400 mb-1">Annual savings</div>
+                                    <div id="verdict-savings" class="text-xl font-bold text-white"></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-[13px] text-slate-400 mb-1">Payback period</div>
+                                    <div id="verdict-payback" class="text-xl font-bold text-white"></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-[13px] text-slate-400 mb-1">Self-consumption</div>
+                                    <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-[13px] text-slate-400 mb-1">Production / consumption</div>
+                                    <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
+                                </div>
+                            </div>
+                            <div id="verdict-recommendations" class="space-y-2 text-sm text-slate-300 border-t border-slate-700/50 pt-4"></div>
+                        </div>
+
+                        <div id="verdict-battery-comparison" class="hidden bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                            <h3 class="text-lg font-semibold text-white mb-4">Battery impact</h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700/30">
+                                    <div class="text-xs text-slate-400 mb-2">Without battery</div>
+                                    <div class="space-y-2">
+                                        <div><span class="text-slate-400 text-xs">Self-consumption:</span> <span id="vbc-no-bat-auto" class="text-white font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Savings/year:</span> <span id="vbc-no-bat-savings" class="text-white font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Payback:</span> <span id="vbc-no-bat-payback" class="text-white font-semibold"></span></div>
+                                    </div>
+                                </div>
+                                <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-amber-500/30">
+                                    <div class="text-xs text-amber-400 mb-2">With battery</div>
+                                    <div class="space-y-2">
+                                        <div><span class="text-slate-400 text-xs">Self-consumption:</span> <span id="vbc-bat-auto" class="text-amber-300 font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Savings/year:</span> <span id="vbc-bat-savings" class="text-amber-300 font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Payback:</span> <span id="vbc-bat-payback" class="text-amber-300 font-semibold"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="vbc-conclusion" class="text-xs text-slate-400 mt-4 text-center italic"></p>
+                        </div>
+                    </div>
+
                     <!-- Tab Navigation + PDF button -->
                     <div class="flex items-center justify-between border-b border-slate-700 mb-8">
                         <div class="flex gap-2 overflow-x-auto">
@@ -1263,6 +1348,7 @@
                     lat, lon, peakpower: kwc, loss: loss, angle: tilt, aspect: aspect, mountingplace: mounting
                 });
 
+                cachedPvgisData = pvgisData;
                 if (!pvgisData.success || !pvgisData.hourly) {
                     throw new Error('PVGIS data unavailable');
                 }
@@ -1329,6 +1415,11 @@
 
                 // Display results
                 displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente, netCost, irr, co2Avoided);
+
+                // Verdict + hypotheses summary (ported from FR)
+                generateVerdict(simResults, financials, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost);
+                updateHypothesesSummary();
+                document.getElementById('hypotheses-summary').style.display = 'block';
                 generateDetailedCharts(simResults, typicalDays, financials);
 
                 // Also generate financial charts for the financial tab
@@ -1337,7 +1428,8 @@
 
                 document.getElementById('results-section').style.display = 'block';
                 generateReport();
-                document.getElementById('sim-form').style.display = 'block';
+                // Keep form hidden, show hypotheses bar instead
+                // document.getElementById('sim-form').style.display = 'block';
             } catch (error) {
                 console.error('Detailed calculation error:', error);
                 document.getElementById('sim-form').style.display = 'block';
@@ -1354,6 +1446,227 @@
                 document.getElementById('sim-loader').style.display = 'none';
                 document.getElementById('sim-loader').classList.add('hidden');
             }
+        }
+
+
+        // ══════════════════════════════════════════════════════════════════════
+        // HYPOTHESES SUMMARY + VERDICT (ported from FR)
+        // ══════════════════════════════════════════════════════════════════════
+        let cachedPvgisData = null;
+
+        function updateHypothesesSummary() {
+            const country = document.getElementById('detectedCountryName').textContent || 'France';
+            const conso = document.getElementById('resConsumption').value;
+            const kwc = document.getElementById('simPeakpower').value;
+            const hasBat = document.getElementById('resBatteryToggle').checked;
+            const batCap = hasBat ? document.getElementById('resBatteryCapacity').value : null;
+            const elecPrice = document.getElementById('resElecPrice').value;
+            const feedin = document.getElementById('resFeedir').value;
+            const installCost = document.getElementById('resInstallCostOverride').value;
+
+            document.getElementById('hyp-location').textContent = country;
+            document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('en-US') + ' kWh/yr';
+            document.getElementById('hyp-kwc').textContent = parseFloat(kwc).toFixed(1) + ' kWp';
+            document.getElementById('hyp-battery').textContent = hasBat ? batCap + ' kWh' : 'None';
+            document.getElementById('hyp-cost').textContent = '€' + parseInt(installCost).toLocaleString('en-US');
+            document.getElementById('hyp-tarif').textContent = (parseFloat(elecPrice) * 100).toFixed(1) + ' c€ / feed-in ' + (parseFloat(feedin) * 100).toFixed(1) + ' c€';
+        }
+
+        function showFormAgain() {
+            const form = document.getElementById('sim-form');
+            document.getElementById('hypotheses-summary').style.display = 'none';
+            form.style.display = 'block';
+            form.classList.remove('fade-slide-in');
+            void form.offsetWidth;
+            form.classList.add('fade-slide-in');
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        const VERDICT_THRESHOLDS = {
+            GOOD_PAYBACK: 12,
+            MEDIUM_PAYBACK: 18,
+            GOOD_IRR: 0.04,
+            MEDIUM_IRR: 0.02
+        };
+
+        function generateVerdict(sim, fin, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost) {
+            const annual = sim.annual;
+            const totalSavings = (annual.autoDirect + annual.autoBattery) * elecPrice + annual.injection * priceRevente;
+            const payback = fin.paybackYear || 99;
+            const irrPct = irr !== null ? irr * 100 : 0;
+            const autoRate = annual.tauxAutoconsommation;
+            const prodRatio = annual.consumption > 0 ? Math.round(annual.production / annual.consumption * 100) : 0;
+
+            let level = 'medium';
+            if (payback <= VERDICT_THRESHOLDS.GOOD_PAYBACK && (irr === null || irr >= VERDICT_THRESHOLDS.GOOD_IRR)) {
+                level = 'good';
+            } else if (payback > VERDICT_THRESHOLDS.MEDIUM_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.MEDIUM_IRR)) {
+                level = 'poor';
+            }
+
+            const box = document.getElementById('verdict-box');
+            const icon = document.getElementById('verdict-icon');
+            const title = document.getElementById('verdict-title');
+            const subtitle = document.getElementById('verdict-subtitle');
+
+            if (level === 'good') {
+                box.className = 'rounded-2xl p-6 border-2 mb-6 border-emerald-500/40 bg-emerald-900/10';
+                icon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 bg-emerald-500/20';
+                icon.textContent = '✓';
+                title.textContent = 'Viable project';
+                title.className = 'text-xl font-bold text-emerald-400 mb-1';
+                subtitle.textContent = 'Conditions are favourable for this installation.';
+            } else if (level === 'medium') {
+                box.className = 'rounded-2xl p-6 border-2 mb-6 border-amber-500/40 bg-amber-900/10';
+                icon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 bg-amber-500/20';
+                icon.textContent = '~';
+                title.textContent = 'Worth investigating';
+                title.className = 'text-xl font-bold text-amber-400 mb-1';
+                subtitle.textContent = 'Profitability exists but depends on several assumptions.';
+            } else {
+                box.className = 'rounded-2xl p-6 border-2 mb-6 border-red-500/40 bg-red-900/10';
+                icon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 bg-red-500/20';
+                icon.textContent = '✗';
+                title.textContent = 'Low viability';
+                title.className = 'text-xl font-bold text-red-400 mb-1';
+                subtitle.textContent = 'As configured, profitability is weak or uncertain.';
+            }
+
+            // Verdict narrative
+            const narrative = document.getElementById('verdict-narrative');
+            const savingsRounded = Math.round(totalSavings);
+            let narrativeText = '';
+            if (level === 'good') {
+                narrativeText = 'With a payback of ' + payback + ' years and an IRR of ' + irrPct.toFixed(1) + '%, this project has a favourable financial profile (25-year NPV: €' + Math.round(fin.totalSavings25y).toLocaleString('en-US') + '). You self-consume ' + autoRate.toFixed(0) + '% of your production, saving an estimated €' + savingsRounded.toLocaleString('en-US') + '/year.';
+                if (batteryCapacity > 0) {
+                    narrativeText += ' The battery (' + batteryCapacity + ' kWh) boosts your autonomy without significantly reducing profitability.';
+                } else {
+                    narrativeText += ' Adding a battery could increase self-consumption — evaluate against the extra cost.';
+                }
+            } else if (level === 'medium') {
+                narrativeText = 'The project is profitable (payback in ' + payback + ' years, IRR ' + irrPct.toFixed(1) + '%) for a net investment of €' + Math.round(netCost).toLocaleString('en-US') + '. The margin is sensitive to cost and tariff assumptions.';
+                if (autoRate < 40) {
+                    narrativeText += ' The self-consumption rate of ' + autoRate.toFixed(0) + '% limits direct savings.';
+                } else {
+                    narrativeText += ' Self-consumption of ' + autoRate.toFixed(0) + '% is adequate.';
+                }
+                if (batteryCapacity > 0) {
+                    const batGainRatio = batteryCost > 0 ? (annual.autoBattery * elecPrice) / batteryCost : 0;
+                    if (batGainRatio < 0.05) {
+                        narrativeText += ' The battery improves autonomy but weighs on profitability — its value is mainly comfort.';
+                    }
+                }
+            } else {
+                narrativeText = 'As configured, the project is hard to justify: estimated payback ' + (payback < 50 ? payback + ' years' : 'over 25 years') + ' and IRR of ' + irrPct.toFixed(1) + '%, below a standard investment return.';
+                if (prodRatio > 200) {
+                    narrativeText += ' The system appears oversized relative to your consumption (' + prodRatio + '% of demand).';
+                } else if (autoRate < 30) {
+                    narrativeText += ' The low self-consumption rate (' + autoRate.toFixed(0) + '%) reduces the economic case.';
+                }
+                narrativeText += ' Check the installation cost and tariff assumptions.';
+            }
+            narrative.textContent = narrativeText;
+
+            // KPI summary
+            document.getElementById('verdict-savings').textContent = '€' + Math.round(totalSavings).toLocaleString('en-US') + '/yr';
+            document.getElementById('verdict-payback').textContent = payback < 50 ? payback + ' yrs' : '> 25 yrs';
+            document.getElementById('verdict-autoconso').textContent = autoRate.toFixed(0) + '%';
+            document.getElementById('verdict-ratio').textContent = prodRatio + '%';
+
+            // Recommendations
+            const recs = [];
+            if (payback <= 10) {
+                recs.push('Fast payback: the system pays for itself in under 10 years.');
+            } else if (payback <= 15) {
+                recs.push('Solid payback, in line with typical residential projects.');
+            } else if (payback < 50) {
+                recs.push('Long payback (' + payback + ' years). Review installation cost and financial assumptions.');
+            }
+
+            if (autoRate < 25) {
+                recs.push('Low self-consumption (' + autoRate.toFixed(0) + '%). The system may be oversized for your usage.');
+            } else if (autoRate > 70) {
+                recs.push('Excellent self-consumption (' + autoRate.toFixed(0) + '%). Production is well matched to your demand.');
+            }
+
+            if (prodRatio > 200) {
+                recs.push('Production covers ' + prodRatio + '% of your demand. A smaller system might be better calibrated.');
+            } else if (prodRatio < 50) {
+                recs.push('Production covers only ' + prodRatio + '% of your demand. You could consider higher capacity if roof space allows.');
+            }
+
+            if (batteryCapacity > 0) {
+                const batSavingsRatio = batteryCost > 0 ? (annual.autoBattery * elecPrice) / batteryCost : 0;
+                if (batSavingsRatio < 0.05) {
+                    recs.push('The battery improves autonomy but its financial return is low at current prices. Without it, the project would likely be more profitable.');
+                } else if (batSavingsRatio > 0.10) {
+                    recs.push('The battery contributes meaningfully to savings and boosts self-consumption.');
+                }
+            }
+
+            if (installCost > 0 && totalSavings > 0) {
+                if (payback > 12) {
+                    recs.push('Key sensitivity: installation cost. A cheaper quote or better subsidies would significantly improve the result.');
+                }
+            }
+
+            const recsDiv = document.getElementById('verdict-recommendations');
+            recsDiv.innerHTML = recs.map(function(r) { return '<p class="flex items-start gap-2"><span class="text-slate-500 mt-0.5">—</span> ' + r + '</p>'; }).join('');
+
+            // Battery comparison
+            if (batteryCapacity > 0) {
+                try {
+                    const consumption = parseFloat(document.getElementById('resConsumption').value);
+                    const profile = document.getElementById('simProfile').value;
+                    const addons = [];
+                    if (document.getElementById('addonEV').checked) addons.push('ev');
+                    if (document.getElementById('addonPAC').checked) addons.push('pac');
+                    if (document.getElementById('addonECS').checked) addons.push('ecs');
+                    const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, addons);
+                    const shading = parseFloat(document.getElementById('resShading').value) / 100;
+
+                    const noBatSim = window.AutoconsommationSimulator.simulateAutoconsommation(
+                        cachedPvgisData.hourly, consoProfile,
+                        { capacityKwh: 0, effCharge: 0.95, effDischarge: 0.95, dodMax: 0.90 },
+                        shading
+                    );
+                    const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
+                    const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
+                    const noBatFin = window.AutoconsommationSimulator.calculateFinancials(
+                        noBatSim.annual,
+                        { priceElecKwh: elecPrice, priceReventeKwh: priceRevente, costPv: installCost, costBattery: 0, priceIncreasePerYear: priceIncrease, degradationPv: 0.005, degradationBattery: 0.02, years: 25 }
+                    );
+                    const noBatSavings = (noBatSim.annual.autoDirect) * elecPrice + noBatSim.annual.injection * priceRevente;
+                    const noBatPayback = noBatFin.paybackYear || 99;
+
+                    document.getElementById('vbc-no-bat-auto').textContent = noBatSim.annual.tauxAutoconsommation.toFixed(0) + '%';
+                    document.getElementById('vbc-no-bat-savings').textContent = '€' + Math.round(noBatSavings).toLocaleString('en-US');
+                    document.getElementById('vbc-no-bat-payback').textContent = noBatPayback < 50 ? noBatPayback + ' yrs' : '> 25 yrs';
+
+                    document.getElementById('vbc-bat-auto').textContent = autoRate.toFixed(0) + '%';
+                    document.getElementById('vbc-bat-savings').textContent = '€' + Math.round(totalSavings).toLocaleString('en-US');
+                    document.getElementById('vbc-bat-payback').textContent = payback < 50 ? payback + ' yrs' : '> 25 yrs';
+
+                    const paybackDiff = payback - noBatPayback;
+                    const autoDiff = autoRate - noBatSim.annual.tauxAutoconsommation;
+                    let conclusion = '';
+                    if (paybackDiff > 3) {
+                        conclusion = 'The battery increases self-consumption by +' + autoDiff.toFixed(0) + ' points but extends payback by ' + paybackDiff + ' years.';
+                    } else if (paybackDiff <= 1) {
+                        conclusion = 'The battery improves self-consumption by +' + autoDiff.toFixed(0) + ' points without significantly reducing profitability.';
+                    } else {
+                        conclusion = 'The battery adds +' + autoDiff.toFixed(0) + ' points of self-consumption for ' + paybackDiff + ' extra year(s) of payback.';
+                    }
+                    document.getElementById('vbc-conclusion').textContent = conclusion;
+                    document.getElementById('verdict-battery-comparison').classList.remove('hidden');
+                } catch(e) {
+                    console.warn('Battery comparison error:', e);
+                }
+            } else {
+                document.getElementById('verdict-battery-comparison').classList.add('hidden');
+            }
+
+            document.getElementById('verdict-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function displayFinancialResults(prod, prodKwc, kwc, savings, feedin, annual, cost, netCost, payback, npv, irr, co2) {
@@ -1661,119 +1974,366 @@
 
         function exportResultsPDF() {
             try {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
-            const w = doc.internal.pageSize.getWidth();
-            let y = 15;
+                if (!window.jspdf && !window.jsPDF) {
+                    alert('PDF library not loaded yet. Please try again in a few seconds.');
+                    return;
+                }
+                const jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const W = doc.internal.pageSize.getWidth();
+                const H = doc.internal.pageSize.getHeight();
+                const M = 16;
+                const BW = 110;
+                const BX = (W - BW) / 2;
+                let y = 0;
 
-            // Helper functions
-            const addTitle = (text, size) => { doc.setFontSize(size || 18); doc.setTextColor(245, 158, 11); doc.text(text, 14, y); y += 10; };
-            const addLine = (label, value) => { doc.setFontSize(10); doc.setTextColor(100, 116, 139); doc.text(label, 14, y); doc.setTextColor(30, 41, 59); doc.text(String(value), 110, y); y += 6; };
-            const addExplain = (text) => { doc.setFontSize(7.5); doc.setTextColor(140, 140, 160); const lines = doc.splitTextToSize(text, w - 32); doc.text(lines, 18, y); y += lines.length * 3.5 + 2; };
-            const addSeparator = () => { doc.setDrawColor(200, 200, 200); doc.line(14, y, w - 14, y); y += 6; };
-            const checkPage = () => { if (y > 270) { doc.addPage(); y = 15; } };
+                const C = {
+                    dark:    [15, 23, 42],
+                    slate:   [71, 85, 105],
+                    light:   [203, 213, 225],
+                    amber:   [245, 158, 11],
+                    green:   [34, 197, 94],
+                    red:     [239, 68, 68],
+                    white:   [255, 255, 255],
+                    muted:   [148, 163, 184],
+                    bg:      [241, 245, 249],
+                    bgCard:  [248, 250, 252],
+                };
 
-            // Header
-            doc.setFontSize(22); doc.setTextColor(245, 158, 11);
-            doc.text('Solar Data Atlas', 14, y); y += 8;
-            doc.setFontSize(12); doc.setTextColor(100, 116, 139);
-            doc.text('Solar Simulation Report', 14, y); y += 4;
-            doc.setFontSize(8);
-            doc.text('Generated on ' + new Date().toLocaleDateString('en-US') + ' — www.solardataatlas.com', 14, y); y += 10;
-            addSeparator();
+                const clean = function(s) {
+                    return String(s)
+                        .replace(/[\u00A0\u202F]/g, ' ')
+                        .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu, '')
+                        .replace(/[\u2080-\u209F]/g, function(c) { return String.fromCharCode(c.charCodeAt(0) - 0x2050); })
+                        .replace(/[☀⚡🔋💰⚙📍🏠💶🔄🌍📄✓✗]/g, '')
+                        .replace(/\s{2,}/g, ' ')
+                        .trim();
+                };
+                const getText = function(id) { return clean(document.getElementById(id)?.textContent || '\u2014'); };
+                const getVal = function(id) { return clean(document.getElementById(id)?.value || '\u2014'); };
 
-            // Location
-            addTitle('Location', 14);
-            const countryName = document.getElementById('detectedCountryName').textContent;
-            const lat = document.getElementById('resLatitude').value;
-            const lon = document.getElementById('resLongitude').value;
-            addLine('Country', countryName);
-            addLine('Coordinates', lat + '°N, ' + lon + '°E');
-            y += 4; addSeparator();
+                function drawHeader() {
+                    doc.setFillColor(...C.dark);
+                    doc.rect(0, 0, W, 32, 'F');
+                    doc.setFontSize(18); doc.setTextColor(...C.amber);
+                    doc.text('Solar Data Atlas', M, 14);
+                    doc.setFontSize(10); doc.setTextColor(...C.light);
+                    doc.text('Solar Simulation Report', M, 21);
+                    doc.setFontSize(7.5); doc.setTextColor(...C.muted);
+                    doc.text('www.solardataatlas.com', W - M, 14, { align: 'right' });
+                    doc.text(new Date().toLocaleDateString('en-US'), W - M, 20, { align: 'right' });
+                    y = 38;
+                }
 
-            // Installation
-            addTitle('Installation', 14);
-            addLine('Installed capacity', document.getElementById('resKwc').textContent + ' kWp');
-            addExplain('Peak power = surface area × fill factor (85%) × panel efficiency.');
-            addLine('Surface area', (document.getElementById('resSurface').value || '—') + ' m²');
-            addLine('Tilt angle', (document.getElementById('resTilt').value || '—') + '°');
-            const orientVal = document.getElementById('resOrientation').value;
-            const orientLabels = {'0':'South','-45':'South-East','45':'South-West','-90':'East','90':'West'};
-            addLine('Orientation', orientLabels[orientVal] || orientVal + '°');
-            y += 4; addSeparator(); checkPage();
+                function drawFooter(pageNum, totalPages) {
+                    doc.setFontSize(6.5); doc.setTextColor(...C.muted);
+                    doc.text('Solar Data Atlas \u00a9 2024\u20132026 Bernard Pugnet \u00b7 Data: PVGIS \u00b7 Indicative simulation, non-contractual.', M, H - 8);
+                    doc.text(pageNum + ' / ' + totalPages, W - M, H - 8, { align: 'right' });
+                }
 
-            // Production
-            addTitle('Production & Savings', 14);
-            addLine('Annual production', document.getElementById('resProduction').textContent + ' kWh');
-            addExplain('Total energy produced in 1 year, simulated hour-by-hour (8,760 h) using PVGIS data for your location.');
-            addLine('Production per kWp', document.getElementById('resProductionPerKwc').textContent + ' kWh/kWp');
-            addExplain('Yield per kWp installed. Varies by region: 800-1,800 kWh/kWp depending on solar irradiation.');
-            checkPage();
-            addLine('Self-consumption savings', document.getElementById('resSavingsAutocons').textContent + ' €/year');
-            addExplain('kWh consumed directly × electricity purchase price. You avoid buying from the grid.');
-            addLine('Feed-in revenue', document.getElementById('resSavingsFeedin').textContent + ' €/year');
-            addExplain('Surplus kWh injected to grid × country feed-in tariff.');
-            doc.setFontSize(11); doc.setTextColor(34, 197, 94);
-            doc.text('Total annual savings: ' + document.getElementById('resAnnualSavings').textContent + ' €', 14, y); y += 5;
-            addExplain('Self-consumption + feed-in = total yearly financial benefit from your system.');
-            addSeparator(); checkPage();
+                function drawSectionTitle(text) {
+                    doc.setFontSize(11); doc.setTextColor(...C.dark);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(clean(text), M, y);
+                    y += 2;
+                    doc.setDrawColor(...C.amber); doc.setLineWidth(0.6);
+                    doc.line(M, y, M + 36, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 6;
+                }
 
-            // Financial
-            addTitle('Financial Summary', 14);
-            addLine('Installation cost', document.getElementById('resInstallCost').textContent + ' €');
-            addExplain('Total gross cost: panels + inverter + installation + grid connection (+ battery if enabled).');
-            addLine('Net cost after subsidies', document.getElementById('resNetCost').textContent + ' €');
-            addExplain('Actual cost after deducting national subsidies and incentives.');
-            addLine('Payback', document.getElementById('resPayback').textContent + ' years');
-            addExplain('Years until cumulative savings cover the net investment. After this: pure profit.');
-            checkPage();
-            addLine('NPV (25 years)', document.getElementById('resNpv').textContent + ' €');
-            addExplain('Net Present Value: total savings over 25 years minus net cost, including annual electricity price increases.');
-            addLine('IRR', document.getElementById('resTri').textContent + ' %');
-            addExplain('Internal Rate of Return: equivalent annual yield. Compare with bank savings (~3%) to assess profitability.');
-            addLine('CO₂ avoided', document.getElementById('resCo2').textContent + ' kg/year');
-            addExplain('Emissions avoided thanks to solar power, based on the CO₂ factor of your country\'s electricity mix.');
+                function drawVerdictBox() {
+                    var verdictTitle = getText('verdict-title');
+                    var verdictNarrative = getText('verdict-narrative');
+                    var borderColor = C.amber;
+                    var bgColor = [255, 251, 235];
+                    var iconText = '?';
+                    if (verdictTitle.toLowerCase().includes('viable')) {
+                        borderColor = C.green; bgColor = [240, 253, 244]; iconText = 'OK';
+                    } else if (verdictTitle.toLowerCase().includes('low')) {
+                        borderColor = C.red; bgColor = [254, 242, 242]; iconText = '!';
+                    }
+                    doc.setFontSize(8);
+                    var narLines = doc.splitTextToSize(clean(verdictNarrative), W - 2 * M - 22);
+                    var boxH = Math.max(24, 14 + narLines.length * 3.5 + 4);
+                    doc.setFillColor(...bgColor);
+                    doc.setDrawColor(...borderColor); doc.setLineWidth(0.5);
+                    doc.roundedRect(M, y, W - 2 * M, boxH, 3, 3, 'FD');
+                    doc.setFillColor(...borderColor);
+                    doc.circle(M + 8, y + 12, 4, 'F');
+                    doc.setFontSize(8); doc.setTextColor(...C.white);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(iconText, M + 8, y + 13.5, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(11); doc.setTextColor(...C.dark);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(clean(verdictTitle), M + 16, y + 9);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8); doc.setTextColor(...C.slate);
+                    doc.text(narLines, M + 16, y + 15);
+                    y += boxH + 6;
+                }
 
-            // Detailed mode extras
-            const autoRateEl = document.getElementById('resAutoconsoRate');
-            if (autoRateEl && autoRateEl.textContent !== '—') {
-                y += 4; addSeparator(); checkPage();
-                addTitle('Self-consumption Details', 14);
-                addLine('Self-consumption rate', autoRateEl.textContent + ' %');
-                addExplain('Share of your solar production consumed on-site (directly + via battery).');
-                addLine('Self-production rate', document.getElementById('resAutoprodRate').textContent + ' %');
-                addExplain('Share of your total consumption covered by solar energy.');
-                addLine('Direct self-consumption', document.getElementById('resAutoDirect').textContent + ' kWh');
-                addLine('Via battery', document.getElementById('resAutoBattery').textContent + ' kWh');
-                addLine('Grid injection', document.getElementById('resInjection').textContent + ' kWh');
-                addLine('Grid withdrawal', document.getElementById('resSoutirage').textContent + ' kWh');
-            }
+                function drawKpiCard(x, cardW, label, value, unit, accent) {
+                    var cardH = 22;
+                    doc.setFillColor(...C.bgCard);
+                    doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
+                    doc.roundedRect(x, y, cardW, cardH, 2, 2, 'FD');
+                    doc.setDrawColor(...(accent || C.amber)); doc.setLineWidth(1);
+                    doc.line(x + 2, y, x + cardW - 2, y);
+                    doc.setFontSize(7); doc.setTextColor(...C.slate);
+                    doc.text(clean(label), x + cardW / 2, y + 7, { align: 'center' });
+                    doc.setFontSize(14); doc.setTextColor(...C.dark);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(clean(value), x + cardW / 2, y + 15, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
+                    if (unit) {
+                        doc.setFontSize(7); doc.setTextColor(...C.muted);
+                        doc.text(clean(unit), x + cardW / 2, y + 20, { align: 'center' });
+                    }
+                }
 
-            // Glossary
-            checkPage();
-            y += 4; addSeparator();
-            addTitle('Glossary', 14);
-            doc.setFontSize(8); doc.setTextColor(80, 80, 100);
-            const glossary = [
-                'kWp (kilowatt-peak): maximum power output of a panel under standard test conditions (1000 W/m², 25°C).',
-                'kWh (kilowatt-hour): unit of energy. 1 kWh = running 1,000 watts for 1 hour.',
-                'NPV: sum of discounted cash flows over the system\'s lifetime.',
-                'IRR: discount rate that sets the NPV to zero. Higher IRR = more profitable investment.',
-                'PVGIS: European solar irradiation database (European Commission).',
-                'Self-consumption: share of solar production used on-site instead of being fed into the grid.'
-            ];
-            glossary.forEach(g => {
-                checkPage();
-                const lines = doc.splitTextToSize('• ' + g, w - 32);
-                doc.text(lines, 18, y); y += lines.length * 3.5 + 1.5;
-            });
+                function drawLabelValueRows(rows) {
+                    rows.forEach(function(row) {
+                        doc.setFontSize(9); doc.setTextColor(...C.slate);
+                        doc.text(clean(row[0]), BX, y);
+                        doc.setTextColor(...C.dark);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(clean(row[1]), BX + BW, y, { align: 'right' });
+                        doc.setFont('helvetica', 'normal');
+                        y += 1.5;
+                        doc.setDrawColor(230, 230, 235); doc.setLineWidth(0.15);
+                        doc.line(BX, y, BX + BW, y);
+                        y += 4;
+                    });
+                }
 
-            // Footer
-            y += 6; checkPage();
-            doc.setFontSize(7); doc.setTextColor(150, 150, 150);
-            doc.text('Solar Data Atlas © 2024-2026 · Bernard Pugnet · Data: PVGIS/NREL · Indicative simulation, non-contractual.', 14, y);
+                function drawNarrativeBlock() {
+                    var reportEl = document.getElementById('reportContent');
+                    if (!reportEl || reportEl.textContent.trim().length < 50) return;
+                    drawSectionTitle('Narrative Analysis');
+                    var children = reportEl.querySelectorAll('h4, p, div');
+                    children.forEach(function(el) {
+                        if (y > 252) { doc.addPage(); y = 20; }
+                        var text = clean(el.textContent.trim());
+                        if (!text || text.length < 3) return;
+                        if (el.tagName === 'DIV') return;
+                        if (el.tagName === 'H4') {
+                            y += 6;
+                            doc.setFontSize(9.5); doc.setTextColor(...C.dark);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text(text, M + 2, y);
+                            doc.setFont('helvetica', 'normal');
+                            y += 1.5;
+                            doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
+                            doc.line(M + 2, y, M + 50, y);
+                            y += 5;
+                        } else {
+                            var isNote = el.querySelector('em') && el.childNodes.length === 1;
+                            if (isNote) {
+                                doc.setFontSize(7.5); doc.setTextColor(...C.muted);
+                            } else {
+                                doc.setFontSize(8); doc.setTextColor(...C.slate);
+                            }
+                            var lines = doc.splitTextToSize(text, W - 2 * M - 6);
+                            doc.text(lines, M + 4, y);
+                            y += lines.length * 3.5 + 3;
+                        }
+                    });
+                    y += 10;
+                }
 
-            doc.save('solardataatlas-report.pdf');
+                function drawGlossary() {
+                    if (y > 235) { doc.addPage(); y = 20; }
+                    doc.setDrawColor(...C.light); doc.setLineWidth(0.3);
+                    doc.line(M, y, W - M, y);
+                    y += 8;
+                    drawSectionTitle('Glossary');
+                    doc.setFontSize(7.5); doc.setTextColor(...C.slate);
+                    var items = [
+                        ['kWp', 'Kilowatt-peak: maximum panel power under standard conditions (1,000 W/m\u00b2, 25\u00b0C).'],
+                        ['kWh', 'Kilowatt-hour: unit of energy. 1 kWh = 1,000 watts for 1 hour.'],
+                        ['NPV', 'Net Present Value: sum of discounted cash flows over 25 years.'],
+                        ['IRR', 'Internal Rate of Return: equivalent annual yield. Compare with bank savings (~3%).'],
+                        ['PVGIS', 'European solar irradiation database (European Commission).'],
+                        ['Self-conso.', 'Share of solar production consumed on-site rather than fed into the grid.']
+                    ];
+                    items.forEach(function(item) {
+                        if (y > 275) { doc.addPage(); y = 20; }
+                        doc.setFont('helvetica', 'bold');
+                        doc.setFontSize(7.5); doc.setTextColor(...C.dark);
+                        doc.text(item[0], M + 2, y);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(...C.slate);
+                        var defLines = doc.splitTextToSize(item[1], W - 2 * M - 22);
+                        doc.text(defLines, M + 20, y);
+                        y += Math.max(defLines.length * 3.2, 3.5) + 3.5;
+                    });
+                }
+
+                // PAGE 1 — Decision summary
+                drawHeader();
+                drawVerdictBox();
+
+                var cardW = (W - 2 * M - 9) / 4;
+                var savedY = y;
+                drawKpiCard(M, cardW, 'Annual savings', getText('resAnnualSavings'), '\u20ac/yr', C.green);
+                drawKpiCard(M + cardW + 3, cardW, 'Payback', getText('resPayback'), 'years', C.amber);
+                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Self-consumption', getText('resAutoprodRate') !== '\u2014' ? getText('resAutoprodRate') : '\u2014', '%', C.amber);
+                drawKpiCard(M + 3 * (cardW + 3), cardW, 'IRR', getText('resTri'), '%', C.green);
+                y = savedY + 28;
+
+                y += 4;
+                drawSectionTitle('Configuration');
+
+                var countryName = getText('detectedCountryName');
+                var lat = getVal('resLatitude');
+                var lon = getVal('resLongitude');
+                var orientVal = getVal('resOrientation');
+                var orientLabels = {'0':'South','-45':'South-East','45':'South-West','-90':'East','90':'West'};
+                var orientLabel = orientLabels[orientVal] || orientVal + '\u00b0';
+                var batteryText = document.getElementById('resBatteryToggle')?.checked
+                    ? getVal('resBatteryCapacity') + ' kWh'
+                    : 'No';
+
+                var consoInput = getVal('resConsumption');
+                var configRows = [
+                    ['Location', countryName + ' (' + lat + '\u00b0N, ' + lon + '\u00b0E)'],
+                    ['Installed capacity', getText('resKwc') + ' kWp'],
+                    ['Surface', getVal('resSurface') + ' m\u00b2'],
+                    ['Tilt / Orientation', getVal('resTilt') + '\u00b0 / ' + orientLabel],
+                    ['Battery', batteryText],
+                    ['Consumption', consoInput + ' kWh'],
+                    ['Electricity price', getVal('resElecPrice') + ' \u20ac/kWh'],
+                    ['Feed-in tariff', getVal('resFeedir') + ' \u20ac/kWh'],
+                ];
+                drawLabelValueRows(configRows);
+
+                y += 4;
+                doc.setFillColor(...C.bg);
+                doc.roundedRect(M, y - 2, W - 2 * M, 16, 2, 2, 'F');
+                doc.setFontSize(8); doc.setTextColor(...C.dark);
+                doc.setFont('helvetica', 'bold');
+                doc.text('KEY TAKEAWAY', M + 4, y + 4);
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(7.5); doc.setTextColor(...C.slate);
+                var quickRead = 'Production: ' + getText('resProduction') + ' kWh/yr  |  '
+                    + 'Savings: ' + getText('resAnnualSavings') + ' \u20ac/yr  |  '
+                    + 'Payback: ' + getText('resPayback') + ' yrs  |  '
+                    + 'NPV 25yr: ' + getText('resNpv') + ' \u20ac';
+                var qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
+                doc.text(qrLines, M + 4, y + 9);
+                y += 20;
+
+                // PAGE 2 — Technical & financial analysis
+                doc.addPage();
+                y = 16;
+
+                drawSectionTitle('Solar Production');
+                drawLabelValueRows([
+                    ['Annual production', getText('resProduction') + ' kWh'],
+                    ['Yield per kWp', getText('resProductionPerKwc') + ' kWh/kWp'],
+                    ['Self-consumption savings', getText('resSavingsAutocons') + ' \u20ac/yr'],
+                    ['Feed-in revenue', getText('resSavingsFeedin') + ' \u20ac/yr'],
+                    ['Total annual savings', getText('resAnnualSavings') + ' \u20ac/yr'],
+                ]);
+                y += 4;
+
+                var autoRateDisplay = getText('resAutoprodRate');
+                var autoprodDisplay = getText('resAutoconsoRate');
+                if (autoRateDisplay !== '\u2014') {
+                    drawSectionTitle('Self-consumption Details');
+                    drawLabelValueRows([
+                        ['Self-consumption rate', autoRateDisplay + ' %'],
+                        ['Self-production rate', autoprodDisplay + ' %'],
+                        ['Direct self-consumption', getText('resAutoDirect') + ' kWh'],
+                        ['Via battery', getText('resAutoBattery') + ' kWh'],
+                        ['Grid injection', getText('resInjection') + ' kWh'],
+                        ['Grid withdrawal', getText('resSoutirage') + ' kWh'],
+                    ]);
+                    y += 4;
+                }
+
+                drawSectionTitle('Financial Summary');
+                drawLabelValueRows([
+                    ['Gross installation cost', getText('resInstallCost') + ' \u20ac'],
+                    ['Net cost after subsidies', getText('resNetCost') + ' \u20ac'],
+                    ['Payback period', getText('resPayback') + ' years'],
+                    ['NPV (25 years)', getText('resNpv') + ' \u20ac'],
+                    ['IRR', getText('resTri') + ' %'],
+                    ['CO2 avoided', getText('resCo2') + ' kg/yr'],
+                ]);
+                y += 4;
+
+                // Battery comparison
+                var batCompEl = document.getElementById('verdict-battery-comparison');
+                if (batCompEl && !batCompEl.classList.contains('hidden')) {
+                    drawSectionTitle('Battery Impact');
+                    var noBatAuto = getText('vbc-no-bat-auto');
+                    var noBatSav = getText('vbc-no-bat-savings');
+                    var noBatPay = getText('vbc-no-bat-payback');
+                    var batAuto = getText('vbc-bat-auto');
+                    var batSav = getText('vbc-bat-savings');
+                    var batPay = getText('vbc-bat-payback');
+                    var batConc = getText('vbc-conclusion');
+
+                    var colW = (BW - 6) / 2;
+                    var colX1 = BX;
+                    var colX2 = BX + colW + 6;
+                    doc.setFillColor(...C.bg);
+                    doc.roundedRect(colX1, y - 2, colW, 24, 2, 2, 'F');
+                    doc.setFontSize(8); doc.setTextColor(...C.slate);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Without battery', colX1 + colW / 2, y + 3, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(7.5); doc.setTextColor(...C.dark);
+                    doc.text('Self-conso: ' + noBatAuto, colX1 + 4, y + 9);
+                    doc.text('Savings: ' + noBatSav, colX1 + 4, y + 14);
+                    doc.text('Payback: ' + noBatPay, colX1 + 4, y + 19);
+                    doc.setFillColor(255, 251, 235);
+                    doc.setDrawColor(...C.amber); doc.setLineWidth(0.4);
+                    doc.roundedRect(colX2, y - 2, colW, 24, 2, 2, 'FD');
+                    doc.setFontSize(8); doc.setTextColor(...C.amber);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('With battery', colX2 + colW / 2, y + 3, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(7.5); doc.setTextColor(...C.dark);
+                    doc.text('Self-conso: ' + batAuto, colX2 + 4, y + 9);
+                    doc.text('Savings: ' + batSav, colX2 + 4, y + 14);
+                    doc.text('Payback: ' + batPay, colX2 + 4, y + 19);
+                    y += 26;
+                    if (batConc && batConc !== '\u2014') {
+                        doc.setFontSize(7); doc.setTextColor(...C.muted);
+                        var concLines = doc.splitTextToSize(clean(batConc), BW);
+                        doc.text(concLines, BX, y);
+                        y += concLines.length * 3 + 4;
+                    }
+                    y += 4;
+                }
+
+                // PAGE 3 — Narrative + Glossary
+                doc.addPage();
+                y = 16;
+
+                drawNarrativeBlock();
+                drawGlossary();
+
+                y += 8;
+                if (y > 265) { doc.addPage(); y = 20; }
+                doc.setFillColor(...C.bg);
+                doc.roundedRect(M, y - 2, W - 2 * M, 16, 2, 2, 'F');
+                doc.setFontSize(6.5); doc.setTextColor(...C.muted);
+                var disclaimer = 'This report is an indicative estimate based on PVGIS data (European Commission) and average country parameters. Actual results may vary depending on shading, installation quality, weather and tariff changes.';
+                var discLines = doc.splitTextToSize(disclaimer, W - 2 * M - 8);
+                doc.text(discLines, M + 4, y + 3);
+
+                var totalPages = doc.getNumberOfPages();
+                for (var p = 1; p <= totalPages; p++) {
+                    doc.setPage(p);
+                    drawFooter(p, totalPages);
+                }
+
+                doc.save('solardataatlas-report.pdf');
             } catch(e) {
                 alert('Error generating PDF: ' + e.message);
                 console.error('PDF export error:', e);
