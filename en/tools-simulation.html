@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solar Simulator - Solar Data Atlas</title>
     <meta name="description" content="Unified solar simulator: estimate the profitability and self-consumption of your photovoltaic installation. Quick and detailed mode with battery.">
-    <meta name="keywords" content="solar simulator, LCOE calculator, self-consumption simulation, PVGIS, PV profitability">
+    <meta name="keywords" content="solarsimulator, LCOE calculator, self-consumption simulation, PVGIS, PV profitability">
     <meta name="author" content="Bernard Pugnet">
     <!-- Canonical & hreflang -->
     <link rel="canonical" href="https://www.solardataatlas.com/en/tools-simulation">
     <link rel="alternate" hreflang="fr" href="https://www.solardataatlas.com/fr/outils-simulation">
-    <link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simulation">
+    <link rel="alternate" hreflang="en" href="https://www.solardataatlas.com/en/tools-simuation">
     <link rel="alternate" hreflang="x-default" href="https://www.solardataatlas.com/en/tools-simulation">    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.solardataatlas.com/en/tools-simulation">
@@ -1492,7 +1492,7 @@
             document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('en-US') + ' kWh/yr';
             document.getElementById('hyp-kwc').textContent = parseFloat(kwc).toFixed(1) + ' kWp';
             document.getElementById('hyp-battery').textContent = hasBat ? batCap + ' kWh' : 'None';
-            document.getElementById('hyp-cost').textContent = '€' + parseInt(installCost).toLocaleString('en-US');
+            document.getElementById('hyp-cost').textContent = '€' + (parseInt(installCost) || Math.round(parseFloat(kwc) * (parseFloat(document.getElementById('resAvgCostHint')?.textContent?.match(/\d+/)?.[0]) || 1600))).toLocaleString('en-US');
             document.getElementById('hyp-tarif').textContent = (parseFloat(elecPrice) * 100).toFixed(1) + ' c€ / feed-in ' + (parseFloat(feedin) * 100).toFixed(1) + ' c€';
         }
 
