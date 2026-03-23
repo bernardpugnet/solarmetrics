@@ -471,6 +471,9 @@
                                 <span id="detectedCountryFlag" class="text-sm text-slate-400">(FR)</span>
                             </div>
                             <p id="netMeteringNote" class="text-xs text-amber-400/80 hidden"></p>
+                            <div id="countryDisclaimer" class="hidden mt-2 p-3 bg-orange-900/30 border border-orange-600/50 rounded-lg">
+                                <p class="text-xs text-orange-300 font-medium"><span class="mr-1">⚠️</span><span id="countryDisclaimerText"></span></p>
+                            </div>
                             <div id="unsupportedCountryNote" class="hidden p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
                                 <p class="text-xs text-amber-400">⚠️ Pays non référencé dans notre base. Les données d'irradiation (PVGIS) sont exactes, mais les tarifs et aides doivent être renseignés manuellement.</p>
                             </div>
@@ -1226,6 +1229,14 @@
                 // Notes de statut
                 document.getElementById('unsupportedCountryNote').classList.add('hidden');
                 document.getElementById('supportedCountryNote').classList.remove('hidden');
+                // Avertissement pays (données approximatives)
+                var disclaimerDiv = document.getElementById('countryDisclaimer');
+                if (countryData.disclaimer) {
+                    document.getElementById('countryDisclaimerText').textContent = countryData.disclaimer.fr;
+                    disclaimerDiv.classList.remove('hidden');
+                } else {
+                    disclaimerDiv.classList.add('hidden');
+                }
             } else {
                 // Unsupported country — vider les champs financiers
                 document.getElementById('unsupportedCountryNote').classList.remove('hidden');
@@ -1242,6 +1253,7 @@
                 document.getElementById('feedInNoteText').classList.add('hidden');
                 document.getElementById('feedInNoteLink').classList.add('hidden');
                 document.querySelectorAll('.cur').forEach(el => el.textContent = '€');
+                document.getElementById('countryDisclaimer').classList.add('hidden');
             }
             // Update subsidy info
             updateSubsidyInfo(cc);
