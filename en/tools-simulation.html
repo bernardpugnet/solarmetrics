@@ -2203,7 +2203,7 @@
                 var savedY = y;
                 drawKpiCard(M, cardW, 'Annual savings', getText('resAnnualSavings'), '\u20ac/yr', C.green);
                 drawKpiCard(M + cardW + 3, cardW, 'Payback', getText('resPayback'), 'years', C.amber);
-                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Self-consumption', getText('resAutoprodRate') !== '\u2014' ? getText('resAutoprodRate') : '\u2014', '%', C.amber);
+                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Self-consumption', getText('resAutoconsoRate') !== '\u2014' ? getText('resAutoconsoRate') : '\u2014', '%', C.amber);
                 drawKpiCard(M + 3 * (cardW + 3), cardW, 'IRR', getText('resTri'), '%', C.green);
                 y = savedY + 28;
 
@@ -2263,8 +2263,8 @@
                 ]);
                 y += 4;
 
-                var autoRateDisplay = getText('resAutoprodRate');
-                var autoprodDisplay = getText('resAutoconsoRate');
+                var autoRateDisplay = getText('resAutoconsoRate');
+                var autoprodDisplay = getText('resAutoprodRate');
                 if (autoRateDisplay !== '\u2014') {
                     drawSectionTitle('Self-consumption Details');
                     drawLabelValueRows([
