@@ -10,7 +10,7 @@
  * All calculations run client-side in the browser.
  * PVGIS hourly data is fetched via Netlify Function (pvgis.js?mode=hourly).
  *
- * References:
+ * References
  *   - Consumption profiles: based on RTE/Enedis typical residential curves (France)
  *   - Battery specs: LFP typical (BYD, Tesla Powerwall, Huawei Luna)
  *   - PVGIS: EU JRC, seriescalc endpoint, local time, 2023 TMY
@@ -419,10 +419,12 @@ function simulateAutoconsommation(pvHourly, consoHourly, batteryConfig, shadingL
   }
 
   // ─── Compute indicators ───
-  const tauxAutoconsommation = totalConsumption > 0
-    ? (totalAutoDirect + totalAutoBattery) / totalConsumption * 100 : 0;
-  const tauxAutoproduction = totalProduction > 0
+  // Taux d'autoconsommation = part de la PRODUCTION consommée sur place (auto / production)
+  const tauxAutoconsommation = totalProduction > 0
     ? (totalAutoDirect + totalAutoBattery) / totalProduction * 100 : 0;
+  // Taux de couverture solaire = part de la CONSOMMATION couverte par le solaire (auto / consommation)
+  const tauxAutoproduction = totalConsumption > 0
+    ? (totalAutoDirect + totalAutoBattery) / totalConsumption * 100 : 0;
 
   return {
     // Annual totals (kWh)
