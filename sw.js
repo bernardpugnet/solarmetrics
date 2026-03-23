@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'solardataatlas-v2026-03f';
+const CACHE_VERSION = 'solardataatlas-v2026-03g';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const ASSETS_CACHE = `${CACHE_VERSION}-assets`;
 const OFFLINE_PAGE = '/offline.html';
