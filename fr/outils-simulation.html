@@ -802,7 +802,7 @@
                                     <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-[13px] text-slate-400 mb-1">Production / conso</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Ratio dimensionnement</div>
                                     <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
                                 </div>
                             </div>
@@ -905,16 +905,16 @@
                                 <div class="kpi-desc">Coût réel après déduction des subventions et aides de votre pays (prime à l'autoconsommation, crédit d'impôt, etc.).</div>
                             </div>
                             <div class="kpi-card kpi-highlight">
-                                <div class="kpi-label">Amortissement</div>
+                                <div class="kpi-label">Temps de retour</div>
                                 <div class="kpi-value" id="resPayback">—</div>
                                 <div class="kpi-unit">ans</div>
                                 <div class="kpi-desc">Nombre d'années pour que les économies cumulées remboursent le coût net. Après cette date, votre installation génère du profit pur.</div>
                             </div>
                             <div class="kpi-card">
-                                <div class="kpi-label">VAN 25 ans</div>
+                                <div class="kpi-label">Gains nets 25 ans</div>
                                 <div class="kpi-value" id="resNpv">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Valeur Actuelle Nette : total des économies sur 25 ans moins le coût net initial, ajusté avec la hausse annuelle de l'électricité.</div>
+                                <div class="kpi-desc">Somme des économies cumulées sur 25 ans moins le coût net initial, en tenant compte de la dégradation des panneaux et de la hausse du prix de l'électricité. Non actualisé (valeur nominale).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">TRI</div>
@@ -931,7 +931,7 @@
                         </div>
                         <div class="grid lg:grid-cols-2 gap-8">
                             <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
-                                <h3 class="text-lg font-semibold text-white mb-4">Amortissement (25 ans)</h3>
+                                <h3 class="text-lg font-semibold text-white mb-4">Temps de retour (25 ans)</h3>
                                 <div class="chart-container">
                                     <canvas id="paybackChart"></canvas>
                                 </div>
@@ -954,7 +954,7 @@
                                 <div class="kpi-unit">%</div>
                             </div>
                             <div class="kpi-card">
-                                <div class="kpi-label">Taux autoproduction</div>
+                                <div class="kpi-label">Couverture solaire</div>
                                 <div class="kpi-value" id="resAutoprodRate">—</div>
                                 <div class="kpi-unit">%</div>
                             </div>
@@ -1566,10 +1566,10 @@
         // VERDICT LOGIC (Patch 1)
         // ══════════════════════════════════════════════════════════════════════
         const VERDICT_THRESHOLDS = {
-            GOOD_PAYBACK: 12,
-            MEDIUM_PAYBACK: 18,
-            GOOD_IRR: 0.04,
-            MEDIUM_IRR: 0.02
+            GOOD_PAYBACK: 12,     // ≤ 12 ans = bon retour
+            POOR_PAYBACK: 20,     // > 20 ans = retour trop long
+            GOOD_IRR: 0.04,       // ≥ 4 % = bon rendement
+            POOR_IRR: 0.02        // < 2 % = rendement insuffisant
         };
 
         function generateVerdict(sim, fin, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost) {
@@ -1581,10 +1581,13 @@
             const prodRatio = annual.consumption > 0 ? Math.round(annual.production / annual.consumption * 100) : 0;
 
             // --- Determine verdict level ---
+            // Logique v2 : on exige la conjonction de deux mauvais indicateurs
+            // pour déclasser en "poor", évitant qu'un seul critère défavorable
+            // masque un projet globalement acceptable.
             let level = 'medium'; // default
             if (payback <= VERDICT_THRESHOLDS.GOOD_PAYBACK && (irr === null || irr >= VERDICT_THRESHOLDS.GOOD_IRR)) {
                 level = 'good';
-            } else if (payback > VERDICT_THRESHOLDS.MEDIUM_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.MEDIUM_IRR)) {
+            } else if (payback > VERDICT_THRESHOLDS.POOR_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.POOR_IRR && payback > 15)) {
                 level = 'poor';
             }
 
@@ -1622,7 +1625,7 @@
             const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1).replace('.', ',') + ' %, ce projet présente un profil financier favorable (VAN 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
+                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1).replace('.', ',') + ' %, ce projet présente un profil financier favorable (gains nets 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
                 if (batteryCapacity > 0) {
                     narrativeText += ' La batterie (' + batteryCapacity + ' kWh) renforce votre autonomie sans dégrader significativement la rentabilité.';
                 } else {
@@ -1663,11 +1666,11 @@
 
             // Payback interpretation
             if (payback <= 10) {
-                recs.push('Amortissement rapide : l\'installation se rembourse en moins de 10 ans.');
+                recs.push('Temps de retour rapide : l\'installation se rembourse en moins de 10 ans.');
             } else if (payback <= 15) {
-                recs.push('Amortissement correct, dans la moyenne des projets résidentiels.');
+                recs.push('Temps de retour correct, dans la moyenne des projets résidentiels.');
             } else if (payback < 50) {
-                recs.push('Amortissement long (' + payback + ' ans). Vérifiez le coût d\'installation et les hypothèses financières.');
+                recs.push('Temps de retour long (' + payback + ' ans). Vérifiez le coût d\'installation et les hypothèses financières.');
             }
 
             // Autoconsommation interpretation
@@ -2029,7 +2032,7 @@
                 const soutirage = document.getElementById('resSoutirage').textContent;
                 detailedSection = `
                 <h4 class="text-white font-semibold mt-6 mb-2">🔋 Autoconsommation</h4>
-                <p>Votre <strong>taux d'autoconsommation est de ${autoRate}%</strong> : c'est la part de votre production solaire que vous consommez directement chez vous (ou via batterie) au lieu de l'injecter dans le réseau. Votre <strong>taux d'autoproduction est de ${autoprod}%</strong>, c'est-à-dire la part de votre consommation totale couverte par le solaire.</p>
+                <p>Votre <strong>taux d'autoconsommation est de ${autoRate}%</strong> : c'est la part de votre production solaire que vous consommez directement chez vous (ou via batterie) au lieu de l'injecter dans le réseau. Votre <strong>couverture solaire est de ${autoprod}%</strong>, c'est-à-dire la part de votre consommation totale couverte par le solaire.</p>
                 <p>En détail : <strong>${autoDirect} kWh</strong> sont consommés directement, <strong>${autoBat} kWh</strong> transitent par la batterie, <strong>${injection} kWh</strong> sont injectés dans le réseau (revendus), et vous soutirez encore <strong>${soutirage} kWh</strong> du réseau pour couvrir vos besoins restants.</p>`;
             }
 
@@ -2060,7 +2063,7 @@
             <h4 class="text-white font-semibold mt-6 mb-2">🏦 Bilan financier</h4>
             <p>Le <strong>coût total de l'installation</strong> est estimé à <strong>${costInst} €</strong> (panneaux + onduleur + pose + raccordement${hasBattery ? ' + batterie' : ''}). Après déduction des aides et subventions de votre pays, le <strong>coût net</strong> est de <strong>${costNet} €</strong>.</p>
             <p>Votre installation sera <strong>amortie en ${payback} ans</strong> : c'est le nombre d'années nécessaires pour que vos économies cumulées couvrent votre investissement net. Après cette date, chaque euro économisé est du profit pur.</p>
-            <p>Sur 25 ans (durée de vie typique des panneaux), la <strong>Valeur Actuelle Nette (VAN)</strong> est de <strong>${npv} €</strong>. La VAN représente le gain net total sur la durée de vie de l'installation en tenant compte de la hausse annuelle du prix de l'électricité.</p>
+            <p>Sur 25 ans (durée de vie typique des panneaux), les <strong>gains nets cumulés</strong> s'élèvent à <strong>${npv} €</strong>. Ce montant représente la somme des économies annuelles sur 25 ans, diminuée du coût net initial, en tenant compte de la dégradation des panneaux et de la hausse du prix de l'électricité.</p>
             <p>Le <strong>Taux de Rentabilité Interne (TRI)</strong> est de <strong>${tri}%</strong>. C'est le rendement annuel équivalent de votre investissement. À titre de comparaison, un livret d'épargne rapporte environ 3%/an : un TRI supérieur à 3% signifie que le solaire est plus rentable qu'un placement bancaire.</p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">🌍 Impact environnemental</h4>
@@ -2276,10 +2279,11 @@
                     var items = [
                         ['kWc', 'Kilowatt-cr\u00eate : puissance maximale d\'un panneau en conditions standard (1 000 W/m\u00b2, 25\u00b0C).'],
                         ['kWh', 'Kilowattheure : unit\u00e9 d\'\u00e9nergie. 1 kWh = 1 000 watts pendant 1 heure.'],
-                        ['VAN', 'Valeur Actuelle Nette : somme des flux financiers actualis\u00e9s sur 25 ans.'],
+                        ['Gains nets', 'Somme des \u00e9conomies cumul\u00e9es sur 25 ans moins l\u2019investissement net. Non actualis\u00e9 (valeur nominale).'],
                         ['TRI', 'Taux de Rentabilit\u00e9 Interne : rendement annuel \u00e9quivalent. \u00c0 comparer \u00e0 un placement bancaire (~3 %).'],
                         ['PVGIS', 'Base de donn\u00e9es europ\u00e9enne d\'irradiation solaire (Commission europ\u00e9enne).'],
-                        ['Autoconso.', 'Part de la production solaire utilis\u00e9e sur place plut\u00f4t qu\'inject\u00e9e au r\u00e9seau.']
+                        ['Autoconso.', 'Part de la production solaire utilis\u00e9e sur place plut\u00f4t qu\'inject\u00e9e au r\u00e9seau.'],
+                        ['Couverture sol.', 'Part de la consommation totale couverte par le solaire (autoproduction directe + batterie).']
                     ];
                     items.forEach(function(item) {
                         if (y > 275) { doc.addPage(); y = 20; }
@@ -2361,8 +2365,8 @@
                 doc.setFontSize(7.5); doc.setTextColor(...C.slate);
                 var quickRead = 'Production : ' + getText('resProduction') + ' kWh/an  |  '
                     + '\u00c9conomies : ' + getText('resAnnualSavings') + ' \u20ac/an  |  '
-                    + 'Amortissement : ' + getText('resPayback') + ' ans  |  '
-                    + 'VAN 25 ans : ' + getText('resNpv') + ' \u20ac';
+                    + 'Temps de retour : ' + getText('resPayback') + ' ans  |  '
+                    + 'Gains nets 25 ans : ' + getText('resNpv') + ' \u20ac';
                 var qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
                 doc.text(qrLines, M + 4, y + 9);
                 y += 20;
@@ -2393,7 +2397,7 @@
                     drawSectionTitle('Autoconsommation d\u00e9taill\u00e9e');
                     drawLabelValueRows([
                         ['Taux autoconsommation', autoRateDisplay + ' %'],
-                        ['Taux autoproduction', autoprodDisplay + ' %'],
+                        ['Couverture solaire', autoprodDisplay + ' %'],
                         ['Autoconsommation directe', getText('resAutoDirect') + ' kWh'],
                         ['Via batterie', getText('resAutoBattery') + ' kWh'],
                         ['Injection r\u00e9seau', getText('resInjection') + ' kWh'],
@@ -2407,7 +2411,7 @@
                     ['Co\u00fbt installation brut', getText('resInstallCost') + ' \u20ac'],
                     ['Co\u00fbt net apr\u00e8s aides', getText('resNetCost') + ' \u20ac'],
                     ['Temps de retour', getText('resPayback') + ' ans'],
-                    ['VAN (25 ans)', getText('resNpv') + ' \u20ac'],
+                    ['Gains nets (25 ans)', getText('resNpv') + ' \u20ac'],
                     ['TRI', getText('resTri') + ' %'],
                     ['CO2 \u00e9vit\u00e9', getText('resCo2') + ' kg/an'],
                 ]);
