@@ -465,11 +465,11 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
-                                    <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                    <input type="number" id="resLatitude" value="51.5074" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
                                 </div>
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Longitude</label>
-                                    <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                    <input type="number" id="resLongitude" value="-0.1278" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
                                 </div>
                             </div>
                         </div>
@@ -758,7 +758,7 @@
                                     <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-[13px] text-slate-400 mb-1">Production / consumption</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Sizing ratio</div>
                                     <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
                                 </div>
                             </div>
@@ -875,10 +875,10 @@
                                 <div class="kpi-desc">Years until cumulative savings cover the net cost. After this point, your system generates pure profit.</div>
                             </div>
                             <div class="kpi-card">
-                                <div class="kpi-label">NPV 25 years</div>
+                                <div class="kpi-label">Net gains 25 years</div>
                                 <div class="kpi-value" id="resNpv">—</div>
                                 <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Net Present Value: total savings over 25 years minus initial net cost, factoring in annual electricity price increases.</div>
+                                <div class="kpi-desc">Sum of cumulative savings over 25 years minus initial net cost, accounting for panel degradation and electricity price increases. Not discounted (nominal value).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">IRR</div>
@@ -895,7 +895,7 @@
                         </div>
                         <div class="grid lg:grid-cols-2 gap-8">
                             <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
-                                <h3 class="text-lg font-semibold text-white mb-4">Payback (25 years)</h3>
+                                <h3 class="text-lg font-semibold text-white mb-4">Payback period (25 years)</h3>
                                 <div class="chart-container">
                                     <canvas id="paybackChart"></canvas>
                                 </div>
@@ -918,7 +918,7 @@
                                 <div class="kpi-unit">%</div>
                             </div>
                             <div class="kpi-card">
-                                <div class="kpi-label">Self-production rate</div>
+                                <div class="kpi-label">Solar coverage</div>
                                 <div class="kpi-value" id="resAutoprodRate">—</div>
                                 <div class="kpi-unit">%</div>
                             </div>
@@ -1045,6 +1045,7 @@
 
         const countryCoords = {
             FR: { lat: 48.8566, lon: 2.3522 },
+            GB: { lat: 51.5074, lon: -0.1278 },
             DE: { lat: 51.1657, lon: 10.4515 },
             ES: { lat: 40.4637, lon: -3.7492 },
             IT: { lat: 41.8719, lon: 12.5674 },
@@ -1076,13 +1077,13 @@
         });
 
         function initMap() {
-            map = L.map('map').setView([48.8566, 2.3522], 5);
+            map = L.map('map').setView([51.5074, -0.1278], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: 'OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
 
-            marker = L.marker([48.8566, 2.3522], { draggable: true }).addTo(map);
+            marker = L.marker([51.5074, -0.1278], { draggable: true }).addTo(map);
             marker.on('dragend', function() {
                 const latlng = marker.getLatLng();
                 document.getElementById('resLatitude').value = latlng.lat.toFixed(4);
@@ -1101,7 +1102,7 @@
             });
 
             // Show initial estimate for default location
-            updateIrradianceEstimate(48.8566);
+            updateIrradianceEstimate(51.5074);
         }
 
         // Estimate annual yield (kWh/kWp) based on latitude
@@ -1507,10 +1508,10 @@
         }
 
         const VERDICT_THRESHOLDS = {
-            GOOD_PAYBACK: 12,
-            MEDIUM_PAYBACK: 18,
-            GOOD_IRR: 0.04,
-            MEDIUM_IRR: 0.02
+            GOOD_PAYBACK: 12,     // ≤ 12 yrs = good payback
+            POOR_PAYBACK: 20,     // > 20 yrs = too long
+            GOOD_IRR: 0.04,       // ≥ 4% = good return
+            POOR_IRR: 0.02        // < 2% = insufficient return
         };
 
         function generateVerdict(sim, fin, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost) {
@@ -1521,10 +1522,13 @@
             const autoRate = annual.tauxAutoconsommation;
             const prodRatio = annual.consumption > 0 ? Math.round(annual.production / annual.consumption * 100) : 0;
 
+            // Verdict v2: require two unfavourable indicators combined
+            // to classify as "poor", preventing a single weak metric
+            // from masking an otherwise acceptable project.
             let level = 'medium';
             if (payback <= VERDICT_THRESHOLDS.GOOD_PAYBACK && (irr === null || irr >= VERDICT_THRESHOLDS.GOOD_IRR)) {
                 level = 'good';
-            } else if (payback > VERDICT_THRESHOLDS.MEDIUM_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.MEDIUM_IRR)) {
+            } else if (payback > VERDICT_THRESHOLDS.POOR_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.POOR_IRR && payback > 15)) {
                 level = 'poor';
             }
 
@@ -1561,7 +1565,7 @@
             const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'With a payback of ' + payback + ' years and an IRR of ' + irrPct.toFixed(1) + '%, this project has a favourable financial profile (25-year NPV: €' + Math.round(fin.totalSavings25y).toLocaleString('en-US') + '). You self-consume ' + autoRate.toFixed(0) + '% of your production, saving an estimated €' + savingsRounded.toLocaleString('en-US') + '/year.';
+                narrativeText = 'With a payback of ' + payback + ' years and an IRR of ' + irrPct.toFixed(1) + '%, this project has a favourable financial profile (25-year net gains: €' + Math.round(fin.totalSavings25y).toLocaleString('en-US') + '). You self-consume ' + autoRate.toFixed(0) + '% of your production, saving an estimated €' + savingsRounded.toLocaleString('en-US') + '/year.';
                 if (batteryCapacity > 0) {
                     narrativeText += ' The battery (' + batteryCapacity + ' kWh) boosts your autonomy without significantly reducing profitability.';
                 } else {
@@ -1952,7 +1956,7 @@
                 const soutirage = document.getElementById('resSoutirage').textContent;
                 detailedSection = `
                 <h4 class="text-white font-semibold mt-6 mb-2">🔋 Self-consumption</h4>
-                <p>Your <strong>self-consumption rate is ${autoRate}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>self-production rate is ${autoprod}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
+                <p>Your <strong>self-consumption rate is ${autoRate}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>solar coverage is ${autoprod}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
                 <p>Breakdown: <strong>${autoDirect} kWh</strong> consumed directly, <strong>${autoBat} kWh</strong> via battery, <strong>${injection} kWh</strong> fed into the grid (sold), and you still draw <strong>${soutirage} kWh</strong> from the grid to cover remaining needs.</p>`;
             }
 
@@ -1983,7 +1987,7 @@
             <h4 class="text-white font-semibold mt-6 mb-2">🏦 Financial Summary</h4>
             <p>The <strong>total installation cost</strong> is estimated at <strong>${costInst} €</strong> (panels + inverter + installation + grid connection${hasBattery ? ' + battery' : ''}). After deducting your country's subsidies and incentives, the <strong>net cost</strong> is <strong>${costNet} €</strong>.</p>
             <p>Your installation will be <strong>paid back in ${payback} years</strong>: this is the number of years needed for cumulative savings to cover your net investment. After that point, every euro saved is pure profit.</p>
-            <p>Over 25 years (typical panel lifespan), the <strong>Net Present Value (NPV)</strong> is <strong>${npv} €</strong>. The NPV represents the total net gain over the installation's lifetime, accounting for annual electricity price increases.</p>
+            <p>Over 25 years (typical panel lifespan), the <strong>net cumulative gains</strong> amount to <strong>${npv} €</strong>. This figure represents the sum of annual savings over 25 years, minus the net initial cost, accounting for panel degradation and electricity price increases.</p>
             <p>The <strong>Internal Rate of Return (IRR)</strong> is <strong>${tri}%</strong>. This is the equivalent annual return on your investment. For comparison, a savings account yields around 3%/year: an IRR above 3% means solar is more profitable than a bank deposit.</p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">🌍 Environmental Impact</h4>
@@ -2177,10 +2181,11 @@
                     var items = [
                         ['kWp', 'Kilowatt-peak: maximum panel power under standard conditions (1,000 W/m\u00b2, 25\u00b0C).'],
                         ['kWh', 'Kilowatt-hour: unit of energy. 1 kWh = 1,000 watts for 1 hour.'],
-                        ['NPV', 'Net Present Value: sum of discounted cash flows over 25 years.'],
+                        ['Net gains', 'Sum of cumulative savings over 25 years minus net investment. Not discounted (nominal value).'],
                         ['IRR', 'Internal Rate of Return: equivalent annual yield. Compare with bank savings (~3%).'],
                         ['PVGIS', 'European solar irradiation database (European Commission).'],
-                        ['Self-conso.', 'Share of solar production consumed on-site rather than fed into the grid.']
+                        ['Self-conso.', 'Share of solar production consumed on-site rather than fed into the grid.'],
+                        ['Solar coverage', 'Share of total consumption covered by solar (direct self-consumption + battery).']
                     ];
                     items.forEach(function(item) {
                         if (y > 275) { doc.addPage(); y = 20; }
@@ -2244,7 +2249,7 @@
                 var quickRead = 'Production: ' + getText('resProduction') + ' kWh/yr  |  '
                     + 'Savings: ' + getText('resAnnualSavings') + ' \u20ac/yr  |  '
                     + 'Payback: ' + getText('resPayback') + ' yrs  |  '
-                    + 'NPV 25yr: ' + getText('resNpv') + ' \u20ac';
+                    + 'Net gains 25yr: ' + getText('resNpv') + ' \u20ac';
                 var qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
                 doc.text(qrLines, M + 4, y + 9);
                 y += 20;
@@ -2269,7 +2274,7 @@
                     drawSectionTitle('Self-consumption Details');
                     drawLabelValueRows([
                         ['Self-consumption rate', autoRateDisplay + ' %'],
-                        ['Self-production rate', autoprodDisplay + ' %'],
+                        ['Solar coverage', autoprodDisplay + ' %'],
                         ['Direct self-consumption', getText('resAutoDirect') + ' kWh'],
                         ['Via battery', getText('resAutoBattery') + ' kWh'],
                         ['Grid injection', getText('resInjection') + ' kWh'],
@@ -2283,7 +2288,7 @@
                     ['Gross installation cost', getText('resInstallCost') + ' \u20ac'],
                     ['Net cost after subsidies', getText('resNetCost') + ' \u20ac'],
                     ['Payback period', getText('resPayback') + ' years'],
-                    ['NPV (25 years)', getText('resNpv') + ' \u20ac'],
+                    ['Net gains (25 years)', getText('resNpv') + ' \u20ac'],
                     ['IRR', getText('resTri') + ' %'],
                     ['CO2 avoided', getText('resCo2') + ' kg/yr'],
                 ]);
