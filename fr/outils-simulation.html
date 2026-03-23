@@ -2305,8 +2305,8 @@
                 var savedY = y;
                 drawKpiCard(M, cardW, '\u00c9conomies annuelles', getText('resAnnualSavings'), '\u20ac/an', C.green);
                 drawKpiCard(M + cardW + 3, cardW, 'Temps de retour', getText('resPayback'), 'ans', C.amber);
-                // NB: le moteur inverse les labels — resAutoprodRate = auto/prod = vrai taux autoconso
-                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoprodRate') !== '\u2014' ? getText('resAutoprodRate') : '\u2014', '%', C.amber);
+                // Autoconsommation KPI card
+                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoconsoRate') !== '\u2014' ? getText('resAutoconsoRate') : '\u2014', '%', C.amber);
                 drawKpiCard(M + 3 * (cardW + 3), cardW, 'TRI', getText('resTri'), '%', C.green);
                 y = savedY + 28;
 
@@ -2386,9 +2386,9 @@
                 y += 4;
 
                 // Autoconsommation
-                // NB: le moteur inverse autoconso/autoprod — on corrige ici les labels
-                var autoRateDisplay = getText('resAutoprodRate');  // auto/prod = vrai autoconso
-                var autoprodDisplay = getText('resAutoconsoRate'); // auto/conso = vrai autoprod
+                // Autoconsommation
+                var autoRateDisplay = getText('resAutoconsoRate');
+                var autoprodDisplay = getText('resAutoprodRate');
                 if (autoRateDisplay !== '\u2014') {
                     drawSectionTitle('Autoconsommation d\u00e9taill\u00e9e');
                     drawLabelValueRows([
