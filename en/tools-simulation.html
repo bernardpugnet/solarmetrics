@@ -427,13 +427,16 @@
                             <span class="text-amber-500">●</span> Location
                         </h4>
                         <div class="space-y-4">
-                            <input type="hidden" id="resCountry" value="FR">
+                            <input type="hidden" id="resCountry" value="GB">
                             <div id="detectedCountryDisplay" class="flex items-center gap-2 px-4 py-2 bg-slate-800/60 border border-slate-700/50 rounded-lg">
                                 <span class="text-lg">📍</span>
                                 <span id="detectedCountryName" class="text-white text-sm font-medium">France</span>
                                 <span id="detectedCountryFlag" class="text-sm text-slate-400">(FR)</span>
                             </div>
                             <p id="netMeteringNote" class="text-xs text-amber-400/80 hidden"></p>
+                            <div id="countryDisclaimer" class="hidden mt-2 p-3 bg-orange-900/30 border border-orange-600/50 rounded-lg">
+                                <p class="text-xs text-orange-300 font-medium"><span class="mr-1">⚠️</span><span id="countryDisclaimerText"></span></p>
+                            </div>
                             <div id="unsupportedCountryNote" class="hidden p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
                                 <p class="text-xs text-amber-400">⚠️ Unsupported country. Irradiation data (PVGIS) is accurate, but financial parameters must be entered manually.</p>
                             </div>
@@ -472,11 +475,11 @@
                             <div id="advancedLatLon" class="hidden grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
-                                    <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                    <input type="number" id="resLatitude" value="51.5074" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
                                 </div>
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Longitude</label>
-                                    <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
+                                    <input type="number" id="resLongitude" value="-0.1278" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
                                 </div>
                             </div>
                         </div>
@@ -743,8 +746,8 @@
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Surplus feed-in tariff (<span class="cur">€</span>/kWh)</label>
                                     <input type="number" id="resFeedir" value="0.04" min="0" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p id="feedInNoteText" class="text-xs text-amber-400/70 mt-1">⚡ EDF OA surplus self-consumption rate (≤9 kWp, Q1 2026). Guaranteed 20 years, revised quarterly.</p>
-                                    <p id="feedInNoteLink" class="text-xs text-slate-500 mt-0.5"><strong class="text-amber-400/60">Indicative value</strong> — check on <a id="feedInNoteLinkA" href="https://www.edf-oa.fr/" target="_blank" class="text-amber-400 hover:underline">edf-oa.fr</a></p>
+                                    <p id="feedInNoteText" class="text-xs text-amber-400/70 mt-1 hidden"></p>
+                                    <p id="feedInNoteLink" class="text-xs text-slate-500 mt-0.5 hidden"><strong class="text-amber-400/60">Indicative value</strong> — <a id="feedInNoteLinkA" href="#" target="_blank" class="text-amber-400 hover:underline">check official source</a></p>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -849,7 +852,7 @@
                                     <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-[13px] text-slate-400 mb-1">Production / consumption</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Sizing ratio</div>
                                     <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
                                 </div>
                             </div>
@@ -1183,6 +1186,7 @@
 
         const countryCoords = {
             FR: { lat: 48.8566, lon: 2.3522 },
+            GB: { lat: 51.5074, lon: -0.1278 },
             DE: { lat: 51.1657, lon: 10.4515 },
             ES: { lat: 40.4637, lon: -3.7492 },
             IT: { lat: 41.8719, lon: 12.5674 },
@@ -1207,6 +1211,7 @@
         // ══════════════════════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
+            detectUserLocation();  // Auto-detect user location
             updateLocationData();
             updateEurostatPrices();
             document.getElementById('menuBtn').addEventListener('click', toggleMobileMenu);
@@ -1214,13 +1219,13 @@
         });
 
         function initMap() {
-            map = L.map('map').setView([48.8566, 2.3522], 5);
+            map = L.map('map').setView([51.5074, -0.1278], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: 'OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
 
-            marker = L.marker([48.8566, 2.3522], { draggable: true }).addTo(map);
+            marker = L.marker([51.5074, -0.1278], { draggable: true }).addTo(map);
             marker.on('dragend', function() {
                 const latlng = marker.getLatLng();
                 document.getElementById('resLatitude').value = latlng.lat.toFixed(4);
@@ -1239,7 +1244,7 @@
             });
 
             // Show initial estimate for default location
-            updateIrradianceEstimate(48.8566);
+            updateIrradianceEstimate(51.5074);
         }
 
         // Estimate annual yield (kWh/kWp) based on latitude
@@ -1261,7 +1266,55 @@
             document.getElementById('irradianceEstimate').classList.remove('hidden');
         }
 
-        function reverseGeocode(lat, lon) {
+        
+        function detectUserLocation() {
+            // Try browser Geolocation API first (precise but requires permission)
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        updateMapLocation(lat, lon);
+                    },
+                    function(error) {
+                        // Permission denied or error — fallback to IP geolocation
+                        detectLocationByIP();
+                    },
+                    { timeout: 3000, enableHighAccuracy: false }
+                );
+            } else {
+                // No geolocation API available — fallback to IP
+                detectLocationByIP();
+            }
+        }
+
+        function detectLocationByIP() {
+            // Fallback: use IP-based geolocation (silent, approximate)
+            fetch('https://ip-api.com/json/?fields=lat,lon,country,city')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.lat && data.lon) {
+                        updateMapLocation(data.lat, data.lon);
+                    }
+                })
+                .catch(e => console.log('IP geolocation failed:', e));
+        }
+
+        function updateMapLocation(lat, lon) {
+            // Update map marker and input fields
+            if (map && marker) {
+                map.setView([lat, lon], 10);
+                marker.setLatLng([lat, lon]);
+            }
+            document.getElementById('resLatitude').value = lat.toFixed(4);
+            document.getElementById('resLongitude').value = lon.toFixed(4);
+            // Detect country from coordinates
+            reverseGeocode(lat, lon);
+            // Update irradiance estimate
+            updateIrradianceEstimate(lat);
+        }
+
+function reverseGeocode(lat, lon) {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=en`;
             fetch(url)
                 .then(r => r.json())
@@ -1325,6 +1378,14 @@
                 // Status notes
                 document.getElementById('unsupportedCountryNote').classList.add('hidden');
                 document.getElementById('supportedCountryNote').classList.remove('hidden');
+                // Country disclaimer (approximate data warning)
+                var disclaimerDiv = document.getElementById('countryDisclaimer');
+                if (countryData.disclaimer) {
+                    document.getElementById('countryDisclaimerText').textContent = countryData.disclaimer.en;
+                    disclaimerDiv.classList.remove('hidden');
+                } else {
+                    disclaimerDiv.classList.add('hidden');
+                }
             } else {
                 // Unsupported country — clear financial fields
                 document.getElementById('unsupportedCountryNote').classList.remove('hidden');
@@ -1341,6 +1402,7 @@
                 document.getElementById('feedInNoteText').classList.add('hidden');
                 document.getElementById('feedInNoteLink').classList.add('hidden');
                 document.querySelectorAll('.cur').forEach(el => el.textContent = '€');
+                document.getElementById('countryDisclaimer').classList.add('hidden');
             }
             // Update subsidy info
             updateSubsidyInfo(cc);
@@ -1723,10 +1785,10 @@
         }
 
         const VERDICT_THRESHOLDS = {
-            GOOD_PAYBACK: 12,
-            MEDIUM_PAYBACK: 18,
-            GOOD_IRR: 0.04,
-            MEDIUM_IRR: 0.02
+            GOOD_PAYBACK: 12,     // ≤ 12 yrs = good payback
+            POOR_PAYBACK: 20,     // > 20 yrs = too long
+            GOOD_IRR: 0.04,       // ≥ 4% = good return
+            POOR_IRR: 0.02        // < 2% = insufficient return
         };
 
         function generateVerdict(sim, fin, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost) {
@@ -1737,10 +1799,13 @@
             const autoRate = annual.tauxAutoconsommation;
             const prodRatio = annual.consumption > 0 ? Math.round(annual.production / annual.consumption * 100) : 0;
 
+            // Verdict v2: require two unfavourable indicators combined
+            // to classify as "poor", preventing a single weak metric
+            // from masking an otherwise acceptable project.
             let level = 'medium';
             if (payback <= VERDICT_THRESHOLDS.GOOD_PAYBACK && (irr === null || irr >= VERDICT_THRESHOLDS.GOOD_IRR)) {
                 level = 'good';
-            } else if (payback > VERDICT_THRESHOLDS.MEDIUM_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.MEDIUM_IRR)) {
+            } else if (payback > VERDICT_THRESHOLDS.POOR_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.POOR_IRR && payback > 15)) {
                 level = 'poor';
             }
 
@@ -2168,7 +2233,7 @@
                 const soutirage = document.getElementById('resSoutirage').textContent;
                 detailedSection = `
                 <h4 class="text-white font-semibold mt-6 mb-2">🔋 Self-consumption</h4>
-                <p>Your <strong>self-consumption rate is ${autoRate}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>self-production rate is ${autoprod}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
+                <p>Your <strong>self-consumption rate is ${autoRate}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>solar coverage is ${autoprod}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
                 <p>Breakdown: <strong>${autoDirect} kWh</strong> consumed directly, <strong>${autoBat} kWh</strong> via battery, <strong>${injection} kWh</strong> fed into the grid (sold), and you still draw <strong>${soutirage} kWh</strong> from the grid to cover remaining needs.</p>`;
             }
 
@@ -2396,7 +2461,8 @@
                         ['Net gains', 'Cumulative net gains over 25 years (not discounted).'],
                         ['IRR', 'Internal Rate of Return: equivalent annual yield. Compare with bank savings (~3%).'],
                         ['PVGIS', 'European solar irradiation database (European Commission).'],
-                        ['Self-conso.', 'Share of solar production consumed on-site rather than fed into the grid.']
+                        ['Self-conso.', 'Share of solar production consumed on-site rather than fed into the grid.'],
+                        ['Solar coverage', 'Share of total consumption covered by solar (direct self-consumption + battery).']
                     ];
                     items.forEach(function(item) {
                         if (y > 275) { doc.addPage(); y = 20; }
@@ -2479,8 +2545,8 @@
                 ]);
                 y += 4;
 
-                var autoRateDisplay = getText('resAutoprodRate');
-                var autoprodDisplay = getText('resAutoconsoRate');
+                var autoRateDisplay = getText('resAutoconsoRate');
+                var autoprodDisplay = getText('resAutoprodRate');
                 if (autoRateDisplay !== '\u2014') {
                     drawSectionTitle('Self-consumption Details');
                     drawLabelValueRows([

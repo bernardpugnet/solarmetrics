@@ -473,6 +473,9 @@
                                 <span id="detectedCountryFlag" class="text-sm text-slate-400">(FR)</span>
                             </div>
                             <p id="netMeteringNote" class="text-xs text-amber-400/80 hidden"></p>
+                            <div id="countryDisclaimer" class="hidden mt-2 p-3 bg-orange-900/30 border border-orange-600/50 rounded-lg">
+                                <p class="text-xs text-orange-300 font-medium"><span class="mr-1">⚠️</span><span id="countryDisclaimerText"></span></p>
+                            </div>
                             <div id="unsupportedCountryNote" class="hidden p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
                                 <p class="text-xs text-amber-400">⚠️ Pays non référencé dans notre base. Les données d'irradiation (PVGIS) sont exactes, mais les tarifs et aides doivent être renseignés manuellement.</p>
                             </div>
@@ -888,7 +891,7 @@
                                     <div id="verdict-autoconso" class="text-xl font-bold text-white"></div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-[13px] text-slate-400 mb-1">Production / conso</div>
+                                    <div class="text-[13px] text-slate-400 mb-1">Ratio dimensionnement</div>
                                     <div id="verdict-ratio" class="text-xl font-bold text-white"></div>
                                 </div>
                             </div>
@@ -1238,6 +1241,7 @@
         // ══════════════════════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
+            detectUserLocation();  // Détection automatique de la localisation
             updateLocationData();
             updateEurostatPrices();
             document.getElementById('menuBtn').addEventListener('click', toggleMobileMenu);
@@ -1295,7 +1299,55 @@
             document.getElementById('irradianceEstimate').classList.remove('hidden');
         }
 
-        function reverseGeocode(lat, lon) {
+        
+        function detectUserLocation() {
+            // Essayer d'abord l'API Geolocation du navigateur (précis mais demande permission)
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        updateMapLocation(lat, lon);
+                    },
+                    function(error) {
+                        // Permission refusée ou erreur — fallback sur géolocalisation par IP
+                        detectLocationByIP();
+                    },
+                    { timeout: 3000, enableHighAccuracy: false }
+                );
+            } else {
+                // API Geolocation non disponible — fallback sur IP
+                detectLocationByIP();
+            }
+        }
+
+        function detectLocationByIP() {
+            // Fallback: géolocalisation par IP (silencieuse, approximative)
+            fetch('https://ip-api.com/json/?fields=lat,lon,country,city')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.lat && data.lon) {
+                        updateMapLocation(data.lat, data.lon);
+                    }
+                })
+                .catch(e => console.log('Géolocalisation IP échouée:', e));
+        }
+
+        function updateMapLocation(lat, lon) {
+            // Mettre à jour le marqueur de la carte et les champs input
+            if (map && marker) {
+                map.setView([lat, lon], 10);
+                marker.setLatLng([lat, lon]);
+            }
+            document.getElementById('resLatitude').value = lat.toFixed(4);
+            document.getElementById('resLongitude').value = lon.toFixed(4);
+            // Détecter le pays à partir des coordonnées
+            reverseGeocode(lat, lon);
+            // Mettre à jour l'estimation d'irradiance
+            updateIrradianceEstimate(lat);
+        }
+
+function reverseGeocode(lat, lon) {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
             fetch(url)
                 .then(r => r.json())
@@ -1359,6 +1411,14 @@
                 // Notes de statut
                 document.getElementById('unsupportedCountryNote').classList.add('hidden');
                 document.getElementById('supportedCountryNote').classList.remove('hidden');
+                // Avertissement pays (données approximatives)
+                var disclaimerDiv = document.getElementById('countryDisclaimer');
+                if (countryData.disclaimer) {
+                    document.getElementById('countryDisclaimerText').textContent = countryData.disclaimer.fr;
+                    disclaimerDiv.classList.remove('hidden');
+                } else {
+                    disclaimerDiv.classList.add('hidden');
+                }
             } else {
                 // Unsupported country — vider les champs financiers
                 document.getElementById('unsupportedCountryNote').classList.remove('hidden');
@@ -1375,6 +1435,7 @@
                 document.getElementById('feedInNoteText').classList.add('hidden');
                 document.getElementById('feedInNoteLink').classList.add('hidden');
                 document.querySelectorAll('.cur').forEach(el => el.textContent = '€');
+                document.getElementById('countryDisclaimer').classList.add('hidden');
             }
             // Update subsidy info
             updateSubsidyInfo(cc);
@@ -1786,10 +1847,10 @@
         // VERDICT LOGIC (Patch 1)
         // ══════════════════════════════════════════════════════════════════════
         const VERDICT_THRESHOLDS = {
-            GOOD_PAYBACK: 12,
-            MEDIUM_PAYBACK: 18,
-            GOOD_IRR: 0.04,
-            MEDIUM_IRR: 0.02
+            GOOD_PAYBACK: 12,     // ≤ 12 ans = bon retour
+            POOR_PAYBACK: 20,     // > 20 ans = retour trop long
+            GOOD_IRR: 0.04,       // ≥ 4 % = bon rendement
+            POOR_IRR: 0.02        // < 2 % = rendement insuffisant
         };
 
         function generateVerdict(sim, fin, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost) {
@@ -1801,10 +1862,13 @@
             const prodRatio = annual.consumption > 0 ? Math.round(annual.production / annual.consumption * 100) : 0;
 
             // --- Determine verdict level ---
+            // Logique v2 : on exige la conjonction de deux mauvais indicateurs
+            // pour déclasser en "poor", évitant qu'un seul critère défavorable
+            // masque un projet globalement acceptable.
             let level = 'medium'; // default
             if (payback <= VERDICT_THRESHOLDS.GOOD_PAYBACK && (irr === null || irr >= VERDICT_THRESHOLDS.GOOD_IRR)) {
                 level = 'good';
-            } else if (payback > VERDICT_THRESHOLDS.MEDIUM_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.MEDIUM_IRR)) {
+            } else if (payback > VERDICT_THRESHOLDS.POOR_PAYBACK || (irr !== null && irr < VERDICT_THRESHOLDS.POOR_IRR && payback > 15)) {
                 level = 'poor';
             }
 
@@ -2249,7 +2313,7 @@
                 const soutirage = document.getElementById('resSoutirage').textContent;
                 detailedSection = `
                 <h4 class="text-white font-semibold mt-6 mb-2">🔋 Autoconsommation</h4>
-                <p>Votre <strong>taux d'autoconsommation est de ${autoRate}%</strong> : c'est la part de votre production solaire que vous consommez directement chez vous (ou via batterie) au lieu de l'injecter dans le réseau. Votre <strong>taux d'autoproduction est de ${autoprod}%</strong>, c'est-à-dire la part de votre consommation totale couverte par le solaire.</p>
+                <p>Votre <strong>taux d'autoconsommation est de ${autoRate}%</strong> : c'est la part de votre production solaire que vous consommez directement chez vous (ou via batterie) au lieu de l'injecter dans le réseau. Votre <strong>couverture solaire est de ${autoprod}%</strong>, c'est-à-dire la part de votre consommation totale couverte par le solaire.</p>
                 <p>En détail : <strong>${autoDirect} kWh</strong> sont consommés directement, <strong>${autoBat} kWh</strong> transitent par la batterie, <strong>${injection} kWh</strong> sont injectés dans le réseau (revendus), et vous soutirez encore <strong>${soutirage} kWh</strong> du réseau pour couvrir vos besoins restants.</p>`;
             }
 
@@ -2499,7 +2563,8 @@
                         ['Gains nets', 'Somme cumul\u00e9e des gains nets sur 25 ans (non actualis\u00e9e).'],
                         ['TRI', 'Taux de Rentabilit\u00e9 Interne : rendement annuel \u00e9quivalent. \u00c0 comparer \u00e0 un placement bancaire (~3 %).'],
                         ['PVGIS', 'Base de donn\u00e9es europ\u00e9enne d\'irradiation solaire (Commission europ\u00e9enne).'],
-                        ['Autoconso.', 'Part de la production solaire utilis\u00e9e sur place plut\u00f4t qu\'inject\u00e9e au r\u00e9seau.']
+                        ['Autoconso.', 'Part de la production solaire utilis\u00e9e sur place plut\u00f4t qu\'inject\u00e9e au r\u00e9seau.'],
+                        ['Couverture sol.', 'Part de la consommation totale couverte par le solaire (autoproduction directe + batterie).']
                     ];
                     items.forEach(function(item) {
                         if (y > 275) { doc.addPage(); y = 20; }
@@ -2525,8 +2590,8 @@
                 var savedY = y;
                 drawKpiCard(M, cardW, '\u00c9conomies annuelles', getText('resAnnualSavings'), '\u20ac/an', C.green);
                 drawKpiCard(M + cardW + 3, cardW, 'Temps de retour', getText('resPayback'), 'ans', C.amber);
-                // NB: le moteur inverse les labels — resAutoprodRate = auto/prod = vrai taux autoconso
-                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoprodRate') !== '\u2014' ? getText('resAutoprodRate') : '\u2014', '%', C.amber);
+                // Autoconsommation KPI card
+                drawKpiCard(M + 2 * (cardW + 3), cardW, 'Autoconsommation', getText('resAutoconsoRate') !== '\u2014' ? getText('resAutoconsoRate') : '\u2014', '%', C.amber);
                 drawKpiCard(M + 3 * (cardW + 3), cardW, 'TRI', getText('resTri'), '%', C.green);
                 y = savedY + 28;
 
@@ -2606,9 +2671,9 @@
                 y += 4;
 
                 // Autoconsommation
-                // NB: le moteur inverse autoconso/autoprod — on corrige ici les labels
-                var autoRateDisplay = getText('resAutoprodRate');  // auto/prod = vrai autoconso
-                var autoprodDisplay = getText('resAutoconsoRate'); // auto/conso = vrai autoprod
+                // Autoconsommation
+                var autoRateDisplay = getText('resAutoconsoRate');
+                var autoprodDisplay = getText('resAutoprodRate');
                 if (autoRateDisplay !== '\u2014') {
                     drawSectionTitle('Autoconsommation d\u00e9taill\u00e9e');
                     drawLabelValueRows([

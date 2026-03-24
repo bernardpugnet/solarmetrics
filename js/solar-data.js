@@ -641,6 +641,65 @@ window.SOLAR_DATA = {
         url: "https://energyhub.org/solar-panels/",
         name: "EnergyHub"
       }
+    },
+
+    GB: {
+      name: { fr: "Royaume-Uni", en: "United Kingdom" },
+      code: "GB",
+      region: "EU",
+      currency: "GBP",
+      currencySymbol: "£",
+      eurostatCode: "UK",
+      defaultLat: 51.5074,
+      defaultLon: -0.1278,
+      mapZoom: 6,
+      electricityPrice: 0.2467,  // GBP/kWh, Ofgem cap Q2 2026 (approx. — enter your actual rate)
+      installCostPerKwc: { min: 1500, max: 2200, avg: 1850 },  // GBP/kWc installed, indicative UK avg — get local quotes
+      co2Factor: 170,  // gCO2/kWh, UK grid avg 2025 (DESNZ)
+      feedInTariff: 0.04,  // GBP/kWh, SEG avg ~4p — rates vary widely (1p–25p), enter your actual SEG rate
+      feedInNote: {
+        fr: "Valeur indicative (~4p). Les tarifs SEG varient de 1p à 25p/kWh selon le fournisseur. Renseignez votre tarif réel.",
+        en: "Indicative value (~4p). SEG rates range from 1p to 25p/kWh depending on supplier. Enter your actual SEG rate.",
+        link: "https://www.ofgem.gov.uk/environmental-and-social-schemes/smart-export-guarantee-seg",
+        linkLabel: "Ofgem SEG"
+      },
+      netMeteringNote: {
+        fr: "Le Royaume-Uni n'a pas de net metering. Le surplus est payé via le Smart Export Guarantee (SEG).",
+        en: "The UK does not have net metering. Surplus is paid via the Smart Export Guarantee (SEG)."
+      },
+      batteryCostPerKwh: 550,  // GBP/kWh installed, UK avg 2026 — varies by brand/capacity
+      subsidies: {
+        fr: {
+          title: "Aides au Royaume-Uni (2026, indicatif)",
+          items: [
+            "TVA 0 % sur panneaux solaires et batteries (depuis février 2025)",
+            "Smart Export Guarantee (SEG) : paiement du surplus injecté (tarif variable selon fournisseur)",
+            "ECO4 / Great British Insulation Scheme : sous conditions de ressources",
+            "Programmes locaux variables selon la région — vérifiez auprès de votre council"
+          ],
+          officialLink: "https://www.gov.uk/guidance/apply-for-the-boiler-upgrade-scheme",
+          officialLabel: "gov.uk"
+        },
+        en: {
+          title: "UK incentives (2026, indicative)",
+          items: [
+            "0% VAT on solar panels and batteries (since February 2025)",
+            "Smart Export Guarantee (SEG): payment for exported surplus (rate varies by supplier)",
+            "ECO4 / Great British Insulation Scheme: means-tested eligibility",
+            "Local council schemes vary by region — check with your local authority"
+          ],
+          officialLink: "https://www.gov.uk/guidance/apply-for-the-boiler-upgrade-scheme",
+          officialLabel: "gov.uk"
+        }
+      },
+      comparator: {
+        url: "https://www.theecoexperts.co.uk/solar-panels",
+        name: "The Eco Experts"
+      },
+      disclaimer: {
+        fr: "Données UK approximatives. Renseignez vos tarifs réels (prix électricité, tarif SEG, coût installation) pour un résultat fiable.",
+        en: "UK data is approximate. Enter your actual rates (electricity price, SEG tariff, install cost) for reliable results."
+      }
     }
   },
 
