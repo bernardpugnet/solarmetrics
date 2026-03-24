@@ -646,15 +646,27 @@
                         </div>
                     </div>
 
-                    <!-- Puissance PV -->
+                    <!-- Lot 7: Surface + puissance estimee -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-                            <span class="text-amber-500">●</span> Puissance de l'installation
+                            <span class="text-amber-500">&#x25CF;</span> Votre installation
                         </h4>
-                        <div>
-                            <label class="text-[13px] text-slate-300 mb-1 block font-medium">Puissance PV (kWc)</label>
-                            <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
-                            <p class="mt-1.5 text-[13px] text-slate-500 leading-snug">Indiquez la puissance de votre devis. Sinon, dépliez « Paramètres toiture » pour l'estimer à partir de la surface.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Surface de toiture disponible (m&#xB2;)</label>
+                                <input type="number" id="resSurfaceSimple" value="30" min="5" max="1000" step="1" oninput="updateKwcFromSurface()" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                <p class="mt-1 text-[13px] text-slate-500">Comptez environ 6 m&#xB2; par kWc install&#xe9;.</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/60 rounded-lg border border-slate-700/40">
+                                <p class="text-[13px] text-slate-400">Puissance estim&#xe9;e : <span id="kwcEstimate" class="text-amber-400 font-semibold">5.1 kWc</span></p>
+                                <p class="text-[11px] text-slate-500 mt-1">Bas&#xe9; sur la surface et des panneaux monocristallins (20 %). Ajustable dans les param&#xe8;tres avanc&#xe9;s.</p>
+                            </div>
+                            <details id="manualKwcOverride">
+                                <summary class="text-[12px] text-amber-400/70 hover:text-amber-400 cursor-pointer">J&#x2019;ai un devis : saisir la puissance exacte</summary>
+                                <div class="mt-2">
+                                    <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" oninput="onManualKwcChange()" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
+                                </div>
+                            </details>
                         </div>
                     </div>
 
@@ -667,18 +679,36 @@
                             <input type="checkbox" id="resBatteryToggle" onchange="toggleBatteryCapacity()" class="w-4 h-4 rounded border-slate-600 text-amber-500 cursor-pointer">
                             <span class="text-sm text-slate-400">Ajouter une batterie</span>
                         </label>
-                        <div id="batteryCapacitySection" style="display:none" class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Capacité batterie (kWh)</label>
-                                <input type="number" id="resBatteryCapacity" min="1" max="100" step="0.5" value="10" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                <p class="text-[13px] text-slate-500 mt-1">Usage résidentiel courant : 5 à 15 kWh.</p>
+                        <div id="batteryCapacitySection" style="display:none" class="space-y-3">
+                            <div class="flex gap-2">
+                                <button type="button" onclick="selectBatteryPreset(5)" class="battery-preset flex-1 py-2.5 rounded-lg border text-center text-sm transition-all border-slate-600 text-slate-400 hover:border-amber-500/50" data-kwh="5">
+                                    <span class="block font-medium">5 kWh</span>
+                                    <span class="block text-[11px] text-slate-500 mt-0.5">Petit</span>
+                                </button>
+                                <button type="button" onclick="selectBatteryPreset(10)" class="battery-preset flex-1 py-2.5 rounded-lg border text-center text-sm transition-all border-amber-500/50 text-amber-300 bg-amber-500/10" data-kwh="10">
+                                    <span class="block font-medium">10 kWh</span>
+                                    <span class="block text-[11px] text-amber-400/60 mt-0.5">Standard</span>
+                                </button>
+                                <button type="button" onclick="selectBatteryPreset(15)" class="battery-preset flex-1 py-2.5 rounded-lg border text-center text-sm transition-all border-slate-600 text-slate-400 hover:border-amber-500/50" data-kwh="15">
+                                    <span class="block font-medium">15 kWh</span>
+                                    <span class="block text-[11px] text-slate-500 mt-0.5">Grand</span>
+                                </button>
                             </div>
-                            <div>
-                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Coût batterie (<span class="cur">€</span>)</label>
-                                <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays (voir ci-dessous)" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                <p class="text-xs text-amber-400/70 mt-1">⚡ Moyenne pays : <span id="resAvgBatteryCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWh (batterie + onduleur + pose)</p>
-                                <p class="mt-1 text-[13px] text-slate-500 leading-snug">Si vide, le coût est estimé à partir de la moyenne pays. Entrez votre devis réel pour plus de précision.</p>
-                            </div>
+                            <p class="text-[12px] text-slate-500">Le co&#xFB;t est estim&#xe9; automatiquement &#xe0; partir de la moyenne pays.</p>
+                            <details>
+                                <summary class="text-[12px] text-amber-400/70 hover:text-amber-400 cursor-pointer">Ajuster la capacit&#xe9; et le co&#xFB;t</summary>
+                                <div class="mt-3 grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-[13px] text-slate-300 mb-1 block font-medium">Capacit&#xe9; (kWh)</label>
+                                        <input type="number" id="resBatteryCapacity" min="1" max="100" step="0.5" value="10" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="text-[13px] text-slate-300 mb-1 block font-medium">Co&#xFB;t (<span class="cur">&#x20AC;</span>)</label>
+                                        <input type="number" id="resBatteryCostOverride" placeholder="Vide = moyenne pays" min="0" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                        <p class="text-xs text-amber-400/70 mt-1">Moyenne : <span id="resAvgBatteryCostHint" class="font-semibold text-amber-400">&#x2014;</span> <span class="cur">&#x20AC;</span>/kWh</p>
+                                    </div>
+                                </div>
+                            </details>
                         </div>
                     </div>
 
@@ -1527,6 +1557,39 @@ function reverseGeocode(lat, lon) {
             contentEl.innerHTML = html;
         }
 
+
+        // --- Lot 7: Simple mode helpers ---
+        function updateKwcFromSurface() {
+            var surface = parseFloat(document.getElementById('resSurfaceSimple').value) || 30;
+            var panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
+            var kwc = (surface * 0.85 * panelEff).toFixed(1);
+            document.getElementById('simPeakpower').value = kwc;
+            var unit = document.documentElement.lang === 'en' ? ' kWp' : ' kWc';
+            document.getElementById('kwcEstimate').textContent = kwc + unit;
+            document.getElementById('resSurface').value = surface;
+        }
+
+        function onManualKwcChange() {
+            var kwc = parseFloat(document.getElementById('simPeakpower').value) || 0;
+            var unit = document.documentElement.lang === 'en' ? ' kWp' : ' kWc';
+            document.getElementById('kwcEstimate').textContent = kwc.toFixed(1) + unit;
+        }
+
+        function selectBatteryPreset(kwh) {
+            document.getElementById('resBatteryCapacity').value = kwh;
+            document.querySelectorAll('.battery-preset').forEach(function(btn) {
+                var isActive = parseInt(btn.getAttribute('data-kwh')) === kwh;
+                if (isActive) {
+                    btn.className = 'battery-preset flex-1 py-2.5 rounded-lg border text-center text-sm transition-all border-amber-500/50 text-amber-300 bg-amber-500/10';
+                } else {
+                    btn.className = 'battery-preset flex-1 py-2.5 rounded-lg border text-center text-sm transition-all border-slate-600 text-slate-400 hover:border-amber-500/50';
+                }
+                var sub = btn.querySelectorAll('span')[1];
+                if (sub) sub.className = 'block text-[11px] mt-0.5 ' + (isActive ? 'text-amber-400/60' : 'text-slate-500');
+            });
+        }
+        // --- End Lot 7 ---
+
         function toggleAdvancedFields() {
             const adv = document.getElementById('advancedFields');
             const latlon = document.getElementById('advancedLatLon');
@@ -1542,7 +1605,7 @@ function reverseGeocode(lat, lon) {
         function toggleBatteryCapacity() {
             const toggle = document.getElementById('resBatteryToggle').checked;
             const section = document.getElementById('batteryCapacitySection');
-            section.style.display = toggle ? 'grid' : 'none';
+            section.style.display = toggle ? 'block' : 'none';
         }
 
         function toggleManualMode() {
@@ -1712,6 +1775,10 @@ function reverseGeocode(lat, lon) {
             const panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
             const kwc = (surface * 0.85 * panelEff).toFixed(1);
             document.getElementById('simPeakpower').value = kwc;
+            var el = document.getElementById('resSurfaceSimple');
+            if (el) el.value = surface;
+            var est = document.getElementById('kwcEstimate');
+            if (est) est.textContent = kwc + ' kWc';
         }
 
         function resetForm() {
@@ -1719,6 +1786,9 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resTilt').value = '30';
             document.getElementById('resShading').value = '0';
             document.getElementById('resSurface').value = '30';
+            if (document.getElementById('resSurfaceSimple')) document.getElementById('resSurfaceSimple').value = '30';
+            if (document.getElementById('kwcEstimate')) document.getElementById('kwcEstimate').textContent = '5.1 kWc';
+            if (typeof selectBatteryPreset === 'function') selectBatteryPreset(10);
             document.getElementById('resPanelType').value = '0.20';
             showPanelInfo('0.20');
             document.getElementById('resConsumption').value = '4000';
