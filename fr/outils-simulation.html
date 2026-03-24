@@ -109,8 +109,10 @@
         .tab-btn.active{border-bottom-color:#f59e0b;color:#fbbf24}
         .tab-content{display:none}
         .tab-content.active{display:block}
-        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
-        .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1.5rem;text-align:center}
+        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem}
+        .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1rem;text-align:center}
+        @media(min-width:640px){.kpi-card{padding:1.5rem}}
+        .kpi-section summary{-webkit-tap-highlight-color:transparent}
         .kpi-label{font-size:0.8125rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
         .kpi-value{font-size:1.875rem;font-weight:700;color:#fbbf24;line-height:1}
         .kpi-unit{font-size:0.8125rem;color:#94a3b8;margin-top:0.25rem}
@@ -506,7 +508,7 @@
                                     <input type="number" id="resManualProductible" value="1200" min="500" max="2500" step="10" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div id="advancedLatLon" class="hidden grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
                                     <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
@@ -525,23 +527,99 @@
                             <span class="text-amber-500">●</span> Consommation Électrique
                         </h4>
                         <div class="space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
+                            <!-- Mode selector for consumption input -->
+                            <div class="mb-4">
+                                <label class="text-[13px] text-slate-300 mb-2 block font-medium">Comment souhaitez-vous renseigner votre consommation ?</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-amber-500 bg-amber-500/10 text-amber-400" id="consoModeLabel_kwh">
+                                        <input type="radio" name="consoMode" value="kwh" checked class="hidden" onchange="switchConsoMode('kwh')">
+                                        ⚡ Je connais mes kWh
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_bill">
+                                        <input type="radio" name="consoMode" value="bill" class="hidden" onchange="switchConsoMode('bill')">
+                                        💶 Je connais ma facture
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_estimate">
+                                        <input type="radio" name="consoMode" value="estimate" class="hidden" onchange="switchConsoMode('estimate')">
+                                        🏠 Aidez-moi à estimer
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Mode 1: Direct kWh (default) -->
+                                <div id="consoPanel_kwh">
                                     <label class="text-[13px] text-slate-300 mb-1 block font-medium">Consommation annuelle (kWh)</label>
                                     <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                     <div class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
                                         Ce chiffre figure sur votre facture annuelle d'électricité. <span class="text-slate-300 font-medium">Repère : un foyer de 4 personnes consomme environ 4 700 kWh/an.</span>
                                     </div>
                                 </div>
+
+                                <!-- Mode 2: Monthly bill -->
+                                <div id="consoPanel_bill" class="hidden">
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Facture mensuelle moyenne (€ TTC)</label>
+                                    <input type="number" id="consoBillInput" value="" min="20" max="1000" step="5" placeholder="ex : 90" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="convertBillToKwh()">
+                                    <div id="consoBillResult" class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug hidden">
+                                        ≈ <span id="consoBillKwh" class="text-amber-400 font-semibold">—</span> kWh/an estimés
+                                    </div>
+                                    <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
+                                        ⚠️ Estimation approximative : l'abonnement (~15 €/mois) est déduit avant conversion. Le résultat peut varier selon votre contrat.
+                                    </div>
+                                </div>
+
+                                <!-- Mode 3: Guided estimation -->
+                                <div id="consoPanel_estimate" class="hidden">
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Nombre de personnes</label>
+                                            <select id="consoEstPersons" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4" selected>4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6+</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Type de logement</label>
+                                            <select id="consoEstHousing" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                <option value="apartment">Appartement</option>
+                                                <option value="house" selected>Maison</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Chauffage principal</label>
+                                            <select id="consoEstHeating" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                <option value="electric">Électrique</option>
+                                                <option value="gas" selected>Gaz / fioul</option>
+                                                <option value="heatpump">Pompe à chaleur</option>
+                                                <option value="other">Autre (bois, etc.)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Surface habitable (m²)</label>
+                                            <input type="number" id="consoEstSurface" value="100" min="20" max="500" step="10" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="computeEstimation()">
+                                        </div>
+                                    </div>
+                                    <div id="consoEstResult" class="mt-2 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
+                                        ≈ <span id="consoEstKwh" class="text-amber-400 font-semibold">—</span> kWh/an estimés
+                                    </div>
+                                    <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
+                                        ⚠️ Estimation basée sur les moyennes ADEME. Votre consommation réelle peut varier significativement.
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Profil de consommation</label>
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Profil de présence</label>
                                     <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="family">Famille 4 personnes</option>
-                                        <option value="retired">Couple retraités</option>
-                                        <option value="telecommute">Télétravail</option>
-                                        <option value="allElectric">Tout-électrique (PAC)</option>
+                                        <option value="family">Faible présence en journée</option>
+                                        <option value="retired">Présence moyenne en journée</option>
+                                        <option value="telecommute">Forte présence en journée</option>
+                                        <option value="allElectric">Tout-électrique / pompe à chaleur</option>
                                     </select>
-                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Ce choix influence directement votre taux d'autoconsommation.</p>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Ce choix détermine la répartition horaire de votre consommation (jour/nuit). Plus vous êtes présent en journée, plus l'autoconsommation est élevée. La taille du foyer est reflétée par la consommation annuelle ci-dessus, pas par ce champ.</p>
                                 </div>
                             </div>
                             <div>
@@ -600,6 +678,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Toggle paramètres avancés -->
+                    <button id="advancedToggleBtn" type="button" onclick="toggleAdvancedFields()" class="w-full px-4 py-3 bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/50 rounded-xl text-sm text-slate-400 hover:text-slate-300 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Afficher les paramètres avancés
+                    </button>
+
+                    <div id="advancedFields" class="hidden space-y-6">
 
                     <!-- Paramètres toiture (replié) -->
                     <details class="bg-slate-900/50 rounded-2xl border border-slate-700/50 group">
@@ -711,7 +797,7 @@
                                     <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-4">
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Dégradation (%/an)</label>
                                     <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
@@ -720,13 +806,13 @@
                                     <label class="text-xs text-slate-400 mb-1 block">Hausse prix (%/an)</label>
                                     <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Taux actualisation (%)</label>
-                                    <input type="number" id="resDiscount" value="4" min="1" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
                             </div>
+                            <!-- resDiscount masqué : le taux d'actualisation n'est pas utilisé dans le calcul actuel -->
+                            <input type="hidden" id="resDiscount" value="4">
                         </div>
                     </details>
+
+                    </div><!-- /advancedFields -->
 
                     <!-- Buttons -->
                     <div class="flex gap-4">
@@ -855,83 +941,110 @@
 
                     <!-- TAB 1: Bilan Financier -->
                     <div id="tab-financial" class="tab-content active">
-                        <div class="kpi-grid">
-                            <div class="kpi-card">
-                                <div class="kpi-label">Production annuelle</div>
-                                <div class="kpi-value" id="resProduction">—</div>
-                                <div class="kpi-unit">kWh</div>
-                                <div class="kpi-desc">Énergie totale produite par vos panneaux en 1 an, calculée heure par heure via les données d'irradiation PVGIS de votre localisation.</div>
+                        <!-- Section 1: Production & Rendement (fermée par défaut) -->
+                        <details class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                            <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                                <h4 class="text-sm font-semibold text-slate-300">📊 Production & Rendement</h4>
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="kpi-grid px-4 pb-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Production annuelle</div>
+                                    <div class="kpi-value" id="resProduction">—</div>
+                                    <div class="kpi-unit">kWh</div>
+                                    <div class="kpi-desc">Énergie totale produite par vos panneaux en 1 an, calculée heure par heure via les données d'irradiation PVGIS de votre localisation.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Production par kWc</div>
+                                    <div class="kpi-value" id="resProductionPerKwc">—</div>
+                                    <div class="kpi-unit">kWh/kWc</div>
+                                    <div class="kpi-desc">Rendement de l'installation : kWh produits par kWc installé. Permet de comparer l'efficacité entre différents sites (1 000–1 500 en France).</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Puissance installée</div>
+                                    <div class="kpi-value" id="resKwc">—</div>
+                                    <div class="kpi-unit">kWc</div>
+                                    <div class="kpi-desc">Puissance crête de l'installation = surface × coefficient de remplissage (85%) × rendement du panneau choisi.</div>
+                                </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Production par kWc</div>
-                                <div class="kpi-value" id="resProductionPerKwc">—</div>
-                                <div class="kpi-unit">kWh/kWc</div>
-                                <div class="kpi-desc">Rendement de l'installation : kWh produits par kWc installé. Permet de comparer l'efficacité entre différents sites (1 000–1 500 en France).</div>
+                        </details>
+
+                        <!-- Section 2: Économies & Revenus (ouverte par défaut) -->
+                        <details open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                            <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                                <h4 class="text-sm font-semibold text-slate-300">💰 Économies & Revenus</h4>
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="kpi-grid px-4 pb-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Économies autoconsommation</div>
+                                    <div class="kpi-value" id="resSavingsAutocons">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Argent économisé en consommant directement votre production solaire au lieu d'acheter au réseau (kWh autoconsommés × prix d'achat).</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Revenus revente</div>
+                                    <div class="kpi-value" id="resSavingsFeedin">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Revenus de la vente du surplus d'électricité injecté sur le réseau (kWh excédentaires × tarif de rachat de votre pays).</div>
+                                </div>
+                                <div class="kpi-card kpi-highlight">
+                                    <div class="kpi-label">Économies annuelles</div>
+                                    <div class="kpi-value" id="resAnnualSavings">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Total des gains annuels = économies autoconsommation + revenus revente surplus. C'est le bénéfice réel de votre installation chaque année.</div>
+                                </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Puissance installée</div>
-                                <div class="kpi-value" id="resKwc">—</div>
-                                <div class="kpi-unit">kWc</div>
-                                <div class="kpi-desc">Puissance crête de l'installation = surface × coefficient de remplissage (85%) × rendement du panneau choisi.</div>
+                        </details>
+
+                        <!-- Section 3: Investissement & Rentabilité (ouverte par défaut) -->
+                        <details open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                            <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                                <h4 class="text-sm font-semibold text-slate-300">📈 Investissement & Rentabilité</h4>
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="kpi-grid px-4 pb-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Coût installation</div>
+                                    <div class="kpi-value" id="resInstallCost">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Coût total brut : panneaux + onduleur + pose + raccordement (+ batterie si activée). Basé sur le prix moyen du pays ou votre valeur personnalisée.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Coût net après aides</div>
+                                    <div class="kpi-value" id="resNetCost">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Coût réel après déduction des subventions et aides de votre pays (prime à l'autoconsommation, crédit d'impôt, etc.).</div>
+                                </div>
+                                <div class="kpi-card kpi-highlight">
+                                    <div class="kpi-label">Temps de retour</div>
+                                    <div class="kpi-value" id="resPayback">—</div>
+                                    <div class="kpi-unit">ans</div>
+                                    <div class="kpi-desc">Nombre d'années pour que les économies cumulées remboursent le coût net. Après cette date, votre installation génère du profit pur.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Gains nets 25 ans</div>
+                                    <div class="kpi-value" id="resNpv">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Somme cumulée des économies sur 25 ans moins le coût net initial. Intègre la hausse annuelle de l'électricité et la dégradation des panneaux. Non actualisé.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">TRI</div>
+                                    <div class="kpi-value" id="resTri">—</div>
+                                    <div class="kpi-unit">%</div>
+                                    <div class="kpi-desc">Taux de Rentabilité Interne : rendement annuel équivalent de votre investissement. À comparer avec un placement bancaire (~3%).</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">CO₂ évité</div>
+                                    <div class="kpi-value" id="resCo2">—</div>
+                                    <div class="kpi-unit">kg/an</div>
+                                    <div class="kpi-desc">Émissions de CO₂ évitées grâce à votre production solaire, basées sur le facteur d'émission du mix électrique de votre pays.</div>
+                                </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Économies autoconsommation</div>
-                                <div class="kpi-value" id="resSavingsAutocons">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Argent économisé en consommant directement votre production solaire au lieu d'acheter au réseau (kWh autoconsommés × prix d'achat).</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Revenus revente</div>
-                                <div class="kpi-value" id="resSavingsFeedin">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Revenus de la vente du surplus d'électricité injecté sur le réseau (kWh excédentaires × tarif de rachat de votre pays).</div>
-                            </div>
-                            <div class="kpi-card kpi-highlight">
-                                <div class="kpi-label">Économies annuelles</div>
-                                <div class="kpi-value" id="resAnnualSavings">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Total des gains annuels = économies autoconsommation + revenus revente surplus. C'est le bénéfice réel de votre installation chaque année.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Coût installation</div>
-                                <div class="kpi-value" id="resInstallCost">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Coût total brut : panneaux + onduleur + pose + raccordement (+ batterie si activée). Basé sur le prix moyen du pays ou votre valeur personnalisée.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Coût net après aides</div>
-                                <div class="kpi-value" id="resNetCost">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Coût réel après déduction des subventions et aides de votre pays (prime à l'autoconsommation, crédit d'impôt, etc.).</div>
-                            </div>
-                            <div class="kpi-card kpi-highlight">
-                                <div class="kpi-label">Amortissement</div>
-                                <div class="kpi-value" id="resPayback">—</div>
-                                <div class="kpi-unit">ans</div>
-                                <div class="kpi-desc">Nombre d'années pour que les économies cumulées remboursent le coût net. Après cette date, votre installation génère du profit pur.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">VAN 25 ans</div>
-                                <div class="kpi-value" id="resNpv">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Valeur Actuelle Nette : total des économies sur 25 ans moins le coût net initial, ajusté avec la hausse annuelle de l'électricité.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">TRI</div>
-                                <div class="kpi-value" id="resTri">—</div>
-                                <div class="kpi-unit">%</div>
-                                <div class="kpi-desc">Taux de Rentabilité Interne : rendement annuel équivalent de votre investissement. À comparer avec un placement bancaire (~3%).</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">CO₂ évité</div>
-                                <div class="kpi-value" id="resCo2">—</div>
-                                <div class="kpi-unit">kg/an</div>
-                                <div class="kpi-desc">Émissions de CO₂ évitées grâce à votre production solaire, basées sur le facteur d'émission du mix électrique de votre pays.</div>
-                            </div>
-                        </div>
+                        </details>
                         <div class="grid lg:grid-cols-2 gap-8">
                             <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
-                                <h3 class="text-lg font-semibold text-white mb-4">Amortissement (25 ans)</h3>
+                                <h3 class="text-lg font-semibold text-white mb-4">Temps de retour (25 ans)</h3>
                                 <div class="chart-container">
                                     <canvas id="paybackChart"></canvas>
                                 </div>
@@ -954,7 +1067,7 @@
                                 <div class="kpi-unit">%</div>
                             </div>
                             <div class="kpi-card">
-                                <div class="kpi-label">Taux autoproduction</div>
+                                <div class="kpi-label">Couverture solaire</div>
                                 <div class="kpi-value" id="resAutoprodRate">—</div>
                                 <div class="kpi-unit">%</div>
                             </div>
@@ -1059,6 +1172,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Bloc Hypothèses & Limites (toujours visible) -->
+                    <div class="mt-8 p-4 bg-slate-800/30 rounded-xl border border-slate-700/30">
+                        <details class="group">
+                            <summary class="cursor-pointer list-none flex items-center justify-between text-sm text-slate-400 hover:text-slate-300">
+                                <span class="font-medium">⚠️ Hypothèses & limites de cette simulation</span>
+                                <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="mt-3 text-xs text-slate-500 leading-relaxed space-y-2">
+                                <p><strong class="text-slate-400">Données d'irradiation</strong> — issues de PVGIS (Commission européenne), base TMY. Reflètent une année météo typique, pas la variabilité réelle.</p>
+                                <p><strong class="text-slate-400">Tarifs & aides</strong> — pré-remplis à partir de sources publiques (Eurostat, régulateurs nationaux). Valeurs indicatives pouvant être obsolètes. Vérifiez sur votre facture et auprès de votre installateur.</p>
+                                <p><strong class="text-slate-400">Fiscalité</strong> — non intégrée ou partielle. L'impact fiscal réel (impôt sur les revenus de revente, TVA, plus-value) dépend de votre situation personnelle.</p>
+                                <p><strong class="text-slate-400">Maintenance</strong> — non intégrée. Comptez environ 1 à 2 % du coût initial par an en entretien courant (nettoyage, onduleur, contrôle).</p>
+                                <p><strong class="text-slate-400">Batterie</strong> — modèle simplifié (rendement fixe, dégradation linéaire). Ne simule pas la gestion thermique, les cycles partiels, ni le vieillissement calendaire.</p>
+                                <p><strong class="text-slate-400">Gains nets 25 ans</strong> — cumul non actualisé. L'inflation et le coût d'opportunité du capital ne sont pas pris en compte.</p>
+                                <p><strong class="text-slate-400">Sensibilité</strong> — les résultats sont sensibles aux hypothèses de prix de l'électricité, de coût d'installation et de consommation. Une variation de ±10 % de ces paramètres peut modifier significativement le verdict.</p>
+                            </div>
+                        </details>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -1278,6 +1411,18 @@
             contentEl.innerHTML = html;
         }
 
+        function toggleAdvancedFields() {
+            const adv = document.getElementById('advancedFields');
+            const latlon = document.getElementById('advancedLatLon');
+            const btn = document.getElementById('advancedToggleBtn');
+            const isHidden = adv.classList.contains('hidden');
+            adv.classList.toggle('hidden');
+            if (latlon) latlon.classList.toggle('hidden');
+            btn.innerHTML = isHidden
+                ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Masquer les paramètres avancés'
+                : '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Afficher les paramètres avancés';
+        }
+
         function toggleBatteryCapacity() {
             const toggle = document.getElementById('resBatteryToggle').checked;
             const section = document.getElementById('batteryCapacitySection');
@@ -1288,6 +1433,72 @@
             const toggle = document.getElementById('resManualMode').checked;
             document.getElementById('manualInputSection').style.display = toggle ? 'block' : 'none';
         }
+
+        // --- Lot 5: Consumption input modes ---
+        function switchConsoMode(mode) {
+            ['kwh','bill','estimate'].forEach(m => {
+                const panel = document.getElementById('consoPanel_' + m);
+                const label = document.getElementById('consoModeLabel_' + m);
+                if (m === mode) {
+                    panel.classList.remove('hidden');
+                    label.classList.remove('border-slate-600','text-slate-400');
+                    label.classList.add('border-amber-500','bg-amber-500/10','text-amber-400');
+                } else {
+                    panel.classList.add('hidden');
+                    label.classList.add('border-slate-600','text-slate-400');
+                    label.classList.remove('border-amber-500','bg-amber-500/10','text-amber-400');
+                }
+            });
+            // Trigger conversion when switching to bill or estimate mode
+            if (mode === 'bill') convertBillToKwh();
+            if (mode === 'estimate') computeEstimation();
+        }
+
+        function convertBillToKwh() {
+            const bill = parseFloat(document.getElementById('consoBillInput').value);
+            const resultDiv = document.getElementById('consoBillResult');
+            const resultSpan = document.getElementById('consoBillKwh');
+            if (!bill || bill < 20) {
+                resultDiv.classList.add('hidden');
+                return;
+            }
+            // Deduct estimated monthly subscription (~15€/month for FR base tariff)
+            const monthlySubscription = 15;
+            const pricePerKwh = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
+            const annualKwh = Math.round(((bill - monthlySubscription) * 12) / pricePerKwh);
+            const clamped = Math.max(1000, Math.min(100000, annualKwh));
+            resultSpan.textContent = clamped.toLocaleString('fr-FR');
+            resultDiv.classList.remove('hidden');
+            document.getElementById('resConsumption').value = clamped;
+        }
+
+        function computeEstimation() {
+            const persons = parseInt(document.getElementById('consoEstPersons').value) || 4;
+            const housing = document.getElementById('consoEstHousing').value;
+            const heating = document.getElementById('consoEstHeating').value;
+            const surface = parseInt(document.getElementById('consoEstSurface').value) || 100;
+
+            // Base consumption per person (ADEME averages, excluding heating)
+            // Includes: lighting, appliances, cooking, hot water (electric)
+            let base = 1100 * persons;
+
+            // Housing type factor
+            if (housing === 'house') base *= 1.2;
+
+            // Heating contribution based on surface
+            if (heating === 'electric') {
+                base += surface * 110; // ~110 kWh/m²/year for electric heating (poorly insulated avg)
+            } else if (heating === 'heatpump') {
+                base += surface * 40;  // ~40 kWh/m²/year for heat pump
+            }
+            // gas/other: heating not on electric bill, no addition
+
+            const result = Math.round(base / 100) * 100; // Round to nearest 100
+            const clamped = Math.max(1000, Math.min(100000, result));
+            document.getElementById('consoEstKwh').textContent = clamped.toLocaleString('fr-FR');
+            document.getElementById('resConsumption').value = clamped;
+        }
+        // --- End Lot 5 ---
 
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('hidden');
@@ -1370,6 +1581,15 @@
             document.getElementById('addonEV').checked = false;
             document.getElementById('addonPAC').checked = false;
             document.getElementById('addonECS').checked = false;
+            // Reset consumption input mode to kWh
+            switchConsoMode('kwh');
+            document.querySelector('input[name="consoMode"][value="kwh"]').checked = true;
+            document.getElementById('consoBillInput').value = '';
+            document.getElementById('consoBillResult').classList.add('hidden');
+            document.getElementById('consoEstPersons').value = '4';
+            document.getElementById('consoEstHousing').value = 'house';
+            document.getElementById('consoEstHeating').value = 'gas';
+            document.getElementById('consoEstSurface').value = '100';
             toggleBatteryCapacity();
             updateKwc();
         }
@@ -1622,7 +1842,7 @@
             const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1).replace('.', ',') + ' %, ce projet présente un profil financier favorable (VAN 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
+                narrativeText = 'Avec un temps de retour de ' + payback + ' ans et un TRI de ' + irrPct.toFixed(1).replace('.', ',') + ' %, ce projet présente un profil financier favorable (gains nets 25 ans : ' + Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' €). Vous autoconsommez ' + autoRate.toFixed(0) + ' % de votre production, pour une économie estimée à ' + savingsRounded.toLocaleString('fr-FR') + ' €/an.';
                 if (batteryCapacity > 0) {
                     narrativeText += ' La batterie (' + batteryCapacity + ' kWh) renforce votre autonomie sans dégrader significativement la rentabilité.';
                 } else {
@@ -1663,11 +1883,11 @@
 
             // Payback interpretation
             if (payback <= 10) {
-                recs.push('Amortissement rapide : l\'installation se rembourse en moins de 10 ans.');
+                recs.push('Temps de retour rapide : l\'installation se rembourse en moins de 10 ans.');
             } else if (payback <= 15) {
-                recs.push('Amortissement correct, dans la moyenne des projets résidentiels.');
+                recs.push('Temps de retour correct, dans la moyenne des projets résidentiels.');
             } else if (payback < 50) {
-                recs.push('Amortissement long (' + payback + ' ans). Vérifiez le coût d\'installation et les hypothèses financières.');
+                recs.push('Temps de retour long (' + payback + ' ans). Vérifiez le coût d\'installation et les hypothèses financières.');
             }
 
             // Autoconsommation interpretation
@@ -2060,7 +2280,7 @@
             <h4 class="text-white font-semibold mt-6 mb-2">🏦 Bilan financier</h4>
             <p>Le <strong>coût total de l'installation</strong> est estimé à <strong>${costInst} €</strong> (panneaux + onduleur + pose + raccordement${hasBattery ? ' + batterie' : ''}). Après déduction des aides et subventions de votre pays, le <strong>coût net</strong> est de <strong>${costNet} €</strong>.</p>
             <p>Votre installation sera <strong>amortie en ${payback} ans</strong> : c'est le nombre d'années nécessaires pour que vos économies cumulées couvrent votre investissement net. Après cette date, chaque euro économisé est du profit pur.</p>
-            <p>Sur 25 ans (durée de vie typique des panneaux), la <strong>Valeur Actuelle Nette (VAN)</strong> est de <strong>${npv} €</strong>. La VAN représente le gain net total sur la durée de vie de l'installation en tenant compte de la hausse annuelle du prix de l'électricité.</p>
+            <p>Sur 25 ans (durée de vie typique des panneaux), les <strong>Gains nets cumulés</strong> sont de <strong>${npv} €</strong>. Ce montant représente la somme des économies annuelles moins le coût net initial, en tenant compte de la hausse du prix de l'électricité et de la dégradation des panneaux (non actualisé).</p>
             <p>Le <strong>Taux de Rentabilité Interne (TRI)</strong> est de <strong>${tri}%</strong>. C'est le rendement annuel équivalent de votre investissement. À titre de comparaison, un livret d'épargne rapporte environ 3%/an : un TRI supérieur à 3% signifie que le solaire est plus rentable qu'un placement bancaire.</p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">🌍 Impact environnemental</h4>
@@ -2276,7 +2496,7 @@
                     var items = [
                         ['kWc', 'Kilowatt-cr\u00eate : puissance maximale d\'un panneau en conditions standard (1 000 W/m\u00b2, 25\u00b0C).'],
                         ['kWh', 'Kilowattheure : unit\u00e9 d\'\u00e9nergie. 1 kWh = 1 000 watts pendant 1 heure.'],
-                        ['VAN', 'Valeur Actuelle Nette : somme des flux financiers actualis\u00e9s sur 25 ans.'],
+                        ['Gains nets', 'Somme cumul\u00e9e des gains nets sur 25 ans (non actualis\u00e9e).'],
                         ['TRI', 'Taux de Rentabilit\u00e9 Interne : rendement annuel \u00e9quivalent. \u00c0 comparer \u00e0 un placement bancaire (~3 %).'],
                         ['PVGIS', 'Base de donn\u00e9es europ\u00e9enne d\'irradiation solaire (Commission europ\u00e9enne).'],
                         ['Autoconso.', 'Part de la production solaire utilis\u00e9e sur place plut\u00f4t qu\'inject\u00e9e au r\u00e9seau.']
@@ -2361,8 +2581,8 @@
                 doc.setFontSize(7.5); doc.setTextColor(...C.slate);
                 var quickRead = 'Production : ' + getText('resProduction') + ' kWh/an  |  '
                     + '\u00c9conomies : ' + getText('resAnnualSavings') + ' \u20ac/an  |  '
-                    + 'Amortissement : ' + getText('resPayback') + ' ans  |  '
-                    + 'VAN 25 ans : ' + getText('resNpv') + ' \u20ac';
+                    + 'Temps de retour : ' + getText('resPayback') + ' ans  |  '
+                    + 'Gains nets 25 ans : ' + getText('resNpv') + ' \u20ac';
                 var qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
                 doc.text(qrLines, M + 4, y + 9);
                 y += 20;
@@ -2393,7 +2613,7 @@
                     drawSectionTitle('Autoconsommation d\u00e9taill\u00e9e');
                     drawLabelValueRows([
                         ['Taux autoconsommation', autoRateDisplay + ' %'],
-                        ['Taux autoproduction', autoprodDisplay + ' %'],
+                        ['Couverture solaire', autoprodDisplay + ' %'],
                         ['Autoconsommation directe', getText('resAutoDirect') + ' kWh'],
                         ['Via batterie', getText('resAutoBattery') + ' kWh'],
                         ['Injection r\u00e9seau', getText('resInjection') + ' kWh'],
@@ -2407,7 +2627,7 @@
                     ['Co\u00fbt installation brut', getText('resInstallCost') + ' \u20ac'],
                     ['Co\u00fbt net apr\u00e8s aides', getText('resNetCost') + ' \u20ac'],
                     ['Temps de retour', getText('resPayback') + ' ans'],
-                    ['VAN (25 ans)', getText('resNpv') + ' \u20ac'],
+                    ['Gains nets (25 ans)', getText('resNpv') + ' \u20ac'],
                     ['TRI', getText('resTri') + ' %'],
                     ['CO2 \u00e9vit\u00e9', getText('resCo2') + ' kg/an'],
                 ]);

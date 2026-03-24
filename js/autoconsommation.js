@@ -33,7 +33,7 @@ const PROFILES = {
   // Peaks: morning 7-9h (breakfast, getting ready), evening 18-22h (cooking, TV, lights)
   // Low: night 0-6h (standby only)
   family: {
-    label: { fr: "Famille 4 personnes", en: "Family (4 persons)" },
+    label: { fr: "Faible présence en journée", en: "Low daytime presence" },
     hourly: [
       0.25, 0.20, 0.18, 0.18, 0.20, 0.30,  // 00-05: night (fridge, standby)
       0.55, 1.40, 1.50, 0.80, 0.65, 0.60,  // 06-11: morning peak then drop
@@ -50,7 +50,7 @@ const PROFILES = {
   // More spread out consumption during the day (home all day)
   // Smaller peaks, more continuous baseline
   retired: {
-    label: { fr: "Couple retraités", en: "Retired couple" },
+    label: { fr: "Présence moyenne en journée", en: "Moderate daytime presence" },
     hourly: [
       0.25, 0.20, 0.18, 0.18, 0.20, 0.25,  // 00-05: night
       0.45, 0.90, 1.10, 1.00, 0.90, 0.85,  // 06-11: gradual morning
@@ -64,7 +64,7 @@ const PROFILES = {
   // Sustained consumption 9-18h (PC, screens, heating/AC office room)
   // Morning peak earlier (start work), evening still high
   telecommute: {
-    label: { fr: "Télétravail", en: "Remote worker" },
+    label: { fr: "Forte présence en journée", en: "High daytime presence" },
     hourly: [
       0.25, 0.20, 0.18, 0.18, 0.20, 0.30,  // 00-05: night
       0.55, 1.20, 1.40, 1.30, 1.25, 1.15,  // 06-11: start work + office load
@@ -79,7 +79,7 @@ const PROFILES = {
   // Hot water peaks: 6-7h and 22-23h (programmable water heater)
   // Heating adds continuous winter load
   allElectric: {
-    label: { fr: "Tout-électrique (PAC)", en: "All-electric (heat pump)" },
+    label: { fr: "Tout-électrique / pompe à chaleur", en: "All-electric / heat pump" },
     hourly: [
       0.35, 0.30, 0.28, 0.28, 0.30, 0.45,  // 00-05: night + heating baseload
       1.00, 1.45, 1.40, 0.85, 0.70, 0.65,  // 06-11: ECS morning + heating

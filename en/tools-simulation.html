@@ -84,8 +84,10 @@
         .tab-btn.active{border-bottom-color:#f59e0b;color:#fbbf24}
         .tab-content{display:none}
         .tab-content.active{display:block}
-        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
-        .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1.5rem;text-align:center}
+        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem}
+        .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1rem;text-align:center}
+        @media(min-width:640px){.kpi-card{padding:1.5rem}}
+        .kpi-section summary{-webkit-tap-highlight-color:transparent}
         .kpi-label{font-size:0.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
         .kpi-value{font-size:1.875rem;font-weight:700;color:#fbbf24;line-height:1}
         .kpi-unit{font-size:0.75rem;color:#64748b;margin-top:0.25rem}
@@ -340,7 +342,12 @@
   </div>
 </div>
                     <a href="hire-me.html" class="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 rounded-lg text-sm font-medium transition-colors">Hire Me</a>
-                                </div>ems-center gap-1">
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="openSiteSearch()" class="p-2 text-slate-400 hover:text-white transition-colors" aria-label="Search the site" title="Ctrl+K">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+                    </button>
+                    <div class="flex items-center gap-1">
                         <a href="../fr/outils-simulation.html" class="px-2 py-1 text-slate-400 hover:text-white text-xs rounded border border-slate-700">FR</a>
                         <span class="px-2 py-1 bg-amber-500/20 text-amber-500 text-xs font-medium rounded border border-amber-500/30">EN</span>
                     </div>
@@ -462,7 +469,7 @@
                                     <input type="number" id="resManualProductible" value="1200" min="500" max="2500" step="10" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div id="advancedLatLon" class="hidden grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
                                     <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
@@ -475,90 +482,15 @@
                         </div>
                     </div>
 
-                    <!-- CARD 3: PV System -->
+                    <!-- CARD 3: PV Power (visible) -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-                            <span class="text-amber-500">●</span> Photovoltaic System
+                            <span class="text-amber-500">●</span> Installation Power
                         </h4>
-                        <div class="space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Orientation</label>
-                                    <select id="resOrientation" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="0">South (optimal)</option>
-                                        <option value="-45">South-East</option>
-                                        <option value="45">South-West</option>
-                                        <option value="-90">East</option>
-                                        <option value="90">West</option>
-                                        <option value="180">North (low)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Tilt (°)</label>
-                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Shading (%)</label>
-                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-xs text-slate-600 mt-0.5">0% = full sun</p>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Roof surface (m²)</label>
-                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Available area for panels. A standard panel is ~1.7 m². Allow ~6 m²/kWp installed.
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-xs text-slate-400 mb-1 block">Panel type</label>
-                                <select id="resPanelType" onchange="showPanelInfo(this.value); updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <option value="0.17">Polycrystalline (~17%)</option>
-                                    <option value="0.20" selected>Monocrystalline PERC (~20%)</option>
-                                    <option value="0.22">Monocrystalline TOPCon (~22%)</option>
-                                    <option value="0.235">Heterojunction HJT (~23.5%)</option>
-                                    <option value="0.245">Back-contact IBC (~24.5%)</option>
-                                </select>
-                                <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
-                                    <strong class="text-amber-400" id="panelInfoTitle">Monocrystalline PERC</strong>
-                                    <p id="panelInfoDesc" class="mt-1 leading-relaxed">Most widely deployed technology. Rear-side treatment (Passivated Emitter Rear Cell) improves light capture. Excellent value for money.</p>
-                                    <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
-                                        <span id="panelInfoEff">⚡ Efficiency: 19–21%</span>
-                                        <span id="panelInfoPrice">💰 Price: $0.25–0.35/Wp</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">PV power (kWp)</label>
-                                    <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Auto-calculated: area × 0.85 × efficiency. Override if you know the exact capacity from your quote.
-                                    </div>
-                                    <div class="mt-1 p-2 bg-amber-900/15 border border-amber-700/30 rounded-lg text-xs text-amber-400/80 leading-relaxed">
-                                        <span class="font-medium">⚠️ Location-independent</span> — peak power (kWp) is a fixed property of your panels. What changes with location is the <strong>yield</strong> (kWh/kWp/year), shown in results after simulation.
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">System losses (%)</label>
-                                    <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Cabling, inverter, dust, temperature losses. 14% is a standard value.
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Mounting type</label>
-                                    <select id="simMounting" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="free">Roof-mounted</option>
-                                        <option value="building">Building-integrated (BIPV)</option>
-                                    </select>
-                                    <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                        <span class="text-slate-400 font-medium">ℹ️</span> Roof-mounted: natural ventilation, better yield. Building-integrated: eligible for higher feed-in tariff.
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <label class="text-[13px] text-slate-300 mb-1 block font-medium">PV power (kWp)</label>
+                            <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
+                            <p class="mt-1.5 text-[13px] text-slate-500 leading-snug">Enter the capacity from your quote. Otherwise, expand "Roof parameters" in advanced settings to estimate from surface area.</p>
                         </div>
                     </div>
 
@@ -568,25 +500,101 @@
                             <span class="text-amber-500">●</span> Electricity Consumption
                         </h4>
                         <div class="space-y-4">
-                            <div>
-                                <label class="text-xs text-slate-400 mb-1 block">Annual consumption (kWh)</label>
-                                <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                    <span class="text-slate-400 font-medium">ℹ️</span> Check your annual bill. UK average: ~3,700 kWh/year for a household.
+                            <!-- Mode selector for consumption input -->
+                            <div class="mb-4">
+                                <label class="text-[13px] text-slate-300 mb-2 block font-medium">How would you like to enter your consumption?</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-amber-500 bg-amber-500/10 text-amber-400" id="consoModeLabel_kwh">
+                                        <input type="radio" name="consoMode" value="kwh" checked class="hidden" onchange="switchConsoMode('kwh')">
+                                        ⚡ I know my kWh
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_bill">
+                                        <input type="radio" name="consoMode" value="bill" class="hidden" onchange="switchConsoMode('bill')">
+                                        💶 I know my bill
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_estimate">
+                                        <input type="radio" name="consoMode" value="estimate" class="hidden" onchange="switchConsoMode('estimate')">
+                                        🏠 Help me estimate
+                                    </label>
                                 </div>
                             </div>
-                            <div>
-                                <label class="text-xs text-slate-400 mb-1 block">Consumption profile</label>
-                                <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <option value="family">Family of 4</option>
-                                    <option value="retired">Retired couple</option>
-                                    <option value="telecommute">Telecommute</option>
-                                    <option value="allElectric">All-electric (Heat pump)</option>
-                                </select>
-                                <div class="mt-1 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-xs text-slate-500 leading-relaxed">
-                                    <span class="text-slate-400 font-medium">ℹ️</span> Determines the hourly distribution of your consumption (day/night, summer/winter). Direct impact on self-consumption rate.
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Mode 1: Direct kWh (default) -->
+                                <div id="consoPanel_kwh">
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Annual consumption (kWh)</label>
+                                    <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <div class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
+                                        Check your annual electricity bill. <span class="text-slate-300 font-medium">Reference: a 4-person household uses ~3,700 kWh/year (UK avg).</span>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <!-- Mode 2: Monthly bill -->
+                                <div id="consoPanel_bill" class="hidden">
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Average monthly bill (incl. tax)</label>
+                                    <input type="number" id="consoBillInput" value="" min="20" max="1000" step="5" placeholder="e.g. 90" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="convertBillToKwh()">
+                                    <div id="consoBillResult" class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug hidden">
+                                        ≈ <span id="consoBillKwh" class="text-amber-400 font-semibold">—</span> estimated kWh/year
+                                    </div>
+                                    <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
+                                        ⚠️ Rough estimate: a standing charge (~15 €/month) is deducted before conversion. Actual consumption may vary by contract.
+                                    </div>
+                                </div>
+
+                                <!-- Mode 3: Guided estimation -->
+                                <div id="consoPanel_estimate" class="hidden">
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Number of people</label>
+                                            <select id="consoEstPersons" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4" selected>4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6+</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Housing type</label>
+                                            <select id="consoEstHousing" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                <option value="apartment">Apartment / flat</option>
+                                                <option value="house" selected>House</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Main heating</label>
+                                            <select id="consoEstHeating" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                <option value="electric">Electric</option>
+                                                <option value="gas" selected>Gas / oil</option>
+                                                <option value="heatpump">Heat pump</option>
+                                                <option value="other">Other (wood, etc.)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-[12px] text-slate-400 mb-1 block">Living area (m²)</label>
+                                            <input type="number" id="consoEstSurface" value="100" min="20" max="500" step="10" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="computeEstimation()">
+                                        </div>
+                                    </div>
+                                    <div id="consoEstResult" class="mt-2 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
+                                        ≈ <span id="consoEstKwh" class="text-amber-400 font-semibold">—</span> estimated kWh/year
+                                    </div>
+                                    <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
+                                        ⚠️ Estimate based on European averages. Your actual consumption may vary significantly.
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Daytime presence</label>
+                                    <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="family">Low daytime presence</option>
+                                        <option value="retired">Moderate daytime presence</option>
+                                        <option value="telecommute">High daytime presence</option>
+                                        <option value="allElectric">All-electric / heat pump</option>
+                                    </select>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Determines the hourly distribution of your consumption (day/night). Higher daytime presence means higher self-consumption.</p>
+                                </div>
+                            </div><!-- end grid -->
                             <div>
                                 <p class="text-sm font-medium text-slate-300 mb-3">Additional equipment</p>
                                 <div class="flex flex-col gap-2">
@@ -636,6 +644,89 @@
                         </div>
                     </div>
 
+                    <!-- Advanced parameters toggle -->
+                    <button id="advancedToggleBtn" type="button" onclick="toggleAdvancedFields()" class="w-full px-4 py-3 bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/50 rounded-xl text-sm text-slate-400 hover:text-slate-300 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Show advanced parameters
+                    </button>
+
+                    <div id="advancedFields" class="hidden space-y-6">
+
+                    <!-- Roof parameters (collapsed) -->
+                    <details class="bg-slate-900/50 rounded-2xl border border-slate-700/50 group">
+                        <summary class="p-6 cursor-pointer list-none flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+                                <span class="text-slate-500">●</span> Roof Parameters
+                            </h4>
+                            <span class="text-slate-500 text-xs group-open:hidden">South · Tilt 30° · Shading 0%</span>
+                            <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-6 pb-6 space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Orientation</label>
+                                    <select id="resOrientation" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="0">South (optimal)</option>
+                                        <option value="-45">South-East</option>
+                                        <option value="45">South-West</option>
+                                        <option value="-90">East</option>
+                                        <option value="90">West</option>
+                                        <option value="180">North (low)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Tilt (°)</label>
+                                    <input type="number" id="resTilt" value="30" min="0" max="90" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Shading (%)</label>
+                                    <input type="number" id="resShading" value="0" min="0" max="80" step="1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="text-xs text-slate-600 mt-0.5">0% = full sun</p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Roof surface (m²)</label>
+                                    <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Allow ~6 m²/kWp installed.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 mb-1 block">Panel type</label>
+                                <select id="resPanelType" onchange="showPanelInfo(this.value); updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <option value="0.17">Polycrystalline (~17%)</option>
+                                    <option value="0.20" selected>Monocrystalline PERC (~20%)</option>
+                                    <option value="0.22">Monocrystalline TOPCon (~22%)</option>
+                                    <option value="0.235">Heterojunction HJT (~23.5%)</option>
+                                    <option value="0.245">Back-contact IBC (~24.5%)</option>
+                                </select>
+                                <div id="panelInfoBubble" class="mt-2 p-3 bg-slate-800/80 border border-slate-600/50 rounded-lg text-xs text-slate-300 transition-all duration-300">
+                                    <strong class="text-amber-400" id="panelInfoTitle">Monocrystalline PERC</strong>
+                                    <p id="panelInfoDesc" class="mt-1 leading-relaxed">Most widely deployed technology. Rear-side treatment (Passivated Emitter Rear Cell) improves light capture. Excellent value for money.</p>
+                                    <div class="flex flex-wrap gap-3 mt-2 text-slate-400">
+                                        <span id="panelInfoEff">⚡ Efficiency: 19–21%</span>
+                                        <span id="panelInfoPrice">💰 Price: $0.25–0.35/Wp</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">System losses (%)</label>
+                                    <input type="number" id="simLoss" min="5" max="25" step="1" value="14" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">14% is a standard value (cabling, inverter, dust, temperature).</p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 mb-1 block">Mounting type</label>
+                                    <select id="simMounting" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                        <option value="free">Roof-mounted</option>
+                                        <option value="building">Building-integrated (BIPV)</option>
+                                    </select>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Roof-mounted: better yield. Building-integrated: higher feed-in tariff.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
                     <!-- CARD 6: Financial Parameters -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
@@ -668,7 +759,7 @@
                                     <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-4">
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Degradation (%/year)</label>
                                     <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
@@ -677,13 +768,13 @@
                                     <label class="text-xs text-slate-400 mb-1 block">Price increase (%/year)</label>
                                     <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
                                 </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Discount rate (%)</label>
-                                    <input type="number" id="resDiscount" value="4" min="1" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
                             </div>
+                            <!-- resDiscount hidden: discount rate is not used in current calculation engine -->
+                            <input type="hidden" id="resDiscount" value="4">
                         </div>
                     </div>
+
+                    </div><!-- /advancedFields -->
 
                     <!-- Buttons -->
                     <div class="flex gap-4">
@@ -773,7 +864,7 @@
                                     <div class="space-y-2">
                                         <div><span class="text-slate-400 text-xs">Self-consumption:</span> <span id="vbc-no-bat-auto" class="text-white font-semibold"></span></div>
                                         <div><span class="text-slate-400 text-xs">Savings/year:</span> <span id="vbc-no-bat-savings" class="text-white font-semibold"></span></div>
-                                        <div><span class="text-slate-400 text-xs">Payback:</span> <span id="vbc-no-bat-payback" class="text-white font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Payback period:</span> <span id="vbc-no-bat-payback" class="text-white font-semibold"></span></div>
                                     </div>
                                 </div>
                                 <div class="text-center p-4 bg-slate-900/50 rounded-xl border border-amber-500/30">
@@ -781,7 +872,7 @@
                                     <div class="space-y-2">
                                         <div><span class="text-slate-400 text-xs">Self-consumption:</span> <span id="vbc-bat-auto" class="text-amber-300 font-semibold"></span></div>
                                         <div><span class="text-slate-400 text-xs">Savings/year:</span> <span id="vbc-bat-savings" class="text-amber-300 font-semibold"></span></div>
-                                        <div><span class="text-slate-400 text-xs">Payback:</span> <span id="vbc-bat-payback" class="text-amber-300 font-semibold"></span></div>
+                                        <div><span class="text-slate-400 text-xs">Payback period:</span> <span id="vbc-bat-payback" class="text-amber-300 font-semibold"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -819,83 +910,110 @@
 
                     <!-- TAB 1: Financial Summary -->
                     <div id="tab-financial" class="tab-content active">
-                        <div class="kpi-grid">
-                            <div class="kpi-card">
-                                <div class="kpi-label">Annual production</div>
-                                <div class="kpi-value" id="resProduction">—</div>
-                                <div class="kpi-unit">kWh</div>
-                                <div class="kpi-desc">Total energy produced by your panels in 1 year, calculated hour-by-hour using PVGIS irradiation data for your location.</div>
+                        <!-- Section 1: Production & Performance (closed by default) -->
+                        <details class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                            <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                                <h4 class="text-sm font-semibold text-slate-300">📊 Production & Performance</h4>
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="kpi-grid px-4 pb-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Annual production</div>
+                                    <div class="kpi-value" id="resProduction">—</div>
+                                    <div class="kpi-unit">kWh</div>
+                                    <div class="kpi-desc">Total energy produced by your panels in 1 year, calculated hour-by-hour using PVGIS irradiation data for your location.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Production per kWp</div>
+                                    <div class="kpi-value" id="resProductionPerKwc">—</div>
+                                    <div class="kpi-unit">kWh/kWp</div>
+                                    <div class="kpi-desc">Installation yield: kWh produced per kWp installed. Allows comparing efficiency between sites (800–1,800 depending on location).</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Installed capacity</div>
+                                    <div class="kpi-value" id="resKwc">—</div>
+                                    <div class="kpi-unit">kWp</div>
+                                    <div class="kpi-desc">Peak power of your system = surface area × fill factor (85%) × panel efficiency for the selected panel type.</div>
+                                </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Production per kWp</div>
-                                <div class="kpi-value" id="resProductionPerKwc">—</div>
-                                <div class="kpi-unit">kWh/kWp</div>
-                                <div class="kpi-desc">Installation yield: kWh produced per kWp installed. Allows comparing efficiency between sites (800–1,800 depending on location).</div>
+                        </details>
+
+                        <!-- Section 2: Savings & Revenue (open by default) -->
+                        <details open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                            <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                                <h4 class="text-sm font-semibold text-slate-300">💰 Savings & Revenue</h4>
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="kpi-grid px-4 pb-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Self-consumption savings</div>
+                                    <div class="kpi-value" id="resSavingsAutocons">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Money saved by consuming your solar production directly instead of buying from the grid (self-consumed kWh × electricity price).</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Feed-in revenue</div>
+                                    <div class="kpi-value" id="resSavingsFeedin">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Revenue from selling surplus electricity to the grid (excess kWh × feed-in tariff for your country).</div>
+                                </div>
+                                <div class="kpi-card kpi-highlight">
+                                    <div class="kpi-label">Annual savings</div>
+                                    <div class="kpi-value" id="resAnnualSavings">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Total yearly benefit = self-consumption savings + feed-in revenue. This is the real financial gain from your system each year.</div>
+                                </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Installed capacity</div>
-                                <div class="kpi-value" id="resKwc">—</div>
-                                <div class="kpi-unit">kWp</div>
-                                <div class="kpi-desc">Peak power of your system = surface area × fill factor (85%) × panel efficiency for the selected panel type.</div>
+                        </details>
+
+                        <!-- Section 3: Investment & Returns (open by default) -->
+                        <details open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                            <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                                <h4 class="text-sm font-semibold text-slate-300">📈 Investment & Returns</h4>
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="kpi-grid px-4 pb-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Installation cost</div>
+                                    <div class="kpi-value" id="resInstallCost">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Total gross cost: panels + inverter + installation + grid connection (+ battery if enabled). Based on country average or your custom value.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Net cost after subsidies</div>
+                                    <div class="kpi-value" id="resNetCost">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Actual cost after deducting your country's subsidies and incentives (self-consumption bonus, tax credits, etc.).</div>
+                                </div>
+                                <div class="kpi-card kpi-highlight">
+                                    <div class="kpi-label">Payback period</div>
+                                    <div class="kpi-value" id="resPayback">—</div>
+                                    <div class="kpi-unit">years</div>
+                                    <div class="kpi-desc">Years until cumulative savings cover the net cost. After this point, your system generates pure profit.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Net gains 25 years</div>
+                                    <div class="kpi-value" id="resNpv">—</div>
+                                    <div class="kpi-unit"><span class="cur">€</span></div>
+                                    <div class="kpi-desc">Cumulative savings over 25 years minus initial net cost. Factors in annual electricity price increases and panel degradation. Not discounted.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">IRR</div>
+                                    <div class="kpi-value" id="resTri">—</div>
+                                    <div class="kpi-unit">%</div>
+                                    <div class="kpi-desc">Internal Rate of Return: equivalent annual return on your investment. Compare with bank savings (~3%) to assess profitability.</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-label">CO₂ avoided</div>
+                                    <div class="kpi-value" id="resCo2">—</div>
+                                    <div class="kpi-unit">kg/year</div>
+                                    <div class="kpi-desc">CO₂ emissions avoided thanks to your solar production, based on the emission factor of your country's electricity mix.</div>
+                                </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Self-consumption savings</div>
-                                <div class="kpi-value" id="resSavingsAutocons">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Money saved by consuming your solar production directly instead of buying from the grid (self-consumed kWh × electricity price).</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Feed-in revenue</div>
-                                <div class="kpi-value" id="resSavingsFeedin">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Revenue from selling surplus electricity to the grid (excess kWh × feed-in tariff for your country).</div>
-                            </div>
-                            <div class="kpi-card kpi-highlight">
-                                <div class="kpi-label">Annual savings</div>
-                                <div class="kpi-value" id="resAnnualSavings">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Total yearly benefit = self-consumption savings + feed-in revenue. This is the real financial gain from your system each year.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Installation cost</div>
-                                <div class="kpi-value" id="resInstallCost">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Total gross cost: panels + inverter + installation + grid connection (+ battery if enabled). Based on country average or your custom value.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">Net cost after subsidies</div>
-                                <div class="kpi-value" id="resNetCost">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Actual cost after deducting your country's subsidies and incentives (self-consumption bonus, tax credits, etc.).</div>
-                            </div>
-                            <div class="kpi-card kpi-highlight">
-                                <div class="kpi-label">Payback</div>
-                                <div class="kpi-value" id="resPayback">—</div>
-                                <div class="kpi-unit">years</div>
-                                <div class="kpi-desc">Years until cumulative savings cover the net cost. After this point, your system generates pure profit.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">NPV 25 years</div>
-                                <div class="kpi-value" id="resNpv">—</div>
-                                <div class="kpi-unit"><span class="cur">€</span></div>
-                                <div class="kpi-desc">Net Present Value: total savings over 25 years minus initial net cost, factoring in annual electricity price increases.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">IRR</div>
-                                <div class="kpi-value" id="resTri">—</div>
-                                <div class="kpi-unit">%</div>
-                                <div class="kpi-desc">Internal Rate of Return: equivalent annual return on your investment. Compare with bank savings (~3%) to assess profitability.</div>
-                            </div>
-                            <div class="kpi-card">
-                                <div class="kpi-label">CO₂ avoided</div>
-                                <div class="kpi-value" id="resCo2">—</div>
-                                <div class="kpi-unit">kg/year</div>
-                                <div class="kpi-desc">CO₂ emissions avoided thanks to your solar production, based on the emission factor of your country's electricity mix.</div>
-                            </div>
-                        </div>
+                        </details>
                         <div class="grid lg:grid-cols-2 gap-8">
                             <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
-                                <h3 class="text-lg font-semibold text-white mb-4">Payback (25 years)</h3>
+                                <h3 class="text-lg font-semibold text-white mb-4">Payback period (25 years)</h3>
                                 <div class="chart-container">
                                     <canvas id="paybackChart"></canvas>
                                 </div>
@@ -918,7 +1036,7 @@
                                 <div class="kpi-unit">%</div>
                             </div>
                             <div class="kpi-card">
-                                <div class="kpi-label">Self-production rate</div>
+                                <div class="kpi-label">Solar coverage</div>
                                 <div class="kpi-value" id="resAutoprodRate">—</div>
                                 <div class="kpi-unit">%</div>
                             </div>
@@ -1023,6 +1141,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Assumptions & Limitations block (always visible) -->
+                    <div class="mt-8 p-4 bg-slate-800/30 rounded-xl border border-slate-700/30">
+                        <details class="group">
+                            <summary class="cursor-pointer list-none flex items-center justify-between text-sm text-slate-400 hover:text-slate-300">
+                                <span class="font-medium">⚠️ Assumptions & limitations of this simulation</span>
+                                <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </summary>
+                            <div class="mt-3 text-xs text-slate-500 leading-relaxed space-y-2">
+                                <p><strong class="text-slate-400">Irradiation data</strong> — sourced from PVGIS (European Commission), TMY database. Reflects a typical meteorological year, not actual year-to-year variability.</p>
+                                <p><strong class="text-slate-400">Tariffs & subsidies</strong> — pre-filled from public sources (Eurostat, national regulators). Indicative values that may be outdated. Check your electricity bill and installer quotes.</p>
+                                <p><strong class="text-slate-400">Taxation</strong> — not integrated or only partially. Actual tax impact (income tax on feed-in revenue, VAT, capital gains) depends on your personal situation.</p>
+                                <p><strong class="text-slate-400">Maintenance</strong> — not included. Allow approximately 1–2% of initial cost per year for routine maintenance (cleaning, inverter, inspections).</p>
+                                <p><strong class="text-slate-400">Battery</strong> — simplified model (fixed efficiency, linear degradation). Does not simulate thermal management, partial cycles, or calendar ageing.</p>
+                                <p><strong class="text-slate-400">Net gains over 25 years</strong> — cumulative, not discounted. Inflation and opportunity cost of capital are not factored in.</p>
+                                <p><strong class="text-slate-400">Sensitivity</strong> — results are sensitive to electricity price, installation cost, and consumption assumptions. A ±10% variation in these parameters can significantly change the verdict.</p>
+                            </div>
+                        </details>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -1246,6 +1384,18 @@
             document.getElementById('simPeakpower').value = kwc;
         }
 
+        function toggleAdvancedFields() {
+            const adv = document.getElementById('advancedFields');
+            const latlon = document.getElementById('advancedLatLon');
+            const btn = document.getElementById('advancedToggleBtn');
+            const isHidden = adv.classList.contains('hidden');
+            adv.classList.toggle('hidden');
+            if (latlon) latlon.classList.toggle('hidden');
+            btn.innerHTML = isHidden
+                ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Hide advanced parameters'
+                : '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Show advanced parameters';
+        }
+
         function toggleBatteryCapacity() {
             const toggle = document.getElementById('resBatteryToggle').checked;
             const section = document.getElementById('batteryCapacitySection');
@@ -1256,6 +1406,63 @@
             const toggle = document.getElementById('resManualMode').checked;
             document.getElementById('manualInputSection').style.display = toggle ? 'block' : 'none';
         }
+
+        // --- Lot 5: Consumption input modes ---
+        function switchConsoMode(mode) {
+            ['kwh','bill','estimate'].forEach(m => {
+                const panel = document.getElementById('consoPanel_' + m);
+                const label = document.getElementById('consoModeLabel_' + m);
+                if (m === mode) {
+                    panel.classList.remove('hidden');
+                    label.classList.remove('border-slate-600','text-slate-400');
+                    label.classList.add('border-amber-500','bg-amber-500/10','text-amber-400');
+                } else {
+                    panel.classList.add('hidden');
+                    label.classList.add('border-slate-600','text-slate-400');
+                    label.classList.remove('border-amber-500','bg-amber-500/10','text-amber-400');
+                }
+            });
+            if (mode === 'bill') convertBillToKwh();
+            if (mode === 'estimate') computeEstimation();
+        }
+
+        function convertBillToKwh() {
+            const bill = parseFloat(document.getElementById('consoBillInput').value);
+            const resultDiv = document.getElementById('consoBillResult');
+            const resultSpan = document.getElementById('consoBillKwh');
+            if (!bill || bill < 20) {
+                resultDiv.classList.add('hidden');
+                return;
+            }
+            const monthlySubscription = 15;
+            const pricePerKwh = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
+            const annualKwh = Math.round(((bill - monthlySubscription) * 12) / pricePerKwh);
+            const clamped = Math.max(1000, Math.min(100000, annualKwh));
+            resultSpan.textContent = clamped.toLocaleString('en-US');
+            resultDiv.classList.remove('hidden');
+            document.getElementById('resConsumption').value = clamped;
+        }
+
+        function computeEstimation() {
+            const persons = parseInt(document.getElementById('consoEstPersons').value) || 4;
+            const housing = document.getElementById('consoEstHousing').value;
+            const heating = document.getElementById('consoEstHeating').value;
+            const surface = parseInt(document.getElementById('consoEstSurface').value) || 100;
+
+            let base = 1100 * persons;
+            if (housing === 'house') base *= 1.2;
+            if (heating === 'electric') {
+                base += surface * 110;
+            } else if (heating === 'heatpump') {
+                base += surface * 40;
+            }
+
+            const result = Math.round(base / 100) * 100;
+            const clamped = Math.max(1000, Math.min(100000, result));
+            document.getElementById('consoEstKwh').textContent = clamped.toLocaleString('en-US');
+            document.getElementById('resConsumption').value = clamped;
+        }
+        // --- End Lot 5 ---
 
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('hidden');
@@ -1327,6 +1534,15 @@
             document.getElementById('resPriceIncrease').value = '2.5';
             document.getElementById('resDiscount').value = '4';
             document.getElementById('resBatteryToggle').checked = false;
+            // Reset consumption input mode to kWh
+            switchConsoMode('kwh');
+            document.querySelector('input[name="consoMode"][value="kwh"]').checked = true;
+            document.getElementById('consoBillInput').value = '';
+            document.getElementById('consoBillResult').classList.add('hidden');
+            document.getElementById('consoEstPersons').value = '4';
+            document.getElementById('consoEstHousing').value = 'house';
+            document.getElementById('consoEstHeating').value = 'gas';
+            document.getElementById('consoEstSurface').value = '100';
             toggleBatteryCapacity();
         }
 
@@ -1561,14 +1777,14 @@
             const savingsRounded = Math.round(totalSavings);
             let narrativeText = '';
             if (level === 'good') {
-                narrativeText = 'With a payback of ' + payback + ' years and an IRR of ' + irrPct.toFixed(1) + '%, this project has a favourable financial profile (25-year NPV: €' + Math.round(fin.totalSavings25y).toLocaleString('en-US') + '). You self-consume ' + autoRate.toFixed(0) + '% of your production, saving an estimated €' + savingsRounded.toLocaleString('en-US') + '/year.';
+                narrativeText = 'With a payback period of ' + payback + ' years and an IRR of ' + irrPct.toFixed(1) + '%, this project has a favourable financial profile (25-year net gains: €' + Math.round(fin.totalSavings25y).toLocaleString('en-US') + '). You self-consume ' + autoRate.toFixed(0) + '% of your production, saving an estimated €' + savingsRounded.toLocaleString('en-US') + '/year.';
                 if (batteryCapacity > 0) {
                     narrativeText += ' The battery (' + batteryCapacity + ' kWh) boosts your autonomy without significantly reducing profitability.';
                 } else {
                     narrativeText += ' Adding a battery could increase self-consumption — evaluate against the extra cost.';
                 }
             } else if (level === 'medium') {
-                narrativeText = 'The project is profitable (payback in ' + payback + ' years, IRR ' + irrPct.toFixed(1) + '%) for a net investment of €' + Math.round(netCost).toLocaleString('en-US') + '. The margin is sensitive to cost and tariff assumptions.';
+                narrativeText = 'The project is profitable (payback period of ' + payback + ' years, IRR ' + irrPct.toFixed(1) + '%) for a net investment of €' + Math.round(netCost).toLocaleString('en-US') + '. The margin is sensitive to cost and tariff assumptions.';
                 if (autoRate < 40) {
                     narrativeText += ' The self-consumption rate of ' + autoRate.toFixed(0) + '% limits direct savings.';
                 } else {
@@ -1581,7 +1797,7 @@
                     }
                 }
             } else {
-                narrativeText = 'As configured, the project is hard to justify: estimated payback ' + (payback < 50 ? payback + ' years' : 'over 25 years') + ' and IRR of ' + irrPct.toFixed(1) + '%, below a standard investment return.';
+                narrativeText = 'As configured, the project is hard to justify: estimated payback period of ' + (payback < 50 ? payback + ' years' : 'over 25 years') + ' and IRR of ' + irrPct.toFixed(1) + '%, below a standard investment return.';
                 if (prodRatio > 200) {
                     narrativeText += ' The system appears oversized relative to your consumption (' + prodRatio + '% of demand).';
                 } else if (autoRate < 30) {
@@ -1983,7 +2199,7 @@
             <h4 class="text-white font-semibold mt-6 mb-2">🏦 Financial Summary</h4>
             <p>The <strong>total installation cost</strong> is estimated at <strong>${costInst} €</strong> (panels + inverter + installation + grid connection${hasBattery ? ' + battery' : ''}). After deducting your country's subsidies and incentives, the <strong>net cost</strong> is <strong>${costNet} €</strong>.</p>
             <p>Your installation will be <strong>paid back in ${payback} years</strong>: this is the number of years needed for cumulative savings to cover your net investment. After that point, every euro saved is pure profit.</p>
-            <p>Over 25 years (typical panel lifespan), the <strong>Net Present Value (NPV)</strong> is <strong>${npv} €</strong>. The NPV represents the total net gain over the installation's lifetime, accounting for annual electricity price increases.</p>
+            <p>Over 25 years (typical panel lifespan), the <strong>cumulative net gains</strong> are <strong>${npv} €</strong>. This is the sum of annual savings minus initial net cost, factoring in electricity price increases and panel degradation (not discounted).</p>
             <p>The <strong>Internal Rate of Return (IRR)</strong> is <strong>${tri}%</strong>. This is the equivalent annual return on your investment. For comparison, a savings account yields around 3%/year: an IRR above 3% means solar is more profitable than a bank deposit.</p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">🌍 Environmental Impact</h4>
@@ -2177,7 +2393,7 @@
                     var items = [
                         ['kWp', 'Kilowatt-peak: maximum panel power under standard conditions (1,000 W/m\u00b2, 25\u00b0C).'],
                         ['kWh', 'Kilowatt-hour: unit of energy. 1 kWh = 1,000 watts for 1 hour.'],
-                        ['NPV', 'Net Present Value: sum of discounted cash flows over 25 years.'],
+                        ['Net gains', 'Cumulative net gains over 25 years (not discounted).'],
                         ['IRR', 'Internal Rate of Return: equivalent annual yield. Compare with bank savings (~3%).'],
                         ['PVGIS', 'European solar irradiation database (European Commission).'],
                         ['Self-conso.', 'Share of solar production consumed on-site rather than fed into the grid.']
@@ -2202,7 +2418,7 @@
                 var cardW = (W - 2 * M - 9) / 4;
                 var savedY = y;
                 drawKpiCard(M, cardW, 'Annual savings', getText('resAnnualSavings'), '\u20ac/yr', C.green);
-                drawKpiCard(M + cardW + 3, cardW, 'Payback', getText('resPayback'), 'years', C.amber);
+                drawKpiCard(M + cardW + 3, cardW, 'Payback period', getText('resPayback'), 'years', C.amber);
                 drawKpiCard(M + 2 * (cardW + 3), cardW, 'Self-consumption', getText('resAutoprodRate') !== '\u2014' ? getText('resAutoprodRate') : '\u2014', '%', C.amber);
                 drawKpiCard(M + 3 * (cardW + 3), cardW, 'IRR', getText('resTri'), '%', C.green);
                 y = savedY + 28;
@@ -2243,8 +2459,8 @@
                 doc.setFontSize(7.5); doc.setTextColor(...C.slate);
                 var quickRead = 'Production: ' + getText('resProduction') + ' kWh/yr  |  '
                     + 'Savings: ' + getText('resAnnualSavings') + ' \u20ac/yr  |  '
-                    + 'Payback: ' + getText('resPayback') + ' yrs  |  '
-                    + 'NPV 25yr: ' + getText('resNpv') + ' \u20ac';
+                    + 'Payback period: ' + getText('resPayback') + ' yrs  |  '
+                    + 'Net gains 25yr: ' + getText('resNpv') + ' \u20ac';
                 var qrLines = doc.splitTextToSize(clean(quickRead), W - 2 * M - 8);
                 doc.text(qrLines, M + 4, y + 9);
                 y += 20;
@@ -2269,7 +2485,7 @@
                     drawSectionTitle('Self-consumption Details');
                     drawLabelValueRows([
                         ['Self-consumption rate', autoRateDisplay + ' %'],
-                        ['Self-production rate', autoprodDisplay + ' %'],
+                        ['Solar coverage', autoprodDisplay + ' %'],
                         ['Direct self-consumption', getText('resAutoDirect') + ' kWh'],
                         ['Via battery', getText('resAutoBattery') + ' kWh'],
                         ['Grid injection', getText('resInjection') + ' kWh'],
@@ -2283,7 +2499,7 @@
                     ['Gross installation cost', getText('resInstallCost') + ' \u20ac'],
                     ['Net cost after subsidies', getText('resNetCost') + ' \u20ac'],
                     ['Payback period', getText('resPayback') + ' years'],
-                    ['NPV (25 years)', getText('resNpv') + ' \u20ac'],
+                    ['Net gains (25 years)', getText('resNpv') + ' \u20ac'],
                     ['IRR', getText('resTri') + ' %'],
                     ['CO2 avoided', getText('resCo2') + ' kg/yr'],
                 ]);
@@ -2313,7 +2529,7 @@
                     doc.setFontSize(7.5); doc.setTextColor(...C.dark);
                     doc.text('Self-conso: ' + noBatAuto, colX1 + 4, y + 9);
                     doc.text('Savings: ' + noBatSav, colX1 + 4, y + 14);
-                    doc.text('Payback: ' + noBatPay, colX1 + 4, y + 19);
+                    doc.text('Payback period: ' + noBatPay, colX1 + 4, y + 19);
                     doc.setFillColor(255, 251, 235);
                     doc.setDrawColor(...C.amber); doc.setLineWidth(0.4);
                     doc.roundedRect(colX2, y - 2, colW, 24, 2, 2, 'FD');
@@ -2324,7 +2540,7 @@
                     doc.setFontSize(7.5); doc.setTextColor(...C.dark);
                     doc.text('Self-conso: ' + batAuto, colX2 + 4, y + 9);
                     doc.text('Savings: ' + batSav, colX2 + 4, y + 14);
-                    doc.text('Payback: ' + batPay, colX2 + 4, y + 19);
+                    doc.text('Payback period: ' + batPay, colX2 + 4, y + 19);
                     y += 26;
                     if (batConc && batConc !== '\u2014') {
                         doc.setFontSize(7); doc.setTextColor(...C.muted);
