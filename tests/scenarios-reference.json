@@ -1,0 +1,155 @@
+{
+  "_meta": {
+    "description": "Scénarios de non-régression pour le simulateur solaire SolarMetrics",
+    "created": "2026-03-24",
+    "phase": "Phase 2 UX — Lot 1",
+    "note": "Ces scénarios documentent les résultats attendus AVANT les modifications UX. Aucune formule ni logique métier n'est modifiée dans ce lot. Les résultats doivent rester identiques après patch."
+  },
+  "thresholds": {
+    "GOOD_PAYBACK": 12,
+    "MEDIUM_PAYBACK": 18,
+    "GOOD_IRR": 0.04,
+    "MEDIUM_IRR": 0.02
+  },
+  "labels": {
+    "before": {
+      "FR": {
+        "payback": "Amortissement",
+        "npv": "VAN 25 ans",
+        "selfProductionRate": "Taux autoproduction"
+      },
+      "EN": {
+        "payback": "Payback",
+        "npv": "NPV 25 years",
+        "selfProductionRate": "Self-production rate"
+      }
+    },
+    "after": {
+      "FR": {
+        "payback": "Temps de retour",
+        "npv": "Gains nets 25 ans",
+        "selfProductionRate": "Couverture solaire"
+      },
+      "EN": {
+        "payback": "Payback period",
+        "npv": "Net gains 25 years",
+        "selfProductionRate": "Solar coverage"
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "id": "S1-FR-standard",
+      "name": "France standard — 3 kWc, sans batterie",
+      "description": "Cas de base résidentiel français, région parisienne, sans batterie",
+      "inputs": {
+        "country": "FR",
+        "lat": 48.8566,
+        "lon": 2.3522,
+        "surface_m2": 18,
+        "consumption_kwh": 5000,
+        "battery": false,
+        "orientation": 180,
+        "tilt": 30,
+        "shading": 0,
+        "panelType": "monocrystalline",
+        "electricityPrice": 0.2664,
+        "feedInTariff": 0.04,
+        "installCostOverride": null,
+        "subsidies": 3000,
+        "degradation": 0.5,
+        "priceIncrease": 2.5,
+        "discountRate": 4,
+        "profile": "family4"
+      },
+      "expectedVerdict": "medium",
+      "validation": "Vérifier que le verdict est 'medium', que le temps de retour est entre 10-18 ans, que le TRI est autour de 2-5%",
+      "note": "Résultats exacts dépendent de l'API PVGIS. Vérifier l'ordre de grandeur, pas les décimales."
+    },
+    {
+      "id": "S2-FR-sud-batterie",
+      "name": "France sud — 6 kWc, avec batterie",
+      "description": "Maison dans le sud de la France, grosse installation avec batterie",
+      "inputs": {
+        "country": "FR",
+        "lat": 43.6,
+        "lon": 3.88,
+        "surface_m2": 36,
+        "consumption_kwh": 8000,
+        "battery": true,
+        "batteryCapacity": 5,
+        "orientation": 180,
+        "tilt": 30,
+        "shading": 0,
+        "panelType": "monocrystalline",
+        "electricityPrice": 0.2664,
+        "feedInTariff": 0.04,
+        "installCostOverride": null,
+        "subsidies": 3000,
+        "degradation": 0.5,
+        "priceIncrease": 2.5,
+        "discountRate": 4,
+        "profile": "family4"
+      },
+      "expectedVerdict": "good",
+      "validation": "Verdict 'good' attendu grâce à meilleur ensoleillement + consommation élevée. Temps de retour < 12 ans probable.",
+      "note": "La batterie peut allonger légèrement le temps de retour mais améliore l'autoconsommation."
+    },
+    {
+      "id": "S3-DE-standard",
+      "name": "Allemagne standard — Berlin, sans batterie",
+      "description": "Cas résidentiel allemand, ensoleillement moyen, prix élec élevé",
+      "inputs": {
+        "country": "DE",
+        "lat": 52.52,
+        "lon": 13.405,
+        "surface_m2": 25,
+        "consumption_kwh": 4500,
+        "battery": false,
+        "orientation": 180,
+        "tilt": 35,
+        "shading": 0,
+        "panelType": "monocrystalline",
+        "electricityPrice": null,
+        "feedInTariff": null,
+        "installCostOverride": null,
+        "subsidies": null,
+        "degradation": 0.5,
+        "priceIncrease": 2.5,
+        "discountRate": 4,
+        "profile": "family4"
+      },
+      "expectedVerdict": "medium",
+      "validation": "Les valeurs null signifient 'utiliser les défauts pays de solar-data.js'. Vérifier que les prix DE sont bien appliqués.",
+      "note": "Ensoleillement Berlin ~950-1050 kWh/kWc. Prix élec DE élevé (~0.40€) compense le productible moindre."
+    },
+    {
+      "id": "S4-GB-defavorable",
+      "name": "UK nord — petit système, conditions défavorables",
+      "description": "Installation sous-dimensionnée dans le nord de l'Angleterre, conditions difficiles",
+      "inputs": {
+        "country": "GB",
+        "lat": 53.48,
+        "lon": -2.24,
+        "surface_m2": 10,
+        "consumption_kwh": 3000,
+        "battery": false,
+        "orientation": 270,
+        "tilt": 15,
+        "shading": 20,
+        "panelType": "polycrystalline",
+        "electricityPrice": null,
+        "feedInTariff": null,
+        "installCostOverride": null,
+        "subsidies": 0,
+        "degradation": 0.5,
+        "priceIncrease": 2.5,
+        "discountRate": 4,
+        "profile": "couple"
+      },
+      "expectedVerdict": "poor",
+      "validation": "Verdict 'poor' attendu : orientation ouest, faible inclinaison, ombrage 20%, pas de subventions, poly au lieu de mono. Temps de retour > 18 ans probable.",
+      "note": "Ce scénario teste les conditions défavorables combinées. Le verdict v2 exige 2 indicateurs défavorables — ici payback long ET TRI faible attendus."
+    }
+  ]
+}
