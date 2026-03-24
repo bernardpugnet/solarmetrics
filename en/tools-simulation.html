@@ -1073,6 +1073,7 @@
         // ══════════════════════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
+            detectUserLocation();  // Auto-detect user location
             updateLocationData();
             updateEurostatPrices();
             document.getElementById('menuBtn').addEventListener('click', toggleMobileMenu);
@@ -1127,7 +1128,55 @@
             document.getElementById('irradianceEstimate').classList.remove('hidden');
         }
 
-        function reverseGeocode(lat, lon) {
+        
+        function detectUserLocation() {
+            // Try browser Geolocation API first (precise but requires permission)
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        updateMapLocation(lat, lon);
+                    },
+                    function(error) {
+                        // Permission denied or error — fallback to IP geolocation
+                        detectLocationByIP();
+                    },
+                    { timeout: 3000, enableHighAccuracy: false }
+                );
+            } else {
+                // No geolocation API available — fallback to IP
+                detectLocationByIP();
+            }
+        }
+
+        function detectLocationByIP() {
+            // Fallback: use IP-based geolocation (silent, approximate)
+            fetch('https://ip-api.com/json/?fields=lat,lon,country,city')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.lat && data.lon) {
+                        updateMapLocation(data.lat, data.lon);
+                    }
+                })
+                .catch(e => console.log('IP geolocation failed:', e));
+        }
+
+        function updateMapLocation(lat, lon) {
+            // Update map marker and input fields
+            if (map && marker) {
+                map.setView([lat, lon], 10);
+                marker.setLatLng([lat, lon]);
+            }
+            document.getElementById('resLatitude').value = lat.toFixed(4);
+            document.getElementById('resLongitude').value = lon.toFixed(4);
+            // Detect country from coordinates
+            reverseGeocode(lat, lon);
+            // Update irradiance estimate
+            updateIrradianceEstimate(lat);
+        }
+
+function reverseGeocode(lat, lon) {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=en`;
             fetch(url)
                 .then(r => r.json())
