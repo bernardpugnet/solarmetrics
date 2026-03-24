@@ -1108,6 +1108,7 @@
         // ══════════════════════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
+            detectUserLocation();  // Détection automatique de la localisation
             updateLocationData();
             updateEurostatPrices();
             document.getElementById('menuBtn').addEventListener('click', toggleMobileMenu);
@@ -1165,7 +1166,55 @@
             document.getElementById('irradianceEstimate').classList.remove('hidden');
         }
 
-        function reverseGeocode(lat, lon) {
+        
+        function detectUserLocation() {
+            // Essayer d'abord l'API Geolocation du navigateur (précis mais demande permission)
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        updateMapLocation(lat, lon);
+                    },
+                    function(error) {
+                        // Permission refusée ou erreur — fallback sur géolocalisation par IP
+                        detectLocationByIP();
+                    },
+                    { timeout: 3000, enableHighAccuracy: false }
+                );
+            } else {
+                // API Geolocation non disponible — fallback sur IP
+                detectLocationByIP();
+            }
+        }
+
+        function detectLocationByIP() {
+            // Fallback: géolocalisation par IP (silencieuse, approximative)
+            fetch('https://ip-api.com/json/?fields=lat,lon,country,city')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.lat && data.lon) {
+                        updateMapLocation(data.lat, data.lon);
+                    }
+                })
+                .catch(e => console.log('Géolocalisation IP échouée:', e));
+        }
+
+        function updateMapLocation(lat, lon) {
+            // Mettre à jour le marqueur de la carte et les champs input
+            if (map && marker) {
+                map.setView([lat, lon], 10);
+                marker.setLatLng([lat, lon]);
+            }
+            document.getElementById('resLatitude').value = lat.toFixed(4);
+            document.getElementById('resLongitude').value = lon.toFixed(4);
+            // Détecter le pays à partir des coordonnées
+            reverseGeocode(lat, lon);
+            // Mettre à jour l'estimation d'irradiance
+            updateIrradianceEstimate(lat);
+        }
+
+function reverseGeocode(lat, lon) {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
             fetch(url)
                 .then(r => r.json())
