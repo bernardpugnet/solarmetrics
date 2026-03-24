@@ -924,6 +924,61 @@
                         </div>
                     </div>
 
+
+                    <!-- Lot 6: Sensitivity Analysis -->
+                    <details id="sensitivity-section" class="hidden mb-8 bg-slate-800/50 rounded-2xl border border-slate-700/50 group">
+                        <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                &#x1F4CA; Analyse de sensibilité
+                            </h3>
+                            <span class="text-[12px] text-slate-500">Que se passe-t-il si les hypothèses varient de ±15 % ?</span>
+                        </summary>
+                        <div class="px-4 pb-4">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b border-slate-700/50">
+                                            <th class="text-left text-slate-400 py-2 px-3 text-[12px] font-medium">Scénario</th>
+                                            <th class="text-center text-slate-400 py-2 px-3 text-[12px] font-medium">Prix élec.</th>
+                                            <th class="text-center text-slate-400 py-2 px-3 text-[12px] font-medium">Coût install.</th>
+                                            <th class="text-center text-slate-400 py-2 px-3 text-[12px] font-medium">Production</th>
+                                            <th class="text-center text-slate-400 py-2 px-3 text-[12px] font-medium">Retour</th>
+                                            <th class="text-center text-slate-400 py-2 px-3 text-[12px] font-medium">Gains 25 ans</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-slate-700/30">
+                                            <td class="py-2 px-3 text-red-400 font-medium text-[12px]">&#x2B07; Pessimiste</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-400" id="sens-pess-price">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-400" id="sens-pess-cost">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-400" id="sens-pess-prod">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[13px] font-semibold text-red-400" id="sens-pess-payback">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[13px] font-semibold text-red-400" id="sens-pess-gains">&#x2014;</td>
+                                        </tr>
+                                        <tr class="border-b border-slate-700/30 bg-slate-700/20">
+                                            <td class="py-2 px-3 text-amber-400 font-medium text-[12px]">&#x25CF; Base (actuel)</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-300" id="sens-base-price">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-300" id="sens-base-cost">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-300" id="sens-base-prod">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[13px] font-semibold text-amber-400" id="sens-base-payback">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[13px] font-semibold text-amber-400" id="sens-base-gains">&#x2014;</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-3 text-green-400 font-medium text-[12px]">&#x2B06; Optimiste</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-400" id="sens-opti-price">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-400" id="sens-opti-cost">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[12px] text-slate-400" id="sens-opti-prod">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[13px] font-semibold text-green-400" id="sens-opti-payback">&#x2014;</td>
+                                            <td class="py-2 px-3 text-center text-[13px] font-semibold text-green-400" id="sens-opti-gains">&#x2014;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="mt-3 text-[11px] text-slate-500 leading-snug">Le sc&#xe9;nario pessimiste combine : prix &#xe9;lec. &#x2212;15 %, co&#xfb;t installation +15 %, production &#x2212;15 %. L&#x2019;optimiste inverse ces variations. Cela donne une fourchette r&#xe9;aliste autour de votre simulation.</p>
+                        </div>
+                    </details>
+
                     <!-- Tab Navigation + PDF button -->
                     <div class="flex items-center justify-between border-b border-slate-700 mb-8">
                         <div class="flex gap-2 overflow-x-auto">
@@ -1561,6 +1616,44 @@ function reverseGeocode(lat, lon) {
         }
         // --- End Lot 5 ---
 
+        // --- Lot 6: Sensitivity analysis ---
+        function updateSensitivity(simResults, elecPrice, installCost, batteryCost, priceRevente, priceIncrease) {
+            const section = document.getElementById('sensitivity-section');
+            if (!section || !simResults) return;
+            section.classList.remove('hidden');
+            const variation = 0.15;
+            const scenarios = [
+                { key: 'pess', priceFactor: 1 - variation, costFactor: 1 + variation, prodFactor: 1 - variation },
+                { key: 'base', priceFactor: 1, costFactor: 1, prodFactor: 1 },
+                { key: 'opti', priceFactor: 1 + variation, costFactor: 1 - variation, prodFactor: 1 + variation }
+            ];
+            scenarios.forEach(sc => {
+                const scPrice = elecPrice * sc.priceFactor;
+                const scCost = installCost * sc.costFactor;
+                const scProd = simResults.annual.production * sc.prodFactor;
+                const prodRatio = sc.prodFactor;
+                const scaledAnnual = {
+                    production: simResults.annual.production * prodRatio,
+                    autoDirect: simResults.annual.autoDirect * prodRatio,
+                    autoBattery: simResults.annual.autoBattery * prodRatio,
+                    injection: simResults.annual.injection * prodRatio,
+                    consumption: simResults.annual.consumption
+                };
+                const fin = window.AutoconsommationSimulator.calculateFinancials(scaledAnnual, {
+                    priceElecKwh: scPrice, priceReventeKwh: priceRevente,
+                    costPv: scCost, costBattery: batteryCost * sc.costFactor,
+                    priceIncreasePerYear: priceIncrease,
+                    degradationPv: 0.005, degradationBattery: 0.02, years: 25
+                });
+                document.getElementById('sens-' + sc.key + '-price').textContent = scPrice.toFixed(4) + ' \u20ac';
+                document.getElementById('sens-' + sc.key + '-cost').textContent = Math.round(scCost).toLocaleString('fr-FR') + ' \u20ac';
+                document.getElementById('sens-' + sc.key + '-prod').textContent = Math.round(scProd).toLocaleString('fr-FR') + ' kWh';
+                document.getElementById('sens-' + sc.key + '-payback').textContent = fin.paybackYear ? fin.paybackYear + ' ans' : '> 25 ans';
+                document.getElementById('sens-' + sc.key + '-gains').textContent = Math.round(fin.totalSavings25y).toLocaleString('fr-FR') + ' \u20ac';
+            });
+        }
+        // --- End Lot 6 ---
+
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('hidden');
         }
@@ -1773,6 +1866,9 @@ function reverseGeocode(lat, lon) {
                 // Also generate financial charts for the financial tab
                 const autoTotal = simResults.annual.autoDirect + simResults.annual.autoBattery;
                 generateFinancialCharts(netCost, installCost, financials.paybackYear || 99, simResults.annual.production, autoTotal, simResults.annual.injection);
+
+                // Lot 6: Sensitivity analysis
+                updateSensitivity(simResults, elecPrice, installCost, batteryCost, priceRevente, priceIncrease);
 
                 const isRecalc = document.getElementById('results-section').style.display === 'block';
                 document.getElementById('results-section').style.display = 'block';
