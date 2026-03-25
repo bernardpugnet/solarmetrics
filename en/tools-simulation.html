@@ -1712,6 +1712,10 @@ function reverseGeocode(lat, lon) {
                     batteryCost = bcost;
                 }
 
+                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
+                const totalInvestment = installCost + batteryCost;
+                const netCost = totalInvestment - subsidies;
+
                 const financials = window.AutoconsommationSimulator.calculateFinancials(
                     simResults.annual,
                     {
@@ -1719,6 +1723,7 @@ function reverseGeocode(lat, lon) {
                         priceReventeKwh: priceRevente,
                         costPv: installCost,
                         costBattery: batteryCost,
+                        subsidies: subsidies,
                         priceIncreasePerYear: priceIncrease,
                         degradationPv: 0.005,
                         degradationBattery: 0.02,
@@ -1736,9 +1741,6 @@ function reverseGeocode(lat, lon) {
                 const co2Avoided = simResults.annual.production * co2PerKwh / 1000;
 
                 // IRR calculation
-                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
-                const totalInvestment = installCost + batteryCost;
-                const netCost = totalInvestment - subsidies;
                 let irr = null;
                 try {
                     const cashFlows = [-netCost];
@@ -1979,28 +1981,28 @@ function reverseGeocode(lat, lon) {
                     const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
                     const noBatFin = window.AutoconsommationSimulator.calculateFinancials(
                         noBatSim.annual,
-                        { priceElecKwh: elecPrice, priceReventeKwh: priceRevente, costPv: installCost, costBattery: 0, priceIncreasePerYear: priceIncrease, degradationPv: 0.005, degradationBattery: 0.02, years: 25 }
+                        { priceElecKwh: elecPrice, priceReventeKwh: priceRevente, costPv: installCost, costBattery: 0, subsidies: subsidies, priceIncreasePerYear: priceIncrease, degradationPv: 0.005, degradationBattery: 0.02, years: 25 }
                     );
                     const noBatSavings = (noBatSim.annual.autoDirect) * elecPrice + noBatSim.annual.injection * priceRevente;
                     const noBatPayback = noBatFin.paybackYear || 99;
 
                     document.getElementById('vbc-no-bat-auto').textContent = noBatSim.annual.tauxAutoconsommation.toFixed(0) + '%';
                     document.getElementById('vbc-no-bat-savings').textContent = '€' + Math.round(noBatSavings).toLocaleString('en-US');
-                    document.getElementById('vbc-no-bat-payback').textContent = noBatPayback < 50 ? noBatPayback + ' yrs' : '> 25 yrs';
+                    document.getElementById('vbc-no-bat-payback').textContent = noBatPayback < 50 ? noBatPayback.toFixed(1) + ' yrs' : '> 25 yrs';
 
                     document.getElementById('vbc-bat-auto').textContent = autoRate.toFixed(0) + '%';
                     document.getElementById('vbc-bat-savings').textContent = '€' + Math.round(totalSavings).toLocaleString('en-US');
-                    document.getElementById('vbc-bat-payback').textContent = payback < 50 ? payback + ' yrs' : '> 25 yrs';
+                    document.getElementById('vbc-bat-payback').textContent = payback < 50 ? payback.toFixed(1) + ' yrs' : '> 25 yrs';
 
-                    const paybackDiff = payback - noBatPayback;
+                    const paybackDiff = Math.round((payback - noBatPayback) * 10) / 10;
                     const autoDiff = autoRate - noBatSim.annual.tauxAutoconsommation;
                     let conclusion = '';
                     if (paybackDiff > 3) {
-                        conclusion = 'The battery increases self-consumption by +' + autoDiff.toFixed(0) + ' points but extends payback by ' + paybackDiff + ' years.';
+                        conclusion = 'The battery increases self-consumption by +' + autoDiff.toFixed(0) + ' points but extends payback by ' + paybackDiff.toFixed(1) + ' years.';
                     } else if (paybackDiff <= 1) {
-                        conclusion = 'The battery improves self-consumption by +' + autoDiff.toFixed(0) + ' points without significantly reducing profitability.';
+                        conclusion = 'The battery improves self-consumption by +' + autoDiff.toFixed(0) + ' points without significantly reducing profitability (payback +' + paybackDiff.toFixed(1) + ' yr).';
                     } else {
-                        conclusion = 'The battery adds +' + autoDiff.toFixed(0) + ' points of self-consumption for ' + paybackDiff + ' extra year(s) of payback.';
+                        conclusion = 'The battery adds +' + autoDiff.toFixed(0) + ' points of self-consumption for ' + paybackDiff.toFixed(1) + ' extra year(s) of payback.';
                     }
                     document.getElementById('vbc-conclusion').textContent = conclusion;
                     document.getElementById('verdict-battery-comparison').classList.remove('hidden');
@@ -2040,7 +2042,7 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resAnnualSavings').textContent = Math.round(totalSavings).toLocaleString('en-US');
             document.getElementById('resInstallCost').textContent = Math.round(cost + batCost).toLocaleString('en-US');
             document.getElementById('resNetCost').textContent = Math.round(netCost).toLocaleString('en-US');
-            document.getElementById('resPayback').textContent = fin.paybackYear || '∞';
+            document.getElementById('resPayback').textContent = fin.paybackYear ? fin.paybackYear.toFixed(1) : '∞';
             document.getElementById('resNpv').textContent = Math.round(fin.totalSavings25y).toLocaleString('en-US');
             document.getElementById('resTri').textContent = irr !== null ? (irr * 100).toFixed(1) : '—';
             document.getElementById('resCo2').textContent = Math.round(co2).toLocaleString('en-US');
