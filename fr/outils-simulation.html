@@ -1885,6 +1885,10 @@ function reverseGeocode(lat, lon) {
                     batteryCost = bcost;
                 }
 
+                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
+                const totalInvestment = installCost + batteryCost;
+                const netCost = totalInvestment - subsidies;
+
                 const financials = window.AutoconsommationSimulator.calculateFinancials(
                     simResults.annual,
                     {
@@ -1892,6 +1896,7 @@ function reverseGeocode(lat, lon) {
                         priceReventeKwh: priceRevente,
                         costPv: installCost,
                         costBattery: batteryCost,
+                        subsidies: subsidies,
                         priceIncreasePerYear: priceIncrease,
                         degradationPv: 0.005,
                         degradationBattery: 0.02,
@@ -1909,9 +1914,6 @@ function reverseGeocode(lat, lon) {
                 const co2Avoided = simResults.annual.production * co2PerKwh / 1000;
 
                 // IRR calculation
-                const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
-                const totalInvestment = installCost + batteryCost;
-                const netCost = totalInvestment - subsidies;
                 let irr = null;
                 try {
                     const cashFlows = [-netCost];
@@ -2177,7 +2179,7 @@ function reverseGeocode(lat, lon) {
                     const subsidies = parseFloat(document.getElementById('resSubsidies').value) || 0;
                     const noBatFin = window.AutoconsommationSimulator.calculateFinancials(
                         noBatSim.annual,
-                        { priceElecKwh: elecPrice, priceReventeKwh: priceRevente, costPv: installCost, costBattery: 0, priceIncreasePerYear: priceIncrease, degradationPv: 0.005, degradationBattery: 0.02, years: 25 }
+                        { priceElecKwh: elecPrice, priceReventeKwh: priceRevente, costPv: installCost, costBattery: 0, subsidies: subsidies, priceIncreasePerYear: priceIncrease, degradationPv: 0.005, degradationBattery: 0.02, years: 25 }
                     );
                     const noBatNetCost = installCost - subsidies;
                     const noBatSavings = (noBatSim.annual.autoDirect) * elecPrice + noBatSim.annual.injection * priceRevente;
@@ -2188,22 +2190,22 @@ function reverseGeocode(lat, lon) {
 
                     document.getElementById('vbc-no-bat-auto').textContent = noBatSim.annual.tauxAutoconsommation.toFixed(0) + ' %';
                     document.getElementById('vbc-no-bat-savings').textContent = Math.round(noBatSavings).toLocaleString('fr-FR') + ' €';
-                    document.getElementById('vbc-no-bat-payback').textContent = noBatPayback < 50 ? noBatPayback + ' ans' : '> 25 ans';
+                    document.getElementById('vbc-no-bat-payback').textContent = noBatPayback < 50 ? noBatPayback.toFixed(1) + ' ans' : '> 25 ans';
 
                     document.getElementById('vbc-bat-auto').textContent = autoRate.toFixed(0) + ' %';
                     document.getElementById('vbc-bat-savings').textContent = Math.round(totalSavings).toLocaleString('fr-FR') + ' €';
-                    document.getElementById('vbc-bat-payback').textContent = batPayback < 50 ? batPayback + ' ans' : '> 25 ans';
+                    document.getElementById('vbc-bat-payback').textContent = batPayback < 50 ? batPayback.toFixed(1) + ' ans' : '> 25 ans';
 
                     // Conclusion
-                    const paybackDiff = batPayback - noBatPayback;
+                    const paybackDiff = Math.round((batPayback - noBatPayback) * 10) / 10;
                     const autoDiff = autoRate - noBatSim.annual.tauxAutoconsommation;
                     let conclusion = '';
                     if (paybackDiff > 3) {
-                        conclusion = 'La batterie augmente l\'autoconsommation de +' + autoDiff.toFixed(0) + ' points mais allonge le retour sur investissement de ' + paybackDiff + ' ans.';
+                        conclusion = 'La batterie augmente l\'autoconsommation de +' + autoDiff.toFixed(0) + ' points mais allonge le retour sur investissement de ' + paybackDiff.toFixed(1) + ' ans.';
                     } else if (paybackDiff <= 1) {
-                        conclusion = 'La batterie améliore l\'autoconsommation de +' + autoDiff.toFixed(0) + ' points sans dégrader significativement la rentabilité.';
+                        conclusion = 'La batterie améliore l\'autoconsommation de +' + autoDiff.toFixed(0) + ' points sans dégrader significativement la rentabilité (retour +' + paybackDiff.toFixed(1) + ' an).';
                     } else {
-                        conclusion = 'La batterie apporte +' + autoDiff.toFixed(0) + ' points d\'autoconsommation pour ' + paybackDiff + ' an(s) de retour supplémentaire.';
+                        conclusion = 'La batterie apporte +' + autoDiff.toFixed(0) + ' points d\'autoconsommation pour ' + paybackDiff.toFixed(1) + ' an(s) de retour supplémentaire.';
                     }
                     document.getElementById('vbc-conclusion').textContent = conclusion;
 
@@ -2245,7 +2247,7 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resAnnualSavings').textContent = Math.round(totalSavings).toLocaleString('fr-FR');
             document.getElementById('resInstallCost').textContent = Math.round(cost + batCost).toLocaleString('fr-FR');
             document.getElementById('resNetCost').textContent = Math.round(netCost).toLocaleString('fr-FR');
-            document.getElementById('resPayback').textContent = fin.paybackYear || '∞';
+            document.getElementById('resPayback').textContent = fin.paybackYear ? fin.paybackYear.toFixed(1) : '∞';
             document.getElementById('resNpv').textContent = Math.round(fin.totalSavings25y).toLocaleString('fr-FR');
             document.getElementById('resTri').textContent = irr !== null ? (irr * 100).toFixed(1) : '—';
             document.getElementById('resCo2').textContent = Math.round(co2).toLocaleString('fr-FR');
