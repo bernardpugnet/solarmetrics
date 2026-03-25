@@ -524,16 +524,17 @@ function calculateFinancials(annual, financialParams) {
   const {
     priceElecKwh = 0.2516,        // €/kWh default (France S2 2025, Eurostat)
     priceReventeKwh = 0.04,       // €/kWh surplus resale (OA France ≤9 kWc, T1 2026)
-    costPv = 0,                    // Total PV installation cost (€)
-    costBattery = 0,               // Total battery cost (€)
-    priceIncreasePerYear = 0.03,   // 3% annual electricity price increase
-    degradationPv = 0.005,         // 0.5%/year panel degradation
-    degradationBattery = 0.02,     // 2%/year battery degradation
-    fixedCostPerYear = 0,          // Fixed electricity subscription cost (€/year, not reducible by PV)
-    years = 25                     // Analysis period
+    costPv = 0,                   // Total PV installation cost (€)
+    costBattery = 0,              // Total battery cost (€)
+    subsidies = 0,                // Subsidies deducted from investment (€)
+    priceIncreasePerYear = 0.03,  // 3% annual electricity price increase
+    degradationPv = 0.005,        // 0.5%/year panel degradation
+    degradationBattery = 0.02,    // 2%/year battery degradation
+    fixedCostPerYear = 0,         // Fixed electricity subscription cost (€/year, not reducible by PV)
+    years = 25                    // Analysis period
   } = financialParams || {};
 
-  const totalInvestment = costPv + costBattery;
+  const totalInvestment = costPv + costBattery - subsidies;
 
   // Year 1 savings (variable part only — fixed subscription is NOT affected)
   const savingsAutoYear1 = annual.autoTotal * priceElecKwh;
@@ -554,8 +555,9 @@ function calculateFinancials(annual, financialParams) {
     const autoBatteryY = annual.autoBattery * pvFactor * batteryFactor;
     const injectionY = annual.injection * pvFactor;
 
-    const savingsY = (autoDirectY + autoBatteryY) * priceElecKwh * priceFactor
-                   + injectionY * priceReventeKwh;
+    const savingsY =
+      (autoDirectY + autoBatteryY) * priceElecKwh * priceFactor +
+      injectionY * priceReventeKwh;
 
     cumulative += savingsY;
 
@@ -566,7 +568,12 @@ function calculateFinancials(annual, financialParams) {
     });
 
     if (paybackYear === null && cumulative >= 0) {
-      paybackYear = y;
+      const prevCumulative = cumulative - savingsY;
+      if (prevCumulative < 0 && savingsY > 0) {
+        paybackYear = Math.round(((y - 1) + Math.abs(prevCumulative) / savingsY) * 10) / 10;
+      } else {
+        paybackYear = y;
+      }
     }
   }
 
