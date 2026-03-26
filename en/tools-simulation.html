@@ -402,31 +402,75 @@
     <main class="pt-16">
         <section class="py-20 bg-slate-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <div class="w-14 h-14 mx-auto mb-5 p-3.5 bg-amber-500/15 rounded-2xl">
-                        <svg class="w-full h-full text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
+                <!-- HERO — split layout: text + simulation card -->
+                <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center mb-12">
+
+                    <!-- Left column: text -->
+                    <div class="text-center lg:text-left mb-10 lg:mb-0">
+                        <div class="w-14 h-14 mx-auto lg:mx-0 mb-5 p-3.5 bg-amber-500/15 rounded-2xl">
+                            <svg class="w-full h-full text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Is solar relevant for your home?</h1>
+                        <p class="text-slate-400 max-w-xl text-base sm:text-lg leading-relaxed">Estimate production, self-consumption, savings and payback using local solar data and a full hourly simulation.</p>
+                        <!-- 3 benefit badges -->
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-3 mt-5">
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-full text-xs sm:text-sm font-medium text-slate-300">
+                                <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                Local solar data
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-full text-xs sm:text-sm font-medium text-slate-300">
+                                <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                8,760 hours simulated
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-full text-xs sm:text-sm font-medium text-slate-300">
+                                <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
+                                Clear economic analysis
+                            </span>
+                        </div>
+                        <!-- PVGIS helper line -->
+                        <p class="text-xs text-slate-500 mt-4">Full hourly simulation via <a href="https://re.jrc.ec.europa.eu/pvg_tools/" target="_blank" class="text-amber-400/70 hover:text-amber-400 underline">PVGIS</a> · Transparent and editable assumptions</p>
                     </div>
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Is solar relevant for your home?</h1>
-                    <p class="text-slate-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">Estimate production, self-consumption, savings and project economics using local solar data and a full hourly simulation.</p>
-                    <!-- 3 benefit badges -->
-                    <div class="flex flex-wrap justify-center gap-3 mt-6">
-                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-full text-xs sm:text-sm font-medium text-slate-300">
-                            <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-                            Local solar data
-                        </span>
-                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-full text-xs sm:text-sm font-medium text-slate-300">
-                            <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-                            8,760 hours simulated
-                        </span>
-                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-full text-xs sm:text-sm font-medium text-slate-300">
-                            <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
-                            Clear economic analysis
-                        </span>
+
+                    <!-- Right column: simulation card -->
+                    <div class="max-w-sm mx-auto lg:max-w-none">
+                        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 sm:p-6">
+                            <!-- Card header -->
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs text-slate-500 italic">Result preview</span>
+                                <span class="text-xs px-2.5 py-0.5 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-full font-medium">Relevant</span>
+                            </div>
+                            <!-- Project context -->
+                            <p class="text-sm text-slate-400 mb-4">France · South-facing roof · 6 kWp</p>
+                            <!-- 4 KPIs — 2×2 grid -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
+                                    <div class="text-xs text-slate-500 uppercase tracking-wide">Production</div>
+                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">5,820</div>
+                                    <div class="text-xs text-slate-500 mt-0.5">kWh/yr</div>
+                                </div>
+                                <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
+                                    <div class="text-xs text-slate-500 uppercase tracking-wide">Self-consumption</div>
+                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">68</div>
+                                    <div class="text-xs text-slate-500 mt-0.5">%</div>
+                                </div>
+                                <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
+                                    <div class="text-xs text-slate-500 uppercase tracking-wide">Savings</div>
+                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">€840</div>
+                                    <div class="text-xs text-slate-500 mt-0.5">/yr</div>
+                                </div>
+                                <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
+                                    <div class="text-xs text-slate-500 uppercase tracking-wide">Payback</div>
+                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">8.2</div>
+                                    <div class="text-xs text-slate-500 mt-0.5">years</div>
+                                </div>
+                            </div>
+                            <!-- Card footer -->
+                            <p class="text-xs text-slate-500 mt-4 text-center">Local data · Hourly simulation · Visible assumptions</p>
+                        </div>
                     </div>
-                    <!-- PVGIS helper line -->
-                    <p class="text-xs text-slate-500 mt-4 max-w-xl mx-auto">The simulation uses <a href="https://re.jrc.ec.europa.eu/pvg_tools/" target="_blank" class="text-amber-400/70 hover:text-amber-400 underline">PVGIS</a> data and models your installation hour by hour over a full year.</p>
+
                 </div>
 
                 <div id="sim-form" class="space-y-6">
