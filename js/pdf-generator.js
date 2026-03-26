@@ -167,21 +167,45 @@
             profileTelecommute: 'Teletravail',
             profileAllElectric: 'Tout electrique',
 
+            // Page 3 — Decision analysis
+            p3Title:              'Analyse decisionnelle',
+            p3WhyVerdict:         'Pourquoi ce verdict',
+            p3Strengths:          'Ce qui soutient la rentabilite',
+            p3Weaknesses:         'Ce qui limite la performance',
+            p3BatteryReading:     'Lecture de la batterie',
+            p3CheckBefore:        'Ce qu\'il faut verifier avant decision',
+            p3Recommendations:    'Recommandations',
+            p3NoBattery:          'Aucune batterie configuree dans cette simulation.',
+            p3DefaultCheck:       'Verifier les conditions locales d\'ombrage, l\'etat de la toiture et les devis d\'installateurs certifies avant tout engagement.',
+            p3DefaultCheckEn:     '',
+
+            // Page 4 — Hypotheses / method / limits
+            p4Assumptions:        'Hypotheses principales',
+            p4Method:             'Methode de calcul',
+            p4Limits:             'Limites du modele',
+            p4MethodText:         'Simulation horaire sur 8 760 heures (annee meteorologique type PVGIS/TMY). Autoconsommation calculee heure par heure en croisant production PV, profil de consommation et etat de charge batterie. Bilan financier sur 25 ans avec degradation annuelle des panneaux et de la batterie.',
+            p4LimitsText:         'Le modele ne prend pas en compte l\'ombrage reel, les pertes de cables, les variations interannuelles de meteo ni les eventuelles pannes. Les prix de l\'electricite et du rachat sont fixes a la date de simulation. Les resultats sont indicatifs et ne remplacent pas une etude sur site par un installateur qualifie.',
+            lblAssumedElecPrice:  'Prix electricite retenu',
+            lblAssumedFeedin:     'Tarif revente retenu',
+            lblAssumedIncrease:   'Hausse annuelle retenue',
+            lblDegradationPv:     'Degradation PV annuelle',
+            lblDegradationBat:    'Degradation batterie annuelle',
+            lblHorizon:           'Horizon d\'analyse',
+            lblDiscountRate:      'Taux d\'actualisation',
+
             // Misc
             no:           'Non',
             notReached:   'Non atteint',
             disclaimer:   'Ce rapport est une estimation indicative basee sur les donnees PVGIS (Commission europeenne) et les parametres moyens du pays. Les resultats reels peuvent varier selon l\'ombrage, la qualite de l\'installation, la meteo et l\'evolution des tarifs.',
             footer:       'Solar Data Atlas (c) 2024-2026 Bernard Pugnet - Donnees PVGIS - Simulation indicative, non contractuelle.',
 
-            // Glossary
+            // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
                 ['kWh', 'Kilowattheure : unite d\'energie. 1 kWh = 1 000 watts pendant 1 heure.'],
-                ['Gains nets', 'Somme cumulee des gains nets sur 25 ans (non actualisee).'],
                 ['TRI', 'Taux de Rentabilite Interne : rendement annuel equivalent. A comparer a un placement bancaire (~3 %).'],
-                ['PVGIS', 'Base de donnees europeenne d\'irradiation solaire (Commission europeenne).'],
                 ['Autoconso.', 'Part de la production solaire utilisee sur place plutot qu\'injectee au reseau.'],
-                ['Couverture sol.', 'Part de la consommation totale couverte par le solaire (autoproduction directe + batterie).'],
+                ['PVGIS', 'Base de donnees europeenne d\'irradiation solaire (Commission europeenne).'],
             ],
         },
 
@@ -282,21 +306,45 @@
             profileTelecommute: 'Remote work',
             profileAllElectric: 'All-electric',
 
+            // Page 3 — Decision analysis
+            p3Title:              'Decision analysis',
+            p3WhyVerdict:         'Why this verdict',
+            p3Strengths:          'What supports profitability',
+            p3Weaknesses:         'What limits performance',
+            p3BatteryReading:     'Battery assessment',
+            p3CheckBefore:        'What to check before deciding',
+            p3Recommendations:    'Recommendations',
+            p3NoBattery:          'No battery configured in this simulation.',
+            p3DefaultCheck:       'Check local shading conditions, roof condition and quotes from certified installers before committing.',
+            p3DefaultCheckEn:     '',
+
+            // Page 4 — Assumptions / method / limits
+            p4Assumptions:        'Key assumptions',
+            p4Method:             'Calculation method',
+            p4Limits:             'Model limitations',
+            p4MethodText:         'Hourly simulation over 8,760 hours (PVGIS/TMY typical meteorological year). Self-consumption calculated hour by hour, crossing PV production, consumption profile and battery state of charge. Financial analysis over 25 years with annual degradation of panels and battery.',
+            p4LimitsText:         'The model does not account for actual shading, cable losses, year-to-year weather variations or potential equipment failures. Electricity and feed-in prices are fixed at simulation date. Results are indicative and do not replace an on-site assessment by a qualified installer.',
+            lblAssumedElecPrice:  'Assumed electricity price',
+            lblAssumedFeedin:     'Assumed feed-in tariff',
+            lblAssumedIncrease:   'Assumed annual increase',
+            lblDegradationPv:     'Annual PV degradation',
+            lblDegradationBat:    'Annual battery degradation',
+            lblHorizon:           'Analysis horizon',
+            lblDiscountRate:      'Discount rate',
+
             // Misc
             no:           'No',
             notReached:   'Not reached',
             disclaimer:   'This report is an indicative estimate based on PVGIS data (European Commission) and country-average parameters. Actual results may vary depending on shading, installation quality, weather and tariff evolution.',
             footer:       'Solar Data Atlas (c) 2024-2026 Bernard Pugnet - PVGIS data - Indicative simulation, non-contractual.',
 
-            // Glossary
+            // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWp', 'Kilowatt-peak: maximum panel power under standard conditions (1,000 W/m2, 25 C).'],
                 ['kWh', 'Kilowatt-hour: unit of energy. 1 kWh = 1,000 watts for 1 hour.'],
-                ['Net gains', 'Cumulative net gains over 25 years (non-discounted).'],
                 ['IRR', 'Internal Rate of Return: equivalent annual return. Compare with bank deposits (~3%).'],
-                ['PVGIS', 'European solar irradiation database (European Commission).'],
                 ['Self-cons.', 'Share of solar production used on-site rather than injected to the grid.'],
-                ['Solar cov.', 'Share of total consumption covered by solar (direct self-consumption + battery).'],
+                ['PVGIS', 'European solar irradiation database (European Commission).'],
             ],
         },
     };
@@ -927,14 +975,304 @@
         }
     }
 
-    /** Client page 3: Narrative + battery comparison */
-    function renderClientPage3(doc, ctx, data) {
-        // TODO Step 4: implement
+    // -----------------------------------------------------------------
+    //  Helper: drawMiniBlock
+    //  Draws a titled mini-block with a short text body.
+    //  Used for the structured analysis blocks on page 3.
+    // -----------------------------------------------------------------
+
+    /**
+     * Draws a titled text block: bold subtitle + body lines.
+     * Handles page breaks before drawing.
+     *
+     * @param {string} title - block subtitle
+     * @param {string|Array} body  - text string or array of strings (bullet lines)
+     */
+    function drawMiniBlock(doc, ctx, title, body) {
+        if (!body || (Array.isArray(body) && body.length === 0)) return;
+
+        var textStr = Array.isArray(body) ? body.join('\n') : String(body);
+        doc.setFontSize(8);
+        var bodyLines = doc.splitTextToSize(clean(textStr), PAGE_W - 2 * M - 8);
+        var neededH = 10 + bodyLines.length * 3.5;
+
+        checkPageBreak(doc, ctx, neededH);
+
+        // Subtitle
+        doc.setFontSize(9);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(title), M + 2, ctx.y);
+        doc.setFont('helvetica', 'normal');
+        ctx.y += 1.5;
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.line(M + 2, ctx.y, M + 50, ctx.y);
+        ctx.y += 4;
+
+        // Body
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(bodyLines, M + 4, ctx.y);
+        ctx.y += bodyLines.length * 3.5 + 5;
     }
 
-    /** Client page 4: Sensitivity + glossary + disclaimer */
+    /**
+     * Builds a strength sentence from numeric data.
+     * Returns an array of short factual lines.
+     */
+    function buildStrengths(data, L, lang) {
+        var lines = [];
+        var fin = data.financial;
+        var prod = data.production;
+        var fp = data.financialParams;
+
+        // Good yield
+        if (prod.perKwc >= 1100) {
+            lines.push('- ' + L.lblProdPerKwc + ' : ' + fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc
+                + (lang === 'fr' ? ' (bon gisement solaire)' : ' (good solar resource)'));
+        }
+        // High self-consumption
+        if (prod.autoconsoRate >= 50) {
+            lines.push('- ' + L.lblAutoRate + ' : ' + fmtNum(prod.autoconsoRate, 1, lang) + '%'
+                + (lang === 'fr' ? ' (valorisation locale forte)' : ' (strong local value)'));
+        }
+        // Good payback
+        if (fin.payback !== null && fin.payback <= 12) {
+            lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
+                + (lang === 'fr' ? ' (retour rapide)' : ' (fast return)'));
+        }
+        // Positive IRR
+        if (fin.irr !== null && fin.irr >= 4) {
+            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr, 1, lang) + '%'
+                + (lang === 'fr' ? ' (rendement competitif)' : ' (competitive return)'));
+        }
+        // Significant 25y gains
+        if (fin.totalSavings25y > fp.netCost * 1.5) {
+            lines.push('- ' + L.lblTotalGains + ' : ' + fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur);
+        }
+        // Fallback
+        if (lines.length === 0) {
+            lines.push(lang === 'fr'
+                ? '- Les parametres ne font pas ressortir de point fort marque dans cette configuration.'
+                : '- The parameters do not highlight a strong advantage in this configuration.');
+        }
+        return lines;
+    }
+
+    /**
+     * Builds weakness lines from numeric data.
+     */
+    function buildWeaknesses(data, L, lang) {
+        var lines = [];
+        var fin = data.financial;
+        var prod = data.production;
+
+        // Low yield
+        if (prod.perKwc < 900) {
+            lines.push('- ' + L.lblProdPerKwc + ' : ' + fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc
+                + (lang === 'fr' ? ' (gisement solaire faible)' : ' (low solar resource)'));
+        }
+        // Low self-consumption
+        if (prod.autoconsoRate < 30) {
+            lines.push('- ' + L.lblAutoRate + ' : ' + fmtNum(prod.autoconsoRate, 1, lang) + '%'
+                + (lang === 'fr' ? ' (forte injection, faible valorisation locale)' : ' (high injection, low local value)'));
+        }
+        // Long or no payback
+        if (fin.payback === null) {
+            lines.push(lang === 'fr'
+                ? '- Temps de retour non atteint sur 25 ans'
+                : '- Payback period not reached within 25 years');
+        } else if (fin.payback > 15) {
+            lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
+                + (lang === 'fr' ? ' (retour lent)' : ' (slow return)'));
+        }
+        // Low IRR
+        if (fin.irr !== null && fin.irr < 2) {
+            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr, 1, lang) + '%'
+                + (lang === 'fr' ? ' (rendement inferieur au cout du capital)' : ' (return below cost of capital)'));
+        }
+        // Fallback
+        if (lines.length === 0) {
+            lines.push(lang === 'fr'
+                ? '- Aucun point faible majeur identifie dans cette configuration.'
+                : '- No major weakness identified in this configuration.');
+        }
+        return lines;
+    }
+
+    /**
+     * Builds a battery reading block.
+     */
+    function buildBatteryReading(data, L, lang) {
+        var flags = data.displayFlags;
+        if (!flags.hasBattery) return [L.p3NoBattery];
+
+        var lines = [];
+        var bc = data.batteryComparison;
+        if (bc) {
+            var diffAuto = fmtNum(bc.autoDiffPoints, 1, lang);
+            lines.push(lang === 'fr'
+                ? '- La batterie augmente l\'autoconsommation de +' + diffAuto + ' points.'
+                : '- The battery increases self-consumption by +' + diffAuto + ' points.');
+
+            if (bc.withBattery.payback !== null && bc.withoutBattery.payback !== null) {
+                var diffPay = fmtNum(bc.paybackDiffYears, 1, lang);
+                if (bc.paybackDiffYears > 0) {
+                    lines.push(lang === 'fr'
+                        ? '- Elle allonge le retour sur investissement de ' + diffPay + ' ' + L.unitYears + '.'
+                        : '- It extends the payback period by ' + diffPay + ' ' + L.unitYears + '.');
+                } else {
+                    lines.push(lang === 'fr'
+                        ? '- Elle reduit le retour sur investissement de ' + fmtNum(Math.abs(bc.paybackDiffYears), 1, lang) + ' ' + L.unitYears + '.'
+                        : '- It reduces the payback period by ' + fmtNum(Math.abs(bc.paybackDiffYears), 1, lang) + ' ' + L.unitYears + '.');
+                }
+            }
+
+            if (bc.conclusion) {
+                lines.push('- ' + bc.conclusion);
+            }
+        } else {
+            lines.push(lang === 'fr'
+                ? '- Batterie configuree (' + fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh + '), comparaison non disponible.'
+                : '- Battery configured (' + fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh + '), comparison not available.');
+        }
+        return lines;
+    }
+
+    // -----------------------------------------------------------------
+    //  Client page 3: Analyse decisionnelle
+    //  Structured, dense, decision-oriented — no marketing filler
+    // -----------------------------------------------------------------
+
+    function renderClientPage3(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var verdict = data.verdict;
+        var flags = data.displayFlags;
+
+        // --- 1. Why this verdict ---
+        if (flags.hasVerdict && verdict) {
+            drawMiniBlock(doc, ctx, L.p3WhyVerdict, verdict.narrative || '');
+        }
+
+        // --- 2. Strengths ---
+        var strengths = buildStrengths(data, L, lang);
+        drawMiniBlock(doc, ctx, L.p3Strengths, strengths);
+
+        // --- 3. Weaknesses ---
+        var weaknesses = buildWeaknesses(data, L, lang);
+        drawMiniBlock(doc, ctx, L.p3Weaknesses, weaknesses);
+
+        // --- 4. Battery reading (only if battery configured) ---
+        var batLines = buildBatteryReading(data, L, lang);
+        drawMiniBlock(doc, ctx, L.p3BatteryReading, batLines);
+
+        // --- 5. What to check before deciding ---
+        var checks = [];
+        if (flags.hasVerdict && verdict && Array.isArray(verdict.recommendations) && verdict.recommendations.length > 0) {
+            verdict.recommendations.forEach(function (r) {
+                checks.push('- ' + r);
+            });
+        }
+        // Always add the generic check
+        checks.push('- ' + L.p3DefaultCheck);
+        drawMiniBlock(doc, ctx, L.p3CheckBefore, checks);
+    }
+
+    // -----------------------------------------------------------------
+    //  Helper: drawGlossaryCompact
+    //  Draws a reduced glossary (max 5 terms, inline, dense)
+    // -----------------------------------------------------------------
+
+    function drawGlossaryCompact(doc, ctx, L) {
+        var items = L.glossary;
+        if (!items || items.length === 0) return;
+
+        // Use at most 5 terms
+        var maxTerms = Math.min(items.length, 5);
+
+        checkPageBreak(doc, ctx, 8 + maxTerms * 5);
+
+        drawSectionTitle(doc, ctx, L.sectionGlossary);
+        doc.setFontSize(7.5);
+
+        for (var i = 0; i < maxTerms; i++) {
+            if (ctx.y + 5 > PAGE_BOTTOM) break;
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor.apply(doc, C.dark);
+            doc.text(items[i][0], M + 2, ctx.y);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor.apply(doc, C.slate);
+            var defLines = doc.splitTextToSize(items[i][1], PAGE_W - 2 * M - 22);
+            doc.text(defLines, M + 20, ctx.y);
+            ctx.y += Math.max(defLines.length * 3.2, 3.5) + 3;
+        }
+        ctx.y += 4;
+    }
+
+    // -----------------------------------------------------------------
+    //  Helper: drawDisclaimerBox
+    //  Draws the disclaimer in a subtle background box
+    // -----------------------------------------------------------------
+
+    function drawDisclaimerBox(doc, ctx, L) {
+        doc.setFontSize(6.5);
+        var discLines = doc.splitTextToSize(L.disclaimer, PAGE_W - 2 * M - 8);
+        var boxH = Math.max(14, discLines.length * 3 + 6);
+
+        checkPageBreak(doc, ctx, boxH + 4);
+
+        doc.setFillColor.apply(doc, C.bg);
+        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, boxH, 2, 2, 'F');
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(discLines, M + 4, ctx.y + 3);
+        ctx.y += boxH + 4;
+    }
+
+    // -----------------------------------------------------------------
+    //  Client page 4: Hypotheses / Method / Limits / Glossary / Disclaimer
+    //  Reinforces credibility — concise, factual, no padding
+    // -----------------------------------------------------------------
+
     function renderClientPage4(doc, ctx, data) {
-        // TODO Step 4: implement
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var fp = data.financialParams;
+        var flags = data.displayFlags;
+
+        // --- 1. Key assumptions (compact table) ---
+        drawSectionTitle(doc, ctx, L.p4Assumptions);
+
+        var assumptionRows = [
+            [L.lblAssumedElecPrice,  fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh],
+            [L.lblAssumedFeedin,     fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh],
+            [L.lblAssumedIncrease,   fmtNum(fp.priceIncreaseRate * 100, 1, lang) + ' ' + L.unitPercent],
+            [L.lblDegradationPv,     fmtNum(fp.degradationPv * 100, 1, lang) + ' ' + L.unitPercent],
+        ];
+        // Battery degradation only if battery present
+        if (flags.hasBattery) {
+            assumptionRows.push([L.lblDegradationBat, fmtNum(fp.degradationBattery * 100, 1, lang) + ' ' + L.unitPercent]);
+        }
+        assumptionRows.push([L.lblHorizon,      fmtNum(fp.years, 0, lang) + ' ' + L.unitYears]);
+        assumptionRows.push([L.lblDiscountRate,  fmtNum(fp.discountRate * 100, 1, lang) + ' ' + L.unitPercent]);
+
+        drawCompactTable(doc, ctx, assumptionRows);
+        ctx.y += 4;
+
+        // --- 2. Method ---
+        checkPageBreak(doc, ctx, 30);
+        drawMiniBlock(doc, ctx, L.p4Method, L.p4MethodText);
+
+        // --- 3. Limits ---
+        checkPageBreak(doc, ctx, 30);
+        drawMiniBlock(doc, ctx, L.p4Limits, L.p4LimitsText);
+
+        // --- 4. Glossary (compact, max 5 terms) ---
+        drawGlossaryCompact(doc, ctx, L);
+
+        // --- 5. Disclaimer ---
+        drawDisclaimerBox(doc, ctx, L);
     }
 
     // --- Study mode ---
