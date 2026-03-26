@@ -948,6 +948,10 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 PDF client
                             </button>
+                            <button onclick="if(!window.lastSimulationData){alert('Lancez d\'abord une simulation.');return;}generateSimulationPdf(window.lastSimulationData,{mode:'study',lang:'fr'})" class="px-3 py-1.5 text-xs text-sky-400 hover:text-sky-300 border border-sky-500/30 hover:border-sky-500/60 rounded-lg transition-colors flex items-center gap-1" title="Télécharger l'étude technico-économique PDF">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                PDF étude
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1319,6 +1323,10 @@
                                     <button onclick="if(!window.lastSimulationData){alert('Lancez d\'abord une simulation.');return;}generateSimulationPdf(window.lastSimulationData,{mode:'client',lang:'fr'})" class="px-4 py-2 text-sm bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold rounded-lg transition-colors flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                         PDF client
+                                    </button>
+                                    <button onclick="if(!window.lastSimulationData){alert('Lancez d\'abord une simulation.');return;}generateSimulationPdf(window.lastSimulationData,{mode:'study',lang:'fr'})" class="px-4 py-2 text-sm bg-sky-500 hover:bg-sky-400 text-slate-900 font-semibold rounded-lg transition-colors flex items-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        PDF étude
                                     </button>
                                 </div>
                             </div>
