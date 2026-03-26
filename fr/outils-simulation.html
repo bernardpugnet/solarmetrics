@@ -2511,10 +2511,16 @@ function reverseGeocode(lat, lon) {
             document.getElementById('subsidyContent').innerHTML = subsidyText;
 
             // System recap
+            const consoSaisie = parseFloat(document.getElementById('resConsumption').value);
+            const consoEffective = annual.consumption;
+            let consoHtml = `<div><strong>Consommation saisie :</strong> ${consoSaisie.toLocaleString('fr-FR')} kWh/an</div>`;
+            if (Math.round(consoEffective) !== Math.round(consoSaisie)) {
+                consoHtml += `<div><strong>Consommation totale (avec équipements) :</strong> ${consoEffective.toLocaleString('fr-FR')} kWh/an</div>`;
+            }
             const systemRecap = `
                 <div><strong>Puissance :</strong> ${kwc.toFixed(2)} kWc</div>
                 <div><strong>Production :</strong> ${annual.production.toLocaleString('fr-FR')} kWh/an</div>
-                <div><strong>Consommation :</strong> ${annual.consumption.toLocaleString('fr-FR')} kWh/an</div>
+                ${consoHtml}
                 <div><strong>Batterie :</strong> ${parseInt(sim.hourly.soc[0]) > 0 ? `${parseInt(sim.hourly.soc[sim.hourly.soc.length-1])} kWh (LFP)` : 'Aucune'}</div>
             `;
             document.getElementById('systemRecap').innerHTML = systemRecap;
@@ -3025,7 +3031,7 @@ function reverseGeocode(lat, lon) {
                     ['Consommation saisie', consoInput + ' kWh'],
                 ];
                 if (consoEffective && consoEffective !== consoInput) {
-                    configRows.push(['Consommation simul\u00e9e', consoEffective + ' kWh']);
+                    configRows.push(['Consommation totale (avec \u00e9quipements)', consoEffective + ' kWh']);
                 }
                 configRows.push(['Prix \u00e9lectricit\u00e9', getVal('resElecPrice') + ' \u20ac/kWh']);
                 configRows.push(['Tarif revente', getVal('resFeedir') + ' \u20ac/kWh']);

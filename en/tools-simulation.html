@@ -2313,10 +2313,16 @@ function reverseGeocode(lat, lon) {
             document.getElementById('subsidyContent').innerHTML = subsidyText;
 
             // System recap
+            const consoSaisie = parseFloat(document.getElementById('resConsumption').value);
+            const consoEffective = annual.consumption;
+            let consoHtml = `<div><strong>Input consumption:</strong> ${consoSaisie.toLocaleString('en-US')} kWh/year</div>`;
+            if (Math.round(consoEffective) !== Math.round(consoSaisie)) {
+                consoHtml += `<div><strong>Total consumption (with equipment):</strong> ${consoEffective.toLocaleString('en-US')} kWh/year</div>`;
+            }
             const systemRecap = `
                 <div><strong>Capacity:</strong> ${kwc.toFixed(2)} kWp</div>
                 <div><strong>Production:</strong> ${annual.production.toLocaleString('en-US')} kWh/year</div>
-                <div><strong>Consumption:</strong> ${annual.consumption.toLocaleString('en-US')} kWh/year</div>
+                ${consoHtml}
                 <div><strong>Battery:</strong> ${parseInt(sim.hourly.soc[0]) > 0 ? `${parseInt(sim.hourly.soc[sim.hourly.soc.length-1])} kWh (LFP)` : 'None'}</div>
             `;
             document.getElementById('systemRecap').innerHTML = systemRecap;
@@ -2780,16 +2786,28 @@ function reverseGeocode(lat, lon) {
                     : 'No';
 
                 var consoInput = getVal('resConsumption');
+                var autoD = getText('resAutoDirect').replace(/\s/g, '').replace(',', '.');
+                var autoB = getText('resAutoBattery').replace(/\s/g, '').replace(',', '.');
+                var sout = getText('resSoutirage').replace(/\s/g, '').replace(',', '.');
+                var consoEffective = '';
+                if (!isNaN(parseFloat(autoD)) && !isNaN(parseFloat(sout))) {
+                    var ce = Math.round(parseFloat(autoD) + parseFloat(autoB) + parseFloat(sout));
+                    consoEffective = ce.toLocaleString('en-US');
+                }
+
                 var configRows = [
                     ['Location', countryName + ' (' + lat + '\u00b0N, ' + lon + '\u00b0E)'],
                     ['Installed capacity', getText('resKwc') + ' kWp'],
                     ['Surface', getVal('resSurface') + ' m\u00b2'],
                     ['Tilt / Orientation', getVal('resTilt') + '\u00b0 / ' + orientLabel],
                     ['Battery', batteryText],
-                    ['Consumption', consoInput + ' kWh'],
-                    ['Electricity price', getVal('resElecPrice') + ' \u20ac/kWh'],
-                    ['Feed-in tariff', getVal('resFeedir') + ' \u20ac/kWh'],
+                    ['Input consumption', consoInput + ' kWh'],
                 ];
+                if (consoEffective && consoEffective !== consoInput) {
+                    configRows.push(['Total consumption (with equipment)', consoEffective + ' kWh']);
+                }
+                configRows.push(['Electricity price', getVal('resElecPrice') + ' \u20ac/kWh']);
+                configRows.push(['Feed-in tariff', getVal('resFeedir') + ' \u20ac/kWh']);
                 drawLabelValueRows(configRows);
 
                 y += 4;
