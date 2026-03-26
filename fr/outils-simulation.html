@@ -88,6 +88,7 @@
     <script src="../js/solar-data.js" defer></script>
     <script src="../js/autoconsommation.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="../js/pdf-generator.js" defer></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <style>
         *{font-family:'Inter',sans-serif}
@@ -943,6 +944,10 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 PDF
                             </button>
+                            <button onclick="if(!window.lastSimulationData){alert('Lancez d\'abord une simulation.');return;}generateSimulationPdf(window.lastSimulationData,{mode:'client',lang:'fr'})" class="px-3 py-1.5 text-xs text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 rounded-lg transition-colors flex items-center gap-1" title="Télécharger le nouveau rapport PDF client">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                PDF client
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1306,10 +1311,16 @@
                         <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-semibold text-white">📄 Rapport d'analyse solaire</h3>
-                                <button onclick="exportResultsPDF()" class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-lg transition-colors flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    Télécharger PDF
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="exportResultsPDF()" class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-lg transition-colors flex items-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        Télécharger PDF
+                                    </button>
+                                    <button onclick="if(!window.lastSimulationData){alert('Lancez d\'abord une simulation.');return;}generateSimulationPdf(window.lastSimulationData,{mode:'client',lang:'fr'})" class="px-4 py-2 text-sm bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold rounded-lg transition-colors flex items-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        PDF client
+                                    </button>
+                                </div>
                             </div>
                             <div id="reportContent" class="prose prose-invert prose-sm max-w-none text-slate-300 leading-relaxed space-y-4">
                                 <p class="text-slate-500 italic">Lancez une simulation pour générer le rapport.</p>
