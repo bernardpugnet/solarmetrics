@@ -654,14 +654,277 @@
 
     // --- Client mode ---
 
-    /** Client page 1: Decision summary (verdict + KPIs + config) */
-    function renderClientPage1(doc, ctx, data) {
-        // TODO Step 3: implement
+    /**
+     * Resolves an orientation value (degrees) to a human-readable label.
+     * @param {number} deg - orientation in degrees (0=South, -45=SE, etc.)
+     * @param {Object} L   - LABELS[lang]
+     * @returns {string}
+     */
+    function orientLabel(deg, L) {
+        var map = {
+            '0':   L.orientSouth,
+            '-45': L.orientSouthEast,
+            '45':  L.orientSouthWest,
+            '-90': L.orientEast,
+            '90':  L.orientWest,
+        };
+        return map[String(deg)] || (deg + '\u00b0');
     }
+
+    /**
+     * Resolves a profile key to a human-readable label.
+     * @param {string} key - 'family' | 'retired' | 'telecommute' | 'allElectric'
+     * @param {Object} L   - LABELS[lang]
+     * @returns {string}
+     */
+    function profileLabel(key, L) {
+        var map = {
+            'family':       L.profileFamily,
+            'retired':      L.profileRetired,
+            'telecommute':  L.profileTelecommute,
+            'allElectric':  L.profileAllElectric,
+        };
+        return map[key] || key;
+    }
+
+    /**
+     * Draws the "A RETENIR" / "KEY TAKEAWAYS" summary box.
+     */
+    function drawQuickReadBox(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var prod = data.production;
+        var fin = data.financial;
+        var fp = data.financialParams;
+
+        var paybackStr = fin.payback !== null ? fmtNum(fin.payback, 1, lang) : L.notReached;
+
+        var line = L.lblAnnualProd + ' : ' + fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwhAn + '  |  '
+            + L.kpiSavings + ' : ' + fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn + '  |  '
+            + L.kpiPayback + ' : ' + paybackStr + ' ' + L.unitYears + '  |  '
+            + L.lblTotalGains + ' : ' + fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur;
+
+        doc.setFillColor.apply(doc, C.bg);
+        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, 16, 2, 2, 'F');
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(L.sectionQuickRead, M + 4, ctx.y + 4);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.slate);
+        var qrLines = doc.splitTextToSize(clean(line), PAGE_W - 2 * M - 8);
+        doc.text(qrLines, M + 4, ctx.y + 9);
+        ctx.y += 20;
+    }
+
+    // -----------------------------------------------------------------
+    //  Client page 1: Synthese decisionnelle
+    //  - Verdict block
+    //  - 4 KPI cards
+    //  - Configuration table
+    //  - Quick-read summary box
+    // -----------------------------------------------------------------
+
+    /** Client page 1: Decision summary (verdict + KPIs + config + quick read) */
+    function renderClientPage1(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var cfg = data.config;
+        var bat = data.battery;
+        var fp = data.financialParams;
+        var fin = data.financial;
+        var prod = data.production;
+        var flags = data.displayFlags;
+
+        // --- Verdict block ---
+        if (flags.hasVerdict) {
+            drawVerdictBlock(doc, ctx, data.verdict);
+        }
+
+        // --- 4 KPI cards ---
+        var paybackVal = fin.payback !== null
+            ? fmtNum(fin.payback, 1, lang)
+            : L.notReached;
+        var irrVal = flags.irrAvailable
+            ? fmtNum(fin.irr, 1, lang)
+            : '—';
+
+        drawKpiCards(doc, ctx, [
+            { label: L.kpiSavings,   value: fmtNum(fin.annualSavings, 0, lang), unit: L.unitEurAn, accent: C.green },
+            { label: L.kpiPayback,   value: paybackVal,                          unit: L.unitYears, accent: C.amber },
+            { label: L.kpiAutoconso, value: fmtNum(prod.autoconsoRate, 1, lang), unit: L.unitPercent, accent: C.amber },
+            { label: L.kpiIrr,       value: irrVal,                              unit: L.unitPercent, accent: C.green },
+        ]);
+
+        // --- Configuration table ---
+        ctx.y += 4;
+        drawSectionTitle(doc, ctx, L.sectionConfig);
+
+        var batteryText = flags.hasBattery
+            ? fmtNum(bat.capacityKwh, 1, lang) + ' ' + L.unitKwh
+            : L.no;
+
+        var configRows = [
+            [L.lblLocation,   cfg.countryName + ' (' + fmtNum(cfg.lat, 2, lang) + '\u00b0N, ' + fmtNum(cfg.lon, 2, lang) + '\u00b0E)'],
+            [L.lblPower,      fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc],
+            [L.lblSurface,    fmtNum(cfg.surface, 0, lang) + ' ' + L.unitM2],
+            [L.lblTiltOrient, fmtNum(cfg.tilt, 0, lang) + '\u00b0 / ' + orientLabel(cfg.orientation, L)],
+            [L.lblProfile,    profileLabel(cfg.profile, L)],
+            [L.lblBattery,    batteryText],
+            [L.lblConsoInput, fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh],
+        ];
+
+        // Show simulated consumption only if addons modified it
+        if (flags.consoModified) {
+            configRows.push([L.lblConsoSimulated, fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh]);
+        }
+
+        configRows.push([L.lblElecPrice,     fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh]);
+        configRows.push([L.lblFeedinTariff,   fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
+
+        drawCompactTable(doc, ctx, configRows);
+
+        // --- Quick-read summary box ---
+        ctx.y += 4;
+        drawQuickReadBox(doc, ctx, data);
+    }
+
+    /**
+     * Draws the battery comparison side-by-side cards.
+     * Uses data from batteryComparison (not DOM).
+     */
+    function drawBatteryComparison(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var bc = data.batteryComparison;
+        if (!bc) return;
+
+        drawSectionTitle(doc, ctx, L.sectionBattery);
+
+        var colW = (BLOCK_W - 6) / 2;
+        var colX1 = BLOCK_X;
+        var colX2 = BLOCK_X + colW + 6;
+
+        var noBatPayStr = bc.withoutBattery.payback !== null
+            ? fmtNum(bc.withoutBattery.payback, 1, lang) + ' ' + L.unitYears
+            : L.notReached;
+        var batPayStr = bc.withBattery.payback !== null
+            ? fmtNum(bc.withBattery.payback, 1, lang) + ' ' + L.unitYears
+            : L.notReached;
+
+        // --- Without battery card ---
+        doc.setFillColor.apply(doc, C.bg);
+        doc.roundedRect(colX1, ctx.y - 2, colW, 24, 2, 2, 'F');
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.setFont('helvetica', 'bold');
+        doc.text(L.lblWithoutBattery, colX1 + colW / 2, ctx.y + 3, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.text(L.lblAutoconsoShort + ' : ' + fmtNum(bc.withoutBattery.autoRate, 1, lang) + '%', colX1 + 4, ctx.y + 9);
+        doc.text(L.lblSavingsShort + ' : ' + fmtNum(bc.withoutBattery.savings, 0, lang) + ' ' + L.unitEur, colX1 + 4, ctx.y + 14);
+        doc.text(L.lblPaybackShort + ' : ' + noBatPayStr, colX1 + 4, ctx.y + 19);
+
+        // --- With battery card ---
+        doc.setFillColor.apply(doc, C.bgAmber);
+        doc.setDrawColor.apply(doc, C.amber);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(colX2, ctx.y - 2, colW, 24, 2, 2, 'FD');
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.amber);
+        doc.setFont('helvetica', 'bold');
+        doc.text(L.lblWithBattery, colX2 + colW / 2, ctx.y + 3, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.text(L.lblAutoconsoShort + ' : ' + fmtNum(bc.withBattery.autoRate, 1, lang) + '%', colX2 + 4, ctx.y + 9);
+        doc.text(L.lblSavingsShort + ' : ' + fmtNum(bc.withBattery.savings, 0, lang) + ' ' + L.unitEur, colX2 + 4, ctx.y + 14);
+        doc.text(L.lblPaybackShort + ' : ' + batPayStr, colX2 + 4, ctx.y + 19);
+
+        ctx.y += 26;
+
+        // --- Conclusion text ---
+        if (bc.conclusion) {
+            doc.setFontSize(7);
+            doc.setTextColor.apply(doc, C.muted);
+            var concLines = doc.splitTextToSize(clean(bc.conclusion), BLOCK_W);
+            doc.text(concLines, BLOCK_X, ctx.y);
+            ctx.y += concLines.length * 3 + 4;
+        }
+        ctx.y += 4;
+    }
+
+    // -----------------------------------------------------------------
+    //  Client page 2: Analyse technique et financiere
+    //  - Production solaire
+    //  - Autoconsommation detaillee (conditionnel)
+    //  - Bilan financier
+    //  - Impact batterie (conditionnel)
+    // -----------------------------------------------------------------
 
     /** Client page 2: Technical & financial analysis */
     function renderClientPage2(doc, ctx, data) {
-        // TODO Step 3: implement
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var prod = data.production;
+        var fin = data.financial;
+        var fp = data.financialParams;
+        var flags = data.displayFlags;
+
+        // --- Production solaire ---
+        drawSectionTitle(doc, ctx, L.sectionProduction);
+        drawCompactTable(doc, ctx, [
+            [L.lblAnnualProd,   fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwh],
+            [L.lblProdPerKwc,   fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc],
+            [L.lblSavingsAuto,  fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
+            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
+            [L.lblSavingsTotal, fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
+        ]);
+        ctx.y += 4;
+
+        // --- Autoconsommation detaillee ---
+        // Only show if autoconsoRate is available (always true after simulation)
+        drawSectionTitle(doc, ctx, L.sectionAutoconso);
+        drawCompactTable(doc, ctx, [
+            [L.lblAutoRate,    fmtNum(prod.autoconsoRate, 1, lang) + ' ' + L.unitPercent],
+            [L.lblProdRate,    fmtNum(prod.autoprodRate, 1, lang) + ' ' + L.unitPercent],
+            [L.lblAutoDirect,  fmtNum(prod.autoDirect, 0, lang) + ' ' + L.unitKwh],
+            [L.lblAutoBattery, fmtNum(prod.autoBattery, 0, lang) + ' ' + L.unitKwh],
+            [L.lblInjection,   fmtNum(prod.injection, 0, lang) + ' ' + L.unitKwh],
+            [L.lblSoutirage,   fmtNum(prod.soutirage, 0, lang) + ' ' + L.unitKwh],
+        ]);
+        ctx.y += 4;
+
+        // --- Bilan financier ---
+        // Check page break: financial section needs ~40mm
+        checkPageBreak(doc, ctx, 45);
+
+        var paybackStr = fin.payback !== null
+            ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
+            : L.notReached;
+        var irrStr = flags.irrAvailable
+            ? fmtNum(fin.irr, 1, lang) + ' ' + L.unitPercent
+            : '—';
+
+        drawSectionTitle(doc, ctx, L.sectionFinancial);
+        drawCompactTable(doc, ctx, [
+            [L.lblInstallCost, fmtNum(fp.totalInvestment, 0, lang) + ' ' + L.unitEur],
+            [L.lblNetCost,     fmtNum(fp.netCost, 0, lang) + ' ' + L.unitEur],
+            [L.lblPayback,     paybackStr],
+            [L.lblTotalGains,  fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur],
+            [L.lblIrr,         irrStr],
+            [L.lblCo2,         fmtNum(fin.co2Avoided, 0, lang) + ' ' + L.unitKgAn],
+        ]);
+        ctx.y += 4;
+
+        // --- Battery comparison (conditional) ---
+        if (flags.hasBatteryComparison) {
+            // Check page break: battery comparison needs ~40mm
+            checkPageBreak(doc, ctx, 40);
+            drawBatteryComparison(doc, ctx, data);
+        }
     }
 
     /** Client page 3: Narrative + battery comparison */
