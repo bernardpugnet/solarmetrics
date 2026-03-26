@@ -1606,12 +1606,13 @@ function reverseGeocode(lat, lon) {
             if (!section || !simResults) return;
             section.classList.remove('hidden');
             const variation = 0.15;
-            const scenarios = [
-                { key: 'pess', priceFactor: 1 - variation, costFactor: 1 + variation, prodFactor: 1 - variation },
-                { key: 'base', priceFactor: 1, costFactor: 1, prodFactor: 1 },
-                { key: 'opti', priceFactor: 1 + variation, costFactor: 1 - variation, prodFactor: 1 + variation }
+            const scenarioDefs = [
+                { key: 'pessimist', domKey: 'pess', priceFactor: 1 - variation, costFactor: 1 + variation, prodFactor: 1 - variation },
+                { key: 'base',      domKey: 'base', priceFactor: 1, costFactor: 1, prodFactor: 1 },
+                { key: 'optimist',  domKey: 'opti', priceFactor: 1 + variation, costFactor: 1 - variation, prodFactor: 1 + variation }
             ];
-            scenarios.forEach(sc => {
+            const storedScenarios = [];
+            scenarioDefs.forEach(sc => {
                 const scPrice = elecPrice * sc.priceFactor;
                 const scCost = installCost * sc.costFactor;
                 const scProd = simResults.annual.production * sc.prodFactor;
@@ -1629,12 +1630,29 @@ function reverseGeocode(lat, lon) {
                     priceIncreasePerYear: priceIncrease,
                     degradationPv: 0.005, degradationBattery: 0.02, years: 25
                 });
-                document.getElementById('sens-' + sc.key + '-price').textContent = scPrice.toFixed(4) + ' \u20ac';
-                document.getElementById('sens-' + sc.key + '-cost').textContent = Math.round(scCost).toLocaleString('en-US') + ' \u20ac';
-                document.getElementById('sens-' + sc.key + '-prod').textContent = Math.round(scProd).toLocaleString('en-US') + ' kWh';
-                document.getElementById('sens-' + sc.key + '-payback').textContent = fin.paybackYear ? fin.paybackYear + ' yrs' : '> 25 yrs';
-                document.getElementById('sens-' + sc.key + '-gains').textContent = Math.round(fin.totalSavings25y).toLocaleString('en-US') + ' \u20ac';
+                // Store for PDF data
+                storedScenarios.push({
+                    key:           sc.key,
+                    elecPrice:     scPrice,
+                    installCost:   Math.round(scCost),
+                    production:    Math.round(scProd),
+                    payback:       fin.paybackYear !== undefined ? fin.paybackYear : null,
+                    totalGains25y: Math.round(fin.totalSavings25y),
+                });
+                // DOM update (unchanged behavior)
+                document.getElementById('sens-' + sc.domKey + '-price').textContent = scPrice.toFixed(4) + ' \u20ac';
+                document.getElementById('sens-' + sc.domKey + '-cost').textContent = Math.round(scCost).toLocaleString('en-US') + ' \u20ac';
+                document.getElementById('sens-' + sc.domKey + '-prod').textContent = Math.round(scProd).toLocaleString('en-US') + ' kWh';
+                document.getElementById('sens-' + sc.domKey + '-payback').textContent = fin.paybackYear ? fin.paybackYear + ' yrs' : '> 25 yrs';
+                document.getElementById('sens-' + sc.domKey + '-gains').textContent = Math.round(fin.totalSavings25y).toLocaleString('en-US') + ' \u20ac';
             });
+            // ── Store sensitivity in window.lastSimulationData ──
+            if (window.lastSimulationData) {
+                window.lastSimulationData.sensitivity = {
+                    variation: variation,
+                    scenarios: storedScenarios,
+                };
+            }
         }
         // --- End Lot 6 ---
 
@@ -1832,6 +1850,86 @@ function reverseGeocode(lat, lon) {
                     }
                     irr = calculateIRR(cashFlows);
                 } catch(e) { console.warn('IRR error:', e); }
+
+                // ── Build window.lastSimulationData (core) ──
+                const _totalSavings = (simResults.annual.autoDirect + simResults.annual.autoBattery) * elecPrice + simResults.annual.injection * priceRevente;
+                window.lastSimulationData = {
+                    config: {
+                        countryCode:     ccDet,
+                        countryName:     document.getElementById('detectedCountryName').textContent || '',
+                        lat:             lat,
+                        lon:             lon,
+                        kwc:             kwc,
+                        surface:         parseFloat(document.getElementById('resSurface').value) || 0,
+                        tilt:            tilt,
+                        orientation:     aspect,
+                        mounting:        mounting,
+                        loss:            loss,
+                        shading:         shading,
+                        profile:         profile,
+                        consumption:     consumption,
+                        addons:          addons.slice(),
+                        panelEfficiency: parseFloat(document.getElementById('resPanelType').value) || 0.20,
+                    },
+                    battery: {
+                        enabled:      hasBattery,
+                        capacityKwh:  batteryCapacity,
+                        cost:         batteryCost,
+                    },
+                    financialParams: {
+                        elecPrice:          elecPrice,
+                        feedinTariff:       priceRevente,
+                        priceIncreaseRate:  priceIncrease,
+                        degradationPv:      0.005,
+                        degradationBattery: 0.02,
+                        installCost:        installCost,  // PV only (panels+inverter+install), excludes battery.cost
+                        subsidies:          subsidies,
+                        netCost:            netCost,            // = installCost + battery.cost - subsidies
+                        totalInvestment:    totalInvestment,    // = installCost + battery.cost
+                        years:              25,
+                        discountRate:       parseFloat(document.getElementById('resDiscount').value) / 100 || 0.04,
+                    },
+                    production: {
+                        annual:           simResults.annual.production,
+                        perKwc:           Math.round(simResults.annual.production / kwc),
+                        autoDirect:       simResults.annual.autoDirect,
+                        autoBattery:      simResults.annual.autoBattery,
+                        autoTotal:        simResults.annual.autoTotal,
+                        injection:        simResults.annual.injection,
+                        soutirage:        simResults.annual.soutirage,
+                        totalConsumption: simResults.annual.consumption,
+                        autoconsoRate:    simResults.annual.tauxAutoconsommation,
+                        autoprodRate:     simResults.annual.tauxAutoproduction,
+                        monthly: {
+                            production:  simResults.monthly.production.slice(),
+                            consumption: simResults.monthly.consumption.slice(),
+                            autoDirect:  simResults.monthly.autoDirect.slice(),
+                            autoBattery: simResults.monthly.autoBattery.slice(),
+                            injection:   simResults.monthly.injection.slice(),
+                            soutirage:   simResults.monthly.soutirage.slice(),
+                        },
+                    },
+                    financial: {
+                        savingsAutoconso: Math.round((simResults.annual.autoDirect + simResults.annual.autoBattery) * elecPrice),
+                        savingsFeedin:    Math.round(simResults.annual.injection * priceRevente),
+                        annualSavings:    Math.round(_totalSavings),
+                        payback:          financials.paybackYear !== undefined ? financials.paybackYear : null,
+                        totalSavings25y:  financials.totalSavings25y,
+                        irr:              irr,
+                        co2Avoided:       Math.round(co2Avoided),
+                        co2PerKwh:        co2PerKwh,
+                    },
+                    verdict: null,            // populated by generateVerdict()
+                    batteryComparison: null,   // populated by generateVerdict() if battery enabled
+                    sensitivity: null,         // populated by updateSensitivity()
+                    meta: {
+                        generatedAt:  new Date().toISOString(),
+                        lang:         document.documentElement.lang || 'en',
+                        version:      '1.0',
+                        simulationId: 'sim-' + Date.now(),
+                    },
+                    financing: null,           // reserved for V2
+                };
 
                 // Display results
                 displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente, netCost, irr, co2Avoided);
@@ -2038,6 +2136,17 @@ function reverseGeocode(lat, lon) {
             const recsDiv = document.getElementById('verdict-recommendations');
             recsDiv.innerHTML = recs.map(function(r) { return '<p class="flex items-start gap-2"><span class="text-slate-500 mt-0.5">—</span> ' + r + '</p>'; }).join('');
 
+            // ── Store verdict data in window.lastSimulationData ──
+            if (window.lastSimulationData) {
+                window.lastSimulationData.verdict = {
+                    level:           level,
+                    title:           title.textContent,
+                    subtitle:        subtitle.textContent,
+                    narrative:       narrativeText,
+                    recommendations: recs.slice(),
+                };
+            }
+
             // Battery comparison
             if (batteryCapacity > 0) {
                 try {
@@ -2083,6 +2192,27 @@ function reverseGeocode(lat, lon) {
                         conclusion = 'The battery adds +' + autoDiff.toFixed(0) + ' points of self-consumption for ' + paybackDiff.toFixed(1) + ' extra year(s) of payback.';
                     }
                     document.getElementById('vbc-conclusion').textContent = conclusion;
+
+                    // ── Store battery comparison in window.lastSimulationData ──
+                    // payback fields are Number | null (null = not reached within horizon)
+                    if (window.lastSimulationData) {
+                        window.lastSimulationData.batteryComparison = {
+                            withBattery: {
+                                autoRate: autoRate,
+                                savings:  Math.round(totalSavings),
+                                payback:  payback < 50 ? payback : null,           // Number | null
+                            },
+                            withoutBattery: {
+                                autoRate: noBatSim.annual.tauxAutoconsommation,
+                                savings:  Math.round(noBatSavings),
+                                payback:  noBatPayback < 50 ? noBatPayback : null, // Number | null
+                            },
+                            autoDiffPoints:    autoDiff,
+                            paybackDiffYears:  paybackDiff,
+                            conclusion:        conclusion,
+                        };
+                    }
+
                     document.getElementById('verdict-battery-comparison').classList.remove('hidden');
                 } catch(e) {
                     console.warn('Battery comparison error:', e);
