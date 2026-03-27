@@ -263,6 +263,10 @@
             // v2 page 5 — decision analysis
             v2DecisionTitle:   'Analyse et aide a la decision',
 
+            // v2 page 6 — assumptions, method, limits
+            v2HypothesesTitle: 'Hypotheses, methode et limites',
+            v2SensitivityNote: 'Les resultats de cette simulation dependent principalement de quatre facteurs : le prix futur de l\'electricite, la degradation reelle des panneaux, la degradation de la batterie (si presente), et l\'adequation du profil de consommation retenu avec vos usages reels.',
+
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
@@ -465,6 +469,10 @@
 
             // v2 page 5 — decision analysis
             v2DecisionTitle:   'Analysis and decision support',
+
+            // v2 page 6 — assumptions, method, limits
+            v2HypothesesTitle: 'Assumptions, method and limitations',
+            v2SensitivityNote: 'The results of this simulation depend primarily on four factors: the future price of electricity, the actual degradation of solar panels, battery degradation (if applicable), and how well the selected consumption profile matches your real usage patterns.',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -1381,6 +1389,73 @@
         }
         checks.push('- ' + L.p3DefaultCheck);
         drawMiniBlock(doc, ctx, L.p3CheckBefore, checks);
+    }
+
+
+    // =================================================================
+    //  7a-6. ASSUMPTIONS, METHOD & LIMITS PAGE (v2 — Step 9)
+    // =================================================================
+
+    /**
+     * Renders v2 page 6: "Hypothèses, méthode et limites"
+     * Uses drawHeader() at top (called by assembler, not here).
+     *
+     * Structure:
+     *   1. Section title
+     *   2. Assumptions table (elec price, feed-in, annual increase,
+     *      PV degradation, battery degradation, horizon, discount rate)
+     *   3. Sensitivity note — short narrative on key uncertainty drivers
+     *   4. Method block (drawMiniBlock + p4MethodText)
+     *   5. Limits block (drawMiniBlock + p4LimitsText)
+     *   6. Disclaimer box (drawDisclaimerBox)
+     *
+     * NO glossary — explicitly excluded from v2 report.
+     *
+     * Reuses: drawSectionTitle, drawCompactTable, drawMiniBlock,
+     *         drawDisclaimerBox, checkPageBreak.
+     */
+    function renderV2Page6(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var fp = data.financialParams;
+        var flags = data.displayFlags;
+
+        // --- Section title ---
+        drawSectionTitle(doc, ctx, L.v2HypothesesTitle);
+
+        // --- 1. Assumptions table ---
+        var assumptionRows = [
+            [L.lblAssumedElecPrice,  fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh],
+            [L.lblAssumedFeedin,     fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh],
+            [L.lblAssumedIncrease,   fmtNum(fp.priceIncreaseRate * 100, 1, lang) + ' ' + L.unitPercent],
+            [L.lblDegradationPv,     fmtNum(fp.degradationPv * 100, 1, lang) + ' ' + L.unitPercent],
+        ];
+        if (flags.hasBattery) {
+            assumptionRows.push([L.lblDegradationBat, fmtNum(fp.degradationBattery * 100, 1, lang) + ' ' + L.unitPercent]);
+        }
+        assumptionRows.push([L.lblHorizon,      fmtNum(fp.years, 0, lang) + ' ' + L.unitYears]);
+        assumptionRows.push([L.lblDiscountRate,  fmtNum(fp.discountRate * 100, 1, lang) + ' ' + L.unitPercent]);
+
+        drawCompactTable(doc, ctx, assumptionRows);
+        ctx.y += 4;
+
+        // --- 2. Sensitivity note — key uncertainty drivers ---
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.slate);
+        var noteLines = doc.splitTextToSize(clean(L.v2SensitivityNote), PAGE_W - 2 * M);
+        doc.text(noteLines, M, ctx.y);
+        ctx.y += noteLines.length * 3.5 + 6;
+
+        // --- 3. Method ---
+        checkPageBreak(doc, ctx, 30);
+        drawMiniBlock(doc, ctx, L.p4Method, L.p4MethodText);
+
+        // --- 4. Limits ---
+        checkPageBreak(doc, ctx, 30);
+        drawMiniBlock(doc, ctx, L.p4Limits, L.p4LimitsText);
+
+        // --- 5. Disclaimer ---
+        drawDisclaimerBox(doc, ctx, L);
     }
 
 
@@ -2454,6 +2529,7 @@
         renderV2Page3:          renderV2Page3,
         renderV2Page4:          renderV2Page4,
         renderV2Page5:          renderV2Page5,
+        renderV2Page6:          renderV2Page6,
     };
 
 })();
