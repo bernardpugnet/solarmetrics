@@ -2030,17 +2030,27 @@ function reverseGeocode(lat, lon) {
                 const co2PerKwh = cData ? cData.co2Factor : 300;
                 const co2Avoided = simResults.annual.production * co2PerKwh / 1000;
 
-                // IRR calculation
+                // IRR calculation — aligned with calculateFinancials() logic:
+                // separate autoDirect and autoBattery, apply battery degradation (2%/yr)
                 let irr = null;
                 try {
                     const cashFlows = [-netCost];
+                    const degradPv = 0.005;      // 0.5%/year — same as calculateFinancials
+                    const degradBat = 0.02;      // 2%/year   — same as calculateFinancials
+                    const hasBat = simResults.annual.autoBattery > 0;
                     for (let y = 1; y <= 25; y++) {
-                        const yProd = simResults.annual.production * Math.pow(1 - 0.005, y - 1);
-                        const autoRatio = (simResults.annual.autoDirect + simResults.annual.autoBattery) / simResults.annual.production;
-                        const yAuto = yProd * autoRatio;
-                        const yInj = yProd - yAuto;
-                        const yPrice = elecPrice * Math.pow(1 + priceIncrease, y - 1);
-                        cashFlows.push(yAuto * yPrice + yInj * priceRevente);
+                        const pvFactor = Math.pow(1 - degradPv, y - 1);
+                        const batteryFactor = hasBat ? Math.pow(1 - degradBat, y - 1) : 1;
+                        const priceFactor = Math.pow(1 + priceIncrease, y - 1);
+
+                        const autoDirectY = simResults.annual.autoDirect * pvFactor;
+                        const autoBatteryY = simResults.annual.autoBattery * pvFactor * batteryFactor;
+                        const injectionY = simResults.annual.injection * pvFactor;
+
+                        const savingsY =
+                            (autoDirectY + autoBatteryY) * elecPrice * priceFactor +
+                            injectionY * priceRevente;
+                        cashFlows.push(savingsY);
                     }
                     irr = calculateIRR(cashFlows);
                 } catch(e) { console.warn('IRR error:', e); }
