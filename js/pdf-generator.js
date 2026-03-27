@@ -250,6 +250,16 @@
             v2AddonPac:        'Pompe a chaleur (~4 000 kWh/an)',
             v2AddonEcs:        'Chauffe-eau thermodynamique (~1 500 kWh/an)',
 
+            // v2 page 4 — financial analysis
+            v2FinancialTitle:  'Bilan financier',
+            v2SavingsTitle:    'Economies annuelles',
+            v2BatteryTitle:    'Impact de la batterie',
+            v2CostPv:          'Cout installation PV',
+            v2CostBattery:     'Cout batterie',
+            v2CostTotal:       'Investissement total',
+            v2Subsidies:       'Aides deduites',
+            v2Co2Note:         'Empreinte carbone evitee',
+
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
@@ -439,6 +449,16 @@
             v2AddonEv:         'Electric vehicle (~2,500 kWh/yr)',
             v2AddonPac:        'Heat pump (~4,000 kWh/yr)',
             v2AddonEcs:        'Thermodynamic water heater (~1,500 kWh/yr)',
+
+            // v2 page 4 — financial analysis
+            v2FinancialTitle:  'Financial summary',
+            v2SavingsTitle:    'Annual savings breakdown',
+            v2BatteryTitle:    'Battery impact',
+            v2CostPv:          'PV installation cost',
+            v2CostBattery:     'Battery cost',
+            v2CostTotal:       'Total investment',
+            v2Subsidies:       'Subsidies deducted',
+            v2Co2Note:         'Carbon footprint avoided',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -1207,6 +1227,100 @@
         doc.text(bodyLines, M + 6, ctx.y + 4);
 
         ctx.y += boxH + 4;
+    }
+
+
+    // =================================================================
+    //  7a-4. FINANCIAL ANALYSIS PAGE (v2 — Step 7)
+    // =================================================================
+
+    /**
+     * Renders v2 page 4: "Analyse économique"
+     * Uses drawHeader() at top (called by assembler, not here).
+     *
+     * Structure:
+     *   1. Section "Bilan financier" — investment, costs, payback, IRR, 25y gains
+     *   2. Section "Économies annuelles" — autoconso savings, feed-in, total
+     *   3. Section "Impact batterie" (conditional) — compact comparison
+     *   4. CO2 line — discrete complementary indicator at bottom
+     *
+     * Reuses: drawSectionTitle, drawCompactTable, drawBatteryComparison,
+     *         checkPageBreak, fmtNum.
+     */
+    function renderV2Page4(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var fin = data.financial;
+        var fp = data.financialParams;
+        var bat = data.battery;
+        var flags = data.displayFlags;
+
+        // -------------------------------------------------------
+        //  1. Bilan financier
+        // -------------------------------------------------------
+        drawSectionTitle(doc, ctx, L.v2FinancialTitle);
+
+        var paybackStr = fin.payback !== null
+            ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
+            : L.notReached;
+        var irrStr = flags.irrAvailable
+            ? fmtNum(fin.irr * 100, 1, lang) + ' ' + L.unitPercent
+            : '\u2014';
+        var subsidies = fp.totalInvestment - fp.netCost;
+
+        var finRows = [
+            [L.v2CostPv,       fmtNum(fp.installCost, 0, lang) + ' ' + L.unitEur],
+        ];
+
+        // Battery cost — only if battery present
+        if (flags.hasBattery) {
+            finRows.push([L.v2CostBattery, fmtNum(bat.cost, 0, lang) + ' ' + L.unitEur]);
+        }
+
+        finRows.push([L.v2CostTotal,      fmtNum(fp.totalInvestment, 0, lang) + ' ' + L.unitEur]);
+
+        // Subsidies — only if non-zero
+        if (subsidies > 0) {
+            finRows.push([L.v2Subsidies,   '\u2212 ' + fmtNum(subsidies, 0, lang) + ' ' + L.unitEur]);
+        }
+
+        finRows.push([L.lblNetCost,        fmtNum(fp.netCost, 0, lang) + ' ' + L.unitEur]);
+        finRows.push([L.lblPayback,         paybackStr]);
+        finRows.push([L.lblIrr,             irrStr]);
+        finRows.push([L.lblTotalGains,      fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur]);
+
+        drawCompactTable(doc, ctx, finRows);
+        ctx.y += 4;
+
+        // -------------------------------------------------------
+        //  2. Économies annuelles
+        // -------------------------------------------------------
+        drawSectionTitle(doc, ctx, L.v2SavingsTitle);
+        drawCompactTable(doc, ctx, [
+            [L.lblSavingsAuto,   fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
+            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
+            [L.lblSavingsTotal,  fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
+        ]);
+        ctx.y += 6;
+
+        // -------------------------------------------------------
+        //  3. Comparaison batterie (conditionnel)
+        // -------------------------------------------------------
+        if (flags.hasBatteryComparison) {
+            checkPageBreak(doc, ctx, 45);
+            drawBatteryComparison(doc, ctx, data);
+        }
+
+        // -------------------------------------------------------
+        //  4. CO2 — indicateur complémentaire discret
+        // -------------------------------------------------------
+        ctx.y += 2;
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(clean(L.v2Co2Note) + ' : '
+            + fmtNum(fin.co2Avoided, 0, lang) + ' ' + L.unitKgAn,
+            M, ctx.y);
+        ctx.y += 6;
     }
 
 
@@ -2278,6 +2392,7 @@
         renderCoverPage:        renderCoverPage,
         renderV2Page2:          renderV2Page2,
         renderV2Page3:          renderV2Page3,
+        renderV2Page4:          renderV2Page4,
     };
 
 })();
