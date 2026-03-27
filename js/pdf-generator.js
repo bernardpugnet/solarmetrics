@@ -38,9 +38,9 @@
     /** Margins */
     var M = 16;                         // left/right margin
     var HEADER_H = 32;                  // header band height
-    var FOOTER_Y = PAGE_H - 8;         // footer baseline
+    var FOOTER_Y = PAGE_H - 14;         // footer top (line separator)
     var CONTENT_START_Y = 38;           // first content Y after header
-    var PAGE_BOTTOM = PAGE_H - 16;      // safe bottom before footer
+    var PAGE_BOTTOM = PAGE_H - 20;      // safe bottom before footer
 
     /** Centered block (for compact label-value rows) */
     var BLOCK_W = 110;
@@ -215,6 +215,8 @@
             notReached:   'Non atteint',
             disclaimer:   'Ce rapport est une estimation indicative basee sur les donnees PVGIS (Commission europeenne) et les parametres moyens du pays. Les resultats reels peuvent varier selon l\'ombrage, la qualite de l\'installation, la meteo et l\'evolution des tarifs.',
             footer:       'Solar Data Atlas (c) 2024-2026 Bernard Pugnet - Donnees PVGIS - Simulation indicative, non contractuelle.',
+            footerLine1:  'Solar Data Atlas \u2014 rapport realise par Bernard Pugnet',
+            footerLine2:  'Pour plus d\'informations : +33 6 02 19 94 81',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -371,6 +373,8 @@
             notReached:   'Not reached',
             disclaimer:   'This report is an indicative estimate based on PVGIS data (European Commission) and country-average parameters. Actual results may vary depending on shading, installation quality, weather and tariff evolution.',
             footer:       'Solar Data Atlas (c) 2024-2026 Bernard Pugnet - PVGIS data - Indicative simulation, non-contractual.',
+            footerLine1:  'Solar Data Atlas \u2014 report by Bernard Pugnet',
+            footerLine2:  'For more information: +33 6 02 19 94 81',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -548,15 +552,40 @@
     }
 
     /**
-     * Draws the footer on a given page.
+     * Draws the 3-zone footer on a given page.
+     * Left:   "Solar Data Atlas" brand text (amber)
+     * Center: 2-line contact info
+     * Right:  page number (e.g. "2/6")
      * Does NOT mutate ctx.y.
      */
     function drawFooter(doc, ctx, pageNum, totalPages) {
         var L = ctx.L;
+        var centerX = PAGE_W / 2;
+
+        // --- Separator line ---
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.line(M, FOOTER_Y, PAGE_W - M, FOOTER_Y);
+
+        // --- Left: brand text ---
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.amber);
+        doc.text('Solar Data Atlas', M, FOOTER_Y + 5);
+        doc.setFont('helvetica', 'normal');
+
+        // --- Center: 2-line contact ---
         doc.setFontSize(6.5);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(clean(L.footerLine1), centerX, FOOTER_Y + 4, { align: 'center' });
+        doc.setFontSize(6);
         doc.setTextColor.apply(doc, C.muted);
-        doc.text(clean(L.footer), M, FOOTER_Y);
-        doc.text(pageNum + ' / ' + totalPages, PAGE_W - M, FOOTER_Y, { align: 'right' });
+        doc.text(clean(L.footerLine2), centerX, FOOTER_Y + 8, { align: 'center' });
+
+        // --- Right: pagination ---
+        doc.setFontSize(7);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(pageNum + '/' + totalPages, PAGE_W - M, FOOTER_Y + 5, { align: 'right' });
     }
 
     /**
@@ -1761,9 +1790,9 @@
             renderStudyPage4(doc, ctx, normalized);
         }
 
-        // --- Draw footers on all pages ---
+        // --- Draw footers on pages 2+ (no footer on cover/page 1) ---
         var totalPages = doc.getNumberOfPages();
-        for (var p = 1; p <= totalPages; p++) {
+        for (var p = 2; p <= totalPages; p++) {
             doc.setPage(p);
             drawFooter(doc, ctx, p, totalPages);
         }
