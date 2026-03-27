@@ -829,7 +829,7 @@
             ? fmtNum(fin.payback, 1, lang)
             : L.notReached;
         var irrVal = flags.irrAvailable
-            ? fmtNum(fin.irr, 1, lang)
+            ? fmtNum(fin.irr * 100, 1, lang)
             : '—';
 
         drawKpiCards(doc, ctx, [
@@ -987,7 +987,7 @@
             ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
             : L.notReached;
         var irrStr = flags.irrAvailable
-            ? fmtNum(fin.irr, 1, lang) + ' ' + L.unitPercent
+            ? fmtNum(fin.irr * 100, 1, lang) + ' ' + L.unitPercent
             : '—';
 
         drawSectionTitle(doc, ctx, L.sectionFinancial);
@@ -1076,9 +1076,9 @@
             lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
                 + (lang === 'fr' ? ' (retour rapide)' : ' (fast return)'));
         }
-        // Positive IRR
-        if (fin.irr !== null && fin.irr >= 4) {
-            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr, 1, lang) + '%'
+        // Positive IRR (fin.irr is a decimal, e.g. 0.17 = 17%)
+        if (fin.irr !== null && fin.irr >= 0.04) {
+            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr * 100, 1, lang) + '%'
                 + (lang === 'fr' ? ' (rendement competitif)' : ' (competitive return)'));
         }
         // Significant 25y gains
@@ -1121,9 +1121,9 @@
             lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
                 + (lang === 'fr' ? ' (retour lent)' : ' (slow return)'));
         }
-        // Low IRR
-        if (fin.irr !== null && fin.irr < 2) {
-            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr, 1, lang) + '%'
+        // Low IRR (fin.irr is a decimal, e.g. 0.02 = 2%)
+        if (fin.irr !== null && fin.irr < 0.02) {
+            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr * 100, 1, lang) + '%'
                 + (lang === 'fr' ? ' (rendement inferieur au cout du capital)' : ' (return below cost of capital)'));
         }
         // Fallback
@@ -1432,7 +1432,7 @@
             ? fmtNum(fin.payback, 1, lang)
             : L.notReached;
         var irrVal = flags.irrAvailable
-            ? fmtNum(fin.irr, 1, lang)
+            ? fmtNum(fin.irr * 100, 1, lang)
             : '\u2014';
 
         drawKpiCards(doc, ctx, [
@@ -1531,7 +1531,7 @@
             ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
             : L.notReached;
         var irrStr = flags.irrAvailable
-            ? fmtNum(fin.irr, 1, lang) + ' ' + L.unitPercent
+            ? fmtNum(fin.irr * 100, 1, lang) + ' ' + L.unitPercent
             : '\u2014';
 
         drawCompactTable(doc, ctx, [
