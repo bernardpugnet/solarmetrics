@@ -260,6 +260,9 @@
             v2Subsidies:       'Aides deduites',
             v2Co2Note:         'Empreinte carbone evitee',
 
+            // v2 page 5 — decision analysis
+            v2DecisionTitle:   'Analyse et aide a la decision',
+
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
@@ -459,6 +462,9 @@
             v2CostTotal:       'Total investment',
             v2Subsidies:       'Subsidies deducted',
             v2Co2Note:         'Carbon footprint avoided',
+
+            // v2 page 5 — decision analysis
+            v2DecisionTitle:   'Analysis and decision support',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -1321,6 +1327,60 @@
             + fmtNum(fin.co2Avoided, 0, lang) + ' ' + L.unitKgAn,
             M, ctx.y);
         ctx.y += 6;
+    }
+
+
+    // =================================================================
+    //  7a-5. DECISION ANALYSIS PAGE (v2 — Step 8)
+    // =================================================================
+
+    /**
+     * Renders v2 page 5: "Analyse et aide à la décision"
+     * Uses drawHeader() at top (called by assembler, not here).
+     *
+     * Structure:
+     *   1. Section title
+     *   2. Strengths block — factual, data-driven (buildStrengths)
+     *   3. Weaknesses block — factual, data-driven (buildWeaknesses)
+     *   4. Battery reading — project-specific (buildBatteryReading)
+     *   5. Points to check — concrete checklist
+     *
+     * Reuses: drawSectionTitle, drawMiniBlock, buildStrengths,
+     *         buildWeaknesses, buildBatteryReading, checkPageBreak.
+     */
+    function renderV2Page5(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var verdict = data.verdict;
+        var flags = data.displayFlags;
+
+        // --- Section title ---
+        drawSectionTitle(doc, ctx, L.v2DecisionTitle);
+
+        // --- 1. Strengths ---
+        var strengths = buildStrengths(data, L, lang);
+        drawMiniBlock(doc, ctx, L.p3Strengths, strengths);
+
+        // --- 2. Weaknesses ---
+        var weaknesses = buildWeaknesses(data, L, lang);
+        drawMiniBlock(doc, ctx, L.p3Weaknesses, weaknesses);
+
+        // --- 3. Battery reading (project-specific) ---
+        if (flags.hasBattery) {
+            var batLines = buildBatteryReading(data, L, lang);
+            drawMiniBlock(doc, ctx, L.p3BatteryReading, batLines);
+        }
+
+        // --- 4. Points to check before deciding ---
+        checkPageBreak(doc, ctx, 25);
+        var checks = [];
+        if (flags.hasVerdict && verdict && Array.isArray(verdict.recommendations) && verdict.recommendations.length > 0) {
+            verdict.recommendations.forEach(function (r) {
+                checks.push('- ' + r);
+            });
+        }
+        checks.push('- ' + L.p3DefaultCheck);
+        drawMiniBlock(doc, ctx, L.p3CheckBefore, checks);
     }
 
 
@@ -2393,6 +2453,7 @@
         renderV2Page2:          renderV2Page2,
         renderV2Page3:          renderV2Page3,
         renderV2Page4:          renderV2Page4,
+        renderV2Page5:          renderV2Page5,
     };
 
 })();
