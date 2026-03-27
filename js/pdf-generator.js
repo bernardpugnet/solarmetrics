@@ -1295,7 +1295,7 @@
 
         // Subsidies — only if non-zero
         if (subsidies > 0) {
-            finRows.push([L.v2Subsidies,   '\u2212 ' + fmtNum(subsidies, 0, lang) + ' ' + L.unitEur]);
+            finRows.push([L.v2Subsidies,   '- ' + fmtNum(subsidies, 0, lang) + ' ' + L.unitEur]);
         }
 
         finRows.push([L.lblNetCost,        fmtNum(fp.netCost, 0, lang) + ' ' + L.unitEur]);
@@ -2429,8 +2429,8 @@
         var mode = (opts && opts.mode) || 'client';
         var lang = (opts && opts.lang) || (data.meta && data.meta.lang) || 'fr';
 
-        if (mode !== 'client' && mode !== 'study') {
-            console.error('[pdf-generator] Invalid mode: ' + mode + '. Use "client" or "study".');
+        if (mode !== 'client' && mode !== 'study' && mode !== 'v2') {
+            console.error('[pdf-generator] Invalid mode: ' + mode + '. Use "client", "study" or "v2".');
             return;
         }
         if (lang !== 'fr' && lang !== 'en') {
@@ -2464,7 +2464,36 @@
         };
 
         // --- Dispatch to mode-specific page composers ---
-        if (mode === 'client') {
+        if (mode === 'v2') {
+            // Page 1: Cover (no header, no footer)
+            renderCoverPage(doc, ctx, normalized);
+
+            // Page 2: Synthèse
+            doc.addPage();
+            drawHeader(doc, ctx);
+            renderV2Page2(doc, ctx, normalized);
+
+            // Page 3: Production & autoconsommation
+            doc.addPage();
+            drawHeader(doc, ctx);
+            renderV2Page3(doc, ctx, normalized);
+
+            // Page 4: Analyse économique
+            doc.addPage();
+            drawHeader(doc, ctx);
+            renderV2Page4(doc, ctx, normalized);
+
+            // Page 5: Analyse et aide à la décision
+            doc.addPage();
+            drawHeader(doc, ctx);
+            renderV2Page5(doc, ctx, normalized);
+
+            // Page 6: Hypothèses, méthode et limites
+            doc.addPage();
+            drawHeader(doc, ctx);
+            renderV2Page6(doc, ctx, normalized);
+
+        } else if (mode === 'client') {
             drawHeader(doc, ctx);
             renderClientPage1(doc, ctx, normalized);
             doc.addPage();
@@ -2498,8 +2527,9 @@
         }
 
         // --- Save ---
+        var modeLabel = mode === 'study' ? 'etude' : (mode === 'v2' ? 'rapport-v2' : 'rapport');
         var filename = 'solardataatlas-'
-            + (mode === 'study' ? 'etude' : 'rapport')
+            + modeLabel
             + '-' + lang
             + '.pdf';
         doc.save(filename);
