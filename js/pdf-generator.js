@@ -236,6 +236,10 @@
             coverToc5:         'Analyse et aide a la decision',
             coverToc6:         'Hypotheses, methode et limites',
 
+            // v2 section titles
+            v2SynthesisTitle:  'Synthese du projet',
+            v2ConfigTitle:     'Configuration de l\'installation',
+
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
@@ -411,6 +415,10 @@
             coverToc4:         'Financial analysis',
             coverToc5:         'Analysis and decision support',
             coverToc6:         'Assumptions, method and limitations',
+
+            // v2 section titles
+            v2SynthesisTitle:  'Project summary',
+            v2ConfigTitle:     'Installation configuration',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -982,6 +990,85 @@
         doc.setFontSize(7.5);
         doc.setTextColor.apply(doc, C.muted);
         doc.text(clean(L.coverEditor), PAGE_W / 2, 282, { align: 'center' });
+    }
+
+
+    // =================================================================
+    //  7a-2. SYNTHESIS PAGE (v2 — Step 5)
+    // =================================================================
+
+    /**
+     * Renders v2 page 2: "Synthèse du projet"
+     * Uses drawHeader() at top (called by assembler, not here).
+     *
+     * Structure:
+     *   1. Section title "Synthèse du projet"
+     *   2. Verdict block (good / medium / poor)
+     *   3. 4 KPI cards (savings, payback, autoconso, IRR)
+     *   4. Compact configuration table
+     *
+     * Reuses existing helpers: drawVerdictBlock, drawKpiCards,
+     * drawSectionTitle, drawCompactTable, orientLabel, profileLabel.
+     */
+    function renderV2Page2(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var cfg = data.config;
+        var bat = data.battery;
+        var fp = data.financialParams;
+        var fin = data.financial;
+        var prod = data.production;
+        var flags = data.displayFlags;
+
+        // --- Section title ---
+        drawSectionTitle(doc, ctx, L.v2SynthesisTitle);
+
+        // --- Verdict block ---
+        if (flags.hasVerdict) {
+            drawVerdictBlock(doc, ctx, data.verdict);
+        }
+
+        // --- 4 KPI cards ---
+        var paybackVal = fin.payback !== null
+            ? fmtNum(fin.payback, 1, lang)
+            : L.notReached;
+        var irrVal = flags.irrAvailable
+            ? fmtNum(fin.irr * 100, 1, lang)
+            : '\u2014';
+
+        drawKpiCards(doc, ctx, [
+            { label: L.kpiSavings,   value: fmtNum(fin.annualSavings, 0, lang), unit: L.unitEurAn, accent: C.green },
+            { label: L.kpiPayback,   value: paybackVal,                          unit: L.unitYears, accent: C.amber },
+            { label: L.kpiAutoconso, value: fmtNum(prod.autoconsoRate, 1, lang), unit: L.unitPercent, accent: C.amber },
+            { label: L.kpiIrr,       value: irrVal,                              unit: L.unitPercent, accent: C.green },
+        ]);
+
+        // --- Configuration table ---
+        ctx.y += 2;
+        drawSectionTitle(doc, ctx, L.v2ConfigTitle);
+
+        var batteryText = flags.hasBattery
+            ? fmtNum(bat.capacityKwh, 1, lang) + ' ' + L.unitKwh
+            : L.no;
+
+        var configRows = [
+            [L.lblLocation,   cfg.countryName + ' (' + fmtNum(cfg.lat, 2, lang) + '\u00b0N, ' + fmtNum(cfg.lon, 2, lang) + '\u00b0E)'],
+            [L.lblPower,      fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc],
+            [L.lblSurface,    fmtNum(cfg.surface, 0, lang) + ' ' + L.unitM2],
+            [L.lblTiltOrient, fmtNum(cfg.tilt, 0, lang) + '\u00b0 / ' + orientLabel(cfg.orientation, L)],
+            [L.lblProfile,    profileLabel(cfg.profile, L)],
+            [L.lblBattery,    batteryText],
+            [L.lblConsoInput, fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh],
+        ];
+
+        if (flags.consoModified) {
+            configRows.push([L.lblConsoSimulated, fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh]);
+        }
+
+        configRows.push([L.lblElecPrice,    fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh]);
+        configRows.push([L.lblFeedinTariff,  fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
+
+        drawCompactTable(doc, ctx, configRows);
     }
 
 
@@ -2051,6 +2138,7 @@
         drawVerdictBlock:       drawVerdictBlock,
         checkPageBreak:         checkPageBreak,
         renderCoverPage:        renderCoverPage,
+        renderV2Page2:          renderV2Page2,
     };
 
 })();
