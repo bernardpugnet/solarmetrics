@@ -2426,7 +2426,7 @@
             console.error('[pdf-generator] No simulation data provided.');
             return;
         }
-        var mode = (opts && opts.mode) || 'client';
+        var mode = (opts && opts.mode) || 'v2';
         var lang = (opts && opts.lang) || (data.meta && data.meta.lang) || 'fr';
 
         if (mode !== 'client' && mode !== 'study' && mode !== 'v2') {
