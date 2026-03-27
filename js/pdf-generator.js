@@ -218,6 +218,24 @@
             footerLine1:  'Solar Data Atlas \u2014 rapport realise par Bernard Pugnet',
             footerLine2:  'Pour plus d\'informations : +33 6 02 19 94 81',
 
+            // Cover page (v2)
+            coverReportTitle:  'Rapport de simulation solaire',
+            coverStudyTitle:   'Etude technico-economique',
+            coverSubtitle:     'Analyse personnalisee de rentabilite photovoltaique',
+            coverLocation:     'Localisation',
+            coverPower:        'Puissance',
+            coverDate:         'Date de generation',
+            coverIntro:        'Ce rapport presente une simulation horaire complete de votre projet photovoltaique, incluant production, autoconsommation, rentabilite financiere et aide a la decision.',
+            coverMethod:       'Donnees climatiques : PVGIS/TMY (Commission europeenne). Simulation : 8 760 heures.',
+            coverEditor:       'Solar Data Atlas \u2014 Bernard Pugnet',
+            coverTocTitle:     'Sommaire',
+            coverToc1:         'Presentation',
+            coverToc2:         'Synthese du projet',
+            coverToc3:         'Production et autoconsommation',
+            coverToc4:         'Analyse economique',
+            coverToc5:         'Analyse et aide a la decision',
+            coverToc6:         'Hypotheses, methode et limites',
+
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
@@ -375,6 +393,24 @@
             footer:       'Solar Data Atlas (c) 2024-2026 Bernard Pugnet - PVGIS data - Indicative simulation, non-contractual.',
             footerLine1:  'Solar Data Atlas \u2014 report by Bernard Pugnet',
             footerLine2:  'For more information: +33 6 02 19 94 81',
+
+            // Cover page (v2)
+            coverReportTitle:  'Solar Simulation Report',
+            coverStudyTitle:   'Techno-Economic Feasibility Study',
+            coverSubtitle:     'Personalised photovoltaic profitability analysis',
+            coverLocation:     'Location',
+            coverPower:        'Capacity',
+            coverDate:         'Generated on',
+            coverIntro:        'This report presents a full hourly simulation of your photovoltaic project, covering production, self-consumption, financial returns and decision support.',
+            coverMethod:       'Climate data: PVGIS/TMY (European Commission). Simulation: 8,760 hours.',
+            coverEditor:       'Solar Data Atlas \u2014 Bernard Pugnet',
+            coverTocTitle:     'Contents',
+            coverToc1:         'Overview',
+            coverToc2:         'Project summary',
+            coverToc3:         'Production and self-consumption',
+            coverToc4:         'Financial analysis',
+            coverToc5:         'Analysis and decision support',
+            coverToc6:         'Assumptions, method and limitations',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -760,7 +796,197 @@
 
 
     // =================================================================
-    //  7. PAGE COMPOSERS (placeholders — Steps 3–6)
+    //  7a. COVER PAGE (v2 — Step 4)
+    // =================================================================
+
+    /**
+     * Renders the cover page (page 1) for the v2 report.
+     * Full-page layout — no drawHeader(), no drawFooter().
+     *
+     * Structure:
+     *   0–70mm   : dark band with logo text + report title
+     *   80–130mm : project info (location, power, date)
+     *   140–175mm: intro paragraph + method line
+     *   185–265mm: table of contents (6 entries)
+     *   275–290mm: editor mention
+     */
+    function renderCoverPage(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var cfg = data.config || {};
+
+        // -------------------------------------------------------
+        //  Dark band — top 70mm
+        // -------------------------------------------------------
+        doc.setFillColor.apply(doc, C.dark);
+        doc.rect(0, 0, PAGE_W, 70, 'F');
+
+        // Amber accent line at bottom of band
+        doc.setDrawColor.apply(doc, C.amber);
+        doc.setLineWidth(0.8);
+        doc.line(M, 69, PAGE_W - M, 69);
+
+        // Logo text: "SOLAR" white + "DATA ATLAS" amber
+        doc.setFontSize(28);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.white);
+        var solarW = doc.getTextWidth('SOLAR ');
+        doc.text('SOLAR ', M, 30);
+        doc.setTextColor.apply(doc, C.amber);
+        doc.text('DATA ATLAS', M + solarW, 30);
+
+        // Report title — below logo
+        doc.setFontSize(14);
+        doc.setTextColor.apply(doc, C.light);
+        doc.setFont('helvetica', 'normal');
+        var title = ctx.mode === 'study' ? L.coverStudyTitle : L.coverReportTitle;
+        doc.text(clean(title), M, 42);
+
+        // Subtitle
+        doc.setFontSize(10);
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(clean(L.coverSubtitle), M, 52);
+
+        // URL — right side in band
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(L.websiteUrl, PAGE_W - M, 52, { align: 'right' });
+
+        // -------------------------------------------------------
+        //  Project info — Y 82–130
+        // -------------------------------------------------------
+        var infoY = 88;
+
+        // Location
+        var locationStr = cfg.countryName || '';
+        if (cfg.lat && cfg.lon) {
+            locationStr += ' (' + fmtNum(cfg.lat, 2, lang) + ', ' + fmtNum(cfg.lon, 2, lang) + ')';
+        }
+        doc.setFontSize(9);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.setFont('helvetica', 'normal');
+        doc.text(clean(L.coverLocation), M, infoY);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(locationStr), M + 50, infoY);
+        doc.setFont('helvetica', 'normal');
+
+        // Power
+        infoY += 10;
+        var powerStr = fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc;
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(clean(L.coverPower), M, infoY);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(powerStr), M + 50, infoY);
+        doc.setFont('helvetica', 'normal');
+
+        // Date
+        infoY += 10;
+        var dateStr = new Date().toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(clean(L.coverDate), M, infoY);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(dateStr), M + 50, infoY);
+        doc.setFont('helvetica', 'normal');
+
+        // Thin separator
+        infoY += 10;
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.line(M, infoY, PAGE_W - M, infoY);
+
+        // -------------------------------------------------------
+        //  Intro paragraph + method — Y 130–170
+        // -------------------------------------------------------
+        var introY = infoY + 10;
+
+        doc.setFontSize(9);
+        doc.setTextColor.apply(doc, C.slate);
+        var introLines = doc.splitTextToSize(clean(L.coverIntro), PAGE_W - 2 * M);
+        doc.text(introLines, M, introY);
+        introY += introLines.length * 4 + 6;
+
+        // Method / source — smaller, muted
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(clean(L.coverMethod), M, introY);
+
+        // -------------------------------------------------------
+        //  Table of contents — Y ~185–260
+        // -------------------------------------------------------
+        var tocY = 185;
+
+        // TOC title
+        doc.setFontSize(12);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(L.coverTocTitle), M, tocY);
+        tocY += 3;
+        doc.setDrawColor.apply(doc, C.amber);
+        doc.setLineWidth(0.6);
+        doc.line(M, tocY, M + 30, tocY);
+        doc.setFont('helvetica', 'normal');
+        tocY += 10;
+
+        // TOC entries
+        var tocItems = [
+            L.coverToc1,
+            L.coverToc2,
+            L.coverToc3,
+            L.coverToc4,
+            L.coverToc5,
+            L.coverToc6,
+        ];
+
+        tocItems.forEach(function (item, i) {
+            var pageNum = i + 1;
+            // Number
+            doc.setFontSize(10);
+            doc.setTextColor.apply(doc, C.amber);
+            doc.setFont('helvetica', 'bold');
+            doc.text(String(pageNum) + '.', M + 2, tocY);
+
+            // Title
+            doc.setTextColor.apply(doc, C.dark);
+            doc.setFont('helvetica', 'normal');
+            doc.text(clean(item), M + 14, tocY);
+
+            // Dotted line + page number (right)
+            doc.setFontSize(8);
+            doc.setTextColor.apply(doc, C.muted);
+            doc.text(String(pageNum), PAGE_W - M, tocY, { align: 'right' });
+
+            // Light dots between title and page number
+            var titleW = doc.getTextWidth(clean(item));
+            var dotsStart = M + 14 + titleW + 2;
+            var dotsEnd = PAGE_W - M - 8;
+            if (dotsEnd > dotsStart) {
+                doc.setDrawColor.apply(doc, C.light);
+                doc.setLineWidth(0.2);
+                // Dotted effect via dashed line
+                doc.setLineDashPattern([0.5, 1.5], 0);
+                doc.line(dotsStart, tocY + 1, dotsEnd, tocY + 1);
+                doc.setLineDashPattern([], 0);
+            }
+
+            tocY += 11;
+        });
+
+        // -------------------------------------------------------
+        //  Editor mention — bottom
+        // -------------------------------------------------------
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(clean(L.coverEditor), PAGE_W / 2, 282, { align: 'center' });
+    }
+
+
+    // =================================================================
+    //  7b. PAGE COMPOSERS (client & study — legacy)
     // =================================================================
 
     // --- Client mode ---
@@ -1824,6 +2050,7 @@
         drawKpiCards:           drawKpiCards,
         drawVerdictBlock:       drawVerdictBlock,
         checkPageBreak:         checkPageBreak,
+        renderCoverPage:        renderCoverPage,
     };
 
 })();
