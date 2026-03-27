@@ -239,6 +239,16 @@
             // v2 section titles
             v2SynthesisTitle:  'Synthese du projet',
             v2ConfigTitle:     'Configuration de l\'installation',
+            v2ProductionTitle: 'Production solaire',
+            v2AutoconsoTitle:  'Autoconsommation detaillee',
+            v2ConsoBoxTitle:   'Comprendre la consommation modelisee',
+            v2ConsoBoxBase:    'La consommation de base est estimee a partir du profil',
+            v2ConsoBoxAddons:  'Equipements supplementaires integres :',
+            v2ConsoBoxResult:  'La consommation totale simulee est de',
+            v2ConsoBoxNoChange:'La consommation simulee correspond a la valeur saisie.',
+            v2AddonEv:         'Vehicule electrique (~2 500 kWh/an)',
+            v2AddonPac:        'Pompe a chaleur (~4 000 kWh/an)',
+            v2AddonEcs:        'Chauffe-eau thermodynamique (~1 500 kWh/an)',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -419,6 +429,16 @@
             // v2 section titles
             v2SynthesisTitle:  'Project summary',
             v2ConfigTitle:     'Installation configuration',
+            v2ProductionTitle: 'Solar production',
+            v2AutoconsoTitle:  'Self-consumption details',
+            v2ConsoBoxTitle:   'Understanding modeled consumption',
+            v2ConsoBoxBase:    'Baseline consumption is estimated from the',
+            v2ConsoBoxAddons:  'Additional equipment included:',
+            v2ConsoBoxResult:  'Total simulated consumption is',
+            v2ConsoBoxNoChange:'Simulated consumption matches the input value.',
+            v2AddonEv:         'Electric vehicle (~2,500 kWh/yr)',
+            v2AddonPac:        'Heat pump (~4,000 kWh/yr)',
+            v2AddonEcs:        'Thermodynamic water heater (~1,500 kWh/yr)',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -1069,6 +1089,124 @@
         configRows.push([L.lblFeedinTariff,  fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
 
         drawCompactTable(doc, ctx, configRows);
+    }
+
+
+    // =================================================================
+    //  7a-3. PRODUCTION & SELF-CONSUMPTION PAGE (v2 — Step 6)
+    // =================================================================
+
+    /**
+     * Renders v2 page 3: "Production et autoconsommation"
+     * Uses drawHeader() at top (called by assembler, not here).
+     *
+     * Structure:
+     *   1. Section "Production solaire" — performance + valeur économique
+     *   2. Section "Autoconsommation détaillée" — répartition flux énergie
+     *   3. Bloc pédagogique "Comprendre la consommation modélisée"
+     *      — conditionnel : adapte le texte selon profil + addons présents
+     *
+     * Reuses: drawSectionTitle, drawCompactTable, profileLabel.
+     */
+    function renderV2Page3(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var prod = data.production;
+        var fin = data.financial;
+        var cfg = data.config;
+        var flags = data.displayFlags;
+
+        // -------------------------------------------------------
+        //  1. Production solaire
+        // -------------------------------------------------------
+        drawSectionTitle(doc, ctx, L.v2ProductionTitle);
+        drawCompactTable(doc, ctx, [
+            [L.lblAnnualProd,    fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwh],
+            [L.lblProdPerKwc,    fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc],
+            [L.lblSavingsAuto,   fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
+            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
+            [L.lblSavingsTotal,  fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
+        ]);
+        ctx.y += 4;
+
+        // -------------------------------------------------------
+        //  2. Autoconsommation détaillée
+        // -------------------------------------------------------
+        drawSectionTitle(doc, ctx, L.v2AutoconsoTitle);
+        drawCompactTable(doc, ctx, [
+            [L.lblAutoRate,    fmtNum(prod.autoconsoRate, 1, lang) + ' ' + L.unitPercent],
+            [L.lblProdRate,    fmtNum(prod.autoprodRate, 1, lang) + ' ' + L.unitPercent],
+            [L.lblAutoDirect,  fmtNum(prod.autoDirect, 0, lang) + ' ' + L.unitKwh],
+            [L.lblAutoBattery, fmtNum(prod.autoBattery, 0, lang) + ' ' + L.unitKwh],
+            [L.lblInjection,   fmtNum(prod.injection, 0, lang) + ' ' + L.unitKwh],
+            [L.lblSoutirage,   fmtNum(prod.soutirage, 0, lang) + ' ' + L.unitKwh],
+        ]);
+        ctx.y += 6;
+
+        // -------------------------------------------------------
+        //  3. Bloc pédagogique — consommation modélisée
+        // -------------------------------------------------------
+        // Build text dynamically based on profile + addons
+        var addonMap = {
+            ev:  L.v2AddonEv,
+            pac: L.v2AddonPac,
+            ecs: L.v2AddonEcs,
+        };
+
+        var lines = [];
+
+        // Baseline profile sentence
+        lines.push(clean(L.v2ConsoBoxBase) + ' "' + profileLabel(cfg.profile, L)
+            + '" (' + fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh + ').');
+
+        // Addons — only if present
+        if (flags.hasAddons) {
+            lines.push(clean(L.v2ConsoBoxAddons));
+            var addons = cfg.addons || [];
+            addons.forEach(function (key) {
+                if (addonMap[key]) {
+                    lines.push('  \u2022 ' + clean(addonMap[key]));
+                }
+            });
+            lines.push(clean(L.v2ConsoBoxResult) + ' '
+                + fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh + '.');
+        } else {
+            lines.push(clean(L.v2ConsoBoxNoChange));
+        }
+
+        var bodyText = lines.join('\n');
+
+        // Compute box height
+        doc.setFontSize(8);
+        var bodyLines = doc.splitTextToSize(bodyText, PAGE_W - 2 * M - 16);
+        var boxH = 12 + bodyLines.length * 3.5 + 4;
+
+        checkPageBreak(doc, ctx, boxH + 10);
+
+        // Title
+        doc.setFontSize(9);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(L.v2ConsoBoxTitle), M, ctx.y);
+        doc.setFont('helvetica', 'normal');
+        ctx.y += 2;
+
+        // Amber underline (short)
+        doc.setDrawColor.apply(doc, C.amber);
+        doc.setLineWidth(0.4);
+        doc.line(M, ctx.y, M + 50, ctx.y);
+        ctx.y += 5;
+
+        // Background box
+        doc.setFillColor.apply(doc, C.bg);
+        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, boxH, 2, 2, 'F');
+
+        // Body text
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(bodyLines, M + 6, ctx.y + 4);
+
+        ctx.y += boxH + 4;
     }
 
 
@@ -2139,6 +2277,7 @@
         checkPageBreak:         checkPageBreak,
         renderCoverPage:        renderCoverPage,
         renderV2Page2:          renderV2Page2,
+        renderV2Page3:          renderV2Page3,
     };
 
 })();
