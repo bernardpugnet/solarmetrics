@@ -1695,27 +1695,38 @@ function reverseGeocode(lat, lon) {
             document.getElementById('prevAutoconso').textContent = autoRate;
 
             // --- Financial KPIs: only if country known or user filled prices manually ---
+            // --- Financial KPIs — 3 levels ---
             var hasElecPrice = elecPrice > 0 && !isNaN(elecPrice);
             var customCost = parseFloat((document.getElementById('resInstallCostOverride') && document.getElementById('resInstallCostOverride').value));
             var hasCustomCost = !isNaN(customCost) && customCost > 0;
-            var canEstimateFinancials = knownCountry || (hasElecPrice && hasCustomCost);
+            var costPerKwc = (countryEntry && countryEntry.installCostPerKwc) ? countryEntry.installCostPerKwc.avg : 0;
+            var batCostKwh = (countryEntry && countryEntry.batteryCostPerKwh) ? countryEntry.batteryCostPerKwh : 450;
+            var hasCostData = hasCustomCost || costPerKwc > 0;
+            var canEstimateSavings = knownCountry || hasElecPrice;
+            var canEstimatePayback = canEstimateSavings && hasCostData;
 
-            if (canEstimateFinancials) {
-                var costPerKwc = (countryEntry && countryEntry.installCostPerKwc) ? countryEntry.installCostPerKwc.avg : 0;
-                var batCostKwh = (countryEntry && countryEntry.batteryCostPerKwh) ? countryEntry.batteryCostPerKwh : 450;
+            // Level 1: Savings (need electricity price)
+            if (canEstimateSavings) {
                 var autoKwh = annualProd * autoRate / 100;
                 var injectionKwh = annualProd - autoKwh;
                 var savingsAuto = autoKwh * elecPrice;
                 var savingsFeedin = injectionKwh * feedin;
                 var annualSavings = Math.round(savingsAuto + savingsFeedin);
+                document.getElementById('prevSavings').textContent = fmtEN(annualSavings);
+                document.getElementById('prevSavingsUnit').textContent = currSym + '/yr';
+            } else {
+                document.getElementById('prevSavings').textContent = '\u2014';
+                document.getElementById('prevSavingsUnit').textContent = '/yr';
+            }
+
+            // Level 2: Payback + verdict (need savings + install cost)
+            if (canEstimatePayback && canEstimateSavings) {
                 var subsidies = parseFloat((document.getElementById('resSubsidies') && document.getElementById('resSubsidies').value)) || 0;
                 var pvCost = hasCustomCost ? customCost : kwc * costPerKwc;
                 var batCost = hasBat ? batKwh * batCostKwh : 0;
                 var totalCost = pvCost + batCost - subsidies;
                 var payback = annualSavings > 0 ? totalCost / annualSavings : 99;
 
-                document.getElementById('prevSavings').textContent = fmtEN(annualSavings);
-                document.getElementById('prevSavingsUnit').textContent = currSym + '/yr';
                 document.getElementById('prevPayback').textContent = payback < 50 ? payback.toFixed(1) : '> 50';
 
                 var verdictText, verdictClass;
@@ -1730,11 +1741,13 @@ function reverseGeocode(lat, lon) {
                 vEl.textContent = verdictText;
                 vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
             } else {
-                document.getElementById('prevSavings').textContent = '\u2014';
-                document.getElementById('prevSavingsUnit').textContent = '/yr';
                 document.getElementById('prevPayback').textContent = '\u2014';
                 var vEl = document.getElementById('prevVerdict');
-                vEl.textContent = 'Missing data';
+                if (!canEstimateSavings) {
+                    vEl.textContent = 'Enter elec. price';
+                } else {
+                    vEl.textContent = 'Enter install cost';
+                }
                 vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium bg-slate-500/15 text-slate-400 border-slate-500/30';
             }
         }
