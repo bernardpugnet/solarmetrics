@@ -272,6 +272,13 @@
             v2HypothesesTitle: 'Hypotheses, methode et limites',
             v2SensitivityNote: 'Les resultats de cette simulation dependent principalement de quatre facteurs : le prix futur de l\'electricite, la degradation reelle des panneaux, la degradation de la batterie (si presente), et l\'adequation du profil de consommation retenu avec vos usages reels.',
 
+            // v2 page intros (pages 2–6)
+            v2IntroP2: 'Cette page presente une lecture d\'ensemble du projet a partir du verdict, des principaux indicateurs de performance et de la configuration retenue. Elle permet d\'apprecier rapidement si l\'installation parait coherente avec votre profil de consommation et vos objectifs.',
+            v2IntroP3: 'Cette page detaille la production solaire attendue, la repartition des flux d\'energie et le niveau d\'autoconsommation du systeme. Elle precise egalement comment la consommation a ete modelisee afin de rendre les resultats plus lisibles et plus comparables.',
+            v2IntroP4: 'Cette page presente les principaux equilibres financiers du projet : investissement, economies annuelles, temps de retour et gains sur la duree d\'analyse. Elle permet aussi d\'apprecier l\'impact specifique de la batterie sur la rentabilite globale de l\'installation.',
+            v2IntroP5: 'Cette page propose une lecture interpretative des resultats en mettant en evidence les elements qui soutiennent le projet, ceux qui le limitent, ainsi que les verifications utiles avant engagement. Elle vise a transformer les chiffres du rapport en points de vigilance concrets.',
+            v2IntroP6: 'Cette page explicite les hypotheses retenues pour la simulation, la methode de calcul utilisee et les principales limites du modele. Elle replace les resultats dans leur cadre technique et rappelle leur caractere indicatif.',
+
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
                 ['kWc', 'Kilowatt-crete : puissance maximale d\'un panneau en conditions standard (1 000 W/m2, 25 C).'],
@@ -483,6 +490,13 @@
             // v2 page 6 — assumptions, method, limits
             v2HypothesesTitle: 'Assumptions, method and limitations',
             v2SensitivityNote: 'The results of this simulation depend primarily on four factors: the future price of electricity, the actual degradation of solar panels, battery degradation (if applicable), and how well the selected consumption profile matches your real usage patterns.',
+
+            // v2 page intros (pages 2–6)
+            v2IntroP2: 'This page provides an overall reading of the project based on the verdict, the main performance indicators and the selected system configuration. It allows a quick assessment of whether the installation is broadly consistent with your consumption profile and objectives.',
+            v2IntroP3: 'This page details expected solar production, energy flows and the level of self-consumption achieved by the system. It also explains how consumption was modeled in order to make the results easier to read and compare.',
+            v2IntroP4: 'This page presents the project\'s main financial balances: investment, annual savings, payback period and gains over the analysis horizon. It also helps assess the specific impact of the battery on overall project profitability.',
+            v2IntroP5: 'This page provides an interpretative reading of the results by highlighting what supports the project, what limits it, and which checks remain useful before committing. Its purpose is to turn the report\'s figures into concrete decision points.',
+            v2IntroP6: 'This page explains the assumptions used for the simulation, the calculation method and the model\'s main limitations. It places the results in their technical context and reminds the reader of their indicative nature.',
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -711,6 +725,23 @@
         doc.line(M, ctx.y, M + 36, ctx.y);
         doc.setFont('helvetica', 'normal');
         ctx.y += 6;
+    }
+
+    /**
+     * Draws a short editorial introduction below the section title.
+     * Style: small italic grey text, no box, no background.
+     * Typically ~8-10mm height for 2 sentences.
+     */
+    function drawPageIntro(doc, ctx, text) {
+        if (!text) return;
+        doc.setFontSize(7.5);
+        doc.setTextColor(130, 140, 155);
+        doc.setFont('helvetica', 'italic');
+        var lines = doc.splitTextToSize(clean(text), PAGE_W - 2 * M);
+        doc.text(lines, M, ctx.y);
+        ctx.y += lines.length * 3.2 + 3;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor.apply(doc, C.dark);
     }
 
     /**
@@ -1086,6 +1117,7 @@
 
         // --- Section title ---
         drawSectionTitle(doc, ctx, L.v2SynthesisTitle);
+        drawPageIntro(doc, ctx, L.v2IntroP2);
 
         // --- Verdict block ---
         if (flags.hasVerdict) {
@@ -1179,6 +1211,7 @@
         //  1. Production solaire
         // -------------------------------------------------------
         drawSectionTitle(doc, ctx, L.v2ProductionTitle);
+        drawPageIntro(doc, ctx, L.v2IntroP3);
         drawCompactTable(doc, ctx, [
             [L.lblAnnualProd,    fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwh],
             [L.lblProdPerKwc,    fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc],
@@ -1298,6 +1331,7 @@
         //  1. Bilan financier
         // -------------------------------------------------------
         drawSectionTitle(doc, ctx, L.v2FinancialTitle);
+        drawPageIntro(doc, ctx, L.v2IntroP4);
 
         var paybackStr = fin.payback !== null
             ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
@@ -1389,6 +1423,7 @@
 
         // --- Section title ---
         drawSectionTitle(doc, ctx, L.v2DecisionTitle);
+        drawPageIntro(doc, ctx, L.v2IntroP5);
 
         // --- 1. Strengths ---
         var strengths = buildStrengths(data, L, lang);
@@ -1447,6 +1482,7 @@
 
         // --- Section title ---
         drawSectionTitle(doc, ctx, L.v2HypothesesTitle);
+        drawPageIntro(doc, ctx, L.v2IntroP6);
 
         // --- 1. Assumptions table ---
         var assumptionRows = [
