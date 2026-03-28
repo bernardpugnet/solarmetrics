@@ -166,6 +166,10 @@
             profileRetired:     'Retraites',
             profileTelecommute: 'Teletravail',
             profileAllElectric: 'Tout electrique',
+            profileDescFamily:      'faible presence en journee, ~4h/jour',
+            profileDescRetired:     'presence moyenne en journee, ~8h/jour',
+            profileDescTelecommute: 'forte presence en journee, ~9h/jour',
+            profileDescAllElectric: 'chauffage electrique / PAC, ~10h/jour',
 
             // Page 3 — Decision analysis
             p3Title:              'Analyse decisionnelle',
@@ -239,6 +243,7 @@
             // v2 section titles
             v2SynthesisTitle:  'Synthese du projet',
             v2ConfigTitle:     'Configuration de l\'installation',
+            v2ProfileNote:     'Le profil de consommation determine la repartition horaire de votre consommation entre le jour et la nuit. Il influence directement le taux d\'autoconsommation : plus vous etes present en journee, plus vous consommez votre propre production solaire.',
             v2ProductionTitle: 'Production solaire',
             v2AutoconsoTitle:  'Autoconsommation detaillee',
             v2ConsoBoxTitle:   'Comprendre la consommation modelisee',
@@ -373,6 +378,10 @@
             profileRetired:     'Retired',
             profileTelecommute: 'Remote work',
             profileAllElectric: 'All-electric',
+            profileDescFamily:      'low daytime presence, ~4h/day',
+            profileDescRetired:     'medium daytime presence, ~8h/day',
+            profileDescTelecommute: 'high daytime presence, ~9h/day',
+            profileDescAllElectric: 'electric heating / heat pump, ~10h/day',
 
             // Page 3 — Decision analysis
             p3Title:              'Decision analysis',
@@ -446,6 +455,7 @@
             // v2 section titles
             v2SynthesisTitle:  'Project summary',
             v2ConfigTitle:     'Installation configuration',
+            v2ProfileNote:     'The consumption profile determines the hourly distribution of your electricity usage between day and night. It directly affects the self-consumption rate: the more you are home during the day, the more you use your own solar production.',
             v2ProductionTitle: 'Solar production',
             v2AutoconsoTitle:  'Self-consumption details',
             v2ConsoBoxTitle:   'Understanding modeled consumption',
@@ -1123,6 +1133,21 @@
         configRows.push([L.lblFeedinTariff,  fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
 
         drawCompactTable(doc, ctx, configRows);
+
+        // --- Profile explanatory note ---
+        ctx.y += 3;
+        var noteText = clean(L.v2ProfileNote);
+        doc.setFontSize(7);
+        doc.setTextColor.apply(doc, C.slate);
+        var noteLines = doc.splitTextToSize(noteText, PAGE_W - 2 * M - 12);
+        var noteH = noteLines.length * 3 + 6;
+        checkPageBreak(doc, ctx, noteH);
+        doc.setFillColor(245, 245, 248);
+        doc.roundedRect(M, ctx.y, PAGE_W - 2 * M, noteH, 1.5, 1.5, 'F');
+        doc.setFont('helvetica', 'italic');
+        doc.text(noteLines, M + 6, ctx.y + 4);
+        doc.setFont('helvetica', 'normal');
+        ctx.y += noteH + 2;
     }
 
 
@@ -1495,7 +1520,15 @@
             'telecommute':  L.profileTelecommute,
             'allElectric':  L.profileAllElectric,
         };
-        return map[key] || key;
+        var descMap = {
+            'family':       L.profileDescFamily,
+            'retired':      L.profileDescRetired,
+            'telecommute':  L.profileDescTelecommute,
+            'allElectric':  L.profileDescAllElectric,
+        };
+        var name = map[key] || key;
+        var desc = descMap[key];
+        return desc ? name + ' (' + desc + ')' : name;
     }
 
     /**
