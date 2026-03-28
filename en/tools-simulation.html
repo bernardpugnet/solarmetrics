@@ -440,35 +440,35 @@
                             <!-- Card header -->
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-xs text-slate-500 italic">Result preview</span>
-                                <span class="text-xs px-2.5 py-0.5 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-full font-medium">Relevant</span>
+                                <span id="prevVerdict" class="text-xs px-2.5 py-0.5 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-full font-medium">Relevant</span>
                             </div>
                             <!-- Project context -->
-                            <p class="text-sm text-slate-400 mb-4">France · South-facing roof · 6 kWp</p>
+                            <p id="prevContext" class="text-sm text-slate-400 mb-4">France · South-facing roof · 6 kWp</p>
                             <!-- 4 KPIs — 2×2 grid -->
                             <div class="grid grid-cols-2 gap-3">
                                 <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
                                     <div class="text-xs text-slate-500 uppercase tracking-wide">Production</div>
-                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">5,820</div>
+                                    <div id="prevProduction" class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">5,820</div>
                                     <div class="text-xs text-slate-500 mt-0.5">kWh/yr</div>
                                 </div>
                                 <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
                                     <div class="text-xs text-slate-500 uppercase tracking-wide">Self-consumption</div>
-                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">68</div>
+                                    <div id="prevAutoconso" class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">68</div>
                                     <div class="text-xs text-slate-500 mt-0.5">%</div>
                                 </div>
                                 <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
                                     <div class="text-xs text-slate-500 uppercase tracking-wide">Savings</div>
-                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">€840</div>
-                                    <div class="text-xs text-slate-500 mt-0.5">/yr</div>
+                                    <div id="prevSavings" class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">840</div>
+                                    <div id="prevSavingsUnit" class="text-xs text-slate-500 mt-0.5">/yr</div>
                                 </div>
                                 <div class="bg-slate-800/60 border border-slate-700/50 rounded-xl p-3 text-center">
                                     <div class="text-xs text-slate-500 uppercase tracking-wide">Payback</div>
-                                    <div class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">8.2</div>
+                                    <div id="prevPayback" class="text-xl sm:text-2xl font-bold text-amber-400 mt-1">8.2</div>
                                     <div class="text-xs text-slate-500 mt-0.5">years</div>
                                 </div>
                             </div>
                             <!-- Card footer -->
-                            <p class="text-xs text-slate-500 mt-4 text-center">Local data · Hourly simulation · Visible assumptions</p>
+                            <p class="text-xs text-slate-500 mt-4 text-center">Quick estimate · Indicative values</p>
                         </div>
                     </div>
 
@@ -1403,10 +1403,12 @@
                 document.getElementById('resLongitude').value = latlng.lng.toFixed(4);
                 reverseGeocode(latlng.lat, latlng.lng);
                 updateIrradianceEstimate(latlng.lat);
+                updatePreviewCard();
             });
 
             // Show initial estimate for default location
             updateIrradianceEstimate(51.5074);
+            updatePreviewCard();
         }
 
         // Estimate annual yield (kWh/kWp) based on latitude
@@ -1568,6 +1570,8 @@ function reverseGeocode(lat, lon) {
             }
             // Update subsidy info
             updateSubsidyInfo(cc);
+            // Update preview card with new country data
+            updatePreviewCard();
         }
 
         function updateEurostatPrices() {
@@ -1610,6 +1614,7 @@ function reverseGeocode(lat, lon) {
             if (el) el.value = surface;
             var est = document.getElementById('kwcEstimate');
             if (est) est.textContent = kwc + ' kWp';
+            updatePreviewCard();
         }
 
 
@@ -1622,13 +1627,122 @@ function reverseGeocode(lat, lon) {
             var unit = document.documentElement.lang === 'en' ? ' kWp' : ' kWc';
             document.getElementById('kwcEstimate').textContent = kwc + unit;
             document.getElementById('resSurface').value = surface;
+            updatePreviewCard();
         }
 
         function onManualKwcChange() {
             var kwc = parseFloat(document.getElementById('simPeakpower').value) || 0;
             var unit = document.documentElement.lang === 'en' ? ' kWp' : ' kWc';
             document.getElementById('kwcEstimate').textContent = kwc.toFixed(1) + unit;
+            updatePreviewCard();
         }
+
+        // -------------------------------------------------------
+        //  Preview card — quick estimate (no PVGIS call)
+        // -------------------------------------------------------
+        function updatePreviewCard() {
+            var el = document.getElementById('prevProduction');
+            if (!el) return;
+
+            // --- Read inputs ---
+            var lat = parseFloat(document.getElementById('resLatitude').value) || 51.51;
+            var kwc = parseFloat(document.getElementById('simPeakpower').value) || 5.1;
+            var conso = parseFloat(document.getElementById('resConsumption').value) || 4000;
+            var elecPrice = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
+            var feedin = parseFloat(document.getElementById('resFeedir').value) || 0.04;
+            var orient = parseInt(document.getElementById('resOrientation').value) || 0;
+            var hasBat = document.getElementById('resBatteryToggle') && document.getElementById('resBatteryToggle').checked;
+            var batKwh = hasBat ? (parseFloat(document.getElementById('resBatteryCapacity').value) || 10) : 0;
+
+            // Country info
+            var cc = (document.getElementById('resCountry') && document.getElementById('resCountry').value) || 'GB';
+            var countryEntry = (window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc]) || null;
+            var countryName = countryEntry ? countryEntry.name : cc;
+            var currSym = (countryEntry && countryEntry.currencySymbol) ? countryEntry.currencySymbol : '\u20ac';
+            var costPerKwc = (countryEntry && countryEntry.installCostPerKwc) ? countryEntry.installCostPerKwc.avg : 1600;
+            var batCostKwh = (countryEntry && countryEntry.batteryCostPerKwh) ? countryEntry.batteryCostPerKwh : 450;
+
+            // --- Quick production estimate ---
+            var yieldKwc = estimateYieldByLatitude(lat);
+            var orientFactor = 1.0;
+            var absOrient = Math.abs(orient);
+            if (absOrient <= 45) orientFactor = 1.0 - absOrient * 0.002;
+            else if (absOrient <= 90) orientFactor = 0.91 - (absOrient - 45) * 0.004;
+            else orientFactor = 0.55;
+            var annualProd = Math.round(kwc * yieldKwc * orientFactor);
+
+            // --- Autoconsommation estimate ---
+            var ratio = annualProd / Math.max(conso, 1);
+            var autoRate;
+            if (ratio <= 0.3) autoRate = 85 + ratio * 10;
+            else if (ratio <= 0.6) autoRate = 88 - (ratio - 0.3) * 60;
+            else if (ratio <= 1.0) autoRate = 70 - (ratio - 0.6) * 50;
+            else autoRate = Math.max(20, 50 - (ratio - 1.0) * 30);
+            if (hasBat && batKwh > 0) {
+                var batBonus = Math.min(20, batKwh / (annualProd / 365) * 5);
+                autoRate = Math.min(95, autoRate + batBonus);
+            }
+            autoRate = Math.round(autoRate);
+
+            var autoKwh = annualProd * autoRate / 100;
+            var injectionKwh = annualProd - autoKwh;
+
+            // --- Savings estimate ---
+            var savingsAuto = autoKwh * elecPrice;
+            var savingsFeedin = injectionKwh * feedin;
+            var annualSavings = Math.round(savingsAuto + savingsFeedin);
+
+            // --- Payback estimate ---
+            var subsidies = parseFloat((document.getElementById('resSubsidies') && document.getElementById('resSubsidies').value)) || 0;
+            var customCost = parseFloat((document.getElementById('resInstallCostOverride') && document.getElementById('resInstallCostOverride').value));
+            var pvCost = isNaN(customCost) || customCost <= 0 ? kwc * costPerKwc : customCost;
+            var batCost = hasBat ? batKwh * batCostKwh : 0;
+            var totalCost = pvCost + batCost - subsidies;
+            var payback = annualSavings > 0 ? totalCost / annualSavings : 99;
+
+            // --- Verdict ---
+            var verdictText, verdictClass;
+            if (payback <= 10) {
+                verdictText = 'Relevant'; verdictClass = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+            } else if (payback <= 15) {
+                verdictText = 'Acceptable'; verdictClass = 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+            } else {
+                verdictText = 'Review needed'; verdictClass = 'bg-red-500/15 text-red-400 border-red-500/30';
+            }
+
+            // --- Orientation label ---
+            var orientLabels = {0:'South', '-45':'South-East', '45':'South-West', '-90':'East', '90':'West', '180':'North'};
+            var orientLabel = orientLabels[String(orient)] || 'South';
+
+            // --- Format numbers (EN locale) ---
+            function fmtEN(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+            // --- Update DOM ---
+            document.getElementById('prevContext').textContent = countryName + ' \u00b7 ' + orientLabel + '-facing roof \u00b7 ' + kwc.toFixed(1) + ' kWp';
+            document.getElementById('prevProduction').textContent = fmtEN(annualProd);
+            document.getElementById('prevAutoconso').textContent = autoRate;
+            document.getElementById('prevSavings').textContent = fmtEN(annualSavings);
+            document.getElementById('prevSavingsUnit').textContent = currSym + '/yr';
+            document.getElementById('prevPayback').textContent = payback < 50 ? payback.toFixed(1) : '> 50';
+            var vEl = document.getElementById('prevVerdict');
+            vEl.textContent = verdictText;
+            vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
+        }
+
+        // --- Wire preview card to form inputs ---
+        (function wirePreviewListeners() {
+            var ids = ['resSurfaceSimple', 'simPeakpower', 'resConsumption', 'resElecPrice',
+                       'resFeedir', 'resOrientation', 'resTilt', 'resBatteryToggle',
+                       'resBatteryCapacity', 'resInstallCostOverride', 'resSubsidies',
+                       'resPanelType', 'resSurface', 'simProfile'];
+            ids.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updatePreviewCard);
+                    el.addEventListener('change', updatePreviewCard);
+                }
+            });
+        })();
 
         function selectBatteryPreset(kwh) {
             document.getElementById('resBatteryCapacity').value = kwh;
