@@ -2299,7 +2299,17 @@ function reverseGeocode(lat, lon) {
             const batCap = hasBat ? document.getElementById('resBatteryCapacity').value : null;
             const elecPrice = document.getElementById('resElecPrice').value;
             const feedin = document.getElementById('resFeedir').value;
-            const installCost = document.getElementById('resInstallCostOverride').value;
+            var installCostRaw = parseFloat(document.getElementById('resInstallCostOverride').value);
+            var installCost;
+            if (!isNaN(installCostRaw) && installCostRaw > 0) {
+                installCost = installCostRaw;
+            } else {
+                // Fallback: country avg × kWc
+                var cc = document.getElementById('resCountry').value;
+                var cd = window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc];
+                var avgCost = (cd && cd.installCostPerKwc) ? cd.installCostPerKwc.avg : 1600;
+                installCost = parseFloat(kwc) * avgCost;
+            }
 
             document.getElementById('hyp-location').textContent = country;
             document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('fr-FR') + ' kWh/an';

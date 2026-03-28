@@ -2231,13 +2231,25 @@ function reverseGeocode(lat, lon) {
             const batCap = hasBat ? document.getElementById('resBatteryCapacity').value : null;
             const elecPrice = document.getElementById('resElecPrice').value;
             const feedin = document.getElementById('resFeedir').value;
-            const installCost = document.getElementById('resInstallCostOverride').value;
+            var installCostRaw = parseFloat(document.getElementById('resInstallCostOverride').value);
+            var installCost;
+            if (!isNaN(installCostRaw) && installCostRaw > 0) {
+                installCost = installCostRaw;
+            } else {
+                var cc = document.getElementById('resCountry').value;
+                var cd = window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc];
+                var avgCost = (cd && cd.installCostPerKwc) ? cd.installCostPerKwc.avg : 1600;
+                installCost = parseFloat(kwc) * avgCost;
+            }
+            var cc2 = document.getElementById('resCountry').value;
+            var cd2 = window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc2];
+            var currSym = (cd2 && cd2.currencySymbol) ? cd2.currencySymbol : '\u20ac';
 
             document.getElementById('hyp-location').textContent = country;
             document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('en-US') + ' kWh/yr';
             document.getElementById('hyp-kwc').textContent = parseFloat(kwc).toFixed(1) + ' kWp';
             document.getElementById('hyp-battery').textContent = hasBat ? batCap + ' kWh' : 'None';
-            document.getElementById('hyp-cost').textContent = '€' + (parseInt(installCost) || Math.round(parseFloat(kwc) * (parseFloat(document.getElementById('resAvgCostHint')?.textContent?.match(/\d+/)?.[0]) || 1600))).toLocaleString('en-US');
+            document.getElementById('hyp-cost').textContent = currSym + parseInt(installCost).toLocaleString('en-US');
             document.getElementById('hyp-tarif').textContent = (parseFloat(elecPrice) * 100).toFixed(1) + ' c€ / feed-in ' + (parseFloat(feedin) * 100).toFixed(1) + ' c€';
         }
 
