@@ -2456,11 +2456,30 @@
         var doc = new jsPDFConstructor('p', 'mm', 'a4');
 
         // --- Drawing context ---
+        var L = {};
+        var baseL = LABELS[lang];
+        for (var k in baseL) {
+            if (baseL.hasOwnProperty(k)) L[k] = baseL[k];
+        }
+
+        // --- Resolve currency from country data ---
+        var cc = (normalized.config && normalized.config.countryCode) || '';
+        var countryEntry = (window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc]) || null;
+        if (countryEntry && countryEntry.currency && countryEntry.currency !== 'EUR') {
+            var cur = countryEntry.currency;           // e.g. 'GBP'
+            var sym = countryEntry.currencySymbol || cur; // e.g. '£'
+            L.unitEur    = cur;
+            L.unitEurAn  = lang === 'fr' ? (cur + '/an')  : (cur + '/yr');
+            L.unitEurKwh = cur + '/kWh';
+            // Also store symbol for potential future use
+            L._currencySymbol = sym;
+        }
+
         var ctx = {
             y:    0,
             lang: lang,
             mode: mode,
-            L:    LABELS[lang],
+            L:    L,
         };
 
         // --- Dispatch to mode-specific page composers ---
