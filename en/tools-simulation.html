@@ -840,7 +840,8 @@
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 mb-1 block">Subsidies (<span class="cur">€</span>)</label>
-                                    <input type="number" id="resSubsidies" value="3000" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                    <input type="number" id="resSubsidies" value="" placeholder="0" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
+                                    <p class="text-[13px] text-slate-500 mt-0.5">Total subsidies you qualify for. Check country-specific subsidies below.</p>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -1657,12 +1658,11 @@ function reverseGeocode(lat, lon) {
             // Country info
             var cc = (document.getElementById('resCountry') && document.getElementById('resCountry').value) || 'GB';
             var countryEntry = (window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc]) || null;
+            var knownCountry = !!countryEntry;
             var countryName = countryEntry ? countryEntry.name : cc;
             var currSym = (countryEntry && countryEntry.currencySymbol) ? countryEntry.currencySymbol : '\u20ac';
-            var costPerKwc = (countryEntry && countryEntry.installCostPerKwc) ? countryEntry.installCostPerKwc.avg : 1600;
-            var batCostKwh = (countryEntry && countryEntry.batteryCostPerKwh) ? countryEntry.batteryCostPerKwh : 450;
 
-            // --- Quick production estimate ---
+            // --- Quick production estimate (always possible from latitude) ---
             var yieldKwc = estimateYieldByLatitude(lat);
             var orientFactor = 1.0;
             var absOrient = Math.abs(orient);
@@ -1671,7 +1671,7 @@ function reverseGeocode(lat, lon) {
             else orientFactor = 0.55;
             var annualProd = Math.round(kwc * yieldKwc * orientFactor);
 
-            // --- Autoconsommation estimate ---
+            // --- Self-consumption estimate (always possible) ---
             var ratio = annualProd / Math.max(conso, 1);
             var autoRate;
             if (ratio <= 0.3) autoRate = 85 + ratio * 10;
@@ -1684,49 +1684,59 @@ function reverseGeocode(lat, lon) {
             }
             autoRate = Math.round(autoRate);
 
-            var autoKwh = annualProd * autoRate / 100;
-            var injectionKwh = annualProd - autoKwh;
-
-            // --- Savings estimate ---
-            var savingsAuto = autoKwh * elecPrice;
-            var savingsFeedin = injectionKwh * feedin;
-            var annualSavings = Math.round(savingsAuto + savingsFeedin);
-
-            // --- Payback estimate ---
-            var subsidies = parseFloat((document.getElementById('resSubsidies') && document.getElementById('resSubsidies').value)) || 0;
-            var customCost = parseFloat((document.getElementById('resInstallCostOverride') && document.getElementById('resInstallCostOverride').value));
-            var pvCost = isNaN(customCost) || customCost <= 0 ? kwc * costPerKwc : customCost;
-            var batCost = hasBat ? batKwh * batCostKwh : 0;
-            var totalCost = pvCost + batCost - subsidies;
-            var payback = annualSavings > 0 ? totalCost / annualSavings : 99;
-
-            // --- Verdict ---
-            var verdictText, verdictClass;
-            if (payback <= 10) {
-                verdictText = 'Relevant'; verdictClass = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
-            } else if (payback <= 15) {
-                verdictText = 'Acceptable'; verdictClass = 'bg-amber-500/15 text-amber-400 border-amber-500/30';
-            } else {
-                verdictText = 'Review needed'; verdictClass = 'bg-red-500/15 text-red-400 border-red-500/30';
-            }
-
             // --- Orientation label ---
             var orientLabels = {0:'South', '-45':'South-East', '45':'South-West', '-90':'East', '90':'West', '180':'North'};
             var orientLabel = orientLabels[String(orient)] || 'South';
-
-            // --- Format numbers (EN locale) ---
             function fmtEN(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
-            // --- Update DOM ---
+            // --- Context line (always shown) ---
             document.getElementById('prevContext').textContent = countryName + ' \u00b7 ' + orientLabel + '-facing roof \u00b7 ' + kwc.toFixed(1) + ' kWp';
             document.getElementById('prevProduction').textContent = fmtEN(annualProd);
             document.getElementById('prevAutoconso').textContent = autoRate;
-            document.getElementById('prevSavings').textContent = fmtEN(annualSavings);
-            document.getElementById('prevSavingsUnit').textContent = currSym + '/yr';
-            document.getElementById('prevPayback').textContent = payback < 50 ? payback.toFixed(1) : '> 50';
-            var vEl = document.getElementById('prevVerdict');
-            vEl.textContent = verdictText;
-            vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
+
+            // --- Financial KPIs: only if country known or user filled prices manually ---
+            var hasElecPrice = elecPrice > 0 && !isNaN(elecPrice);
+            var customCost = parseFloat((document.getElementById('resInstallCostOverride') && document.getElementById('resInstallCostOverride').value));
+            var hasCustomCost = !isNaN(customCost) && customCost > 0;
+            var canEstimateFinancials = knownCountry || (hasElecPrice && hasCustomCost);
+
+            if (canEstimateFinancials) {
+                var costPerKwc = (countryEntry && countryEntry.installCostPerKwc) ? countryEntry.installCostPerKwc.avg : 0;
+                var batCostKwh = (countryEntry && countryEntry.batteryCostPerKwh) ? countryEntry.batteryCostPerKwh : 450;
+                var autoKwh = annualProd * autoRate / 100;
+                var injectionKwh = annualProd - autoKwh;
+                var savingsAuto = autoKwh * elecPrice;
+                var savingsFeedin = injectionKwh * feedin;
+                var annualSavings = Math.round(savingsAuto + savingsFeedin);
+                var subsidies = parseFloat((document.getElementById('resSubsidies') && document.getElementById('resSubsidies').value)) || 0;
+                var pvCost = hasCustomCost ? customCost : kwc * costPerKwc;
+                var batCost = hasBat ? batKwh * batCostKwh : 0;
+                var totalCost = pvCost + batCost - subsidies;
+                var payback = annualSavings > 0 ? totalCost / annualSavings : 99;
+
+                document.getElementById('prevSavings').textContent = fmtEN(annualSavings);
+                document.getElementById('prevSavingsUnit').textContent = currSym + '/yr';
+                document.getElementById('prevPayback').textContent = payback < 50 ? payback.toFixed(1) : '> 50';
+
+                var verdictText, verdictClass;
+                if (payback <= 10) {
+                    verdictText = 'Relevant'; verdictClass = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+                } else if (payback <= 15) {
+                    verdictText = 'Acceptable'; verdictClass = 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+                } else {
+                    verdictText = 'Review needed'; verdictClass = 'bg-red-500/15 text-red-400 border-red-500/30';
+                }
+                var vEl = document.getElementById('prevVerdict');
+                vEl.textContent = verdictText;
+                vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
+            } else {
+                document.getElementById('prevSavings').textContent = '\u2014';
+                document.getElementById('prevSavingsUnit').textContent = '/yr';
+                document.getElementById('prevPayback').textContent = '\u2014';
+                var vEl = document.getElementById('prevVerdict');
+                vEl.textContent = 'Missing data';
+                vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium bg-slate-500/15 text-slate-400 border-slate-500/30';
+            }
         }
 
         // --- Wire preview card to form inputs ---
@@ -1963,7 +1973,7 @@ function reverseGeocode(lat, lon) {
             document.getElementById('simProfile').value = 'family';
             document.getElementById('resElecPrice').value = '0.2516';
             document.getElementById('resFeedir').value = '0.04';
-            document.getElementById('resSubsidies').value = '3000';
+            document.getElementById('resSubsidies').value = '';
             document.getElementById('resDegradation').value = '0.5';
             document.getElementById('resPriceIncrease').value = '2.5';
             document.getElementById('resDiscount').value = '4';
@@ -2232,24 +2242,23 @@ function reverseGeocode(lat, lon) {
             const elecPrice = document.getElementById('resElecPrice').value;
             const feedin = document.getElementById('resFeedir').value;
             var installCostRaw = parseFloat(document.getElementById('resInstallCostOverride').value);
+            var cc = document.getElementById('resCountry').value;
+            var cd = window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc];
+            var currSym = (cd && cd.currencySymbol) ? cd.currencySymbol : '\u20ac';
             var installCost;
             if (!isNaN(installCostRaw) && installCostRaw > 0) {
                 installCost = installCostRaw;
+            } else if (cd && cd.installCostPerKwc) {
+                installCost = parseFloat(kwc) * cd.installCostPerKwc.avg;
             } else {
-                var cc = document.getElementById('resCountry').value;
-                var cd = window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc];
-                var avgCost = (cd && cd.installCostPerKwc) ? cd.installCostPerKwc.avg : 1600;
-                installCost = parseFloat(kwc) * avgCost;
+                installCost = null;
             }
-            var cc2 = document.getElementById('resCountry').value;
-            var cd2 = window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc2];
-            var currSym = (cd2 && cd2.currencySymbol) ? cd2.currencySymbol : '\u20ac';
 
             document.getElementById('hyp-location').textContent = country;
             document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('en-US') + ' kWh/yr';
             document.getElementById('hyp-kwc').textContent = parseFloat(kwc).toFixed(1) + ' kWp';
             document.getElementById('hyp-battery').textContent = hasBat ? batCap + ' kWh' : 'None';
-            document.getElementById('hyp-cost').textContent = currSym + parseInt(installCost).toLocaleString('en-US');
+            document.getElementById('hyp-cost').textContent = installCost !== null ? currSym + parseInt(installCost).toLocaleString('en-US') : '\u2014';
             document.getElementById('hyp-tarif').textContent = (parseFloat(elecPrice) * 100).toFixed(1) + ' c€ / feed-in ' + (parseFloat(feedin) * 100).toFixed(1) + ' c€';
         }
 
