@@ -713,6 +713,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Air conditioning parameterized (Lot 3) -->
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
+                                            <span class="text-sm text-slate-300">❄️ Air conditioning</span>
+                                            <span id="addonAC_kwh" class="text-[12px] text-slate-500">(+800 kWh/yr)</span>
+                                        </label>
+                                        <div id="addonAC_params" class="hidden ml-6 mt-2">
+                                            <div class="max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Usage level</label>
+                                                <select id="acUsage" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="occasional">Occasional support</option>
+                                                    <option value="regular" selected>Regular use</option>
+                                                    <option value="primary">Primary cooling</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1946,7 +1964,7 @@ function reverseGeocode(lat, lon) {
             if (typeof updateProjectedConsumption === 'function') updateProjectedConsumption();
         }
         // --- Lot 1 + Lot 2: Block C dynamic + parameterized addons (pure) ---
-        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs' };
+        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs', addonAC: 'ac' };
 
         // Lot 2: build resolved addon profiles from DOM — pure, no global mutation
         function buildResolvedAddons() {
@@ -1970,6 +1988,8 @@ function reverseGeocode(lat, lon) {
                     };
                 } else if (addonKey === 'ecs') {
                     params = { household: document.getElementById('ecsHousehold').value };
+                } else if (addonKey === 'ac') {
+                    params = { usage: document.getElementById('acUsage').value };
                 }
 
                 var profile = Sim.resolveAddonProfile(addonKey, params);
@@ -2004,6 +2024,15 @@ function reverseGeocode(lat, lon) {
             if (ecsParams) { if (ecsChecked) { ecsParams.classList.remove('hidden'); } else { ecsParams.classList.add('hidden'); } }
             if (ecsKwhLabel && result.resolved.ecs) {
                 ecsKwhLabel.textContent = '(+' + result.resolved.ecs.annualKwh.toLocaleString('en-US') + ' kWh/yr)';
+            }
+
+            // Show/hide AC params + update kWh label
+            var acChecked = document.getElementById('addonAC').checked;
+            var acParams = document.getElementById('addonAC_params');
+            var acKwhLabel = document.getElementById('addonAC_kwh');
+            if (acParams) { if (acChecked) { acParams.classList.remove('hidden'); } else { acParams.classList.add('hidden'); } }
+            if (acKwhLabel && result.resolved.ac) {
+                acKwhLabel.textContent = '(+' + result.resolved.ac.annualKwh.toLocaleString('en-US') + ' kWh/yr)';
             }
 
             // Block C values

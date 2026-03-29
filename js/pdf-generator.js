@@ -254,6 +254,7 @@
             v2AddonEv:         'Vehicule electrique',
             v2AddonPac:        'Pompe a chaleur',
             v2AddonEcs:        'Chauffe-eau thermodynamique',
+            v2AddonAc:         'Climatisation',
 
             // v2 page 4 — financial analysis
             v2FinancialTitle:  'Bilan financier',
@@ -473,6 +474,7 @@
             v2AddonEv:         'Electric vehicle',
             v2AddonPac:        'Heat pump',
             v2AddonEcs:        'Thermodynamic water heater',
+            v2AddonAc:         'Air conditioning',
 
             // v2 page 4 — financial analysis
             v2FinancialTitle:  'Financial summary',
@@ -1255,6 +1257,7 @@
             ev:  addonLabel('v2AddonEv',  'ev'),
             pac: addonLabel('v2AddonPac', 'pac'),
             ecs: addonLabel('v2AddonEcs', 'ecs'),
+            ac:  addonLabel('v2AddonAc',  'ac'),
         };
 
         var lines = [];

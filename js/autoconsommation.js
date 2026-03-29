@@ -146,6 +146,19 @@ const ADDITIONAL_PROFILES = {
     ],
     // Mild seasonality (hot water usage year-round, slightly more in winter)
     seasonal: [1.15, 1.10, 1.05, 0.95, 0.90, 0.85, 0.85, 0.85, 0.90, 1.00, 1.10, 1.15]
+  },
+  ac: {
+    label: { fr: "Climatisation", en: "Air conditioning" },
+    annualKwh: 800, // "Usage courant" default
+    // Daytime-dominated: peak 12h-17h (hottest hours)
+    hourly: [
+      0.05, 0.05, 0.05, 0.05, 0.05, 0.10,  // 00-05: night minimal
+      0.20, 0.30, 0.50, 0.70, 0.90, 1.20,  // 06-11: morning ramp
+      1.50, 1.60, 1.60, 1.50, 1.30, 1.00,  // 12-17: afternoon peak
+      0.70, 0.50, 0.30, 0.20, 0.10, 0.05   // 18-23: evening taper
+    ],
+    // Summer-dominated: Jun–Sep heavy, almost nothing Nov–Mar
+    seasonal: [0.05, 0.05, 0.10, 0.30, 0.80, 1.50, 2.00, 2.00, 1.50, 0.50, 0.10, 0.05]
   }
 };
 
@@ -191,6 +204,17 @@ const ECS_HOUSEHOLD_KWH = {
   '5p':  2200    // 5+ personnes
 };
 
+// ─── Lot 3: Parameterized variants for AC (air conditioning) ───
+
+/**
+ * AC usage level → annualKwh lookup.
+ */
+const AC_USAGE_KWH = {
+  'occasional': 400,   // Appoint occasionnel
+  'regular':    800,   // Usage courant (default, matches base)
+  'primary':    1500   // Climatisation principale
+};
+
 /**
  * Pure function: resolve an addon profile with user-selected parameters.
  * Returns a new object { annualKwh, hourly, seasonal } without mutating
@@ -227,6 +251,12 @@ function resolveAddonProfile(key, params) {
   if (key === 'ecs' && params) {
     if (params.household && ECS_HOUSEHOLD_KWH[params.household] !== undefined) {
       resolved.annualKwh = ECS_HOUSEHOLD_KWH[params.household];
+    }
+  }
+
+  if (key === 'ac' && params) {
+    if (params.usage && AC_USAGE_KWH[params.usage] !== undefined) {
+      resolved.annualKwh = AC_USAGE_KWH[params.usage];
     }
   }
 
@@ -747,6 +777,7 @@ window.AutoconsommationSimulator = {
   EV_MILEAGE_KWH,
   EV_CHARGING_PROFILES,
   ECS_HOUSEHOLD_KWH,
+  AC_USAGE_KWH,
   resolveAddonProfile,
   BATTERY_DEFAULTS,
   generateConsumptionProfile,

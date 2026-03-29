@@ -754,6 +754,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Climatisation paramétrée (Lot 3) -->
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
+                                            <span class="text-sm text-slate-300">❄️ Climatisation</span>
+                                            <span id="addonAC_kwh" class="text-[12px] text-slate-500">(+800 kWh/an)</span>
+                                        </label>
+                                        <div id="addonAC_params" class="hidden ml-6 mt-2">
+                                            <div class="max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Niveau d'usage</label>
+                                                <select id="acUsage" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="occasional">Appoint occasionnel</option>
+                                                    <option value="regular" selected>Usage courant</option>
+                                                    <option value="primary">Climatisation principale</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1981,7 +1999,7 @@ function reverseGeocode(lat, lon) {
             if (typeof updateProjectedConsumption === 'function') updateProjectedConsumption();
         }
         // --- Lot 1 + Lot 2: Bloc C dynamique + addons paramétrés (pure) ---
-        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs' };
+        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs', addonAC: 'ac' };
 
         // Lot 2: build resolved addon profiles from DOM — pure, no global mutation
         // Returns { keys: ['ev','pac'], resolved: { ev: {annualKwh,hourly,seasonal}, pac: {...} }, totalKwh: 6500 }
@@ -2007,6 +2025,8 @@ function reverseGeocode(lat, lon) {
                     };
                 } else if (addonKey === 'ecs') {
                     params = { household: document.getElementById('ecsHousehold').value };
+                } else if (addonKey === 'ac') {
+                    params = { usage: document.getElementById('acUsage').value };
                 }
 
                 var profile = Sim.resolveAddonProfile(addonKey, params);
@@ -2041,6 +2061,15 @@ function reverseGeocode(lat, lon) {
             if (ecsParams) { if (ecsChecked) { ecsParams.classList.remove('hidden'); } else { ecsParams.classList.add('hidden'); } }
             if (ecsKwhLabel && result.resolved.ecs) {
                 ecsKwhLabel.textContent = '(+' + result.resolved.ecs.annualKwh.toLocaleString('fr-FR') + ' kWh/an)';
+            }
+
+            // Show/hide AC params + update kWh label
+            var acChecked = document.getElementById('addonAC').checked;
+            var acParams = document.getElementById('addonAC_params');
+            var acKwhLabel = document.getElementById('addonAC_kwh');
+            if (acParams) { if (acChecked) { acParams.classList.remove('hidden'); } else { acParams.classList.add('hidden'); } }
+            if (acKwhLabel && result.resolved.ac) {
+                acKwhLabel.textContent = '(+' + result.resolved.ac.annualKwh.toLocaleString('fr-FR') + ' kWh/an)';
             }
 
             // Bloc C values
@@ -2223,6 +2252,7 @@ function reverseGeocode(lat, lon) {
             document.getElementById('addonEV').checked = false;
             document.getElementById('addonPAC').checked = false;
             document.getElementById('addonECS').checked = false;
+            document.getElementById('addonAC').checked = false;
             // Reset consumption input mode to kWh
             switchConsoMode('kwh');
             document.querySelector('input[name="consoMode"][value="kwh"]').checked = true;
