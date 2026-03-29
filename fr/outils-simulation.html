@@ -772,6 +772,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Piscine paramétrée (Lot 4) -->
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonPool" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
+                                            <span class="text-sm text-slate-300">🏊 Piscine</span>
+                                            <span id="addonPool_kwh" class="text-[12px] text-slate-500">(+1 200 kWh/an)</span>
+                                        </label>
+                                        <div id="addonPool_params" class="hidden ml-6 mt-2 space-y-2">
+                                            <div class="max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Type de piscine</label>
+                                                <select id="poolType" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="unheated" selected>Piscine non chauffée</option>
+                                                    <option value="heated">Piscine chauffée</option>
+                                                    <option value="custom">Valeur personnalisée</option>
+                                                </select>
+                                            </div>
+                                            <div id="poolCustomInput" class="hidden max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Consommation annuelle estimée (kWh/an)</label>
+                                                <input type="number" id="poolCustomKwh" value="3000" min="0" max="10000" step="100" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" oninput="updateProjectedConsumption()">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1999,7 +2021,7 @@ function reverseGeocode(lat, lon) {
             if (typeof updateProjectedConsumption === 'function') updateProjectedConsumption();
         }
         // --- Lot 1 + Lot 2: Bloc C dynamique + addons paramétrés (pure) ---
-        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs', addonAC: 'ac' };
+        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs', addonAC: 'ac', addonPool: 'pool' };
 
         // Lot 2: build resolved addon profiles from DOM — pure, no global mutation
         // Returns { keys: ['ev','pac'], resolved: { ev: {annualKwh,hourly,seasonal}, pac: {...} }, totalKwh: 6500 }
@@ -2027,6 +2049,12 @@ function reverseGeocode(lat, lon) {
                     params = { household: document.getElementById('ecsHousehold').value };
                 } else if (addonKey === 'ac') {
                     params = { usage: document.getElementById('acUsage').value };
+                } else if (addonKey === 'pool') {
+                    var pt = document.getElementById('poolType').value;
+                    params = { poolType: pt };
+                    if (pt === 'custom') {
+                        params.customKwh = document.getElementById('poolCustomKwh').value;
+                    }
                 }
 
                 var profile = Sim.resolveAddonProfile(addonKey, params);
@@ -2070,6 +2098,20 @@ function reverseGeocode(lat, lon) {
             if (acParams) { if (acChecked) { acParams.classList.remove('hidden'); } else { acParams.classList.add('hidden'); } }
             if (acKwhLabel && result.resolved.ac) {
                 acKwhLabel.textContent = '(+' + result.resolved.ac.annualKwh.toLocaleString('fr-FR') + ' kWh/an)';
+            }
+
+            // Show/hide Pool params + custom input + update kWh label
+            var poolChecked = document.getElementById('addonPool').checked;
+            var poolParams = document.getElementById('addonPool_params');
+            var poolKwhLabel = document.getElementById('addonPool_kwh');
+            var poolCustom = document.getElementById('poolCustomInput');
+            if (poolParams) { if (poolChecked) { poolParams.classList.remove('hidden'); } else { poolParams.classList.add('hidden'); } }
+            if (poolCustom) {
+                var isCustom = document.getElementById('poolType').value === 'custom';
+                if (isCustom) { poolCustom.classList.remove('hidden'); } else { poolCustom.classList.add('hidden'); }
+            }
+            if (poolKwhLabel && result.resolved.pool) {
+                poolKwhLabel.textContent = '(+' + result.resolved.pool.annualKwh.toLocaleString('fr-FR') + ' kWh/an)';
             }
 
             // Bloc C values
@@ -2253,6 +2295,7 @@ function reverseGeocode(lat, lon) {
             document.getElementById('addonPAC').checked = false;
             document.getElementById('addonECS').checked = false;
             document.getElementById('addonAC').checked = false;
+            document.getElementById('addonPool').checked = false;
             // Reset consumption input mode to kWh
             switchConsoMode('kwh');
             document.querySelector('input[name="consoMode"][value="kwh"]').checked = true;

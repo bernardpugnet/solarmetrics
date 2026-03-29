@@ -255,6 +255,7 @@
             v2AddonPac:        'Pompe a chaleur',
             v2AddonEcs:        'Chauffe-eau thermodynamique',
             v2AddonAc:         'Climatisation',
+            v2AddonPool:       'Piscine',
 
             // v2 page 4 — financial analysis
             v2FinancialTitle:  'Bilan financier',
@@ -475,6 +476,7 @@
             v2AddonPac:        'Heat pump',
             v2AddonEcs:        'Thermodynamic water heater',
             v2AddonAc:         'Air conditioning',
+            v2AddonPool:       'Swimming pool',
 
             // v2 page 4 — financial analysis
             v2FinancialTitle:  'Financial summary',
@@ -1258,6 +1260,7 @@
             pac: addonLabel('v2AddonPac', 'pac'),
             ecs: addonLabel('v2AddonEcs', 'ecs'),
             ac:  addonLabel('v2AddonAc',  'ac'),
+            pool: addonLabel('v2AddonPool', 'pool'),
         };
 
         var lines = [];

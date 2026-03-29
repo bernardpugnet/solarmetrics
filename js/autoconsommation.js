@@ -159,6 +159,19 @@ const ADDITIONAL_PROFILES = {
     ],
     // Summer-dominated: Jun–Sep heavy, almost nothing Nov–Mar
     seasonal: [0.05, 0.05, 0.10, 0.30, 0.80, 1.50, 2.00, 2.00, 1.50, 0.50, 0.10, 0.05]
+  },
+  pool: {
+    label: { fr: "Piscine", en: "Swimming pool" },
+    annualKwh: 1200, // "Piscine non chauffée" default (filtration only)
+    // Daytime filtration: pump runs mostly 08h-18h
+    hourly: [
+      0.05, 0.05, 0.05, 0.05, 0.05, 0.10,  // 00-05: night standby
+      0.20, 0.40, 0.80, 1.20, 1.40, 1.50,  // 06-11: morning filtration ramp
+      1.60, 1.60, 1.50, 1.40, 1.20, 0.80,  // 12-17: peak filtration
+      0.40, 0.20, 0.10, 0.10, 0.05, 0.05   // 18-23: evening taper
+    ],
+    // April–October season, peak Jun–Aug
+    seasonal: [0.05, 0.05, 0.15, 0.50, 0.90, 1.40, 1.80, 1.80, 1.30, 0.70, 0.20, 0.05]
   }
 };
 
@@ -215,6 +228,18 @@ const AC_USAGE_KWH = {
   'primary':    1500   // Climatisation principale
 };
 
+// ─── Lot 4: Parameterized variants for pool ───
+
+/**
+ * Pool type → annualKwh lookup.
+ * 'custom' is handled separately via user input.
+ */
+const POOL_TYPE_KWH = {
+  'unheated': 1200,  // Filtration only
+  'heated':   4000,  // Filtration + heating
+  'custom':   null   // null = read from user input field
+};
+
 /**
  * Pure function: resolve an addon profile with user-selected parameters.
  * Returns a new object { annualKwh, hourly, seasonal } without mutating
@@ -257,6 +282,15 @@ function resolveAddonProfile(key, params) {
   if (key === 'ac' && params) {
     if (params.usage && AC_USAGE_KWH[params.usage] !== undefined) {
       resolved.annualKwh = AC_USAGE_KWH[params.usage];
+    }
+  }
+
+  if (key === 'pool' && params) {
+    if (params.poolType === 'custom') {
+      var customKwh = parseInt(params.customKwh) || 0;
+      resolved.annualKwh = Math.max(0, Math.min(10000, customKwh));
+    } else if (params.poolType && POOL_TYPE_KWH[params.poolType] !== undefined && POOL_TYPE_KWH[params.poolType] !== null) {
+      resolved.annualKwh = POOL_TYPE_KWH[params.poolType];
     }
   }
 
@@ -778,6 +812,7 @@ window.AutoconsommationSimulator = {
   EV_CHARGING_PROFILES,
   ECS_HOUSEHOLD_KWH,
   AC_USAGE_KWH,
+  POOL_TYPE_KWH,
   resolveAddonProfile,
   BATTERY_DEFAULTS,
   generateConsumptionProfile,
