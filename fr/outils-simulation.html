@@ -2653,7 +2653,7 @@ function reverseGeocode(lat, lon) {
 
                 // Also generate financial charts for the financial tab
                 const autoTotal = simResults.annual.autoDirect + simResults.annual.autoBattery;
-                generateFinancialCharts(netCost, installCost, financials.paybackYear || 99, simResults.annual.production, autoTotal, simResults.annual.injection);
+                generateFinancialCharts(netCost, installCost, financials.paybackYear || 99, simResults.annual.production, autoTotal, simResults.annual.injection, simResults.annual.soutirage);
 
                 // Lot 6: Sensitivity analysis
                 updateSensitivity(simResults, elecPrice, installCost, batteryCost, priceRevente, priceIncrease);
@@ -3148,7 +3148,7 @@ function reverseGeocode(lat, lon) {
             updateExplorerButtons();
         }
 
-        function generateFinancialCharts(netCost, installCost, payback, prod, auto, inj) {
+        function generateFinancialCharts(netCost, installCost, payback, prod, auto, inj, soutirage) {
             // Payback chart - cumulative savings over 25 years
             const years = Array.from({length: 26}, (_, i) => i);
             const elecP = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
@@ -3196,7 +3196,7 @@ function reverseGeocode(lat, lon) {
                 data: {
                     labels: ['Auto-consommation', 'Injection', 'Soutirage'],
                     datasets: [{
-                        data: [auto, inj, 0],
+                        data: [auto, inj, soutirage || 0],
                         backgroundColor: ['#22c55e', '#f59e0b', '#ef4444']
                     }]
                 },
