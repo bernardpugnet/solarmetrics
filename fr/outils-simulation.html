@@ -731,11 +731,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- PAC inchangée -->
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
-                                        <span class="text-sm text-slate-300">🌡️ Pompe à chaleur (+4 000 kWh/an)</span>
-                                    </label>
+                                    <!-- PAC paramétré (Lot 5) -->
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
+                                            <span class="text-sm text-slate-300">🌡️ Pompe à chaleur</span>
+                                            <span id="addonPAC_kwh" class="text-[12px] text-slate-500">(+4 000 kWh/an)</span>
+                                        </label>
+                                        <div id="addonPAC_params" class="hidden ml-6 mt-2 space-y-2">
+                                            <div class="max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Niveau de chauffage</label>
+                                                <select id="pacLevel" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="moderate">Modéré (2 500 kWh/an)</option>
+                                                    <option value="standard" selected>Standard (4 000 kWh/an)</option>
+                                                    <option value="high">Fort (6 000 kWh/an)</option>
+                                                </select>
+                                            </div>
+                                            <div class="max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">ECS intégrée à la PAC</label>
+                                                <select id="pacEcsIntegrated" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="no" selected>Non</option>
+                                                    <option value="yes">Oui (+1 200 kWh/an)</option>
+                                                </select>
+                                            </div>
+                                            <p id="pacWarning" class="text-[11px] text-amber-400/80 mt-1">⚠️ N'ajoutez cette PAC que si vous prévoyez une nouvelle installation. Si votre consommation actuelle inclut déjà une pompe à chaleur, la cocher ici créera un double comptage.</p>
+                                        </div>
+                                    </div>
                                     <!-- ECS paramétré -->
                                     <div>
                                         <label class="flex items-center gap-2 cursor-pointer">
@@ -743,6 +764,7 @@
                                             <span class="text-sm text-slate-300">💧 Chauffe-eau thermodynamique</span>
                                             <span id="addonECS_kwh" class="text-[12px] text-slate-500">(+1 500 kWh/an)</span>
                                         </label>
+                                        <p id="ecsDisabledHint" class="hidden text-[11px] text-slate-500 ml-6 mt-1">ECS déjà incluse dans la PAC avec ECS intégrée.</p>
                                         <div id="addonECS_params" class="hidden ml-6 mt-2">
                                             <div class="max-w-[200px]">
                                                 <label class="text-[11px] text-slate-400 mb-1 block">Taille du foyer</label>
@@ -2045,6 +2067,11 @@ function reverseGeocode(lat, lon) {
                         mileage: document.getElementById('evMileage').value,
                         charging: document.getElementById('evCharging').value
                     };
+                } else if (addonKey === 'pac') {
+                    params = {
+                        level: document.getElementById('pacLevel').value,
+                        ecsIntegrated: document.getElementById('pacEcsIntegrated').value === 'yes'
+                    };
                 } else if (addonKey === 'ecs') {
                     params = { household: document.getElementById('ecsHousehold').value };
                 } else if (addonKey === 'ac') {
@@ -2080,6 +2107,30 @@ function reverseGeocode(lat, lon) {
             if (evParams) { if (evChecked) { evParams.classList.remove('hidden'); } else { evParams.classList.add('hidden'); } }
             if (evKwhLabel && result.resolved.ev) {
                 evKwhLabel.textContent = '(+' + result.resolved.ev.annualKwh.toLocaleString('fr-FR') + ' kWh/an)';
+            }
+
+            // Show/hide PAC params + update kWh label
+            var pacChecked = document.getElementById('addonPAC').checked;
+            var pacParams = document.getElementById('addonPAC_params');
+            var pacKwhLabel = document.getElementById('addonPAC_kwh');
+            if (pacParams) { if (pacChecked) { pacParams.classList.remove('hidden'); } else { pacParams.classList.add('hidden'); } }
+            if (pacKwhLabel && result.resolved.pac) {
+                pacKwhLabel.textContent = '(+' + result.resolved.pac.annualKwh.toLocaleString('fr-FR') + ' kWh/an)';
+            }
+
+            // Exclusion mutuelle : PAC avec ECS intégrée → désactiver addon ECS séparé
+            var pacEcsIntegrated = pacChecked && document.getElementById('pacEcsIntegrated').value === 'yes';
+            var ecsCheckbox = document.getElementById('addonECS');
+            var ecsHint = document.getElementById('ecsDisabledHint');
+            if (ecsCheckbox) {
+                if (pacEcsIntegrated) {
+                    ecsCheckbox.checked = false;
+                    ecsCheckbox.disabled = true;
+                    if (ecsHint) ecsHint.classList.remove('hidden');
+                } else {
+                    ecsCheckbox.disabled = false;
+                    if (ecsHint) ecsHint.classList.add('hidden');
+                }
             }
 
             // Show/hide ECS params + update kWh label
@@ -2293,7 +2344,10 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resBatteryToggle').checked = false;
             document.getElementById('addonEV').checked = false;
             document.getElementById('addonPAC').checked = false;
+            document.getElementById('pacLevel').value = 'standard';
+            document.getElementById('pacEcsIntegrated').value = 'no';
             document.getElementById('addonECS').checked = false;
+            document.getElementById('addonECS').disabled = false;
             document.getElementById('addonAC').checked = false;
             document.getElementById('addonPool').checked = false;
             // Reset consumption input mode to kWh

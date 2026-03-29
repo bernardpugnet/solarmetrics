@@ -228,6 +228,22 @@ const AC_USAGE_KWH = {
   'primary':    1500   // Climatisation principale
 };
 
+// ─── Lot 5: Parameterized variants for PAC (heat pump) ───
+
+/**
+ * PAC intensity level → annualKwh lookup.
+ */
+const PAC_LEVEL_KWH = {
+  'moderate': 2500,   // PAC modérée
+  'standard': 4000,   // PAC standard (default, matches existing base)
+  'high':     6000    // PAC forte
+};
+
+/**
+ * Bonus kWh/an when PAC includes integrated ECS (domestic hot water).
+ */
+const PAC_ECS_BONUS = 1200;
+
 // ─── Lot 4: Parameterized variants for pool ───
 
 /**
@@ -282,6 +298,15 @@ function resolveAddonProfile(key, params) {
   if (key === 'ac' && params) {
     if (params.usage && AC_USAGE_KWH[params.usage] !== undefined) {
       resolved.annualKwh = AC_USAGE_KWH[params.usage];
+    }
+  }
+
+  if (key === 'pac' && params) {
+    if (params.level && PAC_LEVEL_KWH[params.level] !== undefined) {
+      resolved.annualKwh = PAC_LEVEL_KWH[params.level];
+    }
+    if (params.ecsIntegrated) {
+      resolved.annualKwh += PAC_ECS_BONUS;
     }
   }
 
@@ -813,6 +838,8 @@ window.AutoconsommationSimulator = {
   ECS_HOUSEHOLD_KWH,
   AC_USAGE_KWH,
   POOL_TYPE_KWH,
+  PAC_LEVEL_KWH,
+  PAC_ECS_BONUS,
   resolveAddonProfile,
   BATTERY_DEFAULTS,
   generateConsumptionProfile,
