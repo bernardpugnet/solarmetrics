@@ -111,6 +111,7 @@
         .tab-content{display:none}
         .tab-content.active{display:block}
         .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem}
+        .kpi-grid-3col{grid-template-columns:repeat(3,1fr)}
         .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1rem;text-align:center}
         @media(min-width:640px){.kpi-card{padding:1.5rem}}
         .kpi-section summary{-webkit-tap-highlight-color:transparent}
@@ -1294,7 +1295,7 @@
                                 <h4 class="text-sm font-semibold text-slate-300">📈 Investissement & Rentabilité</h4>
                                 <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </summary>
-                            <div class="kpi-grid px-4 pb-4">
+                            <div class="kpi-grid kpi-grid-3col px-4 pb-4">
                                 <div class="kpi-card">
                                     <div class="kpi-label">Coût installation</div>
                                     <div class="kpi-value" id="resInstallCost">—</div>
