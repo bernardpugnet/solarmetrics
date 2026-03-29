@@ -2701,7 +2701,9 @@ function reverseGeocode(lat, lon) {
 
         function updateHypothesesSummary() {
             const country = document.getElementById('detectedCountryName').textContent || 'France';
-            const conso = document.getElementById('resConsumption').value;
+            const baseConso = parseFloat(document.getElementById('resConsumption').value) || 0;
+            const addonKwh = (typeof buildResolvedAddons === 'function') ? buildResolvedAddons().totalKwh : 0;
+            const conso = baseConso + addonKwh;
             const kwc = document.getElementById('simPeakpower').value;
             const hasBat = document.getElementById('resBatteryToggle').checked;
             const batCap = hasBat ? document.getElementById('resBatteryCapacity').value : null;
@@ -2719,12 +2721,20 @@ function reverseGeocode(lat, lon) {
             } else {
                 installCost = null; // unknown country, no manual cost
             }
+            // Total cost = installation + battery
+            var batteryCostHyp = 0;
+            if (hasBat && batCap) {
+                var bcRaw = parseFloat(document.getElementById('resBatteryCostOverride').value);
+                if (!isNaN(bcRaw) && bcRaw > 0) { batteryCostHyp = bcRaw; }
+                else { batteryCostHyp = parseFloat(batCap) * (parseInt(document.getElementById('resAvgBatteryCostHint').textContent) || 430); }
+            }
+            var totalCost = installCost !== null ? installCost + batteryCostHyp : null;
 
             document.getElementById('hyp-location').textContent = country;
             document.getElementById('hyp-conso').textContent = parseInt(conso).toLocaleString('fr-FR') + ' kWh/an';
             document.getElementById('hyp-kwc').textContent = parseFloat(kwc).toFixed(1) + ' kWc';
             document.getElementById('hyp-battery').textContent = hasBat ? batCap + ' kWh' : 'Sans';
-            document.getElementById('hyp-cost').textContent = installCost !== null ? parseInt(installCost).toLocaleString('fr-FR') + ' ' + currSym : '\u2014';
+            document.getElementById('hyp-cost').textContent = totalCost !== null ? parseInt(totalCost).toLocaleString('fr-FR') + ' ' + currSym : '\u2014';
             document.getElementById('hyp-tarif').textContent = (parseFloat(elecPrice) * 100).toFixed(1) + ' c€ / revente ' + (parseFloat(feedin) * 100).toFixed(1) + ' c€';
         }
 
