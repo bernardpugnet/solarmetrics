@@ -149,6 +149,90 @@ const ADDITIONAL_PROFILES = {
   }
 };
 
+// ─── Lot 2: Parameterized variants for VE and ECS ───
+
+/**
+ * VE mileage → annualKwh lookup.
+ * Based on ~0.167 kWh/km average (typical EV efficiency).
+ */
+const EV_MILEAGE_KWH = {
+  'lt10k':  1500,   // < 10 000 km
+  '10k15k': 2500,   // 10 000–15 000 km (default, matches existing value)
+  '15k25k': 4000,   // 15 000–25 000 km
+  'gt25k':  5500    // > 25 000 km
+};
+
+/**
+ * VE charging mode → hourly shape profiles.
+ * 'mixte' reuses the existing ADDITIONAL_PROFILES.ev.hourly (evening/night mix).
+ */
+const EV_CHARGING_PROFILES = {
+  journee: [
+    0.10, 0.05, 0.05, 0.05, 0.05, 0.10,  // 00-05: standby
+    0.30, 0.50, 0.80, 1.20, 1.50, 1.60,  // 06-11: morning ramp to solar peak
+    1.60, 1.50, 1.30, 1.00, 0.60, 0.30,  // 12-17: afternoon taper
+    0.15, 0.10, 0.10, 0.10, 0.10, 0.10   // 18-23: evening minimal
+  ],
+  nuit: [
+    1.20, 1.10, 1.00, 0.90, 0.80, 0.60,  // 00-05: overnight charge taper
+    0.20, 0.10, 0.05, 0.05, 0.05, 0.05,  // 06-11: car away
+    0.05, 0.05, 0.05, 0.05, 0.10, 0.20,  // 12-17: minimal
+    0.40, 0.80, 1.20, 1.50, 1.60, 1.40   // 18-23: plug-in ramp up
+  ],
+  mixte: null  // null = use existing ADDITIONAL_PROFILES.ev.hourly
+};
+
+/**
+ * ECS household size → annualKwh lookup.
+ */
+const ECS_HOUSEHOLD_KWH = {
+  '1_2': 800,    // 1–2 personnes
+  '3_4': 1500,   // 3–4 personnes (default, matches existing value)
+  '5p':  2200    // 5+ personnes
+};
+
+/**
+ * Pure function: resolve an addon profile with user-selected parameters.
+ * Returns a new object { annualKwh, hourly, seasonal } without mutating
+ * ADDITIONAL_PROFILES.
+ *
+ * @param {string} key    - addon key: 'ev', 'ecs', 'pac', etc.
+ * @param {object} [params] - { mileage, charging } for ev; { household } for ecs
+ * @returns {{ annualKwh: number, hourly: number[], seasonal: number[] }}
+ */
+function resolveAddonProfile(key, params) {
+  var base = ADDITIONAL_PROFILES[key];
+  if (!base) return null;
+
+  // Default: return base values (covers pac and any future addon)
+  var resolved = {
+    annualKwh: base.annualKwh,
+    hourly:    base.hourly,
+    seasonal:  base.seasonal
+  };
+
+  if (key === 'ev' && params) {
+    if (params.mileage && EV_MILEAGE_KWH[params.mileage] !== undefined) {
+      resolved.annualKwh = EV_MILEAGE_KWH[params.mileage];
+    }
+    if (params.charging && EV_CHARGING_PROFILES[params.charging] !== undefined) {
+      var chargingProfile = EV_CHARGING_PROFILES[params.charging];
+      if (chargingProfile) {
+        resolved.hourly = chargingProfile;
+      }
+      // mixte (null) → keep base hourly
+    }
+  }
+
+  if (key === 'ecs' && params) {
+    if (params.household && ECS_HOUSEHOLD_KWH[params.household] !== undefined) {
+      resolved.annualKwh = ECS_HOUSEHOLD_KWH[params.household];
+    }
+  }
+
+  return resolved;
+}
+
 /**
  * Weekend hourly shape modifiers per profile.
  * Applied on Saturday and Sunday to shift consumption patterns:
@@ -202,7 +286,7 @@ const WEEKEND_MODIFIERS = {
  * @param {Array<string>} [addons=[]] - Additional equipment keys: 'ev', 'pac', 'ecs'
  * @returns {Float64Array} - 8760 values in kWh (energy per hour)
  */
-function generateConsumptionProfile(profileKey, annualKwh, addons) {
+function generateConsumptionProfile(profileKey, annualKwh, addons, resolvedAddons) {
   const profile = PROFILES[profileKey];
   if (!profile) throw new Error(`Unknown profile: ${profileKey}`);
 
@@ -237,9 +321,10 @@ function generateConsumptionProfile(profileKey, annualKwh, addons) {
   for (let i = 0; i < 8760; i++) hourly[i] *= normFactor;
 
   // Step 3: Add equipment profiles (EV, PAC, ECS)
+  // resolvedAddons (optional 4th arg) overrides ADDITIONAL_PROFILES for parameterized addons
   if (addons && addons.length > 0) {
     for (const addonKey of addons) {
-      const addon = ADDITIONAL_PROFILES[addonKey];
+      const addon = (resolvedAddons && resolvedAddons[addonKey]) || ADDITIONAL_PROFILES[addonKey];
       if (!addon) continue;
 
       // Generate the addon's 8760 profile, normalized to addon.annualKwh
@@ -659,6 +744,10 @@ async function fetchPvgisHourly(params) {
 window.AutoconsommationSimulator = {
   PROFILES,
   ADDITIONAL_PROFILES,
+  EV_MILEAGE_KWH,
+  EV_CHARGING_PROFILES,
+  ECS_HOUSEHOLD_KWH,
+  resolveAddonProfile,
   BATTERY_DEFAULTS,
   generateConsumptionProfile,
   simulateAutoconsommation,

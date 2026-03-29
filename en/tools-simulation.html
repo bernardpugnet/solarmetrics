@@ -662,19 +662,57 @@
                                 <div id="warningDoubleCount" class="hidden mb-3 p-2.5 bg-orange-900/15 border border-orange-600/30 rounded-lg text-[12px] text-orange-300 leading-snug">
                                     ⚠️ Warning: only add future equipment that is not already included in your current consumption. If you already own this equipment, selecting it may create double counting.
                                 </div>
-                                <div class="flex flex-col gap-2">
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
-                                        <span class="text-sm text-slate-300">🚗 Electric vehicle (+2,500 kWh/yr)</span>
-                                    </label>
+                                <div class="flex flex-col gap-3">
+                                    <!-- EV parameterized -->
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
+                                            <span class="text-sm text-slate-300">🚗 Electric vehicle</span>
+                                            <span id="addonEV_kwh" class="text-[12px] text-slate-500">(+2,500 kWh/yr)</span>
+                                        </label>
+                                        <div id="addonEV_params" class="hidden ml-6 mt-2 grid grid-cols-2 gap-2">
+                                            <div>
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Annual mileage</label>
+                                                <select id="evMileage" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="lt10k">&lt; 10,000 km</option>
+                                                    <option value="10k15k" selected>10,000–15,000 km</option>
+                                                    <option value="15k25k">15,000–25,000 km</option>
+                                                    <option value="gt25k">&gt; 25,000 km</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Charging mode</label>
+                                                <select id="evCharging" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="mixte" selected>Mixed</option>
+                                                    <option value="journee">Mostly daytime</option>
+                                                    <option value="nuit">Mostly night</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- PAC unchanged -->
                                     <label class="flex items-center gap-2 cursor-pointer">
                                         <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
                                         <span class="text-sm text-slate-300">🌡️ Heat pump (+4,000 kWh/yr)</span>
                                     </label>
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
-                                        <span class="text-sm text-slate-300">💧 Thermodynamic water heater (+1,500 kWh/yr)</span>
-                                    </label>
+                                    <!-- ECS parameterized -->
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
+                                            <span class="text-sm text-slate-300">💧 Thermodynamic water heater</span>
+                                            <span id="addonECS_kwh" class="text-[12px] text-slate-500">(+1,500 kWh/yr)</span>
+                                        </label>
+                                        <div id="addonECS_params" class="hidden ml-6 mt-2">
+                                            <div class="max-w-[200px]">
+                                                <label class="text-[11px] text-slate-400 mb-1 block">Household size</label>
+                                                <select id="ecsHousehold" class="w-full px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-[12px]" onchange="updateProjectedConsumption()">
+                                                    <option value="1_2">1–2 people</option>
+                                                    <option value="3_4" selected>3–4 people</option>
+                                                    <option value="5p">5+ people</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1907,31 +1945,70 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resConsumption').value = clamped;
             if (typeof updateProjectedConsumption === 'function') updateProjectedConsumption();
         }
-        // --- Lot 1: Block C dynamic + double counting warning ---
-        // Mapping checkbox ID → ADDITIONAL_PROFILES key (single source of truth)
+        // --- Lot 1 + Lot 2: Block C dynamic + parameterized addons (pure) ---
         var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs' };
 
-        function getSelectedAddonsKwh() {
-            var AP = window.AutoconsommationSimulator && window.AutoconsommationSimulator.ADDITIONAL_PROFILES;
-            var total = 0;
+        // Lot 2: build resolved addon profiles from DOM — pure, no global mutation
+        function buildResolvedAddons() {
+            var Sim = window.AutoconsommationSimulator;
+            var keys = [];
+            var resolved = {};
+            var totalKwh = 0;
+            if (!Sim) return { keys: keys, resolved: resolved, totalKwh: 0 };
+
             for (var id in ADDON_CHECKBOX_MAP) {
                 var el = document.getElementById(id);
-                if (el && el.checked && AP && AP[ADDON_CHECKBOX_MAP[id]]) {
-                    total += AP[ADDON_CHECKBOX_MAP[id]].annualKwh;
+                if (!el || !el.checked) continue;
+                var addonKey = ADDON_CHECKBOX_MAP[id];
+                keys.push(addonKey);
+
+                var params = null;
+                if (addonKey === 'ev') {
+                    params = {
+                        mileage: document.getElementById('evMileage').value,
+                        charging: document.getElementById('evCharging').value
+                    };
+                } else if (addonKey === 'ecs') {
+                    params = { household: document.getElementById('ecsHousehold').value };
+                }
+
+                var profile = Sim.resolveAddonProfile(addonKey, params);
+                if (profile) {
+                    resolved[addonKey] = profile;
+                    totalKwh += profile.annualKwh;
                 }
             }
-            return total;
+            return { keys: keys, resolved: resolved, totalKwh: totalKwh };
         }
 
         function updateProjectedConsumption() {
             var base = parseInt(document.getElementById('resConsumption').value) || 0;
-            var addons = getSelectedAddonsKwh();
-            var total = base + addons;
-            var hasAddons = addons > 0;
+            var result = buildResolvedAddons();
+            var addonsKwh = result.totalKwh;
+            var total = base + addonsKwh;
+            var hasAddons = addonsKwh > 0;
+
+            // Show/hide VE params + update kWh label
+            var evChecked = document.getElementById('addonEV').checked;
+            var evParams = document.getElementById('addonEV_params');
+            var evKwhLabel = document.getElementById('addonEV_kwh');
+            if (evParams) { if (evChecked) { evParams.classList.remove('hidden'); } else { evParams.classList.add('hidden'); } }
+            if (evKwhLabel && result.resolved.ev) {
+                evKwhLabel.textContent = '(+' + result.resolved.ev.annualKwh.toLocaleString('en-US') + ' kWh/yr)';
+            }
+
+            // Show/hide ECS params + update kWh label
+            var ecsChecked = document.getElementById('addonECS').checked;
+            var ecsParams = document.getElementById('addonECS_params');
+            var ecsKwhLabel = document.getElementById('addonECS_kwh');
+            if (ecsParams) { if (ecsChecked) { ecsParams.classList.remove('hidden'); } else { ecsParams.classList.add('hidden'); } }
+            if (ecsKwhLabel && result.resolved.ecs) {
+                ecsKwhLabel.textContent = '(+' + result.resolved.ecs.annualKwh.toLocaleString('en-US') + ' kWh/yr)';
+            }
 
             // Block C values
             document.getElementById('projectedBase').textContent = base.toLocaleString('en-US') + ' kWh/yr';
-            document.getElementById('projectedAddons').textContent = '+' + addons.toLocaleString('en-US') + ' kWh/yr';
+            document.getElementById('projectedAddons').textContent = '+' + addonsKwh.toLocaleString('en-US') + ' kWh/yr';
             document.getElementById('projectedTotal').textContent = total.toLocaleString('en-US') + ' kWh/yr';
 
             // Show/hide addons line
@@ -1960,7 +2037,7 @@ function reverseGeocode(lat, lon) {
             // Also update preview card if it exists
             if (typeof updatePreviewCard === 'function') updatePreviewCard();
         }
-        // --- End Lot 1 ---
+        // --- End Lot 1/2 ---
 
         // --- End Lot 5 ---
 
@@ -2135,12 +2212,11 @@ function reverseGeocode(lat, lon) {
                 const cDataDet = window.SOLAR_DATA && window.SOLAR_DATA.countries[ccDet];
                 const installCost = parseFloat(document.getElementById('resInstallCostOverride').value) || (cDataDet ? Math.round(cDataDet.installCostPerKwc.avg * kwc) : kwc * 2000);
 
-                // Get consumption profile
-                const addons = [];
-                if (document.getElementById('addonEV').checked) addons.push('ev');
-                if (document.getElementById('addonPAC').checked) addons.push('pac');
-                if (document.getElementById('addonECS').checked) addons.push('ecs');
-                const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, addons);
+                // Get consumption profile — Lot 2: build resolved addons (pure, no mutation)
+                const addonResult = buildResolvedAddons();
+                const addons = addonResult.keys;
+                const resolvedAddons = addonResult.resolved;
+                const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, addons, resolvedAddons);
 
                 // Fetch PVGIS hourly data
                 document.getElementById('loader-text').textContent = 'Simulating self-consumption...';
@@ -2243,6 +2319,7 @@ function reverseGeocode(lat, lon) {
                         profile:         profile,
                         consumption:     consumption,
                         addons:          addons.slice(),
+                        resolvedAddons:  resolvedAddons,
                         panelEfficiency: parseFloat(document.getElementById('resPanelType').value) || 0.20,
                     },
                     battery: {
@@ -2537,11 +2614,8 @@ function reverseGeocode(lat, lon) {
                 try {
                     const consumption = parseFloat(document.getElementById('resConsumption').value);
                     const profile = document.getElementById('simProfile').value;
-                    const addons = [];
-                    if (document.getElementById('addonEV').checked) addons.push('ev');
-                    if (document.getElementById('addonPAC').checked) addons.push('pac');
-                    if (document.getElementById('addonECS').checked) addons.push('ecs');
-                    const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, addons);
+                    const batAddonResult = buildResolvedAddons();
+                    const consoProfile = window.AutoconsommationSimulator.generateConsumptionProfile(profile, consumption, batAddonResult.keys, batAddonResult.resolved);
                     const shading = parseFloat(document.getElementById('resShading').value) / 100;
 
                     const noBatSim = window.AutoconsommationSimulator.simulateAutoconsommation(

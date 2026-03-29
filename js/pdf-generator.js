@@ -251,9 +251,9 @@
             v2ConsoBoxAddons:  'Equipements a venir :',
             v2ConsoBoxResult:  'Le total simule est de',
             v2ConsoBoxNoChange:'Aucun equipement a venir ajoute. La consommation simulee correspond a la consommation actuelle.',
-            v2AddonEv:         'Vehicule electrique (~2 500 kWh/an)',
-            v2AddonPac:        'Pompe a chaleur (~4 000 kWh/an)',
-            v2AddonEcs:        'Chauffe-eau thermodynamique (~1 500 kWh/an)',
+            v2AddonEv:         'Vehicule electrique',
+            v2AddonPac:        'Pompe a chaleur',
+            v2AddonEcs:        'Chauffe-eau thermodynamique',
 
             // v2 page 4 — financial analysis
             v2FinancialTitle:  'Bilan financier',
@@ -470,9 +470,9 @@
             v2ConsoBoxAddons:  'Planned equipment:',
             v2ConsoBoxResult:  'Simulated total is',
             v2ConsoBoxNoChange:'No planned equipment added. Simulated consumption matches your current consumption.',
-            v2AddonEv:         'Electric vehicle (~2,500 kWh/yr)',
-            v2AddonPac:        'Heat pump (~4,000 kWh/yr)',
-            v2AddonEcs:        'Thermodynamic water heater (~1,500 kWh/yr)',
+            v2AddonEv:         'Electric vehicle',
+            v2AddonPac:        'Heat pump',
+            v2AddonEcs:        'Thermodynamic water heater',
 
             // v2 page 4 — financial analysis
             v2FinancialTitle:  'Financial summary',
@@ -1239,10 +1239,22 @@
         //  3. Bloc pédagogique — consommation modélisée
         // -------------------------------------------------------
         // Build text dynamically based on profile + addons
+        // Lot 2: build addon labels with dynamic kWh from cfg.resolvedAddons (pure, no global read)
+        var RA = cfg.resolvedAddons || {};
+        var AP_base = window.AutoconsommationSimulator && window.AutoconsommationSimulator.ADDITIONAL_PROFILES;
+        var unitSuffix = (lang === 'fr') ? ' kWh/an)' : ' kWh/yr)';
+        function addonLabel(labelKey, addonKey) {
+            var base = L[labelKey];
+            var src = RA[addonKey] || (AP_base && AP_base[addonKey]);
+            if (src) {
+                return base + ' (~' + fmtNum(src.annualKwh, 0, lang) + unitSuffix;
+            }
+            return base;
+        }
         var addonMap = {
-            ev:  L.v2AddonEv,
-            pac: L.v2AddonPac,
-            ecs: L.v2AddonEcs,
+            ev:  addonLabel('v2AddonEv',  'ev'),
+            pac: addonLabel('v2AddonPac', 'pac'),
+            ecs: addonLabel('v2AddonEcs', 'ecs'),
         };
 
         var lines = [];
