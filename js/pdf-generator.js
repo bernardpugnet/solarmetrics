@@ -246,11 +246,11 @@
             v2ProfileNote:     'Le profil de consommation determine la repartition horaire de votre consommation entre le jour et la nuit. Il influence directement le taux d\'autoconsommation : plus vous etes present en journee, plus vous consommez votre propre production solaire.',
             v2ProductionTitle: 'Production solaire',
             v2AutoconsoTitle:  'Autoconsommation detaillee',
-            v2ConsoBoxTitle:   'Comprendre la consommation modelisee',
-            v2ConsoBoxBase:    'La consommation de base est estimee a partir du profil',
-            v2ConsoBoxAddons:  'Equipements supplementaires integres :',
-            v2ConsoBoxResult:  'La consommation totale simulee est de',
-            v2ConsoBoxNoChange:'La consommation simulee correspond a la valeur saisie.',
+            v2ConsoBoxTitle:   'Consommation simulee',
+            v2ConsoBoxBase:    'La consommation annuelle actuelle est de',
+            v2ConsoBoxAddons:  'Equipements a venir :',
+            v2ConsoBoxResult:  'Le total simule est de',
+            v2ConsoBoxNoChange:'Aucun equipement a venir ajoute. La consommation simulee correspond a la consommation actuelle.',
             v2AddonEv:         'Vehicule electrique (~2 500 kWh/an)',
             v2AddonPac:        'Pompe a chaleur (~4 000 kWh/an)',
             v2AddonEcs:        'Chauffe-eau thermodynamique (~1 500 kWh/an)',
@@ -465,11 +465,11 @@
             v2ProfileNote:     'The consumption profile determines the hourly distribution of your electricity usage between day and night. It directly affects the self-consumption rate: the more you are home during the day, the more you use your own solar production.',
             v2ProductionTitle: 'Solar production',
             v2AutoconsoTitle:  'Self-consumption details',
-            v2ConsoBoxTitle:   'Understanding modeled consumption',
-            v2ConsoBoxBase:    'Baseline consumption is estimated from the',
-            v2ConsoBoxAddons:  'Additional equipment included:',
-            v2ConsoBoxResult:  'Total simulated consumption is',
-            v2ConsoBoxNoChange:'Simulated consumption matches the input value.',
+            v2ConsoBoxTitle:   'Simulated consumption',
+            v2ConsoBoxBase:    'Current annual consumption is',
+            v2ConsoBoxAddons:  'Planned equipment:',
+            v2ConsoBoxResult:  'Simulated total is',
+            v2ConsoBoxNoChange:'No planned equipment added. Simulated consumption matches your current consumption.',
             v2AddonEv:         'Electric vehicle (~2,500 kWh/yr)',
             v2AddonPac:        'Heat pump (~4,000 kWh/yr)',
             v2AddonEcs:        'Thermodynamic water heater (~1,500 kWh/yr)',
@@ -1248,8 +1248,10 @@
         var lines = [];
 
         // Baseline profile sentence
-        lines.push(clean(L.v2ConsoBoxBase) + ' "' + profileLabel(cfg.profile, L)
-            + '" (' + fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh + ').');
+        lines.push(clean(L.v2ConsoBoxBase) + ' '
+            + fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh
+            + (lang === 'fr' ? ', basee sur le profil "' : ', based on the "')
+            + profileLabel(cfg.profile, L) + '".');
 
         // Addons — only if present
         if (flags.hasAddons) {

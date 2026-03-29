@@ -543,122 +543,167 @@
                     <!-- Electricity Consumption -->
                     <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
                         <h4 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-                            <span class="text-amber-500">&#x25CF;</span> Electricity Consumption
+                            <span class="text-amber-500">&#x25CF;</span> Electricity consumption
                         </h4>
-                        <div class="space-y-4">
-                            <!-- Mode selector for consumption input -->
-                            <div class="mb-4">
-                                <label class="text-[13px] text-slate-300 mb-2 block font-medium">How would you like to enter your consumption?</label>
-                                <div class="flex flex-wrap gap-2">
-                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-amber-500 bg-amber-500/10 text-amber-400" id="consoModeLabel_kwh">
-                                        <input type="radio" name="consoMode" value="kwh" checked class="hidden" onchange="switchConsoMode('kwh')">
-                                        ⚡ I know my kWh
-                                    </label>
-                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_bill">
-                                        <input type="radio" name="consoMode" value="bill" class="hidden" onchange="switchConsoMode('bill')">
-                                        💶 I know my bill
-                                    </label>
-                                    <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_estimate">
-                                        <input type="radio" name="consoMode" value="estimate" class="hidden" onchange="switchConsoMode('estimate')">
-                                        🏠 Help me estimate
-                                    </label>
-                                </div>
-                            </div>
+                        <div class="space-y-5">
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Mode 1: Direct kWh (default) -->
-                                <div id="consoPanel_kwh">
-                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Annual consumption (kWh)</label>
-                                    <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <div class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
-                                        This figure appears on your annual electricity bill. <span class="text-slate-300 font-medium">Reference: a household of 4 uses about 4,700 kWh/year.</span>
-                                    </div>
-                                </div>
-
-                                <!-- Mode 2: Monthly bill -->
-                                <div id="consoPanel_bill" class="hidden">
-                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Average monthly bill (€ incl. tax)</label>
-                                    <input type="number" id="consoBillInput" value="" min="20" max="1000" step="5" placeholder="e.g. 90" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="convertBillToKwh()">
-                                    <div id="consoBillResult" class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug hidden">
-                                        ≈ <span id="consoBillKwh" class="text-amber-400 font-semibold">—</span> kWh/yr estimated
-                                    </div>
-                                    <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
-                                        ⚠️ Rough estimate: the standing charge (~15 €/month) is deducted before conversion. Results may vary depending on your contract.
-                                    </div>
-                                </div>
-
-                                <!-- Mode 3: Guided estimation -->
-                                <div id="consoPanel_estimate" class="hidden">
-                                    <div class="space-y-3">
-                                        <div>
-                                            <label class="text-[12px] text-slate-400 mb-1 block">Number of people</label>
-                                            <select id="consoEstPersons" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4" selected>4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6+</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="text-[12px] text-slate-400 mb-1 block">Type of housing</label>
-                                            <select id="consoEstHousing" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
-                                                <option value="apartment">Apartment</option>
-                                                <option value="house" selected>House</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="text-[12px] text-slate-400 mb-1 block">Main heating</label>
-                                            <select id="consoEstHeating" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
-                                                <option value="electric">Electric</option>
-                                                <option value="gas" selected>Gas / oil</option>
-                                                <option value="heatpump">Heat pump</option>
-                                                <option value="other">Other (wood, etc.)</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="text-[12px] text-slate-400 mb-1 block">Living area (m²)</label>
-                                            <input type="number" id="consoEstSurface" value="100" min="20" max="500" step="10" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="computeEstimation()">
-                                        </div>
-                                    </div>
-                                    <div id="consoEstResult" class="mt-2 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
-                                        ≈ <span id="consoEstKwh" class="text-amber-400 font-semibold">—</span> kWh/yr estimated
-                                    </div>
-                                    <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
-                                        ⚠️ Estimate based on average figures. Your actual consumption may vary significantly.
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="text-[13px] text-slate-300 mb-1 block font-medium">Presence profile</label>
-                                    <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                        <option value="family">Low daytime presence</option>
-                                        <option value="retired">Medium daytime presence</option>
-                                        <option value="telecommute">High daytime presence</option>
-                                        <option value="allElectric">All-electric / heat pump</option>
-                                    </select>
-                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">This determines the hourly distribution of your consumption (day/night). The more you are home during the day, the higher the self-consumption. Household size is reflected by the annual consumption above, not this field.</p>
-                                </div>
-                            </div>
+                            <!-- BLOCK A — Current consumption -->
                             <div>
-                                <p class="text-sm font-medium text-slate-300 mb-3">Additional equipment</p>
+                                <h5 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-1.5">
+                                    <span class="text-amber-500 text-xs">A</span> Current consumption
+                                </h5>
+
+                                <!-- Mode selector for consumption input -->
+                                <div class="mb-4">
+                                    <label class="text-[13px] text-slate-300 mb-2 block font-medium">How would you like to enter your consumption?</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-amber-500 bg-amber-500/10 text-amber-400" id="consoModeLabel_kwh">
+                                            <input type="radio" name="consoMode" value="kwh" checked class="hidden" onchange="switchConsoMode('kwh')">
+                                            ⚡ I know my kWh
+                                        </label>
+                                        <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_bill">
+                                            <input type="radio" name="consoMode" value="bill" class="hidden" onchange="switchConsoMode('bill')">
+                                            💶 I know my bill
+                                        </label>
+                                        <label class="flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-lg border text-[13px] transition-colors border-slate-600 text-slate-400" id="consoModeLabel_estimate">
+                                            <input type="radio" name="consoMode" value="estimate" class="hidden" onchange="switchConsoMode('estimate')">
+                                            🏠 Help me estimate
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <!-- Mode 1: Direct kWh (default) -->
+                                    <div id="consoPanel_kwh">
+                                        <label class="text-[13px] text-slate-300 mb-1 block font-medium">Current annual consumption (kWh)</label>
+                                        <input type="number" id="resConsumption" value="4000" min="1000" max="100000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="updateProjectedConsumption()">
+                                        <div class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
+                                            This figure comes from your annual bill. It already includes your current equipment. <span class="text-slate-300 font-medium">Reference: a household of 4 uses about 4,700 kWh/year.</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mode 2: Monthly bill -->
+                                    <div id="consoPanel_bill" class="hidden">
+                                        <label class="text-[13px] text-slate-300 mb-1 block font-medium">Average monthly bill (€ incl. tax)</label>
+                                        <input type="number" id="consoBillInput" value="" min="20" max="1000" step="5" placeholder="e.g. 90" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="convertBillToKwh()">
+                                        <div id="consoBillResult" class="mt-1.5 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug hidden">
+                                            ≈ <span id="consoBillKwh" class="text-amber-400 font-semibold">—</span> kWh/yr estimated
+                                        </div>
+                                        <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
+                                            ⚠️ Rough estimate: the standing charge (~15 €/month) is deducted before conversion. Results may vary depending on your contract.
+                                        </div>
+                                    </div>
+
+                                    <!-- Mode 3: Guided estimation -->
+                                    <div id="consoPanel_estimate" class="hidden">
+                                        <div class="space-y-3">
+                                            <div>
+                                                <label class="text-[12px] text-slate-400 mb-1 block">Number of people</label>
+                                                <select id="consoEstPersons" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4" selected>4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6+</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="text-[12px] text-slate-400 mb-1 block">Type of housing</label>
+                                                <select id="consoEstHousing" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                    <option value="apartment">Apartment</option>
+                                                    <option value="house" selected>House</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="text-[12px] text-slate-400 mb-1 block">Main heating</label>
+                                                <select id="consoEstHeating" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" onchange="computeEstimation()">
+                                                    <option value="electric">Electric</option>
+                                                    <option value="gas" selected>Gas / oil</option>
+                                                    <option value="heatpump">Heat pump</option>
+                                                    <option value="other">Other (wood, etc.)</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="text-[12px] text-slate-400 mb-1 block">Living area (m²)</label>
+                                                <input type="number" id="consoEstSurface" value="100" min="20" max="500" step="10" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" oninput="computeEstimation()">
+                                            </div>
+                                        </div>
+                                        <div id="consoEstResult" class="mt-2 p-2.5 bg-amber-900/10 border border-amber-700/25 rounded-lg text-[13px] text-slate-400 leading-snug">
+                                            ≈ <span id="consoEstKwh" class="text-amber-400 font-semibold">—</span> kWh/yr estimated
+                                        </div>
+                                        <div class="mt-1.5 p-2 bg-slate-800/60 border border-slate-700/40 rounded-lg text-[12px] text-slate-500 leading-snug">
+                                            ⚠️ Estimate based on average figures. Your actual consumption may vary significantly.
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="text-[13px] text-slate-300 mb-1 block font-medium">Presence profile</label>
+                                        <select id="simProfile" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
+                                            <option value="family">Low daytime presence</option>
+                                            <option value="retired">Medium daytime presence</option>
+                                            <option value="telecommute">High daytime presence</option>
+                                        </select>
+                                        <p class="mt-1 text-[13px] text-slate-500 leading-snug">Determines the hourly distribution of your baseline consumption based on when you are home.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visual separator -->
+                            <div class="border-t border-slate-700/40"></div>
+
+                            <!-- BLOCK B — Planned equipment -->
+                            <div>
+                                <h5 class="text-sm font-semibold text-slate-200 mb-2 flex items-center gap-1.5">
+                                    <span class="text-amber-500 text-xs">B</span> Planned equipment
+                                </h5>
+                                <p class="text-[13px] text-slate-500 leading-snug mb-3">Only add new equipment or future uses that are not already included in your current consumption.</p>
+                                <!-- Double counting warning (conditional) -->
+                                <div id="warningDoubleCount" class="hidden mb-3 p-2.5 bg-orange-900/15 border border-orange-600/30 rounded-lg text-[12px] text-orange-300 leading-snug">
+                                    ⚠️ Warning: only add future equipment that is not already included in your current consumption. If you already own this equipment, selecting it may create double counting.
+                                </div>
                                 <div class="flex flex-col gap-2">
                                     <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                        <input type="checkbox" id="addonEV" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
                                         <span class="text-sm text-slate-300">🚗 Electric vehicle (+2,500 kWh/yr)</span>
                                     </label>
                                     <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                        <input type="checkbox" id="addonPAC" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
                                         <span class="text-sm text-slate-300">🌡️ Heat pump (+4,000 kWh/yr)</span>
                                     </label>
                                     <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500">
+                                        <input type="checkbox" id="addonECS" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-amber-500" onchange="updateProjectedConsumption()">
                                         <span class="text-sm text-slate-300">💧 Thermodynamic water heater (+1,500 kWh/yr)</span>
                                     </label>
                                 </div>
-                                <p class="mt-2 text-[13px] text-slate-500 leading-snug">These appliances increase consumption and self-consumption, especially if they run during the day.</p>
                             </div>
+
+                            <!-- Visual separator -->
+                            <div class="border-t border-slate-700/40"></div>
+
+                            <!-- BLOCK C — Simulated consumption -->
+                            <div id="projectedConsumptionBlock" class="p-4 bg-slate-800/40 rounded-xl border border-slate-700/30">
+                                <h5 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-1.5">
+                                    <span class="text-amber-500 text-xs">C</span> Simulated consumption
+                                </h5>
+                                <div class="space-y-1.5 text-[13px]">
+                                    <div class="flex justify-between text-slate-400">
+                                        <span>Current consumption</span>
+                                        <span id="projectedBase" class="text-slate-300 font-medium">4,000 kWh/yr</span>
+                                    </div>
+                                    <div id="projectedAddonsLine" class="flex justify-between text-slate-400 hidden">
+                                        <span>Planned equipment</span>
+                                        <span id="projectedAddons" class="text-amber-400 font-medium">+0 kWh/yr</span>
+                                    </div>
+                                    <div class="border-t border-slate-600/40 pt-1.5 flex justify-between">
+                                        <span class="text-slate-200 font-semibold">Simulated total</span>
+                                        <span id="projectedTotal" class="text-amber-400 font-bold">4,000 kWh/yr</span>
+                                    </div>
+                                </div>
+                                <p id="projectedExplanation" class="mt-2 text-[11px] text-slate-500 leading-snug hidden">This total is distributed hour by hour based on your presence profile to simulate solar production and self-consumption.</p>
+                                <p id="projectedNoAddons" class="mt-2 text-[11px] text-slate-500 leading-snug">No planned equipment added. Simulated consumption matches your current consumption.</p>
+                            </div>
+
                         </div>
                     </div>
 
@@ -1839,6 +1884,7 @@ function reverseGeocode(lat, lon) {
             resultSpan.textContent = clamped.toLocaleString('en-US');
             resultDiv.classList.remove('hidden');
             document.getElementById('resConsumption').value = clamped;
+            if (typeof updateProjectedConsumption === 'function') updateProjectedConsumption();
         }
 
         function computeEstimation() {
@@ -1859,7 +1905,63 @@ function reverseGeocode(lat, lon) {
             const clamped = Math.max(1000, Math.min(100000, result));
             document.getElementById('consoEstKwh').textContent = clamped.toLocaleString('en-US');
             document.getElementById('resConsumption').value = clamped;
+            if (typeof updateProjectedConsumption === 'function') updateProjectedConsumption();
         }
+        // --- Lot 1: Block C dynamic + double counting warning ---
+        // Mapping checkbox ID → ADDITIONAL_PROFILES key (single source of truth)
+        var ADDON_CHECKBOX_MAP = { addonEV: 'ev', addonPAC: 'pac', addonECS: 'ecs' };
+
+        function getSelectedAddonsKwh() {
+            var AP = window.AutoconsommationSimulator && window.AutoconsommationSimulator.ADDITIONAL_PROFILES;
+            var total = 0;
+            for (var id in ADDON_CHECKBOX_MAP) {
+                var el = document.getElementById(id);
+                if (el && el.checked && AP && AP[ADDON_CHECKBOX_MAP[id]]) {
+                    total += AP[ADDON_CHECKBOX_MAP[id]].annualKwh;
+                }
+            }
+            return total;
+        }
+
+        function updateProjectedConsumption() {
+            var base = parseInt(document.getElementById('resConsumption').value) || 0;
+            var addons = getSelectedAddonsKwh();
+            var total = base + addons;
+            var hasAddons = addons > 0;
+
+            // Block C values
+            document.getElementById('projectedBase').textContent = base.toLocaleString('en-US') + ' kWh/yr';
+            document.getElementById('projectedAddons').textContent = '+' + addons.toLocaleString('en-US') + ' kWh/yr';
+            document.getElementById('projectedTotal').textContent = total.toLocaleString('en-US') + ' kWh/yr';
+
+            // Show/hide addons line
+            var addonsLine = document.getElementById('projectedAddonsLine');
+            if (hasAddons) { addonsLine.classList.remove('hidden'); } else { addonsLine.classList.add('hidden'); }
+
+            // Toggle explanation vs no-addons text
+            var explEl = document.getElementById('projectedExplanation');
+            var noAddEl = document.getElementById('projectedNoAddons');
+            if (explEl && noAddEl) {
+                if (hasAddons) {
+                    explEl.classList.remove('hidden');
+                    noAddEl.classList.add('hidden');
+                } else {
+                    explEl.classList.add('hidden');
+                    noAddEl.classList.remove('hidden');
+                }
+            }
+
+            // Warning: visible when at least 1 addon checked
+            var warning = document.getElementById('warningDoubleCount');
+            if (warning) {
+                if (hasAddons) { warning.classList.remove('hidden'); } else { warning.classList.add('hidden'); }
+            }
+
+            // Also update preview card if it exists
+            if (typeof updatePreviewCard === 'function') updatePreviewCard();
+        }
+        // --- End Lot 1 ---
+
         // --- End Lot 5 ---
 
         // --- Lot 6: Sensitivity analysis ---
