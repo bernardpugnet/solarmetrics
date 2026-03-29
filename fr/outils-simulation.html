@@ -1352,36 +1352,42 @@
 
                     <!-- TAB 2: Autoconsommation Détaillée -->
                     <div id="tab-detailed" class="tab-content">
-                        <div class="kpi-grid">
+                        <div class="kpi-grid kpi-grid-3col">
                             <div class="kpi-card">
                                 <div class="kpi-label">Taux autoconsommation</div>
                                 <div class="kpi-value" id="resAutoconsoRate">—</div>
                                 <div class="kpi-unit">%</div>
+                                <div class="kpi-desc">Part de votre production solaire que vous consommez directement (ou via batterie) au lieu de l'injecter dans le réseau.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Couverture solaire</div>
                                 <div class="kpi-value" id="resAutoprodRate">—</div>
                                 <div class="kpi-unit">%</div>
+                                <div class="kpi-desc">Part de votre consommation totale couverte par votre production solaire. Indique votre degré d'indépendance énergétique.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Auto-directe</div>
                                 <div class="kpi-value" id="resAutoDirect">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Énergie solaire consommée instantanément au moment de la production, sans passer par la batterie ni le réseau.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Auto-batterie</div>
                                 <div class="kpi-value" id="resAutoBattery">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Énergie solaire stockée dans la batterie puis restituée pour votre consommation (soir, nuit, jours nuageux).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Injection</div>
                                 <div class="kpi-value" id="resInjection">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Surplus solaire non consommé et non stocké, injecté dans le réseau et revendu au tarif de rachat en vigueur.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Soutirage</div>
                                 <div class="kpi-value" id="resSoutirage">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Énergie achetée au réseau pour couvrir les besoins non satisfaits par le solaire ni la batterie.</div>
                             </div>
                         </div>
                         <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 mb-8">

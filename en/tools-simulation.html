@@ -1315,36 +1315,42 @@
 
                     <!-- TAB 2: Detailed Self-Consumption -->
                     <div id="tab-detailed" class="tab-content">
-                        <div class="kpi-grid">
+                        <div class="kpi-grid kpi-grid-3col">
                             <div class="kpi-card">
                                 <div class="kpi-label">Self-consumption rate</div>
                                 <div class="kpi-value" id="resAutoconsoRate">—</div>
                                 <div class="kpi-unit">%</div>
+                                <div class="kpi-desc">Share of your solar production consumed on-site (directly or via battery) instead of being exported to the grid.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Solar coverage</div>
                                 <div class="kpi-value" id="resAutoprodRate">—</div>
                                 <div class="kpi-unit">%</div>
+                                <div class="kpi-desc">Share of your total consumption covered by solar. Indicates your level of energy independence.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Direct self-cons.</div>
                                 <div class="kpi-value" id="resAutoDirect">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Solar energy consumed instantly at the time of production, without going through the battery or the grid.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Via battery</div>
                                 <div class="kpi-value" id="resAutoBattery">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Solar energy stored in the battery and later used for your consumption (evening, night, cloudy days).</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Grid injection</div>
                                 <div class="kpi-value" id="resInjection">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Surplus solar energy not consumed or stored, exported to the grid and sold at the applicable feed-in tariff.</div>
                             </div>
                             <div class="kpi-card">
                                 <div class="kpi-label">Grid draw</div>
                                 <div class="kpi-value" id="resSoutirage">—</div>
                                 <div class="kpi-unit">kWh</div>
+                                <div class="kpi-desc">Energy purchased from the grid to cover needs not met by solar or battery.</div>
                             </div>
                         </div>
                         <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 mb-8">
