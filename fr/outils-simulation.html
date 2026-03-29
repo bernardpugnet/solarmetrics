@@ -2570,6 +2570,36 @@ function reverseGeocode(lat, lon) {
 
                 // Display results
                 displayDetailedResults(simResults, financials, kwc, installCost, batteryCost, elecPrice, priceRevente, netCost, irr, co2Avoided);
+
+                // Sync preview card with actual detailed results
+                (function syncPreviewWithResults() {
+                    function fmtFR(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'); }
+                    var prod = Math.round(simResults.annual.production);
+                    var autoRate = Math.round(simResults.annual.tauxAutoconsommation);
+                    var savings = Math.round(_totalSavings);
+                    var payback = financials.paybackYear;
+                    document.getElementById('prevProduction').textContent = fmtFR(prod);
+                    document.getElementById('prevAutoconso').textContent = autoRate;
+                    document.getElementById('prevSavings').textContent = fmtFR(savings);
+                    document.getElementById('prevSavingsUnit').textContent = '€/an';
+                    if (payback && payback < 50) {
+                        document.getElementById('prevPayback').textContent = payback.toFixed(1).replace('.', ',');
+                    } else {
+                        document.getElementById('prevPayback').textContent = '> 50';
+                    }
+                    var verdictText, verdictClass;
+                    if (payback && payback <= 10) {
+                        verdictText = 'Pertinent'; verdictClass = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+                    } else if (payback && payback <= 15) {
+                        verdictText = 'Acceptable'; verdictClass = 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+                    } else {
+                        verdictText = 'A vérifier'; verdictClass = 'bg-red-500/15 text-red-400 border-red-500/30';
+                    }
+                    var vEl = document.getElementById('prevVerdict');
+                    vEl.textContent = verdictText;
+                    vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
+                })();
+
                 generateDetailedCharts(simResults, typicalDays, financials);
 
                 // Also generate financial charts for the financial tab
