@@ -87,6 +87,9 @@
         .tab-content.active{display:block}
         .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem}
         .kpi-grid-3col{grid-template-columns:repeat(3,1fr)}
+        .explorer-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background:#334155;outline:none}
+        .explorer-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#f59e0b;cursor:pointer;border:2px solid #1e293b}
+        .explorer-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#f59e0b;cursor:pointer;border:2px solid #1e293b}
         .kpi-card{background:#1e293b;border:1px solid #334155;border-radius:0.75rem;padding:1rem;text-align:center}
         @media(min-width:640px){.kpi-card{padding:1.5rem}}
         .kpi-section summary{-webkit-tap-highlight-color:transparent}
@@ -1165,6 +1168,42 @@
                             <p class="mt-3 text-[11px] text-slate-500 leading-snug">Pessimistic: elec. price &#x2212;15%, install cost +15%, production &#x2212;15%. Optimistic: reversed. This gives a realistic range around your simulation.</p>
                         </div>
                     </details>
+
+                    <!-- Explorer sliders — quick resize PV + battery -->
+                    <div id="explorer-sliders" class="hidden bg-slate-800/40 border border-slate-700/50 rounded-2xl p-5 mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-semibold text-slate-300">🔧 Explore other configurations</h4>
+                            <span class="text-[11px] text-slate-500 italic">Quickly test another system size.</span>
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="text-[12px] text-slate-400 mb-1.5 block">PV surface area</label>
+                                <input type="range" id="explorerSurface" class="explorer-slider" min="10" max="100" step="2" value="30">
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-[11px] text-slate-500">10 m²</span>
+                                    <span id="explorerSurfaceVal" class="text-[12px] text-amber-400 font-medium">30 m² → 5.1 kWp</span>
+                                    <span class="text-[11px] text-slate-500">100 m²</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[12px] text-slate-400 mb-1.5 block">Battery capacity</label>
+                                <input type="range" id="explorerBattery" class="explorer-slider" min="0" max="30" step="1" value="0">
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-[11px] text-slate-500">0 kWh</span>
+                                    <span id="explorerBatteryVal" class="text-[12px] text-amber-400 font-medium">No battery</span>
+                                    <span class="text-[11px] text-slate-500">30 kWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 mt-4">
+                            <button id="explorerApply" onclick="explorerRecalculate()" disabled class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors bg-slate-700 text-slate-500 cursor-not-allowed">
+                                Apply and recalculate
+                            </button>
+                            <button id="explorerReset" onclick="explorerResetSliders()" disabled class="px-3 py-2 text-xs text-slate-500 hover:text-slate-300 transition-colors cursor-not-allowed">
+                                Reset to initial
+                            </button>
+                        </div>
+                    </div>
 
                     <!-- Tab Navigation + PDF button -->
                     <div class="flex items-center justify-between border-b border-slate-700 mb-8">
@@ -2560,6 +2599,9 @@ function reverseGeocode(lat, lon) {
                 generateVerdict(simResults, financials, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost);
                 updateHypothesesSummary();
                 document.getElementById('hypotheses-summary').style.display = 'block';
+                // Init explorer sliders with current values
+                initExplorerSliders();
+
                 generateDetailedCharts(simResults, typicalDays, financials);
 
                 // Also generate financial charts for the financial tab
@@ -2929,6 +2971,89 @@ function reverseGeocode(lat, lon) {
                 <div><strong>Battery:</strong> ${parseInt(sim.hourly.soc[0]) > 0 ? `${parseInt(sim.hourly.soc[sim.hourly.soc.length-1])} kWh (LFP)` : 'None'}</div>
             `;
             document.getElementById('systemRecap').innerHTML = systemRecap;
+        }
+
+        // ─── Explorer sliders: quick PV surface + battery resize ───
+        var _explorerInitSurface = 0;
+        var _explorerInitBattery = 0;
+
+        function initExplorerSliders() {
+            var block = document.getElementById('explorer-sliders');
+            if (!block) return;
+            var surface = parseFloat(document.getElementById('resSurface').value) || 30;
+            var batEl = document.getElementById('resBatteryCapacity');
+            var batToggle = document.getElementById('resBatteryToggle');
+            var battery = (batToggle && batToggle.checked && batEl) ? (parseFloat(batEl.value) || 0) : 0;
+
+            _explorerInitSurface = surface;
+            _explorerInitBattery = battery;
+
+            var sSlider = document.getElementById('explorerSurface');
+            var bSlider = document.getElementById('explorerBattery');
+            sSlider.value = surface;
+            bSlider.value = battery;
+            updateExplorerLabels();
+            updateExplorerButtons();
+            block.classList.remove('hidden');
+
+            sSlider.oninput = function() { updateExplorerLabels(); updateExplorerButtons(); };
+            bSlider.oninput = function() { updateExplorerLabels(); updateExplorerButtons(); };
+        }
+
+        function updateExplorerLabels() {
+            var surface = parseFloat(document.getElementById('explorerSurface').value);
+            var panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
+            var kwc = (surface * 0.85 * panelEff).toFixed(1);
+            document.getElementById('explorerSurfaceVal').textContent = surface + ' m² → ' + kwc + ' kWp';
+
+            var battery = parseInt(document.getElementById('explorerBattery').value);
+            document.getElementById('explorerBatteryVal').textContent = battery === 0 ? 'No battery' : battery + ' kWh';
+        }
+
+        function updateExplorerButtons() {
+            var surface = parseFloat(document.getElementById('explorerSurface').value);
+            var battery = parseInt(document.getElementById('explorerBattery').value);
+            var changed = surface !== _explorerInitSurface || battery !== _explorerInitBattery;
+
+            var applyBtn = document.getElementById('explorerApply');
+            var resetBtn = document.getElementById('explorerReset');
+            if (changed) {
+                applyBtn.disabled = false;
+                applyBtn.className = 'px-4 py-2 text-sm font-semibold rounded-lg transition-colors bg-amber-500 hover:bg-amber-400 text-slate-900 cursor-pointer';
+                resetBtn.disabled = false;
+                resetBtn.className = 'px-3 py-2 text-xs text-slate-400 hover:text-slate-300 transition-colors cursor-pointer';
+            } else {
+                applyBtn.disabled = true;
+                applyBtn.className = 'px-4 py-2 text-sm font-semibold rounded-lg transition-colors bg-slate-700 text-slate-500 cursor-not-allowed';
+                resetBtn.disabled = true;
+                resetBtn.className = 'px-3 py-2 text-xs text-slate-500 transition-colors cursor-not-allowed';
+            }
+        }
+
+        function explorerRecalculate() {
+            var surface = parseFloat(document.getElementById('explorerSurface').value);
+            var battery = parseInt(document.getElementById('explorerBattery').value);
+
+            document.getElementById('resSurface').value = surface;
+            if (document.getElementById('resSurfaceSimple')) document.getElementById('resSurfaceSimple').value = surface;
+            updateKwc();
+
+            if (battery > 0) {
+                document.getElementById('resBatteryToggle').checked = true;
+                document.getElementById('resBatteryCapacity').value = battery;
+            } else {
+                document.getElementById('resBatteryToggle').checked = false;
+            }
+            if (typeof toggleBatteryCapacity === 'function') toggleBatteryCapacity();
+
+            calculateDetailed();
+        }
+
+        function explorerResetSliders() {
+            document.getElementById('explorerSurface').value = _explorerInitSurface;
+            document.getElementById('explorerBattery').value = _explorerInitBattery;
+            updateExplorerLabels();
+            updateExplorerButtons();
         }
 
         function generateFinancialCharts(netCost, installCost, payback, prod, auto, inj) {
