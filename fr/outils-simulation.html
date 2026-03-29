@@ -1820,7 +1820,9 @@ function reverseGeocode(lat, lon) {
             // --- Read inputs ---
             var lat = parseFloat(document.getElementById('resLatitude').value) || 48.86;
             var kwc = parseFloat(document.getElementById('simPeakpower').value) || 5.1;
-            var conso = parseFloat(document.getElementById('resConsumption').value) || 4000;
+            var baseConso = parseFloat(document.getElementById('resConsumption').value) || 4000;
+            var addonKwh = (typeof buildResolvedAddons === 'function') ? buildResolvedAddons().totalKwh : 0;
+            var conso = baseConso + addonKwh;
             var elecPrice = parseFloat(document.getElementById('resElecPrice').value) || 0.25;
             var feedin = parseFloat(document.getElementById('resFeedir').value) || 0.04;
             var orient = parseInt(document.getElementById('resOrientation').value) || 0;
@@ -1831,7 +1833,7 @@ function reverseGeocode(lat, lon) {
             var cc = (document.getElementById('resCountry') && document.getElementById('resCountry').value) || 'FR';
             var countryEntry = (window.SOLAR_DATA && window.SOLAR_DATA.countries && window.SOLAR_DATA.countries[cc]) || null;
             var knownCountry = !!countryEntry;
-            var countryName = countryEntry ? countryEntry.name : cc;
+            var countryName = countryEntry ? (countryEntry.name.fr || countryEntry.name) : cc;
             var currSym = (countryEntry && countryEntry.currencySymbol) ? countryEntry.currencySymbol : '\u20ac';
 
             // --- Quick production estimate (always possible from latitude) ---
