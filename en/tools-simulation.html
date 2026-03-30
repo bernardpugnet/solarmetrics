@@ -1832,9 +1832,11 @@ function reverseGeocode(lat, lon) {
         // -------------------------------------------------------
         //  Preview card — quick estimate (no PVGIS call)
         // -------------------------------------------------------
+        var _pvgisRunning = false; // flag: skip estimation while PVGIS calculation is in progress
         function updatePreviewCard() {
             var el = document.getElementById('prevProduction');
             if (!el) return;
+            if (_pvgisRunning) return; // PVGIS in progress → syncPreviewWithResults will handle it
 
             // --- Read inputs ---
             var lat = parseFloat(document.getElementById('resLatitude').value) || 51.51;
@@ -2378,6 +2380,7 @@ function reverseGeocode(lat, lon) {
         }
 
         async function calculateDetailed() {
+            _pvgisRunning = true; // block updatePreviewCard during PVGIS calculation
             document.getElementById('sim-form').style.display = 'none';
             document.getElementById('sim-loader').classList.remove('hidden');
             document.getElementById('sim-loader').style.display = 'block';
@@ -2614,6 +2617,7 @@ function reverseGeocode(lat, lon) {
                     vEl.textContent = verdictText;
                     vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
                 })();
+                _pvgisRunning = false; // unlock updatePreviewCard
 
                 // Verdict + hypotheses summary (ported from FR)
                 generateVerdict(simResults, financials, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost);
@@ -2636,6 +2640,7 @@ function reverseGeocode(lat, lon) {
                 // Keep form hidden, show hypotheses bar instead
                 // document.getElementById('sim-form').style.display = 'block';
             } catch (error) {
+                _pvgisRunning = false; // unlock updatePreviewCard on error too
                 console.error('Detailed calculation error:', error);
                 document.getElementById('sim-form').style.display = 'block';
                 // Show error to user
