@@ -2134,6 +2134,11 @@ function reverseGeocode(lat, lon) {
 
                 var profile = Sim.resolveAddonProfile(addonKey, params);
                 if (profile) {
+                    // Carry PAC params for PDF display
+                    if (addonKey === 'pac' && params) {
+                        profile.level = params.level || 'standard';
+                        profile.ecsIntegrated = !!params.ecsIntegrated;
+                    }
                     resolved[addonKey] = profile;
                     totalKwh += profile.annualKwh;
                 }

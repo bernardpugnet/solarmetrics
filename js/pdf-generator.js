@@ -1255,9 +1255,23 @@
             }
             return base;
         }
+        // PAC: enrich label with level + ECS intégrée if available
+        var pacLabel = (function() {
+            var base = L['v2AddonPac'];
+            var src = RA['pac'];
+            if (!src) return base;
+            var levelNames = (lang === 'fr')
+                ? { moderate: 'mod\u00e9r\u00e9e', standard: 'standard', high: 'forte' }
+                : { moderate: 'moderate', standard: 'standard', high: 'high' };
+            var detail = levelNames[src.level] || levelNames['standard'];
+            if (src.ecsIntegrated) {
+                detail += (lang === 'fr') ? ' + ECS int\u00e9gr\u00e9e' : ' + integrated DHW';
+            }
+            return base + ' \u2014 ' + detail + ' (~' + fmtNum(src.annualKwh, 0, lang) + unitSuffix;
+        })();
         var addonMap = {
             ev:  addonLabel('v2AddonEv',  'ev'),
-            pac: addonLabel('v2AddonPac', 'pac'),
+            pac: pacLabel,
             ecs: addonLabel('v2AddonEcs', 'ecs'),
             ac:  addonLabel('v2AddonAc',  'ac'),
             pool: addonLabel('v2AddonPool', 'pool'),
