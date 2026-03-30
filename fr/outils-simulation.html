@@ -529,6 +529,17 @@
                             </div>
                             <p class="text-xs text-slate-500 mt-1">Estimation basée sur la latitude. La valeur exacte sera calculée par PVGIS lors de la simulation.</p>
                         </div>
+                        <!-- Latitude / Longitude — always visible -->
+                        <div class="grid grid-cols-2 gap-3 mt-3">
+                            <div>
+                                <label class="text-xs text-slate-500 mb-1 block">Latitude</label>
+                                <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-700/50 rounded-lg text-white text-sm" readonly>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500 mb-1 block">Longitude</label>
+                                <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-700/50 rounded-lg text-white text-sm" readonly>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -571,16 +582,6 @@
                                 <div id="manualInputSection" class="hidden mt-2">
                                     <label class="text-xs text-slate-400 mb-1 block">Productible année 1 (kWh/kWc/an)</label>
                                     <input type="number" id="resManualProductible" value="1200" min="500" max="2500" step="10" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                            </div>
-                            <div id="advancedLatLon" class="grid grid-cols-2 gap-4 mt-3">
-                                <div>
-                                    <label class="text-sm text-slate-400 mb-2 block">Latitude</label>
-                                    <input type="number" id="resLatitude" value="48.8566" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-slate-400 mb-2 block">Longitude</label>
-                                    <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm" readonly>
                                 </div>
                             </div>
                         </div>
