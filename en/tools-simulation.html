@@ -3256,6 +3256,31 @@ function reverseGeocode(lat, lon) {
             const triStr = (fin.irr !== null && fin.irr !== undefined) ? (fin.irr * 100).toFixed(1) : '—';
             const co2_25t = (fin.co2Avoided * 25 / 1000).toFixed(1);
 
+            // --- Consumption profile + addons section ---
+            let consoSection = '';
+            const addons = cfg.addons || [];
+            const RA = cfg.resolvedAddons || {};
+            if (addons.length > 0) {
+                const profileLabels = { family: 'Family', retired: 'Retired', telecommute: 'Remote work', allElectric: 'All-electric' };
+                const addonLabels = { ev: 'Electric vehicle', pac: 'Heat pump', ecs: 'Thermodynamic water heater', ac: 'Air conditioning', pool: 'Swimming pool' };
+                let addonLines = addons.map(function(k) {
+                    var label = addonLabels[k] || k;
+                    if (k === 'pac' && RA[k]) {
+                        var lvl = { moderate: 'moderate', standard: 'standard', high: 'high' };
+                        label += ' — ' + (lvl[RA[k].level] || 'standard');
+                        if (RA[k].ecsIntegrated) label += ' + integrated DHW';
+                    }
+                    var kwh = RA[k] ? RA[k].annualKwh : 0;
+                    return '<li>' + label + ' (~' + fmt(kwh) + ' kWh/yr)</li>';
+                }).join('');
+                var totalConso = pr.totalConsumption || cfg.consumption;
+                consoSection = `
+                <h4 class="text-white font-semibold mt-6 mb-2">🏠 Consumption profile</h4>
+                <p>Base consumption: <strong>${fmt(cfg.consumption)} kWh/yr</strong> ("${profileLabels[cfg.profile] || cfg.profile}" profile), plus:</p>
+                <ul class="list-disc list-inside text-slate-300 mt-1 mb-2 space-y-0.5 text-sm">${addonLines}</ul>
+                <p>Total simulated consumption: <strong>${fmt(totalConso)} kWh/yr</strong>.</p>`;
+            }
+
             let detailedSection = '';
             if (pr.autoconsoRate !== undefined) {
                 detailedSection = `
@@ -3283,6 +3308,8 @@ function reverseGeocode(lat, lon) {
             <p>Your <strong>feed-in revenue</strong> is <strong>${fmt(fin.savingsFeedin)} €/year</strong>: this is the surplus you sell back to the grid at the feed-in tariff applicable in your country.</p>
             <p>In total, your installation saves you <strong class="text-amber-400">${fmt(fin.annualSavings)} €/year</strong> (self-consumption + feed-in).</p>
             ${batterySection}
+
+            ${consoSection}
 
             ${detailedSection}
 

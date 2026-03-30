@@ -3336,6 +3336,31 @@ function reverseGeocode(lat, lon) {
             const triStr = (fin.irr !== null && fin.irr !== undefined) ? (fin.irr * 100).toFixed(1).replace('.', ',') : '—';
             const co2_25t = (fin.co2Avoided * 25 / 1000).toFixed(1).replace('.', ',');
 
+            // --- Consumption profile + addons section ---
+            let consoSection = '';
+            const addons = cfg.addons || [];
+            const RA = cfg.resolvedAddons || {};
+            if (addons.length > 0) {
+                const profileLabels = { family: 'Famille', retired: 'Retraités', telecommute: 'Télétravail', allElectric: 'Tout électrique' };
+                const addonLabels = { ev: 'Véhicule électrique', pac: 'Pompe à chaleur', ecs: 'Chauffe-eau thermodynamique', ac: 'Climatisation', pool: 'Piscine' };
+                let addonLines = addons.map(function(k) {
+                    var label = addonLabels[k] || k;
+                    if (k === 'pac' && RA[k]) {
+                        var lvl = { moderate: 'modérée', standard: 'standard', high: 'forte' };
+                        label += ' — ' + (lvl[RA[k].level] || 'standard');
+                        if (RA[k].ecsIntegrated) label += ' + ECS intégrée';
+                    }
+                    var kwh = RA[k] ? RA[k].annualKwh : 0;
+                    return '<li>' + label + ' (~' + fmt(kwh) + ' kWh/an)</li>';
+                }).join('');
+                var totalConso = pr.totalConsumption || cfg.consumption;
+                consoSection = `
+                <h4 class="text-white font-semibold mt-6 mb-2">🏠 Profil de consommation</h4>
+                <p>Consommation de base : <strong>${fmt(cfg.consumption)} kWh/an</strong> (profil « ${profileLabels[cfg.profile] || cfg.profile} »), complétée par :</p>
+                <ul class="list-disc list-inside text-slate-300 mt-1 mb-2 space-y-0.5 text-sm">${addonLines}</ul>
+                <p>Consommation totale simulée : <strong>${fmt(totalConso)} kWh/an</strong>.</p>`;
+            }
+
             let detailedSection = '';
             if (pr.autoconsoRate !== undefined) {
                 detailedSection = `
@@ -3363,6 +3388,8 @@ function reverseGeocode(lat, lon) {
             <p>Vos <strong>revenus de revente</strong> sont de <strong>${fmt(fin.savingsFeedin)} €/an</strong> : c'est le surplus non consommé que vous revendez au réseau au tarif de rachat en vigueur dans votre pays.</p>
             <p>Au total, votre installation vous fait économiser <strong class="text-amber-400">${fmt(fin.annualSavings)} €/an</strong> (autoconsommation + revente).</p>
             ${batterySection}
+
+            ${consoSection}
 
             ${detailedSection}
 
