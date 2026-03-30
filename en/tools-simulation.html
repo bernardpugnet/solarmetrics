@@ -818,18 +818,18 @@
                         </h4>
                         <div class="space-y-4">
                             <div>
-                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Available roof area (m&#xB2;)</label>
+                                <label class="text-[13px] text-slate-300 mb-1 block font-medium">Installed panel area (m&#xB2;)</label>
                                 <input type="number" id="resSurfaceSimple" value="30" min="5" max="1000" step="1" oninput="updateKwcFromSurface()" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                <p class="mt-1 text-[13px] text-slate-500">Roughly 6 m&#xB2; per kWp installed.</p>
+                                <p class="mt-1 text-[13px] text-slate-500">Roughly 5 m&#xB2; per kWp installed.</p>
                             </div>
                             <div class="p-3 bg-slate-800/60 rounded-lg border border-slate-700/40">
-                                <p class="text-[13px] text-slate-400">Estimated power: <span id="kwcEstimate" class="text-amber-400 font-semibold">5.1 kWp</span></p>
-                                <p class="text-[11px] text-slate-500 mt-1">Based on roof area and monocrystalline panels (20%). Adjustable in advanced settings.</p>
+                                <p class="text-[13px] text-slate-400">Estimated power: <span id="kwcEstimate" class="text-amber-400 font-semibold">6.0 kWp</span></p>
+                                <p class="text-[11px] text-slate-500 mt-1">Based on panel area and monocrystalline panels (20%). Adjustable in advanced settings.</p>
                             </div>
                             <details id="manualKwcOverride">
                                 <summary class="text-[12px] text-amber-400/70 hover:text-amber-400 cursor-pointer">I have a quote: enter exact power</summary>
                                 <div class="mt-2">
-                                    <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="5.1" oninput="onManualKwcChange()" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
+                                    <input type="number" id="simPeakpower" min="0.5" max="100" step="0.1" value="6.0" oninput="onManualKwcChange()" class="w-full max-w-xs px-3 py-2 bg-slate-800 border border-amber-500/50 rounded-lg text-amber-300 text-sm font-medium">
                                 </div>
                             </details>
                         </div>
@@ -919,9 +919,9 @@
                                     <p class="text-xs text-slate-600 mt-0.5">0% = full sun</p>
                                 </div>
                                 <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Roof surface (m²)</label>
+                                    <label class="text-xs text-slate-400 mb-1 block">Panel area (m²)</label>
                                     <input type="number" id="resSurface" value="30" min="5" max="1000" step="1" onchange="updateKwc()" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Allow ~6 m²/kWp installed.</p>
+                                    <p class="mt-1 text-[13px] text-slate-500 leading-snug">Allow ~5 m²/kWp installed.</p>
                                 </div>
                             </div>
                             <div>
@@ -1181,7 +1181,7 @@
                                 <input type="range" id="explorerSurface" class="explorer-slider" min="10" max="100" step="2" value="30">
                                 <div class="flex justify-between mt-1">
                                     <span class="text-[11px] text-slate-500">10 m²</span>
-                                    <span id="explorerSurfaceVal" class="text-[12px] text-amber-400 font-medium">30 m² → 5.1 kWp</span>
+                                    <span id="explorerSurfaceVal" class="text-[12px] text-amber-400 font-medium">30 m² → 6.0 kWp</span>
                                     <span class="text-[11px] text-slate-500">100 m²</span>
                                 </div>
                             </div>
@@ -1258,7 +1258,7 @@
                                     <div class="kpi-label">Installed capacity</div>
                                     <div class="kpi-value" id="resKwc">—</div>
                                     <div class="kpi-unit">kWp</div>
-                                    <div class="kpi-desc">Peak power of your system = surface area × fill factor (85%) × panel efficiency for the selected panel type.</div>
+                                    <div class="kpi-desc">Peak power of your system = installed panel area × panel efficiency for the selected panel type.</div>
                                 </div>
                             </div>
                         </details>
@@ -1800,7 +1800,7 @@ function reverseGeocode(lat, lon) {
         function updateKwc() {
             const surface = parseFloat(document.getElementById('resSurface').value) || 30;
             const panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
-            const kwc = (surface * 0.85 * panelEff).toFixed(1);
+            const kwc = (surface * panelEff).toFixed(1);
             document.getElementById('simPeakpower').value = kwc;
             var el = document.getElementById('resSurfaceSimple');
             if (el) el.value = surface;
@@ -1814,7 +1814,7 @@ function reverseGeocode(lat, lon) {
         function updateKwcFromSurface() {
             var surface = parseFloat(document.getElementById('resSurfaceSimple').value) || 30;
             var panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
-            var kwc = (surface * 0.85 * panelEff).toFixed(1);
+            var kwc = (surface * panelEff).toFixed(1);
             document.getElementById('simPeakpower').value = kwc;
             var unit = document.documentElement.lang === 'en' ? ' kWp' : ' kWc';
             document.getElementById('kwcEstimate').textContent = kwc + unit;
@@ -1838,7 +1838,7 @@ function reverseGeocode(lat, lon) {
 
             // --- Read inputs ---
             var lat = parseFloat(document.getElementById('resLatitude').value) || 51.51;
-            var kwc = parseFloat(document.getElementById('simPeakpower').value) || 5.1;
+            var kwc = parseFloat(document.getElementById('simPeakpower').value) || 6.0;
             var baseConso = parseFloat(document.getElementById('resConsumption').value) || 4000;
             var addonKwh = (typeof buildResolvedAddons === 'function') ? buildResolvedAddons().totalKwh : 0;
             var conso = baseConso + addonKwh;
@@ -2331,7 +2331,7 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resShading').value = '0';
             document.getElementById('resSurface').value = '30';
             if (document.getElementById('resSurfaceSimple')) document.getElementById('resSurfaceSimple').value = '30';
-            if (document.getElementById('kwcEstimate')) document.getElementById('kwcEstimate').textContent = '5.1 kWp';
+            if (document.getElementById('kwcEstimate')) document.getElementById('kwcEstimate').textContent = '6.0 kWp';
             if (typeof selectBatteryPreset === 'function') selectBatteryPreset(10);
             document.getElementById('resPanelType').value = '0.20';
             showPanelInfo('0.20');
@@ -3033,7 +3033,7 @@ function reverseGeocode(lat, lon) {
         function updateExplorerLabels() {
             var surface = parseFloat(document.getElementById('explorerSurface').value);
             var panelEff = parseFloat(document.getElementById('resPanelType').value) || 0.20;
-            var kwc = (surface * 0.85 * panelEff).toFixed(1);
+            var kwc = (surface * panelEff).toFixed(1);
             document.getElementById('explorerSurfaceVal').textContent = surface + ' m² → ' + kwc + ' kWp';
 
             var battery = parseInt(document.getElementById('explorerBattery').value);
@@ -3272,7 +3272,7 @@ function reverseGeocode(lat, lon) {
             const html = `
             <h4 class="text-white font-semibold mb-2">📍 Location & Installation</h4>
             <p>This simulation was performed for a solar installation located in <strong>${cfg.countryName}</strong> (coordinates: ${cfg.lat}°N, ${cfg.lon}°E). The installation comprises <strong>${cfg.surface} m²</strong> of photovoltaic panels facing <strong>${orient}</strong> with a <strong>${cfg.tilt}° tilt</strong>, for a peak power of <strong>${cfg.kwc.toFixed(2)} kWp</strong>.</p>
-            <p><em>Peak power (kWp) is calculated as: surface × fill factor (85%) × panel efficiency. It represents the maximum power output under standard test conditions (1,000 W/m², 25°C).</em></p>
+            <p><em>Peak power (kWp) is calculated as: installed panel area × panel efficiency. It represents the maximum power output under standard test conditions (1,000 W/m², 25°C).</em></p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">⚡ Energy Production</h4>
             <p>Your installation will produce approximately <strong>${fmt(pr.annual)} kWh per year</strong>, or <strong>${fmt(pr.perKwc)} kWh per kWp installed</strong>. This figure is calculated hour-by-hour (8,760 hours/year) using PVGIS solar irradiation data from the European Commission, specific to your exact location.</p>

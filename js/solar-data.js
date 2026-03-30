@@ -711,7 +711,7 @@ window.SOLAR_DATA = {
 
   // Default advanced parameters
   defaults: {
-    coverageFactor: 0.85,
+    coverageFactor: 1.0,  // surface = installed panel area (no roof coverage factor)
     selfConsumptionDefault: 50,
     selfConsumptionWithBattery: 80,
     batteryBoost: 35,  // +35% autoconsommation with battery
