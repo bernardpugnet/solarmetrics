@@ -1047,6 +1047,17 @@
                 <!-- RESULTS SECTION -->
                 <div id="results-section" style="display:none" class="mt-12">
 
+                    <!-- FINANCIAL MISSING ALERT -->
+                    <div id="financialMissingAlert" class="hidden mb-10 p-5 bg-amber-900/20 border-2 border-amber-600/40 rounded-2xl">
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl flex-shrink-0">⚠️</div>
+                            <div>
+                                <h3 id="financialMissingTitle" class="text-lg font-bold text-amber-400 mb-1"></h3>
+                                <p id="financialMissingText" class="text-sm text-amber-300/80 leading-relaxed"></p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- VERDICT SECTION -->
                     <div id="verdict-section" class="mb-10">
                         <div id="verdict-box" class="rounded-2xl p-6 border-2 mb-6">
@@ -1253,7 +1264,7 @@
                         </details>
 
                         <!-- Section 2: Savings & Revenue (open by default) -->
-                        <details open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                        <details id="section-economies" open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
                             <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
                                 <h4 class="text-sm font-semibold text-slate-300">💰 Savings & Revenue</h4>
                                 <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -1281,7 +1292,7 @@
                         </details>
 
                         <!-- Section 3: Investment & Returns (open by default) -->
-                        <details open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
+                        <details id="section-rentabilite" open class="kpi-section bg-slate-900/30 rounded-2xl border border-slate-700/30 mb-4 group">
                             <summary class="p-4 cursor-pointer list-none flex items-center justify-between">
                                 <h4 class="text-sm font-semibold text-slate-300">📈 Investment & Returns</h4>
                                 <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -1325,7 +1336,7 @@
                                 </div>
                             </div>
                         </details>
-                        <div class="grid lg:grid-cols-2 gap-8">
+                        <div id="section-financial-charts" class="grid lg:grid-cols-2 gap-8">
                             <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
                                 <h3 class="text-lg font-semibold text-white mb-4">Payback period (25 years)</h3>
                                 <div class="chart-container">
@@ -2389,12 +2400,20 @@ function reverseGeocode(lat, lon) {
                 const shading = parseFloat(document.getElementById('resShading').value) / 100;
                 const hasBattery = document.getElementById('resBatteryToggle').checked;
                 const batteryCapacity = hasBattery ? (parseFloat(document.getElementById('resBatteryCapacity').value) || 0) : 0;
-                const elecPrice = parseFloat(document.getElementById('resElecPrice').value);
-                const priceRevente = parseFloat(document.getElementById('resFeedir').value);
-                const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100;
+                const elecPrice = parseFloat(document.getElementById('resElecPrice').value) || 0;
+                const priceRevente = parseFloat(document.getElementById('resFeedir').value) || 0;
+                const priceIncrease = parseFloat(document.getElementById('resPriceIncrease').value) / 100 || 0;
                 const ccDet = document.getElementById('resCountry').value;
                 const cDataDet = window.SOLAR_DATA && window.SOLAR_DATA.countries[ccDet];
                 const installCost = parseFloat(document.getElementById('resInstallCostOverride').value) || (cDataDet ? Math.round(cDataDet.installCostPerKwc.avg * kwc) : kwc * 2000);
+
+                // ── Financial availability check ──
+                var _epRaw = document.getElementById('resElecPrice').value.trim();
+                var _icRaw = document.getElementById('resInstallCostOverride').value.trim();
+                var _missingElec = _epRaw === '' || isNaN(parseFloat(_epRaw)) || parseFloat(_epRaw) <= 0;
+                var _hasUserCost = _icRaw !== '' && !isNaN(parseFloat(_icRaw)) && parseFloat(_icRaw) > 0;
+                var _missingCost = !_hasUserCost && !cDataDet;
+                var _financialAvailable = !_missingElec && !_missingCost;
 
                 // Get consumption profile — Lot 2: build resolved addons (pure, no mutation)
                 const addonResult = buildResolvedAddons();
@@ -2629,6 +2648,53 @@ function reverseGeocode(lat, lon) {
 
                 document.getElementById('results-section').style.display = 'block';
                 generateReport();
+
+                // ── Financial availability: hide/neutralize or restore ──
+                if (!_financialAvailable) {
+                    // Show alert with contextual message
+                    var _alertEl = document.getElementById('financialMissingAlert');
+                    var _alertTitle = document.getElementById('financialMissingTitle');
+                    var _alertText = document.getElementById('financialMissingText');
+                    if (_missingElec && _missingCost) {
+                        _alertTitle.textContent = 'Financial analysis unavailable';
+                        _alertText.innerHTML = 'Enter the <strong>electricity price</strong> and the <strong>installation cost</strong> to calculate savings, payback and IRR.';
+                    } else if (_missingElec) {
+                        _alertTitle.textContent = 'Electricity price missing';
+                        _alertText.textContent = 'Enter this value to calculate savings and profitability.';
+                    } else {
+                        _alertTitle.textContent = 'Installation cost missing';
+                        _alertText.textContent = 'Enter this value to calculate payback and IRR.';
+                    }
+                    _alertEl.classList.remove('hidden');
+                    // Hide verdict
+                    document.getElementById('verdict-section').style.display = 'none';
+                    // Hide financial KPI sections + charts
+                    document.getElementById('section-economies').style.display = 'none';
+                    document.getElementById('section-rentabilite').style.display = 'none';
+                    document.getElementById('section-financial-charts').style.display = 'none';
+                    document.getElementById('sensitivity-section').style.display = 'none';
+                    document.getElementById('sensitivity-section').classList.add('hidden');
+                    // Neutralize financial values (safety net)
+                    ['resSavingsAutocons','resSavingsFeedin','resAnnualSavings','resInstallCost','resNetCost','resPayback','resNpv','resTri'].forEach(function(id) {
+                        var el = document.getElementById(id); if (el) el.textContent = '\u2014';
+                    });
+                    // Update preview card
+                    document.getElementById('prevSavings').textContent = '\u2014';
+                    document.getElementById('prevPayback').textContent = '\u2014';
+                    var _vEl = document.getElementById('prevVerdict');
+                    _vEl.textContent = _missingElec ? 'Price missing' : 'Cost missing';
+                    _vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium bg-amber-500/15 text-amber-400 border-amber-500/30';
+                    var _fl = document.getElementById('prevFooterLabel');
+                    if (_fl) _fl.textContent = 'Simulated results \u00b7 Financial analysis incomplete';
+                } else {
+                    // Financial available — restore in case of recalculation after filling fields
+                    document.getElementById('financialMissingAlert').classList.add('hidden');
+                    document.getElementById('verdict-section').style.display = '';
+                    document.getElementById('section-economies').style.display = '';
+                    document.getElementById('section-rentabilite').style.display = '';
+                    document.getElementById('section-financial-charts').style.display = '';
+                }
+
                 // Keep form hidden, show hypotheses bar instead
                 // document.getElementById('sim-form').style.display = 'block';
                 _pvgisRunning = false; // unlock updatePreviewCard — must be last in try block
