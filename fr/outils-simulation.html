@@ -2391,13 +2391,19 @@ function reverseGeocode(lat, lon) {
             document.getElementById('resDiscount').value = '4';
             document.getElementById('resBatteryToggle').checked = false;
             document.getElementById('addonEV').checked = false;
+            document.getElementById('evMileage').value = '10k15k';
+            document.getElementById('evCharging').value = 'mixte';
             document.getElementById('addonPAC').checked = false;
             document.getElementById('pacLevel').value = 'standard';
             document.getElementById('pacEcsIntegrated').value = 'no';
             document.getElementById('addonECS').checked = false;
             document.getElementById('addonECS').disabled = false;
+            document.getElementById('ecsHousehold').value = '3_4';
             document.getElementById('addonAC').checked = false;
+            document.getElementById('acUsage').value = 'regular';
             document.getElementById('addonPool').checked = false;
+            document.getElementById('poolType').value = 'unheated';
+            document.getElementById('poolCustomKwh').value = '3000';
             // Reset consumption input mode to kWh
             switchConsoMode('kwh');
             document.querySelector('input[name="consoMode"][value="kwh"]').checked = true;
@@ -2498,6 +2504,13 @@ function reverseGeocode(lat, lon) {
 
                 // Get typical days
                 const typicalDays = window.AutoconsommationSimulator.getTypicalDays(simResults.hourly.production);
+                // Add real consumption daily profiles (summer/winter)
+                typicalDays.consoSummer = window.AutoconsommationSimulator.averageDailyProfile(simResults.hourly.consumption, 151, 61);
+                typicalDays.consoWinter = (function() {
+                    var dec = window.AutoconsommationSimulator.averageDailyProfile(simResults.hourly.consumption, 334, 31);
+                    var jan = window.AutoconsommationSimulator.averageDailyProfile(simResults.hourly.consumption, 0, 31);
+                    return dec.map(function(v, i) { return Math.round((v + jan[i]) / 2 * 100) / 100; });
+                })();
 
                 // CO2 avoided
                 const cc = document.getElementById('resCountry').value;
@@ -3253,7 +3266,7 @@ function reverseGeocode(lat, lon) {
                     labels: Array.from({length: 24}, (_, i) => `${i}h`),
                     datasets: [
                         { label: 'Production', data: days.summer, borderColor: '#f59e0b', fill: false },
-                        { label: 'Consommation', data: days.summer.map(v => v * 0.5), borderColor: '#64748b', fill: false }
+                        { label: 'Consommation', data: days.consoSummer, borderColor: '#64748b', fill: false }
                     ]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
@@ -3266,7 +3279,7 @@ function reverseGeocode(lat, lon) {
                     labels: Array.from({length: 24}, (_, i) => `${i}h`),
                     datasets: [
                         { label: 'Production', data: days.winter, borderColor: '#3b82f6', fill: false },
-                        { label: 'Consommation', data: days.winter.map(v => v * 1.5), borderColor: '#64748b', fill: false }
+                        { label: 'Consommation', data: days.consoWinter, borderColor: '#64748b', fill: false }
                     ]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
