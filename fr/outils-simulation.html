@@ -540,6 +540,38 @@
                                 <input type="number" id="resLongitude" value="2.3522" step="0.0001" class="w-full px-3 py-1.5 bg-slate-800 border border-slate-700/50 rounded-lg text-white text-sm" readonly>
                             </div>
                         </div>
+                        <!-- Paramètres financiers compacts — grille 2×3 -->
+                        <div class="mt-3 p-3 bg-slate-900/80 border border-slate-700/50 rounded-lg">
+                            <p class="text-xs text-slate-500 mb-2 font-medium">Paramètres financiers</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="text-[10px] text-slate-500 mb-0.5 block">Tarif élec. (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resElecPrice" value="0.2516" min="0.05" max="0.50" step="0.01" class="w-full px-2 py-1 bg-slate-800 border border-slate-700/50 rounded text-white text-xs">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 mb-0.5 block">Rachat surplus (<span class="cur">€</span>/kWh)</label>
+                                    <input type="number" id="resFeedir" value="0.04" min="0" max="0.50" step="0.01" class="w-full px-2 py-1 bg-slate-800 border border-slate-700/50 rounded text-white text-xs">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 mb-0.5 block">Coût install. (<span class="cur">€</span>)</label>
+                                    <input type="number" id="resInstallCostOverride" placeholder="Moy. pays" min="0" max="200000" step="100" class="w-full px-2 py-1 bg-slate-800 border border-slate-700/50 rounded text-white text-xs placeholder-slate-600">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 mb-0.5 block">Aides (<span class="cur">€</span>)</label>
+                                    <input type="number" id="resSubsidies" value="" placeholder="0" min="0" max="50000" step="100" class="w-full px-2 py-1 bg-slate-800 border border-slate-700/50 rounded text-white text-xs placeholder-slate-600">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 mb-0.5 block">Dégradation (%/an)</label>
+                                    <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1" class="w-full px-2 py-1 bg-slate-800 border border-slate-700/50 rounded text-white text-xs">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 mb-0.5 block">Hausse prix (%/an)</label>
+                                    <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5" class="w-full px-2 py-1 bg-slate-800 border border-slate-700/50 rounded text-white text-xs">
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-slate-600 mt-1.5">Pré-rempli selon votre pays · Modifiable</p>
+                            <input type="hidden" id="resDiscount" value="4">
+                        </div>
                     </div>
 
                 </div>
@@ -1003,56 +1035,12 @@
                         </div>
                     </details>
 
-                    <!-- Paramètres financiers (replié) -->
-                    <details class="bg-slate-900/50 rounded-2xl border border-slate-700/50 group">
-                        <summary class="p-6 cursor-pointer list-none flex items-center justify-between">
-                            <h4 class="text-lg font-semibold text-white flex items-center gap-2">
-                                <span class="text-slate-500">●</span> Paramètres financiers & hypothèses
-                            </h4>
-                            <span class="text-slate-500 text-xs group-open:hidden">Tarifs et coûts pré-remplis selon votre pays</span>
-                            <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </summary>
-                        <div class="px-6 pb-6 space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Tarif électricité (<span class="cur">€</span>/kWh)</label>
-                                    <input type="number" id="resElecPrice" value="0.2516" min="0.05" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p class="text-[13px] text-slate-500 mt-1">Pré-rempli selon votre pays (Eurostat 2025). Vérifiez sur votre facture pour plus de précision.</p>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Tarif rachat surplus (<span class="cur">€</span>/kWh)</label>
-                                    <input type="number" id="resFeedir" value="0.04" min="0" max="0.50" step="0.01" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                    <p id="feedInNoteText" class="text-[13px] text-slate-500 mt-1">Tarif EDF OA (≤9 kWc, T1 2026), garanti 20 ans. Vérifiez sur <a id="feedInNoteLinkA" href="https://www.edf-oa.fr/" target="_blank" class="text-amber-400/70 hover:text-amber-400 underline">edf-oa.fr</a></p>
-                                    <p id="feedInNoteLink" class="hidden"></p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Coût installation (<span class="cur">€</span>)</label>
-                                    <input type="number" id="resInstallCostOverride" placeholder="Vide = moyenne pays (voir ci-dessous)" min="0" max="200000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-xs text-amber-400/70 mt-1">⚡ Moyenne pays : <span id="resAvgCostHint" class="font-semibold text-amber-400">—</span> <span class="cur">€</span>/kWc (panneaux + onduleur + pose)</p>
-                                    <p class="text-[13px] text-slate-500 mt-0.5">Si vide, la moyenne pays est utilisée. Entrez votre devis réel si disponible.</p>
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Aides & subventions (<span class="cur">€</span>)</label>
-                                    <input type="number" id="resSubsidies" value="" placeholder="0" min="0" max="50000" step="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-slate-600">
-                                    <p class="text-[13px] text-slate-500 mt-0.5">Montant total des aides dont vous bénéficiez. Consultez les aides pays ci-dessous.</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Dégradation (%/an)</label>
-                                    <input type="number" id="resDegradation" value="0.5" min="0.2" max="1.5" step="0.1" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                                <div>
-                                    <label class="text-xs text-slate-400 mb-1 block">Hausse prix (%/an)</label>
-                                    <input type="number" id="resPriceIncrease" value="2.5" min="0" max="10" step="0.5" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm">
-                                </div>
-                            </div>
-                            <!-- resDiscount masqué : le taux d'actualisation n'est pas utilisé dans le calcul actuel -->
-                            <input type="hidden" id="resDiscount" value="4">
-                        </div>
-                    </details>
+                    <!-- Hidden elements referenced by JS (feedIn notes, avg cost hint) -->
+                    <div class="hidden">
+                        <p id="feedInNoteText"></p>
+                        <p id="feedInNoteLink"></p>
+                        <span id="resAvgCostHint">—</span>
+                    </div>
 
                     </div><!-- /advancedFields -->
 
