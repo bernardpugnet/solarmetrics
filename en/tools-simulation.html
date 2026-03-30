@@ -472,7 +472,7 @@
                                 </div>
                             </div>
                             <!-- Card footer -->
-                            <p class="text-xs text-slate-500 mt-4 text-center">Quick estimate · Indicative values</p>
+                            <p id="prevFooterLabel" class="text-xs text-slate-500 mt-4 text-center">Quick estimate · Indicative values</p>
                         </div>
                     </div>
 
@@ -1888,6 +1888,9 @@ function reverseGeocode(lat, lon) {
             document.getElementById('prevContext').textContent = countryName + ' \u00b7 ' + orientLabel + '-facing roof \u00b7 ' + kwc.toFixed(1) + ' kWp';
             document.getElementById('prevProduction').textContent = fmtEN(annualProd);
             document.getElementById('prevAutoconso').textContent = autoRate;
+            // Reset footer label to estimation mode
+            var footerLabel = document.getElementById('prevFooterLabel');
+            if (footerLabel) footerLabel.textContent = 'Quick estimate \u00b7 Indicative values';
 
             // --- Financial KPIs: only if country known or user filled prices manually ---
             // --- Financial KPIs — 3 levels ---
@@ -2616,8 +2619,10 @@ function reverseGeocode(lat, lon) {
                     var vEl = document.getElementById('prevVerdict');
                     vEl.textContent = verdictText;
                     vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
+                    // Update footer label to reflect real PVGIS results
+                    var footerLabel = document.getElementById('prevFooterLabel');
+                    if (footerLabel) footerLabel.textContent = 'Simulated results';
                 })();
-                _pvgisRunning = false; // unlock updatePreviewCard
 
                 // Verdict + hypotheses summary (ported from FR)
                 generateVerdict(simResults, financials, kwc, netCost, irr, elecPrice, priceRevente, batteryCapacity, batteryCost, installCost);
@@ -2639,6 +2644,7 @@ function reverseGeocode(lat, lon) {
                 generateReport();
                 // Keep form hidden, show hypotheses bar instead
                 // document.getElementById('sim-form').style.display = 'block';
+                _pvgisRunning = false; // unlock updatePreviewCard — must be last in try block
             } catch (error) {
                 _pvgisRunning = false; // unlock updatePreviewCard on error too
                 console.error('Detailed calculation error:', error);
@@ -2948,7 +2954,7 @@ function reverseGeocode(lat, lon) {
 
         function displayDetailedResults(sim, fin, kwc, cost, batCost, elecPrice, revPrice, netCost, irr, co2) {
             const annual = sim.annual;
-            document.getElementById('resProduction').textContent = annual.production.toLocaleString('en-US');
+            document.getElementById('resProduction').textContent = Math.round(annual.production).toLocaleString('en-US');
             document.getElementById('resProductionPerKwc').textContent = Math.round(annual.production / kwc);
             document.getElementById('resKwc').textContent = kwc.toFixed(2);
             document.getElementById('resSavingsAutocons').textContent = Math.round((annual.autoDirect + annual.autoBattery) * elecPrice).toLocaleString('en-US');

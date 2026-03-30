@@ -513,7 +513,7 @@
                                 </div>
                             </div>
                             <!-- Pied de carte -->
-                            <p class="text-xs text-slate-500 mt-4 text-center">Estimation rapide · Valeurs indicatives</p>
+                            <p id="prevFooterLabel" class="text-xs text-slate-500 mt-4 text-center">Estimation rapide · Valeurs indicatives</p>
                         </div>
                     </div>
 
@@ -1915,6 +1915,9 @@ function reverseGeocode(lat, lon) {
             document.getElementById('prevContext').textContent = countryName + ' \u00b7 Toiture ' + orientLabel.toLowerCase() + ' \u00b7 ' + kwc.toFixed(1) + ' kWc';
             document.getElementById('prevProduction').textContent = fmtFR(annualProd);
             document.getElementById('prevAutoconso').textContent = autoRate;
+            // Reset footer label to estimation mode
+            var footerLabel = document.getElementById('prevFooterLabel');
+            if (footerLabel) footerLabel.textContent = 'Estimation rapide \u00b7 Valeurs indicatives';
 
             // --- Financial KPIs — 3 levels ---
             var hasElecPrice = elecPrice > 0 && !isNaN(elecPrice);
@@ -2665,8 +2668,10 @@ function reverseGeocode(lat, lon) {
                     var vEl = document.getElementById('prevVerdict');
                     vEl.textContent = verdictText;
                     vEl.className = 'text-xs px-2.5 py-0.5 border rounded-full font-medium ' + verdictClass;
+                    // Update footer label to reflect real PVGIS results
+                    var footerLabel = document.getElementById('prevFooterLabel');
+                    if (footerLabel) footerLabel.textContent = 'Résultats simulés';
                 })();
-                _pvgisRunning = false; // unlock updatePreviewCard
 
                 // Init explorer sliders with current values
                 initExplorerSliders();
@@ -2699,6 +2704,7 @@ function reverseGeocode(lat, lon) {
                     toast.classList.add('show');
                     setTimeout(() => toast.classList.remove('show'), 2500);
                 }
+                _pvgisRunning = false; // unlock updatePreviewCard — must be last in try block
             } catch (error) {
                 _pvgisRunning = false; // unlock updatePreviewCard on error too
                 console.error('Detailed calculation error:', error);
@@ -3026,7 +3032,7 @@ function reverseGeocode(lat, lon) {
 
         function displayDetailedResults(sim, fin, kwc, cost, batCost, elecPrice, revPrice, netCost, irr, co2) {
             const annual = sim.annual;
-            document.getElementById('resProduction').textContent = annual.production.toLocaleString('fr-FR');
+            document.getElementById('resProduction').textContent = Math.round(annual.production).toLocaleString('fr-FR');
             document.getElementById('resProductionPerKwc').textContent = Math.round(annual.production / kwc);
             document.getElementById('resKwc').textContent = kwc.toFixed(2);
             document.getElementById('resSavingsAutocons').textContent = Math.round((annual.autoDirect + annual.autoBattery) * elecPrice).toLocaleString('fr-FR');
