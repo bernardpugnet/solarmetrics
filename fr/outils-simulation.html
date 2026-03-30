@@ -515,6 +515,20 @@
                             <!-- Pied de carte -->
                             <p id="prevFooterLabel" class="text-xs text-slate-500 mt-4 text-center">Estimation rapide · Valeurs indicatives</p>
                         </div>
+                        <!-- Productible estimé — moved here from localisation card -->
+                        <div id="irradianceEstimate" class="hidden mt-3 p-3 bg-gradient-to-r from-amber-900/20 to-orange-900/20 border border-amber-700/30 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-xs text-slate-400">☀️ Productible estimé à cette latitude :</span>
+                                    <span id="irradianceValue" class="text-sm font-bold text-amber-400 ml-1">—</span>
+                                    <span class="text-xs text-slate-400">kWh/kWc/an</span>
+                                </div>
+                                <div id="irradianceBar" class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                    <div id="irradianceBarFill" class="h-full bg-gradient-to-r from-blue-400 via-amber-400 to-red-500 rounded-full" style="width:0%"></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Estimation basée sur la latitude. La valeur exacte sera calculée par PVGIS lors de la simulation.</p>
+                        </div>
                     </div>
 
                 </div>
@@ -545,19 +559,6 @@
                             </div>
                             <div id="map" style="height:350px; border-radius:12px; border:1px solid rgba(71,85,105,0.5); z-index:1;"></div>
                             <p id="mapHint" class="text-xs text-slate-500">📍 Cliquez sur la carte pour positionner votre installation. Le pays sera détecté automatiquement.</p>
-                            <div id="irradianceEstimate" class="hidden mt-2 p-3 bg-gradient-to-r from-amber-900/20 to-orange-900/20 border border-amber-700/30 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <span class="text-xs text-slate-400">☀️ Productible estimé à cette latitude :</span>
-                                        <span id="irradianceValue" class="text-sm font-bold text-amber-400 ml-1">—</span>
-                                        <span class="text-xs text-slate-400">kWh/kWc/an</span>
-                                    </div>
-                                    <div id="irradianceBar" class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                        <div id="irradianceBarFill" class="h-full bg-gradient-to-r from-blue-400 via-amber-400 to-red-500 rounded-full" style="width:0%"></div>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-slate-500 mt-1">Estimation basée sur la latitude. La valeur exacte sera calculée par PVGIS lors de la simulation (orientation, inclinaison, ombrage inclus).</p>
-                            </div>
                             <div id="manualModeSection" class="hidden mt-4 p-4 bg-amber-900/20 border border-amber-700/40 rounded-xl">
                                 <label class="flex items-center gap-2 text-sm mb-2">
                                     <input type="checkbox" id="resManualMode" onchange="toggleManualMode()" class="accent-amber-500">
