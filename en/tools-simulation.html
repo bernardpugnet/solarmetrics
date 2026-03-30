@@ -3241,75 +3241,59 @@ function reverseGeocode(lat, lon) {
         }
 
         function generateReport() {
-            const prod = document.getElementById('resProduction').textContent;
-            const prodKwc = document.getElementById('resProductionPerKwc').textContent;
-            const kwc = document.getElementById('resKwc').textContent;
-            const savAuto = document.getElementById('resSavingsAutocons').textContent;
-            const savFeed = document.getElementById('resSavingsFeedin').textContent;
-            const savTotal = document.getElementById('resAnnualSavings').textContent;
-            const costInst = document.getElementById('resInstallCost').textContent;
-            const costNet = document.getElementById('resNetCost').textContent;
-            const payback = document.getElementById('resPayback').textContent;
-            const npv = document.getElementById('resNpv').textContent;
-            const tri = document.getElementById('resTri').textContent;
-            const co2 = document.getElementById('resCo2').textContent;
-            const country = document.getElementById('detectedCountryName').textContent;
-            const surface = document.getElementById('resSurface').value || '—';
-            const tilt = document.getElementById('resTilt').value || '—';
-            const orientVal = document.getElementById('resOrientation').value;
-            const orientLabels = {'0':'South','-45':'South-East','45':'South-West','-90':'East','90':'West'};
-            const orient = orientLabels[orientVal] || orientVal + '°';
-            const lat = document.getElementById('resLatitude').value;
-            const lon = document.getElementById('resLongitude').value;
+            const d = window.lastSimulationData;
+            if (!d) return;
+            function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+            const cfg = d.config;
+            const fp = d.financialParams;
+            const fin = d.financial;
+            const pr = d.production;
+            const bat = d.battery;
 
-            const autoRateEl = document.getElementById('resAutoconsoRate');
-            const hasDetailed = autoRateEl && autoRateEl.textContent !== '—';
+            const orientLabels = {'0':'South','-45':'South-East','45':'South-West','-90':'East','90':'West'};
+            const orient = orientLabels[String(cfg.orientation)] || cfg.orientation + '°';
+            const paybackStr = (fin.payback !== null && fin.payback < 50) ? fin.payback.toFixed(1) : '∞';
+            const triStr = (fin.irr !== null && fin.irr !== undefined) ? (fin.irr * 100).toFixed(1) : '—';
+            const co2_25t = (fin.co2Avoided * 25 / 1000).toFixed(1);
+
             let detailedSection = '';
-            if (hasDetailed) {
-                const autoRate = autoRateEl.textContent;
-                const autoprod = document.getElementById('resAutoprodRate').textContent;
-                const autoDirect = document.getElementById('resAutoDirect').textContent;
-                const autoBat = document.getElementById('resAutoBattery').textContent;
-                const injection = document.getElementById('resInjection').textContent;
-                const soutirage = document.getElementById('resSoutirage').textContent;
+            if (pr.autoconsoRate !== undefined) {
                 detailedSection = `
                 <h4 class="text-white font-semibold mt-6 mb-2">🔋 Self-consumption</h4>
-                <p>Your <strong>self-consumption rate is ${autoRate}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>solar coverage is ${autoprod}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
-                <p>Breakdown: <strong>${autoDirect} kWh</strong> consumed directly, <strong>${autoBat} kWh</strong> via battery, <strong>${injection} kWh</strong> fed into the grid (sold), and you still draw <strong>${soutirage} kWh</strong> from the grid to cover remaining needs.</p>`;
+                <p>Your <strong>self-consumption rate is ${pr.autoconsoRate.toFixed(1)}%</strong>: this is the share of your solar production that you consume on-site (directly or via battery) instead of feeding into the grid. Your <strong>solar coverage is ${pr.autoprodRate.toFixed(1)}%</strong>, meaning the share of your total consumption covered by solar energy.</p>
+                <p>Breakdown: <strong>${fmt(pr.autoDirect)} kWh</strong> consumed directly, <strong>${fmt(pr.autoBattery)} kWh</strong> via battery, <strong>${fmt(pr.injection)} kWh</strong> fed into the grid (sold), and you still draw <strong>${fmt(pr.soutirage)} kWh</strong> from the grid to cover remaining needs.</p>`;
             }
 
-            const hasBattery = document.getElementById('resBatteryToggle').checked;
             let batterySection = '';
-            if (hasBattery) {
-                const batCap = document.getElementById('resBatteryCapacity').value;
-                batterySection = `<p>A <strong>${batCap} kWh battery</strong> is included in this simulation. It stores excess solar energy during the day for evening use, increasing your self-consumption rate and reducing grid purchases.</p>`;
+            if (bat.enabled) {
+                batterySection = `<p>A <strong>${bat.capacityKwh} kWh battery</strong> is included in this simulation. It stores excess solar energy during the day for evening use, increasing your self-consumption rate and reducing grid purchases.</p>`;
             }
 
             const html = `
             <h4 class="text-white font-semibold mb-2">📍 Location & Installation</h4>
-            <p>This simulation was performed for a solar installation located in <strong>${country}</strong> (coordinates: ${lat}°N, ${lon}°E). The installation comprises <strong>${surface} m²</strong> of photovoltaic panels facing <strong>${orient}</strong> with a <strong>${tilt}° tilt</strong>, for a peak power of <strong>${kwc} kWp</strong>.</p>
+            <p>This simulation was performed for a solar installation located in <strong>${cfg.countryName}</strong> (coordinates: ${cfg.lat}°N, ${cfg.lon}°E). The installation comprises <strong>${cfg.surface} m²</strong> of photovoltaic panels facing <strong>${orient}</strong> with a <strong>${cfg.tilt}° tilt</strong>, for a peak power of <strong>${cfg.kwc.toFixed(2)} kWp</strong>.</p>
             <p><em>Peak power (kWp) is calculated as: surface × fill factor (85%) × panel efficiency. It represents the maximum power output under standard test conditions (1,000 W/m², 25°C).</em></p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">⚡ Energy Production</h4>
-            <p>Your installation will produce approximately <strong>${prod} kWh per year</strong>, or <strong>${prodKwc} kWh per kWp installed</strong>. This figure is calculated hour-by-hour (8,760 hours/year) using PVGIS solar irradiation data from the European Commission, specific to your exact location.</p>
+            <p>Your installation will produce approximately <strong>${fmt(pr.annual)} kWh per year</strong>, or <strong>${fmt(pr.perKwc)} kWh per kWp installed</strong>. This figure is calculated hour-by-hour (8,760 hours/year) using PVGIS solar irradiation data from the European Commission, specific to your exact location.</p>
             <p><em>The kWh/kWp ratio (between 800 and 1,800 depending on region) allows comparing solar site efficiency regardless of installation size. The higher this number, the better the solar irradiation at your site.</em></p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">💰 Annual Savings</h4>
-            <p>Your <strong>self-consumption savings</strong> amount to <strong>${savAuto} €/year</strong>: this is solar electricity you consume directly instead of buying from the grid (self-consumed kWh × electricity purchase price).</p>
-            <p>Your <strong>feed-in revenue</strong> is <strong>${savFeed} €/year</strong>: this is the surplus you sell back to the grid at the feed-in tariff applicable in your country.</p>
-            <p>In total, your installation saves you <strong class="text-amber-400">${savTotal} €/year</strong> (self-consumption + feed-in).</p>
+            <p>Your <strong>self-consumption savings</strong> amount to <strong>${fmt(fin.savingsAutoconso)} €/year</strong>: this is solar electricity you consume directly instead of buying from the grid (self-consumed kWh × electricity purchase price).</p>
+            <p>Your <strong>feed-in revenue</strong> is <strong>${fmt(fin.savingsFeedin)} €/year</strong>: this is the surplus you sell back to the grid at the feed-in tariff applicable in your country.</p>
+            <p>In total, your installation saves you <strong class="text-amber-400">${fmt(fin.annualSavings)} €/year</strong> (self-consumption + feed-in).</p>
             ${batterySection}
 
             ${detailedSection}
 
             <h4 class="text-white font-semibold mt-6 mb-2">🏦 Financial Summary</h4>
-            <p>The <strong>total installation cost</strong> is estimated at <strong>${costInst} €</strong> (panels + inverter + installation + grid connection${hasBattery ? ' + battery' : ''}). After deducting your country's subsidies and incentives, the <strong>net cost</strong> is <strong>${costNet} €</strong>.</p>
-            <p>Your installation will be <strong>paid back in ${payback} years</strong>: this is the number of years needed for cumulative savings to cover your net investment. After that point, every euro saved is pure profit.</p>
-            <p>Over 25 years (typical panel lifespan), the <strong>cumulative net gains</strong> are <strong>${npv} €</strong>. This is the sum of annual savings minus initial net cost, factoring in electricity price increases and panel degradation (not discounted).</p>
-            <p>The <strong>Internal Rate of Return (IRR)</strong> is <strong>${tri}%</strong>. This is the equivalent annual return on your investment. For comparison, a savings account yields around 3%/year: an IRR above 3% means solar is more profitable than a bank deposit.</p>
+            <p>The <strong>total installation cost</strong> is estimated at <strong>${fmt(fp.totalInvestment)} €</strong> (panels + inverter + installation + grid connection${bat.enabled ? ' + battery' : ''}). After deducting your country's subsidies and incentives, the <strong>net cost</strong> is <strong>${fmt(fp.netCost)} €</strong>.</p>
+            <p>Your installation will be <strong>paid back in ${paybackStr} years</strong>: this is the number of years needed for cumulative savings to cover your net investment. After that point, every euro saved is pure profit.</p>
+            <p>Over 25 years (typical panel lifespan), the <strong>cumulative net gains</strong> are <strong>${fmt(fin.totalSavings25y)} €</strong>. This is the sum of annual savings minus initial net cost, factoring in electricity price increases and panel degradation (not discounted).</p>
+            <p>The <strong>Internal Rate of Return (IRR)</strong> is <strong>${triStr}%</strong>. This is the equivalent annual return on your investment. For comparison, a savings account yields around 3%/year: an IRR above 3% means solar is more profitable than a bank deposit.</p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">🌍 Environmental Impact</h4>
-            <p>Your installation avoids the emission of <strong>${co2} kg of CO₂ per year</strong>, calculated from the emission factor of your country's electricity mix. Over 25 years, this represents approximately <strong>${(parseFloat(co2.replace(/,/g,'').replace(' ','')) * 25 / 1000).toFixed(1)} tonnes of CO₂</strong> avoided.</p>
+            <p>Your installation avoids the emission of <strong>${fmt(fin.co2Avoided)} kg of CO₂ per year</strong>, calculated from the emission factor of your country's electricity mix. Over 25 years, this represents approximately <strong>${co2_25t} tonnes of CO₂</strong> avoided.</p>
 
             <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600/50">
                 <p class="text-xs text-slate-400"><strong>Note:</strong> This report is an indicative estimate based on PVGIS data (European Commission) and country-average parameters. Actual results may vary depending on shading, installation quality, weather conditions, and tariff changes. Report generated on ${new Date().toLocaleDateString('en-US')} by Solar Data Atlas.</p>

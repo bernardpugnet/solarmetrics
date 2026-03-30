@@ -3321,76 +3321,59 @@ function reverseGeocode(lat, lon) {
         }
 
         function generateReport() {
-            const prod = document.getElementById('resProduction').textContent;
-            const prodKwc = document.getElementById('resProductionPerKwc').textContent;
-            const kwc = document.getElementById('resKwc').textContent;
-            const savAuto = document.getElementById('resSavingsAutocons').textContent;
-            const savFeed = document.getElementById('resSavingsFeedin').textContent;
-            const savTotal = document.getElementById('resAnnualSavings').textContent;
-            const costInst = document.getElementById('resInstallCost').textContent;
-            const costNet = document.getElementById('resNetCost').textContent;
-            const payback = document.getElementById('resPayback').textContent;
-            const npv = document.getElementById('resNpv').textContent;
-            const tri = document.getElementById('resTri').textContent;
-            const co2 = document.getElementById('resCo2').textContent;
-            const country = document.getElementById('detectedCountryName').textContent;
-            const surface = document.getElementById('resSurface').value || '—';
-            const tilt = document.getElementById('resTilt').value || '—';
-            const orientVal = document.getElementById('resOrientation').value;
-            const orientLabels = {'0':'Sud','-45':'Sud-Est','45':'Sud-Ouest','-90':'Est','90':'Ouest'};
-            const orient = orientLabels[orientVal] || orientVal + '°';
-            const lat = document.getElementById('resLatitude').value;
-            const lon = document.getElementById('resLongitude').value;
+            const d = window.lastSimulationData;
+            if (!d) return;
+            function fmt(n) { return Math.round(n).toLocaleString('fr-FR'); }
+            const cfg = d.config;
+            const fp = d.financialParams;
+            const fin = d.financial;
+            const pr = d.production;
+            const bat = d.battery;
 
-            // Self-consumption details
-            const autoRateEl = document.getElementById('resAutoconsoRate');
-            const hasDetailed = autoRateEl && autoRateEl.textContent !== '—';
+            const orientLabels = {'0':'Sud','-45':'Sud-Est','45':'Sud-Ouest','-90':'Est','90':'Ouest'};
+            const orient = orientLabels[String(cfg.orientation)] || cfg.orientation + '°';
+            const paybackStr = (fin.payback !== null && fin.payback < 50) ? fin.payback.toFixed(1).replace('.', ',') : '∞';
+            const triStr = (fin.irr !== null && fin.irr !== undefined) ? (fin.irr * 100).toFixed(1).replace('.', ',') : '—';
+            const co2_25t = (fin.co2Avoided * 25 / 1000).toFixed(1).replace('.', ',');
+
             let detailedSection = '';
-            if (hasDetailed) {
-                const autoRate = autoRateEl.textContent;
-                const autoprod = document.getElementById('resAutoprodRate').textContent;
-                const autoDirect = document.getElementById('resAutoDirect').textContent;
-                const autoBat = document.getElementById('resAutoBattery').textContent;
-                const injection = document.getElementById('resInjection').textContent;
-                const soutirage = document.getElementById('resSoutirage').textContent;
+            if (pr.autoconsoRate !== undefined) {
                 detailedSection = `
                 <h4 class="text-white font-semibold mt-6 mb-2">🔋 Autoconsommation</h4>
-                <p>Votre <strong>taux d'autoconsommation est de ${autoRate}%</strong> : c'est la part de votre production solaire que vous consommez directement chez vous (ou via batterie) au lieu de l'injecter dans le réseau. Votre <strong>couverture solaire est de ${autoprod}%</strong>, c'est-à-dire la part de votre consommation totale couverte par le solaire.</p>
-                <p>En détail : <strong>${autoDirect} kWh</strong> sont consommés directement, <strong>${autoBat} kWh</strong> transitent par la batterie, <strong>${injection} kWh</strong> sont injectés dans le réseau (revendus), et vous soutirez encore <strong>${soutirage} kWh</strong> du réseau pour couvrir vos besoins restants.</p>`;
+                <p>Votre <strong>taux d'autoconsommation est de ${pr.autoconsoRate.toFixed(1).replace('.',',')}%</strong> : c'est la part de votre production solaire que vous consommez directement chez vous (ou via batterie) au lieu de l'injecter dans le réseau. Votre <strong>couverture solaire est de ${pr.autoprodRate.toFixed(1).replace('.',',')}%</strong>, c'est-à-dire la part de votre consommation totale couverte par le solaire.</p>
+                <p>En détail : <strong>${fmt(pr.autoDirect)} kWh</strong> sont consommés directement, <strong>${fmt(pr.autoBattery)} kWh</strong> transitent par la batterie, <strong>${fmt(pr.injection)} kWh</strong> sont injectés dans le réseau (revendus), et vous soutirez encore <strong>${fmt(pr.soutirage)} kWh</strong> du réseau pour couvrir vos besoins restants.</p>`;
             }
 
-            const hasBattery = document.getElementById('resBatteryToggle').checked;
             let batterySection = '';
-            if (hasBattery) {
-                const batCap = document.getElementById('resBatteryCapacity').value;
-                batterySection = `<p>Une <strong>batterie de ${batCap} kWh</strong> est incluse dans cette simulation. Elle permet de stocker l'excédent solaire de la journée pour le consommer le soir, augmentant ainsi votre taux d'autoconsommation et réduisant les achats au réseau.</p>`;
+            if (bat.enabled) {
+                batterySection = `<p>Une <strong>batterie de ${bat.capacityKwh} kWh</strong> est incluse dans cette simulation. Elle permet de stocker l'excédent solaire de la journée pour le consommer le soir, augmentant ainsi votre taux d'autoconsommation et réduisant les achats au réseau.</p>`;
             }
 
             const html = `
             <h4 class="text-white font-semibold mb-2">📍 Localisation & Installation</h4>
-            <p>Cette simulation a été réalisée pour une installation solaire située en <strong>${country}</strong> (coordonnées : ${lat}°N, ${lon}°E). L'installation comprend <strong>${surface} m²</strong> de panneaux photovoltaïques orientés <strong>${orient}</strong> avec une inclinaison de <strong>${tilt}°</strong>, pour une puissance crête de <strong>${kwc} kWc</strong>.</p>
+            <p>Cette simulation a été réalisée pour une installation solaire située en <strong>${cfg.countryName}</strong> (coordonnées : ${cfg.lat}°N, ${cfg.lon}°E). L'installation comprend <strong>${cfg.surface} m²</strong> de panneaux photovoltaïques orientés <strong>${orient}</strong> avec une inclinaison de <strong>${cfg.tilt}°</strong>, pour une puissance crête de <strong>${cfg.kwc.toFixed(2)} kWc</strong>.</p>
             <p><em>La puissance crête (kWc) est calculée : surface × coefficient de remplissage (85%) × rendement du type de panneau choisi. C'est la puissance maximale dans les conditions standard d'ensoleillement (1 000 W/m², 25°C).</em></p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">⚡ Production d'énergie</h4>
-            <p>Votre installation produira environ <strong>${prod} kWh par an</strong>, soit <strong>${prodKwc} kWh par kWc installé</strong>. Ce chiffre est calculé heure par heure (8 760 heures/an) à partir des données d'irradiation solaire PVGIS de la Commission européenne, spécifiques à votre emplacement exact.</p>
+            <p>Votre installation produira environ <strong>${fmt(pr.annual)} kWh par an</strong>, soit <strong>${fmt(pr.perKwc)} kWh par kWc installé</strong>. Ce chiffre est calculé heure par heure (8 760 heures/an) à partir des données d'irradiation solaire PVGIS de la Commission européenne, spécifiques à votre emplacement exact.</p>
             <p><em>Le ratio kWh/kWc (entre 800 et 1 800 selon les régions) permet de comparer l'efficacité d'un site solaire indépendamment de la taille de l'installation. Plus ce chiffre est élevé, meilleur est l'ensoleillement de votre site.</em></p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">💰 Économies annuelles</h4>
-            <p>Vos <strong>économies d'autoconsommation</strong> s'élèvent à <strong>${savAuto} €/an</strong> : c'est l'électricité solaire que vous consommez directement au lieu de l'acheter au réseau (kWh autoconsommés × prix d'achat de l'électricité).</p>
-            <p>Vos <strong>revenus de revente</strong> sont de <strong>${savFeed} €/an</strong> : c'est le surplus non consommé que vous revendez au réseau au tarif de rachat en vigueur dans votre pays.</p>
-            <p>Au total, votre installation vous fait économiser <strong class="text-amber-400">${savTotal} €/an</strong> (autoconsommation + revente).</p>
+            <p>Vos <strong>économies d'autoconsommation</strong> s'élèvent à <strong>${fmt(fin.savingsAutoconso)} €/an</strong> : c'est l'électricité solaire que vous consommez directement au lieu de l'acheter au réseau (kWh autoconsommés × prix d'achat de l'électricité).</p>
+            <p>Vos <strong>revenus de revente</strong> sont de <strong>${fmt(fin.savingsFeedin)} €/an</strong> : c'est le surplus non consommé que vous revendez au réseau au tarif de rachat en vigueur dans votre pays.</p>
+            <p>Au total, votre installation vous fait économiser <strong class="text-amber-400">${fmt(fin.annualSavings)} €/an</strong> (autoconsommation + revente).</p>
             ${batterySection}
 
             ${detailedSection}
 
             <h4 class="text-white font-semibold mt-6 mb-2">🏦 Bilan financier</h4>
-            <p>Le <strong>coût total de l'installation</strong> est estimé à <strong>${costInst} €</strong> (panneaux + onduleur + pose + raccordement${hasBattery ? ' + batterie' : ''}). Après déduction des aides et subventions de votre pays, le <strong>coût net</strong> est de <strong>${costNet} €</strong>.</p>
-            <p>Votre installation sera <strong>amortie en ${payback} ans</strong> : c'est le nombre d'années nécessaires pour que vos économies cumulées couvrent votre investissement net. Après cette date, chaque euro économisé est du profit pur.</p>
-            <p>Sur 25 ans (durée de vie typique des panneaux), les <strong>Gains nets cumulés</strong> sont de <strong>${npv} €</strong>. Ce montant représente la somme des économies annuelles moins le coût net initial, en tenant compte de la hausse du prix de l'électricité et de la dégradation des panneaux (non actualisé).</p>
-            <p>Le <strong>Taux de Rentabilité Interne (TRI)</strong> est de <strong>${tri}%</strong>. C'est le rendement annuel équivalent de votre investissement. À titre de comparaison, un livret d'épargne rapporte environ 3%/an : un TRI supérieur à 3% signifie que le solaire est plus rentable qu'un placement bancaire.</p>
+            <p>Le <strong>coût total de l'installation</strong> est estimé à <strong>${fmt(fp.totalInvestment)} €</strong> (panneaux + onduleur + pose + raccordement${bat.enabled ? ' + batterie' : ''}). Après déduction des aides et subventions de votre pays, le <strong>coût net</strong> est de <strong>${fmt(fp.netCost)} €</strong>.</p>
+            <p>Votre installation sera <strong>amortie en ${paybackStr} ans</strong> : c'est le nombre d'années nécessaires pour que vos économies cumulées couvrent votre investissement net. Après cette date, chaque euro économisé est du profit pur.</p>
+            <p>Sur 25 ans (durée de vie typique des panneaux), les <strong>Gains nets cumulés</strong> sont de <strong>${fmt(fin.totalSavings25y)} €</strong>. Ce montant représente la somme des économies annuelles moins le coût net initial, en tenant compte de la hausse du prix de l'électricité et de la dégradation des panneaux (non actualisé).</p>
+            <p>Le <strong>Taux de Rentabilité Interne (TRI)</strong> est de <strong>${triStr}%</strong>. C'est le rendement annuel équivalent de votre investissement. À titre de comparaison, un livret d'épargne rapporte environ 3%/an : un TRI supérieur à 3% signifie que le solaire est plus rentable qu'un placement bancaire.</p>
 
             <h4 class="text-white font-semibold mt-6 mb-2">🌍 Impact environnemental</h4>
-            <p>Votre installation permet d'éviter l'émission de <strong>${co2} kg de CO₂ par an</strong>, calculé à partir du facteur d'émission du mix électrique de votre pays. Sur 25 ans, cela représente environ <strong>${(parseFloat(co2.replace(/\s/g,'').replace(',','.')) * 25 / 1000).toFixed(1)} tonnes de CO₂</strong> en moins.</p>
+            <p>Votre installation permet d'éviter l'émission de <strong>${fmt(fin.co2Avoided)} kg de CO₂ par an</strong>, calculé à partir du facteur d'émission du mix électrique de votre pays. Sur 25 ans, cela représente environ <strong>${co2_25t} tonnes de CO₂</strong> en moins.</p>
 
             <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600/50">
                 <p class="text-xs text-slate-400"><strong>Note :</strong> Ce rapport est une estimation indicative basée sur les données PVGIS (Commission européenne) et les paramètres moyens du pays. Les résultats réels peuvent varier selon l'ombrage, la qualité de l'installation, la météo et l'évolution des tarifs. Rapport généré le ${new Date().toLocaleDateString('fr-FR')} par Solar Data Atlas.</p>
