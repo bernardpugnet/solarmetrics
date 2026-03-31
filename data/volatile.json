@@ -35,7 +35,7 @@
       "surplus_100kwc": { "value": 0.0792, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "CRE" }
     },
     "DE": {
-      "eeg_10kwp": { "value": 0.079, "unit": "EUR/kWh", "as_of": "2025-H2", "source": "Bundesnetzagentur", "note": "Decreasing ~1% every 6 months" }
+      "eeg_10kwp": { "value": 0.0778, "unit": "EUR/kWh", "as_of": "2026-02", "source": "Bundesnetzagentur", "note": "Decreasing ~1% every 6 months. Next: 0.0771 from Aug 2026" }
     },
     "ES": {
       "simplified_compensation": { "value": 0.075, "unit": "EUR/kWh", "as_of": "2026", "source": "IDAE", "note": "Market price offset, max 50% monthly bill" }

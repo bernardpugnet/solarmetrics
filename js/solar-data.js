@@ -81,7 +81,7 @@ window.SOLAR_DATA = {
       electricityPrice: 0.3835,
       installCostPerKwc: { min: 1200, max: 1800, avg: 1500 },
       co2Factor: 350,
-      feedInTariff: 0.079,  // €/kWh, EEG 2025-2026, ≤10 kWp partial feed-in (decreasing 1%/6mo)
+      feedInTariff: 0.0778,  // €/kWh, EEG 2025-2026, ≤10 kWp partial feed-in (decreasing 1%/6mo)
       feedInNote: {
         fr: "Tarif EEG garanti 20 ans pour injection partielle (≤10 kWc). En baisse de ~1% tous les 6 mois. TVA 0% sur les installations.",
         en: "EEG guaranteed 20-year rate for partial feed-in (≤10 kWp). Decreasing ~1% every 6 months. 0% VAT on installations.",
