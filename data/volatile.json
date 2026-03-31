@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "version": "2026-Q1",
+    "updated": "2026-03-31",
+    "description": "Données volatiles — mise à jour trimestrielle",
+    "schema": {
+      "value_simple": "{ value, unit, as_of, source, [note] }",
+      "range": "{ min, max, unit, as_of, source, [note] }",
+      "coefficients": "{ _type: 'coefficients', ... } — nombres bruts sans unité"
+    }
+  },
+
+  "electricity": {
+    "retail": {
+      "FR": { "value": 0.2664, "unit": "EUR/kWh", "as_of": "2025-H2", "source": "Eurostat nrg_pc_204, all taxes, band DC" },
+      "DE": { "value": 0.3835, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "ES": { "value": 0.2608, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "IT": { "value": 0.3291, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "NL": { "value": 0.35, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "BE": { "value": 0.3571, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "PT": { "value": 0.24, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "PL": { "value": 0.22, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "AT": { "value": 0.30, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat" },
+      "GR": { "value": 0.24, "unit": "EUR/kWh", "as_of": "2025-H1", "source": "Eurostat/GlobalPetrolPrices" },
+      "US": { "value": 0.18, "unit": "USD/kWh", "as_of": "2026", "source": "EIA forecast" },
+      "CA": { "value": 0.16, "unit": "CAD/kWh", "as_of": "2025", "source": "CER national average" },
+      "GB": { "value": 0.2467, "unit": "GBP/kWh", "as_of": "2026-Q2", "source": "Ofgem cap" }
+    }
+  },
+
+  "feedin": {
+    "FR": {
+      "surplus_9kwc": { "value": 0.04, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "EDF OA / CRE", "note": "Garanti 20 ans, révisé trimestriellement" },
+      "surplus_36kwc": { "value": 0.0536, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "CRE" },
+      "surplus_100kwc": { "value": 0.0792, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "CRE" }
+    },
+    "DE": {
+      "eeg_10kwp": { "value": 0.079, "unit": "EUR/kWh", "as_of": "2025-H2", "source": "Bundesnetzagentur", "note": "Decreasing ~1% every 6 months" }
+    },
+    "ES": {
+      "simplified_compensation": { "value": 0.075, "unit": "EUR/kWh", "as_of": "2026", "source": "IDAE", "note": "Market price offset, max 50% monthly bill" }
+    },
+    "IT": {
+      "ritiro_dedicato": { "value": 0.06, "unit": "EUR/kWh", "as_of": "2025", "source": "GSE", "note": "Variable market rate ~0.05-0.08" }
+    },
+    "NL": {
+      "saldering_estimate": { "value": 0.12, "unit": "EUR/kWh", "as_of": "2026", "source": "business.gov.nl", "note": "1:1 net metering until 2027, then min 50% retail" }
+    },
+    "BE": {
+      "flanders_wholesale": { "value": 0.05, "unit": "EUR/kWh", "as_of": "2025", "source": "VREG", "note": "Wholesale credits 0.04-0.06" }
+    },
+    "PT": {
+      "upac": { "value": 0.06, "unit": "EUR/kWh", "as_of": "2025", "source": "DGEG", "note": "~90% OMIE market price, varies 0.04-0.08" }
+    },
+    "PL": {
+      "net_billing": { "value": 0.06, "unit": "EUR/kWh", "as_of": "2025", "source": "mojprad.gov.pl", "note": "80% market price credit for ≤10 kW" }
+    },
+    "AT": {
+      "oemag_10kwp": { "value": 0.076, "unit": "EUR/kWh", "as_of": "2025", "source": "OeMAG", "note": "Partial feed-in, 20-year contract" }
+    },
+    "GR": {
+      "net_billing": { "value": 0.07, "unit": "EUR/kWh", "as_of": "2024", "source": "ypen.gov.gr", "note": "Wholesale market price, variable ~0.05-0.08" }
+    },
+    "US": {
+      "federal": { "value": 0, "unit": "USD/kWh", "as_of": "2026", "source": "DSIRE", "note": "No federal feed-in tariff, net metering varies by state" }
+    },
+    "CA": {
+      "federal": { "value": 0, "unit": "CAD/kWh", "as_of": "2026", "source": "NRCan", "note": "No national feed-in tariff, net metering varies by province" }
+    },
+    "GB": {
+      "seg_avg": { "value": 0.04, "unit": "GBP/kWh", "as_of": "2026", "source": "Ofgem SEG", "note": "Indicative ~4p, varies 1-25p by supplier" }
+    }
+  },
+
+  "capex": {
+    "residential": {
+      "FR": { "min": 1300, "max": 2000, "avg": 1600, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe / Fraunhofer ISE" },
+      "DE": { "min": 1200, "max": 1800, "avg": 1500, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe / Fraunhofer ISE" },
+      "ES": { "min": 1000, "max": 1400, "avg": 1200, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "IT": { "min": 1100, "max": 1500, "avg": 1300, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "NL": { "min": 1100, "max": 1500, "avg": 1300, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "BE": { "min": 1200, "max": 1800, "avg": 1500, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "PT": { "min": 1000, "max": 1400, "avg": 1200, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "PL": { "min": 1000, "max": 1400, "avg": 1200, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "AT": { "min": 1200, "max": 1600, "avg": 1400, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "GR": { "min": 1000, "max": 1400, "avg": 1200, "unit": "EUR/kWc", "as_of": "2026-Q1", "source": "SolarPower Europe" },
+      "US": { "min": 2100, "max": 3200, "avg": 2750, "unit": "USD/kWc", "as_of": "2026-Q1", "source": "NREL / EnergySage" },
+      "CA": { "min": 2200, "max": 3500, "avg": 2900, "unit": "CAD/kWc", "as_of": "2026-Q1", "source": "EnergyHub" },
+      "GB": { "min": 1500, "max": 2200, "avg": 1850, "unit": "GBP/kWc", "as_of": "2026-Q1", "source": "The Eco Experts" }
+    }
+  },
+
+  "battery_cost": {
+    "residential_installed": {
+      "FR": { "value": 450, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "DE": { "value": 400, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "ES": { "value": 420, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "IT": { "value": 430, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "NL": { "value": 420, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "BE": { "value": 450, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "PT": { "value": 440, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "PL": { "value": 400, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "AT": { "value": 430, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "GR": { "value": 440, "unit": "EUR/kWh", "as_of": "2026-Q1", "source": "BNEF / IRENA" },
+      "US": { "value": 500, "unit": "USD/kWh", "as_of": "2026-Q1", "source": "Tesla Powerwall range" },
+      "CA": { "value": 550, "unit": "CAD/kWh", "as_of": "2026-Q1", "source": "EnergyHub" },
+      "GB": { "value": 550, "unit": "GBP/kWh", "as_of": "2026-Q1", "source": "The Eco Experts" }
+    }
+  },
+
+  "market_share": {
+    "perc": { "value": 35, "unit": "%", "as_of": "2025", "source": "InfoLink / BNEF", "note": "Declining" },
+    "topcon": { "value": 49, "unit": "%", "as_of": "2025", "source": "InfoLink / BNEF" },
+    "hjt": { "value": 10, "unit": "%", "as_of": "2025", "source": "InfoLink / BNEF" }
+  },
+
+  "module_price": {
+    "perc": { "min": 0.08, "max": 0.10, "unit": "EUR/Wp", "as_of": "2026-Q1", "source": "pvXchange / InfoLink" },
+    "topcon": { "min": 0.09, "max": 0.11, "unit": "EUR/Wp", "as_of": "2026-Q1", "source": "pvXchange / InfoLink" },
+    "hjt": { "min": 0.12, "max": 0.15, "unit": "EUR/Wp", "as_of": "2026-Q1", "source": "pvXchange / InfoLink" }
+  },
+
+  "installed_capacity": {
+    "FR": { "value": 31, "unit": "GW", "as_of": "2025", "source": "RTE" },
+    "DE": { "value": 96, "unit": "GW", "as_of": "2024", "source": "Bundesnetzagentur" },
+    "ES": { "value": 37, "unit": "GW", "as_of": "2024", "source": "REE" },
+    "IT": { "value": 35, "unit": "GW", "as_of": "2024", "source": "GSE" }
+  }
+}

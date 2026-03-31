@@ -1,0 +1,108 @@
+{
+  "_meta": {
+    "version": "2026-Q1",
+    "updated": "2026-03-31",
+    "description": "Données de référence — mise à jour annuelle ou moins"
+  },
+
+  "co2_factor": {
+    "FR": { "value": 56, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "DE": { "value": 350, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "ES": { "value": 200, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "IT": { "value": 250, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "NL": { "value": 300, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "BE": { "value": 150, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "PT": { "value": 200, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "PL": { "value": 650, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate", "note": "Coal-heavy grid" },
+    "AT": { "value": 100, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate", "note": "High hydro share" },
+    "GR": { "value": 400, "unit": "gCO2/kWh", "as_of": "2025", "source": "Ember Climate" },
+    "US": { "value": 380, "unit": "gCO2/kWh", "as_of": "2024", "source": "EPA eGRID" },
+    "CA": { "value": 120, "unit": "gCO2/kWh", "as_of": "2024", "source": "CER", "note": "High hydro share" },
+    "GB": { "value": 170, "unit": "gCO2/kWh", "as_of": "2025", "source": "DESNZ" }
+  },
+
+  "panel_specs": {
+    "standard": {
+      "efficiency": { "value": 0.21, "unit": "ratio", "as_of": "2025", "source": "Industry average" },
+      "m2_per_kwc": { "value": 4.76, "unit": "m2/kWc", "as_of": "2025", "source": "Calculated from efficiency" }
+    },
+    "premium": {
+      "efficiency": { "value": 0.23, "unit": "ratio", "as_of": "2025", "source": "Industry average" },
+      "m2_per_kwc": { "value": 4.35, "unit": "m2/kWc", "as_of": "2025", "source": "Calculated from efficiency" }
+    }
+  },
+
+  "system_defaults": {
+    "coverage_factor": { "value": 1.0, "unit": "ratio", "note": "Surface = installed panel area" },
+    "self_consumption_default": { "value": 50, "unit": "%" },
+    "self_consumption_with_battery": { "value": 80, "unit": "%" },
+    "battery_boost": { "value": 35, "unit": "%", "note": "+35% autoconsommation with battery" },
+    "pv_degradation": { "value": 0.5, "unit": "%/year" },
+    "electricity_price_increase": { "value": 0, "unit": "%/year", "note": "Conservative default" },
+    "discount_rate": { "value": 3, "unit": "%" },
+    "system_lifetime": { "value": 25, "unit": "years" },
+    "battery_presets": [5, 10, 15]
+  },
+
+  "orientation_coefficients": {
+    "_type": "coefficients",
+    "S": 1.00, "SSE": 0.97, "SSW": 0.97,
+    "SE": 0.95, "SW": 0.95,
+    "ESE": 0.90, "WSW": 0.90,
+    "E": 0.85, "W": 0.85,
+    "ENE": 0.78, "WNW": 0.78,
+    "NE": 0.70, "NW": 0.70,
+    "NNE": 0.65, "NNW": 0.65,
+    "N": 0.60
+  },
+
+  "tilt_coefficients": {
+    "_type": "coefficients",
+    "0": 0.90, "5": 0.93, "10": 0.95, "15": 0.96, "20": 0.98,
+    "25": 0.99, "30": 1.00, "35": 1.00, "40": 0.99, "45": 0.97,
+    "50": 0.94, "55": 0.91, "60": 0.88, "65": 0.84, "70": 0.80,
+    "75": 0.75, "80": 0.70, "85": 0.65, "90": 0.60
+  },
+
+  "api_config": {
+    "eurostat": {
+      "base_url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204",
+      "default_band": "4141902",
+      "default_tax": "X_TAX",
+      "default_unit": "KWH",
+      "default_currency": "EUR"
+    },
+    "pvgis": {
+      "function_url": "/.netlify/functions/pvgis",
+      "direct_url": "https://re.jrc.ec.europa.eu/api/v5_3/PVcalc",
+      "default_loss": 14,
+      "default_peak_power": 1
+    },
+    "nrel": {
+      "function_url": "/.netlify/functions/nrel",
+      "api_base_url": "https://developer.nrel.gov/api/pvwatts/v8.json",
+      "default_loss": 14,
+      "default_tilt": 30,
+      "default_azimuth": 180,
+      "default_array_type": 1,
+      "default_module_type": 1,
+      "default_peak_power": 1
+    }
+  },
+
+  "country_meta": {
+    "FR": { "name_fr": "France", "name_en": "France", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "FR", "default_lat": 46.6, "default_lon": 2.2, "map_zoom": 6 },
+    "DE": { "name_fr": "Allemagne", "name_en": "Germany", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "DE", "default_lat": 51.2, "default_lon": 10.4, "map_zoom": 6 },
+    "ES": { "name_fr": "Espagne", "name_en": "Spain", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "ES", "default_lat": 40.0, "default_lon": -3.7, "map_zoom": 6 },
+    "IT": { "name_fr": "Italie", "name_en": "Italy", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "IT", "default_lat": 42.5, "default_lon": 12.5, "map_zoom": 6 },
+    "NL": { "name_fr": "Pays-Bas", "name_en": "Netherlands", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "NL", "default_lat": 52.1, "default_lon": 5.3, "map_zoom": 7 },
+    "BE": { "name_fr": "Belgique", "name_en": "Belgium", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "BE", "default_lat": 50.8, "default_lon": 4.4, "map_zoom": 8 },
+    "PT": { "name_fr": "Portugal", "name_en": "Portugal", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "PT", "default_lat": 39.4, "default_lon": -8.2, "map_zoom": 6 },
+    "PL": { "name_fr": "Pologne", "name_en": "Poland", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "PL", "default_lat": 51.9, "default_lon": 19.1, "map_zoom": 6 },
+    "AT": { "name_fr": "Autriche", "name_en": "Austria", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "AT", "default_lat": 47.5, "default_lon": 14.6, "map_zoom": 7 },
+    "GR": { "name_fr": "Grèce", "name_en": "Greece", "region": "EU", "currency": "EUR", "currency_symbol": "€", "eurostat_code": "EL", "default_lat": 38.5, "default_lon": 23.7, "map_zoom": 6 },
+    "US": { "name_fr": "États-Unis", "name_en": "United States", "region": "NA", "currency": "USD", "currency_symbol": "$", "irradiation_source": "NREL", "default_lat": 39.8, "default_lon": -98.6, "map_zoom": 4 },
+    "CA": { "name_fr": "Canada", "name_en": "Canada", "region": "NA", "currency": "CAD", "currency_symbol": "$ CA", "irradiation_source": "NREL", "default_lat": 56.1, "default_lon": -106.3, "map_zoom": 4 },
+    "GB": { "name_fr": "Royaume-Uni", "name_en": "United Kingdom", "region": "EU", "currency": "GBP", "currency_symbol": "£", "eurostat_code": "UK", "default_lat": 51.5074, "default_lon": -0.1278, "map_zoom": 6 }
+  }
+}
