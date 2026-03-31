@@ -14,11 +14,18 @@
   if (!page || page === 'fr' || page === 'en') page = 'index';
 
   // Map pages to their parent dropdown category (slugs without .html)
+  // FR categories
   var categories = {
     'economie': ['economie','marches','prix-solaire','hypotheses','risques-bankability','comparatif-pays'],
     'technologies': ['technologies','technologies-emergentes','vehicle-to-grid','centrales-virtuelles','physique-electricite-ferme-photovoltaique'],
     'outils': ['outils','outils-simulation','outils-industriel','outils-residentiel','comparateur','guide-installation','widgets','schema-grande-installation','schema-plug-and-play'],
-    'ressources': ['ressources','recyclage-fin-de-vie','veille-reglementaire','mon-solaire-60s','etude-de-cas','ia-data']
+    'ressources': ['ressources','recyclage-fin-de-vie','veille-reglementaire','mon-solaire-60s','etude-de-cas','ia-data'],
+    // EN categories
+    'data': ['data-benchmarks','data-market-power','data-solar-capex-europe','data-solar-opex-europe','data-solar-wacc-europe','data-solar-lcoe-europe','data-solar-ppa-prices-europe','assumptions','solar-prices','country-comparison'],
+    'market': ['economy','markets','risks-bankability'],
+    'tools': ['tools','tools-simulation','tools-industrial','comparator','installation-guide','widgets','schema-large-installation','schema-plug-and-play'],
+    'technologies-en': ['technologies','emerging-technologies','vehicle-to-grid','virtual-power-plants'],
+    'resources': ['resources','recycling-end-of-life','regulatory-watch','solar-in-60s','case-study','ai-data']
   };
 
   var myCategory = null;
@@ -40,12 +47,17 @@
         if (btn.childNodes[j].nodeType === 3) txt += btn.childNodes[j].textContent;
       }
       txt = txt.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      // Match category name via substring
+      // Match category name via substring (FR + EN)
       if (
         (myCategory === 'economie' && txt.indexOf('conomie') > -1) ||
         (myCategory === 'technologies' && txt.indexOf('echnolog') > -1) ||
+        (myCategory === 'technologies-en' && txt.indexOf('echnolog') > -1) ||
         (myCategory === 'outils' && txt.indexOf('util') > -1) ||
-        (myCategory === 'ressources' && txt.indexOf('essource') > -1)
+        (myCategory === 'tools' && txt.indexOf('tool') > -1) ||
+        (myCategory === 'ressources' && txt.indexOf('essource') > -1) ||
+        (myCategory === 'resources' && txt.indexOf('esource') > -1) ||
+        (myCategory === 'data' && txt.indexOf('data') > -1) ||
+        (myCategory === 'market' && txt.indexOf('market') > -1)
       ) {
         btn.style.color = AMBER;
       }
