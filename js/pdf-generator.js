@@ -1518,6 +1518,149 @@
             { label: L.lblIrr,           value: irrVal, unit: L.unitPercent, accent: C.green },
             { label: L.lblCo2,           value: fmtNum(fin.co2Avoided, 0, lang), unit: L.unitKgAn, accent: C.green },
         ]);
+
+        // --- Charts row: Payback + Energy flow ---
+        ctx.y += 4;
+        checkPageBreak(doc, ctx, 55);
+
+        var chartH = 50;
+        var chartW = (PAGE_W - 2 * M - 5) / 2;
+        var chartY = ctx.y;
+
+        // ---- Left chart: Payback (cumulative savings vs net cost) ----
+        var cLeft = M;
+        doc.setFillColor.apply(doc, C.bgCard);
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(cLeft, chartY, chartW, chartH, 2, 2, 'FD');
+
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.dark);
+        var paybackTitle = lang === 'fr' ? 'Temps de retour (25 ans)' : 'Payback period (25 years)';
+        doc.text(clean(paybackTitle), cLeft + 5, chartY + 7);
+
+        // Axes
+        var ax0 = cLeft + 8;
+        var ay0 = chartY + chartH - 6;
+        var aW = chartW - 16;
+        var aH = chartH - 18;
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.line(ax0, ay0, ax0 + aW, ay0);
+        doc.line(ax0, ay0, ax0, ay0 - aH);
+
+        // Cost line (horizontal red)
+        var costY = ay0 - aH * 0.8;
+        doc.setDrawColor.apply(doc, C.red);
+        doc.setLineWidth(0.8);
+        doc.line(ax0, costY, ax0 + aW, costY);
+        doc.setFontSize(5);
+        doc.setTextColor.apply(doc, C.red);
+        var costLabel = lang === 'fr' ? 'Cout net' : 'Net cost';
+        doc.text(clean(costLabel), ax0 + aW + 1, costY - 1);
+
+        // Cumulative savings curve (green)
+        var netCostVal = fp.netCost || 1;
+        var savingsAn = fin.annualSavings || 0;
+        var priceInc = fp.priceIncreaseRate || 0.025;
+        doc.setDrawColor.apply(doc, C.green);
+        doc.setLineWidth(1.2);
+        var prevPx, prevPy;
+        for (var yr = 0; yr <= 25; yr++) {
+            var px = ax0 + (yr / 25) * aW;
+            var cumSavings = savingsAn * yr * (1 + priceInc * yr / 2);
+            var py = ay0 - Math.min((cumSavings / (netCostVal * 2)) * aH, aH);
+            if (yr > 0) {
+                doc.line(prevPx, prevPy, px, py);
+            }
+            prevPx = px;
+            prevPy = py;
+        }
+        doc.setFontSize(5);
+        doc.setTextColor.apply(doc, C.green);
+        var savLabel = lang === 'fr' ? 'Economies' : 'Savings';
+        doc.text(clean(savLabel), ax0 + aW - 15, ay0 - aH + 2);
+
+        // X axis labels (0, 5, 10, 15, 20, 25)
+        doc.setFontSize(4.5);
+        doc.setTextColor.apply(doc, C.muted);
+        for (var y5 = 0; y5 <= 25; y5 += 5) {
+            var lx = ax0 + (y5 / 25) * aW;
+            doc.text(String(y5), lx, ay0 + 3, { align: 'center' });
+        }
+
+        // ---- Right chart: Energy flow (stacked bars) ----
+        var cRight = M + chartW + 5;
+        doc.setFillColor.apply(doc, C.bgCard);
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(cRight, chartY, chartW, chartH, 2, 2, 'FD');
+
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.dark);
+        var flowTitle = lang === 'fr' ? 'Flux energetique annuel' : 'Annual energy flow';
+        doc.text(clean(flowTitle), cRight + 5, chartY + 7);
+
+        var totalProd = prod.annual || 1;
+        var autoDirect = prod.autoDirect || 0;
+        var autoBat = prod.autoBattery || 0;
+        var injection = prod.injection || 0;
+
+        // Left bar: Production (blue)
+        var bx1 = cRight + 15;
+        var by0 = chartY + chartH - 6;
+        var bH = chartH - 22;
+        var bW = 18;
+
+        doc.setFillColor(59, 130, 246); // blue-500
+        doc.rect(bx1, by0 - bH, bW, bH, 'F');
+        doc.setFontSize(6);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.white);
+        doc.text(fmtNum(totalProd, 0, lang) + ' kWh', bx1 + bW / 2, by0 - bH / 2, { align: 'center' });
+        doc.setFontSize(6);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Production', bx1 + bW / 2, by0 + 4, { align: 'center' });
+
+        // Right bar: Split (auto-direct green, auto-battery cyan, injection orange)
+        var bx2 = bx1 + bW + 12;
+        var adH = (autoDirect / totalProd) * bH;
+        var abH = (autoBat / totalProd) * bH;
+        var ijH = (injection / totalProd) * bH;
+
+        doc.setFillColor.apply(doc, C.green);
+        doc.rect(bx2, by0 - adH, bW, adH, 'F');
+        doc.setFillColor(6, 182, 212); // cyan-500
+        doc.rect(bx2, by0 - adH - abH, bW, abH, 'F');
+        doc.setFillColor.apply(doc, C.amber);
+        doc.rect(bx2, by0 - adH - abH - ijH, bW, ijH, 'F');
+
+        doc.setFontSize(6);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'normal');
+        var repLabel = lang === 'fr' ? 'Repartition' : 'Breakdown';
+        doc.text(clean(repLabel), bx2 + bW / 2, by0 + 4, { align: 'center' });
+
+        // Legend (right side)
+        var lgX = bx2 + bW + 4;
+        var lgY = chartY + 16;
+        var lgItems = [
+            { color: C.green, label: (lang === 'fr' ? 'Auto-directe' : 'Direct self-use') },
+            { color: [6, 182, 212], label: (lang === 'fr' ? 'Auto-batterie' : 'Battery self-use') },
+            { color: C.amber, label: 'Injection' },
+        ];
+        for (var li = 0; li < lgItems.length; li++) {
+            doc.setFillColor.apply(doc, lgItems[li].color);
+            doc.rect(lgX, lgY + li * 5, 2.5, 2.5, 'F');
+            doc.setFontSize(5);
+            doc.setTextColor.apply(doc, C.slate);
+            doc.text(clean(lgItems[li].label), lgX + 4, lgY + li * 5 + 2);
+        }
+
+        ctx.y = chartY + chartH + 6;
     }
 
     /**
@@ -1611,7 +1754,158 @@
             ctx.y += 5;
         }
 
-        ctx.y += 4;
+        ctx.y += 6;
+
+        // --- Charts row: Monthly bar chart + Donut ---
+        checkPageBreak(doc, ctx, 52);
+
+        var chartH3 = 48;
+        var chartW3 = (PAGE_W - 2 * M - 5) / 2;
+        var chartY3 = ctx.y;
+
+        // ---- Left chart: Monthly bar chart (Production vs Consumption) ----
+        var cL3 = M;
+        doc.setFillColor.apply(doc, C.bgCard);
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(cL3, chartY3, chartW3, chartH3, 2, 2, 'FD');
+
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.dark);
+        var barTitle = lang === 'fr' ? 'Profil mensuel' : 'Monthly profile';
+        doc.text(clean(barTitle), cL3 + 5, chartY3 + 7);
+
+        // Legend
+        var lgBarY = chartY3 + 12;
+        doc.setFillColor(59, 130, 246);
+        doc.rect(cL3 + 8, lgBarY, 2.5, 2.5, 'F');
+        doc.setFontSize(5.5);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text('Production', cL3 + 12, lgBarY + 2);
+        doc.setFillColor.apply(doc, C.amber);
+        doc.rect(cL3 + 38, lgBarY, 2.5, 2.5, 'F');
+        doc.text(lang === 'fr' ? 'Consommation' : 'Consumption', cL3 + 42, lgBarY + 2);
+
+        // Chart area
+        var barX0 = cL3 + 8;
+        var barY0 = chartY3 + chartH3 - 6;
+        var barAreaW = chartW3 - 16;
+        var barAreaH = chartH3 - 24;
+        var maxBarVal = 0;
+        for (var mb = 0; mb < 12; mb++) {
+            if (monthlyProd[mb] > maxBarVal) maxBarVal = monthlyProd[mb];
+            if (monthlyConso[mb] > maxBarVal) maxBarVal = monthlyConso[mb];
+        }
+        maxBarVal = maxBarVal * 1.1 || 1;
+
+        var slotW = barAreaW / 12;
+        var halfBar = slotW / 2.5;
+
+        for (var mb2 = 0; mb2 < 12; mb2++) {
+            var bx = barX0 + mb2 * slotW + 1;
+            var h1 = (monthlyProd[mb2] / maxBarVal) * barAreaH;
+            var h2 = (monthlyConso[mb2] / maxBarVal) * barAreaH;
+
+            // Production bar (blue)
+            doc.setFillColor(59, 130, 246);
+            doc.rect(bx, barY0 - h1, halfBar, h1, 'F');
+            // Consumption bar (amber)
+            doc.setFillColor.apply(doc, C.amber);
+            doc.rect(bx + halfBar + 0.5, barY0 - h2, halfBar, h2, 'F');
+
+            // Month label
+            doc.setFontSize(4);
+            doc.setTextColor.apply(doc, C.muted);
+            doc.text(months[mb2], bx + halfBar, barY0 + 3, { align: 'center' });
+        }
+
+        // ---- Right chart: Donut (production breakdown) ----
+        var cR3 = M + chartW3 + 5;
+        doc.setFillColor.apply(doc, C.bgCard);
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(cR3, chartY3, chartW3, chartH3, 2, 2, 'FD');
+
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.dark);
+        var donutTitle = lang === 'fr' ? 'Repartition de la production' : 'Production breakdown';
+        doc.text(clean(donutTitle), cR3 + 5, chartY3 + 7);
+
+        // Donut data
+        var dAutoDirect = prod.autoDirect || 0;
+        var dAutoBat = prod.autoBattery || 0;
+        var dInjection = prod.injection || 0;
+        var dTotal = dAutoDirect + dAutoBat + dInjection;
+        if (dTotal === 0) dTotal = 1;
+
+        var donutCx = cR3 + 28;
+        var donutCy = chartY3 + chartH3 / 2 + 2;
+        var donutR = 14;
+
+        // Draw pie slices using line segments (jsPDF approximation)
+        var slices = [
+            { value: dAutoDirect, color: C.green,       label: (lang === 'fr' ? 'Auto-directe' : 'Direct self-use') },
+            { value: dAutoBat,    color: [6, 182, 212],  label: (lang === 'fr' ? 'Auto-batterie' : 'Battery self-use') },
+            { value: dInjection,  color: C.amber,        label: 'Injection' },
+        ];
+
+        var startAngle = -Math.PI / 2;
+        for (var si = 0; si < slices.length; si++) {
+            var sweep = (slices[si].value / dTotal) * 2 * Math.PI;
+            if (sweep < 0.01) continue;
+            // Draw filled arc using small triangles
+            doc.setFillColor.apply(doc, slices[si].color);
+            var steps = Math.max(Math.ceil(sweep / 0.1), 4);
+            for (var st = 0; st < steps; st++) {
+                var a1 = startAngle + (st / steps) * sweep;
+                var a2 = startAngle + ((st + 1) / steps) * sweep;
+                var triX1 = donutCx + donutR * Math.cos(a1);
+                var triY1 = donutCy + donutR * Math.sin(a1);
+                var triX2 = donutCx + donutR * Math.cos(a2);
+                var triY2 = donutCy + donutR * Math.sin(a2);
+                doc.triangle(donutCx, donutCy, triX1, triY1, triX2, triY2, 'F');
+            }
+            startAngle += sweep;
+        }
+
+        // Center hole (white circle to create donut effect)
+        var innerR = donutR * 0.55;
+        doc.setFillColor.apply(doc, C.bgCard);
+        // Approximate circle with many triangles
+        for (var ci = 0; ci < 36; ci++) {
+            var ca1 = (ci / 36) * 2 * Math.PI;
+            var ca2 = ((ci + 1) / 36) * 2 * Math.PI;
+            doc.triangle(
+                donutCx, donutCy,
+                donutCx + innerR * Math.cos(ca1), donutCy + innerR * Math.sin(ca1),
+                donutCx + innerR * Math.cos(ca2), donutCy + innerR * Math.sin(ca2),
+                'F'
+            );
+        }
+
+        // Center text
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor.apply(doc, C.dark);
+        doc.text(fmtNum(prod.annual || 0, 0, lang), donutCx, donutCy, { align: 'center' });
+        doc.setFontSize(5);
+        doc.text('kWh', donutCx, donutCy + 3.5, { align: 'center' });
+
+        // Legend (right of donut)
+        var dlgX = cR3 + 50;
+        var dlgY = chartY3 + 16;
+        for (var dl = 0; dl < slices.length; dl++) {
+            var pct = (slices[dl].value / dTotal * 100).toFixed(0);
+            doc.setFillColor.apply(doc, slices[dl].color);
+            doc.rect(dlgX, dlgY + dl * 6, 2.5, 2.5, 'F');
+            doc.setFontSize(5.5);
+            doc.setTextColor.apply(doc, C.slate);
+            doc.text(clean(slices[dl].label + ': ' + fmtNum(slices[dl].value, 0, lang) + ' kWh (' + pct + '%)'), dlgX + 4, dlgY + dl * 6 + 2);
+        }
+
+        ctx.y = chartY3 + chartH3 + 6;
     }
 
     /**
