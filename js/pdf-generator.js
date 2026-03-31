@@ -213,16 +213,19 @@
             coverPower:        'Puissance',
             coverDate:         'Date de generation',
             coverPanelType:    'Type de panneaux',
-            coverIntro:        'Ce rapport presente une simulation horaire complete de votre projet photovoltaique, incluant production, autoconsommation, rentabilite financiere et aide a la decision.',
-            coverMethod:       'Donnees climatiques : PVGIS/TMY (Commission europeenne). Simulation : 8 760 heures.',
+            coverCoordinates:  'Coordonnees',
+            coverOrientation:  'Orientation / Inclinaison',
+            coverBattery:      'Batterie',
+            coverConsumption:  'Consommation',
+            coverEquipment:    'Equipements simules :',
             coverEditor:       'Solar Data Atlas \u2014 Bernard Pugnet',
             coverTocTitle:     'Sommaire',
             coverToc1:         'Presentation',
-            coverToc2:         'Synthese du projet',
-            coverToc3:         'Production et autoconsommation',
-            coverToc4:         'Analyse economique',
-            coverToc5:         'Analyse et aide a la decision',
-            coverToc6:         'Hypotheses, methode et limites',
+            coverToc2:         'Synthese financiere',
+            coverToc3:         'Autoconsommation detaillee',
+            coverToc4:         'Comparaison batterie & aides',
+            coverToc5:         'Rapport d\'analyse',
+            coverToc6:         'Hypotheses & methode',
 
             // v2 section titles
             v2SynthesisTitle:  'Synthese du projet',
@@ -445,16 +448,19 @@
             coverPower:        'Capacity',
             coverDate:         'Generated on',
             coverPanelType:    'Panel type',
-            coverIntro:        'This report presents a full hourly simulation of your photovoltaic project, covering production, self-consumption, financial returns and decision support.',
-            coverMethod:       'Climate data: PVGIS/TMY (European Commission). Simulation: 8,760 hours.',
+            coverCoordinates:  'Coordinates',
+            coverOrientation:  'Orientation / Tilt',
+            coverBattery:      'Battery',
+            coverConsumption:  'Consumption',
+            coverEquipment:    'Simulated equipment:',
             coverEditor:       'Solar Data Atlas \u2014 Bernard Pugnet',
             coverTocTitle:     'Contents',
             coverToc1:         'Overview',
-            coverToc2:         'Project summary',
-            coverToc3:         'Production and self-consumption',
-            coverToc4:         'Financial analysis',
-            coverToc5:         'Analysis and decision support',
-            coverToc6:         'Assumptions, method and limitations',
+            coverToc2:         'Financial summary',
+            coverToc3:         'Self-consumption details',
+            coverToc4:         'Battery comparison & subsidies',
+            coverToc5:         'Analysis report',
+            coverToc6:         'Assumptions & method',
 
             // v2 section titles
             v2SynthesisTitle:  'Project summary',
@@ -1221,183 +1227,238 @@
 
     /**
      * Renders the cover page (page 1) for the v2 report.
-     * Full-page layout — no drawHeader(), no drawFooter().
-     *
-     * Structure:
-     *   0–70mm   : dark band with logo text + report title
-     *   80–130mm : project info (location, power, date)
-     *   140–170mm: intro paragraph + method line
-     *   185–260mm: table of contents (6 entries)
-     *   275–290mm: editor mention
+     * Light/white design matching the validated mock:
+     *   - Amber accent bar at top (4mm)
+     *   - Centered logo + subtitle
+     *   - Info card with all system details
+     *   - Equipment list (if addons)
+     *   - Verdict banner (green/amber/red)
+     *   - Footer editor mention
      */
     function renderCoverPage(doc, ctx, data) {
         var L = ctx.L;
         var lang = ctx.lang;
         var cfg = data.config || {};
+        var bat = data.battery || {};
+        var flags = data.displayFlags || {};
+        var verdict = data.verdict;
+        var fin = data.financial || {};
+        var prod = data.production || {};
 
         // -------------------------------------------------------
-        //  Dark band — top 70mm
+        //  Amber accent bar — top 4mm
         // -------------------------------------------------------
-        doc.setFillColor.apply(doc, C.dark);
-        doc.rect(0, 0, PAGE_W, 70, 'F');
+        doc.setFillColor.apply(doc, C.amber);
+        doc.rect(0, 0, PAGE_W, 4, 'F');
 
-        // Amber accent line at bottom of band
-        doc.setDrawColor.apply(doc, C.amber);
-        doc.setLineWidth(0.8);
-        doc.line(M, 69, PAGE_W - M, 69);
-
-        // Logo text: "SOLAR" white + "DATA ATLAS" amber
-        doc.setFontSize(28);
+        // -------------------------------------------------------
+        //  Logo area — centered
+        // -------------------------------------------------------
+        doc.setFontSize(26);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor.apply(doc, C.white);
-        var solarW = doc.getTextWidth('SOLAR ');
-        doc.text('SOLAR ', M, 30);
-        doc.setTextColor.apply(doc, C.amber);
-        doc.text('DATA ATLAS', M + solarW, 30);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.text('Solar Data Atlas', PAGE_W / 2, 28, { align: 'center' });
 
-        // Report title — below logo
-        doc.setFontSize(14);
-        doc.setTextColor.apply(doc, C.light);
+        doc.setFontSize(11);
         doc.setFont('helvetica', 'normal');
-        var title = L.coverReportTitle;
-        doc.text(clean(title), M, 42);
-
-        // Subtitle
-        doc.setFontSize(10);
-        doc.setTextColor.apply(doc, C.muted);
-        doc.text(clean(L.coverSubtitle), M, 52);
-
-        // URL — right side in band
-        doc.setFontSize(7.5);
-        doc.setTextColor.apply(doc, C.muted);
-        doc.text(L.websiteUrl, PAGE_W - M, 52, { align: 'right' });
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(clean(L.coverReportTitle), PAGE_W / 2, 38, { align: 'center' });
 
         // -------------------------------------------------------
-        //  Project info — Y 82–130
+        //  Info card — rounded rect with system details
         // -------------------------------------------------------
-        var infoY = 88;
+        var cardX = 25;
+        var cardW = PAGE_W - 50;
+        var cardTop = 50;
 
-        // Location
+        // Build info lines
         var locationStr = cfg.countryName || '';
+        if (cfg.city) locationStr = cfg.city + ', ' + locationStr;
+        var coordStr = '';
         if (cfg.lat && cfg.lon) {
-            locationStr += ' (' + fmtNum(cfg.lat, 2, lang) + ', ' + fmtNum(cfg.lon, 2, lang) + ')';
+            coordStr = fmtNum(cfg.lat, 4, lang) + ', ' + fmtNum(cfg.lon, 4, lang);
         }
-        doc.setFontSize(9);
-        doc.setTextColor.apply(doc, C.slate);
-        doc.setFont('helvetica', 'normal');
-        doc.text(clean(L.coverLocation), M, infoY);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.setFont('helvetica', 'bold');
-        doc.text(clean(locationStr), M + 50, infoY);
-        doc.setFont('helvetica', 'normal');
-
-        // Power
-        infoY += 10;
         var powerStr = fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc;
-        doc.setTextColor.apply(doc, C.slate);
-        doc.text(clean(L.coverPower), M, infoY);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.setFont('helvetica', 'bold');
-        doc.text(clean(powerStr), M + 50, infoY);
-        doc.setFont('helvetica', 'normal');
+        if (cfg.surface) powerStr += ' — ' + fmtNum(cfg.surface, 0, lang) + ' ' + L.unitM2;
+        var orientStr = orientLabel(cfg.orientation, L) + ' / ' + fmtNum(cfg.tilt, 0, lang) + '\u00b0';
+        var batteryStr = flags.hasBattery
+            ? fmtNum(bat.capacityKwh, 1, lang) + ' ' + L.unitKwh
+            : L.no;
+        var consoStr = fmtNum(prod.totalConsumption || cfg.consumption, 0, lang) + ' ' + L.unitKwh + '/' + (lang === 'fr' ? 'an' : 'yr');
 
-        // Date
-        infoY += 10;
-        var dateStr = new Date().toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
-            year: 'numeric', month: 'long', day: 'numeric'
-        });
-        doc.setTextColor.apply(doc, C.slate);
-        doc.text(clean(L.coverDate), M, infoY);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.setFont('helvetica', 'bold');
-        doc.text(clean(dateStr), M + 50, infoY);
-        doc.setFont('helvetica', 'normal');
-
-        // Thin separator
-        infoY += 10;
-        doc.setDrawColor.apply(doc, C.light);
-        doc.setLineWidth(0.3);
-        doc.line(M, infoY, PAGE_W - M, infoY);
-
-        // -------------------------------------------------------
-        //  Intro paragraph + method — Y 130–170
-        // -------------------------------------------------------
-        var introY = infoY + 10;
-
-        doc.setFontSize(9);
-        doc.setTextColor.apply(doc, C.slate);
-        var introLines = doc.splitTextToSize(clean(L.coverIntro), PAGE_W - 2 * M);
-        doc.text(introLines, M, introY);
-        introY += introLines.length * 4 + 6;
-
-        // Method / source — smaller, muted
-        doc.setFontSize(7.5);
-        doc.setTextColor.apply(doc, C.muted);
-        doc.text(clean(L.coverMethod), M, introY);
-
-        // -------------------------------------------------------
-        //  Table of contents — Y ~185–260
-        // -------------------------------------------------------
-        var tocY = 185;
-
-        // TOC title
-        doc.setFontSize(12);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.setFont('helvetica', 'bold');
-        doc.text(clean(L.coverTocTitle), M, tocY);
-        tocY += 3;
-        doc.setDrawColor.apply(doc, C.amber);
-        doc.setLineWidth(0.6);
-        doc.line(M, tocY, M + 30, tocY);
-        doc.setFont('helvetica', 'normal');
-        tocY += 10;
-
-        // TOC entries
-        var tocItems = [
-            L.coverToc1,
-            L.coverToc2,
-            L.coverToc3,
-            L.coverToc4,
-            L.coverToc5,
-            L.coverToc6,
+        var infoLines = [
+            [L.coverLocation,    locationStr],
+            [L.coverCoordinates, coordStr],
+            [L.coverPower,       powerStr],
+            [L.coverPanelType,   panelTypeLabel(cfg.panelEfficiency, lang)],
+            [L.coverOrientation, orientStr],
+            [L.coverBattery,     batteryStr],
+            [L.coverConsumption, consoStr],
         ];
 
-        tocItems.forEach(function (item, i) {
-            var pageNum = i + 1;
+        var lineH = 7.5;
+        var cardH = 10 + infoLines.length * lineH + 4;
+
+        // Card background
+        doc.setFillColor.apply(doc, C.bgCard);
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(cardX, cardTop, cardW, cardH, 3, 3, 'FD');
+
+        // Card content
+        var labelX = cardX + 5;
+        var valueX = cardX + 55;
+        var iy = cardTop + 9;
+
+        for (var i = 0; i < infoLines.length; i++) {
+            var lbl = infoLines[i][0];
+            var val = infoLines[i][1];
+            doc.setFontSize(8);
+            doc.setTextColor.apply(doc, C.slate);
+            doc.setFont('helvetica', 'normal');
+            doc.text(clean(lbl), labelX, iy);
+            doc.setTextColor.apply(doc, C.dark);
+            doc.setFont('helvetica', 'bold');
+            doc.text(clean(val), valueX, iy);
+            iy += lineH;
+        }
+
+        var currentY = cardTop + cardH + 6;
+
+        // -------------------------------------------------------
+        //  Equipment list (addons) — if any
+        // -------------------------------------------------------
+        var addons = cfg.addons || [];
+        var ra = cfg.resolvedAddons || {};
+        if (addons.length > 0) {
+            var addonMap = {
+                ev:   L.v2AddonEv,
+                pac:  L.v2AddonPac,
+                ecs:  L.v2AddonEcs,
+                ac:   L.v2AddonAc,
+                pool: L.v2AddonPool,
+            };
+
+            doc.setFontSize(9);
+            doc.setTextColor.apply(doc, C.dark);
+            doc.setFont('helvetica', 'bold');
+            doc.text(clean(L.coverEquipment), cardX + 5, currentY);
+            currentY += 5;
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(8);
+            doc.setTextColor.apply(doc, C.slate);
+            for (var a = 0; a < addons.length; a++) {
+                var key = addons[a];
+                var addonName = addonMap[key] || key;
+                var kwhStr = '';
+                if (ra[key] && ra[key].annualKwh) {
+                    kwhStr = ' : ' + fmtNum(ra[key].annualKwh, 0, lang) + ' ' + L.unitKwh + '/' + (lang === 'fr' ? 'an' : 'yr');
+                }
+                doc.text(clean('- ' + addonName + kwhStr), cardX + 10, currentY);
+                currentY += 5;
+            }
+            currentY += 4;
+        }
+
+        // -------------------------------------------------------
+        //  Table of contents — compact
+        // -------------------------------------------------------
+        currentY += 2;
+        doc.setFontSize(11);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(L.coverTocTitle), M, currentY);
+        currentY += 3;
+        doc.setDrawColor.apply(doc, C.amber);
+        doc.setLineWidth(0.6);
+        doc.line(M, currentY, M + 25, currentY);
+        currentY += 7;
+
+        var tocItems = [
+            L.coverToc1, L.coverToc2, L.coverToc3,
+            L.coverToc4, L.coverToc5, L.coverToc6,
+        ];
+
+        doc.setFont('helvetica', 'normal');
+        for (var t = 0; t < tocItems.length; t++) {
+            var pageNum = t + 1;
             // Number
-            doc.setFontSize(10);
+            doc.setFontSize(9);
             doc.setTextColor.apply(doc, C.amber);
             doc.setFont('helvetica', 'bold');
-            doc.text(String(pageNum) + '.', M + 2, tocY);
-
+            doc.text(String(pageNum) + '.', M + 2, currentY);
             // Title
             doc.setTextColor.apply(doc, C.dark);
             doc.setFont('helvetica', 'normal');
-            doc.text(clean(item), M + 14, tocY);
-
-            // Dotted line + page number (right)
-            doc.setFontSize(8);
+            doc.text(clean(tocItems[t]), M + 12, currentY);
+            // Dots + page num
+            doc.setFontSize(7.5);
             doc.setTextColor.apply(doc, C.muted);
-            doc.text(String(pageNum), PAGE_W - M, tocY, { align: 'right' });
-
-            // Light dots between title and page number
-            var titleW = doc.getTextWidth(clean(item));
-            var dotsStart = M + 14 + titleW + 2;
-            var dotsEnd = PAGE_W - M - 8;
-            if (dotsEnd > dotsStart) {
+            doc.text(String(pageNum), PAGE_W - M, currentY, { align: 'right' });
+            var tw = doc.getTextWidth(clean(tocItems[t]));
+            var dStart = M + 12 + tw + 2;
+            var dEnd = PAGE_W - M - 8;
+            if (dEnd > dStart) {
                 doc.setDrawColor.apply(doc, C.light);
                 doc.setLineWidth(0.2);
-                // Dotted effect via dashed line
                 doc.setLineDashPattern([0.5, 1.5], 0);
-                doc.line(dotsStart, tocY + 1, dotsEnd, tocY + 1);
+                doc.line(dStart, currentY + 1, dEnd, currentY + 1);
                 doc.setLineDashPattern([], 0);
             }
-
-            tocY += 11;
-        });
+            currentY += 9;
+        }
 
         // -------------------------------------------------------
-        //  Editor mention — bottom
+        //  Verdict banner — bottom area
+        // -------------------------------------------------------
+        if (flags.hasVerdict && verdict) {
+            var bannerY = Math.max(currentY + 6, 230);
+            var bannerH = 18;
+            var bannerX = 25;
+            var bannerW = PAGE_W - 50;
+
+            // Determine colors based on verdict level
+            var vBorder = C.amber;
+            var vBg = C.bgAmber;
+            var vIcon = '?';
+            if (verdict.level === 'good') {
+                vBorder = C.green; vBg = C.bgGreen; vIcon = 'OK';
+            } else if (verdict.level === 'poor') {
+                vBorder = C.red; vBg = C.bgRed; vIcon = '!';
+            }
+
+            doc.setFillColor.apply(doc, vBg);
+            doc.setDrawColor.apply(doc, vBorder);
+            doc.setLineWidth(0.8);
+            doc.roundedRect(bannerX, bannerY, bannerW, bannerH, 3, 3, 'FD');
+
+            // Verdict title — centered
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor.apply(doc, vBorder);
+            doc.text(clean(vIcon + '  ' + (verdict.title || '')), PAGE_W / 2, bannerY + 8, { align: 'center' });
+
+            // Subtitle line — payback + annual savings
+            var subParts = [];
+            if (fin.payback !== null && fin.payback !== undefined && fin.payback < 50) {
+                var paybackLabel = lang === 'fr' ? 'Retour sur investissement en ' : 'Payback in ';
+                subParts.push(paybackLabel + fmtNum(fin.payback, 1, lang) + ' ' + (lang === 'fr' ? 'ans' : 'years'));
+            }
+            if (fin.annualSavings) {
+                var savingsLabel = lang === 'fr' ? 'Economies annuelles : ' : 'Annual savings: ';
+                subParts.push(savingsLabel + fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEur);
+            }
+            if (subParts.length > 0) {
+                doc.setFontSize(7.5);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor.apply(doc, C.slate);
+                doc.text(clean(subParts.join(' — ')), PAGE_W / 2, bannerY + 14, { align: 'center' });
+            }
+        }
+
+        // -------------------------------------------------------
+        //  Footer — editor mention
         // -------------------------------------------------------
         doc.setFontSize(7.5);
         doc.setTextColor.apply(doc, C.muted);
