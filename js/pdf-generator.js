@@ -1,13 +1,13 @@
 /**
  * pdf-generator.js — Solar Data Atlas
- * Modular PDF generator (client & study modes)
+ * v2 PDF generator for solar simulation reports
  *
  * Dependencies: jsPDF 2.5.1 (UMD, loaded via CDN in HTML)
  * Data source:  window.lastSimulationData (built by calculateDetailed / generateVerdict / updateSensitivity)
  *
  * Public API:
  *   window.generateSimulationPdf(data, { mode, lang })
- *     mode: 'client' | 'study'
+ *     mode: 'v2' (only)
  *     lang: 'fr' | 'en'  (takes precedence over data.meta.lang)
  *
  * Architecture:
@@ -17,10 +17,10 @@
  *   4. fmtNum() — locale-aware number formatting
  *   5. normalizeSimulationData(rawData) — adds displayFlags layer
  *   6. Low-level draw helpers (header, footer, section, table, kpi, verdict, pageBreak)
- *   7. Page composers — client mode pages 1–4, study mode pages 1–4 (Step 3+)
+ *   7. Page composers — v2 pages 1–6
  *   8. Entry point — generateSimulationPdf()
  *
- * @version 2.0.0
+ * @version 2.1.0
  * @author  Bernard Pugnet / Solar Data Atlas
  */
 
@@ -197,23 +197,6 @@
             lblHorizon:           'Horizon d\'analyse',
             lblDiscountRate:      'Taux d\'actualisation',
 
-            // Study mode labels
-            studyTitle:           'Etude technico-economique',
-            studySummary:         'Synthese de faisabilite',
-            studyStrengths:       'Points favorables',
-            studyWeaknesses:      'Points de vigilance',
-            studyTechnical:       'Donnees techniques et economiques',
-            studyScenarios:       'Scenarios de sensibilite',
-            studyRisks:           'Risques et points de vigilance',
-            studyFinancingNote:   'Donnees de financement non disponibles dans cette version.',
-            studySensitivityIntro: 'Variation de +/-15% sur trois axes : prix electricite, cout d\'installation, production solaire.',
-            studyRisksText:       'Risque de production : l\'irradiation reelle peut varier de +/-10% par rapport a l\'annee meteorologique type. Risque tarifaire : les prix de l\'electricite et du rachat peuvent evoluer differemment des hypotheses retenues. Risque technique : la degradation reelle des panneaux et de la batterie peut differer des taux theoriques. Risque reglementaire : les conditions de rachat et les aides peuvent etre modifiees.',
-            lblScenario:          'Scenario',
-            lblElecPriceShort:    'Prix elec.',
-            lblInstallCostShort:  'Cout install.',
-            lblProdShort:         'Production',
-            lblGains25y:          'Gains 25 ans',
-
             // Misc
             no:           'Non',
             notReached:   'Non atteint',
@@ -229,6 +212,7 @@
             coverLocation:     'Localisation',
             coverPower:        'Puissance',
             coverDate:         'Date de generation',
+            coverPanelType:    'Type de panneaux',
             coverIntro:        'Ce rapport presente une simulation horaire complete de votre projet photovoltaique, incluant production, autoconsommation, rentabilite financiere et aide a la decision.',
             coverMethod:       'Donnees climatiques : PVGIS/TMY (Commission europeenne). Simulation : 8 760 heures.',
             coverEditor:       'Solar Data Atlas \u2014 Bernard Pugnet',
@@ -257,7 +241,38 @@
             v2AddonAc:         'Climatisation',
             v2AddonPool:       'Piscine',
 
-            // v2 page 4 — financial analysis
+            // v2 page 2 — financial summary
+            v2PageTitle2:      'Synthese financiere',
+            p2ProductionSavings: 'Production & Economies',
+            p2Investment:      'Investissement & Rentabilite',
+
+            // v2 page 3 — self-consumption details
+            v2PageTitle3:      'Autoconsommation detaillee',
+            p3MonthlyTitle:    'Bilan mensuel',
+
+            // v2 page 4 — battery & subsidies
+            v2PageTitle4:      'Comparaison batterie & aides',
+            p4BatteryComparison: 'Comparaison avec / sans batterie',
+            p4Subsidies:       'Aides et subventions',
+            p4SubsidyNote:     'Dispositifs applicables',
+            p4SystemRecap:     'Recapitulatif systeme',
+            p4NoSubsidy:       'Aucune aide deduite dans cette simulation.',
+
+            // v2 page 5 — analysis report
+            v2PageTitle5:      'Rapport d\'analyse',
+            p5ReportTitle:     'Rapport d\'analyse solaire',
+
+            // v2 page 6 — assumptions & method
+            v2PageTitle6:      'Hypotheses & methode',
+
+            // v2 page intros (pages 2–6)
+            v2IntroP2: 'Cette page presente une lecture d\'ensemble du projet a partir du verdict, des principaux indicateurs de performance et de la configuration retenue. Elle permet d\'apprecier rapidement si l\'installation parait coherente avec votre profil de consommation et vos objectifs.',
+            v2IntroP3: 'Cette page detaille la production solaire attendue, la repartition des flux d\'energie et le niveau d\'autoconsommation du systeme. Elle precise egalement comment la consommation a ete modelisee afin de rendre les resultats plus lisibles et plus comparables.',
+            v2IntroP4: 'Cette page presente les principaux equilibres financiers du projet : investissement, economies annuelles, temps de retour et gains sur la duree d\'analyse. Elle permet aussi d\'apprecier l\'impact specifique de la batterie sur la rentabilite globale de l\'installation.',
+            v2IntroP5: 'Cette page propose une lecture interpretative des resultats en mettant en evidence les elements qui soutiennent le projet, ceux qui le limitent, ainsi que les verifications utiles avant engagement. Elle vise a transformer les chiffres du rapport en points de vigilance concrets.',
+            v2IntroP6: 'Cette page explicite les hypotheses retenues pour la simulation, la methode de calcul utilisee et les principales limites du modele. Elle replace les resultats dans leur cadre technique et rappelle leur caractere indicatif.',
+
+            // v2 page 2 — financial analysis
             v2FinancialTitle:  'Bilan financier',
             v2SavingsTitle:    'Economies annuelles',
             v2BatteryTitle:    'Impact de la batterie',
@@ -274,12 +289,8 @@
             v2HypothesesTitle: 'Hypotheses, methode et limites',
             v2SensitivityNote: 'Les resultats de cette simulation dependent principalement de quatre facteurs : le prix futur de l\'electricite, la degradation reelle des panneaux, la degradation de la batterie (si presente), et l\'adequation du profil de consommation retenu avec vos usages reels.',
 
-            // v2 page intros (pages 2–6)
-            v2IntroP2: 'Cette page presente une lecture d\'ensemble du projet a partir du verdict, des principaux indicateurs de performance et de la configuration retenue. Elle permet d\'apprecier rapidement si l\'installation parait coherente avec votre profil de consommation et vos objectifs.',
-            v2IntroP3: 'Cette page detaille la production solaire attendue, la repartition des flux d\'energie et le niveau d\'autoconsommation du systeme. Elle precise egalement comment la consommation a ete modelisee afin de rendre les resultats plus lisibles et plus comparables.',
-            v2IntroP4: 'Cette page presente les principaux equilibres financiers du projet : investissement, economies annuelles, temps de retour et gains sur la duree d\'analyse. Elle permet aussi d\'apprecier l\'impact specifique de la batterie sur la rentabilite globale de l\'installation.',
-            v2IntroP5: 'Cette page propose une lecture interpretative des resultats en mettant en evidence les elements qui soutiennent le projet, ceux qui le limitent, ainsi que les verifications utiles avant engagement. Elle vise a transformer les chiffres du rapport en points de vigilance concrets.',
-            v2IntroP6: 'Cette page explicite les hypotheses retenues pour la simulation, la methode de calcul utilisee et les principales limites du modele. Elle replace les resultats dans leur cadre technique et rappelle leur caractere indicatif.',
+            // Months
+            months: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -418,23 +429,6 @@
             lblHorizon:           'Analysis horizon',
             lblDiscountRate:      'Discount rate',
 
-            // Study mode labels
-            studyTitle:           'Techno-economic feasibility study',
-            studySummary:         'Feasibility summary',
-            studyStrengths:       'Favorable factors',
-            studyWeaknesses:      'Points of caution',
-            studyTechnical:       'Technical and economic data',
-            studyScenarios:       'Sensitivity scenarios',
-            studyRisks:           'Risks and cautions',
-            studyFinancingNote:   'Financing data not available in this version.',
-            studySensitivityIntro: 'Variation of +/-15% on three axes: electricity price, installation cost, solar production.',
-            studyRisksText:       'Production risk: actual irradiation may vary by +/-10% from the typical meteorological year. Tariff risk: electricity and feed-in prices may evolve differently from assumptions. Technical risk: actual degradation of panels and battery may differ from theoretical rates. Regulatory risk: feed-in conditions and subsidies may be modified.',
-            lblScenario:          'Scenario',
-            lblElecPriceShort:    'Elec. price',
-            lblInstallCostShort:  'Install cost',
-            lblProdShort:         'Production',
-            lblGains25y:          '25y gains',
-
             // Misc
             no:           'No',
             notReached:   'Not reached',
@@ -450,6 +444,7 @@
             coverLocation:     'Location',
             coverPower:        'Capacity',
             coverDate:         'Generated on',
+            coverPanelType:    'Panel type',
             coverIntro:        'This report presents a full hourly simulation of your photovoltaic project, covering production, self-consumption, financial returns and decision support.',
             coverMethod:       'Climate data: PVGIS/TMY (European Commission). Simulation: 8,760 hours.',
             coverEditor:       'Solar Data Atlas \u2014 Bernard Pugnet',
@@ -478,7 +473,38 @@
             v2AddonAc:         'Air conditioning',
             v2AddonPool:       'Swimming pool',
 
-            // v2 page 4 — financial analysis
+            // v2 page 2 — financial summary
+            v2PageTitle2:      'Financial summary',
+            p2ProductionSavings: 'Production & Savings',
+            p2Investment:      'Investment & Returns',
+
+            // v2 page 3 — self-consumption details
+            v2PageTitle3:      'Self-consumption details',
+            p3MonthlyTitle:    'Monthly summary',
+
+            // v2 page 4 — battery & subsidies
+            v2PageTitle4:      'Battery comparison & subsidies',
+            p4BatteryComparison: 'Comparison with / without battery',
+            p4Subsidies:       'Subsidies and incentives',
+            p4SubsidyNote:     'Applicable schemes',
+            p4SystemRecap:     'System summary',
+            p4NoSubsidy:       'No subsidies deducted in this simulation.',
+
+            // v2 page 5 — analysis report
+            v2PageTitle5:      'Analysis report',
+            p5ReportTitle:     'Solar analysis report',
+
+            // v2 page 6 — assumptions & method
+            v2PageTitle6:      'Assumptions & method',
+
+            // v2 page intros (pages 2–6)
+            v2IntroP2: 'This page provides an overall reading of the project based on the verdict, the main performance indicators and the selected system configuration. It allows a quick assessment of whether the installation is broadly consistent with your consumption profile and objectives.',
+            v2IntroP3: 'This page details expected solar production, energy flows and the level of self-consumption achieved by the system. It also explains how consumption was modeled in order to make the results easier to read and compare.',
+            v2IntroP4: 'This page presents the project\'s main financial balances: investment, annual savings, payback period and gains over the analysis horizon. It also helps assess the specific impact of the battery on overall project profitability.',
+            v2IntroP5: 'This page provides an interpretative reading of the results by highlighting what supports the project, what limits it, and which checks remain useful before committing. Its purpose is to turn the report\'s figures into concrete decision points.',
+            v2IntroP6: 'This page explains the assumptions used for the simulation, the calculation method and the model\'s main limitations. It places the results in their technical context and reminds the reader of their indicative nature.',
+
+            // v2 page 2 — financial analysis
             v2FinancialTitle:  'Financial summary',
             v2SavingsTitle:    'Annual savings breakdown',
             v2BatteryTitle:    'Battery impact',
@@ -495,12 +521,8 @@
             v2HypothesesTitle: 'Assumptions, method and limitations',
             v2SensitivityNote: 'The results of this simulation depend primarily on four factors: the future price of electricity, the actual degradation of solar panels, battery degradation (if applicable), and how well the selected consumption profile matches your real usage patterns.',
 
-            // v2 page intros (pages 2–6)
-            v2IntroP2: 'This page provides an overall reading of the project based on the verdict, the main performance indicators and the selected system configuration. It allows a quick assessment of whether the installation is broadly consistent with your consumption profile and objectives.',
-            v2IntroP3: 'This page details expected solar production, energy flows and the level of self-consumption achieved by the system. It also explains how consumption was modeled in order to make the results easier to read and compare.',
-            v2IntroP4: 'This page presents the project\'s main financial balances: investment, annual savings, payback period and gains over the analysis horizon. It also helps assess the specific impact of the battery on overall project profitability.',
-            v2IntroP5: 'This page provides an interpretative reading of the results by highlighting what supports the project, what limits it, and which checks remain useful before committing. Its purpose is to turn the report\'s figures into concrete decision points.',
-            v2IntroP6: 'This page explains the assumptions used for the simulation, the calculation method and the model\'s main limitations. It places the results in their technical context and reminds the reader of their indicative nature.',
+            // Months
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
             // Glossary (reduced to 5 essential terms for page 4)
             glossary: [
@@ -625,8 +647,8 @@
             /** IRR was computed */
             irrAvailable: fin.irr !== null && fin.irr !== undefined,
 
-            /** Financing data available (V2 — always false for now) */
-            hasFinancing: d.financing !== null && d.financing !== undefined,
+            /** Financial data available (from simulator check) */
+            financialAvailable: rawData.financialAvailable !== false,
         };
 
         return d;
@@ -640,7 +662,6 @@
     // All helpers receive (doc, ctx) where ctx is a mutable drawing context:
     //   ctx.y     — current Y position (mutated by helpers)
     //   ctx.lang  — 'fr' | 'en'
-    //   ctx.mode  — 'client' | 'study'
     //   ctx.L     — resolved LABELS[lang] object
     //
     // This avoids closures over a shared `y` variable and makes
@@ -664,7 +685,7 @@
         // Subtitle (depends on mode)
         doc.setFontSize(10);
         doc.setTextColor.apply(doc, C.light);
-        var subtitle = ctx.mode === 'study' ? L.reportSubStudy : L.reportSubtitle;
+        var subtitle = L.reportSubtitle;
         doc.text(subtitle, M, 21);
 
         // Right side: URL + date
@@ -901,9 +922,301 @@
         return false;
     }
 
+    /**
+     * Draws a titled text block: bold subtitle + body lines.
+     * Handles page breaks before drawing.
+     *
+     * @param {string} title - block subtitle
+     * @param {string|Array} body  - text string or array of strings (bullet lines)
+     */
+    function drawMiniBlock(doc, ctx, title, body) {
+        if (!body || (Array.isArray(body) && body.length === 0)) return;
+
+        var textStr = Array.isArray(body) ? body.join('\n') : String(body);
+        doc.setFontSize(8);
+        var bodyLines = doc.splitTextToSize(clean(textStr), PAGE_W - 2 * M - 8);
+        var neededH = 10 + bodyLines.length * 3.5;
+
+        checkPageBreak(doc, ctx, neededH);
+
+        // Subtitle
+        doc.setFontSize(9);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.text(clean(title), M + 2, ctx.y);
+        doc.setFont('helvetica', 'normal');
+        ctx.y += 1.5;
+        doc.setDrawColor.apply(doc, C.light);
+        doc.setLineWidth(0.3);
+        doc.line(M + 2, ctx.y, M + 50, ctx.y);
+        ctx.y += 4;
+
+        // Body
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.text(bodyLines, M + 4, ctx.y);
+        ctx.y += bodyLines.length * 3.5 + 5;
+    }
+
+    /**
+     * Draws the disclaimer in a subtle background box
+     */
+    function drawDisclaimerBox(doc, ctx, L) {
+        doc.setFontSize(6.5);
+        var discLines = doc.splitTextToSize(L.disclaimer, PAGE_W - 2 * M - 8);
+        var boxH = Math.max(14, discLines.length * 3 + 6);
+
+        checkPageBreak(doc, ctx, boxH + 4);
+
+        doc.setFillColor.apply(doc, C.bg);
+        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, boxH, 2, 2, 'F');
+        doc.setTextColor.apply(doc, C.muted);
+        doc.text(discLines, M + 4, ctx.y + 3);
+        ctx.y += boxH + 4;
+    }
+
+    /**
+     * Builds a strength sentence from numeric data.
+     * Returns an array of short factual lines.
+     */
+    function buildStrengths(data, L, lang) {
+        var lines = [];
+        var fin = data.financial;
+        var prod = data.production;
+        var fp = data.financialParams;
+
+        // Good yield
+        if (prod.perKwc >= 1100) {
+            lines.push('- ' + L.lblProdPerKwc + ' : ' + fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc
+                + (lang === 'fr' ? ' (bon gisement solaire)' : ' (good solar resource)'));
+        }
+        // High self-consumption
+        if (prod.autoconsoRate >= 50) {
+            lines.push('- ' + L.lblAutoRate + ' : ' + fmtNum(prod.autoconsoRate, 1, lang) + '%'
+                + (lang === 'fr' ? ' (valorisation locale forte)' : ' (strong local value)'));
+        }
+        // Good payback
+        if (fin.payback !== null && fin.payback <= 12) {
+            lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
+                + (lang === 'fr' ? ' (retour rapide)' : ' (fast return)'));
+        }
+        // Positive IRR (fin.irr is a decimal, e.g. 0.17 = 17%)
+        if (fin.irr !== null && fin.irr >= 0.04) {
+            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr * 100, 1, lang) + '%'
+                + (lang === 'fr' ? ' (rendement competitif)' : ' (competitive return)'));
+        }
+        // Significant 25y gains
+        if (fin.totalSavings25y > fp.netCost * 1.5) {
+            lines.push('- ' + L.lblTotalGains + ' : ' + fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur);
+        }
+        // Fallback
+        if (lines.length === 0) {
+            lines.push(lang === 'fr'
+                ? '- Les parametres ne font pas ressortir de point fort marque dans cette configuration.'
+                : '- The parameters do not highlight a strong advantage in this configuration.');
+        }
+        return lines;
+    }
+
+    /**
+     * Builds weakness lines from numeric data.
+     */
+    function buildWeaknesses(data, L, lang) {
+        var lines = [];
+        var fin = data.financial;
+        var prod = data.production;
+
+        // Low yield
+        if (prod.perKwc < 900) {
+            lines.push('- ' + L.lblProdPerKwc + ' : ' + fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc
+                + (lang === 'fr' ? ' (gisement solaire faible)' : ' (low solar resource)'));
+        }
+        // Low self-consumption
+        if (prod.autoconsoRate < 30) {
+            lines.push('- ' + L.lblAutoRate + ' : ' + fmtNum(prod.autoconsoRate, 1, lang) + '%'
+                + (lang === 'fr' ? ' (forte injection, faible valorisation locale)' : ' (high injection, low local value)'));
+        }
+        // Long or no payback
+        if (fin.payback === null) {
+            lines.push(lang === 'fr'
+                ? '- Temps de retour non atteint sur 25 ans'
+                : '- Payback period not reached within 25 years');
+        } else if (fin.payback > 15) {
+            lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
+                + (lang === 'fr' ? ' (retour lent)' : ' (slow return)'));
+        }
+        // Low IRR (fin.irr is a decimal, e.g. 0.02 = 2%)
+        if (fin.irr !== null && fin.irr < 0.02) {
+            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr * 100, 1, lang) + '%'
+                + (lang === 'fr' ? ' (rendement inferieur au cout du capital)' : ' (return below cost of capital)'));
+        }
+        // Fallback
+        if (lines.length === 0) {
+            lines.push(lang === 'fr'
+                ? '- Aucun point faible majeur identifie dans cette configuration.'
+                : '- No major weakness identified in this configuration.');
+        }
+        return lines;
+    }
+
+    /**
+     * Builds a battery reading block.
+     */
+    function buildBatteryReading(data, L, lang) {
+        var flags = data.displayFlags;
+        if (!flags.hasBattery) return [L.p3NoBattery];
+
+        var lines = [];
+        var bc = data.batteryComparison;
+        if (bc) {
+            var diffAuto = fmtNum(bc.autoDiffPoints, 1, lang);
+            lines.push(lang === 'fr'
+                ? '- La batterie augmente l\'autoconsommation de +' + diffAuto + ' points.'
+                : '- The battery increases self-consumption by +' + diffAuto + ' points.');
+
+            if (bc.withBattery.payback !== null && bc.withoutBattery.payback !== null) {
+                var diffPay = fmtNum(bc.paybackDiffYears, 1, lang);
+                if (bc.paybackDiffYears > 0) {
+                    lines.push(lang === 'fr'
+                        ? '- Elle allonge le retour sur investissement de ' + diffPay + ' ' + L.unitYears + '.'
+                        : '- It extends the payback period by ' + diffPay + ' ' + L.unitYears + '.');
+                } else {
+                    lines.push(lang === 'fr'
+                        ? '- Elle reduit le retour sur investissement de ' + fmtNum(Math.abs(bc.paybackDiffYears), 1, lang) + ' ' + L.unitYears + '.'
+                        : '- It reduces the payback period by ' + fmtNum(Math.abs(bc.paybackDiffYears), 1, lang) + ' ' + L.unitYears + '.');
+                }
+            }
+
+            if (bc.conclusion) {
+                lines.push('- ' + bc.conclusion);
+            }
+        } else {
+            lines.push(lang === 'fr'
+                ? '- Batterie configuree (' + fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh + '), comparaison non disponible.'
+                : '- Battery configured (' + fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh + '), comparison not available.');
+        }
+        return lines;
+    }
+
+    /**
+     * Draws the battery comparison section.
+     */
+    function drawBatteryComparison(doc, ctx, data) {
+        var L = ctx.L;
+        var lang = ctx.lang;
+        var bc = data.batteryComparison;
+        if (!bc) return;
+
+        drawSectionTitle(doc, ctx, L.sectionBattery);
+
+        var colW = (BLOCK_W - 6) / 2;
+        var colX1 = BLOCK_X;
+        var colX2 = BLOCK_X + colW + 6;
+
+        var noBatPayStr = bc.withoutBattery.payback !== null
+            ? fmtNum(bc.withoutBattery.payback, 1, lang) + ' ' + L.unitYears
+            : L.notReached;
+        var batPayStr = bc.withBattery.payback !== null
+            ? fmtNum(bc.withBattery.payback, 1, lang) + ' ' + L.unitYears
+            : L.notReached;
+
+        // --- Without battery card ---
+        doc.setFillColor.apply(doc, C.bg);
+        doc.roundedRect(colX1, ctx.y - 2, colW, 24, 2, 2, 'F');
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.slate);
+        doc.setFont('helvetica', 'bold');
+        doc.text(L.lblWithoutBattery, colX1 + colW / 2, ctx.y + 3, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.text(L.lblAutoconsoShort + ' : ' + fmtNum(bc.withoutBattery.autoRate, 1, lang) + '%', colX1 + 4, ctx.y + 9);
+        doc.text(L.lblSavingsShort + ' : ' + fmtNum(bc.withoutBattery.savings, 0, lang) + ' ' + L.unitEur, colX1 + 4, ctx.y + 14);
+        doc.text(L.lblPaybackShort + ' : ' + noBatPayStr, colX1 + 4, ctx.y + 19);
+
+        // --- With battery card ---
+        doc.setFillColor.apply(doc, C.bgAmber);
+        doc.setDrawColor.apply(doc, C.amber);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(colX2, ctx.y - 2, colW, 24, 2, 2, 'FD');
+        doc.setFontSize(8);
+        doc.setTextColor.apply(doc, C.amber);
+        doc.setFont('helvetica', 'bold');
+        doc.text(L.lblWithBattery, colX2 + colW / 2, ctx.y + 3, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor.apply(doc, C.dark);
+        doc.text(L.lblAutoconsoShort + ' : ' + fmtNum(bc.withBattery.autoRate, 1, lang) + '%', colX2 + 4, ctx.y + 9);
+        doc.text(L.lblSavingsShort + ' : ' + fmtNum(bc.withBattery.savings, 0, lang) + ' ' + L.unitEur, colX2 + 4, ctx.y + 14);
+        doc.text(L.lblPaybackShort + ' : ' + batPayStr, colX2 + 4, ctx.y + 19);
+
+        ctx.y += 26;
+
+        // --- Conclusion text ---
+        if (bc.conclusion) {
+            doc.setFontSize(7);
+            doc.setTextColor.apply(doc, C.muted);
+            var concLines = doc.splitTextToSize(clean(bc.conclusion), BLOCK_W);
+            doc.text(concLines, BLOCK_X, ctx.y);
+            ctx.y += concLines.length * 3 + 4;
+        }
+        ctx.y += 4;
+    }
+
+    /**
+     * Resolves an orientation value (degrees) to a human-readable label.
+     * @param {number} deg - orientation in degrees (0=South, -45=SE, etc.)
+     * @param {Object} L   - LABELS[lang]
+     * @returns {string}
+     */
+    function orientLabel(deg, L) {
+        var map = {
+            '0':   L.orientSouth,
+            '-45': L.orientSouthEast,
+            '45':  L.orientSouthWest,
+            '-90': L.orientEast,
+            '90':  L.orientWest,
+        };
+        return map[String(deg)] || (deg + '\u00b0');
+    }
+
+    /**
+     * Resolves a profile key to a human-readable label.
+     * @param {string} key - 'family' | 'retired' | 'telecommute' | 'allElectric'
+     * @param {Object} L   - LABELS[lang]
+     * @returns {string}
+     */
+    function profileLabel(key, L) {
+        var map = {
+            'family':       L.profileFamily,
+            'retired':      L.profileRetired,
+            'telecommute':  L.profileTelecommute,
+            'allElectric':  L.profileAllElectric,
+        };
+        var descMap = {
+            'family':       L.profileDescFamily,
+            'retired':      L.profileDescRetired,
+            'telecommute':  L.profileDescTelecommute,
+            'allElectric':  L.profileDescAllElectric,
+        };
+        var name = map[key] || key;
+        var desc = descMap[key];
+        return desc ? name + ' (' + desc + ')' : name;
+    }
+
+    /**
+     * Returns a human-readable panel type string from efficiency value.
+     * e.g. 0.20 → "Monocristallin — 20 %"
+     */
+    function panelTypeLabel(efficiency, lang) {
+        var pct = Math.round((efficiency || 0.20) * 100);
+        var type = lang === 'fr' ? 'Monocristallin' : 'Monocrystalline';
+        return type + ' — ' + pct + ' %';
+    }
+
 
     // =================================================================
-    //  7a. COVER PAGE (v2 — Step 4)
+    //  7. PAGE COMPOSERS (v2)
     // =================================================================
 
     /**
@@ -913,8 +1226,8 @@
      * Structure:
      *   0–70mm   : dark band with logo text + report title
      *   80–130mm : project info (location, power, date)
-     *   140–175mm: intro paragraph + method line
-     *   185–265mm: table of contents (6 entries)
+     *   140–170mm: intro paragraph + method line
+     *   185–260mm: table of contents (6 entries)
      *   275–290mm: editor mention
      */
     function renderCoverPage(doc, ctx, data) {
@@ -946,7 +1259,7 @@
         doc.setFontSize(14);
         doc.setTextColor.apply(doc, C.light);
         doc.setFont('helvetica', 'normal');
-        var title = ctx.mode === 'study' ? L.coverStudyTitle : L.coverReportTitle;
+        var title = L.coverReportTitle;
         doc.text(clean(title), M, 42);
 
         // Subtitle
@@ -1091,363 +1404,226 @@
         doc.text(clean(L.coverEditor), PAGE_W / 2, 282, { align: 'center' });
     }
 
-
-    // =================================================================
-    //  7a-2. SYNTHESIS PAGE (v2 — Step 5)
-    // =================================================================
-
     /**
-     * Renders v2 page 2: "Synthèse du projet"
-     * Uses drawHeader() at top (called by assembler, not here).
-     *
+     * Renders v2 page 2: "Synthese financiere" / "Financial summary"
      * Structure:
-     *   1. Section title "Synthèse du projet"
-     *   2. Verdict block (good / medium / poor)
-     *   3. 4 KPI cards (savings, payback, autoconso, IRR)
-     *   4. Compact configuration table
-     *
-     * Reuses existing helpers: drawVerdictBlock, drawKpiCards,
-     * drawSectionTitle, drawCompactTable, orientLabel, profileLabel.
+     *   1. Section "Production & Economies" with 2 rows of 3 KPI cards
+     *   2. Section "Investissement & Rentabilite" with 2 rows of 3 KPI cards
      */
     function renderV2Page2(doc, ctx, data) {
         var L = ctx.L;
         var lang = ctx.lang;
-        var cfg = data.config;
-        var bat = data.battery;
-        var fp = data.financialParams;
         var fin = data.financial;
+        var fp = data.financialParams;
         var prod = data.production;
-        var flags = data.displayFlags;
 
-        // --- Section title ---
-        drawSectionTitle(doc, ctx, L.v2SynthesisTitle);
+        // --- Section 1: Production & Economies ---
+        drawSectionTitle(doc, ctx, L.p2ProductionSavings);
         drawPageIntro(doc, ctx, L.v2IntroP2);
 
-        // --- Verdict block ---
-        if (flags.hasVerdict) {
-            drawVerdictBlock(doc, ctx, data.verdict);
-        }
-
-        // --- 4 KPI cards ---
-        var paybackVal = fin.payback !== null
-            ? fmtNum(fin.payback, 1, lang)
-            : L.notReached;
-        var irrVal = flags.irrAvailable
-            ? fmtNum(fin.irr * 100, 1, lang)
-            : '\u2014';
-
+        // Row 1: Production, Rendement, Puissance
         drawKpiCards(doc, ctx, [
-            { label: L.kpiSavings,   value: fmtNum(fin.annualSavings, 0, lang), unit: L.unitEurAn, accent: C.green },
-            { label: L.kpiPayback,   value: paybackVal,                          unit: L.unitYears, accent: C.amber },
-            { label: L.kpiAutoconso, value: fmtNum(prod.autoconsoRate, 1, lang), unit: L.unitPercent, accent: C.amber },
-            { label: L.kpiIrr,       value: irrVal,                              unit: L.unitPercent, accent: C.green },
+            { label: L.lblAnnualProd,   value: fmtNum(prod.annual, 0, lang), unit: L.unitKwhAn, accent: C.green },
+            { label: L.lblProdPerKwc,   value: fmtNum(prod.perKwc, 0, lang), unit: L.unitKwhKwc, accent: C.green },
+            { label: L.lblPower,        value: fmtNum(fp.installedCapacity || data.config.kwc, 1, lang), unit: L.unitKwc, accent: C.green },
         ]);
 
-        // --- Configuration table ---
-        ctx.y += 2;
-        drawSectionTitle(doc, ctx, L.v2ConfigTitle);
+        // Row 2: Eco. autoconso, Revente surplus, Total annuel
+        drawKpiCards(doc, ctx, [
+            { label: L.lblSavingsAuto,   value: fmtNum(fin.savingsAutoconso, 0, lang), unit: L.unitEurAn, accent: C.amber },
+            { label: L.lblSavingsFeedin,  value: fmtNum(fin.savingsFeedin, 0, lang), unit: L.unitEurAn, accent: C.amber },
+            { label: L.lblSavingsTotal,   value: fmtNum(fin.annualSavings, 0, lang), unit: L.unitEurAn, accent: C.green },
+        ]);
 
-        var batteryText = flags.hasBattery
-            ? fmtNum(bat.capacityKwh, 1, lang) + ' ' + L.unitKwh
-            : L.no;
+        ctx.y += 4;
 
-        var configRows = [
-            [L.lblLocation,   cfg.countryName + ' (' + fmtNum(cfg.lat, 2, lang) + '\u00b0N, ' + fmtNum(cfg.lon, 2, lang) + '\u00b0E)'],
-            [L.lblPower,      fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc],
-            [L.lblSurface,    fmtNum(cfg.surface, 0, lang) + ' ' + L.unitM2],
-            [L.lblTiltOrient, fmtNum(cfg.tilt, 0, lang) + '\u00b0 / ' + orientLabel(cfg.orientation, L)],
-            [L.lblProfile,    profileLabel(cfg.profile, L)],
-            [L.lblBattery,    batteryText],
-            [L.lblConsoInput, fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh],
-        ];
+        // --- Section 2: Investissement & Rentabilite ---
+        drawSectionTitle(doc, ctx, L.p2Investment);
 
-        if (flags.consoModified) {
-            configRows.push([L.lblConsoSimulated, fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh]);
-        }
+        var paybackVal = fin.payback !== null ? fmtNum(fin.payback, 1, lang) : L.notReached;
+        var irrVal = fin.irr !== null ? fmtNum(fin.irr * 100, 1, lang) : '\u2014';
 
-        configRows.push([L.lblElecPrice,    fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh]);
-        configRows.push([L.lblFeedinTariff,  fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
+        // Row 1: Cout install. (brut), Cout net apres aides, Temps retour
+        checkPageBreak(doc, ctx, 35);
+        drawKpiCards(doc, ctx, [
+            { label: L.v2CostPv,         value: fmtNum(fp.installCost, 0, lang), unit: L.unitEur, accent: C.slate },
+            { label: L.lblNetCost,       value: fmtNum(fp.netCost, 0, lang), unit: L.unitEur, accent: C.slate },
+            { label: L.lblPayback,       value: paybackVal, unit: L.unitYears, accent: C.amber },
+        ]);
 
-        drawCompactTable(doc, ctx, configRows);
-
-        // --- Profile explanatory note ---
-        ctx.y += 3;
-        var noteText = clean(L.v2ProfileNote);
-        doc.setFontSize(7);
-        doc.setTextColor.apply(doc, C.slate);
-        var noteLines = doc.splitTextToSize(noteText, PAGE_W - 2 * M - 12);
-        var noteH = noteLines.length * 3 + 6;
-        checkPageBreak(doc, ctx, noteH);
-        doc.setFillColor(245, 245, 248);
-        doc.roundedRect(M, ctx.y, PAGE_W - 2 * M, noteH, 1.5, 1.5, 'F');
-        doc.setFont('helvetica', 'italic');
-        doc.text(noteLines, M + 6, ctx.y + 4);
-        doc.setFont('helvetica', 'normal');
-        ctx.y += noteH + 2;
+        // Row 2: Gains nets 25 ans, TRI, CO2 evite
+        drawKpiCards(doc, ctx, [
+            { label: L.lblTotalGains,    value: fmtNum(fin.totalSavings25y, 0, lang), unit: L.unitEur, accent: C.green },
+            { label: L.lblIrr,           value: irrVal, unit: L.unitPercent, accent: C.green },
+            { label: L.lblCo2,           value: fmtNum(fin.co2Avoided, 0, lang), unit: L.unitKgAn, accent: C.green },
+        ]);
     }
 
-
-    // =================================================================
-    //  7a-3. PRODUCTION & SELF-CONSUMPTION PAGE (v2 — Step 6)
-    // =================================================================
-
     /**
-     * Renders v2 page 3: "Production et autoconsommation"
-     * Uses drawHeader() at top (called by assembler, not here).
-     *
+     * Renders v2 page 3: "Autoconsommation detaillee" / "Self-consumption details"
      * Structure:
-     *   1. Section "Production solaire" — performance + valeur économique
-     *   2. Section "Autoconsommation détaillée" — répartition flux énergie
-     *   3. Bloc pédagogique "Comprendre la consommation modélisée"
-     *      — conditionnel : adapte le texte selon profil + addons présents
-     *
-     * Reuses: drawSectionTitle, drawCompactTable, profileLabel.
+     *   1. 6 KPI cards in 2 rows
+     *   2. Monthly table with Mois | Production | Consommation | Auto % | Injection
      */
     function renderV2Page3(doc, ctx, data) {
         var L = ctx.L;
         var lang = ctx.lang;
         var prod = data.production;
-        var fin = data.financial;
-        var cfg = data.config;
-        var flags = data.displayFlags;
 
-        // -------------------------------------------------------
-        //  1. Production solaire
-        // -------------------------------------------------------
-        drawSectionTitle(doc, ctx, L.v2ProductionTitle);
-        drawPageIntro(doc, ctx, L.v2IntroP3);
-        drawCompactTable(doc, ctx, [
-            [L.lblAnnualProd,    fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwh],
-            [L.lblProdPerKwc,    fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc],
-            [L.lblSavingsAuto,   fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsTotal,  fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
-        ]);
-        ctx.y += 4;
-
-        // -------------------------------------------------------
-        //  2. Autoconsommation détaillée
-        // -------------------------------------------------------
+        // --- Section: Autoconsommation details ---
         drawSectionTitle(doc, ctx, L.v2AutoconsoTitle);
-        drawCompactTable(doc, ctx, [
-            [L.lblAutoRate,    fmtNum(prod.autoconsoRate, 1, lang) + ' ' + L.unitPercent],
-            [L.lblProdRate,    fmtNum(prod.autoprodRate, 1, lang) + ' ' + L.unitPercent],
-            [L.lblAutoDirect,  fmtNum(prod.autoDirect, 0, lang) + ' ' + L.unitKwh],
-            [L.lblAutoBattery, fmtNum(prod.autoBattery, 0, lang) + ' ' + L.unitKwh],
-            [L.lblInjection,   fmtNum(prod.injection, 0, lang) + ' ' + L.unitKwh],
-            [L.lblSoutirage,   fmtNum(prod.soutirage, 0, lang) + ' ' + L.unitKwh],
+        drawPageIntro(doc, ctx, L.v2IntroP3);
+
+        // Row 1: Taux autoconso, Couverture solaire, Auto-directe
+        drawKpiCards(doc, ctx, [
+            { label: L.lblAutoRate,   value: fmtNum(prod.autoconsoRate, 1, lang), unit: L.unitPercent, accent: C.amber },
+            { label: L.lblProdRate,   value: fmtNum(prod.autoprodRate, 1, lang), unit: L.unitPercent, accent: C.amber },
+            { label: L.lblAutoDirect, value: fmtNum(prod.autoDirect, 0, lang), unit: L.unitKwh, accent: C.green },
         ]);
+
+        // Row 2: Auto-batterie, Injection, Soutirage
+        drawKpiCards(doc, ctx, [
+            { label: L.lblAutoBattery, value: fmtNum(prod.autoBattery, 0, lang), unit: L.unitKwh, accent: C.green },
+            { label: L.lblInjection,   value: fmtNum(prod.injection, 0, lang), unit: L.unitKwh, accent: C.slate },
+            { label: L.lblSoutirage,   value: fmtNum(prod.soutirage, 0, lang), unit: L.unitKwh, accent: C.slate },
+        ]);
+
         ctx.y += 6;
 
-        // -------------------------------------------------------
-        //  3. Bloc pédagogique — consommation modélisée
-        // -------------------------------------------------------
-        // Build text dynamically based on profile + addons
-        // Lot 2: build addon labels with dynamic kWh from cfg.resolvedAddons (pure, no global read)
-        var RA = cfg.resolvedAddons || {};
-        var AP_base = window.AutoconsommationSimulator && window.AutoconsommationSimulator.ADDITIONAL_PROFILES;
-        var unitSuffix = (lang === 'fr') ? ' kWh/an)' : ' kWh/yr)';
-        function addonLabel(labelKey, addonKey) {
-            var base = L[labelKey];
-            var src = RA[addonKey] || (AP_base && AP_base[addonKey]);
-            if (src) {
-                return base + ' (~' + fmtNum(src.annualKwh, 0, lang) + unitSuffix;
-            }
-            return base;
-        }
-        // PAC: enrich label with level + ECS intégrée if available
-        var pacLabel = (function() {
-            var base = L['v2AddonPac'];
-            var src = RA['pac'];
-            if (!src) return base;
-            var levelNames = (lang === 'fr')
-                ? { moderate: 'mod\u00e9r\u00e9e', standard: 'standard', high: 'forte' }
-                : { moderate: 'moderate', standard: 'standard', high: 'high' };
-            var detail = levelNames[src.level] || levelNames['standard'];
-            if (src.ecsIntegrated) {
-                detail += (lang === 'fr') ? ' + ECS int\u00e9gr\u00e9e' : ' + integrated DHW';
-            }
-            return base + ' \u2014 ' + detail + ' (~' + fmtNum(src.annualKwh, 0, lang) + unitSuffix;
-        })();
-        var addonMap = {
-            ev:  addonLabel('v2AddonEv',  'ev'),
-            pac: pacLabel,
-            ecs: addonLabel('v2AddonEcs', 'ecs'),
-            ac:  addonLabel('v2AddonAc',  'ac'),
-            pool: addonLabel('v2AddonPool', 'pool'),
-        };
+        // --- Monthly table ---
+        checkPageBreak(doc, ctx, 75);
+        drawSectionTitle(doc, ctx, L.p3MonthlyTitle);
 
-        var lines = [];
+        var monthlyProd = prod.monthly && prod.monthly.production ? prod.monthly.production : [];
+        var monthlyConso = prod.monthly && prod.monthly.consumption ? prod.monthly.consumption : [];
+        var monthlyAutoDirect = prod.monthly && prod.monthly.autoDirect ? prod.monthly.autoDirect : [];
+        var monthlyAutoBat = prod.monthly && prod.monthly.autoBattery ? prod.monthly.autoBattery : [];
+        var monthlyInj = prod.monthly && prod.monthly.injection ? prod.monthly.injection : [];
 
-        // Baseline profile sentence
-        lines.push(clean(L.v2ConsoBoxBase) + ' '
-            + fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh
-            + (lang === 'fr' ? ', basee sur le profil "' : ', based on the "')
-            + profileLabel(cfg.profile, L) + '".');
-
-        // Addons — only if present
-        if (flags.hasAddons) {
-            lines.push(clean(L.v2ConsoBoxAddons));
-            var addons = cfg.addons || [];
-            addons.forEach(function (key) {
-                if (addonMap[key]) {
-                    lines.push('  \u2022 ' + clean(addonMap[key]));
-                }
-            });
-            lines.push(clean(L.v2ConsoBoxResult) + ' '
-                + fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh + '.');
-        } else {
-            lines.push(clean(L.v2ConsoBoxNoChange));
+        var months = L.months;
+        if (!months) {
+            months = lang === 'fr'
+                ? ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
+                : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         }
 
-        var bodyText = lines.join('\n');
+        // Table header
+        var colW = (PAGE_W - 2 * M) / 5;
+        var tableX = M;
+        var tableHeaderY = ctx.y;
 
-        // Compute box height
-        doc.setFontSize(8);
-        var bodyLines = doc.splitTextToSize(bodyText, PAGE_W - 2 * M - 16);
-        var boxH = 12 + bodyLines.length * 3.5 + 4;
-
-        checkPageBreak(doc, ctx, boxH + 10);
-
-        // Title
-        doc.setFontSize(9);
-        doc.setTextColor.apply(doc, C.dark);
+        doc.setFillColor.apply(doc, C.dark);
+        doc.rect(tableX, tableHeaderY - 1, PAGE_W - 2 * M, 6, 'F');
+        doc.setFontSize(7);
+        doc.setTextColor.apply(doc, C.white);
         doc.setFont('helvetica', 'bold');
-        doc.text(clean(L.v2ConsoBoxTitle), M, ctx.y);
+        doc.text(L.month || 'Mois', tableX + colW / 2, tableHeaderY + 2.5, { align: 'center' });
+        doc.text(L.lblAnnualProd, tableX + colW + colW / 2, tableHeaderY + 2.5, { align: 'center' });
+        doc.text(L.lblConsoInput || 'Consommation', tableX + 2 * colW + colW / 2, tableHeaderY + 2.5, { align: 'center' });
+        doc.text(L.lblAutoRate, tableX + 3 * colW + colW / 2, tableHeaderY + 2.5, { align: 'center' });
+        doc.text(L.lblInjection, tableX + 4 * colW + colW / 2, tableHeaderY + 2.5, { align: 'center' });
         doc.setFont('helvetica', 'normal');
-        ctx.y += 2;
+        ctx.y = tableHeaderY + 8;
 
-        // Amber underline (short)
-        doc.setDrawColor.apply(doc, C.amber);
-        doc.setLineWidth(0.4);
-        doc.line(M, ctx.y, M + 50, ctx.y);
-        ctx.y += 5;
+        // Table rows
+        for (var m = 0; m < 12; m++) {
+            if (ctx.y > PAGE_BOTTOM - 5) {
+                doc.addPage();
+                drawHeader(doc, ctx);
+            }
 
-        // Background box
-        doc.setFillColor.apply(doc, C.bg);
-        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, boxH, 2, 2, 'F');
+            var rowBg = m % 2 === 0 ? C.bgCard : C.white;
+            doc.setFillColor.apply(doc, rowBg);
+            doc.rect(tableX, ctx.y - 1, PAGE_W - 2 * M, 5, 'F');
 
-        // Body text
-        doc.setFontSize(8);
-        doc.setTextColor.apply(doc, C.slate);
-        doc.text(bodyLines, M + 6, ctx.y + 4);
+            doc.setFontSize(7);
+            doc.setTextColor.apply(doc, C.dark);
 
-        ctx.y += boxH + 4;
+            var autoPercent = monthlyProd[m] > 0 ? ((monthlyAutoDirect[m] + monthlyAutoBat[m]) / monthlyProd[m] * 100) : 0;
+
+            doc.text(months[m], tableX + colW / 2, ctx.y + 2.5, { align: 'center' });
+            doc.text(fmtNum(monthlyProd[m], 0, lang), tableX + colW + colW / 2, ctx.y + 2.5, { align: 'center' });
+            doc.text(fmtNum(monthlyConso[m], 0, lang), tableX + 2 * colW + colW / 2, ctx.y + 2.5, { align: 'center' });
+            doc.text(fmtNum(autoPercent, 1, lang) + '%', tableX + 3 * colW + colW / 2, ctx.y + 2.5, { align: 'center' });
+            doc.text(fmtNum(monthlyInj[m], 0, lang), tableX + 4 * colW + colW / 2, ctx.y + 2.5, { align: 'center' });
+
+            ctx.y += 5;
+        }
+
+        ctx.y += 4;
     }
 
-
-    // =================================================================
-    //  7a-4. FINANCIAL ANALYSIS PAGE (v2 — Step 7)
-    // =================================================================
-
     /**
-     * Renders v2 page 4: "Analyse économique"
-     * Uses drawHeader() at top (called by assembler, not here).
-     *
+     * Renders v2 page 4: "Comparaison batterie & aides" / "Battery comparison & subsidies"
      * Structure:
-     *   1. Section "Bilan financier" — investment, costs, payback, IRR, 25y gains
-     *   2. Section "Économies annuelles" — autoconso savings, feed-in, total
-     *   3. Section "Impact batterie" (conditional) — compact comparison
-     *   4. CO2 line — discrete complementary indicator at bottom
-     *
-     * Reuses: drawSectionTitle, drawCompactTable, drawBatteryComparison,
-     *         checkPageBreak, fmtNum.
+     *   1. Battery comparison table (if battery enabled)
+     *   2. Subsidies section
+     *   3. System recap table
      */
     function renderV2Page4(doc, ctx, data) {
         var L = ctx.L;
         var lang = ctx.lang;
         var fin = data.financial;
         var fp = data.financialParams;
-        var bat = data.battery;
         var flags = data.displayFlags;
 
-        // -------------------------------------------------------
-        //  1. Bilan financier
-        // -------------------------------------------------------
-        drawSectionTitle(doc, ctx, L.v2FinancialTitle);
+        drawSectionTitle(doc, ctx, L.v2PageTitle4);
         drawPageIntro(doc, ctx, L.v2IntroP4);
 
-        var paybackStr = fin.payback !== null
-            ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
-            : L.notReached;
-        var irrStr = flags.irrAvailable
-            ? fmtNum(fin.irr * 100, 1, lang) + ' ' + L.unitPercent
-            : '\u2014';
-        var subsidies = fp.totalInvestment - fp.netCost;
-
-        var finRows = [
-            [L.v2CostPv,       fmtNum(fp.installCost, 0, lang) + ' ' + L.unitEur],
-        ];
-
-        // Battery cost — only if battery present
-        if (flags.hasBattery) {
-            finRows.push([L.v2CostBattery, fmtNum(bat.cost, 0, lang) + ' ' + L.unitEur]);
-        }
-
-        finRows.push([L.v2CostTotal,      fmtNum(fp.totalInvestment, 0, lang) + ' ' + L.unitEur]);
-
-        // Subsidies — only if non-zero
-        if (subsidies > 0) {
-            finRows.push([L.v2Subsidies,   '- ' + fmtNum(subsidies, 0, lang) + ' ' + L.unitEur]);
-        }
-
-        finRows.push([L.lblNetCost,        fmtNum(fp.netCost, 0, lang) + ' ' + L.unitEur]);
-        finRows.push([L.lblPayback,         paybackStr]);
-        finRows.push([L.lblIrr,             irrStr]);
-        finRows.push([L.lblTotalGains,      fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur]);
-
-        drawCompactTable(doc, ctx, finRows);
-        ctx.y += 4;
-
-        // -------------------------------------------------------
-        //  2. Économies annuelles
-        // -------------------------------------------------------
-        drawSectionTitle(doc, ctx, L.v2SavingsTitle);
-        drawCompactTable(doc, ctx, [
-            [L.lblSavingsAuto,   fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsTotal,  fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
-        ]);
-        ctx.y += 6;
-
-        // -------------------------------------------------------
-        //  3. Comparaison batterie (conditionnel)
-        // -------------------------------------------------------
+        // --- Battery comparison (if battery enabled) ---
         if (flags.hasBatteryComparison) {
-            checkPageBreak(doc, ctx, 45);
             drawBatteryComparison(doc, ctx, data);
         }
 
-        // -------------------------------------------------------
-        //  4. CO2 — indicateur complémentaire discret
-        // -------------------------------------------------------
-        ctx.y += 2;
-        doc.setFontSize(7.5);
-        doc.setTextColor.apply(doc, C.muted);
-        doc.text(clean(L.v2Co2Note) + ' : '
-            + fmtNum(fin.co2Avoided, 0, lang) + ' ' + L.unitKgAn,
-            M, ctx.y);
-        ctx.y += 6;
+        // --- Subsidies section ---
+        checkPageBreak(doc, ctx, 30);
+        drawSectionTitle(doc, ctx, L.p4Subsidies);
+
+        var subsidies = fp.totalInvestment - fp.netCost;
+        if (subsidies > 0) {
+            doc.setFontSize(9);
+            doc.setTextColor.apply(doc, C.dark);
+            doc.text(clean(L.p4SubsidyNote + ' — ' + (data.config.countryName || '') + ':'), M, ctx.y);
+            ctx.y += 6;
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            doc.text(fmtNum(subsidies, 0, lang) + ' ' + L.unitEur, M, ctx.y);
+            doc.setFont('helvetica', 'normal');
+            ctx.y += 8;
+        } else {
+            doc.setFontSize(9);
+            doc.setTextColor.apply(doc, C.slate);
+            doc.text(clean(L.p4NoSubsidy), M, ctx.y);
+            ctx.y += 10;
+        }
+
+        // --- System recap table ---
+        checkPageBreak(doc, ctx, 40);
+        drawSectionTitle(doc, ctx, L.p4SystemRecap);
+
+        var recapRows = [
+            [L.lblLocation, data.config.countryName],
+            [L.lblPower, fmtNum(data.config.kwc, 1, lang) + ' ' + L.unitKwc],
+            [L.lblSurface, fmtNum(data.config.surface, 0, lang) + ' ' + L.unitM2],
+            [L.lblTiltOrient, fmtNum(data.config.tilt, 0, lang) + '\u00b0 / ' + orientLabel(data.config.orientation, L)],
+            [L.coverPanelType, panelTypeLabel(data.config.panelEfficiency, lang)],
+            [L.lblBattery, flags.hasBattery ? fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh : L.no],
+            [L.lblConsoInput, fmtNum(data.config.consumption, 0, lang) + ' ' + L.unitKwh],
+            [L.lblConsoSimulated, fmtNum(data.production.totalConsumption, 0, lang) + ' ' + L.unitKwh],
+            [L.lblProfile, profileLabel(data.config.profile, L)],
+        ];
+
+        drawCompactTable(doc, ctx, recapRows);
     }
 
-
-    // =================================================================
-    //  7a-5. DECISION ANALYSIS PAGE (v2 — Step 8)
-    // =================================================================
-
     /**
-     * Renders v2 page 5: "Analyse et aide à la décision"
-     * Uses drawHeader() at top (called by assembler, not here).
-     *
+     * Renders v2 page 5: "Rapport d'analyse" / "Analysis report"
      * Structure:
-     *   1. Section title
-     *   2. Strengths block — factual, data-driven (buildStrengths)
-     *   3. Weaknesses block — factual, data-driven (buildWeaknesses)
-     *   4. Battery reading — project-specific (buildBatteryReading)
-     *   5. Points to check — concrete checklist
-     *
-     * Reuses: drawSectionTitle, drawMiniBlock, buildStrengths,
-     *         buildWeaknesses, buildBatteryReading, checkPageBreak.
+     *   1. Verdict block
+     *   2. Strengths
+     *   3. Weaknesses
+     *   4. Battery reading (if battery)
+     *   5. Points to check before deciding
      */
     function renderV2Page5(doc, ctx, data) {
         var L = ctx.L;
@@ -1455,25 +1631,29 @@
         var verdict = data.verdict;
         var flags = data.displayFlags;
 
-        // --- Section title ---
-        drawSectionTitle(doc, ctx, L.v2DecisionTitle);
+        drawSectionTitle(doc, ctx, L.v2PageTitle5);
         drawPageIntro(doc, ctx, L.v2IntroP5);
 
-        // --- 1. Strengths ---
+        // --- Verdict block ---
+        if (flags.hasVerdict && verdict) {
+            drawVerdictBlock(doc, ctx, verdict);
+        }
+
+        // --- Strengths ---
         var strengths = buildStrengths(data, L, lang);
         drawMiniBlock(doc, ctx, L.p3Strengths, strengths);
 
-        // --- 2. Weaknesses ---
+        // --- Weaknesses ---
         var weaknesses = buildWeaknesses(data, L, lang);
         drawMiniBlock(doc, ctx, L.p3Weaknesses, weaknesses);
 
-        // --- 3. Battery reading (project-specific) ---
+        // --- Battery reading (if battery configured) ---
         if (flags.hasBattery) {
             var batLines = buildBatteryReading(data, L, lang);
             drawMiniBlock(doc, ctx, L.p3BatteryReading, batLines);
         }
 
-        // --- 4. Points to check before deciding ---
+        // --- Points to check ---
         checkPageBreak(doc, ctx, 25);
         var checks = [];
         if (flags.hasVerdict && verdict && Array.isArray(verdict.recommendations) && verdict.recommendations.length > 0) {
@@ -1485,28 +1665,14 @@
         drawMiniBlock(doc, ctx, L.p3CheckBefore, checks);
     }
 
-
-    // =================================================================
-    //  7a-6. ASSUMPTIONS, METHOD & LIMITS PAGE (v2 — Step 9)
-    // =================================================================
-
     /**
-     * Renders v2 page 6: "Hypothèses, méthode et limites"
-     * Uses drawHeader() at top (called by assembler, not here).
-     *
+     * Renders v2 page 6: "Hypotheses & methode" / "Assumptions & method"
      * Structure:
-     *   1. Section title
-     *   2. Assumptions table (elec price, feed-in, annual increase,
-     *      PV degradation, battery degradation, horizon, discount rate)
-     *   3. Sensitivity note — short narrative on key uncertainty drivers
-     *   4. Method block (drawMiniBlock + p4MethodText)
-     *   5. Limits block (drawMiniBlock + p4LimitsText)
-     *   6. Disclaimer box (drawDisclaimerBox)
-     *
-     * NO glossary — explicitly excluded from v2 report.
-     *
-     * Reuses: drawSectionTitle, drawCompactTable, drawMiniBlock,
-     *         drawDisclaimerBox, checkPageBreak.
+     *   1. Assumptions table
+     *   2. Sensitivity note
+     *   3. Method block
+     *   4. Limits block
+     *   5. Disclaimer
      */
     function renderV2Page6(doc, ctx, data) {
         var L = ctx.L;
@@ -1514,11 +1680,10 @@
         var fp = data.financialParams;
         var flags = data.displayFlags;
 
-        // --- Section title ---
-        drawSectionTitle(doc, ctx, L.v2HypothesesTitle);
+        drawSectionTitle(doc, ctx, L.v2PageTitle6);
         drawPageIntro(doc, ctx, L.v2IntroP6);
 
-        // --- 1. Assumptions table ---
+        // --- Assumptions table ---
         var assumptionRows = [
             [L.lblAssumedElecPrice,  fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh],
             [L.lblAssumedFeedin,     fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh],
@@ -1534,979 +1699,22 @@
         drawCompactTable(doc, ctx, assumptionRows);
         ctx.y += 4;
 
-        // --- 2. Sensitivity note — key uncertainty drivers ---
+        // --- Sensitivity note ---
         doc.setFontSize(8);
         doc.setTextColor.apply(doc, C.slate);
         var noteLines = doc.splitTextToSize(clean(L.v2SensitivityNote), PAGE_W - 2 * M);
         doc.text(noteLines, M, ctx.y);
         ctx.y += noteLines.length * 3.5 + 6;
 
-        // --- 3. Method ---
+        // --- Method ---
         checkPageBreak(doc, ctx, 30);
         drawMiniBlock(doc, ctx, L.p4Method, L.p4MethodText);
 
-        // --- 4. Limits ---
+        // --- Limits ---
         checkPageBreak(doc, ctx, 30);
         drawMiniBlock(doc, ctx, L.p4Limits, L.p4LimitsText);
 
-        // --- 5. Disclaimer ---
-        drawDisclaimerBox(doc, ctx, L);
-    }
-
-
-    // =================================================================
-    //  7b. PAGE COMPOSERS (client & study — legacy)
-    // =================================================================
-
-    // --- Client mode ---
-
-    /**
-     * Resolves an orientation value (degrees) to a human-readable label.
-     * @param {number} deg - orientation in degrees (0=South, -45=SE, etc.)
-     * @param {Object} L   - LABELS[lang]
-     * @returns {string}
-     */
-    function orientLabel(deg, L) {
-        var map = {
-            '0':   L.orientSouth,
-            '-45': L.orientSouthEast,
-            '45':  L.orientSouthWest,
-            '-90': L.orientEast,
-            '90':  L.orientWest,
-        };
-        return map[String(deg)] || (deg + '\u00b0');
-    }
-
-    /**
-     * Resolves a profile key to a human-readable label.
-     * @param {string} key - 'family' | 'retired' | 'telecommute' | 'allElectric'
-     * @param {Object} L   - LABELS[lang]
-     * @returns {string}
-     */
-    function profileLabel(key, L) {
-        var map = {
-            'family':       L.profileFamily,
-            'retired':      L.profileRetired,
-            'telecommute':  L.profileTelecommute,
-            'allElectric':  L.profileAllElectric,
-        };
-        var descMap = {
-            'family':       L.profileDescFamily,
-            'retired':      L.profileDescRetired,
-            'telecommute':  L.profileDescTelecommute,
-            'allElectric':  L.profileDescAllElectric,
-        };
-        var name = map[key] || key;
-        var desc = descMap[key];
-        return desc ? name + ' (' + desc + ')' : name;
-    }
-
-    /**
-     * Draws the "A RETENIR" / "KEY TAKEAWAYS" summary box.
-     */
-    function drawQuickReadBox(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var prod = data.production;
-        var fin = data.financial;
-        var fp = data.financialParams;
-
-        var paybackStr = fin.payback !== null ? fmtNum(fin.payback, 1, lang) : L.notReached;
-
-        var line = L.lblAnnualProd + ' : ' + fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwhAn + '  |  '
-            + L.kpiSavings + ' : ' + fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn + '  |  '
-            + L.kpiPayback + ' : ' + paybackStr + ' ' + L.unitYears + '  |  '
-            + L.lblTotalGains + ' : ' + fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur;
-
-        doc.setFillColor.apply(doc, C.bg);
-        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, 16, 2, 2, 'F');
-        doc.setFontSize(8);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.setFont('helvetica', 'bold');
-        doc.text(L.sectionQuickRead, M + 4, ctx.y + 4);
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(7.5);
-        doc.setTextColor.apply(doc, C.slate);
-        var qrLines = doc.splitTextToSize(clean(line), PAGE_W - 2 * M - 8);
-        doc.text(qrLines, M + 4, ctx.y + 9);
-        ctx.y += 20;
-    }
-
-    // -----------------------------------------------------------------
-    //  Client page 1: Synthese decisionnelle
-    //  - Verdict block
-    //  - 4 KPI cards
-    //  - Configuration table
-    //  - Quick-read summary box
-    // -----------------------------------------------------------------
-
-    /** Client page 1: Decision summary (verdict + KPIs + config + quick read) */
-    function renderClientPage1(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var cfg = data.config;
-        var bat = data.battery;
-        var fp = data.financialParams;
-        var fin = data.financial;
-        var prod = data.production;
-        var flags = data.displayFlags;
-
-        // --- Verdict block ---
-        if (flags.hasVerdict) {
-            drawVerdictBlock(doc, ctx, data.verdict);
-        }
-
-        // --- 4 KPI cards ---
-        var paybackVal = fin.payback !== null
-            ? fmtNum(fin.payback, 1, lang)
-            : L.notReached;
-        var irrVal = flags.irrAvailable
-            ? fmtNum(fin.irr * 100, 1, lang)
-            : '—';
-
-        drawKpiCards(doc, ctx, [
-            { label: L.kpiSavings,   value: fmtNum(fin.annualSavings, 0, lang), unit: L.unitEurAn, accent: C.green },
-            { label: L.kpiPayback,   value: paybackVal,                          unit: L.unitYears, accent: C.amber },
-            { label: L.kpiAutoconso, value: fmtNum(prod.autoconsoRate, 1, lang), unit: L.unitPercent, accent: C.amber },
-            { label: L.kpiIrr,       value: irrVal,                              unit: L.unitPercent, accent: C.green },
-        ]);
-
-        // --- Configuration table ---
-        ctx.y += 4;
-        drawSectionTitle(doc, ctx, L.sectionConfig);
-
-        var batteryText = flags.hasBattery
-            ? fmtNum(bat.capacityKwh, 1, lang) + ' ' + L.unitKwh
-            : L.no;
-
-        var configRows = [
-            [L.lblLocation,   cfg.countryName + ' (' + fmtNum(cfg.lat, 2, lang) + '\u00b0N, ' + fmtNum(cfg.lon, 2, lang) + '\u00b0E)'],
-            [L.lblPower,      fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc],
-            [L.lblSurface,    fmtNum(cfg.surface, 0, lang) + ' ' + L.unitM2],
-            [L.lblTiltOrient, fmtNum(cfg.tilt, 0, lang) + '\u00b0 / ' + orientLabel(cfg.orientation, L)],
-            [L.lblProfile,    profileLabel(cfg.profile, L)],
-            [L.lblBattery,    batteryText],
-            [L.lblConsoInput, fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh],
-        ];
-
-        // Show simulated consumption only if addons modified it
-        if (flags.consoModified) {
-            configRows.push([L.lblConsoSimulated, fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh]);
-        }
-
-        configRows.push([L.lblElecPrice,     fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh]);
-        configRows.push([L.lblFeedinTariff,   fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
-
-        drawCompactTable(doc, ctx, configRows);
-
-        // --- Quick-read summary box ---
-        ctx.y += 4;
-        drawQuickReadBox(doc, ctx, data);
-    }
-
-    /**
-     * Draws the battery comparison side-by-side cards.
-     * Uses data from batteryComparison (not DOM).
-     */
-    function drawBatteryComparison(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var bc = data.batteryComparison;
-        if (!bc) return;
-
-        drawSectionTitle(doc, ctx, L.sectionBattery);
-
-        var colW = (BLOCK_W - 6) / 2;
-        var colX1 = BLOCK_X;
-        var colX2 = BLOCK_X + colW + 6;
-
-        var noBatPayStr = bc.withoutBattery.payback !== null
-            ? fmtNum(bc.withoutBattery.payback, 1, lang) + ' ' + L.unitYears
-            : L.notReached;
-        var batPayStr = bc.withBattery.payback !== null
-            ? fmtNum(bc.withBattery.payback, 1, lang) + ' ' + L.unitYears
-            : L.notReached;
-
-        // --- Without battery card ---
-        doc.setFillColor.apply(doc, C.bg);
-        doc.roundedRect(colX1, ctx.y - 2, colW, 24, 2, 2, 'F');
-        doc.setFontSize(8);
-        doc.setTextColor.apply(doc, C.slate);
-        doc.setFont('helvetica', 'bold');
-        doc.text(L.lblWithoutBattery, colX1 + colW / 2, ctx.y + 3, { align: 'center' });
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(7.5);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.text(L.lblAutoconsoShort + ' : ' + fmtNum(bc.withoutBattery.autoRate, 1, lang) + '%', colX1 + 4, ctx.y + 9);
-        doc.text(L.lblSavingsShort + ' : ' + fmtNum(bc.withoutBattery.savings, 0, lang) + ' ' + L.unitEur, colX1 + 4, ctx.y + 14);
-        doc.text(L.lblPaybackShort + ' : ' + noBatPayStr, colX1 + 4, ctx.y + 19);
-
-        // --- With battery card ---
-        doc.setFillColor.apply(doc, C.bgAmber);
-        doc.setDrawColor.apply(doc, C.amber);
-        doc.setLineWidth(0.4);
-        doc.roundedRect(colX2, ctx.y - 2, colW, 24, 2, 2, 'FD');
-        doc.setFontSize(8);
-        doc.setTextColor.apply(doc, C.amber);
-        doc.setFont('helvetica', 'bold');
-        doc.text(L.lblWithBattery, colX2 + colW / 2, ctx.y + 3, { align: 'center' });
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(7.5);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.text(L.lblAutoconsoShort + ' : ' + fmtNum(bc.withBattery.autoRate, 1, lang) + '%', colX2 + 4, ctx.y + 9);
-        doc.text(L.lblSavingsShort + ' : ' + fmtNum(bc.withBattery.savings, 0, lang) + ' ' + L.unitEur, colX2 + 4, ctx.y + 14);
-        doc.text(L.lblPaybackShort + ' : ' + batPayStr, colX2 + 4, ctx.y + 19);
-
-        ctx.y += 26;
-
-        // --- Conclusion text ---
-        if (bc.conclusion) {
-            doc.setFontSize(7);
-            doc.setTextColor.apply(doc, C.muted);
-            var concLines = doc.splitTextToSize(clean(bc.conclusion), BLOCK_W);
-            doc.text(concLines, BLOCK_X, ctx.y);
-            ctx.y += concLines.length * 3 + 4;
-        }
-        ctx.y += 4;
-    }
-
-    // -----------------------------------------------------------------
-    //  Client page 2: Analyse technique et financiere
-    //  - Production solaire
-    //  - Autoconsommation detaillee (conditionnel)
-    //  - Bilan financier
-    //  - Impact batterie (conditionnel)
-    // -----------------------------------------------------------------
-
-    /** Client page 2: Technical & financial analysis */
-    function renderClientPage2(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var prod = data.production;
-        var fin = data.financial;
-        var fp = data.financialParams;
-        var flags = data.displayFlags;
-
-        // --- Production solaire ---
-        drawSectionTitle(doc, ctx, L.sectionProduction);
-        drawCompactTable(doc, ctx, [
-            [L.lblAnnualProd,   fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwh],
-            [L.lblProdPerKwc,   fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc],
-            [L.lblSavingsAuto,  fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsTotal, fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
-        ]);
-        ctx.y += 4;
-
-        // --- Autoconsommation detaillee ---
-        // Only show if autoconsoRate is available (always true after simulation)
-        drawSectionTitle(doc, ctx, L.sectionAutoconso);
-        drawCompactTable(doc, ctx, [
-            [L.lblAutoRate,    fmtNum(prod.autoconsoRate, 1, lang) + ' ' + L.unitPercent],
-            [L.lblProdRate,    fmtNum(prod.autoprodRate, 1, lang) + ' ' + L.unitPercent],
-            [L.lblAutoDirect,  fmtNum(prod.autoDirect, 0, lang) + ' ' + L.unitKwh],
-            [L.lblAutoBattery, fmtNum(prod.autoBattery, 0, lang) + ' ' + L.unitKwh],
-            [L.lblInjection,   fmtNum(prod.injection, 0, lang) + ' ' + L.unitKwh],
-            [L.lblSoutirage,   fmtNum(prod.soutirage, 0, lang) + ' ' + L.unitKwh],
-        ]);
-        ctx.y += 4;
-
-        // --- Bilan financier ---
-        // Check page break: financial section needs ~40mm
-        checkPageBreak(doc, ctx, 45);
-
-        var paybackStr = fin.payback !== null
-            ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
-            : L.notReached;
-        var irrStr = flags.irrAvailable
-            ? fmtNum(fin.irr * 100, 1, lang) + ' ' + L.unitPercent
-            : '—';
-
-        drawSectionTitle(doc, ctx, L.sectionFinancial);
-        drawCompactTable(doc, ctx, [
-            [L.lblInstallCost, fmtNum(fp.totalInvestment, 0, lang) + ' ' + L.unitEur],
-            [L.lblNetCost,     fmtNum(fp.netCost, 0, lang) + ' ' + L.unitEur],
-            [L.lblPayback,     paybackStr],
-            [L.lblTotalGains,  fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur],
-            [L.lblIrr,         irrStr],
-            [L.lblCo2,         fmtNum(fin.co2Avoided, 0, lang) + ' ' + L.unitKgAn],
-        ]);
-        ctx.y += 4;
-
-        // --- Battery comparison (conditional) ---
-        if (flags.hasBatteryComparison) {
-            // Check page break: battery comparison needs ~40mm
-            checkPageBreak(doc, ctx, 40);
-            drawBatteryComparison(doc, ctx, data);
-        }
-    }
-
-    // -----------------------------------------------------------------
-    //  Helper: drawMiniBlock
-    //  Draws a titled mini-block with a short text body.
-    //  Used for the structured analysis blocks on page 3.
-    // -----------------------------------------------------------------
-
-    /**
-     * Draws a titled text block: bold subtitle + body lines.
-     * Handles page breaks before drawing.
-     *
-     * @param {string} title - block subtitle
-     * @param {string|Array} body  - text string or array of strings (bullet lines)
-     */
-    function drawMiniBlock(doc, ctx, title, body) {
-        if (!body || (Array.isArray(body) && body.length === 0)) return;
-
-        var textStr = Array.isArray(body) ? body.join('\n') : String(body);
-        doc.setFontSize(8);
-        var bodyLines = doc.splitTextToSize(clean(textStr), PAGE_W - 2 * M - 8);
-        var neededH = 10 + bodyLines.length * 3.5;
-
-        checkPageBreak(doc, ctx, neededH);
-
-        // Subtitle
-        doc.setFontSize(9);
-        doc.setTextColor.apply(doc, C.dark);
-        doc.setFont('helvetica', 'bold');
-        doc.text(clean(title), M + 2, ctx.y);
-        doc.setFont('helvetica', 'normal');
-        ctx.y += 1.5;
-        doc.setDrawColor.apply(doc, C.light);
-        doc.setLineWidth(0.3);
-        doc.line(M + 2, ctx.y, M + 50, ctx.y);
-        ctx.y += 4;
-
-        // Body
-        doc.setFontSize(8);
-        doc.setTextColor.apply(doc, C.slate);
-        doc.text(bodyLines, M + 4, ctx.y);
-        ctx.y += bodyLines.length * 3.5 + 5;
-    }
-
-    /**
-     * Builds a strength sentence from numeric data.
-     * Returns an array of short factual lines.
-     */
-    function buildStrengths(data, L, lang) {
-        var lines = [];
-        var fin = data.financial;
-        var prod = data.production;
-        var fp = data.financialParams;
-
-        // Good yield
-        if (prod.perKwc >= 1100) {
-            lines.push('- ' + L.lblProdPerKwc + ' : ' + fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc
-                + (lang === 'fr' ? ' (bon gisement solaire)' : ' (good solar resource)'));
-        }
-        // High self-consumption
-        if (prod.autoconsoRate >= 50) {
-            lines.push('- ' + L.lblAutoRate + ' : ' + fmtNum(prod.autoconsoRate, 1, lang) + '%'
-                + (lang === 'fr' ? ' (valorisation locale forte)' : ' (strong local value)'));
-        }
-        // Good payback
-        if (fin.payback !== null && fin.payback <= 12) {
-            lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
-                + (lang === 'fr' ? ' (retour rapide)' : ' (fast return)'));
-        }
-        // Positive IRR (fin.irr is a decimal, e.g. 0.17 = 17%)
-        if (fin.irr !== null && fin.irr >= 0.04) {
-            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr * 100, 1, lang) + '%'
-                + (lang === 'fr' ? ' (rendement competitif)' : ' (competitive return)'));
-        }
-        // Significant 25y gains
-        if (fin.totalSavings25y > fp.netCost * 1.5) {
-            lines.push('- ' + L.lblTotalGains + ' : ' + fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur);
-        }
-        // Fallback
-        if (lines.length === 0) {
-            lines.push(lang === 'fr'
-                ? '- Les parametres ne font pas ressortir de point fort marque dans cette configuration.'
-                : '- The parameters do not highlight a strong advantage in this configuration.');
-        }
-        return lines;
-    }
-
-    /**
-     * Builds weakness lines from numeric data.
-     */
-    function buildWeaknesses(data, L, lang) {
-        var lines = [];
-        var fin = data.financial;
-        var prod = data.production;
-
-        // Low yield
-        if (prod.perKwc < 900) {
-            lines.push('- ' + L.lblProdPerKwc + ' : ' + fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc
-                + (lang === 'fr' ? ' (gisement solaire faible)' : ' (low solar resource)'));
-        }
-        // Low self-consumption
-        if (prod.autoconsoRate < 30) {
-            lines.push('- ' + L.lblAutoRate + ' : ' + fmtNum(prod.autoconsoRate, 1, lang) + '%'
-                + (lang === 'fr' ? ' (forte injection, faible valorisation locale)' : ' (high injection, low local value)'));
-        }
-        // Long or no payback
-        if (fin.payback === null) {
-            lines.push(lang === 'fr'
-                ? '- Temps de retour non atteint sur 25 ans'
-                : '- Payback period not reached within 25 years');
-        } else if (fin.payback > 15) {
-            lines.push('- ' + L.lblPayback + ' : ' + fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
-                + (lang === 'fr' ? ' (retour lent)' : ' (slow return)'));
-        }
-        // Low IRR (fin.irr is a decimal, e.g. 0.02 = 2%)
-        if (fin.irr !== null && fin.irr < 0.02) {
-            lines.push('- ' + L.lblIrr + ' : ' + fmtNum(fin.irr * 100, 1, lang) + '%'
-                + (lang === 'fr' ? ' (rendement inferieur au cout du capital)' : ' (return below cost of capital)'));
-        }
-        // Fallback
-        if (lines.length === 0) {
-            lines.push(lang === 'fr'
-                ? '- Aucun point faible majeur identifie dans cette configuration.'
-                : '- No major weakness identified in this configuration.');
-        }
-        return lines;
-    }
-
-    /**
-     * Builds a battery reading block.
-     */
-    function buildBatteryReading(data, L, lang) {
-        var flags = data.displayFlags;
-        if (!flags.hasBattery) return [L.p3NoBattery];
-
-        var lines = [];
-        var bc = data.batteryComparison;
-        if (bc) {
-            var diffAuto = fmtNum(bc.autoDiffPoints, 1, lang);
-            lines.push(lang === 'fr'
-                ? '- La batterie augmente l\'autoconsommation de +' + diffAuto + ' points.'
-                : '- The battery increases self-consumption by +' + diffAuto + ' points.');
-
-            if (bc.withBattery.payback !== null && bc.withoutBattery.payback !== null) {
-                var diffPay = fmtNum(bc.paybackDiffYears, 1, lang);
-                if (bc.paybackDiffYears > 0) {
-                    lines.push(lang === 'fr'
-                        ? '- Elle allonge le retour sur investissement de ' + diffPay + ' ' + L.unitYears + '.'
-                        : '- It extends the payback period by ' + diffPay + ' ' + L.unitYears + '.');
-                } else {
-                    lines.push(lang === 'fr'
-                        ? '- Elle reduit le retour sur investissement de ' + fmtNum(Math.abs(bc.paybackDiffYears), 1, lang) + ' ' + L.unitYears + '.'
-                        : '- It reduces the payback period by ' + fmtNum(Math.abs(bc.paybackDiffYears), 1, lang) + ' ' + L.unitYears + '.');
-                }
-            }
-
-            if (bc.conclusion) {
-                lines.push('- ' + bc.conclusion);
-            }
-        } else {
-            lines.push(lang === 'fr'
-                ? '- Batterie configuree (' + fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh + '), comparaison non disponible.'
-                : '- Battery configured (' + fmtNum(data.battery.capacityKwh, 1, lang) + ' ' + L.unitKwh + '), comparison not available.');
-        }
-        return lines;
-    }
-
-    // -----------------------------------------------------------------
-    //  Client page 3: Analyse decisionnelle
-    //  Structured, dense, decision-oriented — no marketing filler
-    // -----------------------------------------------------------------
-
-    function renderClientPage3(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var verdict = data.verdict;
-        var flags = data.displayFlags;
-
-        // --- 1. Why this verdict ---
-        if (flags.hasVerdict && verdict) {
-            drawMiniBlock(doc, ctx, L.p3WhyVerdict, verdict.narrative || '');
-        }
-
-        // --- 2. Strengths ---
-        var strengths = buildStrengths(data, L, lang);
-        drawMiniBlock(doc, ctx, L.p3Strengths, strengths);
-
-        // --- 3. Weaknesses ---
-        var weaknesses = buildWeaknesses(data, L, lang);
-        drawMiniBlock(doc, ctx, L.p3Weaknesses, weaknesses);
-
-        // --- 4. Battery reading (only if battery configured) ---
-        var batLines = buildBatteryReading(data, L, lang);
-        drawMiniBlock(doc, ctx, L.p3BatteryReading, batLines);
-
-        // --- 5. What to check before deciding ---
-        var checks = [];
-        if (flags.hasVerdict && verdict && Array.isArray(verdict.recommendations) && verdict.recommendations.length > 0) {
-            verdict.recommendations.forEach(function (r) {
-                checks.push('- ' + r);
-            });
-        }
-        // Always add the generic check
-        checks.push('- ' + L.p3DefaultCheck);
-        drawMiniBlock(doc, ctx, L.p3CheckBefore, checks);
-    }
-
-    // -----------------------------------------------------------------
-    //  Helper: drawGlossaryCompact
-    //  Draws a reduced glossary (max 5 terms, inline, dense)
-    // -----------------------------------------------------------------
-
-    function drawGlossaryCompact(doc, ctx, L) {
-        var items = L.glossary;
-        if (!items || items.length === 0) return;
-
-        // Use at most 5 terms
-        var maxTerms = Math.min(items.length, 5);
-
-        checkPageBreak(doc, ctx, 8 + maxTerms * 5);
-
-        drawSectionTitle(doc, ctx, L.sectionGlossary);
-        doc.setFontSize(7.5);
-
-        for (var i = 0; i < maxTerms; i++) {
-            if (ctx.y + 5 > PAGE_BOTTOM) break;
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor.apply(doc, C.dark);
-            doc.text(items[i][0], M + 2, ctx.y);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor.apply(doc, C.slate);
-            var defLines = doc.splitTextToSize(items[i][1], PAGE_W - 2 * M - 22);
-            doc.text(defLines, M + 20, ctx.y);
-            ctx.y += Math.max(defLines.length * 3.2, 3.5) + 3;
-        }
-        ctx.y += 4;
-    }
-
-    // -----------------------------------------------------------------
-    //  Helper: drawDisclaimerBox
-    //  Draws the disclaimer in a subtle background box
-    // -----------------------------------------------------------------
-
-    function drawDisclaimerBox(doc, ctx, L) {
-        doc.setFontSize(6.5);
-        var discLines = doc.splitTextToSize(L.disclaimer, PAGE_W - 2 * M - 8);
-        var boxH = Math.max(14, discLines.length * 3 + 6);
-
-        checkPageBreak(doc, ctx, boxH + 4);
-
-        doc.setFillColor.apply(doc, C.bg);
-        doc.roundedRect(M, ctx.y - 2, PAGE_W - 2 * M, boxH, 2, 2, 'F');
-        doc.setTextColor.apply(doc, C.muted);
-        doc.text(discLines, M + 4, ctx.y + 3);
-        ctx.y += boxH + 4;
-    }
-
-    // -----------------------------------------------------------------
-    //  Client page 4: Hypotheses / Method / Limits / Glossary / Disclaimer
-    //  Reinforces credibility — concise, factual, no padding
-    // -----------------------------------------------------------------
-
-    function renderClientPage4(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var fp = data.financialParams;
-        var flags = data.displayFlags;
-
-        // --- 1. Key assumptions (compact table) ---
-        drawSectionTitle(doc, ctx, L.p4Assumptions);
-
-        var assumptionRows = [
-            [L.lblAssumedElecPrice,  fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh],
-            [L.lblAssumedFeedin,     fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh],
-            [L.lblAssumedIncrease,   fmtNum(fp.priceIncreaseRate * 100, 1, lang) + ' ' + L.unitPercent],
-            [L.lblDegradationPv,     fmtNum(fp.degradationPv * 100, 1, lang) + ' ' + L.unitPercent],
-        ];
-        // Battery degradation only if battery present
-        if (flags.hasBattery) {
-            assumptionRows.push([L.lblDegradationBat, fmtNum(fp.degradationBattery * 100, 1, lang) + ' ' + L.unitPercent]);
-        }
-        assumptionRows.push([L.lblHorizon,      fmtNum(fp.years, 0, lang) + ' ' + L.unitYears]);
-        assumptionRows.push([L.lblDiscountRate,  fmtNum(fp.discountRate * 100, 1, lang) + ' ' + L.unitPercent]);
-
-        drawCompactTable(doc, ctx, assumptionRows);
-        ctx.y += 4;
-
-        // --- 2. Method ---
-        checkPageBreak(doc, ctx, 30);
-        drawMiniBlock(doc, ctx, L.p4Method, L.p4MethodText);
-
-        // --- 3. Limits ---
-        checkPageBreak(doc, ctx, 30);
-        drawMiniBlock(doc, ctx, L.p4Limits, L.p4LimitsText);
-
-        // --- 4. Glossary (compact, max 5 terms) ---
-        drawGlossaryCompact(doc, ctx, L);
-
-        // --- 5. Disclaimer ---
-        drawDisclaimerBox(doc, ctx, L);
-    }
-
-    // =================================================================
-    //  STUDY MODE — Pages 1 to 4
-    //  Tone: neutral, methodical, traceable. No marketing vocabulary.
-    //  Intended audience: loan officer, technical reviewer, project file.
-    // =================================================================
-
-    // -----------------------------------------------------------------
-    //  Study helper: drawSensitivityTable
-    //  Draws a structured table of 3 scenarios with headers.
-    // -----------------------------------------------------------------
-
-    function drawSensitivityTable(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var sens = data.sensitivity;
-        if (!sens || !Array.isArray(sens.scenarios)) return;
-
-        var scenarios = sens.scenarios;
-        var colWidths = [30, 30, 32, 30, 28, 28]; // scenario, elecPrice, installCost, prod, payback, gains25y
-        var tableW = 0;
-        colWidths.forEach(function (w) { tableW += w; });
-        var startX = (PAGE_W - tableW) / 2;
-
-        var headers = [
-            L.lblScenario,
-            L.lblElecPriceShort,
-            L.lblInstallCostShort,
-            L.lblProdShort,
-            L.lblPayback,
-            L.lblGains25y
-        ];
-
-        var scenarioLabels = {
-            'pessimist': L.scenarioPessimist,
-            'base':      L.scenarioBase,
-            'optimist':  L.scenarioOptimist,
-        };
-
-        // Header row
-        doc.setFillColor.apply(doc, C.dark);
-        doc.rect(startX, ctx.y, tableW, 7, 'F');
-        doc.setFontSize(7);
-        doc.setTextColor.apply(doc, C.white);
-        doc.setFont('helvetica', 'bold');
-        var hx = startX;
-        headers.forEach(function (h, i) {
-            doc.text(clean(h), hx + colWidths[i] / 2, ctx.y + 5, { align: 'center' });
-            hx += colWidths[i];
-        });
-        doc.setFont('helvetica', 'normal');
-        ctx.y += 7;
-
-        // Data rows
-        scenarios.forEach(function (sc, idx) {
-            var rowBg = idx % 2 === 0 ? C.bgCard : C.white;
-            doc.setFillColor.apply(doc, rowBg);
-            doc.rect(startX, ctx.y, tableW, 6, 'F');
-
-            doc.setFontSize(7);
-            doc.setTextColor.apply(doc, C.dark);
-            var rx = startX;
-
-            var payStr = sc.payback !== null ? fmtNum(sc.payback, 1, lang) : L.notReached;
-
-            var cells = [
-                scenarioLabels[sc.key] || sc.key,
-                fmtNum(sc.elecPrice, 4, lang),
-                fmtNum(sc.installCost, 0, lang),
-                fmtNum(sc.production, 0, lang),
-                payStr,
-                fmtNum(sc.totalGains25y, 0, lang),
-            ];
-
-            cells.forEach(function (cell, i) {
-                var align = i === 0 ? 'left' : 'center';
-                var tx = i === 0 ? rx + 2 : rx + colWidths[i] / 2;
-                doc.text(clean(String(cell)), tx, ctx.y + 4.5, { align: align });
-                rx += colWidths[i];
-            });
-            ctx.y += 6;
-        });
-
-        // Bottom border
-        doc.setDrawColor.apply(doc, C.light);
-        doc.setLineWidth(0.3);
-        doc.line(startX, ctx.y, startX + tableW, ctx.y);
-        ctx.y += 4;
-    }
-
-    // -----------------------------------------------------------------
-    //  Study page 1: Synthese projet
-    //  - Title / summary
-    //  - 4 KPI (neutral accent)
-    //  - Strengths / Cautions (factual, no color verdict)
-    // -----------------------------------------------------------------
-
-    function renderStudyPage1(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var fin = data.financial;
-        var prod = data.production;
-        var cfg = data.config;
-        var flags = data.displayFlags;
-
-        // --- Summary title ---
-        drawSectionTitle(doc, ctx, L.studySummary);
-
-        // Summary text: factual one-liner
-        doc.setFontSize(8.5);
-        doc.setTextColor.apply(doc, C.slate);
-        var summaryText = lang === 'fr'
-            ? 'Installation photovoltaique de ' + fmtNum(cfg.kwc, 1, lang) + ' kWc a ' + cfg.countryName
-              + '. Simulation sur ' + fmtNum(data.financialParams.years, 0, lang) + ' ans.'
-            : 'Photovoltaic installation of ' + fmtNum(cfg.kwc, 1, lang) + ' kWp in ' + cfg.countryName
-              + '. Simulation over ' + fmtNum(data.financialParams.years, 0, lang) + ' years.';
-        doc.text(clean(summaryText), M, ctx.y);
-        ctx.y += 6;
-
-        // --- 4 KPI cards (neutral: all slate accent, no green/amber) ---
-        var paybackVal = fin.payback !== null
-            ? fmtNum(fin.payback, 1, lang)
-            : L.notReached;
-        var irrVal = flags.irrAvailable
-            ? fmtNum(fin.irr * 100, 1, lang)
-            : '\u2014';
-
-        drawKpiCards(doc, ctx, [
-            { label: L.kpiSavings,   value: fmtNum(fin.annualSavings, 0, lang), unit: L.unitEurAn, accent: C.slate },
-            { label: L.kpiPayback,   value: paybackVal,                          unit: L.unitYears, accent: C.slate },
-            { label: L.kpiAutoconso, value: fmtNum(prod.autoconsoRate, 1, lang), unit: L.unitPercent, accent: C.slate },
-            { label: L.kpiIrr,       value: irrVal,                              unit: L.unitPercent, accent: C.slate },
-        ]);
-
-        // --- Strengths ---
-        ctx.y += 2;
-        var strengths = buildStrengths(data, L, lang);
-        drawMiniBlock(doc, ctx, L.studyStrengths, strengths);
-
-        // --- Cautions ---
-        var weaknesses = buildWeaknesses(data, L, lang);
-        drawMiniBlock(doc, ctx, L.studyWeaknesses, weaknesses);
-
-        // --- Battery reading (if applicable) ---
-        if (flags.hasBattery) {
-            var batLines = buildBatteryReading(data, L, lang);
-            drawMiniBlock(doc, ctx, L.p3BatteryReading, batLines);
-        }
-    }
-
-    // -----------------------------------------------------------------
-    //  Study page 2: Donnees techniques et economiques
-    //  - Configuration complete
-    //  - Production
-    //  - Autoconsommation
-    //  - Bilan economique
-    //  Dense, traceable, all numbers explicit.
-    // -----------------------------------------------------------------
-
-    function renderStudyPage2(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var cfg = data.config;
-        var bat = data.battery;
-        var fp = data.financialParams;
-        var prod = data.production;
-        var fin = data.financial;
-        var flags = data.displayFlags;
-
-        // --- Configuration ---
-        drawSectionTitle(doc, ctx, L.sectionConfig);
-
-        var batteryText = flags.hasBattery
-            ? fmtNum(bat.capacityKwh, 1, lang) + ' ' + L.unitKwh + ' (' + fmtNum(bat.cost, 0, lang) + ' ' + L.unitEur + ')'
-            : L.no;
-
-        var configRows = [
-            [L.lblLocation,     cfg.countryName + ' (' + fmtNum(cfg.lat, 4, lang) + ', ' + fmtNum(cfg.lon, 4, lang) + ')'],
-            [L.lblPower,        fmtNum(cfg.kwc, 1, lang) + ' ' + L.unitKwc],
-            [L.lblSurface,      fmtNum(cfg.surface, 0, lang) + ' ' + L.unitM2],
-            [L.lblTiltOrient,   fmtNum(cfg.tilt, 0, lang) + '\u00b0 / ' + orientLabel(cfg.orientation, L)],
-            [L.lblProfile,      profileLabel(cfg.profile, L)],
-            [L.lblBattery,      batteryText],
-            [L.lblConsoInput,   fmtNum(cfg.consumption, 0, lang) + ' ' + L.unitKwh],
-        ];
-        if (flags.consoModified) {
-            configRows.push([L.lblConsoSimulated, fmtNum(prod.totalConsumption, 0, lang) + ' ' + L.unitKwh]);
-        }
-        configRows.push([L.lblElecPrice,     fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh]);
-        configRows.push([L.lblFeedinTariff,  fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh]);
-
-        drawCompactTable(doc, ctx, configRows);
-        ctx.y += 4;
-
-        // --- Production ---
-        checkPageBreak(doc, ctx, 40);
-        drawSectionTitle(doc, ctx, L.sectionProduction);
-        drawCompactTable(doc, ctx, [
-            [L.lblAnnualProd,   fmtNum(prod.annual, 0, lang) + ' ' + L.unitKwh],
-            [L.lblProdPerKwc,   fmtNum(prod.perKwc, 0, lang) + ' ' + L.unitKwhKwc],
-        ]);
-        ctx.y += 2;
-
-        // --- Autoconsommation ---
-        drawSectionTitle(doc, ctx, L.sectionAutoconso);
-        drawCompactTable(doc, ctx, [
-            [L.lblAutoRate,    fmtNum(prod.autoconsoRate, 1, lang) + ' ' + L.unitPercent],
-            [L.lblProdRate,    fmtNum(prod.autoprodRate, 1, lang) + ' ' + L.unitPercent],
-            [L.lblAutoDirect,  fmtNum(prod.autoDirect, 0, lang) + ' ' + L.unitKwh],
-            [L.lblAutoBattery, fmtNum(prod.autoBattery, 0, lang) + ' ' + L.unitKwh],
-            [L.lblInjection,   fmtNum(prod.injection, 0, lang) + ' ' + L.unitKwh],
-            [L.lblSoutirage,   fmtNum(prod.soutirage, 0, lang) + ' ' + L.unitKwh],
-        ]);
-        ctx.y += 4;
-
-        // --- Bilan economique ---
-        checkPageBreak(doc, ctx, 50);
-        drawSectionTitle(doc, ctx, L.sectionFinancial);
-
-        var paybackStr = fin.payback !== null
-            ? fmtNum(fin.payback, 1, lang) + ' ' + L.unitYears
-            : L.notReached;
-        var irrStr = flags.irrAvailable
-            ? fmtNum(fin.irr * 100, 1, lang) + ' ' + L.unitPercent
-            : '\u2014';
-
-        drawCompactTable(doc, ctx, [
-            [L.lblInstallCost,   fmtNum(fp.installCost, 0, lang) + ' ' + L.unitEur + ' (PV)'],
-            [L.lblBattery,       flags.hasBattery ? fmtNum(bat.cost, 0, lang) + ' ' + L.unitEur : '\u2014'],
-            ['Total',            fmtNum(fp.totalInvestment, 0, lang) + ' ' + L.unitEur],
-            [L.lblNetCost,       fmtNum(fp.netCost, 0, lang) + ' ' + L.unitEur],
-            [L.lblSavingsAuto,   fmtNum(fin.savingsAutoconso, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsFeedin, fmtNum(fin.savingsFeedin, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblSavingsTotal,  fmtNum(fin.annualSavings, 0, lang) + ' ' + L.unitEurAn],
-            [L.lblPayback,       paybackStr],
-            [L.lblTotalGains,    fmtNum(fin.totalSavings25y, 0, lang) + ' ' + L.unitEur],
-            [L.lblIrr,           irrStr],
-            [L.lblCo2,           fmtNum(fin.co2Avoided, 0, lang) + ' ' + L.unitKgAn],
-        ]);
-    }
-
-    // -----------------------------------------------------------------
-    //  Study page 3: Scenarios / Sensitivity
-    //  - Sensitivity table (3 scenarios)
-    //  - Intro text
-    //  - Financing placeholder (reserved, not displayed if null)
-    // -----------------------------------------------------------------
-
-    function renderStudyPage3(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var flags = data.displayFlags;
-
-        // --- Sensitivity analysis ---
-        if (flags.hasSensitivity) {
-            drawSectionTitle(doc, ctx, L.studyScenarios);
-
-            // Intro text
-            doc.setFontSize(8);
-            doc.setTextColor.apply(doc, C.slate);
-            var introLines = doc.splitTextToSize(clean(L.studySensitivityIntro), PAGE_W - 2 * M);
-            doc.text(introLines, M, ctx.y);
-            ctx.y += introLines.length * 3.5 + 4;
-
-            // Table
-            drawSensitivityTable(doc, ctx, data);
-            ctx.y += 4;
-
-            // Variation note
-            doc.setFontSize(7);
-            doc.setTextColor.apply(doc, C.muted);
-            var varNote = lang === 'fr'
-                ? 'Variation appliquee : +/- ' + fmtNum(data.sensitivity.variation * 100, 0, lang) + '%'
-                : 'Applied variation: +/- ' + fmtNum(data.sensitivity.variation * 100, 0, lang) + '%';
-            doc.text(clean(varNote), M, ctx.y);
-            ctx.y += 8;
-        } else {
-            drawSectionTitle(doc, ctx, L.studyScenarios);
-            doc.setFontSize(8);
-            doc.setTextColor.apply(doc, C.muted);
-            var noSens = lang === 'fr'
-                ? 'Analyse de sensibilite non disponible pour cette simulation.'
-                : 'Sensitivity analysis not available for this simulation.';
-            doc.text(clean(noSens), M, ctx.y);
-            ctx.y += 8;
-        }
-
-        // --- Battery comparison (study tone) ---
-        if (flags.hasBatteryComparison) {
-            checkPageBreak(doc, ctx, 45);
-            drawSectionTitle(doc, ctx, L.sectionBattery);
-
-            var bc = data.batteryComparison;
-            var noBatPayStr = bc.withoutBattery.payback !== null
-                ? fmtNum(bc.withoutBattery.payback, 1, lang) + ' ' + L.unitYears
-                : L.notReached;
-            var batPayStr = bc.withBattery.payback !== null
-                ? fmtNum(bc.withBattery.payback, 1, lang) + ' ' + L.unitYears
-                : L.notReached;
-
-            drawCompactTable(doc, ctx, [
-                [L.lblWithoutBattery + ' \u2014 ' + L.lblAutoRate, fmtNum(bc.withoutBattery.autoRate, 1, lang) + ' %'],
-                [L.lblWithoutBattery + ' \u2014 ' + L.lblSavingsShort, fmtNum(bc.withoutBattery.savings, 0, lang) + ' ' + L.unitEur],
-                [L.lblWithoutBattery + ' \u2014 ' + L.lblPayback, noBatPayStr],
-                [L.lblWithBattery + ' \u2014 ' + L.lblAutoRate, fmtNum(bc.withBattery.autoRate, 1, lang) + ' %'],
-                [L.lblWithBattery + ' \u2014 ' + L.lblSavingsShort, fmtNum(bc.withBattery.savings, 0, lang) + ' ' + L.unitEur],
-                [L.lblWithBattery + ' \u2014 ' + L.lblPayback, batPayStr],
-            ]);
-
-            if (bc.conclusion) {
-                ctx.y += 2;
-                doc.setFontSize(7);
-                doc.setTextColor.apply(doc, C.muted);
-                var concLines = doc.splitTextToSize(clean(bc.conclusion), PAGE_W - 2 * M - 4);
-                doc.text(concLines, M + 2, ctx.y);
-                ctx.y += concLines.length * 3 + 4;
-            }
-            ctx.y += 4;
-        }
-
-        // --- Financing (V2 placeholder — only show note if financing is null) ---
-        // Deliberately not rendering an empty financing block.
-        // When data.financing becomes non-null in V2, a section will be added here.
-    }
-
-    // -----------------------------------------------------------------
-    //  Study page 4: Hypotheses / Risks / Method / Limits / Disclaimer
-    //  Reinforces traceability and prudence.
-    // -----------------------------------------------------------------
-
-    function renderStudyPage4(doc, ctx, data) {
-        var L = ctx.L;
-        var lang = ctx.lang;
-        var fp = data.financialParams;
-        var flags = data.displayFlags;
-
-        // --- 1. Key assumptions (detailed) ---
-        drawSectionTitle(doc, ctx, L.p4Assumptions);
-
-        var assumptionRows = [
-            [L.lblAssumedElecPrice,  fmtNum(fp.elecPrice, 4, lang) + ' ' + L.unitEurKwh],
-            [L.lblAssumedFeedin,     fmtNum(fp.feedinTariff, 4, lang) + ' ' + L.unitEurKwh],
-            [L.lblAssumedIncrease,   fmtNum(fp.priceIncreaseRate * 100, 1, lang) + ' ' + L.unitPercent],
-            [L.lblDegradationPv,     fmtNum(fp.degradationPv * 100, 2, lang) + ' ' + L.unitPercent],
-        ];
-        if (flags.hasBattery) {
-            assumptionRows.push([L.lblDegradationBat, fmtNum(fp.degradationBattery * 100, 1, lang) + ' ' + L.unitPercent]);
-        }
-        assumptionRows.push([L.lblHorizon,      fmtNum(fp.years, 0, lang) + ' ' + L.unitYears]);
-        assumptionRows.push([L.lblDiscountRate,  fmtNum(fp.discountRate * 100, 1, lang) + ' ' + L.unitPercent]);
-
-        drawCompactTable(doc, ctx, assumptionRows);
-        ctx.y += 4;
-
-        // --- 2. Risks ---
-        checkPageBreak(doc, ctx, 30);
-        drawMiniBlock(doc, ctx, L.studyRisks, L.studyRisksText);
-
-        // --- 3. Method ---
-        checkPageBreak(doc, ctx, 30);
-        drawMiniBlock(doc, ctx, L.p4Method, L.p4MethodText);
-
-        // --- 4. Limits ---
-        checkPageBreak(doc, ctx, 30);
-        drawMiniBlock(doc, ctx, L.p4Limits, L.p4LimitsText);
-
-        // --- 5. Disclaimer ---
+        // --- Disclaimer ---
         drawDisclaimerBox(doc, ctx, L);
     }
 
@@ -2515,27 +1723,15 @@
     //  8. ENTRY POINT
     // =================================================================
 
-    /**
-     * Generates a PDF from simulation data.
-     *
-     * @param {Object} data          - window.lastSimulationData
-     * @param {Object} opts
-     * @param {string} opts.mode     - 'client' | 'study'
-     * @param {string} opts.lang     - 'fr' | 'en' (overrides data.meta.lang)
-     */
     function generateSimulationPdf(data, opts) {
         // --- Validate inputs ---
         if (!data) {
             console.error('[pdf-generator] No simulation data provided.');
             return;
         }
-        var mode = (opts && opts.mode) || 'v2';
+        var mode = 'v2';  // Force v2 mode
         var lang = (opts && opts.lang) || (data.meta && data.meta.lang) || 'fr';
 
-        if (mode !== 'client' && mode !== 'study' && mode !== 'v2') {
-            console.error('[pdf-generator] Invalid mode: ' + mode + '. Use "client", "study" or "v2".');
-            return;
-        }
         if (lang !== 'fr' && lang !== 'en') {
             console.warn('[pdf-generator] Unknown lang: ' + lang + '. Falling back to "fr".');
             lang = 'fr';
@@ -2552,6 +1748,15 @@
         var normalized = normalizeSimulationData(data);
         if (!normalized) {
             console.error('[pdf-generator] Data normalization failed.');
+            return;
+        }
+
+        // --- Check financial data availability ---
+        if (normalized.displayFlags.financialAvailable === false) {
+            var msg = lang === 'fr'
+                ? 'Les donnees financieres ne sont pas renseignees. Le rapport PDF ne peut pas etre genere.'
+                : 'Financial data is missing. The PDF report cannot be generated.';
+            alert(msg);
             return;
         }
 
@@ -2581,65 +1786,37 @@
         var ctx = {
             y:    0,
             lang: lang,
-            mode: mode,
             L:    L,
         };
 
-        // --- Dispatch to mode-specific page composers ---
-        if (mode === 'v2') {
-            // Page 1: Cover (no header, no footer)
-            renderCoverPage(doc, ctx, normalized);
+        // --- V2 mode pages ---
+        // Page 1: Cover (no header, no footer)
+        renderCoverPage(doc, ctx, normalized);
 
-            // Page 2: Synthèse
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderV2Page2(doc, ctx, normalized);
+        // Page 2: Financial summary
+        doc.addPage();
+        drawHeader(doc, ctx);
+        renderV2Page2(doc, ctx, normalized);
 
-            // Page 3: Production & autoconsommation
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderV2Page3(doc, ctx, normalized);
+        // Page 3: Self-consumption details
+        doc.addPage();
+        drawHeader(doc, ctx);
+        renderV2Page3(doc, ctx, normalized);
 
-            // Page 4: Analyse économique
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderV2Page4(doc, ctx, normalized);
+        // Page 4: Battery comparison & subsidies
+        doc.addPage();
+        drawHeader(doc, ctx);
+        renderV2Page4(doc, ctx, normalized);
 
-            // Page 5: Analyse et aide à la décision
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderV2Page5(doc, ctx, normalized);
+        // Page 5: Analysis report
+        doc.addPage();
+        drawHeader(doc, ctx);
+        renderV2Page5(doc, ctx, normalized);
 
-            // Page 6: Hypothèses, méthode et limites
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderV2Page6(doc, ctx, normalized);
-
-        } else if (mode === 'client') {
-            drawHeader(doc, ctx);
-            renderClientPage1(doc, ctx, normalized);
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderClientPage2(doc, ctx, normalized);
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderClientPage3(doc, ctx, normalized);
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderClientPage4(doc, ctx, normalized);
-        } else {
-            drawHeader(doc, ctx);
-            renderStudyPage1(doc, ctx, normalized);
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderStudyPage2(doc, ctx, normalized);
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderStudyPage3(doc, ctx, normalized);
-            doc.addPage();
-            drawHeader(doc, ctx);
-            renderStudyPage4(doc, ctx, normalized);
-        }
+        // Page 6: Assumptions & method
+        doc.addPage();
+        drawHeader(doc, ctx);
+        renderV2Page6(doc, ctx, normalized);
 
         // --- Draw footers on pages 2+ (no footer on cover/page 1) ---
         var totalPages = doc.getNumberOfPages();
@@ -2649,14 +1826,10 @@
         }
 
         // --- Save ---
-        var modeLabel = mode === 'study' ? 'etude' : (mode === 'v2' ? 'rapport-v2' : 'rapport');
-        var filename = 'solardataatlas-'
-            + modeLabel
-            + '-' + lang
-            + '.pdf';
+        var filename = 'solardataatlas-rapport-' + lang + '.pdf';
         doc.save(filename);
 
-        console.log('[pdf-generator] PDF generated: ' + filename + ' (' + totalPages + ' pages, mode=' + mode + ', lang=' + lang + ')');
+        console.log('[pdf-generator] PDF generated: ' + filename + ' (' + totalPages + ' pages, lang=' + lang + ')');
     }
 
     // --- Expose public API ---
