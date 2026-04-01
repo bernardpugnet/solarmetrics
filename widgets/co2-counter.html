@@ -127,12 +127,12 @@
     <script>
         // Constants
         const POWER_KWC = 6; // 6 kWc installation
-        const ANNUAL_PRODUCTION = 1100; // kWh/year
-        const CO2_FACTOR = 55; // gCO2/kWh
+        const ANNUAL_PRODUCTION = 1100; // kWh/kWc/year (France centre)
+        const CO2_FACTOR = 56; // gCO2/kWh (Ember Climate 2025)
         const SECONDS_PER_YEAR = 365.25 * 24 * 3600;
 
-        // Calculate CO2 per second: (1100 kWh/year * 55 gCO2/kWh) / seconds per year
-        const CO2_PER_SECOND = (ANNUAL_PRODUCTION * CO2_FACTOR) / SECONDS_PER_YEAR / 1000; // in kg
+        // Calculate CO2 per second: (6 kWc * 1100 kWh/kWc/year * 56 gCO2/kWh) / seconds per year
+        const CO2_PER_SECOND = (POWER_KWC * ANNUAL_PRODUCTION * CO2_FACTOR) / SECONDS_PER_YEAR / 1000; // in kg
 
         const startTime = Date.now();
 
