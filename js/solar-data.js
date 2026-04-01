@@ -40,9 +40,9 @@ window.SOLAR_DATA = {
         fr: {
           title: "Aides en France (2026)",
           items: [
-            "Prime à l'autoconsommation : 220-500 €/kWc selon puissance (≤100 kWc)",
+            "Prime à l'autoconsommation : 80 €/kWc pour ≤9 kWc, 140 €/kWc pour 9-36 kWc (T1 2026)",
             "Obligation d'achat (OA) : tarif surplus garanti 20 ans (0,04 €/kWh pour ≤9 kWc, T1 2026)",
-            "TVA réduite à 10% pour installations ≤3 kWc",
+            "TVA réduite à 5,5% pour installations ≤9 kWc (logement >2 ans, conditions techniques)",
             "MaPrimeRénov' : sous conditions de revenus (rénovation globale)",
             "Exonération d'impôt sur le revenu pour ≤3 kWc"
           ],
@@ -52,9 +52,9 @@ window.SOLAR_DATA = {
         en: {
           title: "Subsidies in France (2026)",
           items: [
-            "Self-consumption bonus: €220-500/kWp depending on capacity (≤100 kWp)",
+            "Self-consumption bonus: €80/kWp for ≤9 kWp, €140/kWp for 9–36 kWp (Q1 2026)",
             "Feed-in tariff (OA): guaranteed surplus rate for 20 years (€0.04/kWh for ≤9 kWp, Q1 2026)",
-            "Reduced VAT at 10% for installations ≤3 kWp",
+            "Reduced VAT at 5.5% for installations ≤9 kWp (dwelling >2 years, technical conditions)",
             "MaPrimeRénov': income-based (whole-house renovation)",
             "Income tax exemption for ≤3 kWp"
           ],
@@ -94,7 +94,7 @@ window.SOLAR_DATA = {
           title: "Aides en Allemagne (2026)",
           items: [
             "TVA à 0% sur les installations PV résidentielles (depuis 2023)",
-            "Tarif de rachat garanti (EEG) : ~0,079 €/kWh pour ≤10 kWc, 20 ans (en baisse progressive)",
+            "Tarif de rachat garanti (EEG) : ~0,078 €/kWh pour ≤10 kWc, 20 ans (en baisse progressive)",
             "Prêts KfW à taux bonifiés (programme 270)",
             "Primes régionales variables (Länder)"
           ],
@@ -105,7 +105,7 @@ window.SOLAR_DATA = {
           title: "Subsidies in Germany (2026)",
           items: [
             "0% VAT on residential PV systems (since 2023)",
-            "Feed-in tariff (EEG): ~€0.079/kWh for ≤10 kWp, 20 years (gradually decreasing)",
+            "Feed-in tariff (EEG): ~€0.078/kWh for ≤10 kWp, 20 years (gradually decreasing)",
             "KfW subsidized loans (program 270)",
             "Variable regional premiums (Länder)"
           ],
@@ -297,7 +297,7 @@ window.SOLAR_DATA = {
         fr: {
           title: "Aides en Belgique (2026)",
           items: [
-            "Wallonie : prime Qualiwatt (selon profil consommation)",
+            "Wallonie : pas de prime directe photovoltaïque ; financement possible via le prêt à taux zéro Rénoprêt",
             "Flandre : prime batterie + injection nette",
             "Bruxelles : certificats verts (Brugel)",
             "TVA à 6% pour rénovation (bâtiment >10 ans)"
@@ -308,7 +308,7 @@ window.SOLAR_DATA = {
         en: {
           title: "Subsidies in Belgium (2026)",
           items: [
-            "Wallonia: Qualiwatt premium (based on consumption profile)",
+            "Wallonia: no direct photovoltaic subsidy; financing may be available through the zero-interest Rénoprêt loan",
             "Flanders: battery premium + net injection",
             "Brussels: green certificates (Brugel)",
             "6% VAT for renovation (buildings >10 years)"
@@ -556,7 +556,7 @@ window.SOLAR_DATA = {
         fr: {
           title: "Aides aux États-Unis (2026)",
           items: [
-            "ITC fédéral (Investment Tax Credit) : expiré le 31/12/2025 — vérifier extensions éventuelles",
+            "Crédit fédéral résidentiel (ITC) : non disponible pour les dépenses engagées après le 31/12/2025",
             "Crédits d'État variables : California (SGIP), New York (NY-Sun), Massachusetts (SMART), etc.",
             "Net metering : disponible dans ~40 États (conditions variables)",
             "Programmes locaux / utility : remises et financements selon fournisseur",
@@ -568,7 +568,7 @@ window.SOLAR_DATA = {
         en: {
           title: "Incentives in the United States (2026)",
           items: [
-            "Federal ITC (Investment Tax Credit): expired 12/31/2025 — check for potential extensions",
+            "Federal residential credit (ITC): not available for expenditures made after 12/31/2025",
             "State-level credits vary: California (SGIP), New York (NY-Sun), Massachusetts (SMART), etc.",
             "Net metering: available in ~40 states (conditions vary)",
             "Local / utility programs: rebates and financing by provider",
